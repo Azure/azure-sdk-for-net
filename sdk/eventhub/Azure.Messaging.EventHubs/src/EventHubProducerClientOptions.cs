@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {

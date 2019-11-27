@@ -409,5 +409,14 @@ namespace Azure.Messaging.EventHubs {
                 return ResourceManager.GetString("BlobsResourceDoesNotExist", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to A checkpoint cannot be created or updated using an empty event..
+        /// </summary>
+        internal static string CannotCreateCheckpointForEmptyEvent {
+            get {
+                return ResourceManager.GetString("CannotCreateCheckpointForEmptyEvent", resourceCulture);
+            }
+        }
     }
 }

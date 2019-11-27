@@ -2510,10 +2510,9 @@ namespace Azure.Storage.Queues.Models
         public string Permissions { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueAccessPolicy instances.
-        /// You can use QueuesModelFactory.QueueAccessPolicy instead.
+        /// Creates a new QueueAccessPolicy instance
         /// </summary>
-        internal QueueAccessPolicy() { }
+        public QueueAccessPolicy() { }
 
         /// <summary>
         /// Serialize a QueueAccessPolicy instance as XML.
@@ -2745,10 +2744,9 @@ namespace Azure.Storage.Queues.Models
         public int MaxAgeInSeconds { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueCorsRule instances.
-        /// You can use QueuesModelFactory.QueueCorsRule instead.
+        /// Creates a new QueueCorsRule instance
         /// </summary>
-        internal QueueCorsRule() { }
+        public QueueCorsRule() { }
 
         /// <summary>
         /// Serialize a QueueCorsRule instance as XML.
@@ -3729,10 +3727,9 @@ namespace Azure.Storage.Queues.Models
         public int? Days { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueRetentionPolicy instances.
-        /// You can use QueuesModelFactory.QueueRetentionPolicy instead.
+        /// Creates a new QueueRetentionPolicy instance
         /// </summary>
-        internal QueueRetentionPolicy() { }
+        public QueueRetentionPolicy() { }
 
         /// <summary>
         /// Serialize a QueueRetentionPolicy instance as XML.
@@ -3802,10 +3799,9 @@ namespace Azure.Storage.Queues.Models
         public string MessageText { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of QueueSendMessage instances.
-        /// You can use QueuesModelFactory.QueueSendMessage instead.
+        /// Creates a new QueueSendMessage instance
         /// </summary>
-        internal QueueSendMessage() { }
+        public QueueSendMessage() { }
 
         /// <summary>
         /// Serialize a QueueSendMessage instance as XML.

@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Interlocked.Decrement(ref partitionsBeingProcessedCount);
 
-                Console.WriteLine($"\tPartition '{ eventArgs.Partition.PartitionId }': partition processing has stopped. Reason: { eventArgs.Reason }.");
+                Console.WriteLine($"\tPartition '{ eventArgs.PartitionId }': partition processing has stopped. Reason: { eventArgs.Reason }.");
 
                 // This method is asynchronous, which means it's expected to return a Task.
 

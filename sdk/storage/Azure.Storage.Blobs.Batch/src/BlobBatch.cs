@@ -183,7 +183,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.Delete);
-            HttpMessage message = BlobRestClient.Blob.DeleteAsync_CreateMessage(
+            HttpMessage message = BatchRestClient.Blob.DeleteAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
                 deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs.Specialized
                 ifMatch: conditions?.IfMatch,
                 ifNoneMatch: conditions?.IfNoneMatch);
             _messages.Add(message);
-            return new DelayedResponse(message, BlobRestClient.Blob.DeleteAsync_CreateResponse);
+            return new DelayedResponse(message, BatchRestClient.Blob.DeleteAsync_CreateResponse);
         }
         #endregion DeleteBlob
 
@@ -285,14 +285,14 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions leaseAccessConditions = default)
         {
             SetBatchOperationType(BlobBatchOperationType.SetAccessTier);
-            HttpMessage message = BlobRestClient.Blob.SetAccessTierAsync_CreateMessage(
+            HttpMessage message = BatchRestClient.Blob.SetAccessTierAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
                 tier: accessTier,
                 rehydratePriority: rehydratePriority,
                 leaseId: leaseAccessConditions?.LeaseId);
             _messages.Add(message);
-            return new DelayedResponse(message, BlobRestClient.Blob.SetAccessTierAsync_CreateResponse);
+            return new DelayedResponse(message, BatchRestClient.Blob.SetAccessTierAsync_CreateResponse);
         }
 
         /// <summary>

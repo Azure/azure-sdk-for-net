@@ -38,36 +38,43 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="type">Type of the azure resource</param>
         /// <param name="createdAt">Time at which the share subscription was
         /// created.</param>
-        /// <param name="createdBy">The user who created the share
-        /// subscription.</param>
+        /// <param name="providerEmail">Email of the provider who created the
+        /// resource</param>
+        /// <param name="providerName">Name of the provider who created the
+        /// resource</param>
+        /// <param name="providerTenantName">Tenant name of the provider who
+        /// created the resource</param>
         /// <param name="provisioningState">Provisioning state of the share
         /// subscription. Possible values include: 'Succeeded', 'Creating',
         /// 'Deleting', 'Moving', 'Failed'</param>
         /// <param name="shareDescription">Description of share</param>
         /// <param name="shareKind">Kind of share. Possible values include:
-        /// 'CopyBased'</param>
+        /// 'CopyBased', 'InPlace'</param>
         /// <param name="shareName">Name of the share</param>
-        /// <param name="shareSender">Sender of the share</param>
-        /// <param name="shareSenderCompanyName">Company name of the share
-        /// sender</param>
         /// <param name="shareSubscriptionStatus">Gets the current status of
         /// share subscription. Possible values include: 'Active', 'Revoked',
         /// 'SourceDeleted', 'Revoking'</param>
         /// <param name="shareTerms">Terms of a share</param>
-        public ShareSubscription(string invitationId, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string provisioningState = default(string), string shareDescription = default(string), string shareKind = default(string), string shareName = default(string), string shareSender = default(string), string shareSenderCompanyName = default(string), string shareSubscriptionStatus = default(string), string shareTerms = default(string))
+        /// <param name="userEmail">Email of the user who created the
+        /// resource</param>
+        /// <param name="userName">Name of the user who created the
+        /// resource</param>
+        public ShareSubscription(string invitationId, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), string provisioningState = default(string), string shareDescription = default(string), string shareKind = default(string), string shareName = default(string), string shareSubscriptionStatus = default(string), string shareTerms = default(string), string userEmail = default(string), string userName = default(string))
             : base(id, name, type)
         {
             CreatedAt = createdAt;
-            CreatedBy = createdBy;
             InvitationId = invitationId;
+            ProviderEmail = providerEmail;
+            ProviderName = providerName;
+            ProviderTenantName = providerTenantName;
             ProvisioningState = provisioningState;
             ShareDescription = shareDescription;
             ShareKind = shareKind;
             ShareName = shareName;
-            ShareSender = shareSender;
-            ShareSenderCompanyName = shareSenderCompanyName;
             ShareSubscriptionStatus = shareSubscriptionStatus;
             ShareTerms = shareTerms;
+            UserEmail = userEmail;
+            UserName = userName;
             CustomInit();
         }
 
@@ -83,16 +90,28 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public System.DateTime? CreatedAt { get; private set; }
 
         /// <summary>
-        /// Gets the user who created the share subscription.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdBy")]
-        public string CreatedBy { get; private set; }
-
-        /// <summary>
         /// Gets or sets the invitation id.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invitationId")]
         public string InvitationId { get; set; }
+
+        /// <summary>
+        /// Gets email of the provider who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerEmail")]
+        public string ProviderEmail { get; private set; }
+
+        /// <summary>
+        /// Gets name of the provider who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerName")]
+        public string ProviderName { get; private set; }
+
+        /// <summary>
+        /// Gets tenant name of the provider who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.providerTenantName")]
+        public string ProviderTenantName { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the share subscription. Possible values
@@ -108,7 +127,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string ShareDescription { get; private set; }
 
         /// <summary>
-        /// Gets kind of share. Possible values include: 'CopyBased'
+        /// Gets kind of share. Possible values include: 'CopyBased', 'InPlace'
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareKind")]
         public string ShareKind { get; private set; }
@@ -118,18 +137,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareName")]
         public string ShareName { get; private set; }
-
-        /// <summary>
-        /// Gets sender of the share
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.shareSender")]
-        public string ShareSender { get; private set; }
-
-        /// <summary>
-        /// Gets company name of the share sender
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.shareSenderCompanyName")]
-        public string ShareSenderCompanyName { get; private set; }
 
         /// <summary>
         /// Gets the current status of share subscription. Possible values
@@ -143,6 +150,18 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareTerms")]
         public string ShareTerms { get; private set; }
+
+        /// <summary>
+        /// Gets email of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userEmail")]
+        public string UserEmail { get; private set; }
+
+        /// <summary>
+        /// Gets name of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userName")]
+        public string UserName { get; private set; }
 
         /// <summary>
         /// Validate the object.

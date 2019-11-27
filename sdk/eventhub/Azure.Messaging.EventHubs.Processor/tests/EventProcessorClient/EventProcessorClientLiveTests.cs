@@ -27,13 +27,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
+    [Ignore("These need to be revisited and revised post-move on the package.")]
     public class EventProcessorClientLiveTests
     {
         /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>
         private const int ReceiveRetryLimit = 10;
-
-        /// <summary>The default retry policy to use for test operations.</summary>
-        private static readonly EventHubsRetryPolicy DefaultRetryPolicy = new EventHubsRetryOptions().ToRetryPolicy();
 
         /// <summary>
         ///   Verifies that the <see cref="EventProcessorClient" /> is able to
@@ -46,8 +44,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
-                await using (var connection = new EventHubConnection(connectionString))
+                await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString))
                 {
                     var initializeCalls = new ConcurrentDictionary<string, int>();
 
@@ -55,7 +54,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                     var eventProcessorManager = new EventProcessorManager
                         (
-                            EventHubConsumerClient.DefaultConsumerGroupName,
+                            consumerGroup,
                             connectionString,
                             onInitialize: eventArgs =>
                                 initializeCalls.AddOrUpdate(eventArgs.PartitionId, 1, (partitionId, value) => value + 1)
@@ -78,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     // Validate results before calling stop.  This way, we can make sure the initialize calls were
                     // triggered by start.
 
-                    var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
+                    var partitionIds = await consumer.GetPartitionIdsAsync();
 
                     foreach (var partitionId in partitionIds)
                     {
@@ -106,46 +105,45 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
                 var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+                var closeCalls = new ConcurrentDictionary<string, int>();
+                var stopReasons = new ConcurrentDictionary<string, ProcessingStoppedReason>();
 
-                await using (var connection = new EventHubConnection(connectionString))
+                // Create the event processor manager to manage our event processors.
+
+                var eventProcessorManager = new EventProcessorManager
+                    (
+                        EventHubConsumerClient.DefaultConsumerGroupName,
+                        connectionString,
+                        onStop: eventArgs =>
+                        {
+                            closeCalls.AddOrUpdate(eventArgs.PartitionId, 1, (partitionId, value) => value + 1);
+                            stopReasons[eventArgs.PartitionId] = eventArgs.Reason;
+                        }
+                    );
+
+                eventProcessorManager.AddEventProcessors(1);
+
+                // Start the event processors.
+
+                await eventProcessorManager.StartAllAsync();
+
+                // Make sure the event processors have enough time to stabilize.
+
+                await eventProcessorManager.WaitStabilization();
+
+                // CloseAsync should have not been called when constructing the event processor or during processing initialization.
+
+                Assert.That(closeCalls.Keys, Is.Empty);
+
+                // Stop the event processors.
+
+                await eventProcessorManager.StopAllAsync();
+
+                // Validate results.
+
+                await using (var producer = new EventHubProducerClient(connectionString))
                 {
-                    var closeCalls = new ConcurrentDictionary<string, int>();
-                    var stopReasons = new ConcurrentDictionary<string, ProcessingStoppedReason>();
-
-                    // Create the event processor manager to manage our event processors.
-
-                    var eventProcessorManager = new EventProcessorManager
-                        (
-                            EventHubConsumerClient.DefaultConsumerGroupName,
-                            connectionString,
-                            onStop: eventArgs =>
-                            {
-                                closeCalls.AddOrUpdate(eventArgs.Partition.PartitionId, 1, (partitionId, value) => value + 1);
-                                stopReasons[eventArgs.Partition.PartitionId] = eventArgs.Reason;
-                            }
-                        );
-
-                    eventProcessorManager.AddEventProcessors(1);
-
-                    // Start the event processors.
-
-                    await eventProcessorManager.StartAllAsync();
-
-                    // Make sure the event processors have enough time to stabilize.
-
-                    await eventProcessorManager.WaitStabilization();
-
-                    // CloseAsync should have not been called when constructing the event processor or during processing initialization.
-
-                    Assert.That(closeCalls.Keys, Is.Empty);
-
-                    // Stop the event processors.
-
-                    await eventProcessorManager.StopAllAsync();
-
-                    // Validate results.
-
-                    var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
+                    var partitionIds = await producer.GetPartitionIdsAsync();
 
                     foreach (var partitionId in partitionIds)
                     {
@@ -206,27 +204,37 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                     // Send some events.
 
-                    var partitionIds = await connection.GetPartitionIdsAsync(DefaultRetryPolicy);
+                    string[] partitionIds;
                     var expectedEvents = new Dictionary<string, List<EventData>>();
 
-                    foreach (var partitionId in partitionIds)
+                    await using (var producer = new EventHubProducerClient(connection))
                     {
-                        // Send a similar set of events for every partition.
+                        partitionIds = await producer.GetPartitionIdsAsync();
 
-                        expectedEvents[partitionId] = new List<EventData>
+                        foreach (var partitionId in partitionIds)
                         {
-                            new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: event processor tests are so long.")),
-                            new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: there are so many of them.")),
-                            new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: will they ever end?")),
-                            new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: let's add a few more messages.")),
-                            new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: this is a monologue.")),
-                            new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: loneliness is what I feel.")),
-                            new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: the end has come."))
-                        };
+                            // Send a similar set of events for every partition.
 
-                        await using (var producer = new EventHubProducerClient(connection))
-                        {
-                            await producer.SendAsync(expectedEvents[partitionId], new SendEventOptions { PartitionId = partitionId });
+                            using (var partitionBatch = await producer.CreateBatchAsync(new CreateBatchOptions { PartitionId = partitionId }))
+                            {
+                                expectedEvents[partitionId] = new List<EventData>
+                                {
+                                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: event processor tests are so long.")),
+                                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: there are so many of them.")),
+                                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: will they ever end?")),
+                                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: let's add a few more messages.")),
+                                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: this is a monologue.")),
+                                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: loneliness is what I feel.")),
+                                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: the end has come."))
+                                };
+
+                                foreach (var expectedEvent in expectedEvents[partitionId])
+                                {
+                                    partitionBatch.TryAdd(expectedEvent);
+                                }
+
+                                await producer.SendAsync(partitionBatch);
+                            }
                         }
                     }
 
@@ -468,11 +476,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                     await using (var producer = new EventHubProducerClient(connection))
                     {
-                        var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
-
-                        for (int i = 0; i < expectedEventsCount; i++)
+                        using (var dummyBatch = await producer.CreateBatchAsync())
                         {
-                            await producer.SendAsync(dummyEvent);
+                            for (int i = 0; i < expectedEventsCount; i++)
+                            {
+                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
+                            }
+
+                            await producer.SendAsync(dummyBatch);
                         }
                     }
 
@@ -518,26 +529,31 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                 await using (var connection = new EventHubConnection(connectionString))
                 {
+                    string partitionId;
                     int receivedEventsCount = 0;
 
                     // Send some events.
 
                     var expectedEventsCount = 20;
-                    var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
                     long? checkpointedSequenceNumber = default;
-
-                    var partitionId = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
                     await using (var producer = new EventHubProducerClient(connectionString))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection))
                     {
+                        partitionId = (await consumer.GetPartitionIdsAsync()).First();
+
                         // Send a few dummy events.  We are not expecting to receive these.
 
                         var dummyEventsCount = 30;
 
-                        for (int i = 0; i < dummyEventsCount; i++)
+                        using (var dummyBatch = await producer.CreateBatchAsync())
                         {
-                            await producer.SendAsync(dummyEvent);
+                            for (int i = 0; i < dummyEventsCount; i++)
+                            {
+                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
+                            }
+
+                            await producer.SendAsync(dummyBatch);
                         }
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
@@ -549,7 +565,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                         while ((receivedEvents.Count < dummyEventsCount) && (++index < ReceiveRetryLimit))
                         {
-                            // TODO: Convert to iterator
+                            Assert.Fail("Convert to iterator");
                             //receivedEvents.AddRange(await receiver.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
@@ -559,9 +575,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                         // Send the events we expect to receive.
 
-                        for (int i = 0; i < expectedEventsCount; i++)
+                        using (var dummyBatch = await producer.CreateBatchAsync())
                         {
-                            await producer.SendAsync(dummyEvent);
+                            for (int i = 0; i < expectedEventsCount; i++)
+                            {
+                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
+                            }
+
+                            await producer.SendAsync(dummyBatch);
                         }
                     }
 
@@ -631,9 +652,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     // Send some events.
 
                     EventData lastEvent;
-                    var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
-
-                    var partitionId = (await connection.GetPartitionIdsAsync(DefaultRetryPolicy)).First();
 
                     await using (var producer = new EventHubProducerClient(connection))
                     await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
@@ -642,9 +660,15 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                         var dummyEventsCount = 10;
 
-                        for (int i = 0; i < dummyEventsCount; i++)
+                        using (var dummyBatch = await producer.CreateBatchAsync())
                         {
-                            await producer.SendAsync(dummyEvent);
+
+                            for (int i = 0; i < dummyEventsCount; i++)
+                            {
+                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
+                            }
+
+                            await producer.SendAsync(dummyBatch);
                         }
 
                         // Receive the events; because there is some non-determinism in the messaging flow, the
@@ -656,7 +680,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                         while ((receivedEvents.Count < dummyEventsCount) && (++index < ReceiveRetryLimit))
                         {
-                            //TODO: Convert to iterator.
+                            Assert.Fail("Convert to iterator.");
                             //receivedEvents.AddRange(await receiver.ReceiveAsync(dummyEventsCount + 10, TimeSpan.FromMilliseconds(25)));
                         }
 
@@ -729,16 +753,20 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     // Send some events.
 
                     var expectedEventsCount = 20;
-                    var dummyEvent = new EventData(Encoding.UTF8.GetBytes("I'm dummy."));
                     DateTimeOffset enqueuedTime;
 
                     await using (var producer = new EventHubProducerClient(connection))
                     {
                         // Send a few dummy events.  We are not expecting to receive these.
 
-                        for (int i = 0; i < 30; i++)
+                        using (var dummyBatch = await producer.CreateBatchAsync())
                         {
-                            await producer.SendAsync(dummyEvent);
+                            for (int i = 0; i < 30; i++)
+                            {
+                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
+                            }
+
+                            await producer.SendAsync(dummyBatch);
                         }
 
                         // Wait a reasonable amount of time so the events are able to reach the service.
@@ -749,9 +777,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                         enqueuedTime = DateTimeOffset.UtcNow;
 
-                        for (int i = 0; i < expectedEventsCount; i++)
+                        using (var dummyBatch = await producer.CreateBatchAsync())
                         {
-                            await producer.SendAsync(dummyEvent);
+                            for (int i = 0; i < expectedEventsCount; i++)
+                            {
+                                dummyBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("I'm dummy.")));
+                            }
+
+                            await producer.SendAsync(dummyBatch);
                         }
                     }
 

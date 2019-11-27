@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// A Blob dataset mapping.
+    /// A Blob data set mapping.
     /// </summary>
     [Newtonsoft.Json.JsonObject("Blob")]
     [Rest.Serialization.JsonTransformation]
@@ -35,6 +35,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="containerName">Container that has the file
         /// path.</param>
+        /// <param name="dataSetId">The id of the source data set.</param>
         /// <param name="filePath">File path within the source data set</param>
         /// <param name="resourceGroup">Resource group of storage
         /// account.</param>
@@ -45,12 +46,14 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
         /// <param name="type">Type of the azure resource</param>
-        /// <param name="dataSetId">Gets the id of source dataset.</param>
-        /// <param name="dataSetMappingStatus">Gets the status of the dataset
+        /// <param name="dataSetMappingStatus">Gets the status of the data set
         /// mapping. Possible values include: 'Ok', 'Broken'</param>
         /// <param name="outputType">File output type. Possible values include:
         /// 'Csv', 'Parquet'</param>
-        public BlobDataSetMapping(string containerName, string filePath, string resourceGroup, string storageAccountName, string subscriptionId, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string dataSetMappingStatus = default(string), string outputType = default(string))
+        /// <param name="provisioningState">Provisioning state of the data set
+        /// mapping. Possible values include: 'Succeeded', 'Creating',
+        /// 'Deleting', 'Moving', 'Failed'</param>
+        public BlobDataSetMapping(string containerName, string dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId, string id = default(string), string name = default(string), string type = default(string), string dataSetMappingStatus = default(string), string outputType = default(string), string provisioningState = default(string))
             : base(id, name, type)
         {
             ContainerName = containerName;
@@ -58,6 +61,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
             DataSetMappingStatus = dataSetMappingStatus;
             FilePath = filePath;
             OutputType = outputType;
+            ProvisioningState = provisioningState;
             ResourceGroup = resourceGroup;
             StorageAccountName = storageAccountName;
             SubscriptionId = subscriptionId;
@@ -76,17 +80,17 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string ContainerName { get; set; }
 
         /// <summary>
-        /// Gets the id of source dataset.
+        /// Gets or sets the id of the source data set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSetId")]
         public string DataSetId { get; set; }
 
         /// <summary>
-        /// Gets the status of the dataset mapping. Possible values include:
+        /// Gets the status of the data set mapping. Possible values include:
         /// 'Ok', 'Broken'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataSetMappingStatus")]
-        public string DataSetMappingStatus { get; set; }
+        public string DataSetMappingStatus { get; private set; }
 
         /// <summary>
         /// Gets or sets file path within the source data set
@@ -100,6 +104,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.outputType")]
         public string OutputType { get; set; }
+
+        /// <summary>
+        /// Gets provisioning state of the data set mapping. Possible values
+        /// include: 'Succeeded', 'Creating', 'Deleting', 'Moving', 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets resource group of storage account.
@@ -130,6 +141,10 @@ namespace Microsoft.Azure.Management.DataShare.Models
             if (ContainerName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ContainerName");
+            }
+            if (DataSetId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DataSetId");
             }
             if (FilePath == null)
             {

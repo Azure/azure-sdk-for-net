@@ -3,6 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Azure.Storage
@@ -60,6 +63,129 @@ namespace Azure.Storage
                 Port = 80
             };
             return builder.Uri;
+        }
+
+        /// <summary>
+        /// Returns a connection string for the storage account, optionally with sensitive data.
+        /// </summary>
+        /// <param name="exportSecrets"><c>True</c> to include sensitive data in the string; otherwise, <c>false</c>.</param>
+        /// <returns>A connection string.</returns>
+        internal static string ToString(this StorageConnectionString conn, bool exportSecrets)
+        {
+            if (conn.Settings == null)
+            {
+                conn.Settings = new Dictionary<string, string>();
+
+                if (conn.DefaultEndpoints)
+                {
+                    conn.Settings.Add(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, conn.BlobEndpoint.Scheme);
+
+                    if (conn.EndpointSuffix != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.EndpointSuffixSetting, conn.EndpointSuffix);
+                    }
+                }
+                else
+                {
+                    if (conn.BlobEndpoint != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.BlobEndpointSetting, conn.BlobEndpoint.ToString());
+                    }
+
+                    if (conn.QueueEndpoint != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.QueueEndpointSetting, conn.QueueEndpoint.ToString());
+                    }
+
+                    if (conn.TableEndpoint != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.TableEndpointSetting, conn.TableEndpoint.ToString());
+                    }
+
+                    if (conn.FileEndpoint != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.FileEndpointSetting, conn.FileEndpoint.ToString());
+                    }
+
+                    if (conn.BlobStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.BlobSecondaryEndpointSetting,
+                            conn.BlobStorageUri.SecondaryUri.ToString());
+                    }
+
+                    if (conn.QueueStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
+                            conn.QueueStorageUri.SecondaryUri.ToString());
+                    }
+
+                    if (conn.TableStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting,
+                            conn.TableStorageUri.SecondaryUri.ToString());
+                    }
+
+                    if (conn.FileStorageUri.SecondaryUri != null)
+                    {
+                        conn.Settings.Add(Constants.ConnectionStrings.FileSecondaryEndpointSetting,
+                            conn.FileStorageUri.SecondaryUri.ToString());
+                    }
+                }
+            }
+
+            var listOfSettings = conn.Settings.Select(pair => string.Format(CultureInfo.InvariantCulture, "{0}={1}", pair.Key, pair.Value)).ToList();
+
+            if (conn.Credentials != null && !conn.IsDevStoreAccount)
+            {
+                listOfSettings.Add(ToString(conn.Credentials, exportSecrets));
+            }
+
+            if (!string.IsNullOrWhiteSpace(conn._accountName) && (conn.Credentials is StorageSharedKeyCredential sharedKeyCredentials ? string.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
+            {
+                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.AccountNameSetting, conn._accountName));
+            }
+
+            return string.Join(";", listOfSettings);
+        }
+
+        private static string ToString(object credentials, bool exportSecrets)
+        {
+            if (credentials is StorageSharedKeyCredential sharedKeyCredentials)
+            {
+                return string.Format(
+                    CultureInfo.InvariantCulture,
+                    "{0}={1};{2}={3}",
+                    Constants.ConnectionStrings.AccountNameSetting,
+                    sharedKeyCredentials.AccountName,
+                    Constants.ConnectionStrings.AccountKeySetting,
+                    exportSecrets ? ((StorageSharedKeyCredential)credentials).ExportBase64EncodedKey() : "Sanitized");
+            }
+            else if (credentials is SharedAccessSignatureCredentials sasCredentials)
+            {
+                return string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.SharedAccessSignatureSetting, exportSecrets ? sasCredentials.SasToken : "[signature hidden]");
+            }
+
+            return string.Empty;
+        }
+
+        internal static string ExportBase64EncodedKey(this StorageSharedKeyCredential credential)
+        {
+            byte[] key = credential.GetAccountKey();
+            return key == null ?
+                null :
+                Convert.ToBase64String(key);
+        }
+
+        // We don't want to expose the AccountKey to users to encourage them to properly manage their secrets,
+        // and we don't want to expose all of Azure.Storage.Common's internals to all our tests,
+        // so we're making a strategic choice to use private reflection for this field.
+        internal static byte[] GetAccountKey(this StorageSharedKeyCredential credential)
+        {
+            Type type = credential.GetType();
+            PropertyInfo prop = type.GetProperty("AccountKeyValue", BindingFlags.NonPublic | BindingFlags.Instance);
+            var val = prop.GetValue(credential);
+            return val as byte[];
+
         }
     }
 }

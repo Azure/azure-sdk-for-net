@@ -4,13 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Tests;
-using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
+using Azure.Storage.Blobs;
 using Moq;
 using NUnit.Framework;
 
@@ -49,10 +46,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var eventHubName = "SomeName";
             var endpoint = new Uri("amqp://some.endpoint.com/path");
             Func<EventHubConnection> fakeFactory = () => new MockConnection(endpoint, eventHubName);
-            var context = new PartitionContext("partition");
-            var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
+            var context = new MockPartitionContext("partition");
+            var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var processor = new EventProcessorClient(new MockCheckPointStorage(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
+            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
 
             // TODO: find a way to call UpdateCheckpointAsync.
 
@@ -72,47 +69,54 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Ignore("Needs to be updated because Partition Pump class does not exist anymore.")]
         public async Task PartitionPumpCreatesScopeForEventProcessing()
         {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-            var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var consumerMock = new Mock<TransportConsumer>();
-            bool returnedItems = false;
-            consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(() =>
-                {
-                    if (returnedItems)
-                    {
-                        throw new InvalidOperationException("Something bad happened");
-                    }
+            // ================================================================
+            //  FIGURE OUT A WAY TO IMPLEMENT THIS MOCKING THE CONSUMER CLIENT
+            //
+            //  Likely needs an internal extension point within the processor
+            // ================================================================
 
-                    returnedItems = true;
-                    return Task.FromResult(
-                        (IEnumerable<EventData>)new[]
-                        {
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id" }
-                                }
-                            },
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id2" }
-                                }
-                            }
-                        });
-                });
 
-            var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
-            connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>())).Returns(consumerMock.Object);
+            //using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            //var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            //var consumerMock = new Mock<TransportConsumer>();
+            //bool returnedItems = false;
+            //consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+            //    .Returns(() =>
+            //    {
+            //        if (returnedItems)
+            //        {
+            //            throw new InvalidOperationException("Something bad happened");
+            //        }
 
-            Func<ProcessEventArgs, ValueTask> processEventAsync = eventArgs =>
-            {
-                processorCalledSource.SetResult(null);
-                return new ValueTask();
-            };
+            //        returnedItems = true;
+            //        return Task.FromResult(
+            //            (IEnumerable<EventData>)new[]
+            //            {
+            //                new EventData(Array.Empty<byte>())
+            //                {
+            //                    Properties =
+            //                    {
+            //                        { "Diagnostic-Id", "id" }
+            //                    }
+            //                },
+            //                new EventData(Array.Empty<byte>())
+            //                {
+            //                    Properties =
+            //                    {
+            //                        { "Diagnostic-Id", "id2" }
+            //                    }
+            //                }
+            //            });
+            //    });
+
+            //var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
+            //connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>())).Returns(consumerMock.Object);
+
+            //Func<ProcessEventArgs, ValueTask> processEventAsync = eventArgs =>
+            //{
+            //    processorCalledSource.SetResult(null);
+            //    return new ValueTask();
+            //};
 
             // TODO: partition pump type does not exist anymore. Figure out how to call RunPartitionProcessingAsync.
 
@@ -136,41 +140,42 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             */
 
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            Assert.That(scope.Links, Has.One.EqualTo("id"));
-            Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
+            //ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
+            //Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+            //Assert.That(scope.Links, Has.One.EqualTo("id"));
+            //Assert.That(scope.Links, Has.One.EqualTo("id2"));
+            //Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
         }
 
-        /// <summary>
-        ///   A minimal mock connection, allowing the public attributes
-        ///   used with diagnostics to be set.
-        /// </summary>
-        ///
         private class MockConnection : EventHubConnection
         {
             private const string MockConnectionString = "Endpoint=value.com;SharedAccessKeyName=[value];SharedAccessKey=[value];";
-            private Uri _serviceEndpoint;
+            public Uri ServiceEndpoint;
 
             public MockConnection(Uri serviceEndpoint,
                                   string eventHubName) : base(MockConnectionString, eventHubName)
             {
-                _serviceEndpoint = serviceEndpoint;
+                ServiceEndpoint = serviceEndpoint;
             }
+        }
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
-                                                                    string eventHubName,
-                                                                    EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options)
+        private class MockEventData : EventData
+        {
+            public MockEventData(ReadOnlyMemory<byte> eventBody,
+                                 IDictionary<string, object> properties = null,
+                                 IReadOnlyDictionary<string, object> systemProperties = null,
+                                 long? sequenceNumber = null,
+                                 long? offset = null,
+                                 DateTimeOffset? enqueuedTime = null,
+                                 string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
             {
-                var mockTransport = new Mock<TransportClient>();
+            }
+        }
 
-                mockTransport
-                    .Setup(t => t.ServiceEndpoint)
-                    .Returns(() => _serviceEndpoint);
-
-                return mockTransport.Object;
+        private class MockPartitionContext : PartitionContext
+        {
+            public MockPartitionContext(string partitionId) : base(partitionId)
+            {
             }
         }
     }
