@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Samples
         {
             // The clients for an Event Hub client each offer additional options on creation, allowing you to control different aspects of its behavior
             // should your scenario have needs that differ from the common defaults.  If you choose not to provide these options, the default behaviors
-            // suitable to most scenarios is used.
+            // suitable to most scenarios are used.
             //
             // Each different Event Hub client allows you to customize how it interacts with the Event Hubs service, such as by customizing how it connects
             // to the service by specifying the transport that communication should use and whether a proxy should be used for network communications.  Please

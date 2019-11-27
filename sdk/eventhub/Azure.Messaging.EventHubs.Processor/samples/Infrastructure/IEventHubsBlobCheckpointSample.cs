@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.Infrastructure
         ///
         /// <param name="eventHubsConnectionString">The connection string for the Event Hubs namespace that the sample should target.</param>
         /// <param name="eventHubName">The name of the Event Hub, sometimes known as its path, that the sample should run against.</param>
-        /// <param name="blobStorageConnectionString">The connection string for the storage account where checkpoints should be persisted.</param>
+        /// <param name="blobStorageConnectionString">The connection string for the storage account where checkpoints and state should be persisted.</param>
         /// <param name="blobContainerName">The name of the blob storage container where checkpoints should be persisted.</param>
         ///
         public Task RunAsync(string eventHubsConnectionString,
