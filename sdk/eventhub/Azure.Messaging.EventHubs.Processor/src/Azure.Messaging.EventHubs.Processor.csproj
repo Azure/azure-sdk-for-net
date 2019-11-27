@@ -33,21 +33,10 @@
     <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 
-  <!-- Import Event Hubs shared source -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Core.projitems" Label="Core" />
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Diagnostics.projitems" Label="Diagnostics" />
-
   <!--Embed the shared resources -->
   <ItemGroup>
     <Compile Remove="Resources.Local.cs" />
     <Compile Include="Resources.Local.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Resources.Designer.cs">
-      <Link>Resources.Designer.cs</Link>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
 
