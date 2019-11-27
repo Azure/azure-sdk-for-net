@@ -531,7 +531,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Checkpoint storedCheckpoint2 = storedCheckpointsList.First(checkpoint => checkpoint.PartitionId == "partitionId2");
 
             Assert.That(storedCheckpoint1, Is.Not.Null);
-
             Assert.That(storedCheckpoint2, Is.Not.Null);
         }
     }

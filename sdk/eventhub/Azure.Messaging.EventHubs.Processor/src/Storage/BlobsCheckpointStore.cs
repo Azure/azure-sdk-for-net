@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                     blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
 
-                    ownershipList.Add(new InnerPartitionOwnership(
+                    ownershipList.Add(new PartitionOwnership(
                         fullyQualifiedNamespace,
                         eventHubName,
                         consumerGroup,
@@ -222,7 +222,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         sequenceNumber = result;
                     }
 
-                    checkpoints.Add(new InnerCheckpoint(
+                    checkpoints.Add(new Checkpoint(
                         fullyQualifiedNamespace,
                         eventHubName,
                         consumerGroup,
@@ -275,63 +275,6 @@ namespace Azure.Messaging.EventHubs.Processor
             finally
             {
                 blobContent?.Dispose();
-            }
-        }
-
-        /// <summary>
-        ///   A workaround so we can create <see cref="PartitionOwnership"/> instances.
-        ///   This class can be removed once the following issue has been closed: https://github.com/Azure/azure-sdk-for-net/issues/7585
-        /// </summary>
-        ///
-        private class InnerPartitionOwnership : PartitionOwnership
-        {
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="InnerPartitionOwnership"/> class.
-            /// </summary>
-            ///
-            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-            /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
-            /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-            /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessorClient" /> instance.</param>
-            /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-            /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
-            /// <param name="eTag">The entity tag needed to update this ownership.</param>
-            ///
-            public InnerPartitionOwnership(string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           string ownerIdentifier,
-                                           string partitionId,
-                                           DateTimeOffset? lastModifiedTime = null,
-                                           string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, lastModifiedTime, eTag)
-            {
-            }
-        }
-
-        /// <summary>
-        ///   A workaround so we can create <see cref="Checkpoint"/> instances.
-        /// </summary>
-        ///
-        private class InnerCheckpoint : Checkpoint
-        {
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="Checkpoint"/> class.
-            /// </summary>
-            ///
-            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-            /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
-            /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-            /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-            /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
-            /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
-            ///
-            public InnerCheckpoint(string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           string partitionId,
-                                           long offset,
-                                           long sequenceNumber) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber)
-            {
             }
         }
     }
