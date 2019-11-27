@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventHubs.Processor
     /// </summary>
     ///
     /// <remarks>
-    ///   An instance of a concrete subclass is provided by the user in the <see cref="EventProcessorClient" />
+    ///   An instance of a concrete subclass is provided by the user in the <c>EventProcessorClient</c>
     ///   constructor.
     /// </remarks>
     ///

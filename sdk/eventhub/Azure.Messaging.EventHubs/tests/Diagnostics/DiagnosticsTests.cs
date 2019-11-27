@@ -7,13 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using Moq;
 using NUnit.Framework;
 
@@ -230,114 +227,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(eventData3.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute), Is.False, "Events that were not accepted into the batch should not have been instrumented.");
-        }
-
-        /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        [Ignore("Needs to be updated because UpdateCheckpointAsync changed its accessibility level to 'protected' and can't be accessed anymore.")]
-        public async Task CheckpointManagerCreatesScope()
-        {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-
-            var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://some.endpoint.com/path");
-            Func<EventHubConnection> fakeFactory = () => new MockConnection(endpoint, eventHubName);
-            var context = new PartitionContext("partition");
-            var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
-
-            var processor = new EventProcessorClient(new MockCheckPointStorage(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
-
-            // TODO: find a way to call UpdateCheckpointAsync.
-
-            await Task.CompletedTask;
-            // await processor.UpdateCheckpointAsync(data, context);
-
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
-        }
-
-        /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="PartitionPump" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        [Ignore("Needs to be updated because Partition Pump class does not exist anymore.")]
-        public async Task PartitionPumpCreatesScopeForEventProcessing()
-        {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-            var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var consumerMock = new Mock<TransportConsumer>();
-            bool returnedItems = false;
-            consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(() =>
-                {
-                    if (returnedItems)
-                    {
-                        throw new InvalidOperationException("Something bad happened");
-                    }
-
-                    returnedItems = true;
-                    return Task.FromResult(
-                        (IEnumerable<EventData>)new[]
-                        {
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id" }
-                                }
-                            },
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id2" }
-                                }
-                            }
-                        });
-                });
-
-            var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
-            connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>())).Returns(consumerMock.Object);
-
-            Func<ProcessEventArgs, ValueTask> processEventAsync = eventArgs =>
-            {
-                processorCalledSource.SetResult(null);
-                return new ValueTask();
-            };
-
-            // TODO: partition pump type does not exist anymore. Figure out how to call RunPartitionProcessingAsync.
-
-            await Task.CompletedTask;
-
-            /*
-
-            var manager = new PartitionPump(connectionMock.Object, "cg", new PartitionContext("eventHubName", "pid"), EventPosition.Earliest, processEventAsync, new EventProcessorClientOptions());
-
-            await manager.StartAsync();
-            await processorCalledSource.Task;
-
-            // TODO: figure out why an exception is being thrown. The problem has always existed, but now the Pump won't swallow exceptions
-            // and throws them back to the caller.
-
-            try
-            {
-                await manager.StopAsync();
-            }
-            catch (InvalidOperationException) { }
-
-            */
-
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            Assert.That(scope.Links, Has.One.EqualTo("id"));
-            Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
         }
 
         /// <summary>

@@ -8,10 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Metadata;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   Provides an easy way to instantiate, start and stop multiple event processors.

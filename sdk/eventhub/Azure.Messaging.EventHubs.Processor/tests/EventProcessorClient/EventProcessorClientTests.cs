@@ -2,17 +2,15 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="EventProcessorClient" />

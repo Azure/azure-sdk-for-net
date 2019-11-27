@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor.Tests.Infrastructure;
 using Azure.Messaging.EventHubs.Tests;
 using Azure.Storage.Blobs;
 using NUnit.Framework;

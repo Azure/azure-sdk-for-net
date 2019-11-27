@@ -5,11 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="MockCheckPointStorage" />

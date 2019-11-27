@@ -5,7 +5,9 @@ using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
+using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
@@ -13,13 +15,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of consuming events from all Event Hub partitions at once, using the Event Processor.
     /// </summary>
     ///
-    public class Sample11_ConsumeEventsWithEventProcessor : IEventHubsSample
+    public class Sample01_ConsumeEventsWithEventProcessor : IEventHubsBlobCheckpointSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample11_ConsumeEventsWithEventProcessor);
+        public string Name { get; } = nameof(Sample01_ConsumeEventsWithEventProcessor);
 
         /// <summary>
         ///   A short description of the sample.
@@ -33,9 +35,13 @@ namespace Azure.Messaging.EventHubs.Samples
         ///
         /// <param name="connectionString">The connection string for the Event Hubs namespace that the sample should target.</param>
         /// <param name="eventHubName">The name of the Event Hub, sometimes known as its path, that she sample should run against.</param>
+        /// <param name="blobStorageConnectionString">The connection string for the storage account where checkpoints should be persisted.</param>
+        /// <param name="blobContainerName">The name of the blob storage container where checkpoints should be persisted.</param>
         ///
         public async Task RunAsync(string connectionString,
-                                   string eventHubName)
+                                   string eventHubName,
+                                   string blobStorageConnectionString,
+                                   string blobContainerName)
         {
             // An event processor is associated with a specific Event Hub and a consumer group.  It receives events from
             // multiple partitions in the Event Hub, passing them to a handler delegate for processing using code that you
@@ -53,7 +59,8 @@ namespace Azure.Messaging.EventHubs.Samples
             // store the checkpoints and partition ownership to a persistent store instead.
             // This isn't relevant to understanding this sample, but is required by the event processor constructor.
 
-            var partitionManager = new MockCheckPointStorage();
+            var containerClient = new BlobContainerClient(blobStorageConnectionString, blobContainerName);
+            var partitionManager = new BlobsCheckpointStore(containerClient);
 
             // It's also possible to specify custom options upon event processor creation.  We don't want to wait
             // more than 1 second for every set of events.

@@ -22,13 +22,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An extract of this sample was taken from <see cref="Sample08_ConsumeEvents" />
     ///
     /// </summary>
-    public class Sample12_AuthenticateWithClientSecretCredential : IEventHubsIdentitySample
+    public class Sample11_AuthenticateWithClientSecretCredential : IEventHubsIdentitySample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample12_AuthenticateWithClientSecretCredential);
+        public string Name { get; } = nameof(Sample11_AuthenticateWithClientSecretCredential);
 
         /// <summary>
         ///   A short description of the sample.

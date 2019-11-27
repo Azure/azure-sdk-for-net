@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor;
 
-namespace Azure.Messaging.EventHubs.Samples.Infrastructure
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   The EventProcessor relies on a <see cref="PartitionManager" /> to store checkpoints and handle partition
