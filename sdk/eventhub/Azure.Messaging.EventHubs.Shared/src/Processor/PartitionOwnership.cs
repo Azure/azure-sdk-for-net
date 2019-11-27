@@ -8,12 +8,12 @@ namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   Contains all the information needed to describe the status of the owner of a partition.  It's used by
-    ///   <see cref="PartitionManager" /> to claim ownership of a partition and to list existing ownership.
+    ///   an <c>EventProcessorClient</c> for cooperative distribution of processing for the associated Event Hub.
     /// </summary>
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
     ///
-    public class PartitionOwnership
+    internal class PartitionOwnership
     {
         /// <summary>
         ///   The fully qualified Event Hubs namespace this partition ownership is associated with.  This
@@ -77,13 +77,13 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
         /// <param name="eTag">The entity tag needed to update this ownership.</param>
         ///
-        protected internal PartitionOwnership(string fullyQualifiedNamespace,
-                                              string eventHubName,
-                                              string consumerGroup,
-                                              string ownerIdentifier,
-                                              string partitionId,
-                                              DateTimeOffset? lastModifiedTime = null,
-                                              string eTag = null)
+        public PartitionOwnership(string fullyQualifiedNamespace,
+                                  string eventHubName,
+                                  string consumerGroup,
+                                  string ownerIdentifier,
+                                  string partitionId,
+                                  DateTimeOffset? lastModifiedTime = null,
+                                  string eTag = null)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));

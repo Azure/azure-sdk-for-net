@@ -5,9 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Processor;
 
-namespace Azure.Messaging.EventHubs.Samples.Infrastructure
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   The EventProcessor relies on a <see cref="PartitionManager" /> to store checkpoints and handle partition
@@ -19,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
     ///   store the checkpoints and partition ownership to a persistent store instead.
     /// </summary>
     ///
-    public sealed class MockCheckPointStorage : PartitionManager
+    internal sealed class MockCheckPointStorage : PartitionManager
     {
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object _ownershipLock = new object();

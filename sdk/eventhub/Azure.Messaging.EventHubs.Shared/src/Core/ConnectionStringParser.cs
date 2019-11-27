@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs.Core
 {

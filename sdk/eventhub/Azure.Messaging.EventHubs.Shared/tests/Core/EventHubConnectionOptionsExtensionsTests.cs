@@ -2,18 +2,19 @@
 // Licensed under the MIT License.
 
 using System.Net;
+using Azure.Messaging.EventHubs.Core;
 using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="EventHubConnectionOptions" />
+    ///   The suite of tests for the <see cref="EventHubConnectionOptionsExtensions" />
     ///   class.
     /// </summary>
     ///
     [TestFixture]
-    public class EventHubConnectionOptionsTests
+    public class EventHubConnectionOptionsExtensionsTests
     {
         /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConnectionOptions.Clone" />

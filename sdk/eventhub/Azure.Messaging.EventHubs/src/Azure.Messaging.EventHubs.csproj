@@ -45,8 +45,7 @@
 
   <!--Embed the shared resources -->
   <ItemGroup>
-    <Compile Remove="Resources.Local.cs" />
-    <Compile Include="Resources.Local.cs">
+     <Compile Update="Resources.Local.cs">
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
 

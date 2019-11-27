@@ -7,11 +7,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Metadata;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Samples.Infrastructure;
+using Azure.Storage.Blobs;
+using Moq;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   Provides an easy way to instantiate, start and stop multiple event processors.
@@ -331,43 +330,25 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class ShortWaitTimeMock : EventProcessorClient
         {
-            /// <summary>A value used to override event processors' load balance update time span.</summary>
             public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
-
-            /// <summary>A value used to override event processors' ownership expiration time span.</summary>
             public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
 
-            /// <summary>
-            ///   The minimum amount of time to be elapsed between two load balancing verifications.
-            /// </summary>
-            ///
             internal override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
-
-            /// <summary>
-            ///   The minimum amount of time for an ownership to be considered expired without further updates.
-            /// </summary>
-            ///
             internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
-            /// </summary>
-            ///
-            /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
-            /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events are read in the context of this group.</param>
-            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-            /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
-            /// <param name="connectionFactory">A factory used to provide new <see cref="EventHubConnection" /> instances.</param>
-            /// <param name="clientOptions">The set of options to use for this event processor.</param>
-            ///
+            private PartitionManager _partitionManager;
+
             public ShortWaitTimeMock(PartitionManager partitionManager,
                                      string consumerGroup,
                                      string fullyQualifiedNamespace,
                                      string eventHubName,
                                      Func<EventHubConnection> connectionFactory,
-                                     EventProcessorClientOptions clientOptions) : base(partitionManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
+                                     EventProcessorClientOptions clientOptions) : base(Mock.Of<BlobContainerClient>(), consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
             {
+                _partitionManager = partitionManager;
             }
+
+            internal override PartitionManager CreateStorageManager(BlobContainerClient checkpointStore) => _partitionManager;
         }
     }
 }
