@@ -308,6 +308,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 typeof(EventProcessorClient)
                     .GetProperty(nameof(ClientOptions), BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(this) as EventProcessorClientOptions;
+
             public ReadableOptionsMock(BlobContainerClient checkpointStore,
                                        string consumerGroup,
                                        string connectionString,

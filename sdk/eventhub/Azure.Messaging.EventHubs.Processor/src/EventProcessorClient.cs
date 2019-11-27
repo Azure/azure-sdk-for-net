@@ -642,8 +642,8 @@ namespace Azure.Messaging.EventHubs
                         }
 
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
-                        // still running and clear our dictionaries.  ActivePartitionProcessors and PartitionContexts are already cleared
-                        // by the StopPartitionProcessingIfRunningAsync method.
+                        // still running and clear our dictionaries.  ActivePartitionProcessors dictionary is already cleared by the
+                        // StopPartitionProcessingIfRunningAsync method.
 
                         await Task.WhenAll(ActivePartitionProcessors.Keys
                             .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown)))

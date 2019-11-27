@@ -18,8 +18,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     public class MockCheckPointStorageTests
     {
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ListOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ListOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -32,8 +32,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -63,8 +63,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -113,8 +113,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -165,8 +165,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -199,8 +199,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -258,8 +258,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -315,8 +315,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -372,8 +372,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.ClaimOwnershipAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -429,8 +429,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -455,8 +455,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -481,8 +481,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -507,8 +507,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="MockCheckPointStorage.UpdateCheckpointAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
