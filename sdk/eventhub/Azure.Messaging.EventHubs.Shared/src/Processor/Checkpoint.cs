@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   Contains the information to reflect the state of event processing for a given Event Hub partition.
     /// </summary>
     ///
-    public class Checkpoint
+    internal class Checkpoint
     {
         /// <summary>
         ///   The fully qualified Event Hubs namespace this checkpoint is associated with.  This
@@ -62,12 +62,12 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
         ///
-        protected internal Checkpoint(string fullyQualifiedNamespace,
-                                      string eventHubName,
-                                      string consumerGroup,
-                                      string partitionId,
-                                      long offset,
-                                      long sequenceNumber)
+        public Checkpoint(string fullyQualifiedNamespace,
+                          string eventHubName,
+                          string consumerGroup,
+                          string partitionId,
+                          long offset,
+                          long sequenceNumber)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));

@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Core
 {
     /// <summary>
     ///   The set of extension methods for the <see cref="EventHubsRetryOptions" />
@@ -12,6 +12,35 @@ namespace Azure.Messaging.EventHubs.Tests
     ///
     internal static class EventHubsRetryOptionsExtensions
     {
+        /// <summary>
+        ///   Creates a new copy of the current <see cref="EventHubsRetryOptions" />, cloning its attributes into a new instance.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        ///
+        /// <returns>A new copy of <see cref="EventHubsRetryOptions" />.</returns>
+        ///
+        public static EventHubsRetryOptions Clone(this EventHubsRetryOptions instance) =>
+            new EventHubsRetryOptions
+            {
+                Mode = instance.Mode,
+                CustomRetryPolicy = instance.CustomRetryPolicy,
+                MaximumRetries = instance.MaximumRetries,
+                Delay = instance.Delay,
+                MaximumDelay = instance.MaximumDelay,
+                TryTimeout = instance.TryTimeout
+            };
+
+        /// <summary>
+        ///   Converts the options into a retry policy for use.
+        /// </summary>
+        ///
+        /// <param name="instance">The instance that this method was invoked on.</param>
+        ///
+        /// <returns>The <see cref="EventHubsRetryPolicy" /> represented by the options.</returns>
+        public static EventHubsRetryPolicy ToRetryPolicy(this EventHubsRetryOptions instance) =>
+            instance.CustomRetryPolicy ?? new BasicRetryPolicy(instance);
+
         /// <summary>
         ///   Compares retry options between two instances to determine if the
         ///   instances represent the same set of options.

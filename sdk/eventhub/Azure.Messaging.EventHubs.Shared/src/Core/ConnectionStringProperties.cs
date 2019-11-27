@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Messaging.EventHubs.Metadata
+namespace Azure.Messaging.EventHubs.Core
 {
     /// <summary>
     ///   The set of properties that comprise a connection string from the

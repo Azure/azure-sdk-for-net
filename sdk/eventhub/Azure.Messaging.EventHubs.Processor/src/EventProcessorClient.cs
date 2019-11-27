@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
-using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -27,6 +27,9 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventProcessorClient
     {
+        /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
+        private static readonly Func<Task> EmptyEventUpdateCheckpoint = () => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
+
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
 
@@ -288,13 +291,6 @@ namespace Azure.Messaging.EventHubs
         private ConcurrentDictionary<string, (Task, CancellationTokenSource)> ActivePartitionProcessors { get; set; } = new ConcurrentDictionary<string, (Task, CancellationTokenSource)>();
 
         /// <summary>
-        ///   The set of contexts associated with partitions that are currently being processed.  Partition ids are used
-        ///   as keys.
-        /// </summary>
-        ///
-        private ConcurrentDictionary<string, PartitionContext> PartitionContexts { get; set; } = new ConcurrentDictionary<string, PartitionContext>();
-
-        /// <summary>
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
         /// </summary>
         ///
@@ -304,7 +300,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         ///
@@ -317,9 +313,9 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public EventProcessorClient(PartitionManager partitionManager,
+        public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
-                                    string connectionString) : this(partitionManager, consumerGroup, connectionString, null, null)
+                                    string connectionString) : this(checkpointStore, consumerGroup, connectionString, null, null)
         {
         }
 
@@ -327,7 +323,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
@@ -341,10 +337,10 @@ namespace Azure.Messaging.EventHubs
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public EventProcessorClient(PartitionManager partitionManager,
+        public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
                                     string connectionString,
-                                    EventProcessorClientOptions clientOptions) : this(partitionManager, consumerGroup, connectionString, null, clientOptions)
+                                    EventProcessorClientOptions clientOptions) : this(checkpointStore, consumerGroup, connectionString, null, clientOptions)
         {
         }
 
@@ -352,7 +348,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -363,10 +359,10 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public EventProcessorClient(PartitionManager partitionManager,
+        public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
                                     string connectionString,
-                                    string eventHubName) : this(partitionManager, consumerGroup, connectionString, eventHubName, null)
+                                    string eventHubName) : this(checkpointStore, consumerGroup, connectionString, eventHubName, null)
         {
         }
 
@@ -374,7 +370,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -386,25 +382,24 @@ namespace Azure.Messaging.EventHubs
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public EventProcessorClient(PartitionManager partitionManager,
+        public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
                                     string connectionString,
                                     string eventHubName,
                                     EventProcessorClientOptions clientOptions)
         {
-            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
-
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = partitionManager;
+            StorageManager = CreateStorageManager(checkpointStore);
             ClientOptions = clientOptions;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
@@ -414,14 +409,14 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
-        public EventProcessorClient(PartitionManager partitionManager,
+        public EventProcessorClient(BlobContainerClient checkpointStore,
                                     string consumerGroup,
                                     string fullyQualifiedNamespace,
                                     string eventHubName,
@@ -429,7 +424,7 @@ namespace Azure.Messaging.EventHubs
                                     EventProcessorClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -440,7 +435,7 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = partitionManager;
+            StorageManager = CreateStorageManager(checkpointStore);
             ClientOptions = clientOptions;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
@@ -458,7 +453,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -469,7 +464,7 @@ namespace Azure.Messaging.EventHubs
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
         /// </remarks>
         ///
-        internal EventProcessorClient(PartitionManager partitionManager,
+        internal EventProcessorClient(BlobContainerClient checkpointStore,
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
@@ -477,7 +472,7 @@ namespace Azure.Messaging.EventHubs
                                       EventProcessorClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNull(partitionManager, nameof(partitionManager));
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNull(connectionFactory, nameof(connectionFactory));
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
@@ -486,7 +481,7 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = partitionManager;
+            StorageManager = CreateStorageManager(checkpointStore);
             ClientOptions = clientOptions;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
@@ -718,6 +713,30 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Creates an <see cref="EventHubConsumerClient" /> to use for processing.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group to associate with the consumer client.</param>
+        /// <param name="connection">The connection to use for the consumer client.</param>
+        /// <param name="options">The options to use for configuring the consumer client.</param>
+        ///
+        /// <returns>An <see cref="EventHubConsumerClient" /> with the requested configuration.</returns>
+        ///
+        internal virtual EventHubConsumerClient CreateConsumer(string consumerGroup,
+                                                               EventHubConnection connection,
+                                                               EventHubConsumerClientOptions options) => new EventHubConsumerClient(consumerGroup, connection, options);
+
+        /// <summary>
+        ///   Creates a <see cref="PartitionManager" /> to use for interacting with durable storage.
+        /// </summary>
+        ///
+        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
+        ///
+        /// <returns>A <see cref="PartitionManager" /> with the requested configuration.</returns>
+        ///
+        internal virtual PartitionManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore);
+
+        /// <summary>
         ///   Called when a 'partition initializing' event is triggered.
         /// </summary>
         ///
@@ -776,7 +795,7 @@ namespace Azure.Messaging.EventHubs
         {
             // We'll use this connection to retrieve an updated list of partition ids from the service.
 
-            await using var connection = ConnectionFactory();
+            await using var consumer = CreateConsumer(ConsumerGroup, ConnectionFactory(), new EventHubConsumerClientOptions { RetryOptions = ClientOptions.RetryOptions });
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -835,7 +854,7 @@ namespace Azure.Messaging.EventHubs
                 // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
                 // it may change in the future.
 
-                var partitionIds = await connection.GetPartitionIdsAsync(RetryPolicy).ConfigureAwait(false);
+                var partitionIds = await consumer.GetPartitionIdsAsync().ConfigureAwait(false);
 
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
                 // increase its ownership list, if no claimable ownership could be found or if a claim attempt has failed.
@@ -1052,14 +1071,9 @@ namespace Azure.Messaging.EventHubs
 
             // TODO: if reason = Shutdown or OwnershipLost and we got an exception when closing, what should the final reason be?
 
-            if (!PartitionContexts.TryRemove(partitionId, out var context))
-            {
-                context = new PartitionContext(partitionId);
-            }
-
             // The RunningTaskTokenSource may be null if we are cleaning tasks after shutting down.
 
-            var eventArgs = new PartitionClosingEventArgs(context, reason, RunningTaskTokenSource?.Token ?? default);
+            var eventArgs = new PartitionClosingEventArgs(partitionId, reason, RunningTaskTokenSource?.Token ?? default);
             await OnPartitionClosingAsync(eventArgs).ConfigureAwait(false);
         }
 
@@ -1153,9 +1167,8 @@ namespace Azure.Messaging.EventHubs
                     TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties
                 };
 
-                await using var connection = ConnectionFactory();
-
-                await using (var consumer = new EventHubConsumerClient(ConsumerGroup, connection, clientOptions))
+                await using (var connection = ConnectionFactory())
+                await using (var consumer = CreateConsumer(ConsumerGroup, connection, clientOptions))
                 {
                     await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, readOptions, cancellationToken))
                     {
@@ -1173,20 +1186,18 @@ namespace Azure.Messaging.EventHubs
 
                         try
                         {
-                            // Small workaround while we don't figure out why partitionEvent.Partition is null some times.
+                            Func<Task> updateCheckpoint;
 
-                            var context = partitionEvent.Partition ?? new PartitionContext(partitionId);
-
-                            if (partitionEvent.Partition != null)
+                            if (partitionEvent.Data != null)
                             {
-                                // We are storing the last received context so we can pass it to OnProcessClosingAsync.
-                                // TODO: make it possible to create a PartitionContext from an EventHubConsumer. This way, we
-                                // can store it a single time in the dictionary.
-
-                                PartitionContexts[partitionId] = partitionEvent.Partition;
+                                updateCheckpoint = () => UpdateCheckpointAsync(partitionEvent.Data, partitionEvent.Partition);
+                            }
+                            else
+                            {
+                                updateCheckpoint = EmptyEventUpdateCheckpoint;
                             }
 
-                            var eventArgs = new ProcessEventArgs(context, partitionEvent.Data, this, RunningTaskTokenSource.Token);
+                            var eventArgs = new ProcessEventArgs(partitionEvent.Partition, partitionEvent.Data, updateCheckpoint, RunningTaskTokenSource.Token);
                             await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                         }
                         catch (Exception eventProcessingException)

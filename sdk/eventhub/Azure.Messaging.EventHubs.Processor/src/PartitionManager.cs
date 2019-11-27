@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   constructor.
     /// </remarks>
     ///
-    public abstract class PartitionManager
+    internal abstract class PartitionManager
     {
         /// <summary>
         ///   Retrieves a complete ownership list from the chosen storage service.
