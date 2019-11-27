@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -15,13 +16,13 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   A storage blob service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    public sealed class BlobsCheckpointStore : PartitionManager
+    internal sealed class BlobsCheckpointStore : PartitionManager
     {
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
         private static readonly Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
 
         /// <summary>The client used to interact with the Azure Blob Storage service.</summary>
-        private readonly BlobContainerClient _containerClient;
+        private readonly BlobContainerClient ContainerClient;
 
         /// <summary>
         ///   Specifies a string that filters the results to return only checkpoint blobs whose name begins
@@ -43,9 +44,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public BlobsCheckpointStore(BlobContainerClient blobContainerClient)
         {
-            // TODO: instead of manually checking the instance, make use of the Guard class once it's available.
+            Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
 
-            _containerClient = blobContainerClient ?? throw new ArgumentNullException(nameof(blobContainerClient));
+            ContainerClient = blobContainerClient;
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
-                await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
                 {
                     // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
                     // to throw an exception.
@@ -115,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 var blobRequestConditions = new BlobRequestConditions();
 
                 var blobName = string.Format(OwnershipPrefix + ownership.PartitionId, ownership.FullyQualifiedNamespace.ToLower(), ownership.EventHubName.ToLower(), ownership.ConsumerGroup.ToLower());
-                BlobClient blobClient = _containerClient.GetBlobClient(blobName);
+                BlobClient blobClient = ContainerClient.GetBlobClient(blobName);
 
                 try
                 {
@@ -206,7 +207,7 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 var prefix = string.Format(CheckpointPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
-                await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
                 {
                     long offset = 0;
                     long sequenceNumber = 0;
@@ -251,7 +252,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
 
-            BlobClient blobClient = _containerClient.GetBlobClient(blobName);
+            BlobClient blobClient = ContainerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
                 {

@@ -60,7 +60,6 @@ namespace Azure.Messaging.EventHubs.Samples
             // This isn't relevant to understanding this sample, but is required by the event processor constructor.
 
             var containerClient = new BlobContainerClient(blobStorageConnectionString, blobContainerName);
-            var partitionManager = new BlobsCheckpointStore(containerClient);
 
             // It's also possible to specify custom options upon event processor creation.  We don't want to wait
             // more than 1 second for every set of events.
@@ -72,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
             // Let's finally create our event processor.  We're using the default consumer group that was created with the Event Hub.
 
-            var eventProcessor = new EventProcessorClient(partitionManager, EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName, eventProcessorOptions);
+            var eventProcessor = new EventProcessorClient(containerClient, EventHubConsumerClient.DefaultConsumerGroupName, connectionString, eventHubName, eventProcessorOptions);
 
             int totalEventsCount = 0;
             int partitionsBeingProcessedCount = 0;

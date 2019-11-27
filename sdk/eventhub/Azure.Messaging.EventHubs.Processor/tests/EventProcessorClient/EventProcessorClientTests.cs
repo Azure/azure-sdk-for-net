@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Storage.Blobs;
 using Moq;
 using NUnit.Framework;
 
@@ -31,21 +32,23 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public void ConstructorValidatesTheConsumerGroup(string consumerGroup)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            Assert.That(() => new EventProcessorClient(Mock.Of<PartitionManager>(), consumerGroup, "dummyConnection", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
-            Assert.That(() => new EventProcessorClient(Mock.Of<PartitionManager>(), consumerGroup, "dummyNamespace", "dummyEventHub", credential.Object, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyConnection", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", credential.Object, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the consumer group.");
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" />
+        ///   constructor.
         /// </summary>
         ///
         [Test]
-        public void ConstructorValidatesThePartitionManager()
+        public void ConstructorValidatesTheBlobContainerClient()
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyConnection", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the event processor store.");
-            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", credential.Object, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The namespace constructor should validate the event processor store.");
+            var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", fakeConnection, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The connection string constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", credential.Object, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The namespace constructor should validate the blob container client.");
         }
 
         /// <summary>
@@ -57,8 +60,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [TestCase("")]
         public void ConstructorValidatesTheConnectionString(string connectionString)
         {
-            Assert.That(() => new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString), Throws.InstanceOf<ArgumentException>(), "The constructor without options should ensure a connection string.");
-            Assert.That(() => new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString, "dummy", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should ensure a connection string.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString), Throws.InstanceOf<ArgumentException>(), "The constructor without options should ensure a connection string.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString, "dummy", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The constructor with options should ensure a connection string.");
         }
 
         /// <summary>
@@ -71,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            Assert.That(() => new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", credential.Object), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", credential.Object), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -84,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            Assert.That(() => new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, credential.Object), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, credential.Object), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void ConstructorValidatesTheCredential()
         {
-            Assert.That(() => new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException);
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -107,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var expected = Mock.Of<EventHubsRetryPolicy>();
             var options = new EventProcessorClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
             var connectionString = "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub";
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options);
+            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options);
 
             Assert.That(GetRetryPolicy(processor), Is.SameAs(expected));
         }
@@ -122,57 +125,57 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var expected = Mock.Of<EventHubsRetryPolicy>();
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var options = new EventProcessorClientOptions { RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = expected } };
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", credential.Object, options);
+            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", credential.Object, options);
 
             Assert.That(GetRetryPolicy(processor), Is.SameAs(expected));
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" />
+        ///   constructor.
         /// </summary>
         ///
         [Test]
         public void ConnectionStringConstructorCreatesTheIdentifier()
         {
-            var eventProcessor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub");
+            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub");
 
             Assert.That(eventProcessor.Identifier, Is.Not.Null);
             Assert.That(eventProcessor.Identifier, Is.Not.Empty);
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" />
+        ///   constructor.
         /// </summary>
         ///
         [Test]
         public void NamespaceConstructorCreatesTheIdentifier()
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var eventProcessor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "hub", credential.Object);
+            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object);
 
             Assert.That(eventProcessor.Identifier, Is.Not.Null);
             Assert.That(eventProcessor.Identifier, Is.Not.Empty);
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" />
+        ///   constructor.
         /// </summary>
         ///
         [Test]
         public void ConnectionStringConstructorCopiesTheIdentifier()
         {
             var clientOptions = new EventProcessorClientOptions { Identifier = Guid.NewGuid().ToString() };
-            var eventProcessor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", clientOptions);
+            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", clientOptions);
 
             Assert.That(eventProcessor.Identifier, Is.EqualTo(clientOptions.Identifier));
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" />
-        ///    constructor.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" />
+        ///   constructor.
         /// </summary>
         ///
         [Test]
@@ -180,14 +183,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
             var clientOptions = new EventProcessorClientOptions { Identifier = Guid.NewGuid().ToString() };
-            var eventProcessor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "hub", credential.Object, clientOptions);
+            var eventProcessor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "hub", credential.Object, clientOptions);
 
             Assert.That(eventProcessor.Identifier, Is.EqualTo(clientOptions.Identifier));
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -200,8 +203,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -214,8 +217,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
-        ///    method.
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
@@ -232,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
         /// </summary>
         ///
         [Test]
@@ -255,7 +258,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
         /// </summary>
         ///
         [Test]
@@ -307,19 +310,19 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     .GetProperty(nameof(ClientOptions), BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(this) as EventProcessorClientOptions;
 
-            public ReadableOptionsMock(PartitionManager partitionManager,
+            public ReadableOptionsMock(BlobContainerClient blobContainerClient,
                                        string consumerGroup,
                                        string connectionString,
-                                       EventProcessorClientOptions clientOptions = default) : base(partitionManager, consumerGroup, connectionString, clientOptions)
+                                       EventProcessorClientOptions clientOptions = default) : base(blobContainerClient, consumerGroup, connectionString, clientOptions)
             {
             }
 
-            public ReadableOptionsMock(PartitionManager partitionManager,
+            public ReadableOptionsMock(BlobContainerClient blobContainerClient,
                                        string consumerGroup,
                                        string fullyQualifiedNamespace,
                                        string eventHubName,
                                        TokenCredential credential,
-                                       EventProcessorClientOptions clientOptions = default) : base(partitionManager, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
+                                       EventProcessorClientOptions clientOptions = default) : base(blobContainerClient, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
             {
             }
         }
