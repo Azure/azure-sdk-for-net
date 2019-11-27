@@ -15,6 +15,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
+        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+
         public SecretClient Client { get; set; }
 
         public Uri VaultUri { get; set; }
@@ -146,7 +148,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name).ConfigureAwait(false));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedSecretAsync(name).ConfigureAwait(false), delay: PollingInterval);
             }
         }
 
@@ -169,7 +171,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     {
                         return (Response)null;
                     }
-                });
+                }, delay: PollingInterval);
             }
         }
 
@@ -182,7 +184,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name).ConfigureAwait(false));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetSecretAsync(name).ConfigureAwait(false), delay: PollingInterval);
             }
         }
     }

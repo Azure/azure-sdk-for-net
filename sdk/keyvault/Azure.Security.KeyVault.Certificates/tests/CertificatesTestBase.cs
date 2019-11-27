@@ -14,6 +14,9 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     public class CertificatesTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
+
+        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+
         private readonly HashSet<string> _toCleanup = new HashSet<string>();
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
 
@@ -130,7 +133,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedCertificateAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedCertificateAsync(name), delay: PollingInterval);
             }
         }
 
@@ -154,7 +157,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     {
                         return (Response)null;
                     }
-                });
+                }, delay: PollingInterval);
             }
         }
 
@@ -167,7 +170,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetCertificateAsync(name), delay: PollingInterval);
             }
         }
 

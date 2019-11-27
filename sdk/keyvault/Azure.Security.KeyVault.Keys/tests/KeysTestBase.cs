@@ -15,6 +15,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
+        protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
+
         public KeyClient Client { get; set; }
 
         public Uri VaultUri { get; set; }
@@ -158,7 +160,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: PollingInterval);
             }
         }
 
@@ -181,7 +183,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     {
                         return (Response)null;
                     }
-                });
+                }, delay: PollingInterval);
             }
         }
 
@@ -194,7 +196,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetKeyAsync(name));
+                return TestRetryHelper.RetryAsync(async () => await Client.GetKeyAsync(name), delay: PollingInterval);
             }
         }
     }
