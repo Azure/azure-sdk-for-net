@@ -26,7 +26,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [Ignore("These need to be revisited and revised post-move on the package.")]
     public class EventProcessorClientLiveTests
     {
         /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>

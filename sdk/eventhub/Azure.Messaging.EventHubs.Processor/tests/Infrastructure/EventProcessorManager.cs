@@ -92,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
-        /// <param name="connectionString">TODO.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace.</param>
         /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="clientOptions">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.PartitionInitializingAsync" />.</param>

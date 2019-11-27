@@ -247,9 +247,10 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
+        ///   Lazily evaluated.
         /// </summary>
         ///
-        private PartitionManager StorageManager { get; }
+        private Lazy<PartitionManager> StorageManager { get; }
 
         /// <summary>
         ///   The set of options to use for consumers responsible for partition processing.
@@ -394,8 +395,7 @@ namespace Azure.Messaging.EventHubs
                                     string eventHubName,
                                     EventProcessorClientOptions clientOptions)
         {
-            // BlobContainerClient validation is done by the BlobsCheckpointStore constructor.
-
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
@@ -418,7 +418,7 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
+            StorageManager = new Lazy<PartitionManager>(() => CreateStorageManager(checkpointStore), LazyThreadSafetyMode.PublicationOnly);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
@@ -441,8 +441,7 @@ namespace Azure.Messaging.EventHubs
                                     TokenCredential credential,
                                     EventProcessorClientOptions clientOptions = default)
         {
-            // BlobContainerClient validation is done by the BlobsCheckpointStore constructor.
-
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
@@ -465,7 +464,7 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
+            StorageManager = new Lazy<PartitionManager>(() => CreateStorageManager(checkpointStore), LazyThreadSafetyMode.PublicationOnly);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
@@ -500,6 +499,7 @@ namespace Azure.Messaging.EventHubs
                                       Func<EventHubConnection> connectionFactory,
                                       EventProcessorClientOptions clientOptions)
         {
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNull(connectionFactory, nameof(connectionFactory));
@@ -521,7 +521,7 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
+            StorageManager = new Lazy<PartitionManager>(() => CreateStorageManager(checkpointStore), LazyThreadSafetyMode.PublicationOnly);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
@@ -742,7 +742,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                await StorageManager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+                await StorageManager.Value.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -848,7 +848,7 @@ namespace Azure.Messaging.EventHubs
                 // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
                 // their eTags to claim orphan partitions.
 
-                var completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
+                var completeOwnershipList = (await StorageManager.Value.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -1050,7 +1050,7 @@ namespace Azure.Messaging.EventHubs
                 var startingPosition = eventArgs.DefaultStartingPosition;
                 var ownership = InstanceOwnership[partitionId];
 
-                var availableCheckpoints = await StorageManager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+                var availableCheckpoints = await StorageManager.Value.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
                 foreach (Checkpoint checkpoint in availableCheckpoints)
                 {
                     if (checkpoint.PartitionId == partitionId)
@@ -1145,7 +1145,7 @@ namespace Azure.Messaging.EventHubs
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
-            IEnumerable<PartitionOwnership> claimedOwnership = await StorageManager.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }).ConfigureAwait(false);
+            IEnumerable<PartitionOwnership> claimedOwnership = await StorageManager.Value.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }).ConfigureAwait(false);
 
             return claimedOwnership.FirstOrDefault();
         }
@@ -1172,7 +1172,7 @@ namespace Azure.Messaging.EventHubs
             // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
             // will fail in claiming it here, but this instance still owns it.
 
-            return StorageManager.ClaimOwnershipAsync(ownershipToRenew);
+            return StorageManager.Value.ClaimOwnershipAsync(ownershipToRenew);
         }
 
         /// <summary>
