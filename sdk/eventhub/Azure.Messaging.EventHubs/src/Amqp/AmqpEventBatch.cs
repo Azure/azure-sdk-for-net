@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   The set of options to apply to the batch.
         /// </summary>
         ///
-        private BatchOptions Options { get; }
+        private CreateBatchOptions Options { get; }
 
         /// <summary>
         ///   The set of messages that have been added to the batch.
@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="options">The set of options to apply to the batch.</param>
         ///
         public AmqpEventBatch(AmqpMessageConverter messageConverter,
-                              BatchOptions options)
+                              CreateBatchOptions options)
         {
             Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(options, nameof(options));

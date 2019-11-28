@@ -222,7 +222,7 @@ namespace Azure.Storage.Files.Shares
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = new SasQueryParameters(paramsMap);
+                Sas = SasQueryParametersInternals.Create(paramsMap);
             }
 
             Query = paramsMap.ToString();

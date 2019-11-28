@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
         private readonly HashSet<string> _toCleanup = new HashSet<string>();
+        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
 
         public CertificateClient Client { get; set; }
 
@@ -48,9 +49,17 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             List<Task> cleanupTasks = new List<Task>();
 
-            foreach (string certName in _toCleanup)
+            _lock.EnterReadLock();
+            try
             {
-                cleanupTasks.Add(CleanupCertificate(certName));
+                foreach (string certName in _toCleanup)
+                {
+                    cleanupTasks.Add(CleanupCertificate(certName));
+                }
+            }
+            finally
+            {
+                _lock.ExitReadLock();
             }
 
             await Task.WhenAll(cleanupTasks);
@@ -60,8 +69,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         {
             try
             {
-                await Client.DeleteCertificateAsync(name);
+                await Client.StartDeleteCertificateAsync(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
 
+            try
+            {
                 await WaitForDeletedCertificate(name);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -79,7 +94,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
         {
-            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
             TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
 
             try
@@ -90,7 +105,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 }
                 else
                 {
-                    while (!operation.HasValue)
+                    while (!operation.HasCompleted)
                     {
                         operation.UpdateStatus(cts.Token);
 
@@ -158,9 +173,14 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected void RegisterForCleanup(string certificateName)
         {
-            lock (_toCleanup)
+            _lock.EnterWriteLock();
+            try
             {
                 _toCleanup.Add(certificateName);
+            }
+            finally
+            {
+                _lock.ExitWriteLock();
             }
         }
     }

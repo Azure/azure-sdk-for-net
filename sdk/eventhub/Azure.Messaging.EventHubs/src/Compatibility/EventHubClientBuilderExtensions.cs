@@ -4,9 +4,7 @@
 using Azure.Core.Extensions;
 using Azure.Messaging.EventHubs;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 namespace Microsoft.Extensions.Azure
-#pragma warning restore AZC0001
 {
     /// <summary>
     ///    The set of extensions to add the Event Hub client types to the clients builder
@@ -57,30 +55,30 @@ namespace Microsoft.Extensions.Azure
         ///   Registers a <see cref="EventHubConsumerClientOptions"/> instance with the provided <paramref name="connectionString"/>
         /// </summary>
         ///
-        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClient<TBuilder>(this TBuilder builder, string consumerGroup, string partitionId, EventPosition startingPosition, string connectionString)
+        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClient<TBuilder>(this TBuilder builder, string consumerGroup, string connectionString)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>(options => new EventHubConsumerClient(consumerGroup, partitionId, startingPosition, connectionString, options));
+            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>(options => new EventHubConsumerClient(consumerGroup, connectionString, options));
         }
 
         /// <summary>
         ///   Registers a <see cref="EventHubConsumerClient"/> instance with the provided <paramref name="connectionString"/> and <paramref name="eventHubName"/>
         /// </summary>
         ///
-        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClient<TBuilder>(this TBuilder builder, string consumerGroup, string partitionId, EventPosition startingPosition, string connectionString, string eventHubName)
+        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClient<TBuilder>(this TBuilder builder, string consumerGroup, string connectionString, string eventHubName)
             where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>(options => new EventHubConsumerClient(consumerGroup, partitionId, startingPosition, connectionString, eventHubName, options));
+            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>(options => new EventHubConsumerClient(consumerGroup, connectionString, eventHubName, options));
         }
 
         /// <summary>
         ///   Registers a <see cref="EventHubConsumerClient"/> instance with the provided <paramref name="fullyQualifiedNamespace"/> and <paramref name="eventHubName"/>
         /// </summary>
         ///
-        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClientWithNamespace<TBuilder>(this TBuilder builder, string consumerGroup, string partitionId, EventPosition startingPosition, string fullyQualifiedNamespace, string eventHubName)
+        public static IAzureClientBuilder<EventHubConsumerClient, EventHubConsumerClientOptions> AddEventHubConsumerClientWithNamespace<TBuilder>(this TBuilder builder, string consumerGroup, string fullyQualifiedNamespace, string eventHubName)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>((options, token) => new EventHubConsumerClient(consumerGroup, partitionId, startingPosition, fullyQualifiedNamespace, eventHubName, token, options));
+            return builder.RegisterClientFactory<EventHubConsumerClient, EventHubConsumerClientOptions>((options, token) => new EventHubConsumerClient(consumerGroup, fullyQualifiedNamespace, eventHubName, token, options));
         }
 
         /// <summary>

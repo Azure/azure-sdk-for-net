@@ -30,12 +30,14 @@ To quickly create the needed Event Hubs resources in Azure and to receive a conn
 
 [![](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2Fassets%2Fsamples-azure-deploy.json)
 
+If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity), you'll also need a service principal with the correct roles. To make configuration for the identity samples easier, a [PowerShell script](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-tests-azure-setup.ps1) script is available. Please see the [Contributing Guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md#Azure-Identity-Samples) for more details about the script.
+
 ### Install the package
 
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs -Version 5.0.0-preview.5
+Install-Package Azure.Messaging.EventHubs -Version 5.0.0-preview.6
 ```
 
 ### Obtain a connection string
@@ -74,7 +76,7 @@ await using (var client = new EventHubProducerClient(connectionString, eventHubN
 
 ### Publish events to an Event Hub
 
-In order to publish events, you'll need to create an `EventHubProducerClient`.  Producers may publish events to a specific partition, or allow the Event Hubs service to decide which partition events should be published to.  It is recommended to use automatic routing when the publishing of events needs to be highly available or when event data should be distributed evenly among the partitions.  Our example will take advantage of automatic routing.
+In order to publish events, you'll need to create an `EventHubProducerClient`.  Producers publish events in batches and may request a specific partition, or allow the Event Hubs service to decide which partition events should be published to.  It is recommended to use automatic routing when the publishing of events needs to be highly available or when event data should be distributed evenly among the partitions.  Our example will take advantage of automatic routing.
 
 ```csharp
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -82,39 +84,60 @@ var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 await using (var producer = new EventHubProducerClient(connectionString, eventHubName))
 {
-    var eventsToPublish = new EventData[]
-    {
-        new EventData(Encoding.UTF8.GetBytes("First")),
-        new EventData(Encoding.UTF8.GetBytes("Second"))
-    };
+    using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+    eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("First")));
+    eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Second")));
     
-    await producer.SendAsync(eventsToPublish);
+    await producer.SendAsync(eventBatch);
 }
 ```
 
-### Consume events from an Event Hub partition
+### Read events from an Event Hub
 
-In order to consume events for an Event Hub partition, you'll need to create an `EventHubConsumerClient` for that partition and consumer group combination.  When an Event Hub is created, it provides a default consumer group that can be used to get started.  A consumer also needs to specify where in the event stream to begin receiving events; in our example, we will focus on reading all published events in a partition using an iterator.
+In order to read events from an Event Hub, you'll need to create an `EventHubConsumerClient` for a given consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started with exploring Event Hubs.  In our example, we will focus on reading all events that have been published to the Event Hub using an iterator.
+
+**Note:** It is important to note that this approach to consuming is intended to improve the experience of exploring the Event Hubs client library and prototyping.  It is recommended that it not be used in production scenarios.   For production use, we recommend using the [Event Processor Client](./../Azure.Messaging.EventHubs.Processor), as it provides a more robust and performant experience.
 
 ```csharp
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
-EventPosition startingPosition = EventPosition.Earliest;
 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-string partitionId;
-
-await using (var client = new EventHubProducerClient(connectionString, eventHubName))
-{
-    partitionId = (await client.GetPartitionIdsAsync()).First();
-}
     
-await using (var consumer = new EventHubConsumerClient(consumerGroup, partitionId, startingPosition, connectionString, eventHubName))
+await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
 {
     using var cancellationSource = new CancellationTokenSource();
     cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
     
-    await foreach (EventData receivedEvent in consumer.SubcribeToEvents(cancellationSource.Token))
+    await foreach (PartitionEvent receivedEvent in consumer.ReadEvents(cancellationSource.Token))
+    {
+        // At this point, the loop will wait for events to be available in the Event Hub.  When an event 
+        // is available, the loop will iterate with the event that was received.  Because we did not 
+        // specify a maximum wait time, the loop will wait forever unless cancellation is requested using
+        // the cancellation token.
+    }
+}
+```
+
+### Read events from an Event Hub partition
+
+In order to read events for an Event Hub partition, you'll need to create an `EventHubConsumerClient` for a given consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started with exploring Event Hubs.  To read from a specific partition, the consumer will also need to specify where in the event stream to begin receiving events; in our example, we will focus on reading all published events for the first partition of the Event Hub.
+
+```csharp
+var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+    
+await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
+{
+    EventPosition startingPosition = EventPosition.Earliest;
+    string partitionId = (await consumer.GetPartitionIdsAsync()).First();
+    
+    using var cancellationSource = new CancellationTokenSource();
+    cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+    
+    await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, cancellationSource.Token))
     {
         // At this point, the loop will wait for events to be available in the partition.  When an event 
         // is available, the loop will iterate with the event that was received.  Because we did not 
@@ -124,60 +147,12 @@ await using (var consumer = new EventHubConsumerClient(consumerGroup, partitionI
 }
 ```
 
-### Consume events using an Event Processor Client
+### Process events using an Event Processor Client
 
-To consume events for all partitions of an Event Hub, you'll create an `EventProcessorClient` for a specific consumer group.  When an Event Hub is created, it provides a default consumer group that can be used to get started.
+For the majority of production scenarios, it is recommended that the  [Event Processor Client](./../Azure.Messaging.EventHubs.Processor) be used for reading and processing events.  The processor is intended to provide a robust experience for processing events across all partitions of an Event Hub in a performant and fault tolerant manner while providing a means to persist its state.  Event Processor clients are also capable of working cooperatively within the context of a consumer group for a given Event Hub, where they will automatically manage distribution and balancing of work as instances become available or unavailable for the group.
 
-The `EventProcessorClient` delegates processing of events to a handler delegate that you provide, allowing your logic to focus on the events received while the processor holds responsibility for managing the underlying Event Hubs operations.  In our example, we will focus on building the `EventProcessorClient` and use a very minimal processor handler that does no actual processing.
+More details can be found in the Event Processor Client [README](./../Azure.Messaging.EventHubs.Processor/README.md) and the accompanying [samples](./../Azure.Messaging.EventHubs.Processor/samples).
 
-**Important Note:** This sample makes use of the `InMemoryPartitionManager`, which is recommended only for exploring the event processor.  It uses volatile memory to store checkpoints which track the state of processing for each partition.  This means that each time the event processor is run with a new `InMemoryPartitionManager` instance, it will re-process all events, rather than starting where a checkpoint was last created.
-
-```csharp
-var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-var eventHubName = "<< NAME OF THE EVENT HUB >>";
-
-string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-PartitionManager partitionManager = new InMemoryPartitionManager(Console.WriteLine);
-
-await using (var processor = new EventProcessorClient(consumerGroup, client, partitionManager, connectionString, eventHubName))
-{
-    // This example implements only the essential methods for processing events
-    // and handling errors.  There are also methods that you can provide which influence 
-    // a partition being initialized for processing and to be notified when a partition will no
-    // longer be processed.
-    
-    processor.ProcessEventsAsync = (PartitionContext partitionContext, EventData eventToProcess) =>
-    {
-        // Perform processing of the event here.
-        
-        return Task.CompletedTask;
-    };
-    
-    processor.ProcessExceptionAsync = (PartitionContext partitionContext, Exception exception) =>
-    {
-        // Any exception which occurs as a result of the event processor itself will be passed to 
-        // this delegate so it may be handled.  The processor will continue to process events if 
-        // it is able to unless this handler explicitly requests that it stop doing so.
-        //
-        // It is important to note that this does not include exceptions during event processing; those
-        // are considered responsibility of the developer implementing the event processing handler.  It
-        // is, therefore, highly encouraged that best practices for exception handling practices are
-        // followed with that delegate.
-                    
-        return Task.CompletedTask;
-    }
-    
-    await processor.StartAsync();
-        
-    // At this point, the processor is consuming events from each partition of the Event Hub and
-    // delegating them for processing.  These operations occur in the background and will not block. 
-    //
-    // In this example, we'll stop processing after two minutes has elapsed.
-        
-    await Task.Delay(TimeSpan.FromMinutes(2));
-    await processor.StopAsync();
-}
-```
 ## Troubleshooting
 
 ### Common exceptions
@@ -199,49 +174,46 @@ For detailed information about these and other exceptions that may occur, please
 
 ## Next steps
 
-Beyond the scenarios discussed, the Azure Event Hubs client library offers support for many additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the Event Hubs client library offers a [project of samples](./samples) to serve as an illustration for common scenarios.
+Beyond the introductory scenarios discussed, the Azure Event Hubs client library offers support for many additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the Event Hubs client library offers a [project of samples](./samples) to serve as an illustration for common scenarios.
 
-The samples are accompanied by a console application which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred IDE and provide the Event Hubs connection information in response to the prompts.  
+The samples are accompanied by a console application which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred editor and provide the Event Hubs connection information in response to the prompts.  
 
 Each of the samples is self-contained and focused on illustrating one specific scenario.  Each is numbered, with the lower numbers concentrating on basic scenarios and building to more complex scenarios as they increase; though each sample is independent, it will assume an understanding of the content discussed in earlier samples.
 
 The available samples are:
 
-- [Hello world](./samples/Sample01_HelloWorld.cs)
+- [Hello world](./samples/Sample01_HelloWorld.cs)  
   An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.
 
-- [Create an Event Hub client with custom options](./samples/Sample02_ClientWithCustomOptions.cs)
+- [Create an Event Hub client with custom options](./samples/Sample02_ClientWithCustomOptions.cs)  
   An introduction to Event Hubs, exploring additional options for creating the different Event Hub clients.
   
-- [Publish an event to an Event Hub](./samples/Sample03_PublishAnEvent.cs)
-  An introduction to publishing events, using a simple Event Hub producer client.
-  
-- [Publish events using a partition key](./samples/Sample04_PublishEventsWithPartitionKey.cs)
-  An introduction to publishing events, using a partition key to group them together.
-  
-- [Publish a size-limited batch of events](./samples/Sample05_PublishAnEventBatch.cs)
-  An introduction to publishing events, using a size-aware batch to ensure the size does not exceed the transport size limits.
+- [Publish an event batch to an Event Hub](./samples/Sample03_PublishAnEventBatch.cs)  
+  An introduction to publishing events, using a batch with single event.  
 
-- [Publish events to a specific Event Hub partition](./samples/Sample06_PublishEventsToSpecificPartitions.cs)
-  An introduction to publishing events, using an Event Hub producer client that is associated with a specific partition.
+- [Read events from an Event Hub](./samples/Sample04_ReadEvents.cs)  
+  An introduction to reading all events available from an Event Hub.
   
-- [Publish events with custom metadata](./samples/Sample07_PublishEventsWithCustomMetadata.cs)
+- [Publish an event batch using a partition key](./samples/Sample05_PublishAnEventBatchWithPartitionKey.cs)  
+  An introduction to publishing events using a partition key to group batches together.
+  
+- [Publish an event batch to a specific partition](./samples/Sample06_PublishAnEventBatchToASpecificPartition.cs)  
+  An introduction to publishing events, specifying a specific partition for the batch to be published to.
+  
+- [Publish events with custom metadata](./samples/Sample07_PublishEventsWithCustomMetadata.cs)  
   An example of publishing events, extending the event data with custom metadata.
   
-- [Consume events from an Event Hub partition](./samples/Sample08_ConsumeEvents.cs)
-  An introduction to consuming events, using a simple Event Hub consumer client.
-  
-- [Consume events from an Event Hub partition, limiting the period of time to wait for an event](./samples/Sample09_ConsumeEventsWithMaximumWaitTime.cs)
-  An introduction to consuming events, using an Event Hub consumer client with maximum wait time.
+- [Read only new events from an Event Hub](./samples/Sample08_ReadOnlyNewEvents.cs)  
+  An example of reading events, beginning with only those newly available from an Event Hub.
 
-- [Consume events from a known position in the Event Hub partition](./samples/Sample10_ConsumeEventsFromAKnownPosition.cs)
-  An example of consuming events, starting at a well-known position in the Event Hub partition.
+- [Read events from a known position in an Event Hub partition](./samples/Sample09_ReadEventsFromAKnownPosition.cs)  
+  An example of reading events from a single Event Hub partition, starting at a well-known position.
   
-- [Consume events from an Event Hub partition in batches](./samples/Sample11_ConsumeEventsByBatch.cs)
-  An example of consuming events, using a batch approach to control throughput.
+- [Publish an event batch with a custom size limit](./samples/Sample10_PublishAnEventBatchWithCustomSizeLimit.cs)  
+  An example of publishing events using a custom size limitation with the batch.
   
-- [Consume events from all partitions of an Event Hub with the Event Processor](./samples/Sample12_ConsumeEventsWithEventProcessor.cs)
-  An example of consuming events from all Event Hub partitions at once, using the Event Processor client.
+- [Authorize using a service principal with client secret](./samples/Sample11_AuthenticateWithClientSecretCredential.cs)  
+  An example of interacting with an Event Hub using an Azure Active Directory application with client secret for authorization.
 
 ## Contributing  
 
@@ -253,4 +225,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 Please see our [contributing guide](./CONTRIBUTING.md) for more information.
   
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2FFREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2FREADME.png)

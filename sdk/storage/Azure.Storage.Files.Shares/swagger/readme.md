@@ -534,7 +534,8 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=rangelist"]
   transform: >
-    $.get.responses["200"]["x-az-response-name"] = "ShareFileRangeInfo";
+    $.get.responses["200"]["x-az-response-name"] = "ShareFileRangeInfoInternal";
+    $.get.responses["200"]["x-az-public"] = false;
     $.get.responses["200"]["x-az-response-schema-name"] = "Ranges";
 ```
 
@@ -749,3 +750,14 @@ directive:
   transform: >
     $.put.parameters[3]["x-ms-enum"].name = "ShareFileRangeWriteType";
 ```
+
+### Hide ranges
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.Range["x-az-public"] = false;
+```
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.Shares%2Fswagger%2Freadme.png)

@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The <see cref="EncryptedBlockBlobClient"/> allows you to manipulate
     /// Azure Storage block blobs with client-side encryption.
     /// </summary>
-    public class EncryptedBlockBlobClient : BlobBaseClient
+    public class EncryptedBlockBlobClient : BlobClient
     {
         #region ctors
         /// <summary>
@@ -137,52 +137,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="blobUri">
-        /// A <see cref="Uri"/> referencing the encrypted block blob that includes the
-        /// name of the account, the name of the container, and the name of
-        /// the blob.
-        /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal EncryptedBlockBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
-        {
-        }
         #endregion ctors
-    }
-
-    /// <summary>
-    /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
-    /// creating <see cref="EncryptedBlockBlobClient"/> instances.
-    /// </summary>
-    public static partial class SpecializedBlobExtensions
-    {
-        /// <summary>
-        /// Create a new <see cref="EncryptedBlockBlobClient"/> object by
-        /// concatenating <paramref name="blobName"/> to
-        /// the end of the <paramref name="client"/>'s
-        /// <see cref="BlobContainerClient.Uri"/>. The new
-        /// <see cref="EncryptedBlockBlobClient"/>
-        /// uses the same request policy pipeline as the
-        /// <see cref="BlobContainerClient"/>.
-        /// </summary>
-        /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
-        /// <param name="blobName">The name of the encrypted block blob.</param>
-        /// <returns>A new <see cref="EncryptedBlockBlobClient"/> instance.</returns>
-        public static EncryptedBlockBlobClient GetEncryptedBlockBlobClient(
-            this BlobContainerClient client,
-            string blobName) =>
-            new EncryptedBlockBlobClient(
-                client.Uri.AppendToPath(blobName),
-                client.Pipeline,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey);
     }
 }

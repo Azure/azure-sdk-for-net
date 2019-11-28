@@ -71,6 +71,35 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange

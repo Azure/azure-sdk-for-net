@@ -10,7 +10,7 @@ using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using NUnit.Framework;
 
-namespace Azure.Storage.Files.Samples
+namespace Azure.Storage.Files.Shares.Samples
 {
     /// <summary>
     /// Basic Azure File Storage samples

@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -50,6 +52,50 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder2.BlobContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
+            BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
+            BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
+
+            var builder1 = new BlobUriBuilder(blob1.Uri);
+            var builder2 = new BlobUriBuilder(blob2.Uri);
+
+            Assert.AreEqual(accountName, builder1.AccountName);
+            Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
         #region Upload

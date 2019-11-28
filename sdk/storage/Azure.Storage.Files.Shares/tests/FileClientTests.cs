@@ -13,7 +13,6 @@ using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Shares.Test
 {
@@ -846,6 +845,9 @@ namespace Azure.Storage.Files.Shares.Test
             Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
 
             Assert.IsNotNull(response);
+            Assert.AreNotEqual("<null>", response.Value.ETag.ToString());
+            Assert.AreNotEqual(default(DateTimeOffset), response.Value.LastModified);
+            Assert.IsTrue(response.Value.FileContentLength > 0);
         }
 
         [Test]
@@ -1007,7 +1009,7 @@ namespace Azure.Storage.Files.Shares.Test
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,

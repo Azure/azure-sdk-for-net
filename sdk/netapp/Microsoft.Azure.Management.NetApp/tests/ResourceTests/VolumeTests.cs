@@ -54,6 +54,10 @@ namespace NetApp.Tests.ResourceTests
                 var resource = ResourceUtils.CreateVolume(netAppMgmtClient);
                 Assert.Equal(ResourceUtils.defaultExportPolicy.ToString(), resource.ExportPolicy.ToString());
                 Assert.Null(resource.Tags);
+                // check DP properties exist but unassigned because
+                // dataprotection volume was not created
+                Assert.Null(resource.VolumeType);
+                Assert.Null(resource.DataProtection);
 
                 var volumesBefore = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 Assert.Single(volumesBefore);
@@ -80,12 +84,13 @@ namespace NetApp.Tests.ResourceTests
                 // create a volume with tags and export policy
                 var dict = new Dictionary<string, string>();
                 dict.Add("Tag2", "Value2");
-                var  protocolTypes = new List<string>() { "NFSv3", "NFSv4.1" };
+                var  protocolTypes = new List<string>() { "NFSv3" };
 
                 var resource = ResourceUtils.CreateVolume(netAppMgmtClient, protocolTypes: protocolTypes,  tags: dict, exportPolicy: exportPolicy);
                 Assert.Equal(exportPolicy.ToString(), resource.ExportPolicy.ToString());
                 Assert.Equal(protocolTypes, resource.ProtocolTypes);
-                Assert.True(resource.Tags.ToString().Contains("Tag2") && resource.Tags.ToString().Contains("Value2"));
+                Assert.True(resource.Tags.ContainsKey("Tag2"));
+                Assert.Equal("Value2", resource.Tags["Tag2"]);
 
                 var volumesBefore = netAppMgmtClient.Volumes.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
                 Assert.Single(volumesBefore);
@@ -270,11 +275,11 @@ namespace NetApp.Tests.ResourceTests
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 // check account resource name - should be available
-                var response = netAppMgmtClient.CheckNameAvailability(ResourceUtils.location, ResourceUtils.accountName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccounts, ResourceUtils.resourceGroup);
+                var response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, ResourceUtils.accountName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccounts, ResourceUtils.resourceGroup);
                 Assert.True(response.IsAvailable);
 
                 // now check file path availability
-                response = netAppMgmtClient.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
                 Assert.True(response.IsAvailable);
 
                 // create the volume
@@ -283,11 +288,11 @@ namespace NetApp.Tests.ResourceTests
                 // check volume resource name - should be unavailable after its creation
                 var resourceName = ResourceUtils.accountName1 + '/' + ResourceUtils.poolName1 + '/' + ResourceUtils.volumeName1;
 
-                response = netAppMgmtClient.CheckNameAvailability(ResourceUtils.location, resourceName, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                response = netAppMgmtClient.NetAppResource.CheckNameAvailability(ResourceUtils.location, resourceName, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
                 Assert.False(response.IsAvailable);
 
                 // now check file path availability again
-                response = netAppMgmtClient.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
+                response = netAppMgmtClient.NetAppResource.CheckFilePathAvailability(ResourceUtils.location, ResourceUtils.volumeName1, CheckNameResourceTypes.MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes, ResourceUtils.resourceGroup);
                 Assert.False(response.IsAvailable);
 
                 // clean up
@@ -364,7 +369,9 @@ namespace NetApp.Tests.ResourceTests
                 Assert.Equal("Premium", updatedVolume.ServiceLevel); // didn't attempt to change - it would be rejected
                 Assert.Equal(200 * ResourceUtils.gibibyte, updatedVolume.UsageThreshold);
                 Assert.Equal(exportPolicy.ToString(), updatedVolume.ExportPolicy.ToString());
-                Assert.True(updatedVolume.Tags.ToString().Contains("Tag2") && updatedVolume.Tags.ToString().Contains("Value2"));
+
+                Assert.True(updatedVolume.Tags.ContainsKey("Tag2"));
+                Assert.Equal("Value2", updatedVolume.Tags["Tag2"]);
 
                 // cleanup
                 ResourceUtils.DeleteVolume(netAppMgmtClient);

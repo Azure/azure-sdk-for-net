@@ -25,14 +25,20 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
 
             // First upload a regular block blob
-            var blobName = this.GetNewBlobName();
-            var blob = this.InstrumentClient(test.Container.GetBlockBlobClient(blobName));
-            var data = this.GetRandomBuffer(Constants.KB);
+            var blobName = GetNewBlobName();
+            var blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            var data = GetRandomBuffer(Constants.KB);
             using var stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
             // Create an EncryptedBlockBlobClient pointing at the same blob
-            var encryptedBlob = this.InstrumentClient(test.Container.GetEncryptedBlockBlobClient(blobName));
+            var encryptedBlob = InstrumentClient(
+                new EncryptedBlockBlobClient(
+                    blob.Uri,
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConfigDefault.AccountKey),
+                    GetOptions()));
 
             // Delete the blob
             var response = await encryptedBlob.DeleteAsync();

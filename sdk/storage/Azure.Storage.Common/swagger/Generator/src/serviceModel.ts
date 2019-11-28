@@ -47,8 +47,8 @@ export async function create(project: IProject) : Promise<IServiceModel> {
     const models: IModels = { };
     for (const [name, model] of Object.entries(project.cache.customTypes)) {
         if (!model) { continue; }
-        if (model.external) { continue; }
         if (isEnumType(model) && model.constant) { continue; }
+        if (!isEnumType(model) && model.external) { continue; }
         models[name] = model;
     }
 
@@ -369,7 +369,7 @@ function createType(project: IProject, name: string, swagger: any, location: str
     }
 
     // Check if it's only defined to represent an external type
-    if (swagger[`x-ms-external`]) {
+    if (swagger[`x-ms-external`] || swagger[`x-az-external`]) {
         model.external = true;
     }
 

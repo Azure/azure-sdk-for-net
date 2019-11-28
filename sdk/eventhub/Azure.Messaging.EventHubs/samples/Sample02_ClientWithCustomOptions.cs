@@ -20,13 +20,13 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample02_ClientWithCustomOptions);
+        public string Name => nameof(Sample02_ClientWithCustomOptions);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to Event Hubs, exploring additional options for creating the different Event Hub clients.";
+        public string Description => "An introduction to Event Hubs, exploring additional options for creating the different Event Hub clients.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -57,11 +57,11 @@ namespace Azure.Messaging.EventHubs.Samples
             {
                ConnectionOptions = new EventHubConnectionOptions
                 {
-                    TransportType = TransportType.AmqpWebSockets,
+                    TransportType = EventHubsTransportType.AmqpWebSockets,
                     Proxy = (IWebProxy)null
                 },
 
-                RetryOptions = new RetryOptions
+                RetryOptions = new EventHubsRetryOptions
                 {
                    MaximumRetries = 5,
                    TryTimeout = TimeSpan.FromMinutes(1)
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 Console.WriteLine("The Event Hub has the following properties:");
                 Console.WriteLine($"\tThe path to the Event Hub from the namespace is: { properties.Name }");
-                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedAt.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
+                Console.WriteLine($"\tThe Event Hub was created at: { properties.CreatedOn.ToString("yyyy-MM-dd hh:mm:ss tt (zzz)") }, in UTC.");
                 Console.WriteLine("\tThe Event Hub has the following partitions:");
 
                 foreach (string partitionId in properties.PartitionIds)

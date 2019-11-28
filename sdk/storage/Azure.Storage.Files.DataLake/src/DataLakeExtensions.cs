@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
@@ -230,6 +231,100 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             return metadataDictionary;
+        }
+
+        internal static FileSystemAccessPolicy ToFileSystemAccessPolicy(this BlobContainerAccessPolicy blobContainerAccessPolicy)
+        {
+            if (blobContainerAccessPolicy == null)
+            {
+                return null;
+            }
+
+            return new FileSystemAccessPolicy()
+            {
+                DataLakePublicAccess = (Models.PublicAccessType)blobContainerAccessPolicy.BlobPublicAccess,
+                ETag = blobContainerAccessPolicy.ETag,
+                LastModified = blobContainerAccessPolicy.LastModified,
+                SignedIdentifiers = blobContainerAccessPolicy.SignedIdentifiers.ToDataLakeSignedIdentifiers()
+            };
+        }
+
+        internal static IEnumerable<DataLakeSignedIdentifier> ToDataLakeSignedIdentifiers(this IEnumerable<BlobSignedIdentifier> blobSignedIdentifiers)
+        {
+            if (blobSignedIdentifiers == null)
+            {
+                return null;
+            }
+
+            return blobSignedIdentifiers.ToList().Select(r => r.ToDataLakeSignedIdentifier());
+        }
+
+        internal static DataLakeSignedIdentifier ToDataLakeSignedIdentifier(this BlobSignedIdentifier blobSignedIdentifier)
+        {
+            if (blobSignedIdentifier == null)
+            {
+                return null;
+            }
+
+            return new DataLakeSignedIdentifier()
+            {
+                AccessPolicy = blobSignedIdentifier.AccessPolicy.ToDataLakeAccessPolicy(),
+                Id = blobSignedIdentifier.Id
+            };
+        }
+
+        internal static DataLakeAccessPolicy ToDataLakeAccessPolicy(this BlobAccessPolicy blobAccessPolicy)
+        {
+            if (blobAccessPolicy == null)
+            {
+                return null;
+            }
+
+            return new DataLakeAccessPolicy()
+            {
+                StartsOn = blobAccessPolicy.StartsOn,
+                ExpiresOn = blobAccessPolicy.ExpiresOn,
+                Permissions = blobAccessPolicy.Permissions
+            };
+        }
+
+        internal static IEnumerable<BlobSignedIdentifier> ToBlobSignedIdentifiers(this IEnumerable<DataLakeSignedIdentifier> dataLakeSignedIdentifiers)
+        {
+            if (dataLakeSignedIdentifiers == null)
+            {
+                return null;
+            }
+
+            return dataLakeSignedIdentifiers.ToList().Select(r => r.ToBlobSignedIdentifier());
+        }
+
+        internal static BlobSignedIdentifier ToBlobSignedIdentifier(this DataLakeSignedIdentifier dataLakeSignedIdentifier)
+        {
+            if (dataLakeSignedIdentifier == null)
+            {
+                return null;
+            }
+
+            return new BlobSignedIdentifier()
+            {
+                AccessPolicy = dataLakeSignedIdentifier.AccessPolicy.ToBlobAccessPolicy(),
+                Id = dataLakeSignedIdentifier.Id
+            };
+        }
+
+        internal static BlobAccessPolicy ToBlobAccessPolicy(this DataLakeAccessPolicy dataLakeAccessPolicy)
+        {
+            if (dataLakeAccessPolicy == null)
+            {
+                return null;
+            }
+
+            return new BlobAccessPolicy()
+            {
+                StartsOn = dataLakeAccessPolicy.StartsOn,
+                ExpiresOn = dataLakeAccessPolicy.ExpiresOn,
+                Permissions = dataLakeAccessPolicy.Permissions
+            };
         }
     }
 }

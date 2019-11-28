@@ -195,3 +195,5 @@ KeyVaultSecret secret = client.GetSecret("Name");
 ```
 
 More on mocking in [mocking samples](samples/Mocking.md)
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FAzure.Core%2FREADME.png)

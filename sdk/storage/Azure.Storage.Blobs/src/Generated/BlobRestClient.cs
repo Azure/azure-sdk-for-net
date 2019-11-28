@@ -12761,10 +12761,9 @@ namespace Azure.Storage.Blobs.Models
         public string Permissions { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobAccessPolicy instances.
-        /// You can use BlobsModelFactory.BlobAccessPolicy instead.
+        /// Creates a new BlobAccessPolicy instance
         /// </summary>
-        internal BlobAccessPolicy() { }
+        public BlobAccessPolicy() { }
 
         /// <summary>
         /// Serialize a BlobAccessPolicy instance as XML.
@@ -13846,10 +13845,9 @@ namespace Azure.Storage.Blobs.Models
         public int MaxAgeInSeconds { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobCorsRule instances.
-        /// You can use BlobsModelFactory.BlobCorsRule instead.
+        /// Creates a new BlobCorsRule instance
         /// </summary>
-        internal BlobCorsRule() { }
+        public BlobCorsRule() { }
 
         /// <summary>
         /// Serialize a BlobCorsRule instance as XML.
@@ -15778,10 +15776,9 @@ namespace Azure.Storage.Blobs.Models
         public int? Days { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobRetentionPolicy instances.
-        /// You can use BlobsModelFactory.BlobRetentionPolicy instead.
+        /// Creates a new BlobRetentionPolicy instance
         /// </summary>
-        internal BlobRetentionPolicy() { }
+        public BlobRetentionPolicy() { }
 
         /// <summary>
         /// Serialize a BlobRetentionPolicy instance as XML.
@@ -16259,10 +16256,9 @@ namespace Azure.Storage.Blobs.Models
         public string ErrorDocument404Path { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of BlobStaticWebsite instances.
-        /// You can use BlobsModelFactory.BlobStaticWebsite instead.
+        /// Creates a new BlobStaticWebsite instance
         /// </summary>
-        internal BlobStaticWebsite() { }
+        public BlobStaticWebsite() { }
 
         /// <summary>
         /// Serialize a BlobStaticWebsite instance as XML.
@@ -17744,10 +17740,9 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of KeyInfo instances.
-        /// You can use BlobsModelFactory.KeyInfo instead.
+        /// Creates a new KeyInfo instance
         /// </summary>
-        internal KeyInfo() { }
+        public KeyInfo() { }
 
         /// <summary>
         /// Serialize a KeyInfo instance as XML.

@@ -3,7 +3,6 @@
 | Component            | Build Status                                                                                                                                                                                                          |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Management Libraries | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20mgmt%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=529&branchName=master)   |
-| Client Libraries     | [![Build Status](https://dev.azure.com/azure-sdk/public/_apis/build/status/net/net%20-%20client%20-%20ci?branchName=master)](https://dev.azure.com/azure-sdk/public/_build/latest?definitionId=290&branchName=master) |
 
 # Prerequisites:
 
@@ -114,6 +113,10 @@ If for any reason there is an update to the build tools, you will then need to f
 2. Navigate to repository root directory
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
+
+## Public API changes
+
+If you make a public API change `eng\Export-API.ps1` script has to be run to update public API listings.
 
 # On-boarding New Libraries
 

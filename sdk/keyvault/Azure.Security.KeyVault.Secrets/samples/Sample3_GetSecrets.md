@@ -6,7 +6,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 ## Creating a SecretClient
 
 To create a new `SecretClient` to create, get, update, or delete secrets, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -45,14 +45,21 @@ Dictionary<string, string> secretValues = new Dictionary<string, string>();
 IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
 foreach (SecretProperties secret in secrets)
 {
-    KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
-
-    if (secretValues.ContainsKey(secretWithValue.Value))
+    // Getting a disabled secret will fail, so skip disabled secrets.
+    if (!secret.Enabled.GetValueOrDefault())
     {
-        throw new InvalidOperationException($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+        continue;
     }
 
-    secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+    KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
+    if (secretValues.ContainsKey(secretWithValue.Value))
+    {
+        Debug.WriteLine($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+    }
+    else
+    {
+        secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+    }
 }
 ```
 
@@ -68,10 +75,16 @@ string newBankSecretPassword = "sskdjfsdasdjsd";
 IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
 foreach (SecretProperties secret in secretVersions)
 {
+    // Secret versions may also be disabled if compromised and new versions generated, so skip disabled versions, too.
+    if (!secret.Enabled.GetValueOrDefault())
+    {
+        continue;
+    }
+
     KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
     if (newBankSecretPassword == oldBankSecret.Value)
     {
-        throw new InvalidOperationException($"Secret {secret.Name} reuses a password");
+        Debug.WriteLine($"Secret {secret.Name} reuses a password");
     }
 }
 
@@ -88,6 +101,7 @@ To list deleted secrets, we also need to wait until they are fully deleted.
 DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
 DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
+// You only need to wait for completion if you want to purge or recover the secret.
 while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted)
 {
     Thread.Sleep(2000);
@@ -115,3 +129,5 @@ To see the full example source, see:
 
 * [Synchronous Sample3_GetSecrets.cs](../tests/samples/Sample3_GetSecrets.cs)
 * [Asynchronous Sample3_GetSecrets.cs](../tests/samples/Sample3_GetSecretsAsync.cs)
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

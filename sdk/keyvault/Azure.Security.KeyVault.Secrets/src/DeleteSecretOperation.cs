@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Secrets
         public override ValueTask<Response<DeletedSecret>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private static async Task<bool> CheckCompletedAsync(Response response)
+        private static async ValueTask<bool> CheckCompletedAsync(Response response)
         {
             switch (response.Status)
             {

@@ -12,8 +12,6 @@ namespace Microsoft.Azure.Management.Storage.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,36 +30,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">Gets or sets the SKU name. Required for account
-        /// creation; optional for update. Note that in older versions, SKU
-        /// name was called accountType. Possible values include:
-        /// 'Standard_LRS', 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS',
-        /// 'Premium_LRS', 'Premium_ZRS', 'Standard_GZRS',
-        /// 'Standard_RAGZRS'</param>
-        /// <param name="tier">Gets the SKU tier. This is based on the SKU
-        /// name. Possible values include: 'Standard', 'Premium'</param>
-        /// <param name="resourceType">The type of the resource, usually it is
-        /// 'storageAccounts'.</param>
-        /// <param name="kind">Indicates the type of storage account. Possible
-        /// values include: 'Storage', 'StorageV2', 'BlobStorage',
-        /// 'FileStorage', 'BlockBlobStorage'</param>
-        /// <param name="locations">The set of locations that the SKU is
-        /// available. This will be supported and registered Azure Geo Regions
-        /// (e.g. West US, East US, Southeast Asia, etc.).</param>
-        /// <param name="capabilities">The capability information in the
-        /// specified SKU, including file encryption, network ACLs, change
-        /// notification, etc.</param>
-        /// <param name="restrictions">The restrictions because of which SKU
-        /// cannot be used. This is empty if there are no restrictions.</param>
-        public Sku(string name, SkuTier? tier = default(SkuTier?), string resourceType = default(string), string kind = default(string), IList<string> locations = default(IList<string>), IList<SKUCapability> capabilities = default(IList<SKUCapability>), IList<Restriction> restrictions = default(IList<Restriction>))
+        /// <param name="name">Possible values include: 'Standard_LRS',
+        /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS',
+        /// 'Premium_ZRS', 'Standard_GZRS', 'Standard_RAGZRS'</param>
+        /// <param name="tier">Possible values include: 'Standard',
+        /// 'Premium'</param>
+        public Sku(string name, SkuTier? tier = default(SkuTier?))
         {
             Name = name;
             Tier = tier;
-            ResourceType = resourceType;
-            Kind = kind;
-            Locations = locations;
-            Capabilities = capabilities;
-            Restrictions = restrictions;
             CustomInit();
         }
 
@@ -71,9 +48,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the SKU name. Required for account creation; optional
-        /// for update. Note that in older versions, SKU name was called
-        /// accountType. Possible values include: 'Standard_LRS',
+        /// Gets or sets possible values include: 'Standard_LRS',
         /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS',
         /// 'Premium_ZRS', 'Standard_GZRS', 'Standard_RAGZRS'
         /// </summary>
@@ -81,47 +56,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the SKU tier. This is based on the SKU name. Possible values
-        /// include: 'Standard', 'Premium'
+        /// Gets or sets possible values include: 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public SkuTier? Tier { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource, usually it is 'storageAccounts'.
-        /// </summary>
-        [JsonProperty(PropertyName = "resourceType")]
-        public string ResourceType { get; private set; }
-
-        /// <summary>
-        /// Gets indicates the type of storage account. Possible values
-        /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
-        /// 'BlockBlobStorage'
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; private set; }
-
-        /// <summary>
-        /// Gets the set of locations that the SKU is available. This will be
-        /// supported and registered Azure Geo Regions (e.g. West US, East US,
-        /// Southeast Asia, etc.).
-        /// </summary>
-        [JsonProperty(PropertyName = "locations")]
-        public IList<string> Locations { get; private set; }
-
-        /// <summary>
-        /// Gets the capability information in the specified SKU, including
-        /// file encryption, network ACLs, change notification, etc.
-        /// </summary>
-        [JsonProperty(PropertyName = "capabilities")]
-        public IList<SKUCapability> Capabilities { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the restrictions because of which SKU cannot be used.
-        /// This is empty if there are no restrictions.
-        /// </summary>
-        [JsonProperty(PropertyName = "restrictions")]
-        public IList<Restriction> Restrictions { get; set; }
+        public SkuTier? Tier { get; set; }
 
         /// <summary>
         /// Validate the object.
