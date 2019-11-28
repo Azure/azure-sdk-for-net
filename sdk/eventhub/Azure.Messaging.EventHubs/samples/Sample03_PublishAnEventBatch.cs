@@ -9,22 +9,22 @@ using Azure.Messaging.EventHubs.Samples.Infrastructure;
 namespace Azure.Messaging.EventHubs.Samples
 {
     /// <summary>
-    ///   An introduction to publishing events, using a simple <see cref="EventHubProducerClient" />.
+    ///   An introduction to publishing events, using a batch with single event.
     /// </summary>
     ///
-    public class Sample03_PublishAnEvent : IEventHubsSample
+    public class Sample03_PublishAnEventBatch : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample03_PublishAnEvent);
+        public string Name => nameof(Sample03_PublishAnEventBatch);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to publishing events, using a simple Event Hub producer client.";
+        public string Description => "An introduction to publishing events, using a batch with single event.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -49,8 +49,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // Allowing automatic routing of partitions is recommended when:
                 //  - The publishing of events needs to be highly available.
                 //  - The event data should be evenly distributed among all available partitions.
-
-
+                //
                 // An event is represented by an arbitrary collection of bytes and metadata.  Event Hubs does not make any
                 // assumptions about the data nor attempt to perform any operations on it; you are free to create the data
                 // in whatever form makes sense for your scenario.
