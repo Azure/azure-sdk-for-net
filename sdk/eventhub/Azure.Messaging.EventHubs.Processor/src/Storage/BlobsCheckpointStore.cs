@@ -21,9 +21,6 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
         private static readonly Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
 
-        /// <summary>The client used to interact with the Azure Blob Storage service.</summary>
-        private readonly BlobContainerClient ContainerClient;
-
         /// <summary>
         ///   Specifies a string that filters the results to return only checkpoint blobs whose name begins
         ///   with the specified prefix.
@@ -35,6 +32,11 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   with the specified prefix.
         /// </summary>
         private const string OwnershipPrefix = "{0}/{1}/{2}/ownership/";
+
+        /// <summary>
+        ///   The client used to interact with the Azure Blob Storage service.
+        /// </summary>
+        private BlobContainerClient ContainerClient { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="BlobsCheckpointStore"/> class.
