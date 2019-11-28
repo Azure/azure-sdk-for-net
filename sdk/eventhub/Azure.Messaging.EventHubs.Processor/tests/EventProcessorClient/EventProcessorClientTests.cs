@@ -531,18 +531,30 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     .GetProperty("RetryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(client);
 
+        /// <summary>
+        ///   Retrieves the ProcessingConsumerOptions for the processor client using its private accessor.
+        /// </summary>
+        ///
         private static EventHubConsumerClientOptions GetProcessingConsumerOptions(EventProcessorClient client) =>
             (EventHubConsumerClientOptions)
             typeof(EventProcessorClient)
                 .GetProperty("ProcessingConsumerOptions", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(client);
 
+        /// <summary>
+        ///   Retrieves the ProcessingReadEventOptions for the processor client using its private accessor.
+        /// </summary>
+        ///
         private static ReadEventOptions GetProcessingReadEventOptions(EventProcessorClient client) =>
             (ReadEventOptions)
             typeof(EventProcessorClient)
                 .GetProperty("ProcessingReadEventOptions", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(client);
 
+        /// <summary>
+        ///   Creates a connection using a processor client's ConnectionFactory and returns its ConnectionOptions.
+        /// </summary>
+        ///
         private static EventHubConnectionOptions GetConnectionOptionsSample(EventProcessorClient client)
         {
             var connectionFactory = (Func<EventHubConnection>)typeof(EventProcessorClient)
