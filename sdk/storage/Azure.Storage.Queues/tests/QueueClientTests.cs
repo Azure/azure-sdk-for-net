@@ -31,7 +31,7 @@ namespace Azure.Storage.Queues.Test
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default));
 
             var queueName = GetNewQueueName();
 

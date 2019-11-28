@@ -123,13 +123,13 @@ namespace Azure.Storage.Sas
             {
                 sb.Append(Constants.Sas.AccountServices.Blob);
             }
-            if ((services & AccountSasServices.Queues) == AccountSasServices.Queues)
-            {
-                sb.Append(Constants.Sas.AccountServices.Queue);
-            }
             if ((services & AccountSasServices.Files) == AccountSasServices.Files)
             {
                 sb.Append(Constants.Sas.AccountServices.File);
+            }
+            if ((services & AccountSasServices.Queues) == AccountSasServices.Queues)
+            {
+                sb.Append(Constants.Sas.AccountServices.Queue);
             }
             return sb.ToString();
         }

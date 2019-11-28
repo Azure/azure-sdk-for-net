@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -58,6 +58,84 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder2.BlobContainerName);
             Assert.AreEqual(blobName, builder2.BlobName);
             Assert.AreEqual("accountName", builder2.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_Sas()
+        {
+            // Arrange
+            var sasBuilder = new AccountSasBuilder
+            {
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = AccountSasServices.All,
+                ResourceTypes = AccountSasResourceTypes.All,
+                Protocol = SasProtocol.Https,
+            };
+            sasBuilder.SetPermissions(AccountSasPermissions.All);
+            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            string sasToken = sasBuilder.ToSasQueryParameters(cred).ToString();
+            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+
+            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
+                "https",
+                TestConfigDefault.AccountName,
+                default,
+                sasToken);
+
+            StorageConnectionString conn1 =
+                new StorageConnectionString(
+                    sasCred,
+                    blobUri,
+                    (default, default),
+                    (default, default));
+
+            BlobContainerClient containerClient1 = GetClient(conn1.ToString(exportSecrets: true));
+
+            // Also test with a connection string not containing the blob endpoint.
+            // This should still work provided account name and Sas credential are present.
+            StorageConnectionString conn2 = TestExtensions.CreateStorageConnectionString(
+                sasCred,
+                TestConfigDefault.AccountName);
+
+            BlobContainerClient containerClient2 = GetClient(conn2.ToString(exportSecrets: true));
+
+            BlobContainerClient GetClient(string connectionString) =>
+                InstrumentClient(
+                    new BlobContainerClient(
+                        connectionString,
+                        GetNewContainerName(),
+                        GetOptions()));
+
+            try
+            {
+                // Act
+                await containerClient1.CreateAsync();
+                BlobClient blob1 = InstrumentClient(containerClient1.GetBlobClient(GetNewBlobName()));
+
+                await containerClient2.CreateAsync();
+                BlobClient blob2 = InstrumentClient(containerClient2.GetBlobClient(GetNewBlobName()));
+
+                var data = GetRandomBuffer(Constants.KB);
+
+                Response<BlobContentInfo> info1 = await blob1.UploadAsync(
+                    new MemoryStream(data),
+                    true,
+                    new CancellationToken());
+                Response<BlobContentInfo> info2 = await blob2.UploadAsync(
+                    new MemoryStream(data),
+                    true,
+                    new CancellationToken());
+
+                // Assert
+                Assert.IsNotNull(info1.Value.ETag);
+                Assert.IsNotNull(info2.Value.ETag);
+            }
+            finally
+            {
+                // Clean up
+                await containerClient1.DeleteAsync();
+                await containerClient2.DeleteAsync();
+            }
         }
 
         [Test]
