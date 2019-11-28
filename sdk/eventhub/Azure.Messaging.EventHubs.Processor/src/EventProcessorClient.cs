@@ -399,7 +399,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
-            clientOptions = clientOptions ?? new EventProcessorClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
             ProcessingConsumerOptions = new EventHubConsumerClientOptions
             {
@@ -447,11 +447,11 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            clientOptions = clientOptions ?? new EventProcessorClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
             ProcessingConsumerOptions = new EventHubConsumerClientOptions
             {
-                RetryOptions = clientOptions.RetryOptions.Clone()
+                RetryOptions = clientOptions.RetryOptions
             };
 
             ProcessingReadEventOptions = new ReadEventOptions
@@ -504,7 +504,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNull(connectionFactory, nameof(connectionFactory));
 
-            clientOptions = clientOptions ?? new EventProcessorClientOptions();
+            clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
             ProcessingConsumerOptions = new EventHubConsumerClientOptions
             {
