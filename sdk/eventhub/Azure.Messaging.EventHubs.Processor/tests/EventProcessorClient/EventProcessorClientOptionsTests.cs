@@ -5,7 +5,7 @@ using System;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="EventProcessorClientOptions" />

@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs
         private Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         /// <summary>Indicates whether or not this event processor is currently running.  Used only for mocking purposes.</summary>
-        private bool? _isRunningMock;
+        private bool? _isRunningOverride;
 
         /// <summary>
         ///   The event to be raised just before event processing starts for a given partition.
@@ -212,9 +212,9 @@ namespace Azure.Messaging.EventHubs
         {
             get
             {
-                if (_isRunningMock.HasValue)
+                if (_isRunningOverride.HasValue)
                 {
-                    return _isRunningMock.Value;
+                    return _isRunningOverride.Value;
                 }
 
                 // Capture the load balancing task so we don't end up with a race condition.
@@ -224,7 +224,7 @@ namespace Azure.Messaging.EventHubs
                 return loadBalancingTask != null && !loadBalancingTask.IsCompleted;
             }
 
-            protected set => _isRunningMock = value;
+            protected set => _isRunningOverride = value;
         }
 
         /// <summary>
@@ -247,15 +247,22 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
+        ///   Lazily evaluated.
         /// </summary>
         ///
-        private PartitionManager StorageManager { get; }
+        private Lazy<PartitionManager> StorageManager { get; }
 
         /// <summary>
-        ///   The set of options to use for this event processor.
+        ///   The set of options to use for consumers responsible for partition processing.
         /// </summary>
         ///
-        private EventProcessorClientOptions ClientOptions { get; }
+        private EventHubConsumerClientOptions ProcessingConsumerOptions { get; }
+
+        /// <summary>
+        ///   The set of options to use to read events when processing a partition.
+        /// </summary>
+        ///
+        private ReadEventOptions ProcessingReadEventOptions { get; }
 
         /// <summary>
         ///   A factory used to provide new <see cref="EventHubConnection" /> instances.
@@ -393,14 +400,25 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
+
+            ProcessingConsumerOptions = new EventHubConsumerClientOptions
+            {
+                RetryOptions = clientOptions.RetryOptions
+            };
+
+            ProcessingReadEventOptions = new ReadEventOptions
+            {
+                MaximumWaitTime = clientOptions.MaximumWaitTime,
+                TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
+            };
+
             ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
 
             ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
-            ClientOptions = clientOptions;
+            StorageManager = new Lazy<PartitionManager>(() => CreateStorageManager(checkpointStore), LazyThreadSafetyMode.PublicationOnly);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
@@ -423,20 +441,30 @@ namespace Azure.Messaging.EventHubs
                                     TokenCredential credential,
                                     EventProcessorClientOptions clientOptions = default)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
+            ProcessingConsumerOptions = new EventHubConsumerClientOptions
+            {
+                RetryOptions = clientOptions.RetryOptions
+            };
+
+            ProcessingReadEventOptions = new ReadEventOptions
+            {
+                MaximumWaitTime = clientOptions.MaximumWaitTime,
+                TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
+            };
+
             ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
-            ClientOptions = clientOptions;
+            StorageManager = new Lazy<PartitionManager>(() => CreateStorageManager(checkpointStore), LazyThreadSafetyMode.PublicationOnly);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
@@ -471,18 +499,29 @@ namespace Azure.Messaging.EventHubs
                                       Func<EventHubConnection> connectionFactory,
                                       EventProcessorClientOptions clientOptions)
         {
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             Argument.AssertNotNull(connectionFactory, nameof(connectionFactory));
 
             clientOptions = clientOptions?.Clone() ?? new EventProcessorClientOptions();
 
+            ProcessingConsumerOptions = new EventHubConsumerClientOptions
+            {
+                RetryOptions = clientOptions.RetryOptions
+            };
+
+            ProcessingReadEventOptions = new ReadEventOptions
+            {
+                MaximumWaitTime = clientOptions.MaximumWaitTime,
+                TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
+            };
+
             ConnectionFactory = connectionFactory;
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
-            ClientOptions = clientOptions;
+            StorageManager = new Lazy<PartitionManager>(() => CreateStorageManager(checkpointStore), LazyThreadSafetyMode.PublicationOnly);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
@@ -603,8 +642,8 @@ namespace Azure.Messaging.EventHubs
                         }
 
                         // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
-                        // still running and clear our dictionaries.  ActivePartitionProcessors, ActivePartitionProcessorTokenSources and
-                        // PartitionContexts are already cleared by the StopPartitionProcessingIfRunningAsync method.
+                        // still running and clear our dictionaries.  ActivePartitionProcessors dictionary is already cleared by the
+                        // StopPartitionProcessingIfRunningAsync method.
 
                         await Task.WhenAll(ActivePartitionProcessors.Keys
                             .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown)))
@@ -703,7 +742,7 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                await StorageManager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+                await StorageManager.Value.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -795,7 +834,7 @@ namespace Azure.Messaging.EventHubs
         {
             // We'll use this connection to retrieve an updated list of partition ids from the service.
 
-            await using var consumer = CreateConsumer(ConsumerGroup, ConnectionFactory(), new EventHubConsumerClientOptions { RetryOptions = ClientOptions.RetryOptions });
+            await using var consumer = CreateConsumer(ConsumerGroup, ConnectionFactory(), ProcessingConsumerOptions);
 
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -809,7 +848,7 @@ namespace Azure.Messaging.EventHubs
                 // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
                 // their eTags to claim orphan partitions.
 
-                var completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
+                var completeOwnershipList = (await StorageManager.Value.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -1011,7 +1050,7 @@ namespace Azure.Messaging.EventHubs
                 var startingPosition = eventArgs.DefaultStartingPosition;
                 var ownership = InstanceOwnership[partitionId];
 
-                var availableCheckpoints = await StorageManager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+                var availableCheckpoints = await StorageManager.Value.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
                 foreach (Checkpoint checkpoint in availableCheckpoints)
                 {
                     if (checkpoint.PartitionId == partitionId)
@@ -1022,7 +1061,7 @@ namespace Azure.Messaging.EventHubs
                 }
 
                 var tokenSource = new CancellationTokenSource();
-                var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, ClientOptions.MaximumWaitTime, RetryPolicy, ClientOptions.TrackLastEnqueuedEventProperties, tokenSource.Token);
+                var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, tokenSource.Token);
 
                 ActivePartitionProcessors[partitionId] = (processingTask, tokenSource);
             }
@@ -1106,7 +1145,7 @@ namespace Azure.Messaging.EventHubs
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.
 
-            IEnumerable<PartitionOwnership> claimedOwnership = await StorageManager.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }).ConfigureAwait(false);
+            IEnumerable<PartitionOwnership> claimedOwnership = await StorageManager.Value.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }).ConfigureAwait(false);
 
             return claimedOwnership.FirstOrDefault();
         }
@@ -1133,7 +1172,7 @@ namespace Azure.Messaging.EventHubs
             // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
             // will fail in claiming it here, but this instance still owns it.
 
-            return StorageManager.ClaimOwnershipAsync(ownershipToRenew);
+            return StorageManager.Value.ClaimOwnershipAsync(ownershipToRenew);
         }
 
         /// <summary>
@@ -1142,35 +1181,18 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition the task is associated with.  Events will be read only from this partition.</param>
         /// <param name="startingPosition">The position within the partition where the task should begin reading events.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be published.</param>
-        /// <param name="retryPolicy">The active policy which governs retry attempts when receiving events.</param>
-        /// <param name="trackLastEnqueuedEventProperties">Indicates whether or not the task should request information on the last enqueued event on the partition associated with a given event, and track that information as events are received.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The running task that is currently receiving and processing events in the context of the specified partition.</returns>
         ///
         private Task RunPartitionProcessingAsync(string partitionId,
                                                  EventPosition startingPosition,
-                                                 TimeSpan? maximumWaitTime,
-                                                 EventHubsRetryPolicy retryPolicy,
-                                                 bool trackLastEnqueuedEventProperties,
                                                  CancellationToken cancellationToken) => Task.Run(async () =>
             {
-                var clientOptions = new EventHubConsumerClientOptions
-                {
-                    RetryOptions = new EventHubsRetryOptions { CustomRetryPolicy = retryPolicy }
-                };
-
-                var readOptions = new ReadEventOptions
-                {
-                    MaximumWaitTime = maximumWaitTime,
-                    TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties
-                };
-
                 await using (var connection = ConnectionFactory())
-                await using (var consumer = CreateConsumer(ConsumerGroup, connection, clientOptions))
+                await using (var consumer = CreateConsumer(ConsumerGroup, connection, ProcessingConsumerOptions))
                 {
-                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, readOptions, cancellationToken))
+                    await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken))
                     {
                         using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                         diagnosticScope.AddAttribute("kind", "server");

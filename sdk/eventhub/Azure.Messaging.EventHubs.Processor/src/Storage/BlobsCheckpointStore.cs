@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -20,9 +21,6 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
         private static readonly Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
 
-        /// <summary>The client used to interact with the Azure Blob Storage service.</summary>
-        private readonly BlobContainerClient _containerClient;
-
         /// <summary>
         ///   Specifies a string that filters the results to return only checkpoint blobs whose name begins
         ///   with the specified prefix.
@@ -36,6 +34,11 @@ namespace Azure.Messaging.EventHubs.Processor
         private const string OwnershipPrefix = "{0}/{1}/{2}/ownership/";
 
         /// <summary>
+        ///   The client used to interact with the Azure Blob Storage service.
+        /// </summary>
+        private BlobContainerClient ContainerClient { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="BlobsCheckpointStore"/> class.
         /// </summary>
         ///
@@ -43,9 +46,9 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public BlobsCheckpointStore(BlobContainerClient blobContainerClient)
         {
-            // TODO: instead of manually checking the instance, make use of the Guard class once it's available.
+            Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
 
-            _containerClient = blobContainerClient ?? throw new ArgumentNullException(nameof(blobContainerClient));
+            ContainerClient = blobContainerClient;
         }
 
         /// <summary>
@@ -66,14 +69,14 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
-                await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
                 {
                     // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
                     // to throw an exception.
 
                     blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
 
-                    ownershipList.Add(new InnerPartitionOwnership(
+                    ownershipList.Add(new PartitionOwnership(
                         fullyQualifiedNamespace,
                         eventHubName,
                         consumerGroup,
@@ -90,7 +93,6 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
-
         }
 
         /// <summary>
@@ -116,7 +118,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 var blobRequestConditions = new BlobRequestConditions();
 
                 var blobName = string.Format(OwnershipPrefix + ownership.PartitionId, ownership.FullyQualifiedNamespace.ToLower(), ownership.EventHubName.ToLower(), ownership.ConsumerGroup.ToLower());
-                BlobClient blobClient = _containerClient.GetBlobClient(blobName);
+                BlobClient blobClient = ContainerClient.GetBlobClient(blobName);
 
                 try
                 {
@@ -207,7 +209,7 @@ namespace Azure.Messaging.EventHubs.Processor
             try
             {
                 var prefix = string.Format(CheckpointPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
-                await foreach (BlobItem blob in _containerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
                 {
                     long offset = 0;
                     long sequenceNumber = 0;
@@ -222,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Processor
                         sequenceNumber = result;
                     }
 
-                    checkpoints.Add(new InnerCheckpoint(
+                    checkpoints.Add(new Checkpoint(
                         fullyQualifiedNamespace,
                         eventHubName,
                         consumerGroup,
@@ -252,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
 
-            BlobClient blobClient = _containerClient.GetBlobClient(blobName);
+            BlobClient blobClient = ContainerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
                 {
@@ -275,63 +277,6 @@ namespace Azure.Messaging.EventHubs.Processor
             finally
             {
                 blobContent?.Dispose();
-            }
-        }
-
-        /// <summary>
-        ///   A workaround so we can create <see cref="PartitionOwnership"/> instances.
-        ///   This class can be removed once the following issue has been closed: https://github.com/Azure/azure-sdk-for-net/issues/7585
-        /// </summary>
-        ///
-        private class InnerPartitionOwnership : PartitionOwnership
-        {
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="InnerPartitionOwnership"/> class.
-            /// </summary>
-            ///
-            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-            /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
-            /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-            /// <param name="ownerIdentifier">The identifier of the associated <see cref="EventProcessorClient" /> instance.</param>
-            /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-            /// <param name="lastModifiedTime">The date and time, in UTC, that the last update was made to this ownership.</param>
-            /// <param name="eTag">The entity tag needed to update this ownership.</param>
-            ///
-            public InnerPartitionOwnership(string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           string ownerIdentifier,
-                                           string partitionId,
-                                           DateTimeOffset? lastModifiedTime = null,
-                                           string eTag = null) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, ownerIdentifier, partitionId, lastModifiedTime, eTag)
-            {
-            }
-        }
-
-        /// <summary>
-        ///   A workaround so we can create <see cref="Checkpoint"/> instances.
-        /// </summary>
-        ///
-        private class InnerCheckpoint : Checkpoint
-        {
-            /// <summary>
-            ///   Initializes a new instance of the <see cref="Checkpoint"/> class.
-            /// </summary>
-            ///
-            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace this partition ownership is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-            /// <param name="eventHubName">The name of the specific Event Hub this partition ownership is associated with, relative to the Event Hubs namespace that contains it.</param>
-            /// <param name="consumerGroup">The name of the consumer group this partition ownership is associated with.</param>
-            /// <param name="partitionId">The identifier of the Event Hub partition this partition ownership is associated with.</param>
-            /// <param name="offset">The offset of the last <see cref="EventData" /> received by the associated partition processor.</param>
-            /// <param name="sequenceNumber">The sequence number of the last <see cref="EventData" /> received by the associated partition processor.</param>
-            ///
-            public InnerCheckpoint(string fullyQualifiedNamespace,
-                                           string eventHubName,
-                                           string consumerGroup,
-                                           string partitionId,
-                                           long offset,
-                                           long sequenceNumber) : base(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber)
-            {
             }
         }
     }

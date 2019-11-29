@@ -11,7 +11,7 @@ using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest;
 
-namespace Azure.Messaging.EventHubs.Tests.Infrastructure
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///  Provides a dynamically created Event Hub instance which exists only in the context

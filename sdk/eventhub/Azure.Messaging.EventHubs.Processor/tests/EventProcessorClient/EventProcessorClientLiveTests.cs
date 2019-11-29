@@ -8,13 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Processor.Tests;
-using Azure.Messaging.EventHubs.Tests.Infrastructure;
+using Azure.Messaging.EventHubs.Tests;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Tests
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///   The suite of live tests for the <see cref="EventProcessorClient" />
@@ -29,7 +26,6 @@ namespace Azure.Messaging.EventHubs.Tests
     [TestFixture]
     [Category(TestCategory.Live)]
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
-    [Ignore("These need to be revisited and revised post-move on the package.")]
     public class EventProcessorClientLiveTests
     {
         /// <summary>The maximum number of times that the receive loop should iterate to collect the expected number of messages.</summary>

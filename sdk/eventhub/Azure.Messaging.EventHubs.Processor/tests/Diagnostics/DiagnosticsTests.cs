@@ -38,7 +38,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Needs to be updated because UpdateCheckpointAsync changed its accessibility level to 'protected' and can't be accessed anymore.")]
         public async Task CheckpointManagerCreatesScope()
         {
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
@@ -49,12 +48,18 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var context = new MockPartitionContext("partition");
             var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
 
-            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
+            var storageManager = new Mock<PartitionManager>();
+            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<BlobContainerClient>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
 
-            // TODO: find a way to call UpdateCheckpointAsync.
+            storageManager
+                .Setup(manager => manager.UpdateCheckpointAsync(It.IsAny<Checkpoint>()))
+                .Returns(Task.CompletedTask);
 
-            await Task.CompletedTask;
-            // await processor.UpdateCheckpointAsync(data, context);
+            eventProcessor
+                .Setup(processor => processor.CreateStorageManager(It.IsAny<BlobContainerClient>()))
+                .Returns(storageManager.Object);
+
+            await eventProcessor.Object.UpdateCheckpointAsync(data, context);
 
             ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
             Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
