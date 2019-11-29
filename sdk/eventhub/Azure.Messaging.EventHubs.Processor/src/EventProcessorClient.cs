@@ -858,7 +858,9 @@ namespace Azure.Messaging.EventHubs
                 var utcNow = DateTimeOffset.UtcNow;
 
                 IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList
-                    .Where(ownership => utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
+                    .Where(ownership =>
+                        utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration
+                        && !string.IsNullOrEmpty(ownership.OwnerIdentifier));
 
                 // Dispose of all previous partition ownership instances and get a whole new dictionary.
 
