@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_partitionInitializingAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already be assigned to this event.");
+                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
                 }
 
                 EnsureNotRunningAndInvoke(() => _partitionInitializingAsync = value);
@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_partitionClosingAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already be assigned to this event.");
+                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
                 }
 
                 EnsureNotRunningAndInvoke(() => _partitionClosingAsync = value);
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_processEventAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already be assigned to this event.");
+                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
                 }
 
                 EnsureNotRunningAndInvoke(() => _processEventAsync = value);
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_processErrorAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already be assigned to this event.");
+                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
