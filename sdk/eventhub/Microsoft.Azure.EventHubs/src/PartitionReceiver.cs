@@ -41,7 +41,7 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="eventPosition"></param>
         /// <param name="epoch"></param>
         /// <param name="receiverOptions"></param>
-        protected internal PartitionReceiver(
+        protected PartitionReceiver(
             EventHubClient eventHubClient,
             string consumerGroupName,
             string partitionId,
