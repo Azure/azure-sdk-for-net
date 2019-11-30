@@ -88,16 +88,16 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             int retries = 0;
             while ((this.Processor.TotalBatches < atLeastBatches) && !this.HasShutDown && (retries < maxRetries))
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(200);
                 retries++;
             }
             Assert.False(this.HasShutDown, "Uncommanded shut down while processing");
             Assert.True(this.Processor.TotalBatches >= atLeastBatches,
-                $"Unexpected loop exit at {this.Processor.TotalBatches} batches and {retries} seconds");
+                $"Unexpected loop exit at {this.Processor.TotalBatches} batches and {retries} retries");
             return this.Processor.TotalBatches;
         }
 
-        public void VerifyNormalStartup(int maxRetries, int retryDelayInMs = 5000)
+        public void VerifyNormalStartup(int maxRetries, int retryDelayInMs = 100)
         {
             int retries = 0;
             while (!this.Processor.IsOpened && !this.HasShutDown && (retries < maxRetries))
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
                 retries++;
             }
             Assert.False(this.HasShutDown, "Shut down before open");
-            Assert.True(this.Processor.IsOpened, $"Open did not succeed after {retries} seconds");
+            Assert.True(this.Processor.IsOpened, $"Open did not succeed after {retries} retries");
         }
 
         public void DoNormalShutdown(int maxRetries)
