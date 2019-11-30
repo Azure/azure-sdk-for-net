@@ -97,12 +97,12 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             return this.Processor.TotalBatches;
         }
 
-        public void VerifyNormalStartup(int maxRetries)
+        public void VerifyNormalStartup(int maxRetries, int retryDelayInMs = 5000)
         {
             int retries = 0;
             while (!this.Processor.IsOpened && !this.HasShutDown && (retries < maxRetries))
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(retryDelayInMs);
                 retries++;
             }
             Assert.False(this.HasShutDown, "Shut down before open");

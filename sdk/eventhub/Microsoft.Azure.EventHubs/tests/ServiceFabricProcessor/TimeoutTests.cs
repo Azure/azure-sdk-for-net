@@ -18,7 +18,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         {
             TestState state = new TestState();
             state.Initialize("timeoutsuppress", 1, 0);
-            state.Options.ReceiveTimeout = TimeSpan.FromSeconds(5.0);
+            state.Options.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
 
             ServiceFabricProcessor sfp = new ServiceFabricProcessor(
                     state.ServiceUri,
@@ -28,17 +28,18 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
                     state.Processor,
                     state.ConnectionString,
                     "$Default",
-                    state.Options);
-            sfp.MockMode = state.PartitionLister;
-            sfp.EventHubClientFactory = new TimeoutEventHubClientFactoryMock(1);
+                    state.Options)
+            {
+                MockMode = state.PartitionLister,
+                EventHubClientFactory = new TimeoutEventHubClientFactoryMock(1)
+            };
 
             state.PrepareToRun();
             state.StartRun(sfp);
 
-            state.VerifyNormalStartup(10);
+            state.VerifyNormalStartup(10, 100);
 
-            Thread.Sleep(20000); // timeout is 5s, sleep 20s to allow some timeouts
-
+            Thread.Sleep((int)state.Options.ReceiveTimeout.TotalMilliseconds * 2); // sleep to allow some timeouts
             state.DoNormalShutdown(10);
             state.WaitRun();
 
@@ -54,7 +55,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         {
             TestState state = new TestState();
             state.Initialize("timeoutinvoke", 1, 0);
-            state.Options.ReceiveTimeout = TimeSpan.FromSeconds(5.0);
+            state.Options.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
             state.Options.InvokeProcessorAfterReceiveTimeout = true;
 
             ServiceFabricProcessor sfp = new ServiceFabricProcessor(
@@ -65,16 +66,18 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
                     state.Processor,
                     state.ConnectionString,
                     "$Default",
-                    state.Options);
-            sfp.MockMode = state.PartitionLister;
-            sfp.EventHubClientFactory = new TimeoutEventHubClientFactoryMock(1);
+                    state.Options)
+            {
+                MockMode = state.PartitionLister,
+                EventHubClientFactory = new TimeoutEventHubClientFactoryMock(1)
+            };
 
             state.PrepareToRun();
             state.StartRun(sfp);
 
-            state.VerifyNormalStartup(10);
+            state.VerifyNormalStartup(10, 100);
 
-            Thread.Sleep(20000); // timeout is 5s, sleep 20s to allow some timeouts
+            Thread.Sleep((int)state.Options.ReceiveTimeout.TotalMilliseconds * 2); // sleep to allow some timeouts
 
             state.DoNormalShutdown(10);
             state.WaitRun();
