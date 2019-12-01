@@ -24,20 +24,17 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1")
+                new TextDocumentInput("1", "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs.")
                 {
                      Language = "en",
-                     Text = "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs."
                 },
-                new TextDocumentInput("2")
+                new TextDocumentInput("2","Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
                 {
                      Language = "en",
-                     Text = "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
                 },
-                new TextDocumentInput("3")
+                new TextDocumentInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
                 {
                      Language = "en",
-                     Text = "Is 998.214.865-68 your Brazilian CPF number?",
                 }
             };
 

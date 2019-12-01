@@ -1159,9 +1159,8 @@ namespace Azure.AI.TextAnalytics
             List<TextDocumentInput> documentInputs = new List<TextDocumentInput>();
             foreach (string input in inputs)
             {
-                documentInputs.Add(new TextDocumentInput($"{id++}")
+                documentInputs.Add(new TextDocumentInput($"{id++}", input)
                 {
-                    Text = input,
                     Language = language,
                 });
             }

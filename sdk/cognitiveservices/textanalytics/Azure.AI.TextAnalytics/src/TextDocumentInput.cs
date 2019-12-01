@@ -10,9 +10,11 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="id"></param>
-        public TextDocumentInput(string id)
+        /// <param name="text"></param>
+        public TextDocumentInput(string id, string text)
         {
             Id = id;
+            Text = text;
         }
 
         /// <summary>
@@ -29,6 +31,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

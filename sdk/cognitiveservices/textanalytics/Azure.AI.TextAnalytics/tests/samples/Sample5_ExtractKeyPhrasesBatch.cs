@@ -25,20 +25,17 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1")
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
                 {
                      Language = "en",
-                     Text = "Microsoft was founded by Bill Gates and Paul Allen."
                 },
-                new TextDocumentInput("2")
+                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
                 {
                      Language = "en",
-                     Text = "Text Analytics is one of the Azure Cognitive Services.",
                 },
-                new TextDocumentInput("3")
+                new TextDocumentInput("3", "My cat might need to see a veterinarian.")
                 {
                      Language = "en",
-                     Text = "My cat might need to see a veterinarian.",
                 }
             };
 

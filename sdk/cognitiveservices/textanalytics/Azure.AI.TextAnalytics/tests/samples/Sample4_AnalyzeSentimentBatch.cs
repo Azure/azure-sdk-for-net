@@ -23,25 +23,21 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1")
+                new TextDocumentInput("1", "That was the best day of my life!")
                 {
                      Language = "en",
-                     Text = "That was the best day of my life!"
                 },
-                new TextDocumentInput("2")
+                new TextDocumentInput("2", "This food is very bad. Everyone who ate with us got sick.")
                 {
                      Language = "en",
-                     Text = "This food is very bad. Everyone who ate with us got sick."
                 },
-                new TextDocumentInput("3")
+                new TextDocumentInput("3", "I'm not sure how I feel about this product.")
                 {
                      Language = "en",
-                     Text = "I'm not sure how I feel about this product.",
                 },
-                new TextDocumentInput("4")
+                new TextDocumentInput("4", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
                 {
                      Language = "en",
-                     Text = "Pike Place Market is my favorite Seattle attraction.  We had so much fun there."
                 }
             };
 
