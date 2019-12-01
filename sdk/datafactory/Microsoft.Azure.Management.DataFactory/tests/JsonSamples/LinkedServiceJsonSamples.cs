@@ -2302,8 +2302,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                value : ""fakeConnString"",
+                type : ""SecureString""
             }
         }
     }
@@ -2317,8 +2317,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -2340,8 +2340,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             }
         }
     }
@@ -2355,8 +2355,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 

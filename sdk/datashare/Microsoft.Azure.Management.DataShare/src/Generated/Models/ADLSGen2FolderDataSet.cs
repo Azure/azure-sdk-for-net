@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// An ADLS Gen 2 folder dataset.
+    /// An ADLS Gen 2 folder data set.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AdlsGen2Folder")]
     [Rest.Serialization.JsonTransformation]

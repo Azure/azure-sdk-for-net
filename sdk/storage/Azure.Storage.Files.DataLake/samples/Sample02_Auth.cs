@@ -11,7 +11,6 @@ using Azure.Identity;
 using Azure.Storage;
 using Azure.Storage.Files.DataLake;
 using Azure.Storage.Files.DataLake.Models;
-using Azure.Storage.Files.DataLake.Sas;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 

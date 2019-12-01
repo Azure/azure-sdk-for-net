@@ -5,7 +5,7 @@ using System;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
+using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Files.Test
 {
@@ -130,12 +130,12 @@ namespace Azure.Storage.Files.Test
 
             var stringToSign = string.Join("\n",
                 Permissions,
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.StartTime),
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.StartTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 canonicalName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                constants.Sas.Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(constants.Sas.Protocol),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion,
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Test
                 constants.Sas.ContentLanguage,
                 constants.Sas.ContentType);
 
-            return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
     }
 }

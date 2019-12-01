@@ -7,21 +7,21 @@ using NUnit.Framework;
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
-    ///   The suite of tests for the <see cref="Processor.BlobsCheckpointStore" />
+    ///   The suite of tests for the <see cref="BlobsCheckpointStore" />
     ///   class.
     /// </summary>
     ///
     public class BlobsCheckpointStoreTests
     {
         /// <summary>
-        ///    Verifies functionality of the <see cref="Processor.BlobsCheckpointStore" />
+        ///    Verifies functionality of the <see cref="BlobsCheckpointStore" />
         ///    constructor.
         /// </summary>
         ///
         [Test]
         public void ConstructorRequiresBlobContainerClient()
         {
-            Assert.That(() => new Processor.BlobsCheckpointStore(null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new BlobsCheckpointStore(null), Throws.InstanceOf<ArgumentException>());
         }
     }
 }

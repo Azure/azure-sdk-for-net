@@ -80,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(typeof(ArgumentTests))]
+        [TestCase(typeof(TypeExtensionsTests))]
         [TestCase(typeof(DBNull))]
         [TestCase(typeof(Exception))]
         public void ToAmqpPropertyDoesNotMapUnknownTypes(Type unknownType)

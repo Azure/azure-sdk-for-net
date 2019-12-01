@@ -6,13 +6,12 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Rest;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests.Infrastructure
+namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
     ///  Provides a dynamically created Azure blob container instance which exists only in the context

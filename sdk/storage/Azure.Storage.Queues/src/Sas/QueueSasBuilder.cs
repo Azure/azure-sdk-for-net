@@ -135,8 +135,8 @@ namespace Azure.Storage.Sas
                 Version = SasQueryParameters.DefaultSasVersion;
             }
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -146,10 +146,10 @@ namespace Azure.Storage.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version);
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = new SasQueryParameters(
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            var p = SasQueryParametersInternals.Create(
                 version: Version,
                 services: default,
                 resourceTypes: default,

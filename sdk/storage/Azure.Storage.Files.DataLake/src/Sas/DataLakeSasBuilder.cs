@@ -5,10 +5,10 @@ using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Storage.Files.DataLake;
 using Azure.Storage.Files.DataLake.Models;
-using Azure.Storage.Sas;
 
-namespace Azure.Storage.Files.DataLake.Sas
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="DataLakeSasBuilder"/> is used to generate a Shared Access
@@ -190,8 +190,8 @@ namespace Azure.Storage.Files.DataLake.Sas
 
             EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? String.Empty, Path ?? String.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 null, // snapshot
@@ -211,7 +211,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 ContentLanguage,
                 ContentType);
 
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
             var p = new DataLakeSasQueryParameters(
                 version: Version,
@@ -252,10 +252,10 @@ namespace Azure.Storage.Files.DataLake.Sas
 
             EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -270,7 +270,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 null, // snapshot

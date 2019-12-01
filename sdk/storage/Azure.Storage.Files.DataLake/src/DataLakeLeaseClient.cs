@@ -41,7 +41,13 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _blobLeaseClient?.ClientDiagnostics;
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         #region ctors
         /// <summary>
@@ -51,6 +57,7 @@ namespace Azure.Storage.Files.DataLake
         protected DataLakeLeaseClient()
         {
             _blobLeaseClient = null;
+            _clientDiagnostics = null;
         }
 
         /// <summary>
@@ -66,6 +73,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeLeaseClient(DataLakePathClient client, string leaseId = null)
         {
             _blobLeaseClient = new BlobLeaseClient(client.BlobClient, leaseId);
+            _clientDiagnostics = client.ClientDiagnostics;
         }
 
         /// <summary>
@@ -82,6 +90,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeLeaseClient(DataLakeFileSystemClient client, string leaseId = null)
         {
             _blobLeaseClient = new BlobLeaseClient(client.ContainerClient, leaseId);
+            _clientDiagnostics = client.ClientDiagnostics;
         }
         #endregion ctors
 

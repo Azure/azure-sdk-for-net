@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// An ADLS Gen 1 file dataset.
+    /// An ADLS Gen 1 file data set.
     /// </summary>
     [Newtonsoft.Json.JsonObject("AdlsGen1File")]
     [Rest.Serialization.JsonTransformation]

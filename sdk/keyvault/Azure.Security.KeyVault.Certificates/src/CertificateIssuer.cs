@@ -60,6 +60,15 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name => Properties.Name;
 
         /// <summary>
+        /// Gets or sets the provider name of the certificate issuer.
+        /// </summary>
+        public string Provider
+        {
+            get => Properties.Provider;
+            set => Properties.Provider = value;
+        }
+
+        /// <summary>
         /// Gets or sets the account identifier or username used to authenticate to the certificate issuer.
         /// </summary>
         public string AccountId { get; set; }

@@ -13,7 +13,6 @@ using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
@@ -202,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Response<PathProperties> getPropertiesResponse = await file.GetPropertiesAsync();
             AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata, isDirectory: false);
-    }
+        }
 
         [Test]
         public async Task CreateAsync_PermissionAndUmask()
@@ -365,7 +364,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<PathProperties> response = await destFile.GetPropertiesAsync();
-    }
+        }
 
         [Test]
         public async Task RenameAsync_Error()
@@ -600,6 +599,18 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.Group);
             Assert.IsNotNull(accessControl.Permissions);
             Assert.IsNotNull(accessControl.AccessControlList);
+            AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
+        }
+
+        private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
+        {
+            DataLakeSasQueryParameters sas = new DataLakeUriBuilder(uri).Sas;
+            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
+            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
+            Assert.AreEqual(key.SignedService, sas.KeyService);
+            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
+            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
+            Assert.AreEqual(key.SignedVersion, sas.Version);
         }
 
         [Test]
@@ -668,6 +679,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.Group);
             Assert.IsNotNull(accessControl.Permissions);
             Assert.IsNotNull(accessControl.AccessControlList);
+            AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
         }
 
         [Test]
@@ -969,6 +981,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
+
         }
 
         [Test]
@@ -1031,6 +1045,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
         }
 
         [Test]

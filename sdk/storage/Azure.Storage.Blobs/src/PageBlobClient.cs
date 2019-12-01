@@ -814,42 +814,30 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var range = new HttpRange(offset, content.Length);
-                    var uploadAttempt = 0;
-                    return await ReliableOperation.DoSyncOrAsync(
-                        async,
-                        reset: () => content.Seek(0, SeekOrigin.Begin),
-                        predicate: e => true,
-                        maximumRetries: Constants.MaxReliabilityRetries,
-                        operation:
-                            () =>
-                            {
-                                Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                                return BlobRestClient.PageBlob.UploadPagesAsync(
-                                    ClientDiagnostics,
-                                    Pipeline,
-                                    Uri,
-                                    body: content,
-                                    contentLength: content.Length,
-                                    transactionalContentHash: transactionalContentHash,
-                                    timeout: default,
-                                    range: range.ToString(),
-                                    leaseId: conditions?.LeaseId,
-                                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                                    ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
-                                    ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
-                                    ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                                    ifModifiedSince: conditions?.IfModifiedSince,
-                                    ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                    ifMatch: conditions?.IfMatch,
-                                    ifNoneMatch: conditions?.IfNoneMatch,
-                                    async: async,
-                                    operationName: Constants.Blob.Page.UploadOperationName,
-                                    cancellationToken: cancellationToken);
-                            },
-                        cleanup: () => { })
-                        .ConfigureAwait(false);
+
+                    return await BlobRestClient.PageBlob.UploadPagesAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        transactionalContentHash: transactionalContentHash,
+                        timeout: default,
+                        range: range.ToString(),
+                        leaseId: conditions?.LeaseId,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                        ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                        ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        async: async,
+                        operationName: Constants.Blob.Page.UploadOperationName,
+                        cancellationToken: cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -1173,7 +1161,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Response<PageRangesInfoInternal> response =  await BlobRestClient.PageBlob.GetPageRangesAsync(
+                    Response<PageRangesInfoInternal> response = await BlobRestClient.PageBlob.GetPageRangesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,

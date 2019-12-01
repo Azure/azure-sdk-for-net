@@ -47,6 +47,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.</param>
         /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
         /// server port (6379) is enabled.</param>
+        /// <param name="replicasPerMaster">The number of replicas to be
+        /// created per master.</param>
         /// <param name="tenantSettings">A dictionary of tenant
         /// settings</param>
         /// <param name="shardCount">The number of shards to be created on a
@@ -73,13 +75,16 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// cache</param>
         /// <param name="linkedServers">List of the linked servers associated
         /// with the cache</param>
+        /// <param name="instances">List of the Redis instances associated with
+        /// the cache</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
-        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string subnetId = default(string), string staticIP = default(string), string redisVersion = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), RedisAccessKeys accessKeys = default(RedisAccessKeys), IList<RedisLinkedServer> linkedServers = default(IList<RedisLinkedServer>), IList<string> zones = default(IList<string>))
+        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string subnetId = default(string), string staticIP = default(string), string redisVersion = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), RedisAccessKeys accessKeys = default(RedisAccessKeys), IList<RedisLinkedServer> linkedServers = default(IList<RedisLinkedServer>), IList<RedisInstanceDetails> instances = default(IList<RedisInstanceDetails>), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             RedisConfiguration = redisConfiguration;
             EnableNonSslPort = enableNonSslPort;
+            ReplicasPerMaster = replicasPerMaster;
             TenantSettings = tenantSettings;
             ShardCount = shardCount;
             MinimumTlsVersion = minimumTlsVersion;
@@ -93,6 +98,7 @@ namespace Microsoft.Azure.Management.Redis.Models
             SslPort = sslPort;
             AccessKeys = accessKeys;
             LinkedServers = linkedServers;
+            Instances = instances;
             Zones = zones;
             CustomInit();
         }
@@ -116,6 +122,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableNonSslPort")]
         public bool? EnableNonSslPort { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of replicas to be created per master.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicasPerMaster")]
+        public int? ReplicasPerMaster { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary of tenant settings
@@ -204,6 +216,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.linkedServers")]
         public IList<RedisLinkedServer> LinkedServers { get; private set; }
+
+        /// <summary>
+        /// Gets list of the Redis instances associated with the cache
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.instances")]
+        public IList<RedisInstanceDetails> Instances { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting where the
