@@ -18,7 +18,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         {
             TestState state = new TestState();
             state.Initialize("timeoutsuppress", 1, 0);
-            state.Options.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
+            state.Options.ReceiveTimeout = TimeSpan.FromMilliseconds(10);
 
             ServiceFabricProcessor sfp = new ServiceFabricProcessor(
                     state.ServiceUri,
@@ -40,6 +40,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             state.VerifyNormalStartup(10);
 
             Thread.Sleep((int)state.Options.ReceiveTimeout.TotalMilliseconds * 10); // sleep to allow some timeouts
+            
             state.DoNormalShutdown(10);
             state.WaitRun();
 
@@ -55,7 +56,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         {
             TestState state = new TestState();
             state.Initialize("timeoutinvoke", 1, 0);
-            state.Options.ReceiveTimeout = TimeSpan.FromMilliseconds(100);
+            state.Options.ReceiveTimeout = TimeSpan.FromMilliseconds(10);
             state.Options.InvokeProcessorAfterReceiveTimeout = true;
 
             ServiceFabricProcessor sfp = new ServiceFabricProcessor(
@@ -76,8 +77,8 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             state.StartRun(sfp);
 
             state.VerifyNormalStartup(10);
-
-            Thread.Sleep((int)state.Options.ReceiveTimeout.TotalMilliseconds * 10); // sleep to allow some timeouts
+            
+            state.CountNBatches(1, 10);
 
             state.DoNormalShutdown(10);
             state.WaitRun();
