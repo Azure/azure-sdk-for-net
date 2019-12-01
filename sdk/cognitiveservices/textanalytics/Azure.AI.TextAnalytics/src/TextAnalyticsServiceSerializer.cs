@@ -221,107 +221,73 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Deserialize Common
 
-        //        #region Detect Languages
+        #region Detect Languages
 
-        //        public static async Task<DocumentResultCollection<DetectedLanguage>> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadDetectLanguageResultCollection(root);
-        //        }
+        public static async Task<DetectLanguageResultCollection> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadDetectLanguageResultCollection(root);
+        }
 
-        //        public static DocumentResultCollection<DetectedLanguage> DeserializeDetectLanguageResponse(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content, default);
-        //            JsonElement root = json.RootElement;
-        //            return ReadDetectLanguageResultCollection(root);
-        //        }
+        public static DetectLanguageResultCollection DeserializeDetectLanguageResponse(Stream content)
+        {
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadDetectLanguageResultCollection(root);
+        }
 
-        //        public static async Task<IEnumerable<DetectedLanguage>> DeserializeDetectedLanguageCollectionAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadDetectedLanguageCollection(root);
-        //        }
+        private static DetectLanguageResultCollection ReadDetectLanguageResultCollection(JsonElement root)
+        {
+            var collection = new List<DetectLanguageResult>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    collection.Add(ReadDetectedLanguageResult(documentElement));
+                }
+            }
 
-        //        public static IEnumerable<DetectedLanguage> DeserializeDetectedLanguageCollection(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content);
-        //            JsonElement root = json.RootElement;
-        //            return ReadDetectedLanguageCollection(root);
-        //        }
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
 
-        //        private static DocumentResultCollection<DetectedLanguage> ReadDetectLanguageResultCollection(JsonElement root)
-        //        {
-        //            var result = new DocumentResultCollection<DetectedLanguage>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadDetectedLanguageResult(documentElement));
-        //                }
-        //            }
+            return new DetectLanguageResultCollection(collection, statistics, modelVersion);
+        }
 
-        //            ReadDocumentErrors(root, result);
-        //            result.ModelVersion = ReadModelVersion(root);
-        //            result.Statistics = ReadDocumentBatchStatistics(root);
+        private static DetectLanguageResult ReadDetectedLanguageResult(JsonElement documentElement)
+        {
+            List<DetectedLanguage> languages = new List<DetectedLanguage>();
+            if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
+            {
+                foreach (JsonElement languageElement in detectedLanguagesValue.EnumerateArray())
+                {
+                    languages.Add(ReadDetectedLanguage(languageElement));
+                }
+            }
 
-        //            return result;
-        //        }
+            return new DetectLanguageResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                languages);
+        }
 
-        //        private static IEnumerable<DetectedLanguage> ReadDetectedLanguageCollection(JsonElement root)
-        //        {
-        //            var result = new List<DetectedLanguage>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    DocumentResult<DetectedLanguage> results = ReadDetectedLanguageResult(documentElement);
+        private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
+        {
+            string name = null;
+            string iso6391Name = null;
+            double score = default;
 
-        //                    // TODO: If needed, sort by score to get the value with the highest confidence.
-        //                    DetectedLanguage language = results.FirstOrDefault();
-        //                    result.Add(language);
-        //                }
-        //            }
+            if (languageElement.TryGetProperty("name", out JsonElement nameValue))
+                name = nameValue.GetString();
+            if (languageElement.TryGetProperty("iso6391Name", out JsonElement iso6391NameValue))
+                iso6391Name = iso6391NameValue.ToString();
+            if (languageElement.TryGetProperty("score", out JsonElement scoreValue))
+                scoreValue.TryGetDouble(out score);
 
-        //            return result;
-        //        }
+            return new DetectedLanguage(name, iso6391Name, score);
+        }
 
-        //        private static DocumentResult<DetectedLanguage> ReadDetectedLanguageResult(JsonElement documentElement)
-        //        {
-        //            var documentResult = new DocumentResult<DetectedLanguage>(
-        //                ReadDocumentId(documentElement),
-        //                ReadDocumentStatistics(documentElement));
-
-        //            if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
-        //            {
-        //                foreach (JsonElement languageElement in detectedLanguagesValue.EnumerateArray())
-        //                {
-        //                    documentResult.Add(ReadDetectedLanguage(languageElement));
-        //                }
-        //            }
-
-
-        //            return documentResult;
-        //        }
-
-        //        private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
-        //        {
-        //            string name = null;
-        //            string iso6391Name = null;
-        //            double score = default;
-
-        //            if (languageElement.TryGetProperty("name", out JsonElement nameValue))
-        //                name = nameValue.GetString();
-        //            if (languageElement.TryGetProperty("iso6391Name", out JsonElement iso6391NameValue))
-        //                iso6391Name = iso6391NameValue.ToString();
-        //            if (languageElement.TryGetProperty("score", out JsonElement scoreValue))
-        //                scoreValue.TryGetDouble(out score);
-
-        //            return new DetectedLanguage(name, iso6391Name, score);
-        //        }
-
-        //        #endregion Detect Languages
+        #endregion Detect Languages
 
         #region Recognize Entities
 
@@ -405,123 +371,94 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Recognize Entities
 
-        //        #region Analyze Sentiment
+        #region Analyze Sentiment
 
-        //        public static async Task<SentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadSentimentResult(root);
-        //        }
+        public static async Task<AnalyzeSentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadSentimentResult(root);
+        }
 
-        //        public static SentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content, default);
-        //            JsonElement root = json.RootElement;
-        //            return ReadSentimentResult(root);
-        //        }
+        public static AnalyzeSentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content)
+        {
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadSentimentResult(root);
+        }
 
-        //        public static async Task<IEnumerable<TextSentiment>> DeserializeSentimentCollectionAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadSentimentCollection(root);
-        //        }
+        private static AnalyzeSentimentResultCollection ReadSentimentResult(JsonElement root)
+        {
+            var collection = new List<AnalyzeSentimentResult>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    collection.Add(ReadDocumentSentimentResult(documentElement));
+                }
+            }
 
-        //        public static IEnumerable<TextSentiment> DeserializeSentimentCollection(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content);
-        //            JsonElement root = json.RootElement;
-        //            return ReadSentimentCollection(root);
-        //        }
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
 
-        //        private static SentimentResultCollection ReadSentimentResult(JsonElement root)
-        //        {
-        //            var result = new SentimentResultCollection();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadDocumentSentimentResult(documentElement));
-        //                }
-        //            }
+            return new AnalyzeSentimentResultCollection(collection, statistics, modelVersion);
+        }
 
-        //            ReadSentimentResultErrors(root, result);
-        //            result.ModelVersion = ReadModelVersion(root);
-        //            result.Statistics = ReadDocumentBatchStatistics(root);
+        private static AnalyzeSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
+        {
+            var documentSentiment = ReadSentiment(documentElement, "documentScores");
+            var sentenceSentiments = new List<TextSentiment>();
+            if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
+            {
+                foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
+                {
+                    sentenceSentiments.Add(ReadSentiment(sentenceElement, "sentenceScores"));
+                }
+            }
 
-        //            return result;
-        //        }
+            return new AnalyzeSentimentResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                documentSentiment,
+                sentenceSentiments);
+        }
 
-        //        private static IEnumerable<TextSentiment> ReadSentimentCollection(JsonElement root)
-        //        {
-        //            var result = new List<TextSentiment>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadDocumentSentimentResult(documentElement).DocumentSentiment);
-        //                }
-        //            }
+        private static TextSentiment ReadSentiment(JsonElement documentElement, string scoresElementName)
+        {
+            TextSentimentClass sentimentClass = default;
+            double positiveScore = default;
+            double neutralScore = default;
+            double negativeScore = default;
+            int offset = default;
+            int length = default;
 
-        //            return result;
-        //        }
+            if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
+            {
+                sentimentClass = (TextSentimentClass)Enum.Parse(typeof(TextSentimentClass), sentimentValue.ToString(), ignoreCase: true);
+            }
 
-        //        private static TextDocumentSentiment ReadDocumentSentimentResult(JsonElement documentElement)
-        //        {
-        //            var documentResult = new TextDocumentSentiment(
-        //                ReadDocumentId(documentElement),
-        //                ReadDocumentStatistics(documentElement))
-        //            {
-        //                DocumentSentiment = ReadSentiment(documentElement, "documentScores")
-        //            };
+            if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
+            {
+                if (scoreValues.TryGetProperty("positive", out JsonElement positiveValue))
+                    positiveValue.TryGetDouble(out positiveScore);
 
-        //            if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
-        //            {
-        //                foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
-        //                {
-        //                    documentResult.Add(ReadSentiment(sentenceElement, "sentenceScores"));
-        //                }
-        //            }
+                if (scoreValues.TryGetProperty("neutral", out JsonElement neutralValue))
+                    neutralValue.TryGetDouble(out neutralScore);
 
-        //            return documentResult;
-        //        }
+                if (scoreValues.TryGetProperty("negative", out JsonElement negativeValue))
+                    negativeValue.TryGetDouble(out negativeScore);
+            }
 
-        //        private static TextSentiment ReadSentiment(JsonElement documentElement, string scoresElementName)
-        //        {
-        //            TextSentimentClass sentimentClass = default;
-        //            double positiveScore = default;
-        //            double neutralScore = default;
-        //            double negativeScore = default;
-        //            int offset = default;
-        //            int length = default;
+            if (documentElement.TryGetProperty("offset", out JsonElement offsetValue))
+                offsetValue.TryGetInt32(out offset);
 
-        //            if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
-        //            {
-        //                sentimentClass = (TextSentimentClass)Enum.Parse(typeof(TextSentimentClass), sentimentValue.ToString(), ignoreCase: true);
-        //            }
+            if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
+                lengthValue.TryGetInt32(out length);
 
-        //            if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
-        //            {
-        //                if (scoreValues.TryGetProperty("positive", out JsonElement positiveValue))
-        //                    positiveValue.TryGetDouble(out positiveScore);
+            return new TextSentiment(sentimentClass, positiveScore, neutralScore, negativeScore, offset, length);
+        }
 
-        //                if (scoreValues.TryGetProperty("neutral", out JsonElement neutralValue))
-        //                    neutralValue.TryGetDouble(out neutralScore);
-
-        //                if (scoreValues.TryGetProperty("negative", out JsonElement negativeValue))
-        //                    negativeValue.TryGetDouble(out negativeScore);
-        //            }
-
-        //            if (documentElement.TryGetProperty("offset", out JsonElement offsetValue))
-        //                offsetValue.TryGetInt32(out offset);
-
-        //            if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
-        //                lengthValue.TryGetInt32(out length);
-
-        //            return new TextSentiment(sentimentClass, positiveScore, neutralScore, negativeScore, offset, length);
-        //        }
-        //        #endregion
+        #endregion
 
         #region Extract Key Phrases
 
@@ -580,143 +517,114 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract Key Phrases
 
-        //        #region Entity Linking
+        #region Entity Linking
 
-        //        public static async Task<DocumentResultCollection<LinkedEntity>> DeserializeLinkedEntityResponseAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadLinkedEntityResultCollection(root);
-        //        }
+        public static async Task<ExtractLinkedEntitiesResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadLinkedEntityResultCollection(root);
+        }
 
-        //        public static DocumentResultCollection<LinkedEntity> DeserializeLinkedEntityResponse(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content, default);
-        //            JsonElement root = json.RootElement;
-        //            return ReadLinkedEntityResultCollection(root);
-        //        }
+        public static ExtractLinkedEntitiesResultCollection DeserializeLinkedEntityResponse(Stream content)
+        {
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadLinkedEntityResultCollection(root);
+        }
 
-        //        public static async Task<IEnumerable<IEnumerable<LinkedEntity>>> DeserializeLinkedEntityCollectionAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadLinkedEntityCollection(root);
-        //        }
+        private static ExtractLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root)
+        {
+            var collection = new List<ExtractLinkedEntitiesResult>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    collection.Add(ReadLinkedEntityResult(documentElement));
+                }
+            }
 
-        //        public static IEnumerable<IEnumerable<LinkedEntity>> DeserializeLinkedEntityCollection(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content);
-        //            JsonElement root = json.RootElement;
-        //            return ReadLinkedEntityCollection(root);
-        //        }
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
 
-        //        private static DocumentResultCollection<LinkedEntity> ReadLinkedEntityResultCollection(JsonElement root)
-        //        {
-        //            var result = new DocumentResultCollection<LinkedEntity>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadLinkedEntityResult(documentElement));
-        //                }
-        //            }
+            return new ExtractLinkedEntitiesResultCollection(collection, statistics, modelVersion);
+        }
 
-        //            ReadDocumentErrors(root, result);
-        //            result.ModelVersion = ReadModelVersion(root);
-        //            result.Statistics = ReadDocumentBatchStatistics(root);
+        private static ExtractLinkedEntitiesResult ReadLinkedEntityResult(JsonElement documentElement)
+        {
+            List<LinkedEntity> entities = new List<LinkedEntity>();
+            if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
+            {
+                foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
+                {
+                    entities.Add(ReadLinkedEntity(entityElement));
+                }
+            }
 
-        //            return result;
-        //        }
+            return new ExtractLinkedEntitiesResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                entities);
+        }
 
-        //        private static IEnumerable<IEnumerable<LinkedEntity>> ReadLinkedEntityCollection(JsonElement root)
-        //        {
-        //            var result = new List<List<LinkedEntity>>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadLinkedEntityResult(documentElement).ToList());
-        //                }
-        //            }
+        private static LinkedEntity ReadLinkedEntity(JsonElement entityElement)
+        {
+            string name = default;
+            string id = default;
+            string language = default;
+            string dataSource = default;
+            Uri uri = default;
 
-        //            return result;
-        //        }
+            if (entityElement.TryGetProperty("name", out JsonElement nameElement))
+                name = nameElement.ToString();
+            if (entityElement.TryGetProperty("id", out JsonElement idElement))
+                id = idElement.ToString();
+            if (entityElement.TryGetProperty("language", out JsonElement languageElement))
+                language = languageElement.ToString();
+            if (entityElement.TryGetProperty("dataSource", out JsonElement dataSourceValue))
+                dataSource = dataSourceValue.ToString();
+            if (entityElement.TryGetProperty("url", out JsonElement urlValue))
+                uri = new Uri(urlValue.ToString());
 
-        //        private static DocumentResult<LinkedEntity> ReadLinkedEntityResult(JsonElement documentElement)
-        //        {
-        //            var documentResult = new DocumentResult<LinkedEntity>(
-        //                ReadDocumentId(documentElement),
-        //                ReadDocumentStatistics(documentElement));
+            IEnumerable<LinkedEntityMatch> matches = ReadLinkedEntityMatches(entityElement);
 
-        //            if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
-        //            {
-        //                foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
-        //                {
-        //                    documentResult.Add(ReadLinkedEntity(entityElement));
-        //                }
-        //            }
+            return new LinkedEntity(name, id, language, dataSource, uri, matches);
+        }
 
-        //            return documentResult;
-        //        }
+        private static IEnumerable<LinkedEntityMatch> ReadLinkedEntityMatches(JsonElement entityElement)
+        {
+            if (entityElement.TryGetProperty("matches", out JsonElement matchesElement))
+            {
+                List<LinkedEntityMatch> matches = new List<LinkedEntityMatch>();
 
-        //        private static LinkedEntity ReadLinkedEntity(JsonElement entityElement)
-        //        {
-        //            string name = default;
-        //            string id = default;
-        //            string language = default;
-        //            string dataSource = default;
-        //            Uri uri = default;
+                foreach (JsonElement matchElement in matchesElement.EnumerateArray())
+                {
+                    string text = default;
+                    double score = default;
+                    int offset = default;
+                    int length = default;
 
-        //            if (entityElement.TryGetProperty("name", out JsonElement nameElement))
-        //                name = nameElement.ToString();
-        //            if (entityElement.TryGetProperty("id", out JsonElement idElement))
-        //                id = idElement.ToString();
-        //            if (entityElement.TryGetProperty("language", out JsonElement languageElement))
-        //                language = languageElement.ToString();
-        //            if (entityElement.TryGetProperty("dataSource", out JsonElement dataSourceValue))
-        //                dataSource = dataSourceValue.ToString();
-        //            if (entityElement.TryGetProperty("url", out JsonElement urlValue))
-        //                uri = new Uri(urlValue.ToString());
+                    if (matchElement.TryGetProperty("text", out JsonElement textValue))
+                        text = textValue.ToString();
 
-        //            IEnumerable<LinkedEntityMatch> matches = ReadLinkedEntityMatches(entityElement);
+                    if (matchElement.TryGetProperty("score", out JsonElement scoreValue))
+                        scoreValue.TryGetDouble(out score);
 
-        //            return new LinkedEntity(name, id, language, dataSource, uri, matches);
-        //        }
+                    if (matchElement.TryGetProperty("offset", out JsonElement offsetValue))
+                        offsetValue.TryGetInt32(out offset);
 
-        //        private static IEnumerable<LinkedEntityMatch> ReadLinkedEntityMatches(JsonElement entityElement)
-        //        {
-        //            if (entityElement.TryGetProperty("matches", out JsonElement matchesElement))
-        //            {
-        //                List<LinkedEntityMatch> matches = new List<LinkedEntityMatch>();
+                    if (matchElement.TryGetProperty("length", out JsonElement lengthValue))
+                        lengthValue.TryGetInt32(out length);
 
-        //                foreach (JsonElement matchElement in matchesElement.EnumerateArray())
-        //                {
-        //                    string text = default;
-        //                    double score = default;
-        //                    int offset = default;
-        //                    int length = default;
+                    matches.Add(new LinkedEntityMatch(text, score, offset, length));
+                }
 
-        //                    if (matchElement.TryGetProperty("text", out JsonElement textValue))
-        //                        text = textValue.ToString();
+                return matches;
+            }
 
-        //                    if (matchElement.TryGetProperty("score", out JsonElement scoreValue))
-        //                        scoreValue.TryGetDouble(out score);
+            return default;
+        }
 
-        //                    if (matchElement.TryGetProperty("offset", out JsonElement offsetValue))
-        //                        offsetValue.TryGetInt32(out offset);
-
-        //                    if (matchElement.TryGetProperty("length", out JsonElement lengthValue))
-        //                        lengthValue.TryGetInt32(out length);
-
-        //                    matches.Add(new LinkedEntityMatch(text, score, offset, length));
-        //                }
-
-        //                return matches;
-        //            }
-
-        //            return default;
-        //        }
-
-        //        #endregion  Entity Linking
+        #endregion  Entity Linking
     }
 }

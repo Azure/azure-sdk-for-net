@@ -82,8 +82,6 @@ namespace Azure.AI.TextAnalytics
 
         #region Detect Language
 
-        // Note that this is a simple overload that takes a single input and returns a single detected language.
-        // More advanced overloads are available that return the full list of detected languages.
         /// <summary>
         /// </summary>
         /// <param name="inputText"></param>
@@ -92,41 +90,38 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<DetectLanguageResult>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
             // TODO: set countryHint from options.
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //try
-            //{
-            //    using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+            try
+            {
+                using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<DetectedLanguage> result = await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
-            //            }
-            //            return CreateDetectedLanguageResponseSimple(response, result[0][0]);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        DetectLanguageResultCollection result = await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (result[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                        }
+                        return Response.FromValue(result[0], response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -137,38 +132,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<DetectLanguageResult> DetectLanguage(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
+            try
+            {
+                using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //try
-            //{
-            //    using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<DetectedLanguage> result = CreateDetectLanguageResponse(response);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw response.CreateRequestFailedException(result[0].ErrorMessage);
-            //            }
-            //            return CreateDetectedLanguageResponseSimple(response, result[0][0]);
-            //        default:
-            //            throw response.CreateRequestFailedException();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        DetectLanguageResultCollection result = CreateDetectLanguageResponse(response);
+                        if (result[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
+                        }
+                        return Response.FromValue(result[0], response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -179,37 +172,11 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDetectLanguageRequest(inputs, countryHint);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            return await CreateDetectLanguageResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(inputs, countryHint);
+            return await DetectLanguagesAsync(detectLanguageInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
         }
 
-        // Note: for simple case, proposal is to take a list of strings as inputs.
-        // We should provide an overload that lets you take a list of LanguageInputs, to handling country hint and id, if needed.
-        // TODO: revisit whether the return type is too complex for a simple overload.  Should it be included in a kitchen sink method instead?
         /// <summary>
         /// </summary>
         /// <param name="inputs"></param>
@@ -218,31 +185,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
         {
-
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDetectLanguageRequest(inputs, countryHint);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-            //        200 => CreateDetectLanguageResponseSimple(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(inputs, countryHint);
+            return DetectLanguages(detectLanguageInputs, new TextAnalysisOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -253,30 +198,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
+            scope.Start();
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
-            //scope.Start();
+            try
+            {
+                using Request request = CreateDetectLanguageRequest(inputs, options);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-            //try
-            //{
-            //    using Request request = CreateDetectLanguageRequest(inputs, options);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false),
-            //        _ => throw await response.CreateRequestFailedExceptionAsync(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -287,29 +229,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
+            scope.Start();
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
-            //scope.Start();
+            try
+            {
+                using Request request = CreateDetectLanguageRequest(inputs, options);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //try
-            //{
-            //    using Request request = CreateDetectLanguageRequest(inputs, options);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => CreateDetectLanguageResponse(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => CreateDetectLanguageResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private Request CreateDetectLanguageRequest(IEnumerable<string> inputs, string countryHint)
@@ -532,40 +472,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<AnalyzeSentimentResult>> AnalyzeSentimentAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, SentimentRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, SentimentRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            SentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false);
-            //            if (results[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
-            //            }
-            //            return CreateAnalyzeSentimentResponseSimple(response, (results[0] as TextDocumentSentiment).DocumentSentiment);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (results[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                        }
+                        return Response.FromValue(results[0], response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -576,39 +512,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<AnalyzeSentimentResult> AnalyzeSentiment(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, SentimentRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, SentimentRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            SentimentResultCollection results = CreateAnalyzeSentimentResponse(response);
-            //            if (results[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw response.CreateRequestFailedException(results[0].ErrorMessage);
-            //            }
-            //            return CreateAnalyzeSentimentResponseSimple(response, (results[0] as TextDocumentSentiment).DocumentSentiment);
-            //        default:
-            //            throw response.CreateRequestFailedException();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response);
+                        if (results[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                        }
+                        return Response.FromValue(results[0], response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -619,32 +552,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, SentimentRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => await CreateAnalyzeSentimentResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false),
-            //        _ => throw await response.CreateRequestFailedExceptionAsync(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return await AnalyzeSentimentAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -655,31 +565,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, SentimentRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-            //        200 => CreateAnalyzeSentimentResponseSimple(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return AnalyzeSentiment(documentInputs, new TextAnalysisOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -690,31 +578,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.Start();
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false),
-            //        _ => throw await response.CreateRequestFailedExceptionAsync(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -725,30 +609,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            scope.Start();
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => CreateAnalyzeSentimentResponse(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => CreateAnalyzeSentimentResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -935,40 +816,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResult>> RecognizePiiEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, PiiEntitiesRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, PiiEntitiesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<NamedEntity> result = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
-            //            }
-            //            return CreateRecognizeEntitiesResponseSimple(response, result[0]);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (results[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                        }
+                        return Response.FromValue(results[0], response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -979,39 +856,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<RecognizeEntitiesResult> RecognizePiiEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, PiiEntitiesRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, PiiEntitiesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<NamedEntity> result = CreateRecognizeEntitiesResponse(response);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw response.CreateRequestFailedException(result[0].ErrorMessage);
-            //            }
-            //            return CreateRecognizeEntitiesResponseSimple(response, result[0]);
-            //        default:
-            //            throw response.CreateRequestFailedException();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response);
+                        if (results[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                        }
+                        return Response.FromValue(results[0], response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1022,33 +896,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, PiiEntitiesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            return await CreateRecognizeEntitiesResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return await RecognizeEntitiesAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1059,31 +909,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizePiiEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, PiiEntitiesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-            //        200 => CreateRecognizeEntitiesResponseSimple(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return RecognizeEntities(documentInputs, new TextAnalysisOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -1094,31 +922,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.Start();
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false),
-            //        _ => throw await response.CreateRequestFailedExceptionAsync(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => await CreateRecognizeEntitiesResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1129,29 +953,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<RecognizeEntitiesResultCollection> RecognizePiiEntities(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            scope.Start();
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
-            //scope.Start();
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => CreateRecognizeEntitiesResponse(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => CreateRecognizeEntitiesResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -1166,40 +988,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<ExtractLinkedEntitiesResult>> ExtractEntityLinkingAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntityLinkingRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntityLinkingRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<LinkedEntity> result = await CreateLinkedEntityResponseAsync(response, cancellationToken).ConfigureAwait(false);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
-            //            }
-            //            return CreateLinkedEntityResponseSimple(response, result[0]);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        ExtractLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (result[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                        }
+                        return Response.FromValue(result[0], response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1210,39 +1028,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<ExtractLinkedEntitiesResult> ExtractEntityLinking(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntityLinkingRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, EntityLinkingRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<LinkedEntity> result = CreateLinkedEntityResponse(response);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw response.CreateRequestFailedException(result[0].ErrorMessage);
-            //            }
-            //            return CreateLinkedEntityResponseSimple(response, result[0]);
-            //        default:
-            //            throw response.CreateRequestFailedException();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        ExtractLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response);
+                        if (results[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                        }
+                        return Response.FromValue(results[0], response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1253,33 +1068,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<ExtractLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, EntityLinkingRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            return await CreateLinkedEntityResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return await ExtractEntityLinkingAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1290,31 +1081,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<ExtractLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, EntityLinkingRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-            //        200 => CreateLinkedEntityResponseSimple(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return ExtractEntityLinking(documentInputs, new TextAnalysisOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -1325,32 +1094,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<ExtractLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
+            scope.Start();
 
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => await CreateLinkedEntityResponseAsync(response, cancellationToken).ConfigureAwait(false),
-            //        _ => throw await response.CreateRequestFailedExceptionAsync(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => await CreateLinkedEntityResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1361,34 +1125,32 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<ExtractLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
+            scope.Start();
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractEntityLinking");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => CreateLinkedEntityResponse(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => CreateLinkedEntityResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
 
+        #region Common
         private List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> inputs, string language)
         {
             language ??= _options.DefaultLanguage;
@@ -1405,6 +1167,24 @@ namespace Azure.AI.TextAnalytics
             }
 
             return documentInputs;
+        }
+
+        private List<DetectLanguageInput> ConvertToDetectLanguageInputs(IEnumerable<string> inputs, string countryHint)
+        {
+            countryHint ??= _options.DefaultCountryHint;
+
+            int id = 0;
+            List<DetectLanguageInput> detectLanguageInputs = new List<DetectLanguageInput>();
+            foreach (string input in inputs)
+            {
+                detectLanguageInputs.Add(new DetectLanguageInput($"{id++}")
+                {
+                    Text = input,
+                    CountryHint = countryHint,
+                });
+            }
+
+            return detectLanguageInputs;
         }
 
         private Request CreateStringCollectionRequest(IEnumerable<string> inputs, string language, string route)
@@ -1440,5 +1220,6 @@ namespace Azure.AI.TextAnalytics
 
             return request;
         }
+        #endregion
     }
 }

@@ -13,8 +13,12 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         /// <param name="list"></param>
-        internal AnalyzeSentimentResultCollection(IList<AnalyzeSentimentResult> list) : base(list)
+        /// <param name="statistics"></param>
+        /// <param name="modelVersion"></param>
+        internal AnalyzeSentimentResultCollection(IList<AnalyzeSentimentResult> list, TextBatchStatistics statistics, string modelVersion) : base(list)
         {
+            Statistics = statistics;
+            ModelVersion = modelVersion;
         }
 
         /// <summary>
