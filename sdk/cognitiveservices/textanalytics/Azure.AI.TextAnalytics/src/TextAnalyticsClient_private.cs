@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         private const string EntitiesRoute = "/entities/recognition/general";
         //private const string PiiEntitiesRoute = "/entities/recognition/pii";
         //private const string SentimentRoute = "/sentiment";
-        //private const string KeyPhrasesRoute = "/keyPhrases";
+        private const string KeyPhrasesRoute = "/keyPhrases";
         //private const string EntityLinkingRoute = "/entities/linking";
 
         private const string ShowStatistics = "showStats";
@@ -75,26 +75,14 @@ namespace Azure.AI.TextAnalytics
         #endregion  Analyze Sentiment
 
         #region Extract KeyPhrases
-        //private static async Task<Response<DocumentResultCollection<string>>> CreateKeyPhraseResponseAsync(Response response, CancellationToken cancellation)
-        //{
-        //    DocumentResultCollection<string> result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-        //    return Response.FromValue(result, response);
-        //}
+        private static async Task<Response<ExtractKeyPhrasesResultCollection>> CreateKeyPhraseResponseAsync(Response response, CancellationToken cancellation)
+        {
+            ExtractKeyPhrasesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
 
-        //private static Response<DocumentResultCollection<string>> CreateKeyPhraseResponse(Response response) =>
-        //    Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream), response);
-
-        //private static async Task<Response<IEnumerable<IEnumerable<string>>>> CreateKeyPhraseResponseSimpleAsync(Response response, CancellationToken cancellation)
-        //{
-        //    var result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseCollectionAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-        //    return Response.FromValue(result, response);
-        //}
-
-        //private static Response<IEnumerable<IEnumerable<string>>> CreateKeyPhraseResponseSimple(Response response) =>
-        //    Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseCollection(response.ContentStream), response);
-
-        //private static Response<IEnumerable<string>> CreateKeyPhraseResponseSimple(Response response, IEnumerable<string> keyPhrases) =>
-        //    Response.FromValue(keyPhrases, response);
+        private static Response<ExtractKeyPhrasesResultCollection> CreateKeyPhraseResponse(Response response) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream), response);
 
         #endregion Extract KeyPhrases
 

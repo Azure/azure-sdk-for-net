@@ -5,7 +5,6 @@ using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -102,7 +101,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Serialize Inputs
 
-        //        #region Deserialize Common
+        #region Deserialize Common
 
         private static string ReadDocumentId(JsonElement documentElement)
         {
@@ -220,7 +219,7 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        //        #endregion Deserialize Common
+        #endregion Deserialize Common
 
         //        #region Detect Languages
 
@@ -524,86 +523,62 @@ namespace Azure.AI.TextAnalytics
         //        }
         //        #endregion
 
-        //        #region Extract Key Phrases
+        #region Extract Key Phrases
 
-        //        public static async Task<DocumentResultCollection<string>> DeserializeKeyPhraseResponseAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadKeyPhraseResultCollection(root);
-        //        }
+        public static async Task<ExtractKeyPhrasesResultCollection> DeserializeKeyPhraseResponseAsync(Stream content, CancellationToken cancellation)
+        {
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadKeyPhraseResultCollection(root);
+        }
 
-        //        public static DocumentResultCollection<string> DeserializeKeyPhraseResponse(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content, default);
-        //            JsonElement root = json.RootElement;
-        //            return ReadKeyPhraseResultCollection(root);
-        //        }
+        public static ExtractKeyPhrasesResultCollection DeserializeKeyPhraseResponse(Stream content)
+        {
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadKeyPhraseResultCollection(root);
+        }
 
-        //        public static async Task<IEnumerable<IEnumerable<string>>> DeserializeKeyPhraseCollectionAsync(Stream content, CancellationToken cancellation)
-        //        {
-        //            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-        //            JsonElement root = json.RootElement;
-        //            return ReadKeyPhraseCollection(root);
-        //        }
+        private static ExtractKeyPhrasesResultCollection ReadKeyPhraseResultCollection(JsonElement root)
+        {
+            var collection = new List<ExtractKeyPhrasesResult>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    collection.Add(ReadKeyPhraseResult(documentElement));
+                }
+            }
 
-        //        public static IEnumerable<IEnumerable<string>> DeserializeKeyPhraseCollection(Stream content)
-        //        {
-        //            using JsonDocument json = JsonDocument.Parse(content);
-        //            JsonElement root = json.RootElement;
-        //            return ReadKeyPhraseCollection(root);
-        //        }
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new ExtractKeyPhrasesResult(error.Id, error.ErrorMessage));
+            }
 
-        //        private static DocumentResultCollection<string> ReadKeyPhraseResultCollection(JsonElement root)
-        //        {
-        //            var result = new DocumentResultCollection<string>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadKeyPhraseResult(documentElement));
-        //                }
-        //            }
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
 
-        //            ReadDocumentErrors(root, result);
-        //            result.ModelVersion = ReadModelVersion(root);
-        //            result.Statistics = ReadDocumentBatchStatistics(root);
+            return new ExtractKeyPhrasesResultCollection(collection, statistics, modelVersion);
+        }
 
-        //            return result;
-        //        }
+        private static ExtractKeyPhrasesResult ReadKeyPhraseResult(JsonElement documentElement)
+        {
+            List<string> keyPhrases = new List<string>();
+            if (documentElement.TryGetProperty("keyPhrases", out JsonElement keyPhrasesValue))
+            {
+                foreach (JsonElement keyPhraseElement in keyPhrasesValue.EnumerateArray())
+                {
+                    keyPhrases.Add(keyPhraseElement.ToString());
+                }
+            }
 
-        //        private static IEnumerable<IEnumerable<string>> ReadKeyPhraseCollection(JsonElement root)
-        //        {
-        //            var result = new List<List<string>>();
-        //            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-        //            {
-        //                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-        //                {
-        //                    result.Add(ReadKeyPhraseResult(documentElement).ToList());
-        //                }
-        //            }
+            return new ExtractKeyPhrasesResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                keyPhrases);
+        }
 
-        //            return result;
-        //        }
-
-        //        private static DocumentResult<string> ReadKeyPhraseResult(JsonElement documentElement)
-        //        {
-        //            var documentResult = new DocumentResult<string>(
-        //                ReadDocumentId(documentElement),
-        //                ReadDocumentStatistics(documentElement));
-
-        //            if (documentElement.TryGetProperty("keyPhrases", out JsonElement keyPhrasesValue))
-        //            {
-        //                foreach (JsonElement keyPhraseElement in keyPhrasesValue.EnumerateArray())
-        //                {
-        //                    documentResult.Add(keyPhraseElement.ToString());
-        //                }
-        //            }
-
-        //            return documentResult;
-        //        }
-
-        //        #endregion Extract Key Phrases
+        #endregion Extract Key Phrases
 
         //        #region Entity Linking
 

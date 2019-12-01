@@ -441,20 +441,7 @@ namespace Azure.AI.TextAnalytics
         public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
-
-            language ??= _options.DefaultLanguage;
-
-            int id = 0;
-            List<TextDocumentInput> documentInputs = new List<TextDocumentInput>();
-            foreach (string input in inputs)
-            {
-                documentInputs.Add(new TextDocumentInput($"{id++}")
-                {
-                    Text = input,
-                    Language = language,
-                });
-            }
-
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
             return await RecognizeEntitiesAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
         }
 
@@ -467,20 +454,7 @@ namespace Azure.AI.TextAnalytics
         public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
-
-            language ??= _options.DefaultLanguage;
-
-            int id = 0;
-            List<TextDocumentInput> documentInputs = new List<TextDocumentInput>();
-            foreach (string input in inputs)
-            {
-                documentInputs.Add(new TextDocumentInput($"{id++}")
-                {
-                    Text = input,
-                    Language = language,
-                });
-            }
-
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
             return RecognizeEntities(documentInputs, new TextAnalysisOptions(), cancellationToken);
         }
 
@@ -789,40 +763,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<ExtractKeyPhrasesResult>> ExtractKeyPhrasesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, KeyPhrasesRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, KeyPhrasesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<string> result = await CreateKeyPhraseResponseAsync(response, cancellationToken).ConfigureAwait(false);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
-            //            }
-            //            return CreateKeyPhraseResponseSimple(response, result[0]);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        ExtractKeyPhrasesResultCollection result = await CreateKeyPhraseResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        if (result[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                        }
+                        return Response.FromValue(result[0], response);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -833,39 +803,36 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<ExtractKeyPhrasesResult> ExtractKeyPhrases(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            scope.AddAttribute("inputText", inputText);
+            scope.Start();
 
-            //Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            try
+            {
+                using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, KeyPhrasesRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
-            //scope.AddAttribute("inputText", inputText);
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(new string[] { inputText }, language, KeyPhrasesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            DocumentResultCollection<string> result = CreateKeyPhraseResponse(response);
-            //            if (result[0].ErrorMessage != default)
-            //            {
-            //                // only one input, so we can ignore the id and grab the first error message.
-            //                throw response.CreateRequestFailedException(result[0].ErrorMessage);
-            //            }
-            //            return CreateKeyPhraseResponseSimple(response, result[0]);
-            //        default:
-            //            throw response.CreateRequestFailedException();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                switch (response.Status)
+                {
+                    case 200:
+                        ExtractKeyPhrasesResultCollection result = CreateKeyPhraseResponse(response);
+                        if (result[0].ErrorMessage != default)
+                        {
+                            // only one input, so we can ignore the id and grab the first error message.
+                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
+                        }
+                        return Response.FromValue(result[0], response);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -876,33 +843,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, KeyPhrasesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    switch (response.Status)
-            //    {
-            //        case 200:
-            //            return await CreateKeyPhraseResponseSimpleAsync(response, cancellationToken).ConfigureAwait(false);
-            //        default:
-            //            throw await response.CreateRequestFailedExceptionAsync();
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return await ExtractKeyPhrasesAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -913,31 +856,9 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
-
-            throw new NotImplementedException();
-
-            //Argument.AssertNotNull(inputs, nameof(inputs));
-
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateStringCollectionRequest(inputs, language, KeyPhrasesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        // TODO: for this, we'll need to stitch back together the errors, as ids have been stripped.
-            //        200 => CreateKeyPhraseResponseSimple(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
+            return ExtractKeyPhrases(documentInputs, new TextAnalysisOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -948,31 +869,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            await Task.Run(() => { }).ConfigureAwait(false);
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            scope.Start();
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
-            //    Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => await CreateKeyPhraseResponseAsync(response, cancellationToken).ConfigureAwait(false),
-            //        _ => throw await response.CreateRequestFailedExceptionAsync(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => await CreateKeyPhraseResponseAsync(response, cancellationToken).ConfigureAwait(false),
+                    _ => throw await response.CreateRequestFailedExceptionAsync(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -983,30 +900,27 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            scope.Start();
 
-            //Argument.AssertNotNull(inputs, nameof(inputs));
+            try
+            {
+                using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            //using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
-            //scope.Start();
-
-            //try
-            //{
-            //    using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
-            //    Response response = _pipeline.SendRequest(request, cancellationToken);
-
-            //    return response.Status switch
-            //    {
-            //        200 => CreateKeyPhraseResponse(response),
-            //        _ => throw response.CreateRequestFailedException(),
-            //    };
-            //}
-            //catch (Exception e)
-            //{
-            //    scope.Failed(e);
-            //    throw;
-            //}
+                return response.Status switch
+                {
+                    200 => CreateKeyPhraseResponse(response),
+                    _ => throw response.CreateRequestFailedException(),
+                };
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         #endregion
@@ -1474,6 +1388,24 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion
+
+        private List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> inputs, string language)
+        {
+            language ??= _options.DefaultLanguage;
+
+            int id = 0;
+            List<TextDocumentInput> documentInputs = new List<TextDocumentInput>();
+            foreach (string input in inputs)
+            {
+                documentInputs.Add(new TextDocumentInput($"{id++}")
+                {
+                    Text = input,
+                    Language = language,
+                });
+            }
+
+            return documentInputs;
+        }
 
         private Request CreateStringCollectionRequest(IEnumerable<string> inputs, string language, string route)
         {
