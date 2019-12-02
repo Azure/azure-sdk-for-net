@@ -144,7 +144,7 @@ namespace Azure.AI.TextAnalytics
                         id = idValue.ToString();
                     if (errorElement.TryGetProperty("error", out JsonElement errorValue))
                     {
-                        if (errorsValue.TryGetProperty("message", out JsonElement messageValue))
+                        if (errorValue.TryGetProperty("message", out JsonElement messageValue))
                         {
                             message = messageValue.ToString();
                         }
