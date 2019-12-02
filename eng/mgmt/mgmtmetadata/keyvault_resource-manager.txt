@@ -1,0 +1,14 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/keyvault/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=C:\Users\yeliu\isra-fel\azure-sdk-for-net\sdk\keyvault\Microsoft.Azure.Management.KeyVault\src\Generated
+2019-11-28 06:33:10 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      00345ca2fdaf5b9149590544302f75b401a3129b
+AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@2.0.4407
