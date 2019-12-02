@@ -39,16 +39,27 @@ namespace Azure.Messaging.EventHubs.Processor
         private BlobContainerClient ContainerClient { get; }
 
         /// <summary>
+        ///   The active policy which governs retry attempts for the
+        ///   <see cref="BlobsCheckpointStore" />.
+        /// </summary>
+        ///
+        private EventHubsRetryPolicy RetryPolicy { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="BlobsCheckpointStore"/> class.
         /// </summary>
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
+        /// <param name="retryPolicy">The retry policy to use as the basis for interacting with the Storage Blobs service.</param>
         ///
-        public BlobsCheckpointStore(BlobContainerClient blobContainerClient)
+        public BlobsCheckpointStore(BlobContainerClient blobContainerClient,
+                                    EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             ContainerClient = blobContainerClient;
+            RetryPolicy = retryPolicy;
         }
 
         /// <summary>

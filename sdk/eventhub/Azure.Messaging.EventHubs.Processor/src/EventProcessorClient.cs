@@ -417,8 +417,8 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
             EventHubName = string.IsNullOrEmpty(eventHubName) ? connectionStringProperties.EventHubName : eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            StorageManager = CreateStorageManager(checkpointStore);
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
 
@@ -463,8 +463,8 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = CreateStorageManager(checkpointStore);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            StorageManager = CreateStorageManager(checkpointStore);
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
 
@@ -519,8 +519,8 @@ namespace Azure.Messaging.EventHubs
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
-            StorageManager = storageManager;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            StorageManager = storageManager;
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
         }
 
@@ -775,7 +775,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>A <see cref="PartitionManager" /> with the requested configuration.</returns>
         ///
-        internal virtual PartitionManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore);
+        internal virtual PartitionManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore, RetryPolicy);
 
         /// <summary>
         ///   Called when a 'partition initializing' event is triggered.

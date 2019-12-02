@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Storage.Blobs;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
@@ -21,7 +23,18 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void ConstructorRequiresBlobContainerClient()
         {
-            Assert.That(() => new BlobsCheckpointStore(null), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new BlobsCheckpointStore(null, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="BlobsCheckpointStore" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorRequiresRetryPolicy()
+        {
+            Assert.That(() => new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), null), Throws.InstanceOf<ArgumentNullException>());
         }
     }
 }

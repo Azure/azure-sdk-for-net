@@ -11,11 +11,6 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   list/claim ownership.
     /// </summary>
     ///
-    /// <remarks>
-    ///   An instance of a concrete subclass is provided by the user in the <see cref="EventProcessorClient" />
-    ///   constructor.
-    /// </remarks>
-    ///
     internal abstract class PartitionManager
     {
         /// <summary>
