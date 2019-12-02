@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
-
+using System.Web;
 using AccountSetting = System.Collections.Generic.KeyValuePair<string, System.Func<string, bool>>;
 using ConnectionStringFilter = System.Func<System.Collections.Generic.IDictionary<string, string>, System.Collections.Generic.IDictionary<string, string>>;
 
@@ -63,11 +63,6 @@ namespace Azure.Storage
         private static readonly AccountSetting s_queueEndpointSetting = Setting(Constants.ConnectionStrings.QueueEndpointSetting, IsValidUri);
 
         /// <summary>
-        /// Validator for the TableEndpoint setting. Must be a valid Uri.
-        /// </summary>
-        private static readonly AccountSetting s_tableEndpointSetting = Setting(Constants.ConnectionStrings.TableEndpointSetting, IsValidUri);
-
-        /// <summary>
         /// Validator for the FileEndpoint setting. Must be a valid Uri.
         /// </summary>
         private static readonly AccountSetting s_fileEndpointSetting = Setting(Constants.ConnectionStrings.FileEndpointSetting, IsValidUri);
@@ -81,11 +76,6 @@ namespace Azure.Storage
         /// Validator for the QueueSecondaryEndpoint setting. Must be a valid Uri.
         /// </summary>
         private static readonly AccountSetting s_queueSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.QueueSecondaryEndpointSetting, IsValidUri);
-
-        /// <summary>
-        /// Validator for the TableSecondaryEndpoint setting. Must be a valid Uri.
-        /// </summary>
-        private static readonly AccountSetting s_tableSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.TableSecondaryEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the FileSecondaryEndpoint setting. Must be a valid Uri.
@@ -300,9 +290,6 @@ namespace Azure.Storage
             builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
             Uri queueEndpoint = builder.Uri;
 
-            builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
-            Uri tableEndpoint = builder.Uri;
-
             builder.Path = Constants.ConnectionStrings.DevStoreAccountName + Constants.ConnectionStrings.SecondaryLocationAccountSuffix;
 
             builder.Port = Constants.ConnectionStrings.BlobEndpointPortNumber;
@@ -310,9 +297,6 @@ namespace Azure.Storage
 
             builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
             Uri queueSecondaryEndpoint = builder.Uri;
-
-            builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
-            Uri tableSecondaryEndpoint = builder.Uri;
 
             var credentials = new StorageSharedKeyCredential(Constants.ConnectionStrings.DevStoreAccountName, Constants.ConnectionStrings.DevStoreAccountKey);
 #pragma warning disable IDE0017 // Simplify object initialization
@@ -390,7 +374,6 @@ namespace Azure.Storage
                 Optional(
                     s_blobEndpointSetting, s_blobSecondaryEndpointSetting,
                     s_queueEndpointSetting, s_queueSecondaryEndpointSetting,
-                    s_tableEndpointSetting, s_tableSecondaryEndpointSetting,
                     s_fileEndpointSetting, s_fileSecondaryEndpointSetting
                     );
 
@@ -398,7 +381,6 @@ namespace Azure.Storage
                 AtLeastOne(
                     s_blobEndpointSetting,
                     s_queueEndpointSetting,
-                    s_tableEndpointSetting,
                     s_fileEndpointSetting
                     );
 
@@ -406,7 +388,6 @@ namespace Azure.Storage
                 Optional(
                     s_blobSecondaryEndpointSetting,
                     s_queueSecondaryEndpointSetting,
-                    s_tableSecondaryEndpointSetting,
                     s_fileSecondaryEndpointSetting
                     );
 
@@ -440,11 +421,9 @@ namespace Azure.Storage
 
                 var blobEndpoint = settingOrDefault(Constants.ConnectionStrings.BlobEndpointSetting);
                 var queueEndpoint = settingOrDefault(Constants.ConnectionStrings.QueueEndpointSetting);
-                var tableEndpoint = settingOrDefault(Constants.ConnectionStrings.TableEndpointSetting);
                 var fileEndpoint = settingOrDefault(Constants.ConnectionStrings.FileEndpointSetting);
                 var blobSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.BlobSecondaryEndpointSetting);
                 var queueSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.QueueSecondaryEndpointSetting);
-                var tableSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.TableSecondaryEndpointSetting);
                 var fileSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.FileSecondaryEndpointSetting);
                 var sasToken = settingOrDefault(Constants.ConnectionStrings.SharedAccessSignatureSetting);
 
@@ -467,10 +446,15 @@ namespace Azure.Storage
 
                     static Uri CreateUri(string endpoint, string sasToken)
                     {
-                        var builder = new UriBuilder(endpoint)
+                        var builder = new UriBuilder(endpoint);
+                        if (!string.IsNullOrEmpty(builder.Query))
                         {
-                            Query = sasToken
-                        };
+                            builder.Query += "&" + sasToken;
+                        }
+                        else
+                        {
+                            builder.Query = sasToken;
+                        }
                         return builder.Uri;
                     }
                 }
@@ -478,7 +462,6 @@ namespace Azure.Storage
                 if (
                     s_isValidEndpointPair(blobEndpoint, blobSecondaryEndpoint)
                     && s_isValidEndpointPair(queueEndpoint, queueSecondaryEndpoint)
-                    && s_isValidEndpointPair(tableEndpoint, tableSecondaryEndpoint)
                     && s_isValidEndpointPair(fileEndpoint, fileSecondaryEndpoint)
                     )
                 {

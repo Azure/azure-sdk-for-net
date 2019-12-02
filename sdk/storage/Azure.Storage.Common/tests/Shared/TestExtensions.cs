@@ -114,13 +114,11 @@ namespace Azure.Storage
                 {
                     accountName = sharedKeyCredentials.AccountName;
                 }
-                else
+                else if (string.Compare(sharedKeyCredentials.AccountName, accountName, System.StringComparison.Ordinal) != 0)
                 {
-                    if (string.Compare(sharedKeyCredentials.AccountName, accountName, System.StringComparison.Ordinal) != 0)
-                    {
-                        throw Errors.AccountMismatch(sharedKeyCredentials.AccountName, accountName);
-                    }
+                    throw Errors.AccountMismatch(sharedKeyCredentials.AccountName, accountName);
                 }
+
             }
 
             if (accountName == default)
@@ -131,10 +129,10 @@ namespace Azure.Storage
             conn._accountName = accountName;
             var sasToken = (storageCredentials is SharedAccessSignatureCredentials sasCredentials) ? sasCredentials.SasToken : default;
 
-            var protocol = useHttps ? "https" : "http";
-            conn.BlobStorageUri = StorageConnectionString.ConstructBlobEndpoint(protocol, accountName, endpointSuffix, sasToken);
-            conn.QueueStorageUri = StorageConnectionString.ConstructQueueEndpoint(protocol, accountName, endpointSuffix, sasToken);
-            conn.FileStorageUri = StorageConnectionString.ConstructFileEndpoint(protocol, accountName, endpointSuffix, sasToken);
+            var scheme = useHttps ? Constants.Https : Constants.Http;
+            conn.BlobStorageUri = StorageConnectionString.ConstructBlobEndpoint(scheme, accountName, endpointSuffix, sasToken);
+            conn.QueueStorageUri = StorageConnectionString.ConstructQueueEndpoint(scheme, accountName, endpointSuffix, sasToken);
+            conn.FileStorageUri = StorageConnectionString.ConstructFileEndpoint(scheme, accountName, endpointSuffix, sasToken);
             conn.Credentials = storageCredentials;
             conn.EndpointSuffix = endpointSuffix;
             conn.DefaultEndpoints = true;

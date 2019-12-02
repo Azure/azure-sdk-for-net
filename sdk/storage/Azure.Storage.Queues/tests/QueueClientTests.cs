@@ -11,6 +11,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
 using Azure.Core;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -46,6 +47,75 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(queueName, builder2.QueueName);
 
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_Sas()
+        {
+            // Arrange
+            var sasBuilder = new AccountSasBuilder
+            {
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = AccountSasServices.All,
+                ResourceTypes = AccountSasResourceTypes.All,
+                Protocol = SasProtocol.Https,
+            };
+            sasBuilder.SetPermissions(AccountSasPermissions.All);
+            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            string sasToken = sasBuilder.ToSasQueryParameters(cred).ToString();
+            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+
+            (Uri, Uri) queueUri = StorageConnectionString.ConstructQueueEndpoint(
+                Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            StorageConnectionString conn1 =
+                new StorageConnectionString(
+                    sasCred,
+                    (default, default),
+                    queueUri,
+                    (default, default));
+
+            QueueClient queueClient1 = GetClient(conn1.ToString(exportSecrets: true));
+
+            // Also test with a connection string not containing the blob endpoint.
+            // This should still work provided account name and Sas credential are present.
+            StorageConnectionString conn2 = TestExtensions.CreateStorageConnectionString(
+                sasCred,
+                TestConfigDefault.AccountName);
+
+            QueueClient queueClient2 = GetClient(conn2.ToString(exportSecrets: true));
+
+            QueueClient GetClient(string connectionString) =>
+                InstrumentClient(
+                    new QueueClient(
+                        connectionString,
+                        GetNewQueueName(),
+                        GetOptions()));
+
+            try
+            {
+                // Act
+                await queueClient1.CreateAsync();
+                await queueClient2.CreateAsync();
+
+                var data = GetRandomBuffer(Constants.KB);
+
+                Response<QueueProperties> prop1 = await queueClient1.GetPropertiesAsync();
+                Response<QueueProperties> prop2 = await queueClient2.GetPropertiesAsync();
+
+                // Assert
+                Assert.IsNotNull(prop1.Value.Metadata);
+                Assert.IsNotNull(prop2.Value.Metadata);
+            }
+            finally
+            {
+                // Clean up
+                await queueClient1.DeleteAsync();
+                await queueClient2.DeleteAsync();
+            }
         }
 
         [Test]

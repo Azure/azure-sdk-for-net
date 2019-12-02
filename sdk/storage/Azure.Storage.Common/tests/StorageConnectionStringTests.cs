@@ -391,7 +391,6 @@ namespace Azure.Storage.Test
                 {
                     new[] { "BlobEndpoint={3}", "BlobSecondaryEndpoint={4}", "BlobEndpoint={3};BlobSecondaryEndpoint={4}" },
                     new[] { "QueueEndpoint={3}", "QueueSecondaryEndpoint={4}", "QueueEndpoint={3};QueueSecondaryEndpoint={4}" },
-                    new[] { "TableEndpoint={3}", "TableSecondaryEndpoint={4}", "TableEndpoint={3};TableSecondaryEndpoint={4}" },
                     new[] { "FileEndpoint={3}", "FileSecondaryEndpoint={4}", "FileEndpoint={3};FileSecondaryEndpoint={4}" }
                 };
 
