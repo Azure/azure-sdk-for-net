@@ -3,10 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
@@ -19,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Processor
     internal sealed class BlobsCheckpointStore : PartitionManager
     {
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
-        private static readonly Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
+        private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
 
         /// <summary>
         ///   Specifies a string that filters the results to return only checkpoint blobs whose name begins
@@ -39,16 +42,27 @@ namespace Azure.Messaging.EventHubs.Processor
         private BlobContainerClient ContainerClient { get; }
 
         /// <summary>
+        ///   The active policy which governs retry attempts for the
+        ///   <see cref="BlobsCheckpointStore" />.
+        /// </summary>
+        ///
+        private EventHubsRetryPolicy RetryPolicy { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="BlobsCheckpointStore"/> class.
         /// </summary>
         ///
         /// <param name="blobContainerClient">The client used to interact with the Azure Blob Storage service.</param>
+        /// <param name="retryPolicy">The retry policy to use as the basis for interacting with the Storage Blobs service.</param>
         ///
-        public BlobsCheckpointStore(BlobContainerClient blobContainerClient)
+        public BlobsCheckpointStore(BlobContainerClient blobContainerClient,
+                                    EventHubsRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(blobContainerClient, nameof(blobContainerClient));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             ContainerClient = blobContainerClient;
+            RetryPolicy = retryPolicy;
         }
 
         /// <summary>
@@ -58,18 +72,24 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
-        public override async Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
-                                                                                       string eventHubName,
-                                                                                       string consumerGroup)
+        public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
+                                                                                 string eventHubName,
+                                                                                 string consumerGroup,
+                                                                                 CancellationToken cancellationToken)
         {
-            List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
-            try
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
+
+            Func<CancellationToken, Task<IEnumerable<PartitionOwnership>>> listOwnershipAsync = async listOwnershipToken =>
             {
-                var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
-                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+                var ownershipList = new List<PartitionOwnership>();
+
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: listOwnershipToken).ConfigureAwait(false))
                 {
                     // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
                     // to throw an exception.
@@ -88,6 +108,11 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
 
                 return ownershipList;
+            };
+
+            try
+            {
+                return ApplyRetryPolicy(listOwnershipAsync, cancellationToken);
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
@@ -100,11 +125,15 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing the successfully claimed ownership.</returns>
         ///
-        public override async Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership)
+        public override async Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership,
+                                                                                        CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             var claimedOwnership = new List<PartitionOwnership>();
             var metadata = new Dictionary<string, string>();
 
@@ -118,7 +147,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 var blobRequestConditions = new BlobRequestConditions();
 
                 var blobName = string.Format(OwnershipPrefix + ownership.PartitionId, ownership.FullyQualifiedNamespace.ToLower(), ownership.EventHubName.ToLower(), ownership.ConsumerGroup.ToLower());
-                BlobClient blobClient = ContainerClient.GetBlobClient(blobName);
+                var blobClient = ContainerClient.GetBlobClient(blobName);
 
                 try
                 {
@@ -130,17 +159,28 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         blobRequestConditions.IfNoneMatch = new ETag("*");
 
-                        using var blobContent = new MemoryStream(Array.Empty<byte>());
-                        try
+                        Func<CancellationToken, Task<Response<BlobContentInfo>>> uploadBlobAsync = async uploadToken =>
                         {
-                            contentInfoResponse = await blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions).ConfigureAwait(false);
-                        }
-                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-                        {
-                            // A blob could have just been created by another Event Processor that claimed ownership of this
-                            // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
+                            using var blobContent = new MemoryStream(Array.Empty<byte>());
 
-                            // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
+                            try
+                            {
+                                return await blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions, cancellationToken: uploadToken).ConfigureAwait(false);
+                            }
+                            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                            {
+                                // A blob could have just been created by another Event Processor that claimed ownership of this
+                                // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
+
+                                // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
+                                return null;
+                            }
+                        };
+
+                        contentInfoResponse = await ApplyRetryPolicy(uploadBlobAsync, cancellationToken).ConfigureAwait(false);
+
+                        if (contentInfoResponse == null)
+                        {
                             continue;
                         }
 
@@ -151,18 +191,10 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         blobRequestConditions.IfMatch = new ETag(ownership.ETag);
 
-                        try
-                        {
-                            infoResponse = await blobClient.SetMetadataAsync(metadata, blobRequestConditions).ConfigureAwait(false);
-                        }
-                        catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
-                        {
-                            // No ownership was found, which means the ETag should have been set to null in order to
-                            // claim this ownership.  For this reason, we consider it a failure and don't try again.
+                        Func<CancellationToken, Task<Response<BlobInfo>>> overwriteBlobAsync = uploadToken =>
+                            blobClient.SetMetadataAsync(metadata, blobRequestConditions, uploadToken);
 
-                            // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
-                            continue;
-                        }
+                        infoResponse = await ApplyRetryPolicy(overwriteBlobAsync, cancellationToken).ConfigureAwait(false);
 
                         ownership.LastModifiedTime = infoResponse.Value.LastModified;
                         ownership.ETag = infoResponse.Value.ETag.ToString();
@@ -171,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     // Small workaround to retrieve the eTag.  The current storage SDK returns it enclosed in
                     // double quotes ('"ETAG_VALUE"' instead of 'ETAG_VALUE').
 
-                    Match match = s_doubleQuotesExpression.Match(ownership.ETag);
+                    var match = DoubleQuotesExpression.Match(ownership.ETag);
 
                     if (match.Success)
                     {
@@ -186,30 +218,40 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
                 }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                {
+                    throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
+                }
             }
 
             return claimedOwnership;
         }
 
         /// <summary>
-        ///   List of all the checkpoints in a data store for a given namespace, Event Hub and consumer group.
+        ///   Retrieves a list of all the checkpoints in a data store for a given namespace, Event Hub and consumer group.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
-        public override async Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
-                                                                                 string eventHubName,
-                                                                                 string consumerGroup)
+        public override Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
+                                                                           string eventHubName,
+                                                                           string consumerGroup,
+                                                                           CancellationToken cancellationToken)
         {
-            List<Checkpoint> checkpoints = new List<Checkpoint>();
-            try
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            var prefix = string.Format(CheckpointPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
+
+            Func<CancellationToken, Task<IEnumerable<Checkpoint>>> listCheckpointsAsync = async listCheckpointsToken =>
             {
-                var prefix = string.Format(CheckpointPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
-                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix).ConfigureAwait(false))
+                var checkpoints = new List<Checkpoint>();
+
+                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: listCheckpointsToken).ConfigureAwait(false))
                 {
                     long offset = 0;
                     long sequenceNumber = 0;
@@ -235,6 +277,11 @@ namespace Azure.Messaging.EventHubs.Processor
                 }
 
                 return checkpoints;
+            };
+
+            try
+            {
+                return ApplyRetryPolicy(listCheckpointsAsync, cancellationToken);
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
@@ -247,26 +294,33 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public override async Task UpdateCheckpointAsync(Checkpoint checkpoint)
+        public override Task UpdateCheckpointAsync(Checkpoint checkpoint,
+                                                   CancellationToken cancellationToken)
         {
-            var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            BlobClient blobClient = ContainerClient.GetBlobClient(blobName);
+            var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
+            var blobClient = ContainerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
-                {
-                    { BlobMetadataKey.Offset, checkpoint.Offset.ToString() },
-                    { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
-                };
+            {
+                { BlobMetadataKey.Offset, checkpoint.Offset.ToString() },
+                { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
+            };
 
-            MemoryStream blobContent = null;
+            Func<CancellationToken, Task> updateCheckpointAsync = async updateCheckpointToken =>
+            {
+                using var blobContent = new MemoryStream(Array.Empty<byte>());
+                await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken);
+            };
+
             try
             {
-                blobContent = new MemoryStream(new byte[0]);
-                await blobClient.UploadAsync(blobContent, metadata: metadata).ConfigureAwait(false);
+                return ApplyRetryPolicy(updateCheckpointAsync, cancellationToken);
                 // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' updated."
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
@@ -274,10 +328,94 @@ namespace Azure.Messaging.EventHubs.Processor
                 // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because specified container does not exist."
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
-            finally
+        }
+
+        /// <summary>
+        ///   Applies the checkpoint store's <see cref="RetryPolicy" /> to a specified function.
+        /// </summary>
+        ///
+        /// <param name="functionToRetry">The function to which the retry policy should be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The value returned by the function to which the retry policy has been applied.</returns>
+        ///
+        private async Task ApplyRetryPolicy(Func<CancellationToken, Task> functionToRetry,
+                                            CancellationToken cancellationToken)
+        {
+            var failedAttemptCount = 0;
+            var retryDelay = default(TimeSpan?);
+            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+
+            var stopWatch = Stopwatch.StartNew();
+
+            while (!cancellationToken.IsCancellationRequested)
             {
-                blobContent?.Dispose();
+                using var timeoutTokenSource = new CancellationTokenSource(tryTimeout);
+
+                try
+                {
+                    using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutTokenSource.Token);
+
+                    await functionToRetry(linkedTokenSource.Token).ConfigureAwait(false);
+
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
+                    // Otherwise, mark the exception as active and break out of the loop.
+
+                    ++failedAttemptCount;
+                    retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+
+                    if ((retryDelay.HasValue) && (!cancellationToken.IsCancellationRequested))
+                    {
+                        await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
+
+                        tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                        stopWatch.Reset();
+                    }
+                    else
+                    {
+                        timeoutTokenSource.Token.ThrowIfCancellationRequested<TimeoutException>();
+                        throw;
+                    }
+                }
             }
+
+            // If no value has been returned nor exception thrown by this point,
+            // then cancellation has been requested.
+
+            throw new TaskCanceledException();
+        }
+
+        /// <summary>
+        ///   Applies the checkpoint store's <see cref="RetryPolicy" /> to a specified function.
+        /// </summary>
+        ///
+        /// <param name="functionToRetry">The function to which the retry policy should be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <typeparam name="T">The type returned by the function to be executed.</typeparam>
+        ///
+        /// <returns>The value returned by the function to which the retry policy has been applied.</returns>
+        ///
+        private async Task<T> ApplyRetryPolicy<T>(Func<CancellationToken, Task<T>> functionToRetry,
+                                                  CancellationToken cancellationToken)
+        {
+            // This method wraps a Func<CancellationToken, Task<T>> inside a Func<CancellationToken, Task>
+            // so we can make use of the other ApplyRetryPolicy method without repeating code.
+
+            T result = default;
+
+            Func<CancellationToken, Task> wrapper = async token =>
+            {
+                result = await functionToRetry(token);
+            };
+
+            await ApplyRetryPolicy(wrapper, cancellationToken);
+
+            return result;
         }
     }
 }
