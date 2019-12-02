@@ -312,8 +312,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public override async Task UpdateCheckpointAsync(Checkpoint checkpoint,
-                                                         CancellationToken cancellationToken)
+        public override Task UpdateCheckpointAsync(Checkpoint checkpoint,
+                                                   CancellationToken cancellationToken)
         {
             var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -324,12 +324,15 @@ namespace Azure.Messaging.EventHubs.Processor
                 { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
             };
 
-            MemoryStream blobContent = null;
+            Func<CancellationToken, Task> updateCheckpointAsync = updateCheckpointToken =>
+            {
+                using var blobContent = new MemoryStream(new byte[0]);
+                return blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken);
+            };
 
             try
             {
-                blobContent = new MemoryStream(new byte[0]);
-                await blobClient.UploadAsync(blobContent, metadata: metadata).ConfigureAwait(false);
+                return ApplyRetryPolicy(updateCheckpointAsync, cancellationToken);
                 // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' updated."
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
@@ -337,10 +340,67 @@ namespace Azure.Messaging.EventHubs.Processor
                 // TODO: Add log  - "Checkpoint with partition id = '{ checkpoint.PartitionId }' could not be updated because specified container does not exist."
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
             }
-            finally
+        }
+
+        /// <summary>
+        ///   Applies the checkpoint store's <see cref="RetryPolicy" /> to a specified function.
+        /// </summary>
+        ///
+        /// <param name="functionToRetry">The function to which the retry policy should be applied.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The value returned by the function to which the retry policy has been applied.</returns>
+        ///
+        private async Task ApplyRetryPolicy(Func<CancellationToken, Task> functionToRetry,
+                                            CancellationToken cancellationToken)
+        {
+            var failedAttemptCount = 0;
+            var retryDelay = default(TimeSpan?);
+            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+
+            var stopWatch = Stopwatch.StartNew();
+
+            while (!cancellationToken.IsCancellationRequested)
             {
-                blobContent?.Dispose();
+                try
+                {
+                    var timeoutToken = (new CancellationTokenSource(tryTimeout)).Token;
+                    var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutToken).Token;
+
+                    // TODO: we should pass the linkedToken instead.  However, what should we do if it timeouts in the last
+                    // try?  It would throw a TaskCanceledException.  Should we deal with it in the caller method?  What
+                    // should we pass to the error handler?
+
+                    await functionToRetry(cancellationToken).ConfigureAwait(false);
+
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
+                    // Otherwise, mark the exception as active and break out of the loop.
+
+                    ++failedAttemptCount;
+                    retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+
+                    if ((retryDelay.HasValue) && (!cancellationToken.IsCancellationRequested))
+                    {
+                        await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
+
+                        tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                        stopWatch.Reset();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
             }
+
+            // If no value has been returned nor exception thrown by this point,
+            // then cancellation has been requested.
+
+            throw new TaskCanceledException();
         }
 
         /// <summary>
