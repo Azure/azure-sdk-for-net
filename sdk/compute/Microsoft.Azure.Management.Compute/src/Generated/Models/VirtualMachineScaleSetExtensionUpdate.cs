@@ -21,20 +21,20 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a Virtual Machine Scale Set Extension.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetExtension : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetExtensionUpdate : SubResourceReadOnly
     {
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineScaleSetExtension
-        /// class.
+        /// Initializes a new instance of the
+        /// VirtualMachineScaleSetExtensionUpdate class.
         /// </summary>
-        public VirtualMachineScaleSetExtension()
+        public VirtualMachineScaleSetExtensionUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the VirtualMachineScaleSetExtension
-        /// class.
+        /// Initializes a new instance of the
+        /// VirtualMachineScaleSetExtensionUpdate class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">The name of the extension.</param>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="provisionAfterExtensions">Collection of extension
         /// names after which this extension needs to be provisioned.</param>
-        public VirtualMachineScaleSetExtension(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>))
+        public VirtualMachineScaleSetExtensionUpdate(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), IList<string> provisionAfterExtensions = default(IList<string>))
             : base(id)
         {
             Name = name;
@@ -86,10 +86,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the extension.
+        /// Gets the name of the extension.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets resource type
