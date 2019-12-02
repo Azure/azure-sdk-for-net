@@ -237,4 +237,28 @@
   <data name="CannotCreateCheckpointForEmptyEvent" xml:space="preserve">
     <value>A checkpoint cannot be created or updated using an empty event.</value>
   </data>
+  <data name="HandlerHasAlreadyBeenAssigned" xml:space="preserve">
+    <value>Another handler has already been assigned to this event.</value>
+  </data>
+  <data name="HandlerHasNotBeenAssigned" xml:space="preserve">
+    <value>Handler has not been previously assigned to this event.</value>
+  </data>
+  <data name="ListOwnershipOperation" xml:space="preserve">
+    <value>Retrieving list of ownership from the storage service.</value>
+  </data>
+  <data name="GetPartitionIdsOperation" xml:space="preserve">
+    <value>Retrieving list of partition identifiers from a Consumer Client.</value>
+  </data>
+  <data name="ListCheckpointsOperation" xml:space="preserve">
+    <value>Retrieving list of checkpoints from the storage service.</value>
+  </data>
+  <data name="ClaimOwnershipOperation" xml:space="preserve">
+    <value>Attempting to claim a new ownership in the storage service.</value>
+  </data>
+  <data name="RenewOwnershipOperation" xml:space="preserve">
+    <value>Attempting to renew all of the processor's ownership in the storage service.</value>
+  </data>
+  <data name="ReadEventsOperation" xml:space="preserve">
+    <value>Receiving events from the Event Hubs service.</value>
+  </data>
 </root>

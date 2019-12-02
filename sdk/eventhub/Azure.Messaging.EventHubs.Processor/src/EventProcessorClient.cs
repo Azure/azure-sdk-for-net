@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_partitionInitializingAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _partitionInitializingAsync = value);
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_partitionInitializingAsync != value)
                 {
-                    throw new ArgumentException("TODO: Handler has not been previously assigned to this event.");
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _partitionInitializingAsync = default);
@@ -100,7 +100,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_partitionClosingAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _partitionClosingAsync = value);
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_partitionClosingAsync != value)
                 {
-                    throw new ArgumentException("TODO: Handler has not been previously assigned to this event.");
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _partitionClosingAsync = default);
@@ -132,7 +132,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_processEventAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processEventAsync = value);
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_processEventAsync != value)
                 {
-                    throw new ArgumentException("TODO: Handler has not been previously assigned to this event.");
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processEventAsync = default);
@@ -164,7 +164,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_processErrorAsync != default)
                 {
-                    throw new NotSupportedException("TODO: A handler has already been assigned to this event.");
+                    throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
@@ -176,7 +176,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (_processErrorAsync != value)
                 {
-                    throw new ArgumentException("TODO: Handler has not been previously assigned to this event.");
+                    throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
@@ -889,7 +889,7 @@ namespace Azure.Messaging.EventHubs
                     // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
                     // without an updated ownership list.
 
-                    var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Retrieving list of ownership from the storage service.", ex, cancellationToken);
+                    var errorEventArgs = new ProcessErrorEventArgs(null, Resources.ListOwnershipOperation, ex, cancellationToken);
                     await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
                 }
 
@@ -921,7 +921,7 @@ namespace Azure.Messaging.EventHubs
                     {
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        var eventArgs = new ProcessErrorEventArgs(null, "TODO: Retrieving list of partition identifiers from a Consumer Client.", ex, cancellationToken);
+                        var eventArgs = new ProcessErrorEventArgs(null, Resources.GetPartitionIdsOperation, ex, cancellationToken);
                         await OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
                     }
 
@@ -1103,7 +1103,7 @@ namespace Azure.Messaging.EventHubs
                 // This should happen on the next load balancing loop as long as this instance still owns the
                 // partition.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Retrieving list of checkpoints from the storage service.", ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.ListCheckpointsOperation, ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
 
                 return;
@@ -1163,7 +1163,7 @@ namespace Azure.Messaging.EventHubs
                     // TODO: should the handler be notified in the processing task instead?  User will be notified
                     // earlier.
 
-                    var errorEventArgs = new ProcessErrorEventArgs(partitionId, "TODO: Receiving events from the Event Hubs service.", ex, cancellationToken);
+                    var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.ReadEventsOperation, ex, cancellationToken);
                     await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
                 }
                 finally
@@ -1225,7 +1225,7 @@ namespace Azure.Messaging.EventHubs
 
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Attempting to claim a new ownership in the storage service.", ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.ClaimOwnershipOperation, ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
 
                 return default;
@@ -1273,7 +1273,7 @@ namespace Azure.Messaging.EventHubs
                 // If ownership renewal fails just give up and try again in the next cycle.  The processor may
                 // end up losing some of its ownership.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Attempting to renew all of the processor's ownership in the storage service.", ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.RenewOwnershipOperation, ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
 
                 return;

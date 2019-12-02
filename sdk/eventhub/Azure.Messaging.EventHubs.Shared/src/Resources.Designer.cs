@@ -418,5 +418,93 @@ namespace Azure.Messaging.EventHubs {
                 return ResourceManager.GetString("CannotCreateCheckpointForEmptyEvent", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Another handler has already been assigned to this event..
+        /// </summary>
+        internal static string HandlerHasAlreadyBeenAssigned
+        {
+            get
+            {
+                return ResourceManager.GetString("HandlerHasAlreadyBeenAssigned", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Handler has not been previously assigned to this event..
+        /// </summary>
+        internal static string HandlerHasNotBeenAssigned
+        {
+            get
+            {
+                return ResourceManager.GetString("HandlerHasNotBeenAssigned", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieving list of ownership from the storage service..
+        /// </summary>
+        internal static string ListOwnershipOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("ListOwnershipOperation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieving list of partition identifiers from a Consumer Client..
+        /// </summary>
+        internal static string GetPartitionIdsOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("GetPartitionIdsOperation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Retrieving list of checkpoints from the storage service..
+        /// </summary>
+        internal static string ListCheckpointsOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("ListCheckpointsOperation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Attempting to claim a new ownership in the storage service..
+        /// </summary>
+        internal static string ClaimOwnershipOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("ClaimOwnershipOperation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Attempting to renew all of the processor's ownership in the storage service..
+        /// </summary>
+        internal static string RenewOwnershipOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("RenewOwnershipOperation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Receiving events from the Event Hubs service..
+        /// </summary>
+        internal static string ReadEventsOperation
+        {
+            get
+            {
+                return ResourceManager.GetString("ReadEventsOperation", resourceCulture);
+            }
+        }
     }
 }
