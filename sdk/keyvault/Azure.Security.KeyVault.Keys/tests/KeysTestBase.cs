@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
+    [NonParallelizable]
     public abstract class KeysTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
@@ -21,7 +22,9 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public Uri VaultUri { get; set; }
 
-        private readonly ConcurrentQueue<string> _keysToCleanup = new ConcurrentQueue<string>();
+        // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
+        private readonly ConcurrentQueue<string> _keysToDelete = new ConcurrentQueue<string>();
+        private readonly ConcurrentStack<string> _keysToPurge = new ConcurrentStack<string>();
 
         protected KeysTestBase(bool isAsync) : base(isAsync)
         {
@@ -46,40 +49,70 @@ namespace Azure.Security.KeyVault.Keys.Tests
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public async Task Cleanup()
         {
-            List<Task> cleanupTasks = new List<Task>();
-
-            foreach (string name in _keysToCleanup)
+            // Start deleting resources as soon as possible.
+            while (_keysToDelete.TryDequeue(out string name))
             {
-                cleanupTasks.Add(CleanupKey(name));
-            }
+                await DeleteKey(name);
 
-            await Task.WhenAll(cleanupTasks);
+                _keysToPurge.Push(name);
+            }
         }
 
-        protected async Task CleanupKey(string name)
+        [OneTimeTearDown]
+        public async Task CleanupAll()
+        {
+            // Make sure the delete queue is empty.
+            await Cleanup();
+
+            while (_keysToPurge.TryPop(out string name))
+            {
+                await PurgeKey(name).ConfigureAwait(false);
+            }
+        }
+
+        protected async Task DeleteKey(string name)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await Client.StartDeleteKeyAsync(name).ConfigureAwait(false);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+        }
+
+        protected async Task PurgeKey(string name)
         {
             try
             {
-                await Client.StartDeleteKeyAsync(name);
+                await WaitForDeletedKey(name).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
             }
 
-            try
+            if (Mode == RecordedTestMode.Playback)
             {
-                await WaitForDeletedKey(name);
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
+                return;
             }
 
             try
             {
-                await Client.PurgeDeletedKeyAsync(name);
+                using (Recording.DisableRecording())
+                {
+                    await Client.PurgeDeletedKeyAsync(name).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -88,7 +121,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         protected void RegisterForCleanup(string name)
         {
-            _keysToCleanup.Enqueue(name);
+            _keysToDelete.Enqueue(name);
         }
 
         protected void AssertKeyVaultKeysEqual(KeyVaultKey exp, KeyVaultKey act)

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,18 +12,20 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
+    [NonParallelizable]
     public class CertificatesTestBase : RecordedTestBase
     {
         public const string AzureKeyVaultUrlEnvironmentVariable = "AZURE_KEYVAULT_URL";
 
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
 
-        private readonly HashSet<string> _toCleanup = new HashSet<string>();
-        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
-
         public CertificateClient Client { get; set; }
 
         public Uri VaultUri { get; set; }
+
+        // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
+        private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
+        private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
 
         public CertificatesTestBase(bool isAsync) : base(isAsync)
         {
@@ -47,48 +50,70 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
-        [OneTimeTearDown]
-        public async Task CleanupCertificates()
+        [TearDown]
+        public async Task Cleanup()
         {
-            List<Task> cleanupTasks = new List<Task>();
-
-            _lock.EnterReadLock();
-            try
+            // Start deleting resources as soon as possible.
+            while (_certificatesToDelete.TryDequeue(out string name))
             {
-                foreach (string certName in _toCleanup)
-                {
-                    cleanupTasks.Add(CleanupCertificate(certName));
-                }
-            }
-            finally
-            {
-                _lock.ExitReadLock();
-            }
+                await DeleteCertificate(name);
 
-            await Task.WhenAll(cleanupTasks);
+                _certificatesToPurge.Push(name);
+            }
         }
 
-        protected async Task CleanupCertificate(string name)
+        [OneTimeTearDown]
+        public async Task CleanupAll()
+        {
+            // Make sure the delete queue is empty.
+            await Cleanup();
+
+            while (_certificatesToPurge.TryPop(out string name))
+            {
+                await PurgeCertificate(name).ConfigureAwait(false);
+            }
+        }
+
+        protected async Task DeleteCertificate(string name)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            try
+            {
+                using (Recording.DisableRecording())
+                {
+                    await Client.StartDeleteCertificateAsync(name).ConfigureAwait(false);
+                }
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+        }
+
+        protected async Task PurgeCertificate(string name)
         {
             try
             {
-                await Client.StartDeleteCertificateAsync(name);
+                await WaitForDeletedCertificate(name).ConfigureAwait(false);
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
             }
 
-            try
+            if (Mode == RecordedTestMode.Playback)
             {
-                await WaitForDeletedCertificate(name);
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
+                return;
             }
 
             try
             {
-                await Client.PurgeDeletedCertificateAsync(name);
+                using (Recording.DisableRecording())
+                {
+                    await Client.PurgeDeletedCertificateAsync(name).ConfigureAwait(false);
+                }
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
@@ -176,15 +201,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected void RegisterForCleanup(string certificateName)
         {
-            _lock.EnterWriteLock();
-            try
-            {
-                _toCleanup.Add(certificateName);
-            }
-            finally
-            {
-                _lock.ExitWriteLock();
-            }
+            _certificatesToDelete.Enqueue(certificateName);
         }
     }
 }
