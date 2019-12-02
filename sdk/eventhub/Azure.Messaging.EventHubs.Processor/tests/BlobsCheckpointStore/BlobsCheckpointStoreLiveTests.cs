@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Tests;
 using Azure.Storage.Blobs;
 using Moq;
@@ -28,6 +29,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class BlobsCheckpointStoreLiveTests
     {
+        /// <summary>The default retry policy to use for the test cases in this class.</summary>
+        private EventHubsRetryPolicy DefaultRetryPolicy { get; } = new BasicRetryPolicy(new EventHubsRetryOptions());
+
         /// <summary>
         ///   Verifies that the <see cref="BlobsCheckpointStore" /> is able to
         ///   connect to the Storage service.
@@ -41,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 Assert.That(async () => await checkpointStore.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup", default), Throws.Nothing);
             }
@@ -60,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 Assert.That(async () => await checkpointStore.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup", default), Throws.Nothing);
             }
@@ -81,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>
                 {
 
@@ -116,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>
                 {
 
@@ -153,7 +157,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 IEnumerable<PartitionOwnership> ownership = await checkpointStore.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup", default);
 
                 Assert.That(ownership, Is.Not.Null.And.Empty);
@@ -173,7 +177,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 IEnumerable<Checkpoint> checkpoints = await checkpointStore.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup", default);
 
                 Assert.That(checkpoints, Is.Not.Null.And.Empty);
@@ -193,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var ownership =
                     new PartitionOwnership
@@ -232,7 +236,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var ownership =
                     new PartitionOwnership
@@ -271,7 +275,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var ownership =
                     new PartitionOwnership
@@ -309,7 +313,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var firstOwnership =
                     new PartitionOwnership
@@ -363,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
 
                 var eTaggyOwnership =
@@ -400,7 +404,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var firstOwnership =
                     new PartitionOwnership
@@ -458,7 +462,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var ownershipCount = 5;
 
@@ -505,7 +509,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var ownershipCount = 5;
 
@@ -578,7 +582,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var firstOwnership =
                     new PartitionOwnership
@@ -613,7 +617,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                 ownershipList.Add(secondOwnership);
 
-                await checkpointStore.ClaimOwnershipAsync(ownershipList, default);
+                Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(ownershipList, default), Throws.InstanceOf<RequestFailedException>());
 
                 IEnumerable<PartitionOwnership> storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup1", default);
 
@@ -636,7 +640,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var firstOwnership =
                     new PartitionOwnership
@@ -671,7 +675,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                 ownershipList.Add(secondOwnership);
 
-                await checkpointStore.ClaimOwnershipAsync(ownershipList, default);
+                Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(ownershipList, default), Throws.InstanceOf<RequestFailedException>());
 
                 IEnumerable<PartitionOwnership> storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace", "eventHubName1", "consumerGroup", default);
 
@@ -694,7 +698,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
                 var ownershipList = new List<PartitionOwnership>();
                 var firstOwnership =
                     new PartitionOwnership
@@ -729,7 +733,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                 ownershipList.Add(secondOwnership);
 
-                await checkpointStore.ClaimOwnershipAsync(ownershipList, default);
+                Assert.That(async () => await checkpointStore.ClaimOwnershipAsync(ownershipList, default), Throws.InstanceOf<RequestFailedException>());
 
                 var storedOwnershipList = await checkpointStore.ListOwnershipAsync("namespace1", "eventHubName", "consumerGroup", default);
 
@@ -752,7 +756,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 Assert.That(async () => await checkpointStore.ListOwnershipAsync("namespace", "eventHubName", "consumerGroup", default), Throws.InstanceOf<RequestFailedException>());
             }
@@ -771,7 +775,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 Assert.That(async () => await checkpointStore.ListCheckpointsAsync("namespace", "eventHubName", "consumerGroup", default), Throws.InstanceOf<RequestFailedException>());
             }
@@ -790,7 +794,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, $"test-container-{Guid.NewGuid()}");
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(new Checkpoint
                     ("namespace", "eventHubName", "consumerGroup", "partitionId", offset: 10, sequenceNumber: 20), default), Throws.InstanceOf<RequestFailedException>());
@@ -810,7 +814,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 await checkpointStore.UpdateCheckpointAsync(new Checkpoint
                     ("namespace", "eventHubName", "consumerGroup1", "partitionId", 10, 20), default);
@@ -842,7 +846,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 await checkpointStore.UpdateCheckpointAsync(new Checkpoint
                     ("namespace", "eventHubName1", "consumerGroup", "partitionId", 10, 20), default);
@@ -874,7 +878,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 await checkpointStore.UpdateCheckpointAsync(new Checkpoint
                     ("namespace1", "eventHubName", "consumerGroup", "partitionId", 10, 20), default);
@@ -906,7 +910,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 var storageConnectionString = StorageTestEnvironment.StorageConnectionString;
                 var containerClient = new BlobContainerClient(storageConnectionString, storageScope.ContainerName);
 
-                var checkpointStore = new BlobsCheckpointStore(containerClient, Mock.Of<EventHubsRetryPolicy>());
+                var checkpointStore = new BlobsCheckpointStore(containerClient, DefaultRetryPolicy);
 
                 await checkpointStore.UpdateCheckpointAsync(new Checkpoint
                     ("namespace", "eventHubName", "consumerGroup", "partitionId1", 10, 20), default);

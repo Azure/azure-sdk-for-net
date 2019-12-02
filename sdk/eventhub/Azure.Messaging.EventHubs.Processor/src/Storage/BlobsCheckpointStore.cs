@@ -191,28 +191,10 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         blobRequestConditions.IfMatch = new ETag(ownership.ETag);
 
-                        Func<CancellationToken, Task<Response<BlobInfo>>> overwriteBlobAsync = async uploadToken =>
-                        {
-                            try
-                            {
-                                return await blobClient.SetMetadataAsync(metadata, blobRequestConditions, uploadToken);
-                            }
-                            catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
-                            {
-                                // No ownership was found, which means the ETag should have been set to null in order to
-                                // claim this ownership.  For this reason, we consider it a failure and don't try again.
-
-                                // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
-                                return null;
-                            }
-                        };
+                        Func<CancellationToken, Task<Response<BlobInfo>>> overwriteBlobAsync = uploadToken =>
+                            blobClient.SetMetadataAsync(metadata, blobRequestConditions, uploadToken);
 
                         infoResponse = await ApplyRetryPolicy(overwriteBlobAsync, cancellationToken).ConfigureAwait(false);
-
-                        if (infoResponse == null)
-                        {
-                            continue;
-                        }
 
                         ownership.LastModifiedTime = infoResponse.Value.LastModified;
                         ownership.ETag = infoResponse.Value.ETag.ToString();
@@ -235,6 +217,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ConditionNotMet)
                 {
                     // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound || ex.ErrorCode == BlobErrorCode.BlobNotFound)
+                {
+                    throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
                 }
             }
 
