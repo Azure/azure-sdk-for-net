@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
@@ -56,12 +57,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
         public override Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                  string eventHubName,
-                                                                                 string consumerGroup)
+                                                                                 string consumerGroup,
+                                                                                 CancellationToken cancellationToken = default)
         {
             List<PartitionOwnership> ownershipList;
 
@@ -82,10 +85,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
         ///
         /// <returns>An enumerable containing the successfully claimed ownership.</returns>
         ///
-        public override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership)
+        public override Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership,
+                                                                                  CancellationToken cancellationToken = default)
         {
             var claimedOwnership = new List<PartitionOwnership>();
 
@@ -132,12 +137,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
         public override Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
                                                                            string eventHubName,
-                                                                           string consumerGroup)
+                                                                           string consumerGroup,
+                                                                           CancellationToken cancellationToken = default)
         {
             List<Checkpoint> checkpointList;
 
@@ -158,8 +165,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.  Not supported.</param>
         ///
-        public override Task UpdateCheckpointAsync(Checkpoint checkpoint)
+        public override Task UpdateCheckpointAsync(Checkpoint checkpoint,
+                                                   CancellationToken cancellationToken = default)
         {
             lock (_checkpointLock)
             {

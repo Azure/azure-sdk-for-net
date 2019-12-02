@@ -742,9 +742,9 @@ namespace Azure.Messaging.EventHubs
             try
             {
                 // TODO: apply retry policy here.  Do not call error handler in case of failure and notify
-                // the user directly.
+                // the user directly.  Pass the cancellation token.
 
-                await StorageManager.UpdateCheckpointAsync(checkpoint).ConfigureAwait(false);
+                await StorageManager.UpdateCheckpointAsync(checkpoint, default).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -853,7 +853,7 @@ namespace Azure.Messaging.EventHubs
 
                 // TODO: apply retry policy here.
 
-                var completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
+                var completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken)
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -1090,7 +1090,7 @@ namespace Azure.Messaging.EventHubs
             // TODO: make partition manager take a cancellation token.
 
             Func<CancellationToken, Task<IEnumerable<Checkpoint>>> functionToRetry = cancellationToken =>
-                StorageManager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
+                StorageManager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken);
 
             var availableCheckpoints = default(IEnumerable<Checkpoint>);
 
@@ -1220,7 +1220,7 @@ namespace Azure.Messaging.EventHubs
 
                 // TODO: make partition manager take a cancellation token.
 
-                return StorageManager.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership });
+                return StorageManager.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }, cancellationToken);
             };
 
             var claimedOwnership = default(IEnumerable<PartitionOwnership>);
@@ -1275,7 +1275,7 @@ namespace Azure.Messaging.EventHubs
 
                 // TODO: make partition manager take a cancellation token.
 
-                return StorageManager.ClaimOwnershipAsync(ownershipToRenew);
+                return StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken);
             };
 
             try

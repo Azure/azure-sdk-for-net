@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Messaging.EventHubs.Processor
@@ -20,22 +21,26 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
         public abstract Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                  string eventHubName,
-                                                                                 string consumerGroup);
+                                                                                 string consumerGroup,
+                                                                                 CancellationToken cancellationToken);
 
         /// <summary>
         ///   Attempts to claim ownership of partitions for processing.
         /// </summary>
         ///
         /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing the successfully claimed ownership instances.</returns>
         ///
-        public abstract Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership);
+        public abstract Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership,
+                                                                                  CancellationToken cancellationToken);
 
 
         /// <summary>
@@ -45,19 +50,23 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
         public abstract Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
                                                                            string eventHubName,
-                                                                           string consumerGroup);
+                                                                           string consumerGroup,
+                                                                           CancellationToken cancellationToken);
 
         /// <summary>
         ///   Updates the checkpoint using the given information for the associated partition and consumer group in the chosen storage service.
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public abstract Task UpdateCheckpointAsync(Checkpoint checkpoint);
+        public abstract Task UpdateCheckpointAsync(Checkpoint checkpoint,
+                                                   CancellationToken cancellationToken);
     }
 }

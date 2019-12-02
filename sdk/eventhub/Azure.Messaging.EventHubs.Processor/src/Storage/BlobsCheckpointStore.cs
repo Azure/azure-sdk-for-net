@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
@@ -69,12 +70,14 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing all the existing ownership for the associated Event Hub and consumer group.</returns>
         ///
         public override async Task<IEnumerable<PartitionOwnership>> ListOwnershipAsync(string fullyQualifiedNamespace,
                                                                                        string eventHubName,
-                                                                                       string consumerGroup)
+                                                                                       string consumerGroup,
+                                                                                       CancellationToken cancellationToken)
         {
             List<PartitionOwnership> ownershipList = new List<PartitionOwnership>();
             try
@@ -111,10 +114,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="partitionOwnership">An enumerable containing all the ownership to claim.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing the successfully claimed ownership.</returns>
         ///
-        public override async Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership)
+        public override async Task<IEnumerable<PartitionOwnership>> ClaimOwnershipAsync(IEnumerable<PartitionOwnership> partitionOwnership,
+                                                                                        CancellationToken cancellationToken)
         {
             var claimedOwnership = new List<PartitionOwnership>();
             var metadata = new Dictionary<string, string>();
@@ -209,12 +214,14 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>An enumerable containing all the existing checkpoints for the associated Event Hub and consumer group.</returns>
         ///
         public override async Task<IEnumerable<Checkpoint>> ListCheckpointsAsync(string fullyQualifiedNamespace,
                                                                                  string eventHubName,
-                                                                                 string consumerGroup)
+                                                                                 string consumerGroup,
+                                                                                 CancellationToken cancellationToken)
         {
             List<Checkpoint> checkpoints = new List<Checkpoint>();
             try
@@ -258,10 +265,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="checkpoint">The checkpoint containing the information to be stored.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public override async Task UpdateCheckpointAsync(Checkpoint checkpoint)
+        public override async Task UpdateCheckpointAsync(Checkpoint checkpoint,
+                                                         CancellationToken cancellationToken)
         {
             var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
 

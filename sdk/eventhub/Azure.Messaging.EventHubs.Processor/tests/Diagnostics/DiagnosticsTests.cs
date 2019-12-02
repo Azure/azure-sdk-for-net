@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -52,7 +53,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
 
             storageManager
-                .Setup(manager => manager.UpdateCheckpointAsync(It.IsAny<Checkpoint>()))
+                .Setup(manager => manager.UpdateCheckpointAsync(It.IsAny<Checkpoint>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             eventProcessor
