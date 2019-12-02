@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Tests;
+using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Processor.Tests;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of live tests for the <see cref="EventProcessorClient" />

@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Messaging.EventHubs.Processor.Tests
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of tests for the <see cref="EventProcessorClient" />
