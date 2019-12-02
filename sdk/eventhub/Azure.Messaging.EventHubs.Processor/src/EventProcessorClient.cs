@@ -714,10 +714,12 @@ namespace Azure.Messaging.EventHubs
         /// <param name="context">The context of the partition the checkpoint is associated with.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        internal async Task UpdateCheckpointAsync(EventData eventData,
-                                                  PartitionContext context,
-                                                  CancellationToken cancellationToken)
+        internal Task UpdateCheckpointAsync(EventData eventData,
+                                            PartitionContext context,
+                                            CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
             Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
@@ -741,13 +743,13 @@ namespace Azure.Messaging.EventHubs
 
             try
             {
-                // TODO: apply retry policy here.  Do not call error handler in case of failure and notify
-                // the user directly.
-
-                await StorageManager.UpdateCheckpointAsync(checkpoint, cancellationToken).ConfigureAwait(false);
+                return StorageManager.UpdateCheckpointAsync(checkpoint, cancellationToken);
             }
             catch (Exception e)
             {
+                // In case of failure, there is no need to call the error handler because the exception can
+                // be thrown directly to the user here.
+
                 scope.Failed(e);
                 throw;
             }
@@ -840,40 +842,11 @@ namespace Azure.Messaging.EventHubs
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                Stopwatch cycleDuration = Stopwatch.StartNew();
+                var cycleDuration = Stopwatch.StartNew();
 
                 // Renew this instance's ownership so they don't expire.
 
                 await RenewOwnershipAsync(cancellationToken).ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
-                // their eTags to claim orphan partitions.
-
-                // TODO: apply retry policy here.
-
-                var completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken)
-                    .ConfigureAwait(false))
-                    .ToList();
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
-                // but it may be overridden by a derived class.
-
-                var utcNow = DateTimeOffset.UtcNow;
-
-                IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList
-                    .Where(ownership =>
-                        utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration
-                        && !string.IsNullOrEmpty(ownership.OwnerIdentifier));
-
-                // Dispose of all previous partition ownership instances and get a whole new dictionary.
-
-                InstanceOwnership = activeOwnership
-                    .Where(ownership => ownership.OwnerIdentifier == Identifier)
-                    .ToDictionary(ownership => ownership.PartitionId);
 
                 // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
                 // the processing tasks we don't need anymore.
@@ -883,12 +856,9 @@ namespace Azure.Messaging.EventHubs
                     .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken)))
                     .ConfigureAwait(false);
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
                 // Now that we are left with processing tasks that should be running, check their status.  If any has stopped, it
                 // means a failure has happened, so try closing it and starting a new one.  In case we don't have a task that should
-                // exist, create it.  This might happen if the user hasn't updated ActivePartitionProcessors when initializing processing
-                // in the previous cycle.
+                // exist, create it.  This might happen if task creation failed in the last cycle.
 
                 await Task.WhenAll(InstanceOwnership
                     .Select(async kvp =>
@@ -901,40 +871,72 @@ namespace Azure.Messaging.EventHubs
                     }))
                     .ConfigureAwait(false);
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
+                // their eTags to claim orphan partitions.
 
-                // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
-                // it may change in the future.
-
-                var partitionIds = default(string[]);
+                var completeOwnershipList = default(IEnumerable<PartitionOwnership>);
 
                 try
                 {
-                    partitionIds = await consumer.GetPartitionIdsAsync().ConfigureAwait(false);
+                    completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken)
+                        .ConfigureAwait(false))
+                        .ToList();
                 }
                 catch (Exception ex)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                    var eventArgs = new ProcessErrorEventArgs(null, "TODO: Retrieving list of partition identifiers from a Consumer Client.", ex, cancellationToken);
-                    await OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
+                    // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
+                    // without an updated ownership list.
+
+                    var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Retrieving list of ownership from the storage service.", ex, cancellationToken);
+                    await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
                 }
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
+                // but it may be overridden by a derived class.
 
-                if (partitionIds != default)
+                var utcNow = DateTimeOffset.UtcNow;
+
+                IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList?
+                    .Where(ownership =>
+                        utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration
+                        && !string.IsNullOrEmpty(ownership.OwnerIdentifier));
+
+                // Active ownership list may be null if complete ownership list retrieval has failed.  There's no point in continuing the current
+                // cycle if that is the case.
+
+                if (activeOwnership != default)
                 {
-                    // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
-                    // increase its ownership list, if no claimable ownership could be found or if a claim attempt has failed.
+                    // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
+                    // it may change in the future.
 
-                    var claimedOwnership = await FindAndClaimOwnershipAsync(partitionIds, completeOwnershipList, activeOwnership, cancellationToken).ConfigureAwait(false);
+                    var partitionIds = default(string[]);
 
-                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                    if (claimedOwnership != null)
+                    try
                     {
-                        InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
-                        await StartPartitionProcessingAsync(claimedOwnership.PartitionId, cancellationToken).ConfigureAwait(false);
+                        partitionIds = await consumer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                        var eventArgs = new ProcessErrorEventArgs(null, "TODO: Retrieving list of partition identifiers from a Consumer Client.", ex, cancellationToken);
+                        await OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
+                    }
+
+                    if (partitionIds != default)
+                    {
+                        // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
+                        // increase its ownership list, if no claimable ownership could be found or if a claim attempt has failed.
+
+                        var claimedOwnership = await FindAndClaimOwnershipAsync(partitionIds, completeOwnershipList, activeOwnership, cancellationToken).ConfigureAwait(false);
+
+                        if (claimedOwnership != null)
+                        {
+                            InstanceOwnership[claimedOwnership.PartitionId] = claimedOwnership;
+                            await StartPartitionProcessingAsync(claimedOwnership.PartitionId, cancellationToken).ConfigureAwait(false);
+                        }
                     }
                 }
 
@@ -1087,30 +1089,27 @@ namespace Azure.Messaging.EventHubs
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            // TODO: make partition manager take a cancellation token.
-
-            Func<CancellationToken, Task<IEnumerable<Checkpoint>>> functionToRetry = cancellationToken =>
-                StorageManager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken);
-
             var availableCheckpoints = default(IEnumerable<Checkpoint>);
 
             try
             {
-                availableCheckpoints = await ApplyRetryPolicy(functionToRetry, cancellationToken).ConfigureAwait(false);
+                availableCheckpoints = await StorageManager.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                // If processing task creation fails even after applying the retry policy, we'll try again on
-                // the next time this method is called.  This should happen on the next load balancing loop as
-                // long as this instance still owns the partition.
+                // If processing task creation fails, we'll try again on the next time this method is called.
+                // This should happen on the next load balancing loop as long as this instance still owns the
+                // partition.
 
                 var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Retrieving list of checkpoints from the storage service.", ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
 
                 return;
             }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var startingPosition = initializingEventArgs.DefaultStartingPosition;
 
@@ -1203,38 +1202,28 @@ namespace Azure.Messaging.EventHubs
 
             var oldOwnership = completeOwnershipEnumerable.FirstOrDefault(ownership => ownership.PartitionId == partitionId);
 
-            Func<CancellationToken, Task<IEnumerable<PartitionOwnership>>> functionToRetry = cancellationToken =>
-            {
-                // We need to create an Ownership instance in every attempt to update the last modified time.
-
-                var newOwnership = new PartitionOwnership
-                (
-                    FullyQualifiedNamespace,
-                    EventHubName,
-                    ConsumerGroup,
-                    Identifier,
-                    partitionId,
-                    DateTimeOffset.UtcNow,
-                    oldOwnership?.ETag
-                );
-
-                // TODO: make partition manager take a cancellation token.
-
-                return StorageManager.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }, cancellationToken);
-            };
+            var newOwnership = new PartitionOwnership
+            (
+                FullyQualifiedNamespace,
+                EventHubName,
+                ConsumerGroup,
+                Identifier,
+                partitionId,
+                DateTimeOffset.UtcNow,
+                oldOwnership?.ETag
+            );
 
             var claimedOwnership = default(IEnumerable<PartitionOwnership>);
 
             try
             {
-                claimedOwnership = await ApplyRetryPolicy(functionToRetry, cancellationToken).ConfigureAwait(false);
+                claimedOwnership = await StorageManager.ClaimOwnershipAsync(new List<PartitionOwnership> { newOwnership }, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                // If ownership claim fails even after applying the retry policy, just treat it as a usual
-                // ownership claim failure.
+                // If ownership claim fails, just treat it as a usual ownership claim failure.
 
                 var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Attempting to claim a new ownership in the storage service.", ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
@@ -1257,47 +1246,38 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            Func<CancellationToken, Task<IEnumerable<PartitionOwnership>>> functionToRetry = cancellationToken =>
-            {
-                // We need to create Ownership instances in every attempt to update the last modified time.
-
-                IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
-                    .Select(ownership => new PartitionOwnership
-                    (
-                        ownership.FullyQualifiedNamespace,
-                        ownership.EventHubName,
-                        ownership.ConsumerGroup,
-                        ownership.OwnerIdentifier,
-                        ownership.PartitionId,
-                        DateTimeOffset.UtcNow,
-                        ownership.ETag
-                    ));
-
-                // TODO: make partition manager take a cancellation token.
-
-                return StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken);
-            };
+            IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
+                .Select(ownership => new PartitionOwnership
+                (
+                    ownership.FullyQualifiedNamespace,
+                    ownership.EventHubName,
+                    ownership.ConsumerGroup,
+                    ownership.OwnerIdentifier,
+                    ownership.PartitionId,
+                    DateTimeOffset.UtcNow,
+                    ownership.ETag
+                ));
 
             try
             {
-                await ApplyRetryPolicy(functionToRetry, cancellationToken).ConfigureAwait(false);
+                // Dispose of all previous partition ownership instances and get a whole new dictionary.
+
+                InstanceOwnership = (await StorageManager.ClaimOwnershipAsync(ownershipToRenew, cancellationToken)
+                    .ConfigureAwait(false))
+                    .ToDictionary(ownership => ownership.PartitionId);
             }
             catch (Exception ex)
             {
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                // If ownership renewal fails even after applying the retry policy, just give up and try again
-                // in the next cycle.  The processor may end up losing some of its ownership.
+                // If ownership renewal fails just give up and try again in the next cycle.  The processor may
+                // end up losing some of its ownership.
 
                 var errorEventArgs = new ProcessErrorEventArgs(null, "TODO: Attempting to renew all of the processor's ownership in the storage service.", ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
+
+                return;
             }
-
-            // TODO: not true anymore.  Update comment.
-
-            // We cannot rely on the ownership returned by ClaimOwnershipAsync to update our InstanceOwnership dictionary.
-            // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
-            // will fail in claiming it here, but this instance still owns it.
         }
 
         /// <summary>
@@ -1355,67 +1335,6 @@ namespace Azure.Messaging.EventHubs
                     }
                 }
             });
-
-        /// <summary>
-        ///   Applies the processor's <see cref="RetryPolicy" /> to a specified function.
-        /// </summary>
-        ///
-        /// <param name="functionToRetry">The function to which the retry policy should be applied.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <typeparam name="T">The type returned by the function to be executed.</typeparam>
-        ///
-        /// <returns>The value returned by the function to which the retry policy has been applied.</returns>
-        ///
-        private async Task<T> ApplyRetryPolicy<T>(Func<CancellationToken, Task<T>> functionToRetry,
-                                                  CancellationToken cancellationToken)
-        {
-            var failedAttemptCount = 0;
-            var retryDelay = default(TimeSpan?);
-            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
-
-            var stopWatch = Stopwatch.StartNew();
-
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                try
-                {
-                    var timeoutToken = (new CancellationTokenSource(tryTimeout)).Token;
-                    var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutToken).Token;
-
-                    // TODO: we should pass the linkedToken instead.  However, what should we do if it timeouts in the last
-                    // try?  It would throw a TaskCanceledException.  Should we deal with it in the caller method?  What
-                    // should we pass to the error handler?
-
-                    return await functionToRetry(cancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                    // Otherwise, mark the exception as active and break out of the loop.
-
-                    ++failedAttemptCount;
-                    retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
-
-                    if ((retryDelay.HasValue) && (!cancellationToken.IsCancellationRequested))
-                    {
-                        await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-
-                        tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
-                        stopWatch.Reset();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-
-            // If no value has been returned nor exception thrown by this point,
-            // then cancellation has been requested.
-
-            throw new TaskCanceledException();
-        }
 
         /// <summary>
         ///   Invokes a specified action only if this <see cref="EventProcessorClient" /> instance is not running.

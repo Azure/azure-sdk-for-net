@@ -159,13 +159,13 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         blobRequestConditions.IfNoneMatch = new ETag("*");
 
-                        Func<CancellationToken, Task<Response<BlobContentInfo>>> uploadBlobAsync = uploadToken =>
+                        Func<CancellationToken, Task<Response<BlobContentInfo>>> uploadBlobAsync = async uploadToken =>
                         {
                             using var blobContent = new MemoryStream(Array.Empty<byte>());
 
                             try
                             {
-                                return blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions, cancellationToken: uploadToken);
+                                return await blobClient.UploadAsync(blobContent, metadata: metadata, conditions: blobRequestConditions, cancellationToken: uploadToken).ConfigureAwait(false);
                             }
                             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobAlreadyExists)
                             {
@@ -173,7 +173,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                 // partition.  In this case, there's no point in retrying because we don't have the correct ETag.
 
                                 // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
-                                return Task.FromResult<Response<BlobContentInfo>>(null);
+                                return null;
                             }
                         };
 
@@ -191,11 +191,11 @@ namespace Azure.Messaging.EventHubs.Processor
                     {
                         blobRequestConditions.IfMatch = new ETag(ownership.ETag);
 
-                        Func<CancellationToken, Task<Response<BlobInfo>>> overwriteBlobAsync = uploadToken =>
+                        Func<CancellationToken, Task<Response<BlobInfo>>> overwriteBlobAsync = async uploadToken =>
                         {
                             try
                             {
-                                return blobClient.SetMetadataAsync(metadata, blobRequestConditions, uploadToken);
+                                return await blobClient.SetMetadataAsync(metadata, blobRequestConditions, uploadToken);
                             }
                             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
                             {
@@ -203,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                 // claim this ownership.  For this reason, we consider it a failure and don't try again.
 
                                 // TODO: Add log  - "Ownership with partition id = '{ ownership.PartitionId }' is not claimable."
-                                return Task.FromResult<Response<BlobInfo>>(null);
+                                return null;
                             }
                         };
 
@@ -315,6 +315,8 @@ namespace Azure.Messaging.EventHubs.Processor
         public override Task UpdateCheckpointAsync(Checkpoint checkpoint,
                                                    CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             var blobName = string.Format(CheckpointPrefix + checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace.ToLower(), checkpoint.EventHubName.ToLower(), checkpoint.ConsumerGroup.ToLower());
             var blobClient = ContainerClient.GetBlobClient(blobName);
 
@@ -324,10 +326,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 { BlobMetadataKey.SequenceNumber, checkpoint.SequenceNumber.ToString() }
             };
 
-            Func<CancellationToken, Task> updateCheckpointAsync = updateCheckpointToken =>
+            Func<CancellationToken, Task> updateCheckpointAsync = async updateCheckpointToken =>
             {
                 using var blobContent = new MemoryStream(new byte[0]);
-                return blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken);
+                await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken);
             };
 
             try
