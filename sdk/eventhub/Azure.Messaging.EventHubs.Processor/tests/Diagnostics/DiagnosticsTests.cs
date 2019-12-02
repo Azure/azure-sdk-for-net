@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 .Setup(processor => processor.CreateStorageManager(It.IsAny<BlobContainerClient>()))
                 .Returns(storageManager.Object);
 
-            await eventProcessor.Object.UpdateCheckpointAsync(data, context);
+            await eventProcessor.Object.UpdateCheckpointAsync(data, context, default);
 
             ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
             Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));

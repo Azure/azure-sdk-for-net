@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs
     public class EventProcessorClient
     {
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
-        private static readonly Func<Task> EmptyEventUpdateCheckpoint = () => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
+        private static readonly Func<CancellationToken, Task> EmptyEventUpdateCheckpoint = cancellationToken => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
 
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -712,12 +712,12 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventData">The event containing the information to be stored in the checkpoint.</param>
         /// <param name="context">The context of the partition the checkpoint is associated with.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal async Task UpdateCheckpointAsync(EventData eventData,
-                                                  PartitionContext context)
+                                                  PartitionContext context,
+                                                  CancellationToken cancellationToken)
         {
-            // TODO: Should this method take a cancellation token from the ProcessEventArgs?
-
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
             Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
@@ -742,9 +742,9 @@ namespace Azure.Messaging.EventHubs
             try
             {
                 // TODO: apply retry policy here.  Do not call error handler in case of failure and notify
-                // the user directly.  Pass the cancellation token.
+                // the user directly.
 
-                await StorageManager.UpdateCheckpointAsync(checkpoint, default).ConfigureAwait(false);
+                await StorageManager.UpdateCheckpointAsync(checkpoint, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1333,11 +1333,11 @@ namespace Azure.Messaging.EventHubs
 
                         try
                         {
-                            Func<Task> updateCheckpoint;
+                            Func<CancellationToken, Task> updateCheckpoint;
 
                             if (partitionEvent.Data != null)
                             {
-                                updateCheckpoint = () => UpdateCheckpointAsync(partitionEvent.Data, partitionEvent.Partition);
+                                updateCheckpoint = updateCheckpointToken => UpdateCheckpointAsync(partitionEvent.Data, partitionEvent.Partition, updateCheckpointToken);
                             }
                             else
                             {
