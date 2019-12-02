@@ -871,7 +871,7 @@ namespace Azure.Messaging.EventHubs
                     }))
                     .ConfigureAwait(false);
 
-                // From the storage service provided by the user, obtain a complete list of ownership, including expired ones.  We may still need
+                // From the storage service, obtain a complete list of ownership, including expired ones.  We may still need
                 // their eTags to claim orphan partitions.
 
                 var completeOwnershipList = default(IEnumerable<PartitionOwnership>);
@@ -889,7 +889,7 @@ namespace Azure.Messaging.EventHubs
                     // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
                     // without an updated ownership list.
 
-                    var errorEventArgs = new ProcessErrorEventArgs(null, Resources.ListOwnershipOperation, ex, cancellationToken);
+                    var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListOwnership, ex, cancellationToken);
                     await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
                 }
 
@@ -921,7 +921,7 @@ namespace Azure.Messaging.EventHubs
                     {
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        var eventArgs = new ProcessErrorEventArgs(null, Resources.GetPartitionIdsOperation, ex, cancellationToken);
+                        var eventArgs = new ProcessErrorEventArgs(null, Resources.OperationGetPartitionIds, ex, cancellationToken);
                         await OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
                     }
 
@@ -1103,7 +1103,7 @@ namespace Azure.Messaging.EventHubs
                 // This should happen on the next load balancing loop as long as this instance still owns the
                 // partition.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.ListCheckpointsOperation, ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListCheckpoints, ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
 
                 return;
@@ -1163,7 +1163,7 @@ namespace Azure.Messaging.EventHubs
                     // TODO: should the handler be notified in the processing task instead?  User will be notified
                     // earlier.
 
-                    var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.ReadEventsOperation, ex, cancellationToken);
+                    var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
                     await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
                 }
                 finally
@@ -1225,7 +1225,7 @@ namespace Azure.Messaging.EventHubs
 
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.ClaimOwnershipOperation, ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationClaimOwnership, ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
 
                 return default;
@@ -1273,7 +1273,7 @@ namespace Azure.Messaging.EventHubs
                 // If ownership renewal fails just give up and try again in the next cycle.  The processor may
                 // end up losing some of its ownership.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.RenewOwnershipOperation, ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationRenewOwnership, ex, cancellationToken);
                 await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
 
                 return;

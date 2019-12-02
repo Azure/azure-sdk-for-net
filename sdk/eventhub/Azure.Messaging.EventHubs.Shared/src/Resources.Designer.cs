@@ -420,7 +420,7 @@ namespace Azure.Messaging.EventHubs {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Another handler has already been assigned to this event..
+        ///   Looks up a localized string similar to Another handler has already been assigned to this event and there can be only one..
         /// </summary>
         internal static string HandlerHasAlreadyBeenAssigned
         {
@@ -431,7 +431,7 @@ namespace Azure.Messaging.EventHubs {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Handler has not been previously assigned to this event..
+        ///   Looks up a localized string similar to This handler has not been previously assigned to this event..
         /// </summary>
         internal static string HandlerHasNotBeenAssigned
         {
@@ -444,66 +444,66 @@ namespace Azure.Messaging.EventHubs {
         /// <summary>
         ///   Looks up a localized string similar to Retrieving list of ownership from the storage service..
         /// </summary>
-        internal static string ListOwnershipOperation
+        internal static string OperationListOwnership
         {
             get
             {
-                return ResourceManager.GetString("ListOwnershipOperation", resourceCulture);
+                return ResourceManager.GetString("OperationListOwnership", resourceCulture);
             }
         }
 
         /// <summary>
         ///   Looks up a localized string similar to Retrieving list of partition identifiers from a Consumer Client..
         /// </summary>
-        internal static string GetPartitionIdsOperation
+        internal static string OperationGetPartitionIds
         {
             get
             {
-                return ResourceManager.GetString("GetPartitionIdsOperation", resourceCulture);
+                return ResourceManager.GetString("OperationGetPartitionIds", resourceCulture);
             }
         }
 
         /// <summary>
         ///   Looks up a localized string similar to Retrieving list of checkpoints from the storage service..
         /// </summary>
-        internal static string ListCheckpointsOperation
+        internal static string OperationListCheckpoints
         {
             get
             {
-                return ResourceManager.GetString("ListCheckpointsOperation", resourceCulture);
+                return ResourceManager.GetString("OperationListCheckpoints", resourceCulture);
             }
         }
 
         /// <summary>
         ///   Looks up a localized string similar to Attempting to claim a new ownership in the storage service..
         /// </summary>
-        internal static string ClaimOwnershipOperation
+        internal static string OperationClaimOwnership
         {
             get
             {
-                return ResourceManager.GetString("ClaimOwnershipOperation", resourceCulture);
+                return ResourceManager.GetString("OperationClaimOwnership", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Attempting to renew all of the processor's ownership in the storage service..
+        ///   Looks up a localized string similar to Attempting to renew all of the processor's partition ownership in the storage service..
         /// </summary>
-        internal static string RenewOwnershipOperation
+        internal static string OperationRenewOwnership
         {
             get
             {
-                return ResourceManager.GetString("RenewOwnershipOperation", resourceCulture);
+                return ResourceManager.GetString("OperationRenewOwnership", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Receiving events from the Event Hubs service..
+        ///   Looks up a localized string similar to Reading events from the Event Hubs service..
         /// </summary>
-        internal static string ReadEventsOperation
+        internal static string OperationReadEvents
         {
             get
             {
-                return ResourceManager.GetString("ReadEventsOperation", resourceCulture);
+                return ResourceManager.GetString("OperationReadEvents", resourceCulture);
             }
         }
     }

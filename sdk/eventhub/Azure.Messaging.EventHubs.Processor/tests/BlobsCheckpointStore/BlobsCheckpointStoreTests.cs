@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void ConstructorRequiresBlobContainerClient()
         {
-            Assert.That(() => new BlobsCheckpointStore(null, Mock.Of<EventHubsRetryPolicy>()), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new BlobsCheckpointStore(null, Mock.Of<EventHubsRetryPolicy>()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public void ConstructorRequiresRetryPolicy()
         {
-            Assert.That(() => new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), null), Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), null), Throws.ArgumentNullException);
         }
     }
 }

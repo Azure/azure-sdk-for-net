@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Processor
     internal sealed class BlobsCheckpointStore : PartitionManager
     {
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
-        private static readonly Regex s_doubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
+        private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);
 
         /// <summary>
         ///   Specifies a string that filters the results to return only checkpoint blobs whose name begins
@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     // Small workaround to retrieve the eTag.  The current storage SDK returns it enclosed in
                     // double quotes ('"ETAG_VALUE"' instead of 'ETAG_VALUE').
 
-                    var match = s_doubleQuotesExpression.Match(ownership.ETag);
+                    var match = DoubleQuotesExpression.Match(ownership.ETag);
 
                     if (match.Success)
                     {
@@ -328,7 +328,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             Func<CancellationToken, Task> updateCheckpointAsync = async updateCheckpointToken =>
             {
-                using var blobContent = new MemoryStream(new byte[0]);
+                using var blobContent = new MemoryStream(Array.Empty<byte>());
                 await blobClient.UploadAsync(blobContent, metadata: metadata, cancellationToken: updateCheckpointToken);
             };
 
@@ -364,16 +364,13 @@ namespace Azure.Messaging.EventHubs.Processor
 
             while (!cancellationToken.IsCancellationRequested)
             {
+                using var timeoutTokenSource = new CancellationTokenSource(tryTimeout);
+
                 try
                 {
-                    var timeoutToken = (new CancellationTokenSource(tryTimeout)).Token;
-                    var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutToken).Token;
+                    using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutTokenSource.Token);
 
-                    // TODO: we should pass the linkedToken instead.  However, what should we do if it timeouts in the last
-                    // try?  It would throw a TaskCanceledException.  Should we deal with it in the caller method?  What
-                    // should we pass to the error handler?
-
-                    await functionToRetry(cancellationToken).ConfigureAwait(false);
+                    await functionToRetry(linkedTokenSource.Token).ConfigureAwait(false);
 
                     return;
                 }
@@ -394,6 +391,7 @@ namespace Azure.Messaging.EventHubs.Processor
                     }
                     else
                     {
+                        timeoutTokenSource.Token.ThrowIfCancellationRequested<TimeoutException>();
                         throw;
                     }
                 }
