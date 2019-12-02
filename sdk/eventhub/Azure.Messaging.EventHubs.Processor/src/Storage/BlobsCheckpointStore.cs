@@ -417,51 +417,19 @@ namespace Azure.Messaging.EventHubs.Processor
         private async Task<T> ApplyRetryPolicy<T>(Func<CancellationToken, Task<T>> functionToRetry,
                                                   CancellationToken cancellationToken)
         {
-            var failedAttemptCount = 0;
-            var retryDelay = default(TimeSpan?);
-            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+            // This method wraps a Func<CancellationToken, Task<T>> inside a Func<CancellationToken, Task>
+            // so we can make use of the other ApplyRetryPolicy method without repeating code.
 
-            var stopWatch = Stopwatch.StartNew();
+            T result = default;
 
-            while (!cancellationToken.IsCancellationRequested)
+            Func<CancellationToken, Task> wrapper = async token =>
             {
-                try
-                {
-                    var timeoutToken = (new CancellationTokenSource(tryTimeout)).Token;
-                    var linkedToken = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutToken).Token;
+                result = await functionToRetry(token);
+            };
 
-                    // TODO: we should pass the linkedToken instead.  However, what should we do if it timeouts in the last
-                    // try?  It would throw a TaskCanceledException.  Should we deal with it in the caller method?  What
-                    // should we pass to the error handler?
+            await ApplyRetryPolicy(wrapper, cancellationToken);
 
-                    return await functionToRetry(cancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                    // Otherwise, mark the exception as active and break out of the loop.
-
-                    ++failedAttemptCount;
-                    retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
-
-                    if ((retryDelay.HasValue) && (!cancellationToken.IsCancellationRequested))
-                    {
-                        await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-
-                        tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
-                        stopWatch.Reset();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-            }
-
-            // If no value has been returned nor exception thrown by this point,
-            // then cancellation has been requested.
-
-            throw new TaskCanceledException();
+            return result;
         }
     }
 }
