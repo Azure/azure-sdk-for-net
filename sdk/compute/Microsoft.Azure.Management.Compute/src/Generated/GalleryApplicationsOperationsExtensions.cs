@@ -80,6 +80,64 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Update a gallery Application Definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition to be updated. The allowed
+            /// characters are alphabets and numbers with dots, dashes, and periods allowed
+            /// in the middle. The maximum length is 80 characters.
+            /// </param>
+            /// <param name='galleryApplication'>
+            /// Parameters supplied to the update gallery Application operation.
+            /// </param>
+            public static GalleryApplication Update(this IGalleryApplicationsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdate galleryApplication)
+            {
+                return operations.UpdateAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplication).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a gallery Application Definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition to be updated. The allowed
+            /// characters are alphabets and numbers with dots, dashes, and periods allowed
+            /// in the middle. The maximum length is 80 characters.
+            /// </param>
+            /// <param name='galleryApplication'>
+            /// Parameters supplied to the update gallery Application operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GalleryApplication> UpdateAsync(this IGalleryApplicationsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplication, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves information about a gallery Application Definition.
             /// </summary>
             /// <param name='operations'>
@@ -267,6 +325,64 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<GalleryApplication> BeginCreateOrUpdateAsync(this IGalleryApplicationsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplication galleryApplication, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplication, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a gallery Application Definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition to be updated. The allowed
+            /// characters are alphabets and numbers with dots, dashes, and periods allowed
+            /// in the middle. The maximum length is 80 characters.
+            /// </param>
+            /// <param name='galleryApplication'>
+            /// Parameters supplied to the update gallery Application operation.
+            /// </param>
+            public static GalleryApplication BeginUpdate(this IGalleryApplicationsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdate galleryApplication)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplication).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a gallery Application Definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Application Gallery in which the Application
+            /// Definition is to be updated.
+            /// </param>
+            /// <param name='galleryApplicationName'>
+            /// The name of the gallery Application Definition to be updated. The allowed
+            /// characters are alphabets and numbers with dots, dashes, and periods allowed
+            /// in the middle. The maximum length is 80 characters.
+            /// </param>
+            /// <param name='galleryApplication'>
+            /// Parameters supplied to the update gallery Application operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GalleryApplication> BeginUpdateAsync(this IGalleryApplicationsOperations operations, string resourceGroupName, string galleryName, string galleryApplicationName, GalleryApplicationUpdate galleryApplication, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryApplicationName, galleryApplication, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
