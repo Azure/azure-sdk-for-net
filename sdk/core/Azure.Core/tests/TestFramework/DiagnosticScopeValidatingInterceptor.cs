@@ -27,11 +27,8 @@ namespace Azure.Core.Testing
                     expectedEventPrefix + ".Start"
                 };
 
-                TestDiagnosticListener diagnosticListener;
-                using (diagnosticListener = new TestDiagnosticListener(s => s.Name.StartsWith("Azure.")))
-                {
-                    invocation.Proceed();
-                }
+                using TestDiagnosticListener diagnosticListener = new TestDiagnosticListener(s => s.Name.StartsWith("Azure."));
+                invocation.Proceed();
 
                 bool strict = !invocation.Method.GetCustomAttributes(true).Any(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
                 if (invocation.Method.ReturnType.Name.Contains("Pageable") ||
@@ -74,6 +71,9 @@ namespace Azure.Core.Testing
                 }
                 finally
                 {
+                    // Remove subscribers before enumerating events.
+                    diagnosticListener.Dispose();
+
                     if (strict)
                     {
                         foreach (var expectedEvent in expectedEvents)
