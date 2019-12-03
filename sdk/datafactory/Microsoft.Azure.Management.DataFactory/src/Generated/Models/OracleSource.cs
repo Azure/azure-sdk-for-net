@@ -47,10 +47,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
         /// <param name="partitionOption">The partition mechanism that will be
-        /// used for oracle read in parallel.</param>
+        /// used for Oracle read in parallel. Possible values include: 'None',
+        /// 'PhysicalPartitionsOfTable', 'DynamicRange'</param>
         /// <param name="partitionSettings">The settings that will be leveraged
-        /// for oracle source partitioning.</param>
-        public OracleSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object), object partitionOption = default(object), OraclePartitionSettings partitionSettings = default(OraclePartitionSettings))
+        /// for Oracle source partitioning.</param>
+        public OracleSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object oracleReaderQuery = default(object), object queryTimeout = default(object), string partitionOption = default(string), OraclePartitionSettings partitionSettings = default(OraclePartitionSettings))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             OracleReaderQuery = oracleReaderQuery;
@@ -81,14 +82,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object QueryTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the partition mechanism that will be used for oracle
-        /// read in parallel.
+        /// Gets or sets the partition mechanism that will be used for Oracle
+        /// read in parallel. Possible values include: 'None',
+        /// 'PhysicalPartitionsOfTable', 'DynamicRange'
         /// </summary>
         [JsonProperty(PropertyName = "partitionOption")]
-        public object PartitionOption { get; set; }
+        public string PartitionOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the settings that will be leveraged for oracle source
+        /// Gets or sets the settings that will be leveraged for Oracle source
         /// partitioning.
         /// </summary>
         [JsonProperty(PropertyName = "partitionSettings")]

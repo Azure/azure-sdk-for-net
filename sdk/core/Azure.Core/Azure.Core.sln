@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "src\Azure.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Extensions", "..\Azure.Core.Extensions\src\Azure.Core.Extensions.csproj", "{F8945D73-B000-4129-AF58-896EC3DB49AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{F8945D73-B000-4129-AF58-896EC3DB49AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Extensions.Tests", "..\Azure.Core.Extensions\tests\Azure.Core.Extensions.Tests.csproj", "{5B093527-8B04-4D2B-B23D-441D4B5EE305}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{5B093527-8B04-4D2B-B23D-441D4B5EE305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

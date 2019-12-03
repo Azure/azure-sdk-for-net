@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines parameters for an Azure Search index that influence scoring in
-    /// search queries.
+    /// Defines parameters for a search index that influence scoring in search
+    /// queries.
     /// <see
     /// href="https://docs.microsoft.com/rest/api/searchservice/Add-scoring-profiles-to-a-search-index"
     /// />

@@ -37,7 +37,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -89,7 +89,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -148,7 +148,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -174,7 +174,7 @@ namespace Storage.Tests
                     blobContainer.Metadata = new Dictionary<string, string>();
                     blobContainer.Metadata.Add("metadata", "true");
                     blobContainer.PublicAccess = PublicAccess.Container;
-                    var blobContainerSet = storageMgmtClient.BlobContainers.Update(rgName, accountName, containerName1, metadata:blobContainer.Metadata, publicAccess:blobContainer.PublicAccess);
+                    var blobContainerSet = storageMgmtClient.BlobContainers.Update(rgName, accountName, containerName1, metadata: blobContainer.Metadata, publicAccess: blobContainer.PublicAccess);
                     Assert.NotNull(blobContainer.Metadata);
                     Assert.NotNull(blobContainer.PublicAccess);
                     Assert.Equal(blobContainer.Metadata, blobContainerSet.Metadata);
@@ -187,19 +187,34 @@ namespace Storage.Tests
                     Assert.Null(blobContainer2.Metadata);
                     Assert.Null(blobContainer2.PublicAccess);
 
+                    string containerName3 = TestUtilities.GenerateName("container");
+                    BlobContainer blobContainer3 = storageMgmtClient.BlobContainers.Create(rgName, accountName, containerName3);
+                    Assert.Null(blobContainer3.Metadata);
+                    Assert.Null(blobContainer3.PublicAccess);
+
                     var storageAccount = new CloudStorageAccount(new StorageCredentials(accountName, storageMgmtClient.StorageAccounts.ListKeys(rgName, accountName).Keys.ElementAt(0).Value), false);
                     var container = storageAccount.CreateCloudBlobClient().GetContainerReference(containerName2);
                     //container.AcquireLeaseAsync(TimeSpan.FromSeconds(45)).Wait();
 
+                    //List container
                     IPage<ListContainerItem> containerList = storageMgmtClient.BlobContainers.List(rgName, accountName);
+                    Assert.Null(containerList.NextPageLink);
+                    Assert.Equal(3, containerList.Count());
                     foreach (ListContainerItem blobContainerList in containerList)
                     {
-                        Assert.NotNull(blobContainer.Metadata);
-                        Assert.NotNull(blobContainer.PublicAccess);
-                        Assert.False(blobContainerSet.HasImmutabilityPolicy);
-                        Assert.False(blobContainerSet.HasLegalHold);
+                        Assert.NotNull(blobContainerList.Name);
+                        Assert.NotNull(blobContainerList.PublicAccess);
+                        Assert.False(blobContainerList.HasImmutabilityPolicy);
+                        Assert.False(blobContainerList.HasLegalHold);
                     }
 
+                    //List container with next link
+                    containerList = storageMgmtClient.BlobContainers.List(rgName, accountName, "2");
+                    Assert.NotNull(containerList.NextPageLink);
+                    Assert.Equal(2, containerList.Count());
+                    containerList = storageMgmtClient.BlobContainers.ListNext(containerList.NextPageLink);
+                    Assert.Null(containerList.NextPageLink);
+                    Assert.Single(containerList);
                 }
                 finally
                 {
@@ -215,7 +230,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -298,7 +313,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -344,7 +359,7 @@ namespace Storage.Tests
         //{
         //    var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
+        //    using (MockContext context = MockContext.Start(this.GetType()))
         //    {
         //        var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
         //        var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -394,7 +409,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -446,7 +461,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -506,7 +521,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -560,7 +575,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -621,7 +636,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -672,7 +687,7 @@ namespace Storage.Tests
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
                 var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
@@ -760,6 +775,43 @@ namespace Storage.Tests
                         Assert.Equal(putRule.MaxAgeInSeconds, getRule.MaxAgeInSeconds);
                     }
 
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // List Blob Service 
+        [Fact]
+        public void ListBlobServiceTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
+
+                // implement case
+                try
+                {
+                    var properties = storageMgmtClient.BlobServices.List(rgName, accountName);
+                    List<BlobServiceProperties> propertiesList = new List<BlobServiceProperties>(properties);
+                    Assert.Equal(1, propertiesList.Count);
+                    Assert.Equal("default", propertiesList[0].Name);
                 }
                 finally
                 {

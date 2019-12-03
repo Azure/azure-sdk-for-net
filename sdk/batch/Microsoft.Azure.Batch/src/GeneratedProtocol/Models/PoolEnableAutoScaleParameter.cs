@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Options for enabling automatic scaling on a pool.
+    /// Options for enabling automatic scaling on a Pool.
     /// </summary>
     public partial class PoolEnableAutoScaleParameter
     {
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// class.
         /// </summary>
         /// <param name="autoScaleFormula">The formula for the desired number
-        /// of compute nodes in the pool.</param>
+        /// of Compute Nodes in the Pool.</param>
         /// <param name="autoScaleEvaluationInterval">The time interval at
-        /// which to automatically adjust the pool size according to the
+        /// which to automatically adjust the Pool size according to the
         /// autoscale formula.</param>
         public PoolEnableAutoScaleParameter(string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?))
         {
@@ -49,15 +49,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the formula for the desired number of compute nodes in
-        /// the pool.
+        /// Gets or sets the formula for the desired number of Compute Nodes in
+        /// the Pool.
         /// </summary>
         /// <remarks>
         /// The formula is checked for validity before it is applied to the
-        /// pool. If the formula is not valid, the Batch service rejects the
+        /// Pool. If the formula is not valid, the Batch service rejects the
         /// request with detailed error information. For more information about
-        /// specifying this formula, see Automatically scale compute nodes in
-        /// an Azure Batch pool
+        /// specifying this formula, see Automatically scale Compute Nodes in
+        /// an Azure Batch Pool
         /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
         /// </remarks>
         [JsonProperty(PropertyName = "autoScaleFormula")]
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the time interval at which to automatically adjust the
-        /// pool size according to the autoscale formula.
+        /// Pool size according to the autoscale formula.
         /// </summary>
         /// <remarks>
         /// The default value is 15 minutes. The minimum and maximum value are

@@ -2,28 +2,25 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using Microsoft.Azure.Search.Common;
+
 namespace Microsoft.Azure.Search.Models
 {
-    using System.Collections.Generic;
-    using Common;
-
-    internal static class AutocompleteParametersExtensions
+    public partial class AutocompleteParameters
     {
-        private static readonly IList<string> Empty = new string[0];
-
-        internal static AutocompleteRequest ToRequest(this AutocompleteParameters parameters, string searchText, string suggesterName) =>
+        internal AutocompleteRequest ToRequest(string searchText, string suggesterName) =>
             new AutocompleteRequest()
             {
-                AutocompleteMode = parameters?.AutocompleteMode,
-                Filter = parameters?.Filter,
-                HighlightPostTag = parameters?.HighlightPostTag,
-                HighlightPreTag = parameters?.HighlightPreTag,
-                MinimumCoverage = parameters?.MinimumCoverage,
-                SearchFields = parameters?.SearchFields.ToCommaSeparatedString(),
+                AutocompleteMode = AutocompleteMode,
+                Filter = Filter,
+                HighlightPostTag = HighlightPostTag,
+                HighlightPreTag = HighlightPreTag,
+                MinimumCoverage = MinimumCoverage,
+                SearchFields = SearchFields.ToCommaSeparatedString(),
                 SearchText = searchText,
                 SuggesterName = suggesterName,
-                Top = parameters?.Top,
-                UseFuzzyMatching = parameters?.UseFuzzyMatching
+                Top = Top,
+                UseFuzzyMatching = UseFuzzyMatching
             };
     }
 }

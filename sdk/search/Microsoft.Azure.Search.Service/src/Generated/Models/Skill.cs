@@ -37,16 +37,21 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
-        /// <param name="outputs">The output of a skill is either a field in an
-        /// Azure Search index, or a value that can be consumed as an input by
+        /// <param name="outputs">The output of a skill is either a field in a
+        /// search index, or a value that can be consumed as an input by
         /// another skill.</param>
+        /// <param name="name">The name of the skill which uniquely identifies
+        /// it within the skillset. A skill with no name defined will be given
+        /// a default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
         /// /document or /document/content). The default is /document.</param>
-        public Skill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string))
+        public Skill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string name = default(string), string description = default(string), string context = default(string))
         {
+            Name = name;
             Description = description;
             Context = context;
             Inputs = inputs;
@@ -58,6 +63,15 @@ namespace Microsoft.Azure.Search.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name of the skill which uniquely identifies it
+        /// within the skillset. A skill with no name defined will be given a
+        /// default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the skill which describes the
@@ -82,9 +96,9 @@ namespace Microsoft.Azure.Search.Models
         public IList<InputFieldMappingEntry> Inputs { get; set; }
 
         /// <summary>
-        /// Gets or sets the output of a skill is either a field in an Azure
-        /// Search index, or a value that can be consumed as an input by
-        /// another skill.
+        /// Gets or sets the output of a skill is either a field in a search
+        /// index, or a value that can be consumed as an input by another
+        /// skill.
         /// </summary>
         [JsonProperty(PropertyName = "outputs")]
         public IList<OutputFieldMappingEntry> Outputs { get; set; }

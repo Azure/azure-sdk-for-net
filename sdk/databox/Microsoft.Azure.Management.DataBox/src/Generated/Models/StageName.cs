@@ -86,7 +86,22 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Order has been aborted.
         /// </summary>
         [EnumMember(Value = "Aborted")]
-        Aborted
+        Aborted,
+        /// <summary>
+        /// Order has completed with warnings.
+        /// </summary>
+        [EnumMember(Value = "CompletedWithWarnings")]
+        CompletedWithWarnings,
+        /// <summary>
+        /// Device is ready to be handed to customer from Azure DC.
+        /// </summary>
+        [EnumMember(Value = "ReadyToDispatchFromAzureDC")]
+        ReadyToDispatchFromAzureDC,
+        /// <summary>
+        /// Device can be dropped off at Azure DC.
+        /// </summary>
+        [EnumMember(Value = "ReadyToReceiveAtAzureDC")]
+        ReadyToReceiveAtAzureDC
     }
     internal static class StageNameEnumExtension
     {
@@ -125,6 +140,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "Failed_IssueDetectedAtAzureDC";
                 case StageName.Aborted:
                     return "Aborted";
+                case StageName.CompletedWithWarnings:
+                    return "CompletedWithWarnings";
+                case StageName.ReadyToDispatchFromAzureDC:
+                    return "ReadyToDispatchFromAzureDC";
+                case StageName.ReadyToReceiveAtAzureDC:
+                    return "ReadyToReceiveAtAzureDC";
             }
             return null;
         }
@@ -159,6 +180,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return StageName.FailedIssueDetectedAtAzureDC;
                 case "Aborted":
                     return StageName.Aborted;
+                case "CompletedWithWarnings":
+                    return StageName.CompletedWithWarnings;
+                case "ReadyToDispatchFromAzureDC":
+                    return StageName.ReadyToDispatchFromAzureDC;
+                case "ReadyToReceiveAtAzureDC":
+                    return StageName.ReadyToReceiveAtAzureDC;
             }
             return null;
         }

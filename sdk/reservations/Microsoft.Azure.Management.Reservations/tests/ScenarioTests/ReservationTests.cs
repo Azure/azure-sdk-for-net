@@ -1,19 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Reservations.Tests.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using Microsoft.Azure.Management.Reservations;
 using Microsoft.Azure.Management.Reservations.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
+using Reservations.Tests.Helpers;
 using Xunit;
-using System.Collections.Generic;
 
 namespace Reservations.Tests.ScenarioTests
 {
@@ -30,19 +28,22 @@ namespace Reservations.Tests.ScenarioTests
             string reservationId = idTuple.Item2;
 
             TestGetReservation(reservationOrderId, reservationId);
+            TestGetAvailableScopes(reservationOrderId, reservationId);
             TestUpdateReservationToShared(reservationOrderId, reservationId);
             TestUpdateReservationToSingle(reservationOrderId, reservationId);
+            TestUpdateRenewalOn(reservationOrderId, reservationId);
+            TestUpdateRenewalOff(reservationOrderId, reservationId);
+            TestUpdateRenewalProperties(reservationOrderId, reservationId);
 
             TestSplitAndMerge(reservationOrderId);
             TestListReservations(reservationOrderId);
             TestListReservationRevisions(reservationOrderId, reservationId);
         }
 
-
         private void TestSplitAndMerge(string reservationOrderId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservations = reservationsClient.Reservation.List(reservationOrderId);
@@ -122,7 +123,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestGetReservation(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservation = reservationsClient.Reservation.Get(reservationId, reservationOrderId);
@@ -130,10 +131,23 @@ namespace Reservations.Tests.ScenarioTests
             }
         }
 
+        private void TestGetAvailableScopes(string reservationOrderId, string reservationId)
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                var scope = new ScopeProperties($"/subscriptions/{Common.SubscriptionId}");
+                var body = new SubscriptionScopeProperties(scope);
+                var res = reservationsClient.Reservation.AvailableScopes(reservationOrderId, reservationId, body);
+            }
+        }
+
         private void TestUpdateReservationToShared(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservations = reservationsClient.Reservation.List(reservationOrderId);
@@ -160,7 +174,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestUpdateReservationToSingle(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var reservations = reservationsClient.Reservation.List(reservationOrderId);
@@ -184,10 +198,100 @@ namespace Reservations.Tests.ScenarioTests
             }
         }
 
-        private void TestListReservations(string reservationOrderId)
+        private void TestUpdateRenewalOn(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var reservations = reservationsClient.Reservation.List(reservationOrderId);
+                var enumerator1 = reservations.GetEnumerator();
+                ReservationResponse validReservation = null;
+                while (enumerator1.MoveNext())
+                {
+                    var currentReservation = enumerator1.Current;
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
+                    {
+                        validReservation = currentReservation;
+                        break;
+                    }
+                }
+                Assert.NotNull(validReservation);
+
+                reservationId = validReservation.Id.Split('/')[6];
+                Patch Patch = new Patch(renew: true);
+                var reservation = reservationsClient.Reservation.Update(reservationOrderId, reservationId, Patch);
+                ValidateReservation(reservation);
+                Assert.True(reservation.Properties.Renew);
+            }
+        }
+
+        private void TestUpdateRenewalOff(string reservationOrderId, string reservationId)
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var reservations = reservationsClient.Reservation.List(reservationOrderId);
+                var enumerator1 = reservations.GetEnumerator();
+                ReservationResponse validReservation = null;
+                while (enumerator1.MoveNext())
+                {
+                    var currentReservation = enumerator1.Current;
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
+                    {
+                        validReservation = currentReservation;
+                        break;
+                    }
+                }
+                Assert.NotNull(validReservation);
+
+                reservationId = validReservation.Id.Split('/')[6];
+                Patch Patch = new Patch(renew: false);
+                var reservation = reservationsClient.Reservation.Update(reservationOrderId, reservationId, Patch);
+                ValidateReservation(reservation);
+                Assert.False(reservation.Properties.Renew);
+            }
+        }
+
+        private void TestUpdateRenewalProperties(string reservationOrderId, string reservationId)
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                var reservations = reservationsClient.Reservation.List(reservationOrderId);
+                var enumerator1 = reservations.GetEnumerator();
+                ReservationResponse validReservation = null;
+                while (enumerator1.MoveNext())
+                {
+                    var currentReservation = enumerator1.Current;
+                    if (String.Equals(currentReservation.Properties.ProvisioningState, "Succeeded"))
+                    {
+                        validReservation = currentReservation;
+                        break;
+                    }
+                }
+                Assert.NotNull(validReservation);
+
+                reservationId = validReservation.Id.Split('/')[6];
+                var renewProperties = new PatchPropertiesRenewProperties()
+                {
+                    PurchaseProperties = CreatePurchaseRequestBody()
+                };
+                Patch Patch = new Patch(renew: true, renewProperties: renewProperties);
+                var reservation = reservationsClient.Reservation.Update(reservationOrderId, reservationId, Patch);
+                var reservationWithRenewProperties = reservationsClient.Reservation.Get(reservationId, reservationOrderId, "renewProperties");
+                ValidateReservation(reservationWithRenewProperties);
+                Assert.True(reservationWithRenewProperties.Properties.Renew);
+                Assert.NotNull(reservationWithRenewProperties.Properties.RenewProperties);
+            }
+        }
+
+        private void TestListReservations(string reservationOrderId)
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var ReservationList = reservationsClient.Reservation.List(reservationOrderId);
@@ -204,7 +308,7 @@ namespace Reservations.Tests.ScenarioTests
         private void TestListReservationRevisions(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
                 var revisions = reservationsClient.Reservation.ListRevisions(reservationId, reservationOrderId);

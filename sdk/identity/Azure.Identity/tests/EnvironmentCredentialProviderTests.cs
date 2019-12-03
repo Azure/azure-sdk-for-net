@@ -7,20 +7,18 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using NUnit.Framework;
+using Azure.Core.Testing;
+using Azure.Identity.Tests.Mock;
+using System.Threading.Tasks;
 
 namespace Azure.Identity.Tests
 {
-    public static class TestAccessibilityExtensions
+    public class EnvironmentCredentialProviderTests : ClientTestBase
     {
-        public static TokenCredential _credential(this EnvironmentCredential provider)
+        public EnvironmentCredentialProviderTests(bool isAsync) : base(isAsync)
         {
-            return (TokenCredential)typeof(EnvironmentCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
         }
-    }
 
-
-    public class EnvironmentCredentialProviderTests
-    {
         [NonParallelizable]
         [Test]
         public void CredentialConstruction()
@@ -39,15 +37,15 @@ namespace Azure.Identity.Tests
 
                 var provider = new EnvironmentCredential();
 
-                ClientSecretCredential cred = provider._credential() as ClientSecretCredential;
+                ClientSecretCredential cred =_credential(provider) as ClientSecretCredential;
 
                 Assert.NotNull(cred);
 
-                Assert.AreEqual("mockclientid", cred._clientId());
+                Assert.AreEqual("mockclientid", cred.ClientId);
 
-                Assert.AreEqual("mocktenantid", cred._tenantId());
+                Assert.AreEqual("mocktenantid", cred.TenantId);
 
-                Assert.AreEqual("mockclientsecret", cred._clientSecret());
+                Assert.AreEqual("mockclientsecret", cred.ClientSecret);
             }
             finally
             {
@@ -56,6 +54,41 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecretBackup);
 
             }
+        }
+
+        [Test]
+        public async Task EnvironmentCredentialUnavailableException()
+        {
+            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), null));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task EnvironmentCredentialAuthenticationFailedException()
+        {
+            string expectedInnerExMessage = Guid.NewGuid().ToString();
+
+            var mockAadClient = new MockAadIdentityClient(() => { throw new MockClientException(expectedInnerExMessage); });
+
+            ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient);
+
+            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), innerCred));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsInstanceOf(typeof(MockClientException), ex.InnerException);
+
+            Assert.AreEqual(expectedInnerExMessage, ex.InnerException.Message);
+
+            await Task.CompletedTask;
+        }
+
+        public static TokenCredential _credential(EnvironmentCredential provider)
+        {
+            return (TokenCredential)typeof(EnvironmentCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.DataFactory
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("DataFactory", "ActivityRuns", "2018-06-01"),
+                new Tuple<string, string, string>("DataFactory", "DataFlowDebugSession", "2018-06-01"),
+                new Tuple<string, string, string>("DataFactory", "DataFlows", "2018-06-01"),
                 new Tuple<string, string, string>("DataFactory", "Datasets", "2018-06-01"),
                 new Tuple<string, string, string>("DataFactory", "ExposureControl", "2018-06-01"),
                 new Tuple<string, string, string>("DataFactory", "Factories", "2018-06-01"),

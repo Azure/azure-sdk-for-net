@@ -1,7 +1,8 @@
 {
   "Entries": [],
   "Variables": {
-    "DateTimeOffsetNow": "2019-07-01T14:58:03.5610147-07:00",
-    "RandomSeed": "253665865"
+    "DateTimeOffsetNow": "2019-07-16T19:11:04.9951692-07:00",
+    "RandomSeed": "1482280406",
+    "Storage_TestConfigOAuth": "OAuthTenant\nstorageteglazatesting2\nU2FuaXRpemVk\nhttps://storageteglazatesting2.blob.core.windows.net\nhttps://storageteglazatesting2.file.core.windows.net\nhttps://storageteglazatesting2.queue.core.windows.net\nhttps://storageteglazatesting2.table.core.windows.net\n\n\n\n\nhttps://storageteglazatesting2-secondary.blob.core.windows.net\n\nhttps://storageteglazatesting2-secondary.queue.core.windows.net\nhttps://storageteglazatesting2-secondary.table.core.windows.net\n5c8bb5b8-7dff-451b-b4d3-f0ee3752e9bb\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://storageteglazatesting2.blob.core.windows.net/;QueueEndpoint=https://storageteglazatesting2.queue.core.windows.net/;TableEndpoint=https://storageteglazatesting2.table.core.windows.net/;FileEndpoint=https://storageteglazatesting2.file.core.windows.net/;BlobSecondaryEndpoint=https://storageteglazatesting2-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://storageteglazatesting2-secondary.queue.core.windows.net/;TableSecondaryEndpoint=https://storageteglazatesting2-secondary.table.core.windows.net/;AccountName=storageteglazatesting2;AccountKey=Sanitized"
   }
 }

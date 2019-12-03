@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApplicationTypeResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApplicationTypeResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Service Fabric application type name resource.
         /// </summary>

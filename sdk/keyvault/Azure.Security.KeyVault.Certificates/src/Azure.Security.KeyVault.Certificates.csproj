@@ -3,24 +3,43 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Certificates client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <PackageTags>Microsoft Azure Key Vault Certificates</PackageTags>
+    <Version>4.0.0-preview.7</Version>
+    <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
+      - Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.
+
+      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.6/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more detailed changes.
       ]]>
     </PackageReleaseNotes>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+    <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
+
   <ItemGroup>
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
   </ItemGroup>
 </Project>

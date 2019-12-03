@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
         /// <param name="storeSettings">Parquet store settings.</param>
-        public ParquetSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), ConnectorReadSetting storeSettings = default(ConnectorReadSetting))
+        public ParquetSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets parquet store settings.
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
-        public ConnectorReadSetting StoreSettings { get; set; }
+        public StoreReadSettings StoreSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

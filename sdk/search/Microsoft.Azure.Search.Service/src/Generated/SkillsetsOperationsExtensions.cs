@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Search
     public static partial class SkillsetsOperationsExtensions
     {
             /// <summary>
-            /// Creates a new cognitive skillset in an Azure Search service or updates the
-            /// skillset if it already exists.
+            /// Creates a new skillset in a search service or updates the skillset if it
+            /// already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Search
             /// The name of the skillset to create or update.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more cognitive skills to create or update in
-            /// an Azure Search service.
+            /// The skillset containing one or more skills to create or update in a search
+            /// service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new cognitive skillset in an Azure Search service or updates the
-            /// skillset if it already exists.
+            /// Creates a new skillset in a search service or updates the skillset if it
+            /// already exists.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/update-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Search
             /// The name of the skillset to create or update.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more cognitive skills to create or update in
-            /// an Azure Search service.
+            /// The skillset containing one or more skills to create or update in a search
+            /// service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes a cognitive skillset in an Azure Search service.
+            /// Deletes a skillset in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/delete-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Deletes a cognitive skillset in an Azure Search service.
+            /// Deletes a skillset in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/delete-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Retrieves a cognitive skillset in an Azure Search service.
+            /// Retrieves a skillset in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Retrieves a cognitive skillset in an Azure Search service.
+            /// Retrieves a skillset in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/get-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// List all cognitive skillsets in an Azure Search service.
+            /// List all skillsets in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// List all cognitive skillsets in an Azure Search service.
+            /// List all skillsets in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/list-skillset" />
             /// </summary>
             /// <param name='operations'>
@@ -191,15 +191,14 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new cognitive skillset in an Azure Search service.
+            /// Creates a new skillset in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/create-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more cognitive skills to create in an Azure
-            /// Search service.
+            /// The skillset containing one or more skills to create in a search service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
@@ -210,15 +209,14 @@ namespace Microsoft.Azure.Search
             }
 
             /// <summary>
-            /// Creates a new cognitive skillset in an Azure Search service.
+            /// Creates a new skillset in a search service.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/create-skillset" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='skillset'>
-            /// The skillset containing one or more cognitive skills to create in an Azure
-            /// Search service.
+            /// The skillset containing one or more skills to create in a search service.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation

@@ -82,7 +82,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateAzureActiveDirectoryTokenProvider(
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
-            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
+            string authority,
             object state = null)
         {
             Guard.ArgumentNotNull(nameof(authCallback), authCallback);

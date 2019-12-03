@@ -28,12 +28,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Initializes a new instance of the HierarchicalModel class.
         /// </summary>
-        public HierarchicalModel(string name = default(string), IList<string> children = default(IList<string>), PrebuiltDomainObject inherits = default(PrebuiltDomainObject), IList<string> roles = default(IList<string>))
+        public HierarchicalModel(string name = default(string), IList<JsonChild> children = default(IList<JsonChild>), IList<JsonModelFeatureInformation> features = default(IList<JsonModelFeatureInformation>), IList<string> roles = default(IList<string>), PrebuiltDomainObject inherits = default(PrebuiltDomainObject))
         {
             Name = name;
             Children = children;
-            Inherits = inherits;
+            Features = features;
             Roles = roles;
+            Inherits = inherits;
             CustomInit();
         }
 
@@ -50,17 +51,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "children")]
-        public IList<string> Children { get; set; }
+        public IList<JsonChild> Children { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "inherits")]
-        public PrebuiltDomainObject Inherits { get; set; }
+        [JsonProperty(PropertyName = "features")]
+        public IList<JsonModelFeatureInformation> Features { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "roles")]
         public IList<string> Roles { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "inherits")]
+        public PrebuiltDomainObject Inherits { get; set; }
 
     }
 }

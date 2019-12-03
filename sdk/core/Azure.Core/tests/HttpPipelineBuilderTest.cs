@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -10,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class HttpPipelineBuilderTest: PolicyTestBase
+    public class HttpPipelineBuilderTest : PolicyTestBase
     {
         [Theory]
         [TestCase(HttpPipelinePosition.PerCall, 1)]
@@ -21,14 +22,14 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
 
             var options = new TestOptions();
-            options.AddPolicy(position, policy);
+            options.AddPolicy(policy, position);
             options.Transport = transport;
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, false);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
 
             using Request request = transport.CreateRequest();
-            request.Method = HttpPipelineMethod.Get;
-            request.UriBuilder.Uri = new Uri("http://example.com");
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("http://example.com"));
 
             Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
@@ -36,17 +37,40 @@ namespace Azure.Core.Tests
             Assert.AreEqual(expectedCount, policy.ExecutionCount);
         }
 
+        [Test]
+        public async Task UsesAssemblyNameAndInformationalVersionForTelemetryPolicySettings()
+        {
+            var transport = new MockTransport(new MockResponse(503), new MockResponse(200));
+            var options = new TestOptions
+            {
+                Transport = transport
+            };
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options);
+
+            using Request request = transport.CreateRequest();
+            request.Method = RequestMethod.Get;
+            request.Uri.Reset(new Uri("http://example.com"));
+
+            await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            var informationalVersion = typeof(TestOptions).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+
+            Assert.True(request.Headers.TryGetValue("User-Agent", out string value));
+            StringAssert.StartsWith($"azsdk-net-Core.Tests/{informationalVersion} ", value);
+        }
+
         private class TestOptions : ClientOptions
         {
             public TestOptions()
             {
-                RetryPolicy.Delay = TimeSpan.Zero;
+                Retry.Delay = TimeSpan.Zero;
             }
         }
 
-        private class CounterPolicy : SynchronousHttpPipelinePolicy
+        private class CounterPolicy : HttpPipelineSynchronousPolicy
         {
-            public override void OnSendingRequest(HttpPipelineMessage message)
+            public override void OnSendingRequest(HttpMessage message)
             {
                 ExecutionCount++;
             }

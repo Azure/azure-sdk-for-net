@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
@@ -18,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         public Uri VaultUri { get; set; }
 
-        private readonly Queue<(KeyBase Key, bool Delete)> _keysToCleanup = new Queue<(KeyBase, bool)>();
+        private readonly ConcurrentQueue<string> _keysToCleanup = new ConcurrentQueue<string>();
 
         protected KeysTestBase(bool isAsync) : base(isAsync)
         {
@@ -26,7 +27,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         internal KeyClient GetClient(TestRecording recording = null)
         {
-            recording ??= Recording;
+            recording = recording ?? Recording;
 
             return InstrumentClient
                 (new KeyClient(
@@ -43,56 +44,62 @@ namespace Azure.Security.KeyVault.Keys.Tests
             VaultUri = new Uri(Recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable));
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public async Task Cleanup()
+        {
+            List<Task> cleanupTasks = new List<Task>();
+
+            foreach (string name in _keysToCleanup)
+            {
+                cleanupTasks.Add(CleanupKey(name));
+            }
+
+            await Task.WhenAll(cleanupTasks);
+        }
+
+        protected async Task CleanupKey(string name)
         {
             try
             {
-                foreach (var cleanupItem in _keysToCleanup)
-                {
-                    if (cleanupItem.Delete)
-                    {
-                        await Client.DeleteKeyAsync(cleanupItem.Key.Name);
-                    }
-                }
-
-                foreach (var cleanupItem in _keysToCleanup)
-                {
-                    await WaitForDeletedKey(cleanupItem.Key.Name);
-                }
-
-                foreach (var cleanupItem in _keysToCleanup)
-                {
-                    await Client.PurgeDeletedKeyAsync(cleanupItem.Key.Name);
-                }
-
-                foreach (var cleanupItem in _keysToCleanup)
-                {
-                    await WaitForPurgedKey(cleanupItem.Key.Name);
-                }
+                await Client.StartDeleteKeyAsync(name);
             }
-            finally
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
-                _keysToCleanup.Clear();
+            }
+
+            try
+            {
+                await WaitForDeletedKey(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+            }
+
+            try
+            {
+                await Client.PurgeDeletedKeyAsync(name);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
             }
         }
 
-        protected void RegisterForCleanup(KeyBase key, bool delete = true)
+        protected void RegisterForCleanup(string name)
         {
-            _keysToCleanup.Enqueue((key, delete));
+            _keysToCleanup.Enqueue(name);
         }
 
-        protected void AssertKeysEqual(Key exp, Key act)
+        protected void AssertKeyVaultKeysEqual(KeyVaultKey exp, KeyVaultKey act)
         {
-            AssertKeyMaterialEqual(exp.KeyMaterial, act.KeyMaterial);
-            AssertKeysEqual((KeyBase)exp, (KeyBase)act);
+            AssertKeysEqual(exp.Key, act.Key);
+            AssertKeyPropertiesEqual(exp.Properties, act.Properties);
         }
 
-        private void AssertKeyMaterialEqual(JsonWebKey exp, JsonWebKey act)
+        private void AssertKeysEqual(JsonWebKey exp, JsonWebKey act)
         {
-            Assert.AreEqual(exp.KeyId, act.KeyId);
+            Assert.AreEqual(exp.Id, act.Id);
             Assert.AreEqual(exp.KeyType, act.KeyType);
-            Assert.IsTrue(AreEqual(exp.KeyOps, act.KeyOps));
+            AssertAreEqual(exp.KeyOps, act.KeyOps);
             Assert.AreEqual(exp.CurveName, act.CurveName);
             Assert.AreEqual(exp.K, act.K);
             Assert.AreEqual(exp.N, act.N);
@@ -108,44 +115,38 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(exp.T, act.T);
         }
 
-        protected void AssertKeysEqual(KeyBase exp, KeyBase act)
+        protected void AssertKeyPropertiesEqual(KeyProperties exp, KeyProperties act)
         {
             Assert.AreEqual(exp.Managed, act.Managed);
             Assert.AreEqual(exp.RecoveryLevel, act.RecoveryLevel);
-            Assert.AreEqual(exp.Expires, act.Expires);
+            Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
             Assert.AreEqual(exp.NotBefore, act.NotBefore);
-            Assert.IsTrue(AreEqual(exp.Tags, act.Tags));
+            AssertAreEqual(exp.Tags, act.Tags);
         }
 
-        private static bool AreEqual(IList<KeyOperations> exp, IList<KeyOperations> act)
+        protected static void AssertAreEqual<T>(IReadOnlyCollection<T> exp, IReadOnlyCollection<T> act)
         {
-            if (exp == null && act == null)
-                return true;
+            if (exp is null && act is null)
+                return;
 
-            if (exp.Count != act.Count)
-                return false;
-
-            for (var i = 0; i < exp.Count; ++i)
-                if (exp[i] != act[i])
-                    return false;
-
-            return true;
+            CollectionAssert.AreEqual(exp, act);
         }
 
-        private static bool AreEqual(IDictionary<string, string> exp, IDictionary<string, string> act)
+        protected static void AssertAreEqual<TKey, TValue>(IDictionary<TKey, TValue> exp, IDictionary<TKey, TValue> act)
         {
             if (exp == null && act == null)
-                return true;
+                return;
 
             if (exp?.Count != act?.Count)
-                return false;
+                Assert.Fail("Actual count {0} does not match expected count {1}", act?.Count, exp?.Count);
 
-            foreach (var pair in exp)
+            foreach (KeyValuePair<TKey, TValue> pair in exp)
             {
-                if (!act.TryGetValue(pair.Key, out string value)) return false;
-                if (!string.Equals(value, pair.Value)) return false;
+                if (!act.TryGetValue(pair.Key, out TValue value))
+                    Assert.Fail("Actual dictionary does not contain expected key '{0}'", pair.Key);
+
+                Assert.AreEqual(pair.Value, value);
             }
-            return true;
         }
 
         protected Task WaitForDeletedKey(string name)
@@ -173,10 +174,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 return TestRetryHelper.RetryAsync(async () => {
                     try
                     {
-                        await Client.GetDeletedKeyAsync(name);
-                        throw new InvalidOperationException("Key still exists");
+                        await Client.GetDeletedKeyAsync(name).ConfigureAwait(false);
+                        throw new InvalidOperationException($"Key {name} still exists");
                     }
-                    catch
+                    catch (RequestFailedException ex) when (ex.Status == 404)
                     {
                         return (Response)null;
                     }
@@ -184,7 +185,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected Task PollForKey(string name)
+        protected Task WaitForKey(string name)
         {
             if (Mode == RecordedTestMode.Playback)
             {

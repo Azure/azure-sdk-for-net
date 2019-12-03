@@ -202,6 +202,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='instanceId'>
         /// The instance ID of the virtual machine.
         /// </param>
+        /// <param name='expand'>
+        /// The expand expression to apply on the operation. Possible values include:
+        /// 'instanceView'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -223,7 +227,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualMachineScaleSetVM>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualMachineScaleSetVM>> GetWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string instanceId, InstanceViewTypes? expand = default(InstanceViewTypes?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -241,7 +245,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -252,6 +256,7 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("vmScaleSetName", vmScaleSetName);
                 tracingParameters.Add("instanceId", instanceId);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -264,6 +269,10 @@ namespace Microsoft.Azure.Management.Compute
             _url = _url.Replace("{instanceId}", System.Uri.EscapeDataString(instanceId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expand, Client.SerializationSettings).Trim('"'))));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
@@ -444,7 +453,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -646,7 +655,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -893,7 +902,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Redeploys a virtual machine in a VM scale set.
+        /// Shuts down the virtual machine in the virtual machine scale set, moves it
+        /// to a new node, and powers it back on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1024,7 +1034,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             VirtualMachineScaleSetVMReimageParameters vmScaleSetVMReimageInput = default(VirtualMachineScaleSetVMReimageParameters);
             if (tempDisk != null)
             {
@@ -1220,7 +1230,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1405,7 +1415,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1602,7 +1612,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1827,7 +1837,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2016,7 +2026,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2203,7 +2213,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2385,7 +2395,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2520,7 +2530,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Redeploys a virtual machine in a VM scale set.
+        /// Shuts down the virtual machine in the virtual machine scale set, moves it
+        /// to a new node, and powers it back on.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2567,7 +2578,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2749,7 +2760,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2945,7 +2956,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-03-01";
+            string apiVersion = "2019-07-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

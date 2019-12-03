@@ -11,6 +11,22 @@ namespace Microsoft.Azure.EventHubs
     public class EventHubsException : Exception
     {
         /// <summary>
+        ///Enumerates the types of error sources for the messaging communication.
+        /// </summary>
+        public enum ErrorSourceType
+        {
+            /// <summary>
+            /// Identifies the exception as a server error and service needs to take an action to address the failure.
+            /// </summary>
+            ServerError,
+
+            /// <summary>
+            /// Identifies the exception as a user error and user needs to take an action to address the failure.
+            /// </summary>
+            UserError,
+        }
+
+        /// <summary>
         /// Returns a new EventHubsException
         /// </summary>
         /// <param name="isTransient">Specifies whether or not the exception is transient.</param>
@@ -47,10 +63,12 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="isTransient">Specifies whether or not the exception is transient.</param>
         /// <param name="message">The detailed message exception.</param>
         /// <param name="innerException">The inner exception.</param>
-        public EventHubsException(bool isTransient, string message, Exception innerException)
+        /// <param name="errorSource">Error source of exception.</param>
+        public EventHubsException(bool isTransient, string message, Exception innerException, ErrorSourceType errorSource)
             : base(message, innerException)
         {
             this.IsTransient = isTransient;
+            this.ErrorSource = errorSource;
         }
 
         /// <summary>
@@ -80,5 +98,10 @@ namespace Microsoft.Azure.EventHubs
         /// Gets the Event Hubs namespace from which the exception occured, if available.
         /// </summary>
         public string EventHubsNamespace { get; internal set; }
+
+        /// <summary>
+        /// Gets the error source.
+        /// </summary>
+        public ErrorSourceType ErrorSource { get; private set; }
     }
 }

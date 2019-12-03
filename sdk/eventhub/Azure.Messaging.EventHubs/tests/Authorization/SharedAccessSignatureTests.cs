@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using Azure.Messaging.EventHubs.Authorization;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
-namespace Azure.Messaging.EventHubs.Tests.Authorization
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///   The suite of unit tests for the <see cref="SharedAccessSignature" />
@@ -15,7 +16,6 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
     /// </summary>
     ///
     [TestFixture]
-    [Parallelizable(ParallelScope.Children)]
     public class SharedAccessSignatureTests
     {
         /// <summary>A string that is 300 characters long, breaking invariants for argument maximum lengths.</summary>
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void ToStringReflectsTheValue()
         {
             var expected = "This is the value of the SAS";
-            var signature = new SharedAccessSignature(String.Empty, "keyName", "key", expected, DateTime.UtcNow.AddHours(4));
+            var signature = new SharedAccessSignature("hub", "keyName", "key", expected, DateTimeOffset.UtcNow.AddHours(4));
 
             Assert.That(signature.ToString(), Is.EqualTo(expected));
         }
@@ -57,7 +57,9 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("")]
         public void CompositeConstructorValidatesTheResource(string resource)
         {
-            Assert.That(() => new SharedAccessSignature(resource, "Yay", "OMG!", TimeSpan.FromMilliseconds(500)), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = resource is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(resource, "Yay", "OMG!", TimeSpan.FromMilliseconds(500)), typeConstraint);
         }
 
         /// <summary>
@@ -119,11 +121,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void CompositeConstructorComputesTheExpirationWhenProvided()
         {
             var timeToLive = TimeSpan.FromMinutes(10);
-            var expectedExpiration = DateTime.UtcNow.Add(timeToLive);
+            DateTimeOffset expectedExpiration = DateTimeOffset.UtcNow.Add(timeToLive);
             var allowedVariance = TimeSpan.FromSeconds(5);
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey", timeToLive);
 
-            Assert.That(signature.ExpirationUtc, Is.EqualTo(expectedExpiration).Within(allowedVariance));
+            Assert.That(signature.SignatureExpiration, Is.EqualTo(expectedExpiration).Within(allowedVariance));
         }
 
         /// <summary>
@@ -133,10 +135,10 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [Test]
         public void CompositeConstructorComputesTheExpirationWhenTheDefaultIsUsed()
         {
-            var minimumExpiration = DateTime.UtcNow.Add(TimeSpan.FromMinutes(1));
+            DateTimeOffset minimumExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromMinutes(1));
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", "theKey", "keykeykey");
 
-            Assert.That(signature.ExpirationUtc, Is.GreaterThan(minimumExpiration));
+            Assert.That(signature.SignatureExpiration, Is.GreaterThan(minimumExpiration));
         }
 
         /// <summary>
@@ -160,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [Test]
         public void CompositeConstructorCreatesTheSignatureValue()
         {
-            var longLegalString = new String('G', 250);
+            var longLegalString = new string('G', 250);
             var signature = new SharedAccessSignature("amqps://some.namespace.com/hubName", longLegalString, longLegalString, TimeSpan.FromDays(30));
             Assert.That(signature.Value, Is.Not.Null.Or.Empty);
         }
@@ -174,7 +176,9 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("")]
         public void SignatureKeyConstructorValidatesTheSignature(string signature)
         {
-            Assert.That(() => new SharedAccessSignature(signature, "key"), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = signature is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(signature, "key"), typeConstraint);
         }
 
         /// <summary>
@@ -209,7 +213,9 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         [TestCase("")]
         public void SignatureOnlyConstructorValidatesTheSignature(string signature)
         {
-            Assert.That(() => new SharedAccessSignature(signature), Throws.ArgumentException);
+            ExactTypeConstraint typeConstraint = signature is null ? Throws.ArgumentNullException : Throws.ArgumentException;
+
+            Assert.That(() => new SharedAccessSignature(signature), typeConstraint);
         }
 
         /// <summary>
@@ -249,14 +255,14 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var keyName = "rootShared";
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
-            var expiration = DateTime.UtcNow.Add(validFor);
+            DateTimeOffset expiration = DateTimeOffset.UtcNow.Add(validFor);
             var composedSignature = new SharedAccessSignature("amqps://some.namespace.com/hubName", keyName, key, validFor);
             var parsedSignature = constructor(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
             Assert.That(parsedSignature, Is.Not.Null, "There should have been a result returned.");
             Assert.That(parsedSignature.Resource, Is.EqualTo(resource), "The resource should match.");
             Assert.That(parsedSignature.SharedAccessKeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
-            Assert.That(parsedSignature.ExpirationUtc, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
+            Assert.That(parsedSignature.SignatureExpiration, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
         }
 
         /// <summary>
@@ -339,7 +345,7 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         ///
         [Test]
         [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey&notreal=123")]
-        [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&fale=test&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey")]
+        [TestCase("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&false=test&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey")]
         public void ParseToleratesExtraTokens(string signature)
         {
             Assert.That(() => ParseSignature(signature), Throws.Nothing);
@@ -354,42 +360,42 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         public void ParseExtractsValues()
         {
             var signature = "SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey";
-            var parsed = ParseSignature(signature);
+            (string KeyName, string Resource, DateTimeOffset ExpirationTime) parsed = ParseSignature(signature);
 
             Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
             Assert.That(parsed.Resource, Is.Not.Null.Or.Empty, "The resource should have been parsed.");
             Assert.That(parsed.KeyName, Is.Not.Null.Or.Empty, "The key should have been parsed.");
-            Assert.That(parsed.ExpirationUtc, Is.Not.EqualTo(default(DateTime)), "The expiration should be parsed.");
+            Assert.That(parsed.ExpirationTime, Is.Not.EqualTo(default(DateTimeOffset)), "The expiration should be parsed.");
         }
 
         /// <summary>
-        ///   Validates functionality of the <see cref="SharedAccessSignature.ExtendExpiration" />
+        ///   Validates functionality of the <see cref="SharedAccessSignature.CloneWithNewExpiration" />
         ///   method.
         /// </summary>
         [Test]
         public void ExtendValidityValidatesTheDuration()
         {
             var signature = new SharedAccessSignature("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey&notreal=123");
-            Assert.That(() => signature.ExtendExpiration(TimeSpan.FromMilliseconds(-1)), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => signature.CloneWithNewExpiration(TimeSpan.FromMilliseconds(-1)), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
-        ///   Validates functionality of the <see cref="SharedAccessSignature.ExtendExpiration" />
+        ///   Validates functionality of the <see cref="SharedAccessSignature.CloneWithNewExpiration" />
         ///   method.
         /// </summary>
         [Test]
         public void ExtendValidityValidatesTheKey()
         {
             var signature = new SharedAccessSignature("SharedAccessSignature sr=amqps%3A%2F%2Fmy.eh.com%2Fsomepath%2F&sig=%2BLsuqDlN8Us5lp%2FGdyEUMnU1XA4HdXx%2BJUdtkRNr7qI%3D&se=1562258488&skn=keykeykey&notreal=123");
-            Assert.That(() => signature.ExtendExpiration(TimeSpan.FromMilliseconds(21)), Throws.InvalidOperationException);
+            Assert.That(() => signature.CloneWithNewExpiration(TimeSpan.FromMilliseconds(21)), Throws.InvalidOperationException);
         }
 
         /// <summary>
-        ///   Validates functionality of the <see cref="SharedAccessSignature.ExtendExpiration" />
+        ///   Validates functionality of the <see cref="SharedAccessSignature.CloneWithNewExpiration" />
         ///   method.
         /// </summary>
         [Test]
-        public void ExtendExpirationUpdatesTheSignatureValue()
+        public void CloneAndExtendExpirationUpdatesTheSignatureValue()
         {
             var keyName = "rootShared";
             var key = "ABC123FFF333";
@@ -398,49 +404,27 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var parsedSignature = new SharedAccessSignature(composedSignature.ToString(), keyName) as SharedAccessSignature;
             var initialParsedValue = parsedSignature.Value;
 
-            parsedSignature.ExtendExpiration(TimeSpan.FromHours(4));
+            parsedSignature = parsedSignature.CloneWithNewExpiration(TimeSpan.FromHours(4));
             Assert.That(parsedSignature.Value, Is.Not.EqualTo(initialParsedValue));
         }
 
         /// <summary>
-        ///   Validates functionality of the <see cref="SharedAccessSignature.ExtendExpiration" />
+        ///   Validates functionality of the <see cref="SharedAccessSignature.CloneWithNewExpiration" />
         ///   method.
         /// </summary>
         [Test]
-        public void ExtendExpirationUpdatesTheExpirationTime()
+        public void CloneAndExtendExpirationUpdatesTheExpirationTime()
         {
             var keyName = "rootShared";
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
             var extendBy = TimeSpan.FromHours(1);
-            var expiration = DateTime.UtcNow.Add(extendBy);
+            DateTimeOffset expiration = DateTimeOffset.UtcNow.Add(extendBy);
             var composedSignature = new SharedAccessSignature("amqps://some.namespace.com/hubName", keyName, key, validFor);
             var parsedSignature = new SharedAccessSignature(composedSignature.ToString(), keyName) as SharedAccessSignature;
 
-            parsedSignature.ExtendExpiration(extendBy);
-            Assert.That(parsedSignature.ExpirationUtc, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="ParseSignature" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void ParseProducesCorrectValues()
-        {
-            var resource = "amqps://some.namespace.com/hubName";
-            var keyName = "rootShared";
-            var key = "ABC123FFF333";
-            var validFor = TimeSpan.FromMinutes(30);
-            var expiration = DateTime.UtcNow.Add(validFor);
-            var signature = new SharedAccessSignature(resource, keyName, key, validFor);
-            var parsed = ParseSignature(signature.ToString());
-
-            Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
-            Assert.That(parsed.Resource, Is.EqualTo("amqps://some.namespace.com/hubName"), "The resource should match.");
-            Assert.That(parsed.KeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
-            Assert.That(parsed.ExpirationUtc, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
+            parsedSignature = parsedSignature.CloneWithNewExpiration(extendBy);
+            Assert.That(parsedSignature.SignatureExpiration, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)));
         }
 
         /// <summary>
@@ -455,15 +439,40 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
             var keyName = "rootShared";
             var key = "ABC123FFF333";
             var validFor = TimeSpan.FromMinutes(30);
+            var extendBy = TimeSpan.FromMinutes(12);
             var signature = new SharedAccessSignature(resource, keyName, key, validFor);
-            var clone = signature.Clone();
+
+            var clone = signature.CloneWithNewExpiration(extendBy);
+            var expectedCloneExpiration = DateTimeOffset.UtcNow.Add(extendBy);
 
             Assert.That(clone, Is.Not.Null, "There should have been a copy produced.");
             Assert.That(clone, Is.Not.SameAs(signature), "The clone should be a unique instance.");
             Assert.That(clone.Resource, Is.EqualTo(signature.Resource), "The resource should match.");
             Assert.That(clone.SharedAccessKeyName, Is.EqualTo(signature.SharedAccessKeyName), "The key name should match.");
             Assert.That(clone.SharedAccessKey, Is.EqualTo(signature.SharedAccessKey), "The key should match.");
-            Assert.That(clone.ExpirationUtc, Is.EqualTo(signature.ExpirationUtc), "The expiration should match.");
+            Assert.That(clone.SignatureExpiration, Is.EqualTo(expectedCloneExpiration).Within(TimeSpan.FromSeconds(5)), "The expiration should have been extended.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="ParseSignature" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ParseProducesCorrectValues()
+        {
+            var resource = "amqps://some.namespace.com/hubName";
+            var keyName = "rootShared";
+            var key = "ABC123FFF333";
+            var validFor = TimeSpan.FromMinutes(30);
+            var expiration = DateTimeOffset.UtcNow.Add(validFor);
+            var signature = new SharedAccessSignature(resource, keyName, key, validFor);
+            (string KeyName, string Resource, DateTimeOffset ExpirationTime) parsed = ParseSignature(signature.ToString());
+
+            Assert.That(parsed, Is.Not.Null, "There should have been a result returned.");
+            Assert.That(parsed.Resource, Is.EqualTo("amqps://some.namespace.com/hubName"), "The resource should match.");
+            Assert.That(parsed.KeyName, Is.EqualTo(keyName), "The key name should have been parsed.");
+            Assert.That(parsed.ExpirationTime, Is.EqualTo(expiration).Within(TimeSpan.FromSeconds(5)), "The expiration should be parsed.");
         }
 
         /// <summary>
@@ -475,11 +484,11 @@ namespace Azure.Messaging.EventHubs.Tests.Authorization
         ///
         /// <returns>The set of composite properties parsed from the signature.</returns>
         ///
-        private static (string KeyName, string Resource, DateTime ExpirationUtc) ParseSignature(string sharedAccessSignature)
+        private static (string KeyName, string Resource, DateTimeOffset ExpirationTime) ParseSignature(string sharedAccessSignature)
         {
             try
             {
-                return ((string KeyName, string Resource, DateTime ExpirationUtc))
+                return ((string KeyName, string Resource, DateTimeOffset ExpirationTime))
                     typeof(SharedAccessSignature)
                         .GetMethod(nameof(ParseSignature), BindingFlags.Static | BindingFlags.NonPublic)
                         .Invoke(null, new object[] { sharedAccessSignature });

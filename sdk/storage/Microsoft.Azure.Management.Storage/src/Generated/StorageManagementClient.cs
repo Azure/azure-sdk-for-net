@@ -100,6 +100,16 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the IBlobServicesOperations.
         /// </summary>
         public virtual IBlobServicesOperations BlobServices { get; private set; }
@@ -108,6 +118,29 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IBlobContainersOperations.
         /// </summary>
         public virtual IBlobContainersOperations BlobContainers { get; private set; }
+
+        /// <summary>
+        /// Gets the IFileServicesOperations.
+        /// </summary>
+        public virtual IFileServicesOperations FileServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IFileSharesOperations.
+        /// </summary>
+        public virtual IFileSharesOperations FileShares { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling StorageManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected StorageManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -192,6 +225,33 @@ namespace Microsoft.Azure.Management.Storage
         /// Thrown when a required parameter is null
         /// </exception>
         public StorageManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling StorageManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public StorageManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -315,10 +375,14 @@ namespace Microsoft.Azure.Management.Storage
             StorageAccounts = new StorageAccountsOperations(this);
             Usages = new UsagesOperations(this);
             ManagementPolicies = new ManagementPoliciesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
+            FileServices = new FileServicesOperations(this);
+            FileShares = new FileSharesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-01";
+            ApiVersion = "2019-06-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

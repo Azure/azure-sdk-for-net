@@ -20,11 +20,11 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
-                
+
                 string openIdNoSecret = TestUtilities.GenerateName("openId");
                 string openId2 = TestUtilities.GenerateName("openId");
 
@@ -54,7 +54,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         openIdNoSecret);
 
                     Assert.NotNull(openIdConnectProviderContract);
-                    
+
                     Assert.Equal(openIdProviderName, openIdConnectProviderContract.DisplayName);
                     Assert.Equal(metadataEndpoint, openIdConnectProviderContract.MetadataEndpoint);
                     Assert.Equal(clientId, openIdConnectProviderContract.ClientId);
@@ -125,7 +125,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     await testBase.client.OpenIdConnectProvider.DeleteAsync(
                         testBase.rgName,
                         testBase.serviceName,
-                        openIdNoSecret, 
+                        openIdNoSecret,
                         openIdConnectProviderTag.ETag);
 
                     // get the deleted openId Connect Provider to make sure it was deleted
@@ -171,7 +171,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(getResponseOpendId2.Body);
                     Assert.NotNull(getResponseOpendId2.Headers.ETag);
 
-                    Assert.Equal(openId2, getResponseOpendId2.Body.Name);                    
+                    Assert.Equal(openId2, getResponseOpendId2.Body.Name);
                     Assert.Equal(updatedClientId, getResponseOpendId2.Body.ClientId);
                     Assert.Equal(updateMetadataEndpoint, getResponseOpendId2.Body.MetadataEndpoint);
                     Assert.Equal(clientSecret, getResponseOpendId2.Body.ClientSecret);

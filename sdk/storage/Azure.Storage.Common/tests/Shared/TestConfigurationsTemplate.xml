@@ -1,24 +1,18 @@
 <TestConfigurations>
   <TargetTestTenant>ProductionTenant</TargetTestTenant>
-  <TargetPremiumBlobTenant>ProductionTenant</TargetPremiumBlobTenant>
-  <TargetSecondaryTestTenant>ProductionTenant2</TargetSecondaryTestTenant>
-  <TargetPreviewBlobTenant>NotInPreview</TargetPreviewBlobTenant>
+  <TargetPremiumBlobTenant>PremiumBlobTenant</TargetPremiumBlobTenant>
+  <TargetSecondaryTestTenant>SecondaryTenant</TargetSecondaryTestTenant>
+  <TargetPreviewBlobTenant>NotInPreview</TargetPreviewBlobTenant>  <!-- Internal only -->
   <TargetOAuthTenant>OAuthTenant</TargetOAuthTenant>
+  <TargetHierarchicalNamespaceTenant>NamespaceTenant</TargetHierarchicalNamespaceTenant>
+
   <TenantConfigurations>
-    <TenantConfiguration>
-      <TenantName>DevStore</TenantName>
-      <TenantType>DevStore</TenantType>
-      <AccountName>devstoreaccount1</AccountName>
-      <AccountKey>Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==</AccountKey>
-      <BlobServiceEndpoint>http://127.0.0.1:10000/devstoreaccount1</BlobServiceEndpoint>
-      <QueueServiceEndpoint>http://127.0.0.1:10001/devstoreaccount1</QueueServiceEndpoint>
-      <TableServiceEndpoint>http://127.0.0.1:10002/devstoreaccount1</TableServiceEndpoint>
-    </TenantConfiguration>
+    <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>ProductionTenant</TenantName>
       <TenantType>Cloud</TenantType>
-      <AccountName>[ACCOUNT NAME HERE]</AccountName>
-      <AccountKey>[ACCOUNT KEY HERE]</AccountKey>
+      <AccountName>[ACCOUNT]</AccountName>
+      <AccountKey>[ACCOUNT-KEY]</AccountKey>
       <BlobServiceEndpoint>http://[ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
       <QueueServiceEndpoint>http://[ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
       <TableServiceEndpoint>http://[ACCOUNT].table.core.windows.net</TableServiceEndpoint>
@@ -27,41 +21,87 @@
       <QueueServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
       <FileServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
-      <ConnectionString>[CONNECTION STRING HERE]</ConnectionString>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=[ACCOUNT];AccountKey=[ACCOUNT-KEY];EndpointSuffix=core.windows.net</ConnectionString>
     </TenantConfiguration>
+
+    <!-- A storage account with Read-only geo-redundant access (RA-GRS) enabled -->
+    <!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
     <TenantConfiguration>
-      <TenantName>ProductionTenant2</TenantName>
+      <TenantName>SecondaryTenant</TenantName>
       <TenantType>Cloud</TenantType>
-      <AccountName>[2ND ACCOUNT NAME HERE]</AccountName>
-      <AccountKey>[2ND ACCOUNT KEY HERE]</AccountKey>
-      <BlobServiceEndpoint>http://[2ND ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
-      <QueueServiceEndpoint>http://[2ND ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
-      <TableServiceEndpoint>http://[2ND ACCOUNT].table.core.windows.net</TableServiceEndpoint>
-      <FileServiceEndpoint>http://[2ND ACCOUNT].file.core.windows.net</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+      <AccountName>[RAGRS-ACCOUNT]</AccountName>
+      <AccountKey>[RAGRS-ACCOUNT-KEY]</AccountKey>
+      <BlobServiceEndpoint>http://[RAGRS-ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
+      <QueueServiceEndpoint>http://[RAGRS-ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
+      <TableServiceEndpoint>http://[RAGRS-ACCOUNT].table.core.windows.net</TableServiceEndpoint>
+      <FileServiceEndpoint>http://[RAGRS-ACCOUNT].file.core.windows.net</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>http://[RAGRS-ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>http://[RAGRS-ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[RAGRS-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>http://[RAGRS-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
+
+    <!-- A storage account with Oauth access -->
+    <!-- Replace [OAUTH-ACCOUNT] and [OAUTH-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>OAuthTenant</TenantName>
       <TenantType>Cloud</TenantType>
-      <AccountName>[OAuthTenant ACCOUNT NAME HERE]</AccountName>
-      <AccountKey>[OAuthTenant ACCOUNT KEY HERE]</AccountKey>
-      
+      <AccountName>[OAUTH-ACCOUNT]</AccountName>
+      <AccountKey>[OAUTH-ACCOUNT-KEY]</AccountKey>
+
       <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>[ActiveDirectoryTenantId]</ActiveDirectoryTenantId>
-      <ActiveDirectoryAuthEndpoint>https://login.windows.net</ActiveDirectoryAuthEndpoint>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       
-      <BlobServiceEndpoint>http://[OAuthTenant ACCOUNT NAME HERE].blob.core.windows.net</BlobServiceEndpoint>
-      <QueueServiceEndpoint>http://[OAuthTenant ACCOUNT NAME HERE].queue.core.windows.net</QueueServiceEndpoint>
-      <TableServiceEndpoint>http://[OAuthTenant ACCOUNT NAME HERE].table.core.windows.net</TableServiceEndpoint>
-      <FileServiceEndpoint>http://[OAuthTenant ACCOUNT NAME HERE].file.core.windows.net</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>http://[OAUTH-ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
+      <QueueServiceEndpoint>http://[OAUTH-ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
+      <TableServiceEndpoint>http://[OAUTH-ACCOUNT].table.core.windows.net</TableServiceEndpoint>
+      <FileServiceEndpoint>http://[OAUTH-ACCOUNT].file.core.windows.net</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+    </TenantConfiguration>
+	
+    <!-- A storage account with premium preformance enabled -->
+	<!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
+    <TenantConfiguration>
+      <TenantName>PremiumBlobTenant</TenantName>
+      <TenantType>Cloud</TenantType>
+      <AccountName>[PREMIUM-ACCOUNT]</AccountName>
+      <AccountKey>[PREMIUM-ACCOUNT-KEY]</AccountKey>
+      <BlobServiceEndpoint>http://[PREMIUM-ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
+      <QueueServiceEndpoint>http://[PREMIUM-ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
+      <TableServiceEndpoint>http://[PREMIUM-ACCOUNT].table.core.windows.net</TableServiceEndpoint>
+      <FileServiceEndpoint>http://[PREMIUM-ACCOUNT].file.core.windows.net</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+    </TenantConfiguration>
+    
+    <!-- A storge account with hierarchical namespace enabled and OAuth access -->
+    <!-- Replace [NAMESPACE-ACCOUNT] and [NAMESPACE-ACCOUNT-KEY] -->
+    <TenantConfiguration>
+      <TenantName>NamespaceTenant</TenantName>
+      <TenantType>Cloud</TenantType>
+      <AccountName>[NAMESPACE-ACCOUNT]</AccountName>
+      <AccountKey>[NAMESPACE-ACCOUNT-KEY]</AccountKey>
+
+      <ActiveDirectoryApplicationId>[ActiveDirectoryApplicationId]</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>[ActiveDirectoryApplicationSecret]</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>[ActiveDirectoryTenantId]</ActiveDirectoryTenantId>
+      <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
+
+      <BlobServiceEndpoint>http://[NAMESPACE-ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
+      <QueueServiceEndpoint>http://[NAMESPACE-ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
+      <TableServiceEndpoint>http://[NAMESPACE-ACCOUNT].table.core.windows.net</TableServiceEndpoint>
+      <FileServiceEndpoint>http://[NAMESPACE-ACCOUNT].file.core.windows.net</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>http://[NAMESPACE-ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>http://[NAMESPACE-ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[NAMESPACE-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>http://[NAMESPACE-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
 </TestConfigurations>

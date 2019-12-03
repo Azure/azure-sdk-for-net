@@ -50,26 +50,27 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
-        /// <param name="privateIPAddressVersion">Available from Api-Version
-        /// 2016-03-30 onwards, it represents whether the specific
-        /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
-        /// values include: 'IPv4', 'IPv6'</param>
+        /// <param name="privateIPAddressVersion">Whether the specific IP
+        /// configuration is IPv4 or IPv6. Default is IPv4. Possible values
+        /// include: 'IPv4', 'IPv6'</param>
         /// <param name="subnet">Subnet bound to the IP configuration.</param>
-        /// <param name="primary">Gets whether this is a primary customer
-        /// address on the network interface.</param>
+        /// <param name="primary">Whether this is a primary customer address on
+        /// the network interface.</param>
         /// <param name="publicIPAddress">Public IP address bound to the IP
         /// configuration.</param>
         /// <param name="applicationSecurityGroups">Application security groups
         /// in which the IP configuration is included.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// network interface IP configuration. Possible values are:
-        /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// network interface IP configuration. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="privateLinkConnectionProperties">PrivateLinkConnection
+        /// properties for the network interface.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterfaceIPConfiguration(string id = default(string), IList<VirtualNetworkTap> virtualNetworkTaps = default(IList<VirtualNetworkTap>), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), IList<ApplicationSecurityGroup> applicationSecurityGroups = default(IList<ApplicationSecurityGroup>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public NetworkInterfaceIPConfiguration(string id = default(string), IList<VirtualNetworkTap> virtualNetworkTaps = default(IList<VirtualNetworkTap>), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), Subnet subnet = default(Subnet), bool? primary = default(bool?), PublicIPAddress publicIPAddress = default(PublicIPAddress), IList<ApplicationSecurityGroup> applicationSecurityGroups = default(IList<ApplicationSecurityGroup>), string provisioningState = default(string), NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = default(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties), string name = default(string), string etag = default(string))
             : base(id)
         {
             VirtualNetworkTaps = virtualNetworkTaps;
@@ -84,6 +85,7 @@ namespace Microsoft.Azure.Management.Network.Models
             PublicIPAddress = publicIPAddress;
             ApplicationSecurityGroups = applicationSecurityGroups;
             ProvisioningState = provisioningState;
+            PrivateLinkConnectionProperties = privateLinkConnectionProperties;
             Name = name;
             Etag = etag;
             CustomInit();
@@ -134,9 +136,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets available from Api-Version 2016-03-30 onwards, it
-        /// represents whether the specific ipconfiguration is IPv4 or IPv6.
-        /// Default is taken as IPv4. Possible values include: 'IPv4', 'IPv6'
+        /// Gets or sets whether the specific IP configuration is IPv4 or IPv6.
+        /// Default is IPv4. Possible values include: 'IPv4', 'IPv6'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
         public string PrivateIPAddressVersion { get; set; }
@@ -148,8 +149,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public Subnet Subnet { get; set; }
 
         /// <summary>
-        /// Gets whether this is a primary customer address on the network
-        /// interface.
+        /// Gets or sets whether this is a primary customer address on the
+        /// network interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
@@ -168,12 +169,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationSecurityGroup> ApplicationSecurityGroups { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the network interface IP
-        /// configuration. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the provisioning state of the network interface IP
+        /// configuration. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets privateLinkConnection properties for the network interface.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateLinkConnectionProperties")]
+        public NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties PrivateLinkConnectionProperties { get; private set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a
@@ -183,11 +190,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Contains information about the container which a task is executing.
+    /// Contains information about the container which a Task is executing.
     /// </summary>
     public partial class TaskContainerExecutionInformation
     {

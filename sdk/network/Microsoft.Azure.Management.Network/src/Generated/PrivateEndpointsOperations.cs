@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the private endpoint.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update private endpoint operation
+        /// Parameters supplied to the create or update private endpoint operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -504,7 +504,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -686,7 +686,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -823,7 +823,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the private endpoint.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the create or update private endpoint operation
+        /// Parameters supplied to the create or update private endpoint operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -864,7 +864,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -17,10 +17,30 @@ namespace Azure.Identity
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {
-        private string _tenantId;
-        private string _clientId;
-        private X509Certificate2 _clientCertificate;
-        private AadIdentityClient _client;
+        /// <summary>
+        /// Gets the Azure Active Directory tenant (directory) Id of the service principal
+        /// </summary>
+        internal string TenantId { get; }
+
+        /// <summary>
+        /// Gets the client (application) ID of the service principal
+        /// </summary>
+        internal string ClientId { get; }
+
+        /// <summary>
+        /// Gets the authentication X509 Certificate of the service principal
+        /// </summary>
+        internal X509Certificate2 ClientCertificate { get; }
+
+        private readonly AadIdentityClient _client;
+        private readonly CredentialPipeline _pipeline;
+
+        /// <summary>
+        /// Protected constructor for mocking.
+        /// </summary>
+        protected ClientCertificateCredential()
+        {
+        }
 
         /// <summary>
         /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
@@ -29,7 +49,7 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate)
-            : this(tenantId, clientId, clientCertificate, null)
+            : this(tenantId, clientId, clientCertificate, (TokenCredentialOptions)null)
         {
         }
 
@@ -40,37 +60,80 @@ namespace Azure.Identity
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
-        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, IdentityClientOptions options)
+        public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
+            : this(tenantId, clientId, clientCertificate, CredentialPipeline.GetInstance(options))
+
         {
-            _tenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
+        }
 
-            _clientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline)
+            : this(tenantId, clientId, clientCertificate, pipeline, new AadIdentityClient(pipeline))
+        {
+        }
 
-            _clientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
+        internal ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, CredentialPipeline pipeline, AadIdentityClient client)
+        {
+            TenantId = tenantId ?? throw new ArgumentNullException(nameof(tenantId));
 
-            _client = (options != null) ? new AadIdentityClient(options) : AadIdentityClient.SharedClient;
+            ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
+
+            ClientCertificate = clientCertificate ?? throw new ArgumentNullException(nameof(clientCertificate));
+
+            _pipeline = pipeline;
+
+            _client = client;
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken = default)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return _client.Authenticate(_tenantId, _clientId, _clientCertificate, scopes, cancellationToken);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+
+            try
+            {
+                return scope.Succeeded(_client.Authenticate(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken));
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw scope.Failed(e);
+            }
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate.
+        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
-        /// <param name="scopes">The list of scopes for which the token will have access.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        public override async Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken = default)
+        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return await _client.AuthenticateAsync(_tenantId, _clientId, _clientCertificate, scopes, cancellationToken).ConfigureAwait(false);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ClientCertificateCredential.GetToken", requestContext);
+
+            try
+            {
+                return scope.Succeeded(await _client.AuthenticateAsync(TenantId, ClientId, ClientCertificate, requestContext.Scopes, cancellationToken).ConfigureAwait(false));
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
+            catch (Exception e)
+            {
+                throw scope.Failed(e);
+            }
         }
     }
 }

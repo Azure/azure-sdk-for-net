@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApplicationResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, ApplicationResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApplicationResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, ApplicationResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a Service Fabric application resource.
         /// </summary>
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApplicationResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, ApplicationResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApplicationResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, ApplicationResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a Service Fabric application resource.
         /// </summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit.Abstractions;
@@ -32,7 +32,7 @@ namespace DataBox.Tests
             var helper = (TestOutputHelper)testOutputHelper;
             ITest test = (ITest)helper.GetType().GetField("test", BindingFlags.NonPublic | BindingFlags.Instance)
                                   .GetValue(helper);
-            this.Context = MockContext.Start(this.GetType().FullName, test.TestCase.TestMethod.Method.Name);
+            this.Context = MockContext.Start(this.GetType(), test.TestCase.TestMethod.Method.Name);
 
             this.Client = this.Context.GetServiceClient<DataBoxManagementClient>();
             this.RMClient = this.Context.GetServiceClient<ResourceManagementClient>();
@@ -84,7 +84,7 @@ namespace DataBox.Tests
         {
             return new List<DestinationAccountDetails>
             {
-                new DestinationAccountDetails
+                new DestinationStorageAccountDetails
                 {
                     AccountId = "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount",
                 }
@@ -117,7 +117,7 @@ namespace DataBox.Tests
             };
         }
 
-        protected static void ValidateJobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, JobResource getJob)
+        protected static void ValidateJobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, JobResource getJob, JobDeliveryType deliverType)
         {
             Assert.NotNull(getJob.Details);
             Assert.NotNull(getJob.Details.ContactDetails.NotificationPreference);
@@ -134,6 +134,7 @@ namespace DataBox.Tests
             Assert.Equal(shippingAddress.StreetAddress1, getJob.Details.ShippingAddress.StreetAddress1);
             Assert.Equal(shippingAddress.StreetAddress2, getJob.Details.ShippingAddress.StreetAddress2);
             Assert.Equal(shippingAddress.StreetAddress3, getJob.Details.ShippingAddress.StreetAddress3);
+            Assert.Equal(getJob.DeliveryType, deliverType);
         }
 
         protected static void ValidateJobWithoutDetails(string jobName,
@@ -152,5 +153,38 @@ namespace DataBox.Tests
             Assert.Equal(jobName, job.Name);
             Assert.Equal(TestConstants.DefaultType, job.Type);            
         }
+
+        protected static void ValidateIndividualValidateResponse(IList<ValidationInputResponse> IndividualResponseDetails)
+        {
+            Assert.NotNull(IndividualResponseDetails);
+            Assert.True(IndividualResponseDetails.Count > 1);
+            foreach(ValidationInputResponse validationResponse in IndividualResponseDetails)
+            {
+                switch (validationResponse.GetType().Name)
+                {
+                    case "DataDestinationDetailsValidationResponseProperties":
+                        Assert.True(((DataDestinationDetailsValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);
+                        break;
+                    case "SubscriptionIsAllowedToCreateJobValidationResponseProperties":
+                        Assert.True(((SubscriptionIsAllowedToCreateJobValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);
+                        break;
+                    case "SkuAvailabilityValidationResponseProperties":
+                        Assert.True(((SkuAvailabilityValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);
+                        break;
+                    case "CreateOrderLimitForSubscriptionValidationResponseProperties":
+                        Assert.True(((CreateOrderLimitForSubscriptionValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);
+                        break;
+                    case "PreferencesValidationResponseProperties":
+                        Assert.True(((PreferencesValidationResponseProperties)validationResponse).Status == ValidationStatus.Valid);
+                        break;
+                    case "AddressValidationProperties":
+                        Assert.True(((AddressValidationProperties)validationResponse).ValidationStatus == AddressValidationStatus.Valid);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 }
+

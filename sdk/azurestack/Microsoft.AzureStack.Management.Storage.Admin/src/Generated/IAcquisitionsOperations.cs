@@ -24,16 +24,10 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
     public partial interface IAcquisitionsOperations
     {
         /// <summary>
-        /// Returns a list of BLOB acquistions.
+        /// Returns a list of BLOB acquisitions.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Resource group name.
-        /// </param>
-        /// <param name='farmId'>
-        /// Farm Id.
-        /// </param>
-        /// <param name='filter'>
-        /// Filter string
+        /// <param name='location'>
+        /// Resource location.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,7 +35,7 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -50,6 +44,6 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<Acquisition>>> ListWithHttpMessagesAsync(string resourceGroupName, string farmId, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AcquisitionList>> ListWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

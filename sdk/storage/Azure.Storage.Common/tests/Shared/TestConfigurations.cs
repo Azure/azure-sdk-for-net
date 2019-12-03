@@ -1,93 +1,140 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml.Linq;
+using NUnit.Framework;
 
 namespace Azure.Storage.Test
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Xml.Linq;
-    using Azure.Storage.Common;
-    using NUnit.Framework;
-
+    /// <summary>
+    /// The TestConfigurations lazily loads the XML config file full of Azure
+    /// Storage tenants to use when executing our tests.
+    /// </summary>
+    /// <remarks>
+    /// The TestConfigurations file contains a fixed set of names and a
+    /// variable list of TenantConfiguration definitions.  Each name refers to
+    /// a tenant that supports certain functionality (i.e., the OAuth tenant
+    /// needs to be setup for requests that use AD to authenticate).  It's
+    /// possible that each name refers to a unique tenant, but it's also
+    /// possible that multiple names will refer to the same tenant (i.e., if
+    /// you want to use a Premium blob with OAuth enabled as your
+    /// "TargetTestTenant", "TargetPremiumBlobTenant", and "TargetOAuthTenant"
+    /// simultaneously).
+    /// </remarks>
     public class TestConfigurations
     {
         /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        /// 
-        /// This is only here to run before any of our tests make requests.
+        /// Gets or sets a mapping of tenant names to definitions.  The
+        /// Target*TenantName properties define the keys to use with this
+        /// dictionary.  You should only access the tenants via the GetTenant
+        /// method that will Assert.Inconclusive if the desired tenant wasn't
+        /// defined in this configuration.
         /// </summary>
-#pragma warning disable IDE0052 // Remove unread private members
-        static readonly TestEventListener _logging = new TestEventListener();
-#pragma warning restore IDE0052 // Remove unread private members
+        private IDictionary<string, TenantConfiguration> Tenants { get; set; }
 
         /// <summary>
-        /// We'll check DefaultTestConfigPathEnvironmentVariable first for
-        /// live test configuration settings.
+        /// Gets the name of the tenant in the Tenants dictionary to use by
+        /// default for our tests.
         /// </summary>
-        const string DefaultTestConfigPathEnvironmentVariable = @"AZ_STORAGE_CONFIG_PATH";
+        private string TargetTenantName { get; set; }
 
         /// <summary>
-        /// We'll check DefaultTestConfigFilePath second for live test
-        /// configuration settings.
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests that require Read Access Geo-Redundant Storage to be setup.
         /// </summary>
-        const string DefaultTestConfigFilePath = @"TestConfigurations.xml";
-        
+        private string TargetSecondaryTenantName { get; set; }
+
         /// <summary>
-        /// Path of the file containing the live test configurations.
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests that require Premium SSDs.
         /// </summary>
-        public static string TestConfigurationsPath { get; private set; }
+        private string TargetPremiumBlobTenantName { get; set; }
 
-        static TestConfigurations DefaultTestConfigurations => defaultTestConfigurations.Value;
+        /// <summary>
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests that require preview features.
+        /// </summary>
+        private string TargetPreviewBlobTenantName { get; set; }
 
-        static IEnumerable<TenantConfiguration> DefaultTenantConfigurations => defaultTestConfigurations.Value.TenantConfigurations;
+        /// <summary>
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests that require authentication with Azure AD.
+        /// </summary>
+        private string TargetOAuthTenantName { get; set; }
+
+        /// <summary>
+        /// Gets the name of the tenant in the Tenants dictionary to use for
+        /// any tests that require hierarchical namespace.
+        /// </summary>
+        private string TargetHierarchicalNamespaceTenantName { get; set; }
+
+        /// <summary>
+        /// Gets the tenant to use by default for our tests.
+        /// </summary>
+        public static TenantConfiguration DefaultTargetTenant =>
+            GetTenant("TargetTestTenant", s_configurations.Value.TargetTenantName);
+
+        /// <summary>
+        /// Gets a tenant to use for any tests that require Read Access
+        /// Geo-Redundant Storage to be setup.
+        /// </summary>
+        public static TenantConfiguration DefaultSecondaryTargetTenant =>
+            GetTenant("TargetSecondaryTestTenant", s_configurations.Value.TargetSecondaryTenantName);
+
+        /// <summary>
+        /// Gets a tenant to use for any tests that require Premium SSDs.
+        /// </summary>
+        public static TenantConfiguration DefaultTargetPremiumBlobTenant =>
+            GetTenant("TargetPremiumBlobTenant", s_configurations.Value.TargetPremiumBlobTenantName);
+
+        /// <summary>
+        /// Gets a tenant that uses preview features for tests that require it.
+        /// </summary>
+        public static TenantConfiguration DefaultTargetPreviewBlobTenant =>
+            GetTenant("TargetPreviewBlobTenant", s_configurations.Value.TargetPreviewBlobTenantName);
+
+        /// <summary>
+        /// Gets a tenant to use for any tests that require authentication with
+        /// Azure AD.
+        /// </summary>
+        public static TenantConfiguration DefaultTargetOAuthTenant =>
+            GetTenant("TargetOAuthTenant", s_configurations.Value.TargetOAuthTenantName);
+
+        /// <summary>
+        /// Gets a tenant to use for any tests that require hierarchical namespace
+        /// </summary>
+        public static TenantConfiguration DefaultTargetHierarchicalNamespaceTenant =>
+            GetTenant("TargetHierarchicalNamespaceTenant", s_configurations.Value.TargetHierarchicalNamespaceTenantName);
+
+        /// <summary>
+        /// When loading our test configuration, we'll check the
+        /// AZ_STORAGE_CONFIG_PATH first.
+        /// </summary>
+        private const string DefaultTestConfigPathEnvironmentVariable = @"AZ_STORAGE_CONFIG_PATH";
+
+        /// <summary>
+        /// When loading our test configuration, we'll check for a local file
+        /// named TestConfigurations.xml second.
+        /// </summary>
+        private const string DefaultTestConfigFilePath = @"TestConfigurations.xml";
+
+        /// <summary>
+        /// Gets or sets the path of the file containing the live test
+        /// configurations.  This is only used for throwing informative error
+        /// messages to aid debugging configuration mishaps.
+        /// </summary>
+        private static string TestConfigurationsPath { get; set; }
 
         /// <summary>
         /// Lazily load the live test configuraions the first time they're
         /// required.
         /// </summary>
-        static readonly Lazy<TestConfigurations> defaultTestConfigurations = new Lazy<TestConfigurations>(
-            () =>
-            {
-                // Get the live test configurations path
-                TestConfigurationsPath = Environment.GetEnvironmentVariable(DefaultTestConfigPathEnvironmentVariable);
-                if (String.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
-                {
-                    TestConfigurationsPath = DefaultTestConfigFilePath;
-                    if (String.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
-                    {
-                        Assert.Inconclusive($"Live test configuration not found at file {TestConfigurationsPath}!");
-                    }
-                }
-
-                // Load the live test configurations
-                try
-                {
-                    return ReadFromXml(XDocument.Load(TestConfigurationsPath));
-                }
-                catch (Exception ex)
-                {
-                    Assert.Inconclusive($"Live test configuration failed to load from file {TestConfigurationsPath}!\n{ex.ToString()}");
-                    return null;
-                }
-            });
-
-        public string TargetTenantName { get; private set; }
-        public string TargetSecondaryTenantName { get; private set; }
-        public string TargetPremiumBlobTenantName { get; private set; }
-        public string TargetPreviewBlobTenantName { get; private set; }
-        public string TargetOAuthTenantName { get; private set; }
-
-        public static TenantConfiguration DefaultTargetTenant => GetTenantConfiguration("TargetTestTenant", DefaultTestConfigurations.TargetTenantName);
-        public static TenantConfiguration DefaultSecondaryTargetTenant => GetTenantConfiguration("TargetSecondaryTestTenant", DefaultTestConfigurations.TargetSecondaryTenantName);
-        public static TenantConfiguration DefaultTargetPremiumBlobTenant => GetTenantConfiguration("TargetPremiumBlobTenant", DefaultTestConfigurations.TargetPremiumBlobTenantName);
-        public static TenantConfiguration DefaultTargetPreviewBlobTenant => GetTenantConfiguration("TargetPreviewBlobTenant", DefaultTestConfigurations.TargetPreviewBlobTenantName);
-        public static TenantConfiguration DefaultTargetOAuthTenant => GetTenantConfiguration("OAuthTenant", DefaultTestConfigurations.TargetOAuthTenantName);
-
-        public IEnumerable<TenantConfiguration> TenantConfigurations { get; private set; }
+        private static readonly Lazy<TestConfigurations> s_configurations =
+            new Lazy<TestConfigurations>(LoadTestConfigurations);
 
         /// <summary>
         /// Get the live test configuration for a specific tenant type, or
@@ -100,77 +147,80 @@ namespace Azure.Storage.Test
         /// <returns>
         /// The live test configuration for a specific tenant type.
         /// </returns>
-        private static TenantConfiguration GetTenantConfiguration(string type, string name)
+        private static TenantConfiguration GetTenant(string type, string name)
         {
-            var config = DefaultTenantConfigurations.SingleOrDefault(c => c.TenantName == name);
-            if (config == null)
+            if (!s_configurations.Value.Tenants.TryGetValue(name, out TenantConfiguration config))
             {
                 Assert.Inconclusive($"Live test configuration tenant type '{type}' named '{name}' was not found in file {TestConfigurationsPath}!");
             }
             return config;
         }
 
-        public static TestConfigurations ReadFromXml(XDocument testConfigurationsDoc)
-            => ReadFromXml(testConfigurationsDoc.Element("TestConfigurations"));
-
-        public static TestConfigurations ReadFromXml(XElement testConfigurationsElement)
-            =>
-                new TestConfigurations
+        /// <summary>
+        /// Load the test configurations file from the path pointed to by the
+        /// AZ_STORAGE_CONFIG_PATH environment variable or the local copy of
+        /// the TestConfigurations.xml if present.  If we fail to find or load
+        /// the test configurations, we'll stop running the test
+        /// via Assert.Inconclusive.
+        /// </summary>
+        /// <returns>The test configurations.</returns>
+        private static TestConfigurations LoadTestConfigurations()
+        {
+            // Get the live test configurations path
+            TestConfigurationsPath = Environment.GetEnvironmentVariable(DefaultTestConfigPathEnvironmentVariable);
+            if (string.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
+            {
+                TestConfigurationsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, DefaultTestConfigFilePath);
+                if (string.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
                 {
-                    TargetTenantName = (string)testConfigurationsElement.Element("TargetTestTenant"),
-                    TargetSecondaryTenantName = (string)testConfigurationsElement.Element("TargetSecondaryTestTenant"),
-                    TargetPremiumBlobTenantName = (string)testConfigurationsElement.Element("TargetPremiumBlobTenant"),
-                    TargetPreviewBlobTenantName = (string)testConfigurationsElement.Element("TargetPreviewBlobTenant"),
-                    TargetOAuthTenantName = (string)testConfigurationsElement.Element("TargetOAuthTenant"),
+                    Assert.Inconclusive($"Live test configuration not found at file {TestConfigurationsPath}!");
+                }
+            }
 
-                    TenantConfigurations =
-                        testConfigurationsElement.Element("TenantConfigurations").Elements("TenantConfiguration")
-                        .Select(
-                            tenantConfigurationElement
-                            =>
-                            new TenantConfiguration
-                            {
-                                TenantName = (string)tenantConfigurationElement.Element("TenantName"),
-                                AccountName = (string)tenantConfigurationElement.Element("AccountName"),
-                                AccountKey = (string)tenantConfigurationElement.Element("AccountKey"),
-                                BlobServiceEndpoint = (string)tenantConfigurationElement.Element("BlobServiceEndpoint"),
-                                FileServiceEndpoint = (string)tenantConfigurationElement.Element("FileServiceEndpoint"),
-                                QueueServiceEndpoint = (string)tenantConfigurationElement.Element("QueueServiceEndpoint"),
-                                TableServiceEndpoint = (string)tenantConfigurationElement.Element("TableServiceEndpoint"),
-                                BlobServiceSecondaryEndpoint = (string)tenantConfigurationElement.Element("BlobServiceSecondaryEndpoint"),
-                                FileServiceSecondaryEndpoint = (string)tenantConfigurationElement.Element("FileServiceSecondaryEndpoint"),
-                                QueueServiceSecondaryEndpoint = (string)tenantConfigurationElement.Element("QueueServiceSecondaryEndpoint"),
-                                TableServiceSecondaryEndpoint = (string)tenantConfigurationElement.Element("TableServiceSecondaryEndpoint"),
-                                TenantType = (TenantType)Enum.Parse(typeof(TenantType), (string)tenantConfigurationElement.Element("TenantType"), true),
-                                BlobSecurePortOverride = (string)tenantConfigurationElement.Element("BlobSecurePortOverride"),
-                                FileSecurePortOverride = (string)tenantConfigurationElement.Element("FileSecurePortOverride"),
-                                QueueSecurePortOverride = (string)tenantConfigurationElement.Element("QueueSecurePortOverride"),
-                                TableSecurePortOverride = (string)tenantConfigurationElement.Element("TableSecurePortOverride"),
-                                ActiveDirectoryApplicationId = (string)tenantConfigurationElement.Element("ActiveDirectoryApplicationId"),
-                                ActiveDirectoryApplicationSecret = (string)tenantConfigurationElement.Element("ActiveDirectoryApplicationSecret"),
-                                ActiveDirectoryTenantId = (string)tenantConfigurationElement.Element("ActiveDirectoryTenantId"),
-                                ActiveDirectoryAuthEndpoint = (string)tenantConfigurationElement.Element("ActiveDirectoryAuthEndpoint"),
-                                ConnectionString = 
-                                    !String.IsNullOrWhiteSpace((string)tenantConfigurationElement.Element("ConnectionString"))
-                                    ? (string)tenantConfigurationElement.Element("ConnectionString")
-                                    : new StorageConnectionString(
-                                        storageCredentials: new StorageSharedKeyCredential(
-                                            accountName: (string)tenantConfigurationElement.Element("AccountName"),
-                                            accountKey: (string)tenantConfigurationElement.Element("AccountKey")
-                                            ),
-                                        blobStorageUri: (GetUriOrDefault((string)tenantConfigurationElement.Element("BlobServiceEndpoint")), GetUriOrDefault((string)tenantConfigurationElement.Element("BlobServiceSecondaryEndpoint"))),
-                                        fileStorageUri: (GetUriOrDefault((string)tenantConfigurationElement.Element("FileServiceEndpoint")), GetUriOrDefault((string)tenantConfigurationElement.Element("FileServiceSecondaryEndpoint"))),
-                                        queueStorageUri: (GetUriOrDefault((string)tenantConfigurationElement.Element("QueueServiceEndpoint")), GetUriOrDefault((string)tenantConfigurationElement.Element("QueueServiceSecondaryEndpoint"))),
-                                        tableStorageUri: (GetUriOrDefault((string)tenantConfigurationElement.Element("TableServiceEndpoint")), GetUriOrDefault((string)tenantConfigurationElement.Element("TableServiceSecondaryEndpoint")))
-                                        ).ToString(exportSecrets: true)
-                            }
-                            )
-                            .ToArray()
-                };
+            // Load the live test configurations
+            try
+            {
+                return ReadFromXml(XDocument.Load(TestConfigurationsPath));
+            }
+            catch (Exception ex)
+            {
+                Assert.Inconclusive($"Live test configuration failed to load from file {TestConfigurationsPath}!\n{ex.ToString()}");
+                return null;
+            }
+        }
 
-        static Uri GetUriOrDefault(string uriString)
-            => !String.IsNullOrWhiteSpace(uriString)
-            ? new Uri(uriString)
-            : default;
+        /// <summary>
+        /// Parse the test configurations XML.
+        /// </summary>
+        /// <param name="doc">The root of the XML document.</param>
+        /// <returns>The test configurations.</returns>
+        private static TestConfigurations ReadFromXml(XDocument doc)
+        {
+            XElement config = doc.Element("TestConfigurations");
+            string Get(string name) => (string)config.Element(name);
+            return new TestConfigurations
+            {
+                TargetTenantName = Get("TargetTestTenant"),
+                TargetSecondaryTenantName = Get("TargetSecondaryTestTenant"),
+                TargetPremiumBlobTenantName = Get("TargetPremiumBlobTenant"),
+                TargetPreviewBlobTenantName = Get("TargetPreviewBlobTenant"),
+                TargetOAuthTenantName = Get("TargetOAuthTenant"),
+                TargetHierarchicalNamespaceTenantName = Get("TargetHierarchicalNamespaceTenant"),
+                Tenants =
+                    config.Element("TenantConfigurations").Elements("TenantConfiguration")
+                    .Select(TenantConfiguration.Parse)
+                    .ToDictionary(tenant => tenant.TenantName)
+            };
+        }
+
+        /// <summary>
+        /// Add a static TestEventListener which will redirect SDK logging
+        /// to Console.Out for easy debugging.
+        ///
+        /// This is only here to run before any of our tests make requests.
+        /// </summary>
+#pragma warning disable IDE0052 // Remove unread private members
+        private static readonly TestEventListener s_logging = new TestEventListener();
+#pragma warning restore IDE0052 // Remove unread private members
     }
 }

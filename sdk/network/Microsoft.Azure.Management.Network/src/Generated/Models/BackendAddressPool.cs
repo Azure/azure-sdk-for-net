@@ -35,29 +35,34 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the BackendAddressPool class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="backendIPConfigurations">Gets collection of references
-        /// to IP addresses defined in network interfaces.</param>
-        /// <param name="loadBalancingRules">Gets load balancing rules that use
-        /// this backend address pool.</param>
-        /// <param name="outboundRule">Gets outbound rules that use this
-        /// backend address pool.</param>
-        /// <param name="provisioningState">Get provisioning state of the
-        /// public IP resource. Possible values are: 'Updating', 'Deleting',
-        /// and 'Failed'.</param>
-        /// <param name="name">Gets name of the resource that is unique within
-        /// a resource group. This name can be used to access the
-        /// resource.</param>
+        /// <param name="backendIPConfigurations">An array of references to IP
+        /// addresses defined in network interfaces.</param>
+        /// <param name="loadBalancingRules">An array of references to load
+        /// balancing rules that use this backend address pool.</param>
+        /// <param name="outboundRule">A reference to an outbound rule that
+        /// uses this backend address pool.</param>
+        /// <param name="outboundRules">An array of references to outbound
+        /// rules that use this backend address pool.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// backend address pool resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="name">The name of the resource that is unique within
+        /// the set of backend address pools used by the load balancer. This
+        /// name can be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public BackendAddressPool(string id = default(string), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="type">Type of the resource.</param>
+        public BackendAddressPool(string id = default(string), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), IList<SubResource> outboundRules = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             BackendIPConfigurations = backendIPConfigurations;
             LoadBalancingRules = loadBalancingRules;
             OutboundRule = outboundRule;
+            OutboundRules = outboundRules;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
+            Type = type;
             CustomInit();
         }
 
@@ -67,44 +72,61 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets collection of references to IP addresses defined in network
+        /// Gets an array of references to IP addresses defined in network
         /// interfaces.
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendIPConfigurations")]
         public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; private set; }
 
         /// <summary>
-        /// Gets load balancing rules that use this backend address pool.
+        /// Gets an array of references to load balancing rules that use this
+        /// backend address pool.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
-        /// Gets outbound rules that use this backend address pool.
+        /// Gets a reference to an outbound rule that uses this backend address
+        /// pool.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundRule")]
         public SubResource OutboundRule { get; private set; }
 
         /// <summary>
-        /// Gets or sets get provisioning state of the public IP resource.
-        /// Possible values are: 'Updating', 'Deleting', and 'Failed'.
+        /// Gets an array of references to outbound rules that use this backend
+        /// address pool.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        [JsonProperty(PropertyName = "properties.outboundRules")]
+        public IList<SubResource> OutboundRules { get; private set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource.
+        /// Gets the provisioning state of the backend address pool resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the name of the resource that is unique within the set
+        /// of backend address pools used by the load balancer. This name can
+        /// be used to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }

@@ -22,6 +22,48 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ManagedInstancesOperationsExtensions
     {
             /// <summary>
+            /// Gets a list of all managed instances in an instance pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='instancePoolName'>
+            /// The instance pool name.
+            /// </param>
+            public static IPage<ManagedInstance> ListByInstancePool(this IManagedInstancesOperations operations, string resourceGroupName, string instancePoolName)
+            {
+                return operations.ListByInstancePoolAsync(resourceGroupName, instancePoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of all managed instances in an instance pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='instancePoolName'>
+            /// The instance pool name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ManagedInstance>> ListByInstancePoolAsync(this IManagedInstancesOperations operations, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByInstancePoolWithHttpMessagesAsync(resourceGroupName, instancePoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of managed instances in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -235,48 +277,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a list of all managed instances in an instance pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='instancePoolName'>
-            /// The instance pool name.
-            /// </param>
-            public static IPage<ManagedInstance> ListByInstancePool(this IManagedInstancesOperations operations, string resourceGroupName, string instancePoolName)
-            {
-                return operations.ListByInstancePoolAsync(resourceGroupName, instancePoolName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of all managed instances in an instance pool.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='instancePoolName'>
-            /// The instance pool name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ManagedInstance>> ListByInstancePoolAsync(this IManagedInstancesOperations operations, string resourceGroupName, string instancePoolName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByInstancePoolWithHttpMessagesAsync(resourceGroupName, instancePoolName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets a list of all managed instances in the subscription.
             /// </summary>
             /// <param name='operations'>
@@ -440,40 +440,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a list of managed instances in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ManagedInstance> ListByResourceGroupNext(this IManagedInstancesOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of managed instances in a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ManagedInstance>> ListByResourceGroupNextAsync(this IManagedInstancesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets a list of all managed instances in an instance pool.
             /// </summary>
             /// <param name='operations'>
@@ -502,6 +468,40 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task<IPage<ManagedInstance>> ListByInstancePoolNextAsync(this IManagedInstancesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByInstancePoolNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of managed instances in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ManagedInstance> ListByResourceGroupNext(this IManagedInstancesOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of managed instances in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ManagedInstance>> ListByResourceGroupNextAsync(this IManagedInstancesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

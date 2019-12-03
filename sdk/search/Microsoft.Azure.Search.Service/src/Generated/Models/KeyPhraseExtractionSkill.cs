@@ -37,9 +37,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
-        /// <param name="outputs">The output of a skill is either a field in an
-        /// Azure Search index, or a value that can be consumed as an input by
+        /// <param name="outputs">The output of a skill is either a field in a
+        /// search index, or a value that can be consumed as an input by
         /// another skill.</param>
+        /// <param name="name">The name of the skill which uniquely identifies
+        /// it within the skillset. A skill with no name defined will be given
+        /// a default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
@@ -52,8 +56,8 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="maxKeyPhraseCount">A number indicating how many key
         /// phrases to return. If absent, all identified key phrases will be
         /// returned.</param>
-        public KeyPhraseExtractionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), KeyPhraseExtractionSkillLanguage? defaultLanguageCode = default(KeyPhraseExtractionSkillLanguage?), int? maxKeyPhraseCount = default(int?))
-            : base(inputs, outputs, description, context)
+        public KeyPhraseExtractionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string name = default(string), string description = default(string), string context = default(string), KeyPhraseExtractionSkillLanguage? defaultLanguageCode = default(KeyPhraseExtractionSkillLanguage?), int? maxKeyPhraseCount = default(int?))
+            : base(inputs, outputs, name, description, context)
         {
             DefaultLanguageCode = defaultLanguageCode;
             MaxKeyPhraseCount = maxKeyPhraseCount;

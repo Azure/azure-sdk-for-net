@@ -37,9 +37,9 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public override string ToString() { }
         public static bool ==(Microsoft.Azure.ServiceBus.CorrelationFilter o1, Microsoft.Azure.ServiceBus.CorrelationFilter o2) { }
         public static bool !=(Microsoft.Azure.ServiceBus.CorrelationFilter p1, Microsoft.Azure.ServiceBus.CorrelationFilter p2) { }
-        public override string ToString() { }
     }
     public class static EntityNameHelper
     {
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public override string ToString() { }
         public static bool ==(Microsoft.Azure.ServiceBus.FalseFilter o1, Microsoft.Azure.ServiceBus.FalseFilter o2) { }
         public static bool !=(Microsoft.Azure.ServiceBus.FalseFilter o1, Microsoft.Azure.ServiceBus.FalseFilter o2) { }
-        public override string ToString() { }
     }
     public abstract class Filter : System.IEquatable<Microsoft.Azure.ServiceBus.Filter>
     {
@@ -171,8 +171,8 @@ namespace Microsoft.Azure.ServiceBus
             public System.DateTime EnqueuedTimeUtc { get; }
             public bool IsLockTokenSet { get; }
             public bool IsReceived { get; }
-            public System.DateTime LockedUntilUtc { get; }
             public string LockToken { get; }
+            public System.DateTime LockedUntilUtc { get; }
             public long SequenceNumber { get; }
         }
     }
@@ -257,8 +257,8 @@ namespace Microsoft.Azure.ServiceBus
     {
         public RetryExponential(System.TimeSpan minimumBackoff, System.TimeSpan maximumBackoff, int maximumRetryCount) { }
         public System.TimeSpan DeltaBackoff { get; }
-        public System.TimeSpan MaximumBackoff { get; }
         public int MaxRetryCount { get; }
+        public System.TimeSpan MaximumBackoff { get; }
         public System.TimeSpan MinimalBackoff { get; }
         protected override bool OnShouldRetry(System.TimeSpan remainingTime, int currentRetryCount, out System.TimeSpan retryInterval) { }
     }
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessKeyName, string sharedAccessKey, Microsoft.Azure.ServiceBus.TransportType transportType) { }
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, Microsoft.Azure.ServiceBus.TransportType transportType) { }
-        public string Authentication { get; set; }
+        public Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder.AuthenticationType Authentication { get; set; }
         public string Endpoint { get; set; }
         public string EntityPath { get; set; }
         public System.TimeSpan OperationTimeout { get; set; }
@@ -342,9 +342,10 @@ namespace Microsoft.Azure.ServiceBus
         public string GetEntityConnectionString() { }
         public string GetNamespaceConnectionString() { }
         public override string ToString() { }
-        public class static AuthenticationType
+        public enum AuthenticationType
         {
-            public const string ManagedIdentity = "Managed Identity";
+            Other = 0,
+            ManagedIdentity = 1,
         }
     }
     public class ServiceBusException : System.Exception
@@ -408,9 +409,9 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public override string ToString() { }
         public static bool ==(Microsoft.Azure.ServiceBus.SqlFilter o1, Microsoft.Azure.ServiceBus.SqlFilter o2) { }
         public static bool !=(Microsoft.Azure.ServiceBus.SqlFilter o1, Microsoft.Azure.ServiceBus.SqlFilter o2) { }
-        public override string ToString() { }
     }
     public sealed class SqlRuleAction : Microsoft.Azure.ServiceBus.RuleAction
     {
@@ -420,9 +421,9 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.RuleAction other) { }
         public override int GetHashCode() { }
+        public override string ToString() { }
         public static bool ==(Microsoft.Azure.ServiceBus.SqlRuleAction o1, Microsoft.Azure.ServiceBus.SqlRuleAction o2) { }
         public static bool !=(Microsoft.Azure.ServiceBus.SqlRuleAction o1, Microsoft.Azure.ServiceBus.SqlRuleAction o2) { }
-        public override string ToString() { }
     }
     public class SubscriptionClient : Microsoft.Azure.ServiceBus.ClientEntity, Microsoft.Azure.ServiceBus.Core.IReceiverClient, Microsoft.Azure.ServiceBus.IClientEntity, Microsoft.Azure.ServiceBus.ISubscriptionClient
     {
@@ -485,9 +486,9 @@ namespace Microsoft.Azure.ServiceBus
         public override bool Equals(object obj) { }
         public override bool Equals(Microsoft.Azure.ServiceBus.Filter other) { }
         public override int GetHashCode() { }
+        public override string ToString() { }
         public static bool ==(Microsoft.Azure.ServiceBus.TrueFilter o1, Microsoft.Azure.ServiceBus.TrueFilter o2) { }
         public static bool !=(Microsoft.Azure.ServiceBus.TrueFilter o1, Microsoft.Azure.ServiceBus.TrueFilter o2) { }
-        public override string ToString() { }
     }
     public sealed class UnauthorizedException : Microsoft.Azure.ServiceBus.ServiceBusException
     {
@@ -592,6 +593,7 @@ namespace Microsoft.Azure.ServiceBus.Core
         public override System.Collections.Generic.IList<Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin> RegisteredPlugins { get; }
         public override Microsoft.Azure.ServiceBus.ServiceBusConnection ServiceBusConnection { get; }
         public string TransferDestinationPath { get; }
+        public string ViaEntityPath { get; }
         public System.Threading.Tasks.Task CancelScheduledMessageAsync(long sequenceNumber) { }
         protected override System.Threading.Tasks.Task OnClosingAsync() { }
         public override void RegisterPlugin(Microsoft.Azure.ServiceBus.Core.ServiceBusPlugin serviceBusPlugin) { }
@@ -864,7 +866,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
 {
     public class AzureActiveDirectoryTokenProvider : Microsoft.Azure.ServiceBus.Primitives.TokenProvider
     {
-        public const string CommonAuthority = "https://login.microsoftonline.com/common";
         public AzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authenticationCallback, string authority, object state) { }
         public event Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback AuthCallback;
         public override System.Threading.Tasks.Task<Microsoft.Azure.ServiceBus.Primitives.SecurityToken> GetTokenAsync(string appliesTo, System.TimeSpan timeout) { }
@@ -900,7 +901,7 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     public abstract class TokenProvider : Microsoft.Azure.ServiceBus.Primitives.ITokenProvider
     {
         protected TokenProvider() { }
-        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority = "https://login.microsoftonline.com/common", object state = null) { }
+        public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateAzureActiveDirectoryTokenProvider(Microsoft.Azure.ServiceBus.Primitives.AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback, string authority, object state = null) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateManagedIdentityTokenProvider() { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string sharedAccessSignature) { }
         public static Microsoft.Azure.ServiceBus.Primitives.TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey) { }

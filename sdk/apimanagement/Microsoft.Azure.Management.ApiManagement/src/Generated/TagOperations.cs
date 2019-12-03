@@ -151,10 +151,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
-                }
             }
             if (Client.ApiVersion == null)
             {
@@ -417,10 +413,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (operationId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)
@@ -694,10 +686,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (operationId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)
@@ -989,10 +977,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (operationId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)
@@ -1286,10 +1270,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (operationId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)
@@ -2813,10 +2793,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
-                }
             }
             if (Client.ApiVersion == null)
             {
@@ -3053,10 +3029,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)
@@ -3304,10 +3276,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)
@@ -3573,10 +3541,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)
@@ -3844,10 +3808,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (tagId == null)

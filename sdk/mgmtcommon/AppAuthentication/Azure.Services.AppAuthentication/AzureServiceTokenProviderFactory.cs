@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string CertificateThumbprint = "CertificateThumbprint";
         private const string KeyVaultCertificateSecretIdentifier = "KeyVaultCertificateSecretIdentifier";
         private const string CertificateStoreLocation = "CertificateStoreLocation";
+        private const string MsiRetryTimeout = "MsiRetryTimeout";
 
         // taken from https://github.com/dotnet/corefx/blob/master/src/Common/src/System/Data/Common/DbConnectionOptions.Common.cs
         private const string ConnectionStringPattern =                      // may not contain embedded null except trailing last value
@@ -89,7 +90,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
             else if (string.Equals(runAs, CurrentUser, StringComparison.OrdinalIgnoreCase))
             {
                 // If RunAs=CurrentUser
+#if FullNetFx
                 azureServiceTokenProvider = new WindowsAuthenticationAzureServiceTokenProvider(new AdalAuthenticationContext(), azureAdInstance);
+#else
+                throw new ArgumentException($"Connection string {connectionString} is not supported for .NET Core.");
+#endif
             }
             else if (string.Equals(runAs, App, StringComparison.OrdinalIgnoreCase))
             {
@@ -128,6 +133,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     }
                     else if (connectionSettings.ContainsKey(KeyVaultCertificateSecretIdentifier))
                     {
+                        ValidateMsiRetryTimeout(connectionSettings, connectionString);
+
                         azureServiceTokenProvider =
                             new ClientCertificateAzureServiceTokenProvider(
                                 connectionSettings[AppId],
@@ -137,7 +144,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                 azureAdInstance,
                                 connectionSettings.ContainsKey(TenantId) // tenantId can be specified in connection string or retrieved from Key Vault access token later
                                     ? connectionSettings[TenantId]
-                                    : default(string));
+                                    : default(string),
+                                connectionSettings.ContainsKey(MsiRetryTimeout)
+                                    ? int.Parse(connectionSettings[MsiRetryTimeout])
+                                    : 0);
                     }
                     else if (connectionSettings.ContainsKey(AppKey))
                     {
@@ -153,14 +163,25 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     }
                     else
                     {
+                        ValidateMsiRetryTimeout(connectionSettings, connectionString);
+
                         // If certificate or client secret are not specified, use the specified managed identity
-                        azureServiceTokenProvider = new MsiAccessTokenProvider(connectionSettings[AppId]);
+                        azureServiceTokenProvider = new MsiAccessTokenProvider(
+                            connectionSettings.ContainsKey(MsiRetryTimeout)
+                                ? int.Parse(connectionSettings[MsiRetryTimeout])
+                                : 0,
+                            connectionSettings[AppId]);
                     }
                 }
                 else
                 {
+                    ValidateMsiRetryTimeout(connectionSettings, connectionString);
+
                     // If AppId is not specified, use Managed Service Identity
-                    azureServiceTokenProvider = new MsiAccessTokenProvider();
+                    azureServiceTokenProvider = new MsiAccessTokenProvider(
+                        connectionSettings.ContainsKey(MsiRetryTimeout)
+                            ? int.Parse(connectionSettings[MsiRetryTimeout])
+                            : 0);
                 }
             }
             else
@@ -222,6 +243,26 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
                         throw new ArgumentException(
                             $"Connection string {connectionString} is not valid. StoreLocation {storeLocation} is not valid. Valid values are CurrentUser and LocalMachine.");
+                    }
+                }
+
+            }
+        }
+
+        private static void ValidateMsiRetryTimeout(Dictionary<string, string> connectionSettings, string connectionString)
+        {
+            if (connectionSettings != null && connectionSettings.ContainsKey(MsiRetryTimeout))
+            {
+                if (!string.IsNullOrEmpty(connectionSettings[MsiRetryTimeout]))
+                {
+                    int timeoutInt;
+                    string timeoutString = connectionSettings[MsiRetryTimeout];
+
+                    bool parseSucceeded = int.TryParse(timeoutString, out timeoutInt);
+                    if (!parseSucceeded)
+                    {
+                        throw new ArgumentException(
+                            $"Connection string {connectionString} is not valid. MsiRetryTimeout {timeoutString} is not valid. Valid values are integers greater than or equal to 0.");
                     }
                 }
 

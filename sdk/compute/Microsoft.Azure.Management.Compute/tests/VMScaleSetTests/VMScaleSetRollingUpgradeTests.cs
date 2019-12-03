@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -30,7 +30,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetRollingUpgrade")]
         public void TestVMScaleSetRollingUpgrade()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -85,6 +85,9 @@ namespace Compute.Tests
                     Assert.Equal("HealthState/healthy", getVMInstanceViewResponse.VmHealth.Status.Code);
 
                     // Update the VMSS by adding an extension
+                    ComputeManagementTestUtilities.WaitSeconds(600);
+                    var vmssStatus = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
+
                     inputVMScaleSet.VirtualMachineProfile.ExtensionProfile = extensionProfile;
                     UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
@@ -123,7 +126,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetRollingUpgradeAPIs")]
         public void TestVMScaleSetRollingUpgradeAPIs()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -155,18 +158,25 @@ namespace Compute.Tests
                         {
                             vmScaleSet.Overprovision = false;
                             vmScaleSet.UpgradePolicy.Mode = UpgradeMode.Rolling;
+                            vmScaleSet.UpgradePolicy.AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                            {
+                                EnableAutomaticOSUpgrade = false
+                            };
                         },
                         createWithManagedDisks: true,
                         createWithPublicIpAddress: false,
                         createWithHealthProbe: true);
 
                     ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                    ComputeManagementTestUtilities.WaitSeconds(600);
+                    var vmssStatus = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
 
                     m_CrpClient.VirtualMachineScaleSetRollingUpgrades.StartOSUpgrade(rgName, vmssName);
                     var rollingUpgradeStatus = m_CrpClient.VirtualMachineScaleSetRollingUpgrades.GetLatest(rgName, vmssName);
                     Assert.Equal(inputVMScaleSet.Sku.Capacity, rollingUpgradeStatus.Progress.SuccessfulInstanceCount);
 
                     var upgradeTask = m_CrpClient.VirtualMachineScaleSetRollingUpgrades.BeginStartOSUpgradeWithHttpMessagesAsync(rgName, vmssName);
+                    vmssStatus = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
 
                     m_CrpClient.VirtualMachineScaleSetRollingUpgrades.Cancel(rgName, vmssName);
 
@@ -199,7 +209,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetRollingUpgradeHistory")]
         public void TestVMScaleSetRollingUpgradeHistory()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -238,6 +248,8 @@ namespace Compute.Tests
                         createWithHealthProbe: true);
 
                     ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
+                    ComputeManagementTestUtilities.WaitSeconds(600);
+                    var vmssStatus = m_CrpClient.VirtualMachineScaleSets.GetInstanceView(rgName, vmssName);
 
                     m_CrpClient.VirtualMachineScaleSetRollingUpgrades.StartOSUpgrade(rgName, vmssName);
                     var rollingUpgradeHistory = m_CrpClient.VirtualMachineScaleSets.GetOSUpgradeHistory(rgName, vmssName);
@@ -263,7 +275,7 @@ namespace Compute.Tests
         public void TestVMScaleSetAutomaticOSUpgradePolicies()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
                 EnsureClientsInitialized(context);
@@ -352,7 +364,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetExtensionUpgradeAPIs")]
         public void TestVMScaleSetExtensionUpgradeAPIs()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
                 
@@ -363,7 +375,7 @@ namespace Compute.Tests
 
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                     EnsureClientsInitialized(context);
 
                     // Windows VM image
@@ -413,3 +425,4 @@ namespace Compute.Tests
         }
     }
 }
+

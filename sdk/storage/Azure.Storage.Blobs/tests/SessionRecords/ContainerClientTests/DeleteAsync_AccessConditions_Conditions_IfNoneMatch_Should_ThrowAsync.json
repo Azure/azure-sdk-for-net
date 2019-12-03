@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://storagedotnettesting.blob.core.windows.net/test-container-fa37b194-7db2-8811-5df6-907f10c7eccc?restype=container",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9e9ba586cf56274a8c361eb1f590c314-dec8ce3890563749-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Blobs/12.1.0-dev.20191105.1\u002Be81bf5fa649aa8ed18a433e1eb7724e5321ffbff",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18362 )"
+        ],
+        "x-ms-client-request-id": "9656e676-5bbf-b59d-b35b-87f5d8d03cc3",
+        "x-ms-date": "Tue, 05 Nov 2019 21:17:24 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-02-02"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Date": "Tue, 05 Nov 2019 21:17:24 GMT",
+        "ETag": "\u00220x8D762358DD95DCC\u0022",
+        "Last-Modified": "Tue, 05 Nov 2019 21:17:24 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "9656e676-5bbf-b59d-b35b-87f5d8d03cc3",
+        "x-ms-request-id": "757880d6-101e-0063-691e-943a2d000000",
+        "x-ms-version": "2019-02-02"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1888792070",
+    "Storage_TestConfigDefault": "ProductionTenant\nstoragedotnettesting\nU2FuaXRpemVk\nhttp://storagedotnettesting.blob.core.windows.net\nhttps://storagedotnettesting.file.core.windows.net\nhttps://storagedotnettesting.queue.core.windows.net\nhttps://storagedotnettesting.table.core.windows.net\n\n\n\n\nhttps://storagedotnettesting-secondary.blob.core.windows.net\nhttps://storagedotnettesting-secondary.file.core.windows.net\nhttps://storagedotnettesting-secondary.queue.core.windows.net\nhttps://storagedotnettesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://storagedotnettesting.blob.core.windows.net/;QueueEndpoint=https://storagedotnettesting.queue.core.windows.net/;TableEndpoint=https://storagedotnettesting.table.core.windows.net/;FileEndpoint=https://storagedotnettesting.file.core.windows.net/;BlobSecondaryEndpoint=https://storagedotnettesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://storagedotnettesting-secondary.queue.core.windows.net/;TableSecondaryEndpoint=https://storagedotnettesting-secondary.table.core.windows.net/;FileSecondaryEndpoint=https://storagedotnettesting-secondary.file.core.windows.net/;AccountName=storagedotnettesting;AccountKey=Sanitized"
+  }
+}

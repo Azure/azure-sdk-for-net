@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskHyperVGeneration1PositiveTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
 
@@ -50,7 +50,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskHyperVGeneration2PositiveTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
 
@@ -81,7 +81,7 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskHyperVGenerationOmittedTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 EnsureClientsInitialized(context);
 
@@ -109,3 +109,4 @@ namespace Compute.Tests.DiskRPTests
         }
     }
 }
+

@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="other">The other event to consider.</param>
         /// <param name="considerSystemProperties">If <c>true</c>, the <see cref="EventData.SystemProperties" /> will be considered; otherwise, differences will be ignored.</param>
         ///
-        /// <returns><c>true</c>, if the two events are structurally equivilent; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c>, if the two events are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
         public static bool IsEquivalentTo(this EventData instance,
                                           EventData other,
@@ -60,19 +60,27 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            // Verify the system properties are equivilent, unless they're the same reference.
+            // Verify the system properties are equivalent, unless they're the same reference.
 
             if ((considerSystemProperties) && (!Object.ReferenceEquals(instance.SystemProperties, other.SystemProperties)))
             {
-
                 if ((instance.SystemProperties == null) || (other.SystemProperties == null))
                 {
                     return false;
                 }
 
-                // Verify that the system properties contain the same elements, assuming they are non-null.
+                if (instance.SystemProperties.Count != other.SystemProperties.Count)
+                {
+                    return false;
+                }
 
-                if (instance.SystemProperties?.Count != other.SystemProperties?.Count)
+                if ((instance.Offset != other.Offset)
+                    || (instance.EnqueuedTime != other.EnqueuedTime)
+                    || (instance.PartitionKey != other.PartitionKey)
+                    || (instance.SequenceNumber != other.SequenceNumber)
+                    || (instance.LastPartitionSequenceNumber != other.LastPartitionSequenceNumber)
+                    || (instance.LastPartitionOffset != other.LastPartitionOffset)
+                    || (instance.LastPartitionEnqueuedTime != other.LastPartitionEnqueuedTime))
                 {
                     return false;
                 }
@@ -99,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            // The only meaningful comparison left is to ensure that the property sets are equivilent,
+            // The only meaningful comparison left is to ensure that the property sets are equivalent,
             // the outcome of this check is the final word on equality.
 
             if (instance.Properties.Count != other.Properties.Count)

@@ -16,20 +16,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// An Azure Batch task to add.
+    /// An Azure Batch Task to add.
     /// </summary>
     /// <remarks>
-    /// Batch will retry tasks when a recovery operation is triggered on a
-    /// compute node. Examples of recovery operations include (but are not
-    /// limited to) when an unhealthy compute node is rebooted or a compute
-    /// node disappeared due to host failure. Retries due to recovery
-    /// operations are independent of and are not counted against the
-    /// maxTaskRetryCount. Even if the maxTaskRetryCount is 0, an internal
-    /// retry due to a recovery operation may occur. Because of this, all tasks
-    /// should be idempotent. This means tasks need to tolerate being
-    /// interrupted and restarted without causing any corruption or duplicate
-    /// data. The best practice for long running tasks is to use some form of
-    /// checkpointing.
+    /// Batch will retry Tasks when a recovery operation is triggered on a
+    /// Node. Examples of recovery operations include (but are not limited to)
+    /// when an unhealthy Node is rebooted or a Compute Node disappeared due to
+    /// host failure. Retries due to recovery operations are independent of and
+    /// are not counted against the maxTaskRetryCount. Even if the
+    /// maxTaskRetryCount is 0, an internal retry due to a recovery operation
+    /// may occur. Because of this, all Tasks should be idempotent. This means
+    /// Tasks need to tolerate being interrupted and restarted without causing
+    /// any corruption or duplicate data. The best practice for long running
+    /// Tasks is to use some form of checkpointing.
     /// </remarks>
     public partial class TaskAddParameter
     {
@@ -44,39 +43,39 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddParameter class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the task within
-        /// the job.</param>
-        /// <param name="commandLine">The command line of the task.</param>
-        /// <param name="displayName">A display name for the task.</param>
+        /// <param name="id">A string that uniquely identifies the Task within
+        /// the Job.</param>
+        /// <param name="commandLine">The command line of the Task.</param>
+        /// <param name="displayName">A display name for the Task.</param>
         /// <param name="containerSettings">The settings for the container
-        /// under which the task runs.</param>
+        /// under which the Task runs.</param>
         /// <param name="exitConditions">How the Batch service should respond
-        /// when the task completes.</param>
+        /// when the Task completes.</param>
         /// <param name="resourceFiles">A list of files that the Batch service
-        /// will download to the compute node before running the command
+        /// will download to the Compute Node before running the command
         /// line.</param>
         /// <param name="outputFiles">A list of files that the Batch service
-        /// will upload from the compute node after running the command
+        /// will upload from the Compute Node after running the command
         /// line.</param>
         /// <param name="environmentSettings">A list of environment variable
-        /// settings for the task.</param>
+        /// settings for the Task.</param>
         /// <param name="affinityInfo">A locality hint that can be used by the
-        /// Batch service to select a compute node on which to start the new
-        /// task.</param>
+        /// Batch service to select a Compute Node on which to start the new
+        /// Task.</param>
         /// <param name="constraints">The execution constraints that apply to
-        /// this task.</param>
-        /// <param name="userIdentity">The user identity under which the task
+        /// this Task.</param>
+        /// <param name="userIdentity">The user identity under which the Task
         /// runs.</param>
         /// <param name="multiInstanceSettings">An object that indicates that
-        /// the task is a multi-instance task, and contains information about
-        /// how to run the multi-instance task.</param>
-        /// <param name="dependsOn">The tasks that this task depends
+        /// the Task is a multi-instance Task, and contains information about
+        /// how to run the multi-instance Task.</param>
+        /// <param name="dependsOn">The Tasks that this Task depends
         /// on.</param>
-        /// <param name="applicationPackageReferences">A list of application
-        /// packages that the Batch service will deploy to the compute node
-        /// before running the command line.</param>
+        /// <param name="applicationPackageReferences">A list of Packages that
+        /// the Batch service will deploy to the Compute Node before running
+        /// the command line.</param>
         /// <param name="authenticationTokenSettings">The settings for an
-        /// authentication token that the task can use to perform Batch service
+        /// authentication token that the Task can use to perform Batch service
         /// operations.</param>
         public TaskAddParameter(string id, string commandLine, string displayName = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
@@ -104,21 +103,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a string that uniquely identifies the task within the
-        /// job.
+        /// Gets or sets a string that uniquely identifies the Task within the
+        /// Job.
         /// </summary>
         /// <remarks>
         /// The ID can contain any combination of alphanumeric characters
         /// including hyphens and underscores, and cannot contain more than 64
         /// characters. The ID is case-preserving and case-insensitive (that
-        /// is, you may not have two IDs within a job that differ only by
+        /// is, you may not have two IDs within a Job that differ only by
         /// case).
         /// </remarks>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets a display name for the task.
+        /// Gets or sets a display name for the Task.
         /// </summary>
         /// <remarks>
         /// The display name need not be unique and can contain any Unicode
@@ -128,18 +127,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line of the task.
+        /// Gets or sets the command line of the Task.
         /// </summary>
         /// <remarks>
-        /// For multi-instance tasks, the command line is executed as the
-        /// primary task, after the primary task and all subtasks have finished
+        /// For multi-instance Tasks, the command line is executed as the
+        /// primary Task, after the primary Task and all subtasks have finished
         /// executing the coordination command line. The command line does not
         /// run under a shell, and therefore cannot take advantage of shell
         /// features such as environment variable expansion. If you want to
         /// take advantage of such features, you should invoke the shell in the
         /// command line, for example using "cmd /c MyCommand" in Windows or
         /// "/bin/sh -c MyCommand" in Linux. If the command line refers to file
-        /// paths, it should use a relative path (relative to the task working
+        /// paths, it should use a relative path (relative to the Task working
         /// directory), or use the Batch provided environment variable
         /// (https://docs.microsoft.com/en-us/azure/batch/batch-compute-node-environment-variables).
         /// </remarks>
@@ -147,17 +146,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string CommandLine { get; set; }
 
         /// <summary>
-        /// Gets or sets the settings for the container under which the task
+        /// Gets or sets the settings for the container under which the Task
         /// runs.
         /// </summary>
         /// <remarks>
-        /// If the pool that will run this task has containerConfiguration set,
-        /// this must be set as well. If the pool that will run this task
+        /// If the Pool that will run this Task has containerConfiguration set,
+        /// this must be set as well. If the Pool that will run this Task
         /// doesn't have containerConfiguration set, this must not be set. When
         /// this is specified, all directories recursively below the
         /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
-        /// node) are mapped into the container, all task environment variables
-        /// are mapped into the container, and the task command line is
+        /// node) are mapped into the container, all Task environment variables
+        /// are mapped into the container, and the Task command line is
         /// executed in the container. Files produced in the container outside
         /// of AZ_BATCH_NODE_ROOT_DIR might not be reflected to the host disk,
         /// meaning that Batch file APIs will not be able to access those
@@ -167,7 +166,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskContainerSettings ContainerSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets how the Batch service should respond when the task
+        /// Gets or sets how the Batch service should respond when the Task
         /// completes.
         /// </summary>
         [JsonProperty(PropertyName = "exitConditions")]
@@ -175,11 +174,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will download
-        /// to the compute node before running the command line.
+        /// to the Compute Node before running the command line.
         /// </summary>
         /// <remarks>
-        /// For multi-instance tasks, the resource files will only be
-        /// downloaded to the compute node on which the primary task is
+        /// For multi-instance Tasks, the resource files will only be
+        /// downloaded to the Compute Node on which the primary Task is
         /// executed. There is a maximum size for the list of resource files.
         /// When the max size is exceeded, the request will fail and the
         /// response error code will be RequestEntityTooLarge. If this occurs,
@@ -192,64 +191,64 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets a list of files that the Batch service will upload
-        /// from the compute node after running the command line.
+        /// from the Compute Node after running the command line.
         /// </summary>
         /// <remarks>
-        /// For multi-instance tasks, the files will only be uploaded from the
-        /// compute node on which the primary task is executed.
+        /// For multi-instance Tasks, the files will only be uploaded from the
+        /// Compute Node on which the primary Task is executed.
         /// </remarks>
         [JsonProperty(PropertyName = "outputFiles")]
         public IList<OutputFile> OutputFiles { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of environment variable settings for the task.
+        /// Gets or sets a list of environment variable settings for the Task.
         /// </summary>
         [JsonProperty(PropertyName = "environmentSettings")]
         public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets a locality hint that can be used by the Batch service
-        /// to select a compute node on which to start the new task.
+        /// to select a Compute Node on which to start the new Task.
         /// </summary>
         [JsonProperty(PropertyName = "affinityInfo")]
         public AffinityInformation AffinityInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints that apply to this task.
+        /// Gets or sets the execution constraints that apply to this Task.
         /// </summary>
         /// <remarks>
         /// If you do not specify constraints, the maxTaskRetryCount is the
-        /// maxTaskRetryCount specified for the job, the maxWallClockTime is
+        /// maxTaskRetryCount specified for the Job, the maxWallClockTime is
         /// infinite, and the retentionTime is 7 days.
         /// </remarks>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets the user identity under which the task runs.
+        /// Gets or sets the user identity under which the Task runs.
         /// </summary>
         /// <remarks>
-        /// If omitted, the task runs as a non-administrative user unique to
-        /// the task.
+        /// If omitted, the Task runs as a non-administrative user unique to
+        /// the Task.
         /// </remarks>
         [JsonProperty(PropertyName = "userIdentity")]
         public UserIdentity UserIdentity { get; set; }
 
         /// <summary>
-        /// Gets or sets an object that indicates that the task is a
-        /// multi-instance task, and contains information about how to run the
-        /// multi-instance task.
+        /// Gets or sets an object that indicates that the Task is a
+        /// multi-instance Task, and contains information about how to run the
+        /// multi-instance Task.
         /// </summary>
         [JsonProperty(PropertyName = "multiInstanceSettings")]
         public MultiInstanceSettings MultiInstanceSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the tasks that this task depends on.
+        /// Gets or sets the Tasks that this Task depends on.
         /// </summary>
         /// <remarks>
-        /// This task will not be scheduled until all tasks that it depends on
-        /// have completed successfully. If any of those tasks fail and exhaust
-        /// their retry counts, this task will never be scheduled. If the job
+        /// This Task will not be scheduled until all Tasks that it depends on
+        /// have completed successfully. If any of those Tasks fail and exhaust
+        /// their retry counts, this Task will never be scheduled. If the Job
         /// does not have usesTaskDependencies set to true, and this element is
         /// present, the request fails with error code
         /// TaskDependenciesNotSpecifiedOnJob.
@@ -258,34 +257,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public TaskDependencies DependsOn { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of application packages that the Batch service
-        /// will deploy to the compute node before running the command line.
+        /// Gets or sets a list of Packages that the Batch service will deploy
+        /// to the Compute Node before running the command line.
         /// </summary>
         /// <remarks>
         /// Application packages are downloaded and deployed to a shared
-        /// directory, not the task working directory. Therefore, if a
-        /// referenced package is already on the compute node, and is up to
-        /// date, then it is not re-downloaded; the existing copy on the
-        /// compute node is used. If a referenced application package cannot be
-        /// installed, for example because the package has been deleted or
-        /// because download failed, the task fails.
+        /// directory, not the Task working directory. Therefore, if a
+        /// referenced package is already on the Node, and is up to date, then
+        /// it is not re-downloaded; the existing copy on the Compute Node is
+        /// used. If a referenced Package cannot be installed, for example
+        /// because the package has been deleted or because download failed,
+        /// the Task fails.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets the settings for an authentication token that the task
+        /// Gets or sets the settings for an authentication token that the Task
         /// can use to perform Batch service operations.
         /// </summary>
         /// <remarks>
-        /// If this property is set, the Batch service provides the task with
+        /// If this property is set, the Batch service provides the Task with
         /// an authentication token which can be used to authenticate Batch
-        /// service operations without requiring an account access key. The
+        /// service operations without requiring an Account access key. The
         /// token is provided via the AZ_BATCH_AUTHENTICATION_TOKEN environment
-        /// variable. The operations that the task can carry out using the
-        /// token depend on the settings. For example, a task can request job
-        /// permissions in order to add other tasks to the job, or check the
-        /// status of the job or of other tasks under the job.
+        /// variable. The operations that the Task can carry out using the
+        /// token depend on the settings. For example, a Task can request Job
+        /// permissions in order to add other Tasks to the Job, or check the
+        /// status of the Job or of other Tasks under the Job.
         /// </remarks>
         [JsonProperty(PropertyName = "authenticationTokenSettings")]
         public AuthenticationTokenSettings AuthenticationTokenSettings { get; set; }

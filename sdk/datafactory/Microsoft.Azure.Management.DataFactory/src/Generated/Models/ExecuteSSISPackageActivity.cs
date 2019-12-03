@@ -67,7 +67,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// connection managers to execute the SSIS package.</param>
         /// <param name="propertyOverrides">The property overrides to execute
         /// the SSIS package.</param>
-        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object runtime = default(object), object loggingLevel = default(object), object environmentPath = default(object), SSISExecutionCredential executionCredential = default(SSISExecutionCredential), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>))
+        /// <param name="logLocation">SSIS package execution log
+        /// location.</param>
+        public ExecuteSSISPackageActivity(string name, SSISPackageLocation packageLocation, IntegrationRuntimeReference connectVia, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object runtime = default(object), object loggingLevel = default(object), object environmentPath = default(object), SSISExecutionCredential executionCredential = default(SSISExecutionCredential), IDictionary<string, SSISExecutionParameter> projectParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, SSISExecutionParameter> packageParameters = default(IDictionary<string, SSISExecutionParameter>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> projectConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, IDictionary<string, SSISExecutionParameter>> packageConnectionManagers = default(IDictionary<string, IDictionary<string, SSISExecutionParameter>>), IDictionary<string, SSISPropertyOverride> propertyOverrides = default(IDictionary<string, SSISPropertyOverride>), SSISLogLocation logLocation = default(SSISLogLocation))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             PackageLocation = packageLocation;
@@ -81,6 +83,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ProjectConnectionManagers = projectConnectionManagers;
             PackageConnectionManagers = packageConnectionManagers;
             PropertyOverrides = propertyOverrides;
+            LogLocation = logLocation;
             CustomInit();
         }
 
@@ -162,6 +165,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.propertyOverrides")]
         public IDictionary<string, SSISPropertyOverride> PropertyOverrides { get; set; }
+
+        /// <summary>
+        /// Gets or sets SSIS package execution log location.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.logLocation")]
+        public SSISLogLocation LogLocation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -253,6 +262,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
                         valueElement6.Validate();
                     }
                 }
+            }
+            if (LogLocation != null)
+            {
+                LogLocation.Validate();
             }
         }
     }

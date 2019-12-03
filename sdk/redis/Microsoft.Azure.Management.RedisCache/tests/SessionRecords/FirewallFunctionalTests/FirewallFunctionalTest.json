@@ -1,0 +1,2557 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache/register?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVnaXN0ZXI/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "62dc198e-98a4-4e5d-8f67-a8f663256b97"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "591a40c4-ac1c-4c15-996c-ce76db89a849"
+        ],
+        "x-ms-correlation-request-id": [
+          "591a40c4-ac1c-4c15-996c-ce76db89a849"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010218Z:591a40c4-ac1c-4c15-996c-ce76db89a849"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:02:17 GMT"
+        ],
+        "Content-Length": [
+          "3694"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"96231a05-34ce-4eb4-aa6a-70759cbb5e83\",\r\n    \"roleDefinitionId\": \"4f731528-ba85-45c7-acfb-cd0a9b3cf31b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"South India\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US 2 EUAP\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US EUAP\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"RedisConfigDefinition\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGU/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f43f1b4b-4eb0-4c2b-913c-458d945b8ae8"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "eb4d9b59-a666-4618-88b5-8c2dd0a22650"
+        ],
+        "x-ms-correlation-request-id": [
+          "eb4d9b59-a666-4618-88b5-8c2dd0a22650"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010218Z:eb4d9b59-a666-4618-88b5-8c2dd0a22650"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:02:17 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "3694"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache\",\r\n  \"namespace\": \"Microsoft.Cache\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"96231a05-34ce-4eb4-aa6a-70759cbb5e83\",\r\n    \"roleDefinitionId\": \"4f731528-ba85-45c7-acfb-cd0a9b3cf31b\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"Redis\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"South India\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ],\r\n      \"zoneMappings\": [\r\n        {\r\n          \"location\": \"East US 2\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"Central US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US 2 EUAP\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Central US EUAP\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"France Central\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Southeast Asia\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"West US 2\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"North Europe\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"East US\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"UK South\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Japan East\",\r\n          \"zones\": [\r\n            \"1\",\r\n            \"2\",\r\n            \"3\"\r\n          ]\r\n        },\r\n        {\r\n          \"location\": \"Australia East\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Africa North\",\r\n          \"zones\": []\r\n        },\r\n        {\r\n          \"location\": \"South Central US\",\r\n          \"zones\": []\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/operationResults\",\r\n      \"locations\": [\r\n        \"North Central US\",\r\n        \"South Central US\",\r\n        \"Central US\",\r\n        \"West Europe\",\r\n        \"North Europe\",\r\n        \"West US\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"Brazil South\",\r\n        \"Southeast Asia\",\r\n        \"East Asia\",\r\n        \"Australia East\",\r\n        \"Australia Southeast\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"South India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West US 2\",\r\n        \"West Central US\",\r\n        \"Korea Central\",\r\n        \"Korea South\",\r\n        \"France Central\",\r\n        \"Australia Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Central US EUAP\",\r\n        \"East US 2 EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"checkNameAvailability\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\",\r\n        \"2014-04-01-preview\",\r\n        \"2014-04-01-alpha\",\r\n        \"2014-04-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"RedisConfigDefinition\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-07-01\",\r\n        \"2018-03-01\",\r\n        \"2017-10-01\",\r\n        \"2017-02-01\",\r\n        \"2016-04-01\",\r\n        \"2015-08-01\",\r\n        \"2015-03-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2018-03-01\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourcegroups/RedisFirewall7602?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlZ3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "50483e33-b069-4a79-b73e-83ed687e13d1"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "37"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "c36369cc-6e95-4b60-b958-3a0cd3e1abfd"
+        ],
+        "x-ms-correlation-request-id": [
+          "c36369cc-6e95-4b60-b958-3a0cd3e1abfd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010220Z:c36369cc-6e95-4b60-b958-3a0cd3e1abfd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:02:19 GMT"
+        ],
+        "Content-Length": [
+          "194"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602\",\r\n  \"name\": \"RedisFirewall7602\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourcegroups/RedisFirewall7602?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlZ3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a9239628-fe1c-4f16-9010-bd56a5de967a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "66f49b5e-632f-4f77-86f4-8025dbed9302"
+        ],
+        "x-ms-correlation-request-id": [
+          "66f49b5e-632f-4f77-86f4-8025dbed9302"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010220Z:66f49b5e-632f-4f77-86f4-8025dbed9302"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:02:19 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "194"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602\",\r\n  \"name\": \"RedisFirewall7602\",\r\n  \"location\": \"westcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    }\r\n  },\r\n  \"location\": \"West Central US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "bf1dec2b-caed-4ee4-ae67-390e85bc82b3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "152"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01"
+        ],
+        "x-ms-request-id": [
+          "d8de0740-cee6-40d1-bc4f-15e0550408c9"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "a99d4339-bda5-4426-8325-59c3afa2fb08"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010222Z:a99d4339-bda5-4426-8325-59c3afa2fb08"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:02:21 GMT"
+        ],
+        "Content-Length": [
+          "758"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": {\r\n      \"primaryKey\": \"Lu8yYwJ4lij2MpS+OHvyLm3wMhCL44kvZ0eDREx+cFI=\",\r\n      \"secondaryKey\": \"+WdqBAyXse4AMh5WsfUcGfa6PFGcxwTRqsJNueS+2k4=\"\r\n    },\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "88d2bde9-7e04-4cb0-8b5e-4b3401829169"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "b5dfa06b-3795-4c9d-a253-5e71b8a65d6c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010252Z:b5dfa06b-3795-4c9d-a253-5e71b8a65d6c"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:02:51 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "613c3651-710c-4ff3-b5f6-9d622a8718aa"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "aa9546f9-33c8-431c-912c-6fc0116b5394"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010322Z:aa9546f9-33c8-431c-912c-6fc0116b5394"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:03:22 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e5dd52f3-87ce-4723-b9ca-7b9dc8de63d7"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "8caae06f-eb96-45db-9bc0-8a3f746388a2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010352Z:8caae06f-eb96-45db-9bc0-8a3f746388a2"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:03:51 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "c3f907ab-e3de-4837-9fa9-004a674bde8d"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "d407193d-bd76-4919-9782-076e31302732"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010422Z:d407193d-bd76-4919-9782-076e31302732"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:04:22 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e204dcfb-e5d0-4698-bcd8-74d2e1de1f0b"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "7bc703a3-d54d-4ad5-a746-0056e10a35a8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010452Z:7bc703a3-d54d-4ad5-a746-0056e10a35a8"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:04:52 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "63f02f9a-5466-45d8-b759-5c3aa4fec686"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-correlation-request-id": [
+          "404f28f4-7a68-4be8-8dcd-9f503452f573"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010523Z:404f28f4-7a68-4be8-8dcd-9f503452f573"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:05:22 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "02ff3c95-ef7c-4060-b9f7-6fa3a3dd5bf6"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-correlation-request-id": [
+          "1afd6c78-757d-4392-b83d-8d416a237ef9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010554Z:1afd6c78-757d-4392-b83d-8d416a237ef9"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:05:53 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "03b160e5-2c1c-423c-9c1b-419ac0571374"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "bd1fc46f-7a33-4df0-b2a1-4643f63fb186"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010624Z:bd1fc46f-7a33-4df0-b2a1-4643f63fb186"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:06:23 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "25208e92-97d3-45a5-a76f-025e57ffd8bb"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11991"
+        ],
+        "x-ms-correlation-request-id": [
+          "78bd4c64-3918-408b-bc1f-1278080baf0e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010654Z:78bd4c64-3918-408b-bc1f-1278080baf0e"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:06:54 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "63327dd3-d626-4158-aad0-539d7aea7431"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11990"
+        ],
+        "x-ms-correlation-request-id": [
+          "1f7b59c2-4535-4733-8e8f-44f5cbb8c3ca"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010724Z:1f7b59c2-4535-4733-8e8f-44f5cbb8c3ca"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:07:23 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0e88ddea-6098-43a0-8fe3-ac869faaada2"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11989"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "e17743fd-df86-4fdd-b44f-c43fb95fed30"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010754Z:e17743fd-df86-4fdd-b44f-c43fb95fed30"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:07:53 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1f21ffb6-9fa1-45fb-ade1-1a39dee8238f"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11988"
+        ],
+        "x-ms-correlation-request-id": [
+          "6710d4f4-e63c-4394-beff-dfa2d10ec282"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010824Z:6710d4f4-e63c-4394-beff-dfa2d10ec282"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:08:24 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "0fc831c4-8c5c-452f-9b36-e3a2454875ac"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11987"
+        ],
+        "x-ms-correlation-request-id": [
+          "067200ff-9fde-4904-9455-7d38efa881e9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010854Z:067200ff-9fde-4904-9455-7d38efa881e9"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:08:53 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "01876481-bd6e-427a-bb40-0cb280ae15fc"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11986"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "dcb6dd14-3e82-451c-a4d2-c525ebaf44b8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010924Z:dcb6dd14-3e82-451c-a4d2-c525ebaf44b8"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:09:24 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "a1106652-abaa-4a85-94b4-22d40f4f5c44"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11985"
+        ],
+        "x-ms-correlation-request-id": [
+          "c58da084-273f-4559-84d0-a6443719cd8d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T010955Z:c58da084-273f-4559-84d0-a6443719cd8d"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:09:54 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e2f787e8-7f6e-4a96-8f75-c51c25faaced"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "x-ms-correlation-request-id": [
+          "010c8a6a-c8ad-426d-9a9a-a57c9f521920"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011028Z:010c8a6a-c8ad-426d-9a9a-a57c9f521920"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:10:28 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "fa27f034-1a44-47a8-9eff-facfd7df92a1"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11983"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "24ef2ee5-c51a-42c9-a7a3-a0c4b925eac6"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011058Z:24ef2ee5-c51a-42c9-a7a3-a0c4b925eac6"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:10:58 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "197dd19e-7870-43fe-a3d7-e0e4fbb11e65"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11982"
+        ],
+        "x-ms-correlation-request-id": [
+          "43789798-2fc1-42c9-b618-e2da48dfa03b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011129Z:43789798-2fc1-42c9-b618-e2da48dfa03b"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:11:29 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4f42353c-4845-497f-ab37-636b0ee2cbd9"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11981"
+        ],
+        "x-ms-correlation-request-id": [
+          "4320b3b5-395b-4a42-bc6a-21c82862c922"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011159Z:4320b3b5-395b-4a42-bc6a-21c82862c922"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:11:58 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "137f5b74-6d01-45f3-9dc9-a0b845d26245"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11980"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "f87eb96d-781f-4b41-ab2f-5d42836f3eca"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011229Z:f87eb96d-781f-4b41-ab2f-5d42836f3eca"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:12:28 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2863edef-a4e7-4d25-9415-8b910790ea44"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11979"
+        ],
+        "x-ms-correlation-request-id": [
+          "950bf451-9169-4480-8c4e-92996d9bae0c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011259Z:950bf451-9169-4480-8c4e-92996d9bae0c"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:12:59 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9d5cc26b-035e-46bd-9ee1-90dd4cafd50e"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11978"
+        ],
+        "x-ms-correlation-request-id": [
+          "09bfbb57-44cf-472e-8a16-39755be785e5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011329Z:09bfbb57-44cf-472e-8a16-39755be785e5"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:13:29 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "9531fb95-3d43-4374-a1b2-fba1a1ca430c"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11977"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "2555f4f2-5c33-46b6-b61c-fdfad87cb605"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011359Z:2555f4f2-5c33-46b6-b61c-fdfad87cb605"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:13:58 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "06177086-b103-4fcf-9966-c622adff350a"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11976"
+        ],
+        "x-ms-correlation-request-id": [
+          "b4d88fdb-1194-4d82-94a1-4fe5c4ed4cc5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011430Z:b4d88fdb-1194-4d82-94a1-4fe5c4ed4cc5"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:14:29 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "1ebc9c0c-a3e7-49e0-be2f-737b6c41ab5b"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11975"
+        ],
+        "x-ms-correlation-request-id": [
+          "d69c2ce8-a3a6-4721-9041-50d6506d0761"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011500Z:d69c2ce8-a3a6-4721-9041-50d6506d0761"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:14:59 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "463e8952-c8c2-4c6f-b4c9-328c66514dcd"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11974"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "8ee4c041-d5ed-46b0-a66f-cf1cfea970c0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011530Z:8ee4c041-d5ed-46b0-a66f-cf1cfea970c0"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:15:29 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "3a6e3584-0f6c-4a6b-99a7-2b9506ea2b2d"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11973"
+        ],
+        "x-ms-correlation-request-id": [
+          "2061ab0d-d822-4cf2-acb9-1c3ce93e14a1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011600Z:2061ab0d-d822-4cf2-acb9-1c3ce93e14a1"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:00 GMT"
+        ],
+        "Content-Length": [
+          "639"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvcmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "37bfa937-2267-4cd7-90bb-0c0940c0e5c8"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11972"
+        ],
+        "x-ms-correlation-request-id": [
+          "bb8151dd-28da-4951-89d6-dac6bd21f48a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011630Z:bb8151dd-28da-4951-89d6-dac6bd21f48a"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:29 GMT"
+        ],
+        "Content-Length": [
+          "640"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTc/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "be89f26a-edb5-49e2-9d0b-9b3e851222f3"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "5b86e550-e501-4384-97f8-6c3ecd6ade0b"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11971"
+        ],
+        "x-ms-correlation-request-id": [
+          "c4606d42-ceb4-49fd-a850-243cf4174921"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011630Z:c4606d42-ceb4-49fd-a850-243cf4174921"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:30 GMT"
+        ],
+        "Content-Length": [
+          "640"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917\",\r\n  \"location\": \"West Central US\",\r\n  \"name\": \"RedisFirewall7917\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"4.0.14\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxfragmentationmemory-reserved\": \"300\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"RedisFirewall7917.redis.cache.windows.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380,\r\n    \"linkedServers\": []\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleOne?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTcvZmlyZXdhbGxSdWxlcy9SdWxlT25lP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"startIP\": \"10.0.0.0\",\r\n    \"endIP\": \"10.0.0.32\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "efaeab6c-6793-4249-9641-a365907e1773"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "82"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917/firewallRules/RuleOne?api-version=2018-03-01"
+        ],
+        "x-ms-request-id": [
+          "118117de-0994-4f44-8c1c-22f4d0d8e7bb"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "f0c92e67-2867-4875-8b55-98eed1771c6e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011631Z:f0c92e67-2867-4875-8b55-98eed1771c6e"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:30 GMT"
+        ],
+        "Content-Length": [
+          "301"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startIP\": \"10.0.0.0\",\r\n    \"endIP\": \"10.0.0.32\"\r\n  },\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917/firewallRules/RuleOne\",\r\n  \"name\": \"RedisFirewall7917/RuleOne\",\r\n  \"type\": \"Microsoft.Cache/redis/firewallRules\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleTwo?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTcvZmlyZXdhbGxSdWxlcy9SdWxlVHdvP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"startIP\": \"10.0.0.64\",\r\n    \"endIP\": \"10.0.0.128\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a3632045-f4f4-41ff-ba0c-a609923bd504"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "84"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917/firewallRules/RuleTwo?api-version=2018-03-01"
+        ],
+        "x-ms-request-id": [
+          "43c627e6-51fa-4b9a-9d44-9ffea005d7f6"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "9d1d8d42-b899-4c45-8aa6-4dd87dd79ec9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011632Z:9d1d8d42-b899-4c45-8aa6-4dd87dd79ec9"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:31 GMT"
+        ],
+        "Content-Length": [
+          "303"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"startIP\": \"10.0.0.64\",\r\n    \"endIP\": \"10.0.0.128\"\r\n  },\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/redis/RedisFirewall7917/firewallRules/RuleTwo\",\r\n  \"name\": \"RedisFirewall7917/RuleTwo\",\r\n  \"type\": \"Microsoft.Cache/redis/firewallRules\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleOne?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTcvZmlyZXdhbGxSdWxlcy9SdWxlT25lP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "32f3a5c9-7c22-4ae8-a4cf-4385709905ad"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "859623e0-36dc-4870-9922-b66a3a1ec561"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11970"
+        ],
+        "x-ms-correlation-request-id": [
+          "3775569b-5231-4db7-943b-1f7a6d1bf3e3"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011632Z:3775569b-5231-4db7-943b-1f7a6d1bf3e3"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:31 GMT"
+        ],
+        "Content-Length": [
+          "301"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleOne\",\r\n  \"name\": \"RedisFirewall7917/RuleOne\",\r\n  \"type\": \"Microsoft.Cache/Redis/firewallRules\",\r\n  \"properties\": {\r\n    \"startIP\": \"10.0.0.0\",\r\n    \"endIP\": \"10.0.0.32\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleTwo?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTcvZmlyZXdhbGxSdWxlcy9SdWxlVHdvP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1ef55575-56c1-4193-982e-6a982a1615af"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ca9f9283-f74d-410f-a063-db48e562aac4"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11969"
+        ],
+        "x-ms-correlation-request-id": [
+          "ddc1e7c5-a54d-4c47-8c8b-4aabae204634"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011632Z:ddc1e7c5-a54d-4c47-8c8b-4aabae204634"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:31 GMT"
+        ],
+        "Content-Length": [
+          "303"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleTwo\",\r\n  \"name\": \"RedisFirewall7917/RuleTwo\",\r\n  \"type\": \"Microsoft.Cache/Redis/firewallRules\",\r\n  \"properties\": {\r\n    \"startIP\": \"10.0.0.64\",\r\n    \"endIP\": \"10.0.0.128\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTcvZmlyZXdhbGxSdWxlcz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "c5bc5844-ea8d-455c-b8cc-9fdb04b4fe40"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "da915aee-30ec-463f-88b2-7cb5ab22be21"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11968"
+        ],
+        "x-ms-correlation-request-id": [
+          "4ba1a2b7-1d01-427a-a89a-558ef6a39e76"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011632Z:4ba1a2b7-1d01-427a-a89a-558ef6a39e76"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:32 GMT"
+        ],
+        "Content-Length": [
+          "617"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleOne\",\r\n      \"name\": \"RedisFirewall7917/RuleOne\",\r\n      \"type\": \"Microsoft.Cache/Redis/firewallRules\",\r\n      \"properties\": {\r\n        \"startIP\": \"10.0.0.0\",\r\n        \"endIP\": \"10.0.0.32\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleTwo\",\r\n      \"name\": \"RedisFirewall7917/RuleTwo\",\r\n      \"type\": \"Microsoft.Cache/Redis/firewallRules\",\r\n      \"properties\": {\r\n        \"startIP\": \"10.0.0.64\",\r\n        \"endIP\": \"10.0.0.128\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTcvZmlyZXdhbGxSdWxlcz9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0399f6cf-9617-4076-9e51-6c5f9c22049a"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "2213e04d-119f-49fd-be7d-a6f76dc7d7bb"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11967"
+        ],
+        "x-ms-correlation-request-id": [
+          "dee3ea80-b22e-4a2a-a687-658fcfb1301b"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011633Z:dee3ea80-b22e-4a2a-a687-658fcfb1301b"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:32 GMT"
+        ],
+        "Content-Length": [
+          "313"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleOne\",\r\n      \"name\": \"RedisFirewall7917/RuleOne\",\r\n      \"type\": \"Microsoft.Cache/Redis/firewallRules\",\r\n      \"properties\": {\r\n        \"startIP\": \"10.0.0.0\",\r\n        \"endIP\": \"10.0.0.32\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisFirewall7602/providers/Microsoft.Cache/Redis/RedisFirewall7917/firewallRules/RuleTwo?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzRmlyZXdhbGw3NjAyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvUmVkaXNGaXJld2FsbDc5MTcvZmlyZXdhbGxSdWxlcy9SdWxlVHdvP2FwaS12ZXJzaW9uPTIwMTgtMDMtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "88dc56b6-51d3-452b-9805-8421ccf240c2"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "ce1071fb-2b40-40ce-b0ae-98850eef178e"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "636641c1-a138-45cf-8a80-b06fc97aa707"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T011633Z:636641c1-a138-45cf-8a80-b06fc97aa707"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:16:32 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "FirewallFunctionalTest": [
+      "RedisFirewall7602",
+      "RedisFirewall7917"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "bc130894-c5b3-4adc-a077-0b51f3714abe"
+  }
+}

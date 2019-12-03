@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 
 namespace Azure.Core.Testing
@@ -17,6 +18,14 @@ namespace Azure.Core.Testing
         protected MockTransport CreateMockTransport()
         {
             return new MockTransport()
+            {
+                ExpectSyncPipeline = !IsAsync
+            };
+        }
+
+        protected MockTransport CreateMockTransport(Func<MockRequest, MockResponse> responseFactory)
+        {
+            return new MockTransport(responseFactory)
             {
                 ExpectSyncPipeline = !IsAsync
             };

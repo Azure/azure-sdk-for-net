@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The set of changes to be made to a job.
+    /// The set of changes to be made to a Job.
     /// </summary>
     public partial class JobUpdateParameter
     {
@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobUpdateParameter class.
         /// </summary>
-        /// <param name="poolInfo">The pool on which the Batch service runs the
-        /// job's tasks.</param>
-        /// <param name="priority">The priority of the job.</param>
+        /// <param name="poolInfo">The Pool on which the Batch service runs the
+        /// Job's Tasks.</param>
+        /// <param name="priority">The priority of the Job.</param>
         /// <param name="constraints">The execution constraints for the
-        /// job.</param>
+        /// Job.</param>
         /// <param name="metadata">A list of name-value pairs associated with
-        /// the job as metadata.</param>
+        /// the Job as metadata.</param>
         /// <param name="onAllTasksComplete">The action the Batch service
-        /// should take when all tasks in the job are in the completed
+        /// should take when all Tasks in the Job are in the completed
         /// state.</param>
         public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the priority of the job.
+        /// Gets or sets the priority of the Job.
         /// </summary>
         /// <remarks>
         /// Priority values can range from -1000 to 1000, with -1000 being the
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the execution constraints for the job.
+        /// Gets or sets the execution constraints for the Job.
         /// </summary>
         /// <remarks>
         /// If omitted, the constraints are cleared.
@@ -78,22 +78,23 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
-        /// Gets or sets the pool on which the Batch service runs the job's
-        /// tasks.
+        /// Gets or sets the Pool on which the Batch service runs the Job's
+        /// Tasks.
         /// </summary>
         /// <remarks>
-        /// You may change the pool for a job only when the job is disabled.
+        /// You may change the Pool for a Job only when the Job is disabled.
         /// The Update Job call will fail if you include the poolInfo element
-        /// and the job is not disabled. If you specify an
-        /// autoPoolSpecification specification in the poolInfo, only the
-        /// keepAlive property can be updated, and then only if the auto pool
-        /// has a poolLifetimeOption of job.
+        /// and the Job is not disabled. If you specify an
+        /// autoPoolSpecification in the poolInfo, only the keepAlive property
+        /// of the autoPoolSpecification can be updated, and then only if the
+        /// autoPoolSpecification has a poolLifetimeOption of Job (other job
+        /// properties can be updated as normal).
         /// </remarks>
         [JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the job as
+        /// Gets or sets a list of name-value pairs associated with the Job as
         /// metadata.
         /// </summary>
         /// <remarks>
@@ -105,14 +106,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the action the Batch service should take when all
-        /// tasks in the job are in the completed state.
+        /// Tasks in the Job are in the completed state.
         /// </summary>
         /// <remarks>
         /// If omitted, the completion behavior is set to noaction. If the
-        /// current value is terminatejob, this is an error because a job's
+        /// current value is terminatejob, this is an error because a Job's
         /// completion behavior may not be changed from terminatejob to
         /// noaction. You may not change the value from terminatejob to
-        /// noaction - that is, once you have engaged automatic job
+        /// noaction - that is, once you have engaged automatic Job
         /// termination, you cannot turn it off again. If you try to do this,
         /// the request fails and Batch returns status code 400 (Bad Request)
         /// and an 'invalid property value' error response. If you do not

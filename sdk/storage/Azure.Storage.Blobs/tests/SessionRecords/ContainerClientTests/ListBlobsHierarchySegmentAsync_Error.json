@@ -1,41 +1,43 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.blob.core.windows.net/test-container-7bf58314-e866-1e5b-37ea-1a107cf31d82?restype=container\u0026comp=list",
+      "RequestUri": "http:\u002f\u002fgapradev.blob.core.windows.net\u002ftest-container-58259cc4-983d-4c64-5739-2214f16d8971?restype=container\u0026comp=list",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-storage-blobs/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs\u002f12.0.0-dev.20190912.1\u002b064a590adba2509967d360508e56bc71e2e8a2e8",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "da30baf303b3de3348cdaa1dd79563dd",
-        "x-ms-date": "Mon, 17 Jun 2019 20:57:11 GMT",
+        "x-ms-client-request-id": "e8c296dd004c4f60250b02ce0c50adf7",
+        "x-ms-date": "Thu, 12 Sep 2019 18:28:26 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2018-11-09"
+        "x-ms-version": "2019-02-02"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "225",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:57:11 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Thu, 12 Sep 2019 18:28:26 GMT",
         "Server": [
-          "Windows-Azure-Blob/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Blob\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
+        "x-ms-client-request-id": "e8c296dd004c4f60250b02ce0c50adf7",
         "x-ms-error-code": "ContainerNotFound",
-        "x-ms-request-id": "a9357c9a-b01e-0079-2a4f-25b12a000000",
-        "x-ms-version": "2018-11-09"
+        "x-ms-request-id": "8b43c807-001e-0016-6297-6964ec000000",
+        "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eContainerNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified container does not exist.\n",
-        "RequestId:a9357c9a-b01e-0079-2a4f-25b12a000000\n",
-        "Time:2019-06-17T20:57:11.4732329Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eContainerNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified container does not exist.\n",
+        "RequestId:8b43c807-001e-0016-6297-6964ec000000\n",
+        "Time:2019-09-12T18:28:26.9367387Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     }
   ],
   "Variables": {
-    "RandomSeed": "1083984979"
+    "RandomSeed": "1213323234",
+    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp:\u002f\u002fgapradev.blob.core.windows.net\nhttp:\u002f\u002fgapradev.file.core.windows.net\nhttp:\u002f\u002fgapradev.queue.core.windows.net\nhttp:\u002f\u002fgapradev.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fgapradev-secondary.blob.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.file.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.queue.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fgapradev.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fgapradev.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fgapradev.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fgapradev.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.file.core.windows.net\u002f;AccountName=gapradev;AccountKey=Sanitized"
   }
 }

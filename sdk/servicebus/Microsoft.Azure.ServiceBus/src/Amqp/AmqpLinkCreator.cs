@@ -35,7 +35,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
 
         public async Task<Tuple<AmqpObject, DateTime>> CreateAndOpenAmqpLinkAsync()
         {
-            var timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout);
+            var timeoutHelper = new TimeoutHelper(this.serviceBusConnection.OperationTimeout, true);
 
             MessagingEventSource.Log.AmqpGetOrCreateConnectionStart();
             var amqpConnection = await this.serviceBusConnection.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 MessagingEventSource.Log.AmqpSessionCreationException(this.entityPath, amqpConnection, exception);
                 session?.Abort();
-                throw AmqpExceptionHelper.GetClientException(exception, null, session.GetInnerException());
+                throw AmqpExceptionHelper.GetClientException(exception, null, session.GetInnerException(), amqpConnection.IsClosing());
             }
 
             AmqpObject link = null;
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                     exception);
 
                 session.SafeClose(exception);
-                throw AmqpExceptionHelper.GetClientException(exception, null, link?.GetInnerException(), session.IsClosing());
+                throw AmqpExceptionHelper.GetClientException(exception, null, link?.GetInnerException(), amqpConnection.IsClosing());
             }
         }
 

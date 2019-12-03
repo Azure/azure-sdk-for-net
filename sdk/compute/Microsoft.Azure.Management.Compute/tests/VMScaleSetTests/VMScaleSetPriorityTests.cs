@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Compute.Tests
@@ -31,7 +31,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Regular")]
         public void TestVMScaleSetPriorityOperations_Accept_Regular()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Regular);
             }
@@ -53,9 +53,9 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetScenarioOperations_Accept_Low")]
         public void TestVMScaleSetPriorityOperations_Accept_Low()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
-                TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Low);
+                TestVMScaleSetPriorityOperationsInternal(context, VirtualMachinePriorityTypes.Low, true);
             }
         }
 
@@ -144,7 +144,7 @@ namespace Compute.Tests
         [Trait("Name", "TestVMScaleSetEvictionPolicyOperations")]
         public void TestVMScaleSetEvictionPolicyOperations()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
 
@@ -158,13 +158,12 @@ namespace Compute.Tests
                     EnsureClientsInitialized(context);
 
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                     // Create low priority scaleset with no eviction policy specified
-                    TestVMScaleSetEvictionPolicyInternal(rgName, storageAccountOutput, imageRef);
+                    TestVMScaleSetEvictionPolicyInternal(rgName, imageRef);
 
                     // Create low priority scaleset with 'delete' eviction policy specified
-                    TestVMScaleSetEvictionPolicyInternal(rgName, storageAccountOutput, imageRef, VirtualMachineEvictionPolicyTypes.Delete);
+                    TestVMScaleSetEvictionPolicyInternal(rgName, imageRef, VirtualMachineEvictionPolicyTypes.Delete);
                 }
                 finally
                 {
@@ -178,7 +177,6 @@ namespace Compute.Tests
 
         private void TestVMScaleSetEvictionPolicyInternal(
             string rgName,
-            StorageAccount storageAccount,
             ImageReference imageRef,
             string evictionPolicy = null)
         {
@@ -189,7 +187,7 @@ namespace Compute.Tests
             var getResponse = CreateVMScaleSet_NoAsyncTracking(
                 rgName,
                 vmssName,
-                storageAccount,
+                null,
                 imageRef,
                 out inputVMScaleSet,
                 null,
@@ -201,9 +199,11 @@ namespace Compute.Tests
                     vmScaleSet.Sku.Name = VirtualMachineSizeTypes.StandardA1;
                     vmScaleSet.Sku.Tier = "Standard";
                     vmScaleSet.Sku.Capacity = 2;
-                });
+                },
+                false,
+                true);
 
-            ValidateVMScaleSet(inputVMScaleSet, getResponse);
+            ValidateVMScaleSet(inputVMScaleSet, getResponse, true);
 
             evictionPolicy = evictionPolicy ?? VirtualMachineEvictionPolicyTypes.Deallocate;
 
@@ -213,3 +213,4 @@ namespace Compute.Tests
         }
     }
 }
+

@@ -1,21 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
-
-// TODO: Make this type internal once Operation<T> has an Id property
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// An <see cref="Operation{Int64}"/> for tracking the status of a 
-    /// <see cref="BlobBaseClient.StartCopyFromUriAsync"/> request.  Its
-    /// <see cref="Value"/> upon succesful completion will be the number of
-    /// bytes copied.
+    /// An <see cref="Operation{Int64}"/> for tracking the status of a
+    /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
+    /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
+    /// completion will be the number of bytes copied.
     /// </summary>
     public class CopyFromUriOperation : Operation<long>
     {
@@ -30,65 +28,66 @@ namespace Azure.Storage.Blobs.Models
         private readonly CancellationToken _cancellationToken;
 
         /// <summary>
-        /// ID of the copy operation.
-        /// </summary>
-        private readonly string _copyId;
-
-        /// <summary>
-        /// Gets the ID of the copy operation that can be compared with the
-        /// <see cref="BlobProperties.CopyId"/> value returned from
-        /// <see cref="BlobBaseClient.GetPropertiesAsync" /> or passed to
-        /// <see cref="BlobBaseClient.AbortCopyFromUriAsync" />.
-        /// </summary>
-        public virtual string Id => this._copyId;
-
-        /// <summary>
         /// Whether the operation has completed.
         /// </summary>
         private bool _hasCompleted;
 
         /// <summary>
-        /// Gets a value indicating whether the operation has completed.
+        /// Gets the number of bytes copied by the operation.
         /// </summary>
-        public override bool HasCompleted => this._hasCompleted;
+        private long? _value;
+
+        private Response _rawResponse;
 
         /// <summary>
-        /// Whether the operation completed succesfully.
+        /// Gets a value indicating whether the operation has completed.
         /// </summary>
-        private bool _hasValue;
+        public override bool HasCompleted => _hasCompleted;
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
-        /// succesfully produced a value.  The <see cref="Value"/> property
-        /// is the number of bytes copied by the operation.
+        /// succesfully produced a value.  The <see cref="Operation{Int64}.Value"/>
+        /// property is the number of bytes copied by the operation.
         /// </summary>
-        public override bool HasValue => this._hasValue;
+        public override bool HasValue => _value.HasValue;
+
+        /// <inheritdoc />
+        public override string Id { get; }
+
+        /// <summary>
+        /// Gets the number of bytes copied by the operation.
+        /// </summary>
+        public override long Value => OperationHelpers.GetValue(ref _value);
+
+        /// <inheritdoc />
+        public override Response GetRawResponse() => _rawResponse;
+
+        /// <inheritdoc />
+        public override ValueTask<Response<long>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+            this.DefaultWaitForCompletionAsync(cancellationToken);
+
+        /// <inheritdoc />
+        public override ValueTask<Response<long>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+            this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         /// <summary>
         /// Initializes a new <see cref="CopyFromUriOperation"/> instance for
         /// mocking.
         /// </summary>
-        internal CopyFromUriOperation(
-            string copyId,
-            bool hasCompleted,
-            long? value = default,
-            Response rawResponse = default)
+        protected CopyFromUriOperation()
         {
-            this._copyId = copyId;
-            this._hasCompleted = hasCompleted;
-            if (value != null)
-            {
-                this._hasValue = true;
-                this.Value = value.Value;
-            }
-            else
-            {
-                this._hasValue = false;
-            }
-            if (rawResponse != null)
-            {
-                this.SetRawResponse(rawResponse);
-            }
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="CopyFromUriOperation"/> instance
+        /// </summary>
+        /// <param name="client">
+        /// The client used to check for completion.
+        /// </param>
+        /// <param name="id">The ID of this operation.</param>
+        public CopyFromUriOperation(string id, BlobBaseClient client):
+            this(client, id, null, CancellationToken.None)
+        {
         }
 
         /// <summary>
@@ -112,10 +111,11 @@ namespace Azure.Storage.Blobs.Models
             Response initialResponse,
             CancellationToken cancellationToken)
         {
-            this._client = client;
-            this._cancellationToken = cancellationToken;
-            this._copyId = copyId;
-            this.SetRawResponse(initialResponse);
+            Id = copyId;
+            _value = null;
+            _rawResponse = initialResponse;
+            _client = client;
+            _cancellationToken = cancellationToken;
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.Storage.Blobs.Models
         /// <returns>The <see cref="Response"/> with the status update.</returns>
         public override Response UpdateStatus(
             CancellationToken cancellationToken = default) =>
-            this.UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// Check for the latest status of the copy operation.
@@ -138,9 +138,9 @@ namespace Azure.Storage.Blobs.Models
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public async override ValueTask<Response> UpdateStatusAsync(
+        public override async ValueTask<Response> UpdateStatusAsync(
             CancellationToken cancellationToken = default) =>
-            await this.UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Check for the latest status of the copy operation.
@@ -149,61 +149,48 @@ namespace Azure.Storage.Blobs.Models
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
+        /// <param name="async" />
         /// <returns>The <see cref="Response"/> with the status update.</returns>
         private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             // Short-circuit when already completed (which improves mocking
             // scenarios that won't have a client).
-            if (this.HasCompleted) { return this.GetRawResponse(); }
+            if (HasCompleted)
+            {
+                return GetRawResponse();
+            }
 
             // Use our original CancellationToken if the user didn't provide one
             if (cancellationToken == default)
             {
-                cancellationToken = this._cancellationToken;
+                cancellationToken = _cancellationToken;
             }
 
             // Get the latest status
-            var task = this._client.GetPropertiesAsync(null, cancellationToken);
-            var update = async ?
+            Task<Response<BlobProperties>> task = _client.GetPropertiesAsync(cancellationToken: cancellationToken);
+            Response<BlobProperties> update = async ?
                 await task.ConfigureAwait(false) :
                 task.EnsureCompleted();
 
             // Check if the operation is no longer running
-            if (this.Id != update.Value.CopyId ||
+            if (Id != update.Value.CopyId ||
                 update.Value.CopyStatus != CopyStatus.Pending)
             {
-                this._hasCompleted = true;
+                _hasCompleted = true;
             }
 
             // Check if the operation succeeded
-            if (this.Id == update.Value.CopyId &&
+            if (Id == update.Value.CopyId &&
                 update.Value.CopyStatus == CopyStatus.Success)
             {
-                this.Value = update.Value.ContentLength;
-                this._hasValue = true;
+                _value = update.Value.ContentLength;
             }
 
             // Save this update as the latest raw response indicating the state
             // of the copy operation
-            var response = update.GetRawResponse();
-            this.SetRawResponse(response);
+            Response response = update.GetRawResponse();
+            _rawResponse = response;
             return response;
         }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new CopyFromUriOperation instance for mocking.
-        /// </summary>
-        public static CopyFromUriOperation CopyFromUriOperation(
-            string copyId,
-            bool hasCompleted,
-            long? value = default,
-            Response rawResponse = default) =>
-            new CopyFromUriOperation(copyId, hasCompleted, value, rawResponse);
     }
 }

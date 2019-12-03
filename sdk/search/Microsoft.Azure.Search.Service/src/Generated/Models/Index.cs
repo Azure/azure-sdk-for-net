@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an index definition in Azure Search, which describes the
-    /// fields and search behavior of an index.
+    /// Represents a search index definition, which describes the fields and
+    /// search behavior of an index.
     /// </summary>
     public partial class Index
     {

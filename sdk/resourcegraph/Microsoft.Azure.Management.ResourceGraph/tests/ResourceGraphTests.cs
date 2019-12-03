@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
         [Fact]
         public void ResourcesBasicQueryTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
         [Fact]
         public void ResourcesQueryOptionsTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
         [Fact]
         public void ResourcesFacetQueryTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGraphClient = GetResourceGraphClient(context);
 
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
         [Fact]
         public void ResourcesMalformedQueryTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
         [Fact]
         public void ResourcesBasicQueryObjectArrayFormatTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var resourceGraphClient = GetResourceGraphClient(context);
                 var query = new QueryRequest

@@ -1,0 +1,148 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3472?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzQ3Mj9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "3472ec8d-1c19-4581-99d6-94870e278ba0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "33"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 12 Aug 2019 23:10:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "ac5503af-fcb0-4e9e-93ee-4ce4cf66929d"
+        ],
+        "x-ms-correlation-request-id": [
+          "ac5503af-fcb0-4e9e-93ee-4ce4cf66929d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190812T231027Z:ac5503af-fcb0-4e9e-93ee-4ce4cf66929d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "219"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg3472\",\r\n  \"name\": \"csmrg3472\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg3472/providers/Microsoft.Resources/deployments/csmd1948/validate?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnMzQ3Mi9wcm92aWRlcnMvTWljcm9zb2Z0LlJlc291cmNlcy9kZXBsb3ltZW50cy9jc21kMTk0OC92YWxpZGF0ZT9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://testtemplates.blob.core.windows.net/templates/bad-website-1.js\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"value\": \"mctest0101\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"value\": \"mctest0101\"\r\n      },\r\n      \"siteMode\": {\r\n        \"value\": \"Limited\"\r\n      },\r\n      \"computeMode\": {\r\n        \"value\": \"Shared\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"value\": \"North Europe\"\r\n      },\r\n      \"sku\": {\r\n        \"value\": \"Free\"\r\n      },\r\n      \"workerSize\": {\r\n        \"value\": \"0\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0f118f74-b21d-4e6b-b2ac-4baa484d5b9d"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "626"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 12 Aug 2019 23:10:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "7b3fb948-a85b-4371-a968-5742c7d29297"
+        ],
+        "x-ms-correlation-request-id": [
+          "7b3fb948-a85b-4371-a968-5742c7d29297"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190812T231028Z:7b3fb948-a85b-4371-a968-5742c7d29297"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "564"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"InvalidTemplate\",\r\n    \"message\": \"Deployment template validation failed: 'The template parameters 'hostingPlanName, siteMode, computeMode, siteLocation, sku, workerSize' in the parameters file are not valid; they are not present in the original template and can therefore not be provided at deployment time. The only supported parameters for this template are 'siteName'. Please see https://aka.ms/arm-deploy/#parameter-file for usage details.'.\",\r\n    \"additionalInfo\": [\r\n      {\r\n        \"type\": \"TemplateViolation\",\r\n        \"info\": {\r\n          \"lineNumber\": 0,\r\n          \"positionNumber\": 0,\r\n          \"snippet\": \"\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 400
+    }
+  ],
+  "Names": {
+    "ValidateBadDeployment": [
+      "csmrg3472",
+      "csmd1948"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
+  }
+}

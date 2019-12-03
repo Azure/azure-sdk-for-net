@@ -39,15 +39,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="loadBalancerFrontendIPConfigurations">An array of
+        /// <param name="loadBalancerFrontendIpConfigurations">An array of
         /// references to the load balancer IP configurations.</param>
-        /// <param name="ipConfigurations">An array of references to the
-        /// private link service IP configuration.</param>
-        /// <param name="networkInterfaces">Gets an array of references to the
+        /// <param name="ipConfigurations">An array of private link service IP
+        /// configurations.</param>
+        /// <param name="networkInterfaces">An array of references to the
         /// network interfaces created for this private link service.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// private link service. Possible values are: 'Updating', 'Succeeded',
-        /// and 'Failed'.</param>
+        /// private link service resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="privateEndpointConnections">An array of list about
         /// connections to the private endpoint.</param>
         /// <param name="visibility">The visibility list of the private link
@@ -56,12 +56,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// link service.</param>
         /// <param name="fqdns">The list of Fqdn.</param>
         /// <param name="alias">The alias of the private link service.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
-        public PrivateLinkService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<FrontendIPConfiguration> loadBalancerFrontendIPConfigurations = default(IList<FrontendIPConfiguration>), IList<PrivateLinkServiceIpConfiguration> ipConfigurations = default(IList<PrivateLinkServiceIpConfiguration>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), PrivateLinkServicePropertiesVisibility visibility = default(PrivateLinkServicePropertiesVisibility), PrivateLinkServicePropertiesAutoApproval autoApproval = default(PrivateLinkServicePropertiesAutoApproval), IList<string> fqdns = default(IList<string>), string alias = default(string), string etag = default(string))
+        /// <param name="enableProxyProtocol">Whether the private link service
+        /// is enabled for proxy protocol or not.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
+        public PrivateLinkService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<FrontendIPConfiguration> loadBalancerFrontendIpConfigurations = default(IList<FrontendIPConfiguration>), IList<PrivateLinkServiceIpConfiguration> ipConfigurations = default(IList<PrivateLinkServiceIpConfiguration>), IList<NetworkInterface> networkInterfaces = default(IList<NetworkInterface>), string provisioningState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), PrivateLinkServicePropertiesVisibility visibility = default(PrivateLinkServicePropertiesVisibility), PrivateLinkServicePropertiesAutoApproval autoApproval = default(PrivateLinkServicePropertiesAutoApproval), IList<string> fqdns = default(IList<string>), string alias = default(string), bool? enableProxyProtocol = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
-            LoadBalancerFrontendIPConfigurations = loadBalancerFrontendIPConfigurations;
+            LoadBalancerFrontendIpConfigurations = loadBalancerFrontendIpConfigurations;
             IpConfigurations = ipConfigurations;
             NetworkInterfaces = networkInterfaces;
             ProvisioningState = provisioningState;
@@ -70,6 +72,7 @@ namespace Microsoft.Azure.Management.Network.Models
             AutoApproval = autoApproval;
             Fqdns = fqdns;
             Alias = alias;
+            EnableProxyProtocol = enableProxyProtocol;
             Etag = etag;
             CustomInit();
         }
@@ -83,12 +86,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets an array of references to the load balancer IP
         /// configurations.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancerFrontendIPConfigurations")]
-        public IList<FrontendIPConfiguration> LoadBalancerFrontendIPConfigurations { get; set; }
+        [JsonProperty(PropertyName = "properties.loadBalancerFrontendIpConfigurations")]
+        public IList<FrontendIPConfiguration> LoadBalancerFrontendIpConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of references to the private link service IP
-        /// configuration.
+        /// Gets or sets an array of private link service IP configurations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<PrivateLinkServiceIpConfiguration> IpConfigurations { get; set; }
@@ -101,18 +103,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<NetworkInterface> NetworkInterfaces { get; private set; }
 
         /// <summary>
-        /// Gets the provisioning state of the private link service. Possible
-        /// values are: 'Updating', 'Succeeded', and 'Failed'.
+        /// Gets the provisioning state of the private link service resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets an array of list about connections to the private
-        /// endpoint.
+        /// Gets an array of list about connections to the private endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
-        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets or sets the visibility list of the private link service.
@@ -139,11 +141,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Alias { get; private set; }
 
         /// <summary>
+        /// Gets or sets whether the private link service is enabled for proxy
+        /// protocol or not.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableProxyProtocol")]
+        public bool? EnableProxyProtocol { get; set; }
+
+        /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

@@ -8,6 +8,9 @@ namespace Microsoft.Azure.Batch
 
     public partial class JobSpecification
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JobSpecification"/> class.
+        /// </summary>
         public JobSpecification() : this(poolInformation: null)
         {
         }

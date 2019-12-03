@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum PoolState
     {
         /// <summary>
-        /// The pool is available to run tasks subject to the availability of
-        /// compute nodes.
+        /// The Pool is available to run Tasks subject to the availability of
+        /// Compute Nodes.
         /// </summary>
         [EnumMember(Value = "active")]
         Active,
         /// <summary>
-        /// The user has requested that the pool be deleted, but the delete
+        /// The user has requested that the Pool be deleted, but the delete
         /// operation has not yet completed.
         /// </summary>
         [EnumMember(Value = "deleting")]

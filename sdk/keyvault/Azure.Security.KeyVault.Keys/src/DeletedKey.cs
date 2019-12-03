@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -8,81 +7,62 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Represents a KeyVault key that has been deleted, allowing it to be recovered, if needed.
+    /// Represents a Key Vault key that has been deleted, allowing it to be recovered, if needed.
     /// </summary>
-    public class DeletedKey : Key
+    public class DeletedKey : KeyVaultKey
     {
-        /// <summary>
-        /// The identifier of the deleted key. This is used to recover the key.
-        /// </summary>
-        public string RecoveryId { get; private set; }
-
-        /// <summary>
-        /// The time when the key was deleted, in UTC.
-        /// </summary>
-        public DateTimeOffset? DeletedDate { get; private set; }
-
-        /// <summary>
-        /// The time when the key is scheduled to be purged, in UTC
-        /// </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
-
-        internal DeletedKey() { }
-
-        internal DeletedKey(string name) : base(name) { }
-
-        public DeletedKey (string name, string recoveryId, DateTimeOffset? deletedDate, DateTimeOffset? scheduledPurge)
-            : base(name)
-        {
-            RecoveryId = recoveryId;
-            DeletedDate = deletedDate;
-            ScheduledPurgeDate = scheduledPurge;
-        }
-
         private const string RecoveryIdPropertyName = "recoveryId";
-        private static readonly JsonEncodedText RecoveryIdPropertyNameBytes = JsonEncodedText.Encode(RecoveryIdPropertyName);
-        private const string DeletedDatePropertyName = "deletedDate";
-        private static readonly JsonEncodedText DeletedDatePropertyNameBytes = JsonEncodedText.Encode(DeletedDatePropertyName);
+        private const string DeletedOnPropertyName = "deletedDate";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
-        private static readonly JsonEncodedText ScheduledPurgeDatePropertyNameBytes = JsonEncodedText.Encode(ScheduledPurgeDatePropertyName);
 
-        internal override void WriteProperties(Utf8JsonWriter json)
+        private string _recoveryId;
+
+        internal DeletedKey(KeyProperties properties = null) : base(properties)
         {
-            base.WriteProperties(json);
-
-            if (RecoveryId != null)
-            {
-                json.WriteString(RecoveryIdPropertyNameBytes, RecoveryId);
-            }
-
-            if (DeletedDate.HasValue)
-            {
-                json.WriteNumber(DeletedDatePropertyNameBytes, DeletedDate.Value.ToUnixTimeMilliseconds());
-            }
-
-            if (ScheduledPurgeDate.HasValue)
-            {
-                json.WriteNumber(ScheduledPurgeDatePropertyNameBytes, ScheduledPurgeDate.Value.ToUnixTimeMilliseconds());
-            }
         }
 
-        internal override void ReadProperties(JsonElement json)
+        internal DeletedKey(string name) : base(name)
         {
-            base.ReadProperties(json);
-            foreach (JsonProperty prop in json.EnumerateObject())
+        }
+
+        /// <summary>
+        /// Gets a <see cref="Uri"/> of the deleted key that can be used to recover it.
+        /// </summary>
+        public Uri RecoveryId
+        {
+            get => _recoveryId is null ? null : new Uri(_recoveryId);
+            internal set => _recoveryId = value?.ToString();
+        }
+
+        /// <summary>
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the key was deleted.
+        /// </summary>
+        public DateTimeOffset? DeletedOn { get; internal set; }
+
+        /// <summary>
+        /// Gets a <see cref="DateTimeOffset"/> for when the deleted key will be purged.
+        /// </summary>
+        public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
+
+        internal override void ReadProperty(JsonProperty prop)
+        {
+            switch (prop.Name)
             {
-                switch (prop.Name)
-                {
-                    case RecoveryIdPropertyName:
-                        RecoveryId = prop.Value.GetString();
-                        break;
-                    case DeletedDatePropertyName:
-                        DeletedDate = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
-                        break;
-                    case ScheduledPurgeDatePropertyName:
-                        ScheduledPurgeDate = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
-                        break;
-                }
+                case RecoveryIdPropertyName:
+                    _recoveryId = prop.Value.GetString();
+                    break;
+
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+
+                case ScheduledPurgeDatePropertyName:
+                    ScheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    break;
+
+                default:
+                    base.ReadProperty(prop);
+                    break;
             }
         }
     }

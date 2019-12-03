@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 namespace Azure.Core.Testing
@@ -66,14 +67,8 @@ namespace Azure.Core.Testing
         {
             lock (Entries)
             {
-                var index = matcher.FindMatch(request, Entries, out var failureMessage);
-                if (index == -1)
-                {
-                    throw new InvalidOperationException(failureMessage);
-                }
-
-                var entry = Entries[index];
-                Entries.RemoveAt(index);
+                RecordEntry entry = matcher.FindMatch(request, Entries);
+                Entries.Remove(entry);
                 return entry;
             }
 
@@ -87,6 +82,41 @@ namespace Azure.Core.Testing
                 {
                     entry.Sanitize(sanitizer);
                 }
+            }
+        }
+
+        public bool IsEquivalent(RecordSession session, RecordMatcher matcher)
+        {
+            if (session == null)
+            {
+                return false;
+            }
+
+            // The DateTimeOffsetNow variable is updated any time it's used so
+            // we only care that both sessions use it or both sessions don't.
+            var now = TestRecording.DateTimeOffsetNowVariableKey;
+            return session.Variables.TryGetValue(now, out string _) == Variables.TryGetValue(now, out string _) &&
+                   session.Variables.Where(v => v.Key != now).SequenceEqual(Variables.Where(v => v.Key != now)) &&
+                   session.Entries.SequenceEqual(Entries, new EntryEquivalentComparer(matcher));
+        }
+
+        private class EntryEquivalentComparer : IEqualityComparer<RecordEntry>
+        {
+            private readonly RecordMatcher _matcher;
+
+            public EntryEquivalentComparer(RecordMatcher matcher)
+            {
+                _matcher = matcher;
+            }
+
+            public bool Equals(RecordEntry x, RecordEntry y)
+            {
+                return _matcher.IsEquivalentRecord(x, y);
+            }
+
+            public int GetHashCode(RecordEntry obj)
+            {
+                return obj.GetHashCode();
             }
         }
     }

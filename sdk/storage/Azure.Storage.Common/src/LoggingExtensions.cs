@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Diagnostics;
@@ -13,9 +12,9 @@ using System.Runtime.ExceptionServices;
 using System.Web;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Common
+namespace Azure.Storage
 {
-    static class LoggingExtensions
+    internal static class LoggingExtensions
     {
         // The Azure.Core logging plan is still being settled, so we're adding
         // [Condtional] extensions we can implement later to light up logging
@@ -30,7 +29,7 @@ namespace Azure.Storage.Common
 #pragma warning restore CA1801 // Review unused parameters
             // Methods that return values can't be marked [Conditional], but
             // using statements will check for null before calling Dispose
-            => null;        
+            => null;
 #pragma warning restore IDE0060 // Remove unused parameter
 
         [Conditional("EnableLoggingHelpers")]
@@ -71,7 +70,7 @@ namespace Azure.Storage.Common
         }
 
         /*
-        Temporarily removing unused code that depends on HttpUtility.ParseQueryString 
+        Temporarily removing unused code that depends on HttpUtility.ParseQueryString
 
 
         public static HttpRequestMessage Sanitize(this HttpRequestMessage httpRequest)

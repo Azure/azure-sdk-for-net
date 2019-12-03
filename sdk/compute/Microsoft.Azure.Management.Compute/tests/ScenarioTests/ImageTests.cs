@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -15,145 +15,182 @@ namespace Compute.Tests
 {
     public class ImageTests : VMTestBase
     {
-        /// <summary>
-        /// Covers following Operations:
-        /// Create RG
-        /// Create Image
-        /// GetImages in a RG
-        /// Delete Image
-        /// Delete RG
-        /// </summary>
         [Fact]
-        [Trait("Name", "TestImageOperations")]
-        public void TestImageOperations()
+        [Trait("Name", "TestCreateImage_with_DiskEncryptionSet")]
+        public void TestCreateImage_with_DiskEncryptionSet()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                EnsureClientsInitialized(context);
+              
+                string diskEncryptionSetId = getDefaultDiskEncryptionSetId();
+
+                CreateImageTestHelper(originalTestLocation, diskEncryptionSetId);
+
+            }
+        }
+        
+        [Fact]
+        [Trait("Name", "TestCreateImage_without_DiskEncryptionSet")]
+        public void TestCreateImage_without_DiskEncryptionSet()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "FranceCentral");
                 EnsureClientsInitialized(context);
+                CreateImageTestHelper(originalTestLocation, diskEncryptionSetId: null);
+            }
+        }
 
-                // Create resource group
-                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+        private void CreateImageTestHelper(string originalTestLocation, string diskEncryptionSetId)
+        {
+            VirtualMachine inputVM = null;
 
-                var imageName = ComputeManagementTestUtilities.GenerateName("imageTest");
+            // Create resource group
+            var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
 
-                // Create a VM, so we can use its OS disk for creating the image
-                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
-                string asName = ComputeManagementTestUtilities.GenerateName("as");
-                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
-                VirtualMachine inputVM = null;
+            var imageName = ComputeManagementTestUtilities.GenerateName("imageTest");
 
-                try
+            // Create a VM, so we can use its OS disk for creating the image
+            string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+            string asName = ComputeManagementTestUtilities.GenerateName("as");
+            ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+            try
+            {
+                // Create Storage Account
+                var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                // Add data disk to the VM.
+                Action<VirtualMachine> addDataDiskToVM = vm =>
                 {
-                    // Create Storage Account
-                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+                    string containerName = HttpMockServer.GetAssetName("TestImageOperations", TestPrefix);
+                    var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
+                    var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestImageOperations", TestPrefix));
 
-                    // Add data disk to the VM.
-                    Action<VirtualMachine> addDataDiskToVM = vm =>
+                    vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
+                    vm.StorageProfile.DataDisks = new List<DataDisk>();
+                    foreach (int index in new int[] { 1, 2 })
                     {
-                        string containerName = HttpMockServer.GetAssetName("TestImageOperations", TestPrefix);
-                        var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
-                        var vhduri = vhdContainer + string.Format("/{0}.vhd", HttpMockServer.GetAssetName("TestImageOperations", TestPrefix));
-
-                        vm.HardwareProfile.VmSize = VirtualMachineSizeTypes.StandardA4;
-                        vm.StorageProfile.DataDisks = new List<DataDisk>();
-                        foreach (int index in new int[] { 1, 2 })
+                        var diskName = "dataDisk" + index;
+                        var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, HttpMockServer.GetAssetName("TestImageOperations", TestPrefix));
+                        var dd = new DataDisk
                         {
-                            var diskName = "dataDisk" + index;
-                            var ddUri = vhdContainer + string.Format("/{0}{1}.vhd", diskName, HttpMockServer.GetAssetName("TestImageOperations", TestPrefix));
-                            var dd = new DataDisk
+                            Caching = CachingTypes.None,
+                            Image = null,
+                            DiskSizeGB = 10,
+                            CreateOption = DiskCreateOptionTypes.Empty,
+                            Lun = 1 + index,
+                            Name = diskName,
+                            Vhd = new VirtualHardDisk
                             {
-                                Caching = CachingTypes.None,
-                                Image = null,
-                                DiskSizeGB = 10,
-                                CreateOption = DiskCreateOptionTypes.Empty,
-                                Lun = 1 + index,
-                                Name = diskName,
-                                Vhd = new VirtualHardDisk
-                                {
-                                    Uri = ddUri
-                                }
-                            };
-                            vm.StorageProfile.DataDisks.Add(dd);
-                        }
-
-                        var testStatus = new InstanceViewStatus
-                        {
-                            Code = "test",
-                            Message = "test"
+                                Uri = ddUri
+                            }
                         };
+                        vm.StorageProfile.DataDisks.Add(dd);
+                    }
 
-                        var testStatusList = new List<InstanceViewStatus> { testStatus };
+                    var testStatus = new InstanceViewStatus
+                    {
+                        Code = "test",
+                        Message = "test"
                     };
 
-                    // Create the VM, whose OS disk will be used in creating the image
-                    var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, addDataDiskToVM);
+                    var testStatusList = new List<InstanceViewStatus> { testStatus };
+                };
 
-                    // Create the Image
-                    var imageInput = new Image()
-                    {
-                        Location = m_location,
-                        Tags = new Dictionary<string, string>()
+                // Create the VM, whose OS disk will be used in creating the image
+                var createdVM = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, addDataDiskToVM);
+
+                int expectedDiskLunWithDiskEncryptionSet = createdVM.StorageProfile.DataDisks[0].Lun;
+
+                // Create the Image
+                var imageInput = new Image()
+                {
+                    Location = m_location,
+                    Tags = new Dictionary<string, string>()
                         {
                             {"RG", "rg"},
                             {"testTag", "1"},
                         },
-                        StorageProfile = new ImageStorageProfile()
+                    StorageProfile = new ImageStorageProfile()
+                    {
+                        OsDisk = new ImageOSDisk()
                         {
-                            OsDisk = new ImageOSDisk()
+                            BlobUri = createdVM.StorageProfile.OsDisk.Vhd.Uri,
+                            DiskEncryptionSet = diskEncryptionSetId == null ? null : new DiskEncryptionSetParameters()
                             {
-                                BlobUri = createdVM.StorageProfile.OsDisk.Vhd.Uri,
-                                OsState = OperatingSystemStateTypes.Generalized,
-                                OsType = OperatingSystemTypes.Windows,
+                                Id = diskEncryptionSetId
                             },
-                            DataDisks = new List<ImageDataDisk>()
+                            OsState = OperatingSystemStateTypes.Generalized,
+                            OsType = OperatingSystemTypes.Windows,
+                        },
+                        DataDisks = new List<ImageDataDisk>()
                             {
                                 new ImageDataDisk()
                                 {
                                     BlobUri = createdVM.StorageProfile.DataDisks[0].Vhd.Uri,
-                                    Lun = createdVM.StorageProfile.DataDisks[0].Lun,
+                                    DiskEncryptionSet = diskEncryptionSetId == null ? null: new DiskEncryptionSetParameters()
+                                    {
+                                        Id = diskEncryptionSetId
+                                    },
+                                    Lun = expectedDiskLunWithDiskEncryptionSet,
                                 }
-                            },
-                            ZoneResilient = true
-                        }
-                    };
+                            }
+                    },
 
-                    var image = m_CrpClient.Images.CreateOrUpdate(rgName, imageName, imageInput);
-                    var getImage = m_CrpClient.Images.Get(rgName, imageName);
+                    HyperVGeneration = HyperVGeneration.V1
+                };
 
-                    ValidateImage(imageInput, getImage);
+                var image = m_CrpClient.Images.CreateOrUpdate(rgName, imageName, imageInput);
+                var getImage = m_CrpClient.Images.Get(rgName, imageName);
 
-                    ImageUpdate updateParams = new ImageUpdate()
-                    {
-                        Tags = getImage.Tags
-                    };
+                ValidateImage(imageInput, getImage);
 
-                    string tagKey = "UpdateTag";
-                    updateParams.Tags.Add(tagKey, "TagValue");
-                    m_CrpClient.Images.Update(rgName, imageName, updateParams);
-
-                    getImage = m_CrpClient.Images.Get(rgName, imageName);
-                    Assert.True(getImage.Tags.ContainsKey(tagKey));
-
-                    var listResponse = m_CrpClient.Images.ListByResourceGroup(rgName);
-                    Assert.Single(listResponse);
-
-                    m_CrpClient.Images.Delete(rgName, image.Name);
-                }
-                finally
+                if( diskEncryptionSetId != null)
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
-                    if (inputVM != null)
-                    {
-                        m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
-                    }
+                    Assert.True(getImage.StorageProfile.OsDisk.DiskEncryptionSet != null, "OsDisk.DiskEncryptionSet is null");
+                    Assert.True(string.Equals(diskEncryptionSetId, getImage.StorageProfile.OsDisk.DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
+                        "getImage.StorageProfile.OsDisk.DiskEncryptionSet is not matching with expected DiskEncryptionSet resource");
 
-                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    Assert.Equal(1, getImage.StorageProfile.DataDisks.Count);
+                    Assert.True(getImage.StorageProfile.DataDisks[0].DiskEncryptionSet != null, ".DataDisks.DiskEncryptionSet is null");
+                    Assert.True(string.Equals(diskEncryptionSetId, getImage.StorageProfile.DataDisks[0].DiskEncryptionSet.Id, StringComparison.OrdinalIgnoreCase),
+                        "DataDisks.DiskEncryptionSet.Id is not matching with expected DiskEncryptionSet resource");
                 }
+
+                ImageUpdate updateParams = new ImageUpdate()
+                {
+                    Tags = getImage.Tags
+                };
+
+                string tagKey = "UpdateTag";
+                updateParams.Tags.Add(tagKey, "TagValue");
+                m_CrpClient.Images.Update(rgName, imageName, updateParams);
+
+                getImage = m_CrpClient.Images.Get(rgName, imageName);
+                Assert.True(getImage.Tags.ContainsKey(tagKey));
+
+                var listResponse = m_CrpClient.Images.ListByResourceGroup(rgName);
+                Assert.Single(listResponse);
+
+                m_CrpClient.Images.Delete(rgName, image.Name);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                if (inputVM != null)
+                {
+                    m_CrpClient.VirtualMachines.Delete(rgName, inputVM.Name);
+                }
+
+                m_ResourcesClient.ResourceGroups.Delete(rgName);
             }
         }
-
+        
         void ValidateImage(Image imageIn, Image imageOut)
         {
             Assert.True(!string.IsNullOrEmpty(imageOut.ProvisioningState));
@@ -197,3 +234,4 @@ namespace Compute.Tests
         }
     }
 }
+

@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <AssemblyTitle>Microsoft Azure.Storage.Common client library samples</AssemblyTitle>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Azure.Storage.Samples.Tests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\*.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

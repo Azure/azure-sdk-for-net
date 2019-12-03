@@ -4,13 +4,13 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline.Policies;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class BufferResponsePolicyTests: SyncAsyncPolicyTestBase
+    public class BufferResponsePolicyTests : SyncAsyncPolicyTestBase
     {
         public BufferResponsePolicyTests(bool isAsync) : base(isAsync) { }
 
@@ -21,8 +21,8 @@ namespace Azure.Core.Tests
             var readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
             mockResponse.ContentStream = readTrackingStream;
 
-            var mockTransport = CreateMockTransport(mockResponse);
-            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            Response response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
 
             Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
             var ms = (MemoryStream)response.ContentStream;
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests
                 ContentStream = new ReadTrackingStream(128, 64)
             };
 
-            var mockTransport = CreateMockTransport(mockResponse);
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
             Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, BufferResponsePolicy.Shared));
         }
 
@@ -53,8 +53,8 @@ namespace Azure.Core.Tests
         {
             MockResponse mockResponse = new MockResponse(200);
 
-            var mockTransport = CreateMockTransport(mockResponse);
-            var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            Response response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
             Assert.Null(response.ContentStream);
         }
 
@@ -67,10 +67,25 @@ namespace Azure.Core.Tests
                 ContentStream = readTrackingStream
             };
 
-            var mockTransport = CreateMockTransport(mockResponse);
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
             await SendGetRequest(mockTransport, BufferResponsePolicy.Shared);
 
             Assert.True(readTrackingStream.IsClosed);
+        }
+
+        [Test]
+        public async Task DoesntBufferWhenDisabled()
+        {
+            ReadTrackingStream readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = readTrackingStream
+            };
+
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            Response response = await SendGetRequest(mockTransport, BufferResponsePolicy.Shared, bufferResponse: false);
+
+            Assert.IsNotInstanceOf<MemoryStream>(response.ContentStream);
         }
 
         private class ReadTrackingStream : Stream

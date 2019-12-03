@@ -6,11 +6,12 @@
     using Newtonsoft.Json;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ImportExportTests : BaseTest
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ExportVersion()
         {
             UseClientFor(async client =>
@@ -33,7 +34,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ImportVersion()
         {
             var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportApp.json"));
@@ -58,7 +59,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ImportApp()
         {
             var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportApp.json"));
@@ -67,6 +68,22 @@
             UseClientFor(async client =>
             {
                 var testAppId = await client.Apps.ImportAsync(app, "Test Import LUIS App");
+                var testApp = await client.Apps.GetAsync(testAppId);
+                await client.Apps.DeleteAsync(testAppId);
+
+                Assert.NotNull(testApp);
+            });
+        }
+
+        [Fact]
+        public void ImportAppWithEnabledForAllModels()
+        {
+            var appJson = File.ReadAllText(Path.Combine(Directory.GetCurrentDirectory(), "SessionRecords/ImportAppWithEnabledForAllModels.json"));
+            var app = JsonConvert.DeserializeObject<LuisApp>(appJson);
+
+            UseClientFor(async client =>
+            {
+                var testAppId = await client.Apps.ImportAsync(app, "Test Import LUIS App With Enabled For All Models");
                 var testApp = await client.Apps.GetAsync(testAppId);
                 await client.Apps.DeleteAsync(testAppId);
 

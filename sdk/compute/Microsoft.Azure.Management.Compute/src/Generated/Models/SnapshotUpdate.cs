@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="osType">the Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
-        /// this field is mandatory and it indicates the size of the VHD to
+        /// this field is mandatory and it indicates the size of the disk to
         /// create. If this field is present for updates or creation with other
         /// options, it indicates a resize. Resizes are only allowed if the
         /// disk is not attached to a running VM, and can only increase the
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets if creationData.createOption is Empty, this field is
-        /// mandatory and it indicates the size of the VHD to create. If this
+        /// mandatory and it indicates the size of the disk to create. If this
         /// field is present for updates or creation with other options, it
         /// indicates a resize. Resizes are only allowed if the disk is not
         /// attached to a running VM, and can only increase the disk's size.

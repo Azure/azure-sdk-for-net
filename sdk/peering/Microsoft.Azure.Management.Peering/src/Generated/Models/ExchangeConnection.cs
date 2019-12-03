@@ -37,11 +37,17 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// 'ProvisioningCompleted', 'Validating', 'Active'</param>
         /// <param name="bgpSession">The BGP session associated with the
         /// connection.</param>
-        public ExchangeConnection(int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession))
+        /// <param name="connectionIdentifier">The unique identifier (GUID) for
+        /// the connection.</param>
+        /// <param name="errorMessage">The error message related to the
+        /// connection state, if any.</param>
+        public ExchangeConnection(int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession), string connectionIdentifier = default(string), string errorMessage = default(string))
         {
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;
             BgpSession = bgpSession;
+            ConnectionIdentifier = connectionIdentifier;
+            ErrorMessage = errorMessage;
             CustomInit();
         }
 
@@ -71,6 +77,18 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "bgpSession")]
         public BgpSession BgpSession { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unique identifier (GUID) for the connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "connectionIdentifier")]
+        public string ConnectionIdentifier { get; set; }
+
+        /// <summary>
+        /// Gets the error message related to the connection state, if any.
+        /// </summary>
+        [JsonProperty(PropertyName = "errorMessage")]
+        public string ErrorMessage { get; private set; }
 
     }
 }

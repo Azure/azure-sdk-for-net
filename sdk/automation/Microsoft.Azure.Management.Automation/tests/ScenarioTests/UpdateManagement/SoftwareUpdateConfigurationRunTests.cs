@@ -13,7 +13,7 @@
         public void CanGetRunById()
         {
             var runId = Guid.Parse("6ff49ee2-092a-48bf-841a-c3d645611689");
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -26,7 +26,7 @@
         [Fact]
         public void CanGetAllRuns()
         {
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -40,7 +40,7 @@
         public void CanGetAllRunsByConfigurationName()
         {
             const string configName = "all-01";
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -54,7 +54,7 @@
         public void CanGetAllRunsByOs()
         {
             const string os = "Windows";
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -68,7 +68,7 @@
         public void CanGetAllRunsByStatus()
         {
             const string status = "Failed";
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 
@@ -82,7 +82,7 @@
         public void CanGetAllRunsByStartTime()
         {
             var startTime = DateTime.Parse("2018-10-23T11:02:00-8").ToUniversalTime();
-            using (var context = MockContext.Start(GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
 

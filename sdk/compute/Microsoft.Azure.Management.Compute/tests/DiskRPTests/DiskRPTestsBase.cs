@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -12,6 +12,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
+using ResourceIdentityType = Microsoft.Azure.Management.ResourceManager.Models.ResourceIdentityType;
 
 namespace Compute.Tests.DiskRPTests
 {
@@ -23,7 +24,7 @@ namespace Compute.Tests.DiskRPTests
         #region Execution
         protected void Disk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, IList<string> zones = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
                 DiskRPLocation = location ?? DiskRPLocation;
@@ -31,15 +32,16 @@ namespace Compute.Tests.DiskRPTests
                 // Data
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones);
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
 
                 try
                 {
                     // **********
                     // SETUP
                     // **********
-                    // Create resource group, unless create option is import in which case resource group will be created with vm
-                    if (diskCreateOption != DiskCreateOption.Import)
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which casethe resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
                     {
                         m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
                     }
@@ -103,9 +105,9 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        protected void Snapshot_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null, bool incremental = false)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
                 DiskRPLocation = location ?? DiskRPLocation;
@@ -129,18 +131,18 @@ namespace Compute.Tests.DiskRPTests
                     Validate(sourceDisk, diskOut, DiskRPLocation);
 
                     // Generate snapshot using disk info
-                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id);
+                    Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id, incremental: incremental);
 
                     // **********
                     // TEST
                     // **********
                     // Put
                     Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, snapshotName, snapshot);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Get
                     snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Get access
                     AccessUri accessUri = m_CrpClient.Snapshots.GrantAccess(rgName, snapshotName, AccessDataDefault);
@@ -148,18 +150,18 @@ namespace Compute.Tests.DiskRPTests
 
                     // Get
                     snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Patch
                     var updatesnapshot = new SnapshotUpdate();
                     const string tagKey = "tageKey";
                     updatesnapshot.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
                     snapshotOut = m_CrpClient.Snapshots.Update(rgName, snapshotName, updatesnapshot);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // Get
                     snapshotOut = m_CrpClient.Snapshots.Get(rgName, snapshotName);
-                    Validate(snapshot, snapshotOut);
+                    Validate(snapshot, snapshotOut, incremental: incremental);
 
                     // End access
                     m_CrpClient.Snapshots.RevokeAccess(rgName, snapshotName);
@@ -186,19 +188,75 @@ namespace Compute.Tests.DiskRPTests
             }
 
         }
-        protected void Disk_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null)
+
+        protected void DiskEncryptionSet_CRUD_Execute(string methodName, string location = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var desName = TestUtilities.GenerateName(DiskNamePrefix);
+                DiskEncryptionSet des = GenerateDefaultDiskEncryptionSet(DiskRPLocation);
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+
+                    // Put DiskEncryptionSet
+                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName, desName, des);
+                    Validate(des, desOut, desName);
+
+                    // Get DiskEncryptionSet
+                    desOut = m_CrpClient.DiskEncryptionSets.Get(rgName, desName);
+                    Validate(des, desOut, desName);
+
+                    // Patch DiskEncryptionSet
+                    const string tagKey = "tageKey";
+                    var updateDes = new DiskEncryptionSetUpdate();
+                    updateDes.Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } };
+                    desOut = m_CrpClient.DiskEncryptionSets.Update(rgName, desName, updateDes);
+                    Validate(des, desOut, desName);
+                    Assert.Equal(1, desOut.Tags.Count);
+
+                    // Delete DiskEncryptionSet
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName, desName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.DiskEncryptionSets.Get(rgName, desName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        protected void Disk_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
 
                 // Data
                 var rgName1 = TestUtilities.GenerateName(TestPrefix);
                 var rgName2 = TestUtilities.GenerateName(TestPrefix);
                 var diskName1 = TestUtilities.GenerateName(DiskNamePrefix);
                 var diskName2 = TestUtilities.GenerateName(DiskNamePrefix);
-                Disk disk1 = GenerateDefaultDisk(diskCreateOption, rgName1, diskSizeGB);
-                Disk disk2 = GenerateDefaultDisk(diskCreateOption, rgName2, diskSizeGB);
+                Disk disk1 = GenerateDefaultDisk(diskCreateOption, rgName1, diskSizeGB, location: location);
+                Disk disk2 = GenerateDefaultDisk(diskCreateOption, rgName2, diskSizeGB, location: location);
 
                 try
                 {
@@ -251,7 +309,7 @@ namespace Compute.Tests.DiskRPTests
 
         protected void Snapshot_List_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null)
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
                 EnsureClientsInitialized(context);
 
@@ -323,26 +381,137 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
+        protected void DiskEncryptionSet_List_Execute(string methodName, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName1 = TestUtilities.GenerateName(TestPrefix);
+                var rgName2 = TestUtilities.GenerateName(TestPrefix);
+                var desName1 = TestUtilities.GenerateName(DiskNamePrefix);
+                var desName2 = TestUtilities.GenerateName(DiskNamePrefix);
+                DiskEncryptionSet des1 = GenerateDefaultDiskEncryptionSet(DiskRPLocation);
+                DiskEncryptionSet des2 = GenerateDefaultDiskEncryptionSet(DiskRPLocation);
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource groups
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName1, new ResourceGroup { Location = DiskRPLocation });
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName2, new ResourceGroup { Location = DiskRPLocation });
+
+                    // Put 4 diskEncryptionSets, 2 in each resource group
+                    m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName1, desName1, des1);
+                    m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName1, desName2, des2);
+                    m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName2, desName1, des1);
+                    m_CrpClient.DiskEncryptionSets.CreateOrUpdate(rgName2, desName2, des2);
+
+                    // **********
+                    // TEST
+                    // **********
+                    // List diskEncryptionSets under resource group
+                    IPage<DiskEncryptionSet> dessOut = m_CrpClient.DiskEncryptionSets.ListByResourceGroup(rgName1);
+                    Assert.Equal(2, dessOut.Count());
+                    Assert.Null(dessOut.NextPageLink);
+
+                    dessOut = m_CrpClient.DiskEncryptionSets.ListByResourceGroup(rgName2);
+                    Assert.Equal(2, dessOut.Count());
+                    Assert.Null(dessOut.NextPageLink);
+
+                    // List diskEncryptionSets under subscription
+                    dessOut = m_CrpClient.DiskEncryptionSets.List();
+                    Assert.True(dessOut.Count() >= 4);
+                    if (dessOut.NextPageLink != null)
+                    {
+                        dessOut = m_CrpClient.DiskEncryptionSets.ListNext(dessOut.NextPageLink);
+                        Assert.True(dessOut.Any());
+                    }
+
+                    // Delete diskEncryptionSets
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName1, desName1);
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName1, desName2);
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName2, desName1);
+                    m_CrpClient.DiskEncryptionSets.Delete(rgName2, desName2);
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName1);
+                    m_ResourcesClient.ResourceGroups.Delete(rgName2);
+                }
+            }
+        }
+
+        protected void DiskEncryptionSet_CreateDisk_Execute(string methodName, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                var desName = "longlivedBvtDES";
+                Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
+                disk.Location = location;
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+                    // Get DiskEncryptionSet
+                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.Get("longrunningrg-centraluseuap", desName);
+                    Assert.NotNull(desOut);
+                    disk.Encryption = new Encryption
+                    {
+                        Type = EncryptionType.EncryptionAtRestWithCustomerKey.ToString(),
+                        DiskEncryptionSetId = desOut.Id
+                    };
+                    //Put Disk
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+                    Assert.Equal(desOut.Id.ToLower(), diskOut.Encryption.DiskEncryptionSetId.ToLower());
+                    Assert.Equal(EncryptionType.EncryptionAtRestWithCustomerKey, diskOut.Encryption.Type);
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         #endregion
 
         #region Generation
         public static readonly GrantAccessData AccessDataDefault = new GrantAccessData { Access = AccessLevel.Read, DurationInSeconds = 1000 };
 
-        protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null)
+        protected Disk GenerateDefaultDisk(string diskCreateOption, string rgName, int? diskSizeGB = null, IList<string> zones = null, string location = null)
         {
             Disk disk;
 
             switch (diskCreateOption)
             {
                 case "Upload":
+                    disk = GenerateBaseDisk(diskCreateOption);
+                    disk.CreationData.UploadSizeBytes = (long) (diskSizeGB ?? 10) * 1024 * 1024 * 1024 + 512;
+                    break;
                 case "Empty":
                     disk = GenerateBaseDisk(diskCreateOption);
                     disk.DiskSizeGB = diskSizeGB;
                     disk.Zones = zones;
                     break;
                 case "Import":
-                    disk = GenerateImportDisk(diskCreateOption, rgName);
+                    disk = GenerateImportDisk(diskCreateOption, rgName, location);
                     disk.DiskSizeGB = diskSizeGB;
+                    disk.Zones = zones;
+                    break;
+                case "Copy":
+                    disk = GenerateCopyDisk(rgName, diskSizeGB ?? 10, location);
                     disk.Zones = zones;
                     break;
                 default:
@@ -356,13 +525,14 @@ namespace Compute.Tests.DiskRPTests
         /// Generates a disk used when the DiskCreateOption is Import
         /// </summary>
         /// <returns></returns>
-        private Disk GenerateImportDisk(string diskCreateOption, string rgName)
+        private Disk GenerateImportDisk(string diskCreateOption, string rgName, string location)
         {
             // Create a VM, so we can use its OS disk for creating the image
             string storageAccountName = ComputeManagementTestUtilities.GenerateName(DiskNamePrefix);
             string asName = ComputeManagementTestUtilities.GenerateName("as");
             ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
             VirtualMachine inputVM = null;
+            m_location = location;
 
             // Create Storage Account
             var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
@@ -384,6 +554,49 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
+        /// <summary>
+        /// Generates a disk used when the DiskCreateOption is Copy
+        /// </summary>
+        /// <returns></returns>
+        private Disk GenerateCopyDisk(string rgName, int diskSizeGB, string location)
+        {
+            // Create an empty disk
+            Disk originalDisk = GenerateDefaultDisk("Empty", rgName, diskSizeGB: diskSizeGB);
+            m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+            Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, TestUtilities.GenerateName(DiskNamePrefix + "_original"), originalDisk);
+
+            Snapshot snapshot = GenerateDefaultSnapshot(diskOut.Id);
+            Snapshot snapshotOut = m_CrpClient.Snapshots.CreateOrUpdate(rgName, "snapshotswaaggertest", snapshot);
+
+            Disk copyDisk = GenerateBaseDisk("Import");
+            copyDisk.CreationData.SourceResourceId = snapshotOut.Id;
+            return copyDisk;
+        }
+
+        protected DiskEncryptionSet GenerateDefaultDiskEncryptionSet(string location)
+        {
+            string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault";
+            string encryptionKeyUri = @"https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c";
+
+            var des = new DiskEncryptionSet
+            {
+                Identity = new EncryptionSetIdentity
+                {
+                    Type = ResourceIdentityType.SystemAssigned.ToString()
+                },
+                Location = location,
+                ActiveKey = new KeyVaultAndKeyReference
+                {
+                    SourceVault = new SourceVault
+                    {
+                        Id = testVaultId
+                    },
+                    KeyUrl = encryptionKeyUri
+                }
+            };
+            return des;
+        }
+
         protected Disk GenerateBaseDisk(string diskCreateOption)
         {
             var disk = new Disk
@@ -403,17 +616,18 @@ namespace Compute.Tests.DiskRPTests
             return disk;
         }
 
-        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = "Standard_LRS")
+        protected Snapshot GenerateDefaultSnapshot(string sourceDiskId, string snapshotStorageAccountTypes = "Standard_LRS", bool incremental = false)
         {
-            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes);
+            Snapshot snapshot = GenerateBaseSnapshot(sourceDiskId, snapshotStorageAccountTypes, incremental);
             return snapshot;
         }
 
-        private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes)
+        private Snapshot GenerateBaseSnapshot(string sourceDiskId, string snapshotStorageAccountTypes, bool incremental = false)
         {
             var snapshot = new Snapshot()
             {
-                Location = DiskRPLocation
+                Location = DiskRPLocation,
+                Incremental = incremental
             };
             snapshot.Sku = new SnapshotSku()
             {
@@ -431,7 +645,17 @@ namespace Compute.Tests.DiskRPTests
 
         #region Validation
 
-        private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false)
+        private void Validate(DiskEncryptionSet diskEncryptionSetExpected, DiskEncryptionSet diskEncryptionSetActual, string expectedDESName)
+        {
+            Assert.Equal(expectedDESName, diskEncryptionSetActual.Name);
+            Assert.Equal(diskEncryptionSetExpected.Location, diskEncryptionSetActual.Location);
+            Assert.Equal(diskEncryptionSetExpected.ActiveKey.SourceVault.Id, diskEncryptionSetActual.ActiveKey.SourceVault.Id);
+            Assert.Equal(diskEncryptionSetExpected.ActiveKey.KeyUrl, diskEncryptionSetActual.ActiveKey.KeyUrl);
+            Assert.NotNull(diskEncryptionSetActual.Identity);
+            Assert.Equal(ResourceIdentityType.SystemAssigned.ToString(), diskEncryptionSetActual.Identity.Type);
+        }
+
+        private void Validate(Snapshot snapshotExpected, Snapshot snapshotActual, bool diskHydrated = false, bool incremental = false)
         {
             // snapshot resource
             Assert.Equal(string.Format("{0}/{1}", ApiConstants.ResourceProviderNamespace, "snapshots"), snapshotActual.Type);
@@ -442,6 +666,8 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(snapshotExpected.Sku.Name, snapshotActual.Sku.Name);
             Assert.True(snapshotActual.ManagedBy == null);
             Assert.NotNull(snapshotActual.ProvisioningState);
+            Assert.Equal(incremental, snapshotActual.Incremental);
+            Assert.NotNull(snapshotActual.CreationData.SourceUniqueId);
             if (snapshotExpected.OsType != null) //these properties are not mandatory for the client
             {
                 Assert.Equal(snapshotExpected.OsType, snapshotActual.OsType);
@@ -452,7 +678,6 @@ namespace Compute.Tests.DiskRPTests
                 // Disk resizing
                 Assert.Equal(snapshotExpected.DiskSizeGB, snapshotActual.DiskSizeGB);
             }
-
 
             // Creation data
             CreationData creationDataExp = snapshotExpected.CreationData;
@@ -488,11 +713,13 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(diskExpected.Sku.Name, diskActual.Sku.Name);
             Assert.NotNull(diskActual.ProvisioningState);
             Assert.Equal(diskExpected.OsType, diskActual.OsType);
+            Assert.NotNull(diskActual.UniqueId);
 
             if (diskExpected.DiskSizeGB != null)
             {
                 // Disk resizing
                 Assert.Equal(diskExpected.DiskSizeGB, diskActual.DiskSizeGB);
+                Assert.NotNull(diskActual.DiskSizeBytes);
             }
 
             if (!update)

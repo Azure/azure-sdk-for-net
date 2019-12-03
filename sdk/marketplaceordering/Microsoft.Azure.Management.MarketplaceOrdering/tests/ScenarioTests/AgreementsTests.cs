@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 
@@ -20,7 +20,7 @@ namespace MarketplaceOrdering.Tests.ScenarioTests
         [Fact]
         public void GetMarketplaceOrderingTerms()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var marketplaceOrderingAgreementsClient = MarketplaceOrderingHelper.GetMarketplaceOrderingAgreementsClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -35,7 +35,7 @@ namespace MarketplaceOrdering.Tests.ScenarioTests
         [Fact]
         public void SetMarketplaceOrderingTerms()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var marketplaceOrderingAgreementsClient = MarketplaceOrderingHelper.GetMarketplaceOrderingAgreementsClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -62,3 +62,4 @@ namespace MarketplaceOrdering.Tests.ScenarioTests
         }
     }
 }
+

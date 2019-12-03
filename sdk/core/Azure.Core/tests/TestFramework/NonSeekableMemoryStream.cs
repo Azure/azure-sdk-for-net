@@ -6,13 +6,13 @@ using System.IO;
 
 namespace Azure.Core.Testing
 {
-    internal class NonSeekableMemoryStream: MemoryStream
+    internal class NonSeekableMemoryStream : MemoryStream
     {
         public NonSeekableMemoryStream()
         {
         }
 
-        public NonSeekableMemoryStream(byte[] buffer): base(buffer)
+        public NonSeekableMemoryStream(byte[] buffer) : base(buffer)
         {
         }
 

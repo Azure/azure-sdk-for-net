@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// The settings that will be leveraged for oracle source partitioning.
+    /// The settings that will be leveraged for Oracle source partitioning.
     /// </summary>
     public partial class OraclePartitionSettings
     {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the OraclePartitionSettings class.
         /// </summary>
         /// <param name="partitionNames">Names of the physical partitions of
-        /// oracle table. </param>
+        /// Oracle table. </param>
         /// <param name="partitionColumnName">The name of the column in integer
         /// type that will be used for proceeding range partitioning. Type:
         /// string (or Expression with resultType string).</param>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets names of the physical partitions of oracle table.
+        /// Gets or sets names of the physical partitions of Oracle table.
         /// </summary>
         [JsonProperty(PropertyName = "partitionNames")]
         public object PartitionNames { get; set; }

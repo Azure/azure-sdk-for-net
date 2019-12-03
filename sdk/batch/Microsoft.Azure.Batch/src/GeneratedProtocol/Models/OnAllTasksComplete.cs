@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     public enum OnAllTasksComplete
     {
         /// <summary>
-        /// Do nothing. The job remains active unless terminated or disabled by
+        /// Do nothing. The Job remains active unless terminated or disabled by
         /// some other means.
         /// </summary>
         [EnumMember(Value = "noaction")]
         NoAction,
         /// <summary>
-        /// Terminate the job. The job's terminateReason is set to
+        /// Terminate the Job. The Job's terminateReason is set to
         /// 'AllTasksComplete'.
         /// </summary>
         [EnumMember(Value = "terminatejob")]

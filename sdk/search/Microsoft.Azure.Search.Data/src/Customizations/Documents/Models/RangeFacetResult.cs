@@ -15,7 +15,15 @@ namespace Microsoft.Azure.Search.Models
     /// </typeparam>
     public class RangeFacetResult<T> where T : struct
     {
-        internal RangeFacetResult(long count, T? from, T? to)
+        /// <summary>
+        /// Creates a new instance of the <c cref="RangeFacetResult{T}">RangeFacetResult</c> class.
+        /// </summary>
+        /// <param name="count">The approximate count of documents falling within the bucket described by this facet.</param>
+        /// <param name="from">A value indicating the inclusive lower bound of the facet's range, or <c>null</c> to indicate that there is
+        /// no lower bound (for the first bucket).</param>
+        /// <param name="to">A value indicating the exclusive upper bound of the facet's range, or <c>null</c> to indicate that there is
+        /// no upper bound (for the last bucket).</param>
+        public RangeFacetResult(long count, T? from, T? to)
         {
             From = from;
             To = to;
@@ -28,14 +36,14 @@ namespace Microsoft.Azure.Search.Models
         public long Count { get; }
 
         /// <summary>
-        /// Gets a value indicating the inclusive lower bound of the facet's range, or null to indicate that there is
-        /// no lower bound (i.e. -- for the first bucket).
+        /// Gets a value indicating the inclusive lower bound of the facet's range, or <c>null</c> to indicate that there is
+        /// no lower bound (for the first bucket).
         /// </summary>
         public T? From { get; }
 
         /// <summary>
-        /// Gets a value indicating the exclusive upper bound of the facet's range, or null to indicate that there is
-        /// no upper bound (i.e. -- for the last bucket).
+        /// Gets a value indicating the exclusive upper bound of the facet's range, or <c>null</c> to indicate that there is
+        /// no upper bound (for the last bucket).
         /// </summary>
         public T? To { get; }
     }

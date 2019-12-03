@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the private endpoint.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update private endpoint operation
+            /// Parameters supplied to the create or update private endpoint operation.
             /// </param>
             public static PrivateEndpoint CreateOrUpdate(this IPrivateEndpointsOperations operations, string resourceGroupName, string privateEndpointName, PrivateEndpoint parameters)
             {
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the private endpoint.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update private endpoint operation
+            /// Parameters supplied to the create or update private endpoint operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the private endpoint.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update private endpoint operation
+            /// Parameters supplied to the create or update private endpoint operation.
             /// </param>
             public static PrivateEndpoint BeginCreateOrUpdate(this IPrivateEndpointsOperations operations, string resourceGroupName, string privateEndpointName, PrivateEndpoint parameters)
             {
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the private endpoint.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the create or update private endpoint operation
+            /// Parameters supplied to the create or update private endpoint operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

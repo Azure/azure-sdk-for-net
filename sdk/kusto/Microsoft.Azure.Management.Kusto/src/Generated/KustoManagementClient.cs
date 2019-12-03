@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
+        /// Gets the IAttachedDatabaseConfigurationsOperations.
+        /// </summary>
+        public virtual IAttachedDatabaseConfigurationsOperations AttachedDatabaseConfigurations { get; private set; }
+
+        /// <summary>
         /// Gets the IDataConnectionsOperations.
         /// </summary>
         public virtual IDataConnectionsOperations DataConnections { get; private set; }
@@ -342,10 +347,11 @@ namespace Microsoft.Azure.Management.Kusto
         {
             Clusters = new ClustersOperations(this);
             Databases = new DatabasesOperations(this);
+            AttachedDatabaseConfigurations = new AttachedDatabaseConfigurationsOperations(this);
             DataConnections = new DataConnectionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-01-21";
+            ApiVersion = "2019-09-07";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -375,6 +381,8 @@ namespace Microsoft.Azure.Management.Kusto
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Database>("kind"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Database>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataConnection>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataConnection>("kind"));
             CustomInitialize();

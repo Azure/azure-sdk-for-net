@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -8,10 +8,11 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.FrontDoor;
 using Microsoft.Azure.Management.FrontDoor.Models;
 using FrontDoor.Tests.Helpers;
-using Microsoft.Azure.Management.Resources.Models;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
 using refID = Microsoft.Azure.Management.FrontDoor.Models.SubResource;
+
 namespace FrontDoor.Tests.ScenarioTests
 {
     public class FrontDoorTests
@@ -22,14 +23,16 @@ namespace FrontDoor.Tests.ScenarioTests
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-            
-            string subid = ConnectionStringKeys.SubscriptionIdKey;
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
                 var resourcesClient = FrontDoorTestUtilities.GetResourceManagementClient(context, handler2);
-                
+
+                // Get subscription id
+                string subid = frontDoorMgmtClient.SubscriptionId;
+
                 // Create resource group
                 var resourceGroupName = FrontDoorTestUtilities.CreateResourceGroup(resourcesClient);
 
@@ -52,7 +55,9 @@ namespace FrontDoor.Tests.ScenarioTests
                         name: "healthProbeSettings1",
                         path: "/",
                         protocol: "Http",
-                        intervalInSeconds: 120
+                        intervalInSeconds: 120,
+                        //healthProbeMethod: "GET",
+                        enabledState: "Enabled"
                     );
                 
                 LoadBalancingSettingsModel loadBalancingSettings1 = new LoadBalancingSettingsModel(
@@ -78,6 +83,10 @@ namespace FrontDoor.Tests.ScenarioTests
                     healthProbeSettings: new refID("/subscriptions/"+subid+"/resourceGroups/"+resourceGroupName+"/providers/Microsoft.Network/frontDoors/"+frontDoorName+"/healthProbeSettings/healthProbeSettings1")
                     );
 
+                BackendPoolsSettings backendPoolsSettings1 = new BackendPoolsSettings(
+                    sendRecvTimeoutSeconds: 123
+                    );
+
                 FrontendEndpoint frontendEndpoint1 = new FrontendEndpoint(
                     name: "frontendEndpoint1",
                     hostName: frontDoorName+".azurefd.net",
@@ -98,12 +107,12 @@ namespace FrontDoor.Tests.ScenarioTests
                     LoadBalancingSettings = new List<LoadBalancingSettingsModel> { loadBalancingSettings1 },
                     HealthProbeSettings = new List<HealthProbeSettingsModel> { healthProbeSettings1 },
                     FrontendEndpoints = new List<FrontendEndpoint> { frontendEndpoint1 },
-                    BackendPools = new List<BackendPool> { backendPool1 }
+                    BackendPools = new List<BackendPool> { backendPool1 },
+                    BackendPoolsSettings = backendPoolsSettings1
                 };
-                
-                
-                var createdFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, createParameters);
 
+                var createdFrontDoor = frontDoorMgmtClient.FrontDoors.CreateOrUpdate(resourceGroupName, frontDoorName, createParameters);
+                
                 // validate that correct frontdoor is created
                 VerifyFrontDoor(createdFrontDoor, createParameters);
 
@@ -139,14 +148,14 @@ namespace FrontDoor.Tests.ScenarioTests
 
             }
         }
-        
+
         [Fact]
         public void WAFCRUDTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
             var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create clients
                 var frontDoorMgmtClient = FrontDoorTestUtilities.GetFrontDoorManagementClient(context, handler1);
@@ -155,7 +164,7 @@ namespace FrontDoor.Tests.ScenarioTests
                 // Create resource group
                 var resourceGroupName = FrontDoorTestUtilities.CreateResourceGroup(resourcesClient);
 
-                // Create a frontDoor
+                // Create a frontDoor WAF policy
                 string policyName = TestUtilities.GenerateName("policy");
 
                 WebApplicationFirewallPolicy createParameters = new WebApplicationFirewallPolicy
@@ -202,31 +211,58 @@ namespace FrontDoor.Tests.ScenarioTests
                         }
                     ),
                     ManagedRules = new ManagedRuleSetList(
-                        new List <ManagedRuleSet> {
+                        new List<ManagedRuleSet> {
                             new ManagedRuleSet
                             {
                                 RuleSetType = "DefaultRuleSet",
                                 RuleSetVersion = "1.0",
+                                Exclusions = new List<ManagedRuleExclusion>
+                                {
+                                    new ManagedRuleExclusion
+                                    {
+                                        MatchVariable = ManagedRuleExclusionMatchVariable.RequestBodyPostArgNames,
+                                        SelectorMatchOperator = ManagedRuleExclusionSelectorMatchOperator.Contains,
+                                        Selector = "query"
+                                    }
+                                },
                                 RuleGroupOverrides = new List<ManagedRuleGroupOverride>
                                 {
                                     new ManagedRuleGroupOverride
                                     {
                                         RuleGroupName = "SQLI",
+                                        Exclusions = new List<ManagedRuleExclusion>
+                                        {
+                                                new ManagedRuleExclusion
+                                                {
+                                                    MatchVariable = ManagedRuleExclusionMatchVariable.RequestHeaderNames,
+                                                    SelectorMatchOperator = ManagedRuleExclusionSelectorMatchOperator.Equals,
+                                                    Selector = "User-Agent"
+                                                }
+                                        },
                                         Rules = new List<ManagedRuleOverride>
                                         {
                                             new ManagedRuleOverride
                                             {
-                                                RuleId = "Rule1",
+                                                RuleId = "942100",
                                                 Action = "Redirect",
-                                                EnabledState = "Disabled"
+                                                EnabledState = "Disabled",
+                                                Exclusions = new List<ManagedRuleExclusion>
+                                                {
+                                                    new ManagedRuleExclusion
+                                                    {
+                                                        MatchVariable = ManagedRuleExclusionMatchVariable.QueryStringArgNames,
+                                                        SelectorMatchOperator = ManagedRuleExclusionSelectorMatchOperator.Equals,
+                                                        Selector = "search"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                            
+
                     })
-                    
+
                 };
 
                 var policy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, createParameters);
@@ -293,6 +329,9 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.Equal(policy.PolicySettings.RedirectUrl, parameters.PolicySettings.RedirectUrl);
             Assert.Equal(policy.CustomRules.Rules.Count, parameters.CustomRules.Rules.Count);
             Assert.Equal(policy.ManagedRules.ManagedRuleSets.Count, parameters.ManagedRules.ManagedRuleSets.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].Exclusions.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Exclusions.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Rules[0].Exclusions.Count, parameters.ManagedRules.ManagedRuleSets[0].RuleGroupOverrides[0].Rules[0].Exclusions.Count);
         }
 
         private static void VerifyFrontDoor(FrontDoorModel frontDoor, FrontDoorModel parameters)
@@ -303,6 +342,7 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.True(frontDoor.Tags.SequenceEqual(parameters.Tags));
             VerifyRoutingRules(frontDoor.RoutingRules, parameters.RoutingRules);
             VerifyBackendPool(frontDoor.BackendPools, parameters.BackendPools);
+            VerifyBackendPoolsSettings(frontDoor.BackendPoolsSettings, parameters.BackendPoolsSettings);
             VerifyHealthProbeSettings(frontDoor.HealthProbeSettings, parameters.HealthProbeSettings);
             VerifyLoadBalancingSettings(frontDoor.LoadBalancingSettings, parameters.LoadBalancingSettings);
             VerifyFrontendEndpoint(frontDoor.FrontendEndpoints, parameters.FrontendEndpoints);
@@ -343,6 +383,11 @@ namespace FrontDoor.Tests.ScenarioTests
             }
         }
 
+        private static void VerifyBackendPoolsSettings(BackendPoolsSettings backendPoolsSettings, BackendPoolsSettings parameters)
+        {
+            Assert.Equal(backendPoolsSettings.SendRecvTimeoutSeconds, parameters.SendRecvTimeoutSeconds);
+        }
+
         private static void VerifyHealthProbeSettings(IList<HealthProbeSettingsModel> healthProbeSettings, IList<HealthProbeSettingsModel> parameters)
         {
             Assert.Equal(healthProbeSettings.Count, parameters.Count);
@@ -351,6 +396,8 @@ namespace FrontDoor.Tests.ScenarioTests
                 Assert.Equal(healthProbeSettings[i].Path, parameters[i].Path);
                 Assert.Equal(healthProbeSettings[i].Protocol, parameters[i].Protocol);
                 Assert.Equal(healthProbeSettings[i].IntervalInSeconds, parameters[i].IntervalInSeconds);
+                //Assert.Equal(healthProbeSettings[i].HealthProbeMethod, parameters[i].HealthProbeMethod);
+                Assert.Equal(healthProbeSettings[i].EnabledState, parameters[i].EnabledState);
             }
         }
 

@@ -27,7 +27,6 @@ Param(
     [string] $SpecsRepoBranch = "master"
 )
 
-$repoRoot = "$PSScriptRoot\..\..\..\..\.."
-$generateFolder = "$PSScriptRoot\Generated"
+"$PSScriptRoot\..\..\Install-BuildTools.ps1"
 
 Start-AutoRestCodeGeneration -ResourceProvider "search/resource-manager" -AutoRestVersion "latest" -SpecsRepoFork $SpecsRepoFork -SpecsRepoBranch $SpecsRepoBranch

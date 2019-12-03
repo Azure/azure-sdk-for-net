@@ -1,0 +1,280 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourcegroups/csmrg9892?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlZ3JvdXBzL2NzbXJnOTg5Mj9hcGktdmVyc2lvbj0yMDE5LTA3LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b5afe578-4357-4c93-8707-18f79cab040b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Aug 2019 01:42:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "0d050386-70b4-4f60-8ac2-21ea7fbfde4f"
+        ],
+        "x-ms-correlation-request-id": [
+          "0d050386-70b4-4f60-8ac2-21ea7fbfde4f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190813T014206Z:0d050386-70b4-4f60-8ac2-21ea7fbfde4f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "215"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg9892\",\r\n  \"name\": \"csmrg9892\",\r\n  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "//subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg9892/providers/Microsoft.Web/serverFarms/csmr2749?api-version=2018-02-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2ZiM2EzZDZiLTQ0YzgtNDRmNS04OGM5LWIyMDkxN2M5Yjk2Yi9yZXNvdXJjZUdyb3Vwcy9jc21yZzk4OTIvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2VydmVyRmFybXMvY3NtcjI3NDk/YXBpLXZlcnNpb249MjAxOC0wMi0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\"\r\n  },\r\n  \"location\": \"West US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f730ae6b-1828-44df-9c00-605951f6a525"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.3.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "86"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Aug 2019 01:42:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "50e4f3e3-9b3b-4407-91aa-f1ed10ae97ba"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "50232362-76c4-4b26-acfb-b6995eee9f5f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190813T014213Z:50232362-76c4-4b26-acfb-b6995eee9f5f"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1282"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg9892/providers/Microsoft.Web/serverfarms/csmr2749\",\r\n  \"name\": \"csmr2749\",\r\n  \"type\": \"Microsoft.Web/serverfarms\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"serverFarmId\": 12404,\r\n    \"name\": \"csmr2749\",\r\n    \"workerSize\": \"Default\",\r\n    \"workerSizeId\": 0,\r\n    \"workerTierName\": null,\r\n    \"numberOfWorkers\": 1,\r\n    \"currentWorkerSize\": \"Default\",\r\n    \"currentWorkerSizeId\": 0,\r\n    \"currentNumberOfWorkers\": 1,\r\n    \"status\": \"Ready\",\r\n    \"webSpace\": \"csmrg9892-WestUSwebspace\",\r\n    \"subscription\": \"fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n    \"adminSiteName\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"maximumNumberOfWorkers\": 10,\r\n    \"planName\": \"VirtualDedicatedPlan\",\r\n    \"adminRuntimeSiteName\": null,\r\n    \"computeMode\": \"Dedicated\",\r\n    \"siteMode\": null,\r\n    \"geoRegion\": \"West US\",\r\n    \"perSiteScaling\": false,\r\n    \"maximumElasticWorkerCount\": 1,\r\n    \"numberOfSites\": 0,\r\n    \"hostingEnvironmentId\": null,\r\n    \"isSpot\": false,\r\n    \"spotExpirationTime\": null,\r\n    \"freeOfferExpirationTime\": null,\r\n    \"tags\": null,\r\n    \"kind\": \"app\",\r\n    \"resourceGroup\": \"csmrg9892\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"hyperV\": false,\r\n    \"mdmId\": \"waws-prod-bay-123_12404\",\r\n    \"targetWorkerCount\": 0,\r\n    \"targetWorkerSizeId\": 0,\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"webSiteId\": null,\r\n    \"existingServerFarmIds\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"size\": \"S1\",\r\n    \"family\": \"S\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg9892/resources?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmIzYTNkNmItNDRjOC00NGY1LTg4YzktYjIwOTE3YzliOTZiL3Jlc291cmNlR3JvdXBzL2NzbXJnOTg5Mi9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "82065b84-e286-41f2-80d1-b1b43d713b8c"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Aug 2019 01:42:13 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "7ccff38c-6361-425e-b423-9e9e5f1c862a"
+        ],
+        "x-ms-correlation-request-id": [
+          "7ccff38c-6361-425e-b423-9e9e5f1c862a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190813T014214Z:7ccff38c-6361-425e-b423-9e9e5f1c862a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "304"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg9892/providers/Microsoft.Web/serverFarms/csmr2749\",\r\n      \"name\": \"csmr2749\",\r\n      \"type\": \"Microsoft.Web/serverFarms\",\r\n      \"sku\": {\r\n        \"name\": \"S1\",\r\n        \"tier\": \"Standard\",\r\n        \"size\": \"S1\",\r\n        \"family\": \"S\",\r\n        \"capacity\": 1\r\n      },\r\n      \"kind\": \"app\",\r\n      \"location\": \"westus\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/csmrg9892/providers/Microsoft.Web/serverFarms/csmr2749?api-version=2018-02-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2ZiM2EzZDZiLTQ0YzgtNDRmNS04OGM5LWIyMDkxN2M5Yjk2Yi9yZXNvdXJjZUdyb3Vwcy9jc21yZzk4OTIvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2VydmVyRmFybXMvY3NtcjI3NDk/YXBpLXZlcnNpb249MjAxOC0wMi0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8f19fdcb-dccf-413c-ae85-def1274cf1e5"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26328.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.3.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 13 Aug 2019 01:42:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a34690b1-12ea-46d7-a3f2-ebf259d78dad"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "c9bb5fc0-fe7d-4c6f-bb8b-7bf691f8905a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190813T014216Z:c9bb5fc0-fe7d-4c6f-bb8b-7bf691f8905a"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CreatedAndDeleteResourceById": [
+      "csmrg9892",
+      "csmr2749"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
+  }
+}

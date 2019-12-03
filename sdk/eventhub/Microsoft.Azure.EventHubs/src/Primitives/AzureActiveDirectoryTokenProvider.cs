@@ -11,11 +11,6 @@ namespace Microsoft.Azure.EventHubs
     /// </summary>
     public class AzureActiveDirectoryTokenProvider : TokenProvider
     {
-        /// <summary>
-        /// Common authority for Azure Active Directory.
-        /// </summary>
-        public const string CommonAuthority = "https://login.microsoftonline.com/common";
-
         readonly string clientId;
         readonly object authCallbackState;
         readonly string authority;

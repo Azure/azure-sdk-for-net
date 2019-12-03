@@ -7,280 +7,281 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelTests : BaseTest
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void ListCompositeEntities()
-        {
-            UseClientFor(async client =>
-            {
-                var childEntity = await client.Model.AddPrebuiltAsync(GlobalAppId, GlobalVersionId, new List<string> { "datetimeV2" });
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, new CompositeEntityModel(new List<string>() { "datetimeV2" }, name: "CompositeTest"));
-                var result = await client.Model.ListCompositeEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity.Single().Id);
-
-                Assert.NotEmpty(result);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void AddCompositeEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var childEntity = await client.Model.AddPrebuiltAsync(GlobalAppId, GlobalVersionId, new List<string> { "datetimeV2" });
-                var compositeEntity = new CompositeEntityModel(new List<string>() { "datetimeV2" }, name: "CompositeTest");
-                var result = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, compositeEntity);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, result);
-                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity.Single().Id);
-
-                Assert.True(result != Guid.Empty);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void GetCompositeEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var childEntity = await client.Model.AddPrebuiltAsync(GlobalAppId, GlobalVersionId, new List<string> { "datetimeV2" });
-                var entity = new CompositeEntityModel(new List<string>() { "datetimeV2" }, name: "CompositeTest");
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, entity);
-                var result = await client.Model.GetCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity.Single().Id);
-
-                Assert.True(result.Id != Guid.Empty);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void UpdateCompositeEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var childEntity = await client.Model.AddPrebuiltAsync(GlobalAppId, GlobalVersionId, new List<string> { "datetimeV2" });
-                var entity = new CompositeEntityModel(new List<string>() { "datetimeV2" }, name: "CompositeTest");
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, entity);
-                await client.Model.UpdateCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId, new CompositeEntityModel(new List<string>() { "datetimeV2" }, name: "CompositeTestUpdate"));
-
-                var entities = await client.Model.ListCompositeEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity.Single().Id);
-            
-
-                Assert.Equal("CompositeTestUpdate", entities.Single(e => e.Id == entityId).Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void DeleteCompositeEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var childEntity = await client.Model.AddPrebuiltAsync(GlobalAppId, GlobalVersionId, new List<string> { "datetimeV2" });
-                var entity = new CompositeEntityModel(new List<string>() { childEntity.Single().Name }, name: "CompositeTest");
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, entity);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                var entities = await client.Model.ListCompositeEntitiesAsync(GlobalAppId, GlobalVersionId);
-                Assert.DoesNotContain(entities, e => e.Id == entityId);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void AddCompositeEntityChild()
-        {
-            UseClientFor(async client =>
-            {
-                var childEntityId = await client.Model.AddEntityAsync(GlobalAppId, GlobalVersionId, new ModelCreateObject("ChildTest"));
-                var childEntityId2 = await client.Model.AddEntityAsync(GlobalAppId, GlobalVersionId, new ModelCreateObject("ChildTest2"));
-                var entity = new CompositeEntityModel(new List<string>() { "ChildTest" }, name: "CompositeTest");
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, entity);
-
-                var child = new CompositeChildModelCreateObject("ChildTest2");
-                var result = await client.Model.AddCompositeEntityChildAsync(GlobalAppId, GlobalVersionId, entityId, child);
-
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                await client.Model.DeleteEntityAsync(GlobalAppId, GlobalVersionId, childEntityId);
-                await client.Model.DeleteEntityAsync(GlobalAppId, GlobalVersionId, childEntityId2);
-
-                Assert.True(result != Guid.Empty);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void DeleteCompositeEntityChild()
-        {
-            UseClientFor(async client =>
-            {
-                var childEntity = await client.Model.AddPrebuiltAsync(GlobalAppId, GlobalVersionId, new List<string> { "datetimeV2" });
-                var childEntity2 = await client.Model.AddPrebuiltAsync(GlobalAppId, GlobalVersionId, new List<string> { "number" });
-                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, GlobalVersionId, new CompositeEntityModel(new List<string>() { childEntity.Single().Name, childEntity2.Single().Name }, name: "CompositeTest"));
-                var childEntityId = childEntity2.Single().Id;
-
-                await client.Model.DeleteCompositeEntityChildAsync(GlobalAppId, GlobalVersionId, entityId, childEntityId);
-
-                var entities = await client.Model.ListCompositeEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity.Single().Id);
-                await client.Model.DeletePrebuiltAsync(GlobalAppId, GlobalVersionId, childEntity2.Single().Id);
-
-                Assert.DoesNotContain(entities, e => e.Id == entityId && e.Children.Any(c => c.Id == childEntityId));
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void ListHierarchicalEntities()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                var result = await client.Model.ListHierarchicalEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                Assert.NotEmpty(result);
-                Assert.NotEmpty(result);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void AddHierarchicalEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                Assert.True(entityId != Guid.Empty);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void GetHierarchicalEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                var result = await client.Model.GetHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                Assert.True(result.Id != Guid.Empty);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void UpdateHierarchicalEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                await client.Model.UpdateHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTestUpdate"));
-                var entities = await client.Model.ListHierarchicalEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                Assert.Equal("HierarchicalTestUpdate", entities.Single(e => e.Id == entityId).Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void DeleteHierarchicalEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                var entities = await client.Model.ListHierarchicalEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                entities = await client.Model.ListHierarchicalEntitiesAsync(GlobalAppId, GlobalVersionId);
-                Assert.DoesNotContain(entities, e => e.Id == entityId);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void GetHierarchicalEntityChild()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                var entity = await client.Model.GetHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                var result = await client.Model.GetHierarchicalEntityChildAsync(GlobalAppId, GlobalVersionId, entityId, entity.Children.First().Id);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                Assert.True(result.Id != Guid.Empty);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void DeleteHierarchicalEntityChild()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest", "AnotherChildTest" }, name: "HierarchicalTest"));
-                var entity = (await client.Model.ListHierarchicalEntitiesAsync(GlobalAppId, GlobalVersionId)).SingleOrDefault(o => o.Id == entityId);
-                var childEntityId = entity.Children.First().Id;
-
-                await client.Model.DeleteHierarchicalEntityChildAsync(GlobalAppId, GlobalVersionId, entityId, childEntityId);
-                var entities = await client.Model.ListHierarchicalEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                Assert.DoesNotContain(entities, e => e.Id == entityId && e.Children.Any(c => c.Id == childEntityId));
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void UpdateHierarchicalEntityChild()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                var entity = await client.Model.GetHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-                var childEntity = entity.Children.Last();
-                var updateEntity = new HierarchicalChildModelUpdateObject("RenamedChildEntity");
-
-                await client.Model.UpdateHierarchicalEntityChildAsync(GlobalAppId, GlobalVersionId, entity.Id, childEntity.Id, updateEntity);
-
-                var entities = await client.Model.ListHierarchicalEntitiesAsync(GlobalAppId, GlobalVersionId);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                entity = entities.Last(e => e.Id == entity.Id);
-                childEntity = entity.Children.Last(c => c.Id == childEntity.Id);
-                Assert.Equal("RenamedChildEntity", childEntity.Name);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
-        public void AddHierarchicalEntityChild()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, new HierarchicalEntityModel(new List<string>() { "ChildTest" }, name: "HierarchicalTest"));
-                var childEntity = new HierarchicalChildModelCreateObject
-                {
-                    Name = "NewChildEntity"
-                };
-
-                var result = await client.Model.AddHierarchicalEntityChildAsync(GlobalAppId, GlobalVersionId, entityId, childEntity);
-                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, GlobalVersionId, entityId);
-
-                Assert.True(result != Guid.Empty);
-            });
-        }
-
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListModels()
         {
             UseClientFor(async client =>
             {
                 var versionId = GlobalVersionId;
-                var entities = await client.Model.ListModelsAsync(GlobalAppId, versionId);
+                var entities = await client.Model.ListEntitiesAsync(GlobalAppId, versionId);
 
                 foreach (var entity in entities)
                 {
                     var entityInfo = await client.Model.GetEntityAsync(GlobalAppId, versionId, entity.Id);
                     Assert.Equal(entity.Name, entityInfo.Name);
+                }
+            });
+        }
+
+        [Fact]
+        public void CreateModelWithNoChildren()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Children = new List<ChildEntityModelCreateObject> { },
+                    Name = "Entity To Be Added"
+                });
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void CreateModelWithChildren()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Children = new List<ChildEntityModelCreateObject> {
+                        new ChildEntityModelCreateObject {
+                            Name = "child1",
+                            Children = new List<ChildEntityModelCreateObject>{ }
+                        }
+                    },
+                    Name = "Entity To Be Added"
+                });
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void CreateModelWithChildrenAndInstanceOf()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var prebuiltEntitiesToAdd = new string[]
+                {
+                    "email"
+                };
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, versionId, prebuiltEntitiesToAdd);
+
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Children = new List<ChildEntityModelCreateObject> {
+                        new ChildEntityModelCreateObject {
+                            Name = "child1",
+                            Children = new List<ChildEntityModelCreateObject>{
+                                new ChildEntityModelCreateObject {
+                                    Name = "instanceOf",
+                                    InstanceOf = "email"
+                                }
+                            }
+                        }
+                    },
+                    Name = "Entity To Be Added"
+                });
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+                foreach (var added in prebuiltEntitiesAdded)
+                {
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, versionId, added.Id);
+                }
+            });
+        }
+
+        [Fact]
+        public void DeleteModel()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Children = new List<ChildEntityModelCreateObject> { },
+                    Name = "Entity To Be Added"
+                });
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void AddModelChild()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Children = new List<ChildEntityModelCreateObject> { },
+                    Name = "Entity To Be Added"
+                });
+
+                await client.Model.AddEntityChildAsync(GlobalAppId, versionId, entityId, new ChildEntityModelCreateObject
+                {
+                    Name = "child1",
+                    Children = new List<ChildEntityModelCreateObject> { }
+                });
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void GetModel()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Children = new List<ChildEntityModelCreateObject> {
+                        new ChildEntityModelCreateObject{
+                            Name = "child1"
+                        }
+                    },
+                    Name = "Entity To Be Added"
+                });
+
+                var model = await client.Model.GetEntityAsync(GlobalAppId, versionId, entityId);
+                Assert.Equal("child1", model.Children[0].Name);
+                Assert.Equal(entityId, model.Id);
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void GetModelChild()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "Entity To Be Added"
+                });
+
+                var childId  = await client.Model.AddEntityChildAsync(GlobalAppId, versionId, entityId, new ChildEntityModelCreateObject
+                {
+                    Name = "child1",
+                    Children = new List<ChildEntityModelCreateObject> { }
+                });
+
+                var model = await client.Model.GetEntityAsync(GlobalAppId, versionId, childId);
+                Assert.Equal("child1", model.Name);
+                Assert.Equal(childId, model.Id);
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void UpdateModel()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Children = new List<ChildEntityModelCreateObject> {
+                        new ChildEntityModelCreateObject{
+                            Name = "child1"
+                        }
+                    },
+                    Name = "Entity To Be Added"
+                });
+
+                await client.Model.UpdateEntityChildAsync(GlobalAppId, versionId, entityId, new EntityModelUpdateObject {
+                    Name = "Updated  Model"
+                });
+
+                var model = await client.Model.GetEntityAsync(GlobalAppId, versionId, entityId);
+                Assert.Equal("Updated  Model", model.Name);
+                Assert.Equal("child1", model.Children[0].Name);
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void UpdateModelChildName()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "Entity To Be Added"
+                });
+
+                var childId = await client.Model.AddEntityChildAsync(GlobalAppId, versionId, entityId, new ChildEntityModelCreateObject
+                {
+                    Name = "child1",
+                    Children = new List<ChildEntityModelCreateObject> { }
+                });
+
+                await client.Model.UpdateEntityChildAsync(GlobalAppId, versionId, childId, new EntityModelUpdateObject {
+                    Name = "child2"
+                });
+
+                var model = await client.Model.GetEntityAsync(GlobalAppId, versionId, entityId);
+
+                Assert.Equal("child2", model.Children[0].Name);
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+            });
+        }
+
+        [Fact]
+        public void UpdateModelChildInstanceOf()
+        {
+            UseClientFor(async client =>
+            {
+                var versionId = GlobalVersionId;
+                var prebuiltEntitiesToAdd = new string[]
+                {
+                    "email",
+                    "number"
+                };
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, versionId, prebuiltEntitiesToAdd);
+
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
+                {
+                    Name = "Entity To Be Added",
+                    Children = new List<ChildEntityModelCreateObject> {
+                        new ChildEntityModelCreateObject {
+                            Name = "child1",
+                            InstanceOf = "email"
+                            }
+                        }
+                });
+
+                var model = await client.Model.GetEntityAsync(GlobalAppId, versionId, entityId);
+
+                await client.Model.UpdateEntityChildAsync(GlobalAppId, versionId, model.Children[0].Id, new EntityModelUpdateObject {
+                    InstanceOf = "number",
+                    Name = "changed Instance Of"
+                });
+
+                model = await client.Model.GetEntityAsync(GlobalAppId, versionId, entityId);
+
+                Assert.Equal("changed Instance Of", model.Children[0].Name);
+
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+                foreach (var added in prebuiltEntitiesAdded)
+                {
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, versionId, added.Id);
                 }
             });
         }

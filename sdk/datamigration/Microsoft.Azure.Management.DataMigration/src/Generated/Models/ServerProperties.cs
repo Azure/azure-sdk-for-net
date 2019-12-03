@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
     using System.Linq;
 
     /// <summary>
-    /// Server properties for Oracle, MySQL type source
+    /// Server properties for MySQL type source
     /// </summary>
     public partial class ServerProperties
     {

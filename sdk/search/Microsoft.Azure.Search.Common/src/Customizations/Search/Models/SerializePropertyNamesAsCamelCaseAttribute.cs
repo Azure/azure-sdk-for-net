@@ -10,11 +10,11 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Indicates that the public properties of a model type should be serialized as camel-case in order to match
-    /// the field names of an Azure Search index.
+    /// the field names of a search index.
     /// </summary>
     /// <remarks>
     /// Types without this attribute are expected to have property names that exactly match their corresponding
-    /// fields names in Azure Search. Otherwise, it would not be possible to use instances of the type to populate
+    /// fields names in Azure Cognitive Search. Otherwise, it would not be possible to use instances of the type to populate
     /// the index.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false, Inherited = true)]

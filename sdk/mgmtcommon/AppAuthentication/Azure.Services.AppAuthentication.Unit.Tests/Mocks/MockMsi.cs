@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
                 case MsiTestType.MsiAzureVmTimeout:
                     var start = DateTime.Now;
-                    while(DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsTimeoutInSecs + 10))
+                    while(DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsProbeTimeoutInSeconds + 10))
                     {
                         if (cancellationToken.IsCancellationRequested)
                         {

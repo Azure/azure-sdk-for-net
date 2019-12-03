@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties used to create a user used to execute tasks on an Azure
-    /// Batch node.
+    /// Properties used to create a user used to execute Tasks on an Azure
+    /// Batch Compute Node.
     /// </summary>
     public partial class UserAccount
     {
@@ -30,14 +30,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the UserAccount class.
         /// </summary>
-        /// <param name="name">The name of the user account.</param>
-        /// <param name="password">The password for the user account.</param>
+        /// <param name="name">The name of the user Account.</param>
+        /// <param name="password">The password for the user Account.</param>
         /// <param name="elevationLevel">The elevation level of the user
-        /// account.</param>
+        /// Account.</param>
         /// <param name="linuxUserConfiguration">The Linux-specific user
-        /// configuration for the user account.</param>
+        /// configuration for the user Account.</param>
         /// <param name="windowsUserConfiguration">The Windows-specific user
-        /// configuration for the user account.</param>
+        /// configuration for the user Account.</param>
         public UserAccount(string name, string password, ElevationLevel? elevationLevel = default(ElevationLevel?), LinuxUserConfiguration linuxUserConfiguration = default(LinuxUserConfiguration), WindowsUserConfiguration windowsUserConfiguration = default(WindowsUserConfiguration))
         {
             Name = name;
@@ -54,19 +54,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the user account.
+        /// Gets or sets the name of the user Account.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the password for the user account.
+        /// Gets or sets the password for the user Account.
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets the elevation level of the user account.
+        /// Gets or sets the elevation level of the user Account.
         /// </summary>
         /// <remarks>
         /// The default value is nonAdmin. Possible values include: 'nonAdmin',
@@ -77,10 +77,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the Linux-specific user configuration for the user
-        /// account.
+        /// Account.
         /// </summary>
         /// <remarks>
-        /// This property is ignored if specified on a Windows pool. If not
+        /// This property is ignored if specified on a Windows Pool. If not
         /// specified, the user is created with the default options.
         /// </remarks>
         [JsonProperty(PropertyName = "linuxUserConfiguration")]
@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the Windows-specific user configuration for the user
-        /// account.
+        /// Account.
         /// </summary>
         /// <remarks>
         /// This property can only be specified if the user is on a Windows
-        /// pool. If not specified and on a Windows pool, the user is created
+        /// Pool. If not specified and on a Windows Pool, the user is created
         /// with the default options.
         /// </remarks>
         [JsonProperty(PropertyName = "windowsUserConfiguration")]

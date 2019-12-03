@@ -1,0 +1,146 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList2174/providers/Microsoft.Cache/Redis/RedisGetList460/listKeys?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3Q0NjAvbGlzdEtleXM/YXBpLXZlcnNpb249MjAxOC0wMy0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "89b38c33-7c53-4d14-bf47-8c6a050127f5"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "17458689-3906-4cb8-a104-2365b0772a5d"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "9382989b-fbc6-4ad3-af72-150a02cc6b62"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014454Z:9382989b-fbc6-4ad3-af72-150a02cc6b62"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:44:53 GMT"
+        ],
+        "Content-Length": [
+          "123"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"KaFkzy9GMpwV3EYJCGRWIYx0k0xYGgZCqW4dHBOHReU=\",\r\n  \"secondaryKey\": \"lfQLk5wvIo3TYPeALdduTcYzRdDr9TxSY9g4qctEdV8=\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList2174/providers/Microsoft.Cache/Redis/RedisGetList460/regenerateKey?api-version=2018-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDIxNzQvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3Q0NjAvcmVnZW5lcmF0ZUtleT9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"keyType\": \"Primary\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e7c87598-6d04-4c3f-88e0-8b95f8bfb936"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.4.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "4de0819b-49da-4661-be10-9d8fb79df278"
+        ],
+        "x-rp-server-mvid": [
+          "c8d499fd-faba-42bf-96f3-7c4db098f0ac"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "a18dec82-5ed6-4b05-a600-86406b6f19d8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191031T014456Z:a18dec82-5ed6-4b05-a600-86406b6f19d8"
+        ],
+        "Date": [
+          "Thu, 31 Oct 2019 01:44:56 GMT"
+        ],
+        "Content-Length": [
+          "123"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"H2XrWm85y00CVPRj80NDGHT6D2uktMmD9qFRih7c6yQ=\",\r\n  \"secondaryKey\": \"lfQLk5wvIo3TYPeALdduTcYzRdDr9TxSY9g4qctEdV8=\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "bc130894-c5b3-4adc-a077-0b51f3714abe"
+  }
+}

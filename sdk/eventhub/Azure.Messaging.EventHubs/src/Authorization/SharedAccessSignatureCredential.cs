@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Authorization
 {
@@ -18,11 +18,20 @@ namespace Azure.Messaging.EventHubs.Authorization
     ///
     internal class SharedAccessSignatureCredential : TokenCredential
     {
+        /// <summary>The buffer to apply when considering refreshing; signatures that expire less than this duration will be refreshed.</summary>
+        private static readonly TimeSpan SignatureRefreshBuffer = TimeSpan.FromMinutes(10);
+
+        /// <summary>The length of time extend signature validity, if a token was requested.</summary>
+        private static readonly TimeSpan SignatureExtensionDuration = TimeSpan.FromMinutes(30);
+
+        /// <summary>Provides a target for synchronization to guard against concurrent token expirations.</summary>
+        private readonly object ExtensionSyncRoot = new object();
+
         /// <summary>
         ///   The shared access signature that forms the basis of this security token.
         /// </summary>
         ///
-        public SharedAccessSignature SharedAccessSignature { get; }
+        private SharedAccessSignature SharedAccessSignature { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="SharedAccessSignatureCredential"/> class.
@@ -32,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         public SharedAccessSignatureCredential(SharedAccessSignature signature)
         {
-            Guard.ArgumentNotNull(nameof(signature), signature);
+            Argument.AssertNotNull(signature, nameof(signature));
             SharedAccessSignature = signature;
         }
 
@@ -41,23 +50,39 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="scopes">The access scopes to request a token for.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
-        /// <returns>The token representating the shared access signature for this credential.</returns>
+        /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(string[] scopes, CancellationToken cancellationToken) => new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.ExpirationUtc);
+        public override AccessToken GetToken(TokenRequestContext requestContext,
+                                             CancellationToken cancellationToken)
+        {
+            if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
+            {
+                lock (ExtensionSyncRoot)
+                {
+                    if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
+                    {
+                        SharedAccessSignature = SharedAccessSignature.CloneWithNewExpiration(SignatureExtensionDuration);
+                    }
+                }
+            }
+
+            return new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.SignatureExpiration);
+        }
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
         ///   use in authorization against an Event Hub.
         /// </summary>
         ///
-        /// <param name="scopes">The access scopes to request a token for.</param>
+        /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>
         ///
-        /// <returns>The token representating the shared access signature for this credential.</returns>
+        /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override Task<AccessToken> GetTokenAsync(string[] scopes, CancellationToken cancellationToken) => Task.FromResult(new AccessToken(SharedAccessSignature.Value, SharedAccessSignature.ExpirationUtc));
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
+                                                             CancellationToken cancellationToken) => new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
     }
 }

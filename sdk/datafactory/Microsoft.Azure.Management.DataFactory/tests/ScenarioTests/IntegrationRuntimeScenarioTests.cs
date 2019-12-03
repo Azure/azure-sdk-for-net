@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -165,8 +165,20 @@ namespace DataFactory.Tests.ScenarioTests
                             CatalogAdminPassword = new SecureString(Environment.GetEnvironmentVariable("CatalogAdminPassword")),
                             CatalogServerEndpoint = Environment.GetEnvironmentVariable("CatalogServerEndpoint"),
                             CatalogPricingTier = "S1"
+                        },
+                        DataProxyProperties = new IntegrationRuntimeDataProxyProperties
+                        {
+                            ConnectVia = new EntityReference
+                            {
+                                ReferenceName = "selfHostedIRName"
+                            },
+                            StagingLinkedService = new EntityReference
+                            {
+                                ReferenceName = "stagingLinkedService"
+                            },
+                            Path = "fakedPath"
                         }
-                    }
+        }
                 }
             };
 
@@ -217,3 +229,4 @@ namespace DataFactory.Tests.ScenarioTests
         }
     }
 }
+

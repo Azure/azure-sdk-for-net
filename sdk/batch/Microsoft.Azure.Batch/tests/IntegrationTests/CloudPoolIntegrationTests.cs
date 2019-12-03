@@ -23,6 +23,9 @@ namespace BatchClientIntegrationTests
     using Xunit;
     using Xunit.Abstractions;
     using Protocol = Microsoft.Azure.Batch.Protocol;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Auth;
+    using Microsoft.WindowsAzure.Storage.Blob;
 
     public class CloudPoolIntegrationTests
     {
@@ -1072,6 +1075,68 @@ namespace BatchClientIntegrationTests
             };
 
             SynchronizationContextHelper.RunTest(test, timeout: TimeSpan.FromSeconds(60));
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task CreatePool_WithBlobFuseMountConfiguration()
+        {
+            Func<Task> test = async () =>
+            {
+                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+                {
+                    string poolId = TestUtilities.GenerateResourceId();
+
+                    const string containerName = "blobfusecontainer";
+                    StagingStorageAccount storageAccount = TestUtilities.GetStorageCredentialsFromEnvironment();
+                    CloudStorageAccount cloudStorageAccount = new CloudStorageAccount(
+                        new StorageCredentials(storageAccount.StorageAccount, storageAccount.StorageAccountKey),
+                        blobEndpoint: storageAccount.BlobUri,
+                        queueEndpoint: null,
+                        tableEndpoint: null,
+                        fileEndpoint: null);
+                    CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
+
+                    var container = blobClient.GetContainerReference(containerName);
+                    await container.CreateIfNotExistsAsync();
+
+                    try
+                    {
+                        var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        CloudPool pool = batchCli.PoolOperations.CreatePool(
+                            poolId,
+                            PoolFixture.VMSize,
+                            new VirtualMachineConfiguration(
+                                imageDetails.ImageReference,
+                                imageDetails.NodeAgentSkuId));
+
+                        pool.MountConfiguration = new List<MountConfiguration>
+                        {
+                            new MountConfiguration(
+                                new AzureBlobFileSystemConfiguration(
+                                    storageAccount.StorageAccount,
+                                    containerName,
+                                    "foo",
+                                    AzureStorageAuthenticationKey.FromAccountKey(storageAccount.StorageAccountKey)))
+                        };
+
+                        await pool.CommitAsync().ConfigureAwait(false);
+                        await pool.RefreshAsync().ConfigureAwait(false);
+
+                        Assert.NotNull(pool.MountConfiguration);
+                        Assert.NotEmpty(pool.MountConfiguration);
+                        Assert.Equal(storageAccount.StorageAccount, pool.MountConfiguration.Single().AzureBlobFileSystemConfiguration.AccountName);
+                        Assert.Equal(containerName, pool.MountConfiguration.Single().AzureBlobFileSystemConfiguration.ContainerName);
+                    }
+                    finally
+                    {
+                        await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                    }
+                }
+            };
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         #region Test helpers

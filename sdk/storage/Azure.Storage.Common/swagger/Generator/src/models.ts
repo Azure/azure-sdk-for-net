@@ -115,7 +115,8 @@ export interface IModelType {
     type: string,
     description?: string,
     external?: boolean,
-    extendedHeaders: IHeader[]
+    extendedHeaders: IHeader[],
+    returnStream?: boolean
 }
 
 export interface IVoidType extends IModelType {
@@ -132,7 +133,8 @@ export interface IObjectType extends IModelType {
     serialize: boolean,
     deserialize: boolean,
     disableWarnings?: string,
-    public: boolean
+    public: boolean,
+    struct: boolean
 }
 
 export function isObjectType(model: IModelType): model is IObjectType {
@@ -150,7 +152,8 @@ export interface IProperty {
     required?: boolean,
     readonly: boolean,
     xml?: IXmlSettings,
-    model: IModelType
+    model: IModelType,
+    isNullable?: boolean
 }
 
 export interface IXmlSettings {
@@ -168,6 +171,7 @@ export interface IEnumType extends IModelType {
     customSerialization: boolean,
     constant: boolean,
     public: boolean,
+    skipValue?: string,
     values: IEnumValue[]
 }
 
@@ -217,7 +221,8 @@ export interface IParameter {
     location: string,
     skipUrlEncoding: boolean,
     parameterGroup?: string,
-    model: IModelType
+    model: IModelType,
+    trace: boolean
 }
 
 export interface IResponses {
@@ -233,7 +238,9 @@ export interface IResponse {
     headers: IHeaders,
     model?: IModelType,
     exception?: boolean,
-    public: boolean
+    public: boolean,
+    returnStream?: boolean,
+    struct: boolean
 }
 
 export interface IResponseGroup {

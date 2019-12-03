@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.NetApp.Models
     /// </summary>
     public static class CheckNameResourceTypes
     {
-        public const string MicrosoftNetAppNetAppAccount = "Microsoft.NetApp/netAppAccount";
-        public const string MicrosoftNetAppNetAppAccountCapacityPools = "Microsoft.NetApp/netAppAccount/capacityPools";
-        public const string MicrosoftNetAppNetAppAccountCapacityPoolsVolumes = "Microsoft.NetApp/netAppAccount/capacityPools/volumes";
-        public const string MicrosoftNetAppNetAppAccountCapacityPoolsVolumesSnapshots = "Microsoft.NetApp/netAppAccount/capacityPools/volumes/snapshots";
+        public const string MicrosoftNetAppNetAppAccounts = "Microsoft.NetApp/netAppAccounts";
+        public const string MicrosoftNetAppNetAppAccountsCapacityPools = "Microsoft.NetApp/netAppAccounts/capacityPools";
+        public const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes";
+        public const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
     }
 }

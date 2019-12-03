@@ -13,11 +13,6 @@ namespace Microsoft.Azure.ServiceBus.Primitives
         bool deadlineSet;
         TimeSpan originalTimeout;
 
-        public TimeoutHelper(TimeSpan timeout)
-            : this(timeout, false)
-        {
-        }
-
         public TimeoutHelper(TimeSpan timeout, bool startTimeout)
         {
             Debug.Assert(timeout >= TimeSpan.Zero, "timeout must be non-negative");

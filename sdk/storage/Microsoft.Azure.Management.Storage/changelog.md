@@ -1,5 +1,41 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 14.0.0
+
+- StorageAccounts.GetProperties() will also return PrivateEndpointConnections of the Stroage account
+- Support Get/Put one PrivateEndpointConnection of a Stroage account
+- Support List PrivateLinkResources of a Stroage account
+
+**Breaking changes**
+
+- Remove parameter "skipToken" from BlobContainers.List()
+
+### Changes in 13.3.0
+
+- Support enable Files Azure Active Directory Domain Service Authentication when create or update Storage account
+- Support regenerateKey for Kerberos keys on Storage account
+- Support list Kerberos keys on Storage account
+
+### Changes in 13.2.0
+
+- Support set LargeFileSharesState as Enabled on Create or Update Storage account
+- Support list Storage Account with NextPageLink
+
+### Changes in 13.1.0
+
+- Support Create/Get/List/Delete File share
+- Support Get/Set File service properties 
+
+### Changes in 13.0.0
+
+- Add back StorageManagementClient constructor that takes HttpClient as a parameter
+- Support List Blob Service on a Storage account
+
+**Breaking changes**
+
+- ManagementPolicy child property type DateAfterModification.DaysAfterModificationGreaterThan, DateAfterCreation.DaysAfterCreationGreaterThan, changed from int to double.
+- Class ListContainerItems is removed, since BlobContainers.List() return value type change from ListContainerItems to IPage<ListContainerItem>.
+
 ### Changes in 12.0.0
 
 - Support Create or Update Storage Account with AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions as 'AADDS' or 'None'.

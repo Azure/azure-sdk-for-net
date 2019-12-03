@@ -284,51 +284,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Upgrades a data warehouse.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to be upgraded.
-            /// </param>
-            public static void UpgradeDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                operations.UpgradeDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Upgrades a data warehouse.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to be upgraded.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpgradeDataWarehouseAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.UpgradeDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Gets a list of databases.
             /// </summary>
             /// <param name='operations'>
@@ -716,6 +671,51 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
+            /// Upgrades a data warehouse.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be upgraded.
+            /// </param>
+            public static void UpgradeDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                operations.UpgradeDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrades a data warehouse.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be upgraded.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UpgradeDataWarehouseAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UpgradeDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Renames a database.
             /// </summary>
             /// <param name='operations'>
@@ -764,6 +764,59 @@ namespace Microsoft.Azure.Management.Sql
             public static async Task RenameAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, ResourceMoveDefinition parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RenameWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            public static void Failover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
+            {
+                operations.FailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task FailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.FailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -922,51 +975,6 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Upgrades a data warehouse.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to be upgraded.
-            /// </param>
-            public static void BeginUpgradeDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
-            {
-                operations.BeginUpgradeDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Upgrades a data warehouse.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='serverName'>
-            /// The name of the server.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database to be upgraded.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginUpgradeDataWarehouseAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginUpgradeDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1216,6 +1224,104 @@ namespace Microsoft.Azure.Management.Sql
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Upgrades a data warehouse.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be upgraded.
+            /// </param>
+            public static void BeginUpgradeDataWarehouse(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName)
+            {
+                operations.BeginUpgradeDataWarehouseAsync(resourceGroupName, serverName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrades a data warehouse.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to be upgraded.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginUpgradeDataWarehouseAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginUpgradeDataWarehouseWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            public static void BeginFailover(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string))
+            {
+                operations.BeginFailoverAsync(resourceGroupName, serverName, databaseName, replicaType).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Failovers a database.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='serverName'>
+            /// The name of the server.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the database to failover.
+            /// </param>
+            /// <param name='replicaType'>
+            /// The type of replica to be failed over. Possible values include: 'Primary',
+            /// 'ReadableSecondary'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginFailoverAsync(this IDatabasesOperations operations, string resourceGroupName, string serverName, string databaseName, string replicaType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginFailoverWithHttpMessagesAsync(resourceGroupName, serverName, databaseName, replicaType, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

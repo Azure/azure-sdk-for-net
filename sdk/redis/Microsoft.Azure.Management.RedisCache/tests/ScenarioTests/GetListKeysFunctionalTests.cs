@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using AzureRedisCache.Tests.ScenarioTests;
@@ -34,14 +34,14 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void GetTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
                 RedisResource response = _client.Redis.Get(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
                 Assert.Contains(fixture.RedisCacheName, response.Id);
                 Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Succeeded, response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Basic, response.Sku.Name);
                 Assert.Equal(SkuFamily.C, response.Sku.Family);
                 Assert.Equal(0, response.Sku.Capacity);
@@ -55,7 +55,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void ListTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
                 IPage<RedisResource> listResponse = _client.Redis.ListByResourceGroup(resourceGroupName: fixture.ResourceGroupName);
@@ -71,7 +71,7 @@ namespace AzureRedisCache.Tests
                         Assert.Contains(fixture.RedisCacheName, response.Id);
                         Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                        Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
+                        Assert.Equal(ProvisioningState.Succeeded, response.ProvisioningState, ignoreCase: true);
                         Assert.Equal(SkuName.Basic, response.Sku.Name);
                         Assert.Equal(SkuFamily.C, response.Sku.Family);
                         Assert.Equal(0, response.Sku.Capacity);
@@ -88,7 +88,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void ListWithoutResourceGroupTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
                 IPage<RedisResource> listResponse = _client.Redis.List();
@@ -104,7 +104,7 @@ namespace AzureRedisCache.Tests
                         Assert.Contains(fixture.RedisCacheName, response.Id);
                         Assert.Equal(fixture.RedisCacheName, response.Name);
 
-                        Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
+                        Assert.Equal(ProvisioningState.Succeeded, response.ProvisioningState, ignoreCase: true);
                         Assert.Equal(SkuName.Basic, response.Sku.Name);
                         Assert.Equal(SkuFamily.C, response.Sku.Family);
                         Assert.Equal(0, response.Sku.Capacity);
@@ -121,7 +121,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void ListKeysTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
                 var response = _client.Redis.ListKeys(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName);
@@ -133,7 +133,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void RegenerateKeyTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
 
@@ -152,3 +152,4 @@ namespace AzureRedisCache.Tests
         }
     }
 }
+

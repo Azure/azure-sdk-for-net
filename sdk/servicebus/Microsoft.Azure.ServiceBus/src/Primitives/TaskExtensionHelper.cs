@@ -10,17 +10,20 @@ namespace Microsoft.Azure.ServiceBus.Primitives
     {
         public static void Schedule(Func<Task> func)
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    await func().ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    MessagingEventSource.Log.ScheduleTaskFailed(func, ex);
-                }
-            });
+            _ = ScheduleInternal(func);
         }
+
+        static async Task ScheduleInternal(Func<Task> func)
+        {
+            try
+            {
+                await func().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                MessagingEventSource.Log.ScheduleTaskFailed(func, ex);
+            }
+        }
+
     }
 }

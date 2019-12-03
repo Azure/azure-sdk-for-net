@@ -86,6 +86,7 @@ namespace DataFactory.Tests.UnitTests
             packageCMs["MyOledbCM"]["passWord"] = new SSISExecutionParameter() { Value = new SecureString() { Value = "123" } };
             var propertyOverrides = new Dictionary<string, SSISPropertyOverride>();
             propertyOverrides["\\package.dtsx\\maxparralcount"] = new SSISPropertyOverride() { Value = 3, IsSensitive = false };
+            var accessCredential = new SSISAccessCredential() { UserName = "user", Domain = "domain", Password = new SecureString() { Value = "123" } };
             ExecuteSSISPackageActivity activity = new ExecuteSSISPackageActivity
             {
                 Name = triggeredPipelineName,
@@ -95,7 +96,11 @@ namespace DataFactory.Tests.UnitTests
                 EnvironmentPath = "./test",
                 PackageLocation = new SSISPackageLocation
                 {
-                    PackagePath = "myfolder/myproject/mypackage.dtsx"
+                    Type = "File",
+                    PackagePath = "\\\\Host\\share\\mypackage.dtsx",
+                    ConfigurationPath = "\\\\Host\\share\\config.dtsConfig",
+                    AccessCredential = accessCredential,
+                    PackagePassword = new SecureString() { Value = "123" }
                 },
                 ConnectVia = new IntegrationRuntimeReference
                 {
@@ -105,7 +110,13 @@ namespace DataFactory.Tests.UnitTests
                 PackageParameters = packageParameters,
                 ProjectConnectionManagers = projectCMs,
                 PackageConnectionManagers = packageCMs,
-                PropertyOverrides = propertyOverrides
+                PropertyOverrides = propertyOverrides,
+                LogLocation = new SSISLogLocation()
+                {
+                    LogPath = "\\\\Host\\share\\log",
+                    AccessCredential = accessCredential,
+                    LogRefreshInterval = "00:01:00"
+                }
             };
             var handler = new RecordedDelegatingHandler();
             var client = this.CreateWorkflowClient(handler);

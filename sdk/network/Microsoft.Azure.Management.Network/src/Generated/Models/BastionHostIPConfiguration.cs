@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="provisioningState">The provisioning state of the
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'</param>
+        /// bastion host IP configuration resource. Possible values include:
+        /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="privateIPAllocationMethod">Private IP allocation
         /// method. Possible values include: 'Static', 'Dynamic'</param>
         /// <param name="name">Name of the resource that is unique within a
@@ -78,11 +78,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource. Possible
-        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+        /// Gets the provisioning state of the bastion host IP configuration
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets private IP allocation method. Possible values include:
@@ -92,11 +93,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource.
+        /// Gets or sets name of the resource that is unique within a resource
+        /// group. This name can be used to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

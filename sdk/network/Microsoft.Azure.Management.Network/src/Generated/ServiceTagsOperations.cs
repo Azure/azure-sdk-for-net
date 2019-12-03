@@ -54,7 +54,10 @@ namespace Microsoft.Azure.Management.Network
         /// Gets a list of service tag information resources.
         /// </summary>
         /// <param name='location'>
-        /// The location.
+        /// The location that will be used as a reference for version (not as a filter
+        /// based on location, you will get the list of service tags with prefix
+        /// details across all regions but limited to the cloud that your subscription
+        /// belongs to).
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -87,7 +90,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2019-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

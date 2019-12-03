@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="ruleSetType">Defines the rule set type to use.</param>
         /// <param name="ruleSetVersion">Defines the version of the rule set to
         /// use.</param>
+        /// <param name="exclusions">Describes the exclusions that are applied
+        /// to all rules in the set.</param>
         /// <param name="ruleGroupOverrides">Defines the rule group overrides
         /// to apply to the rule set.</param>
-        public ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleGroupOverride> ruleGroupOverrides = default(IList<ManagedRuleGroupOverride>))
+        public ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleExclusion> exclusions = default(IList<ManagedRuleExclusion>), IList<ManagedRuleGroupOverride> ruleGroupOverrides = default(IList<ManagedRuleGroupOverride>))
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
+            Exclusions = exclusions;
             RuleGroupOverrides = ruleGroupOverrides;
             CustomInit();
         }
@@ -61,6 +64,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "ruleSetVersion")]
         public string RuleSetVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes the exclusions that are applied to all rules
+        /// in the set.
+        /// </summary>
+        [JsonProperty(PropertyName = "exclusions")]
+        public IList<ManagedRuleExclusion> Exclusions { get; set; }
 
         /// <summary>
         /// Gets or sets defines the rule group overrides to apply to the rule
@@ -85,13 +95,23 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetVersion");
             }
-            if (RuleGroupOverrides != null)
+            if (Exclusions != null)
             {
-                foreach (var element in RuleGroupOverrides)
+                foreach (var element in Exclusions)
                 {
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (RuleGroupOverrides != null)
+            {
+                foreach (var element1 in RuleGroupOverrides)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

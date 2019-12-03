@@ -136,6 +136,52 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Gets all resource providers for the tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return. If null is passed returns all providers.
+            /// </param>
+            /// <param name='expand'>
+            /// The properties to include in the results. For example, use
+            /// &amp;$expand=metadata in the query string to retrieve resource provider
+            /// metadata. To include property aliases in response, use
+            /// $expand=resourceTypes/aliases.
+            /// </param>
+            public static IPage<Provider> ListAtTenantScope(this IProvidersOperations operations, int? top = default(int?), string expand = default(string))
+            {
+                return operations.ListAtTenantScopeAsync(top, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all resource providers for the tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return. If null is passed returns all providers.
+            /// </param>
+            /// <param name='expand'>
+            /// The properties to include in the results. For example, use
+            /// &amp;$expand=metadata in the query string to retrieve resource provider
+            /// metadata. To include property aliases in response, use
+            /// $expand=resourceTypes/aliases.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Provider>> ListAtTenantScopeAsync(this IProvidersOperations operations, int? top = default(int?), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAtTenantScopeWithHttpMessagesAsync(top, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets the specified resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -178,6 +224,48 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Gets the specified resource provider at the tenant level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='expand'>
+            /// The $expand query parameter. For example, to include property aliases in
+            /// response, use $expand=resourceTypes/aliases.
+            /// </param>
+            public static Provider GetAtTenantScope(this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string))
+            {
+                return operations.GetAtTenantScopeAsync(resourceProviderNamespace, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specified resource provider at the tenant level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider.
+            /// </param>
+            /// <param name='expand'>
+            /// The $expand query parameter. For example, to include property aliases in
+            /// response, use $expand=resourceTypes/aliases.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Provider> GetAtTenantScopeAsync(this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAtTenantScopeWithHttpMessagesAsync(resourceProviderNamespace, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all resource providers for a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -206,6 +294,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<Provider>> ListNextAsync(this IProvidersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all resource providers for the tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Provider> ListAtTenantScopeNext(this IProvidersOperations operations, string nextPageLink)
+            {
+                return operations.ListAtTenantScopeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all resource providers for the tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Provider>> ListAtTenantScopeNextAsync(this IProvidersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAtTenantScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

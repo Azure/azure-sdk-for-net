@@ -35,7 +35,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void GetMetricDefinitionsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var insightsClient = GetMonitorManagementClient(context, handler);
 
@@ -67,7 +67,7 @@ namespace Monitor.Tests.Scenarios
         [Trait("Category", "Scenario")]
         public void GetMetricsTest()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var insightsClient = GetMonitorManagementClient(context, handler);
 

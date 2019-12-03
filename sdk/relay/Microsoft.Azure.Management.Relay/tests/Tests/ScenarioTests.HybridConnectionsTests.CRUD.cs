@@ -1,4 +1,4 @@
-﻿//  
+//  
 //  
 // Copyright (c) Microsoft.  All rights reserved.
 // 
@@ -28,7 +28,7 @@ namespace Relay.Tests.ScenarioTests
         [Fact]
         public void HybridConnectionsCreateGetUpdateDelete()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 InitializeClients(context);
                 var location = this.ResourceManagementClient.GetLocationFromProvider();
@@ -142,3 +142,4 @@ namespace Relay.Tests.ScenarioTests
         }
     }
 }
+

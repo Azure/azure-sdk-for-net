@@ -398,10 +398,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
-                }
             }
             if (Client.ApiVersion == null)
             {
@@ -649,10 +645,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (operationId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -926,10 +918,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (operationId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1245,10 +1233,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
-                }
             }
             if (parameters == null)
             {
@@ -1509,10 +1493,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                 if (operationId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)

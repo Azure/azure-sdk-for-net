@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The endpoint configuration for the compute node.
+    /// The endpoint configuration for the Compute Node.
     /// </summary>
     public partial class ComputeNodeEndpointConfiguration
     {
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// class.
         /// </summary>
         /// <param name="inboundEndpoints">The list of inbound endpoints that
-        /// are accessible on the compute node.</param>
+        /// are accessible on the Compute Node.</param>
         public ComputeNodeEndpointConfiguration(IList<InboundEndpoint> inboundEndpoints)
         {
             InboundEndpoints = inboundEndpoints;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the list of inbound endpoints that are accessible on
-        /// the compute node.
+        /// the Compute Node.
         /// </summary>
         [JsonProperty(PropertyName = "inboundEndpoints")]
         public IList<InboundEndpoint> InboundEndpoints { get; set; }

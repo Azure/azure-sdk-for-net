@@ -22,13 +22,13 @@ namespace Microsoft.Azure.Batch.Protocol
     public static partial class CertificateOperationsExtensions
     {
             /// <summary>
-            /// Adds a certificate to the specified account.
+            /// Adds a Certificate to the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='certificate'>
-            /// The certificate to be added.
+            /// The Certificate to be added.
             /// </param>
             /// <param name='certificateAddOptions'>
             /// Additional parameters for the operation
@@ -39,13 +39,13 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Adds a certificate to the specified account.
+            /// Adds a Certificate to the specified Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='certificate'>
-            /// The certificate to be added.
+            /// The Certificate to be added.
             /// </param>
             /// <param name='certificateAddOptions'>
             /// Additional parameters for the operation
@@ -62,8 +62,8 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the certificates that have been added to the specified
-            /// account.
+            /// Lists all of the Certificates that have been added to the specified
+            /// Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,8 +77,8 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the certificates that have been added to the specified
-            /// account.
+            /// Lists all of the Certificates that have been added to the specified
+            /// Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -98,16 +98,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Cancels a failed deletion of a certificate from the specified account.
+            /// Cancels a failed deletion of a Certificate from the specified Account.
             /// </summary>
             /// <remarks>
-            /// If you try to delete a certificate that is being used by a pool or compute
-            /// node, the status of the certificate changes to deleteFailed. If you decide
-            /// that you want to continue using the certificate, you can use this operation
-            /// to set the status of the certificate back to active. If you intend to
-            /// delete the certificate, you do not need to run this operation after the
-            /// deletion failed. You must make sure that the certificate is not being used
-            /// by any resources, and then you can try again to delete the certificate.
+            /// If you try to delete a Certificate that is being used by a Pool or Compute
+            /// Node, the status of the Certificate changes to deleteFailed. If you decide
+            /// that you want to continue using the Certificate, you can use this operation
+            /// to set the status of the Certificate back to active. If you intend to
+            /// delete the Certificate, you do not need to run this operation after the
+            /// deletion failed. You must make sure that the Certificate is not being used
+            /// by any resources, and then you can try again to delete the Certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The algorithm used to derive the thumbprint parameter. This must be sha1.
             /// </param>
             /// <param name='thumbprint'>
-            /// The thumbprint of the certificate being deleted.
+            /// The thumbprint of the Certificate being deleted.
             /// </param>
             /// <param name='certificateCancelDeletionOptions'>
             /// Additional parameters for the operation
@@ -127,16 +127,16 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Cancels a failed deletion of a certificate from the specified account.
+            /// Cancels a failed deletion of a Certificate from the specified Account.
             /// </summary>
             /// <remarks>
-            /// If you try to delete a certificate that is being used by a pool or compute
-            /// node, the status of the certificate changes to deleteFailed. If you decide
-            /// that you want to continue using the certificate, you can use this operation
-            /// to set the status of the certificate back to active. If you intend to
-            /// delete the certificate, you do not need to run this operation after the
-            /// deletion failed. You must make sure that the certificate is not being used
-            /// by any resources, and then you can try again to delete the certificate.
+            /// If you try to delete a Certificate that is being used by a Pool or Compute
+            /// Node, the status of the Certificate changes to deleteFailed. If you decide
+            /// that you want to continue using the Certificate, you can use this operation
+            /// to set the status of the Certificate back to active. If you intend to
+            /// delete the Certificate, you do not need to run this operation after the
+            /// deletion failed. You must make sure that the Certificate is not being used
+            /// by any resources, and then you can try again to delete the Certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The algorithm used to derive the thumbprint parameter. This must be sha1.
             /// </param>
             /// <param name='thumbprint'>
-            /// The thumbprint of the certificate being deleted.
+            /// The thumbprint of the Certificate being deleted.
             /// </param>
             /// <param name='certificateCancelDeletionOptions'>
             /// Additional parameters for the operation
@@ -162,19 +162,19 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a certificate from the specified account.
+            /// Deletes a Certificate from the specified Account.
             /// </summary>
             /// <remarks>
-            /// You cannot delete a certificate if a resource (pool or compute node) is
-            /// using it. Before you can delete a certificate, you must therefore make sure
-            /// that the certificate is not associated with any existing pools, the
-            /// certificate is not installed on any compute nodes (even if you remove a
-            /// certificate from a pool, it is not removed from existing compute nodes in
-            /// that pool until they restart), and no running tasks depend on the
-            /// certificate. If you try to delete a certificate that is in use, the
-            /// deletion fails. The certificate status changes to deleteFailed. You can use
-            /// Cancel Delete Certificate to set the status back to active if you decide
-            /// that you want to continue using the certificate.
+            /// You cannot delete a Certificate if a resource (Pool or Compute Node) is
+            /// using it. Before you can delete a Certificate, you must therefore make sure
+            /// that the Certificate is not associated with any existing Pools, the
+            /// Certificate is not installed on any Nodes (even if you remove a Certificate
+            /// from a Pool, it is not removed from existing Compute Nodes in that Pool
+            /// until they restart), and no running Tasks depend on the Certificate. If you
+            /// try to delete a Certificate that is in use, the deletion fails. The
+            /// Certificate status changes to deleteFailed. You can use Cancel Delete
+            /// Certificate to set the status back to active if you decide that you want to
+            /// continue using the Certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The algorithm used to derive the thumbprint parameter. This must be sha1.
             /// </param>
             /// <param name='thumbprint'>
-            /// The thumbprint of the certificate to be deleted.
+            /// The thumbprint of the Certificate to be deleted.
             /// </param>
             /// <param name='certificateDeleteOptions'>
             /// Additional parameters for the operation
@@ -194,19 +194,19 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Deletes a certificate from the specified account.
+            /// Deletes a Certificate from the specified Account.
             /// </summary>
             /// <remarks>
-            /// You cannot delete a certificate if a resource (pool or compute node) is
-            /// using it. Before you can delete a certificate, you must therefore make sure
-            /// that the certificate is not associated with any existing pools, the
-            /// certificate is not installed on any compute nodes (even if you remove a
-            /// certificate from a pool, it is not removed from existing compute nodes in
-            /// that pool until they restart), and no running tasks depend on the
-            /// certificate. If you try to delete a certificate that is in use, the
-            /// deletion fails. The certificate status changes to deleteFailed. You can use
-            /// Cancel Delete Certificate to set the status back to active if you decide
-            /// that you want to continue using the certificate.
+            /// You cannot delete a Certificate if a resource (Pool or Compute Node) is
+            /// using it. Before you can delete a Certificate, you must therefore make sure
+            /// that the Certificate is not associated with any existing Pools, the
+            /// Certificate is not installed on any Nodes (even if you remove a Certificate
+            /// from a Pool, it is not removed from existing Compute Nodes in that Pool
+            /// until they restart), and no running Tasks depend on the Certificate. If you
+            /// try to delete a Certificate that is in use, the deletion fails. The
+            /// Certificate status changes to deleteFailed. You can use Cancel Delete
+            /// Certificate to set the status back to active if you decide that you want to
+            /// continue using the Certificate.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The algorithm used to derive the thumbprint parameter. This must be sha1.
             /// </param>
             /// <param name='thumbprint'>
-            /// The thumbprint of the certificate to be deleted.
+            /// The thumbprint of the Certificate to be deleted.
             /// </param>
             /// <param name='certificateDeleteOptions'>
             /// Additional parameters for the operation
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified certificate.
+            /// Gets information about the specified Certificate.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The algorithm used to derive the thumbprint parameter. This must be sha1.
             /// </param>
             /// <param name='thumbprint'>
-            /// The thumbprint of the certificate to get.
+            /// The thumbprint of the Certificate to get.
             /// </param>
             /// <param name='certificateGetOptions'>
             /// Additional parameters for the operation
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets information about the specified certificate.
+            /// Gets information about the specified Certificate.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// The algorithm used to derive the thumbprint parameter. This must be sha1.
             /// </param>
             /// <param name='thumbprint'>
-            /// The thumbprint of the certificate to get.
+            /// The thumbprint of the Certificate to get.
             /// </param>
             /// <param name='certificateGetOptions'>
             /// Additional parameters for the operation
@@ -278,8 +278,8 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the certificates that have been added to the specified
-            /// account.
+            /// Lists all of the Certificates that have been added to the specified
+            /// Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -296,8 +296,8 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Lists all of the certificates that have been added to the specified
-            /// account.
+            /// Lists all of the Certificates that have been added to the specified
+            /// Account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

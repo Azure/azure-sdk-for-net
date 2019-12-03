@@ -17,22 +17,39 @@ namespace Azure.Core.Testing
         {
         }
 
-        protected Task<Response> SendRequestAsync(HttpPipeline pipeline, Request request, CancellationToken cancellationToken = default)
+        protected async Task<Response> SendRequestAsync(HttpPipeline pipeline, Action<Request> requestAction, bool bufferResponse = true, CancellationToken cancellationToken = default)
         {
-            return IsAsync ? pipeline.SendRequestAsync(request, cancellationToken) : Task.FromResult(pipeline.SendRequest(request, cancellationToken));
+            HttpMessage message = pipeline.CreateMessage();
+            message.BufferResponse = bufferResponse;
+            requestAction(message.Request);
+
+            if (IsAsync)
+            {
+                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                pipeline.Send(message, cancellationToken);
+            }
+
+            return message.Response;
         }
 
-        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
+        protected async Task<Response> SendRequestAsync(HttpPipelineTransport transport, Action<Request> requestAction, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true)
         {
             await Task.Yield();
 
-            using (Request request = transport.CreateRequest())
+            var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
+            return await SendRequestAsync(pipeline, requestAction, bufferResponse, CancellationToken.None);
+        }
+
+        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null)
+        {
+            return await SendRequestAsync(transport, request =>
             {
-                request.Method = HttpPipelineMethod.Get;
-                request.UriBuilder.Uri = new Uri("http://example.com");
-                var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
-                return await SendRequestAsync(pipeline, request, CancellationToken.None);
-            }
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(uri ?? new Uri("http://example.com"));
+            }, policy, responseClassifier, bufferResponse);
         }
     }
 }

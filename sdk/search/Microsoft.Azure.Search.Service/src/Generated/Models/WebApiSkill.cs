@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Search.Models
     /// A skill that can call a Web API endpoint, allowing you to extend a
     /// skillset by having it call your custom code.
     /// <see
-    /// href="https://docs.microsoft.com/azure/search/cognitive-search-custom-skill-interface"
+    /// href="https://docs.microsoft.com/azure/search/cognitive-search-custom-skill-web-api"
     /// />
     /// </summary>
     [Newtonsoft.Json.JsonObject("#Microsoft.Skills.Custom.WebApiSkill")]
@@ -39,30 +39,37 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
-        /// <param name="outputs">The output of a skill is either a field in an
-        /// Azure Search index, or a value that can be consumed as an input by
+        /// <param name="outputs">The output of a skill is either a field in a
+        /// search index, or a value that can be consumed as an input by
         /// another skill.</param>
         /// <param name="uri">The url for the Web API.</param>
-        /// <param name="httpHeaders">The headers required to make the http
-        /// request.</param>
-        /// <param name="httpMethod">The method for the http request.</param>
+        /// <param name="name">The name of the skill which uniquely identifies
+        /// it within the skillset. A skill with no name defined will be given
+        /// a default name of its 1-based index in the skills array, prefixed
+        /// with the character '#'.</param>
         /// <param name="description">The description of the skill which
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
         /// /document or /document/content). The default is /document.</param>
+        /// <param name="httpHeaders">The headers required to make the http
+        /// request.</param>
+        /// <param name="httpMethod">The method for the http request.</param>
         /// <param name="timeout">The desired timeout for the request. Default
         /// is 30 seconds.</param>
         /// <param name="batchSize">The desired batch size which indicates
         /// number of documents.</param>
-        public WebApiSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, string description = default(string), string context = default(string), System.TimeSpan? timeout = default(System.TimeSpan?), int? batchSize = default(int?))
-            : base(inputs, outputs, description, context)
+        /// <param name="degreeOfParallelism">If set, the number of parallel
+        /// calls that can be made to the Web API.</param>
+        public WebApiSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, string name = default(string), string description = default(string), string context = default(string), IDictionary<string, string> httpHeaders = default(IDictionary<string, string>), string httpMethod = default(string), System.TimeSpan? timeout = default(System.TimeSpan?), int? batchSize = default(int?), int? degreeOfParallelism = default(int?))
+            : base(inputs, outputs, name, description, context)
         {
             Uri = uri;
             HttpHeaders = httpHeaders;
             HttpMethod = httpMethod;
             Timeout = timeout;
             BatchSize = batchSize;
+            DegreeOfParallelism = degreeOfParallelism;
             CustomInit();
         }
 
@@ -81,7 +88,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets the headers required to make the http request.
         /// </summary>
         [JsonProperty(PropertyName = "httpHeaders")]
-        public WebApiHttpHeaders HttpHeaders { get; set; }
+        public IDictionary<string, string> HttpHeaders { get; set; }
 
         /// <summary>
         /// Gets or sets the method for the http request.
@@ -104,6 +111,13 @@ namespace Microsoft.Azure.Search.Models
         public int? BatchSize { get; set; }
 
         /// <summary>
+        /// Gets or sets if set, the number of parallel calls that can be made
+        /// to the Web API.
+        /// </summary>
+        [JsonProperty(PropertyName = "degreeOfParallelism")]
+        public int? DegreeOfParallelism { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -115,14 +129,6 @@ namespace Microsoft.Azure.Search.Models
             if (Uri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Uri");
-            }
-            if (HttpHeaders == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "HttpHeaders");
-            }
-            if (HttpMethod == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "HttpMethod");
             }
         }
     }

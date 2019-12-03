@@ -51,17 +51,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine. Applicable to OS disks only. Possible values
         /// include: 'V1', 'V2'</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
-        /// this field is mandatory and it indicates the size of the VHD to
+        /// this field is mandatory and it indicates the size of the disk to
         /// create. If this field is present for updates or creation with other
         /// options, it indicates a resize. Resizes are only allowed if the
         /// disk is not attached to a running VM, and can only increase the
         /// disk's size.</param>
+        /// <param name="diskSizeBytes">The size of the disk in bytes. This
+        /// field is read only.</param>
+        /// <param name="uniqueId">Unique Guid identifying the
+        /// resource.</param>
         /// <param name="encryptionSettingsCollection">Encryption settings
         /// collection used be Azure Disk Encryption, can contain multiple
         /// encryption settings per disk or snapshot.</param>
         /// <param name="provisioningState">The disk provisioning
         /// state.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string))
+        /// <param name="incremental">Whether a snapshot is incremental.
+        /// Incremental snapshots on the same disk occupy less space than full
+        /// snapshots and can be diffed.</param>
+        /// <param name="encryption">Encryption property can be used to encrypt
+        /// data at rest with customer managed keys or platform managed
+        /// keys.</param>
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -71,8 +81,12 @@ namespace Microsoft.Azure.Management.Compute.Models
             HyperVGeneration = hyperVGeneration;
             CreationData = creationData;
             DiskSizeGB = diskSizeGB;
+            DiskSizeBytes = diskSizeBytes;
+            UniqueId = uniqueId;
             EncryptionSettingsCollection = encryptionSettingsCollection;
             ProvisioningState = provisioningState;
+            Incremental = incremental;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -121,13 +135,25 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets if creationData.createOption is Empty, this field is
-        /// mandatory and it indicates the size of the VHD to create. If this
+        /// mandatory and it indicates the size of the disk to create. If this
         /// field is present for updates or creation with other options, it
         /// indicates a resize. Resizes are only allowed if the disk is not
         /// attached to a running VM, and can only increase the disk's size.
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskSizeGB")]
         public int? DiskSizeGB { get; set; }
+
+        /// <summary>
+        /// Gets the size of the disk in bytes. This field is read only.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskSizeBytes")]
+        public long? DiskSizeBytes { get; private set; }
+
+        /// <summary>
+        /// Gets unique Guid identifying the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.uniqueId")]
+        public string UniqueId { get; private set; }
 
         /// <summary>
         /// Gets or sets encryption settings collection used be Azure Disk
@@ -142,6 +168,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets whether a snapshot is incremental. Incremental
+        /// snapshots on the same disk occupy less space than full snapshots
+        /// and can be diffed.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.incremental")]
+        public bool? Incremental { get; set; }
+
+        /// <summary>
+        /// Gets or sets encryption property can be used to encrypt data at
+        /// rest with customer managed keys or platform managed keys.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -163,6 +204,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (EncryptionSettingsCollection != null)
             {
                 EncryptionSettingsCollection.Validate();
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
             }
         }
     }

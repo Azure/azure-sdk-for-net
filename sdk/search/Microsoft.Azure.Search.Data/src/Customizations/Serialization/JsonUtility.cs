@@ -2,20 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Serialization.Internal;
+using Microsoft.Rest.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using static System.Linq.Expressions.Expression;
+using Throw = Microsoft.Azure.Search.Common.Throw;
+
 namespace Microsoft.Azure.Search.Serialization
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using Microsoft.Azure.Search.Models;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
-    using Rest.Serialization;
-    using static System.Linq.Expressions.Expression;
-    using Throw = Common.Throw;
-
     internal static class JsonUtility
     {
         private static IContractResolver CamelCaseResolver { get; } = new CamelCasePropertyNamesContractResolver();
@@ -39,10 +40,10 @@ namespace Microsoft.Azure.Search.Serialization
             bool useCamelCase)
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
-            settings.Converters.Add(new GeographyPointConverter());
+            settings.Converters.Add(new GeoJsonPointConverter());
             settings.Converters.Add(new IndexActionConverter<T>());
-            settings.Converters.Add(new DateTimeConverter());
-            settings.Converters.Add(new DoubleConverter());
+            settings.Converters.Add(new Iso8601DateTimeConverter());
+            settings.Converters.Add(new EdmDoubleConverter());
             settings.NullValueHandling = NullValueHandling.Ignore;
 
             if (useCamelCase)
@@ -60,10 +61,10 @@ namespace Microsoft.Azure.Search.Serialization
         private static JsonSerializerSettings CreateDeserializerSettings<T>(JsonSerializerSettings baseSettings)
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
-            settings.Converters.Add(new GeographyPointConverter());
+            settings.Converters.Add(new GeoJsonPointConverter());
             settings.Converters.Add(new DocumentConverter());
-            settings.Converters.Add(new DateTimeConverter());
-            settings.Converters.Add(new DoubleConverter());
+            settings.Converters.Add(new Iso8601DateTimeConverter());
+            settings.Converters.Add(new EdmDoubleConverter());
             settings.Converters.Add(new SearchResultConverter<T>());
             settings.Converters.Add(new SuggestResultConverter<T>());
             settings.DateParseHandling = DateParseHandling.DateTimeOffset;

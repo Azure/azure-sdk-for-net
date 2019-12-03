@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Options for evaluating an automatic scaling formula on a pool.
+    /// Options for evaluating an automatic scaling formula on a Pool.
     /// </summary>
     public partial class PoolEvaluateAutoScaleParameter
     {
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// class.
         /// </summary>
         /// <param name="autoScaleFormula">The formula for the desired number
-        /// of compute nodes in the pool.</param>
+        /// of Compute Nodes in the Pool.</param>
         public PoolEvaluateAutoScaleParameter(string autoScaleFormula)
         {
             AutoScaleFormula = autoScaleFormula;
@@ -45,15 +45,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the formula for the desired number of compute nodes in
-        /// the pool.
+        /// Gets or sets the formula for the desired number of Compute Nodes in
+        /// the Pool.
         /// </summary>
         /// <remarks>
         /// The formula is validated and its results calculated, but it is not
-        /// applied to the pool. To apply the formula to the pool, 'Enable
-        /// automatic scaling on a pool'. For more information about specifying
-        /// this formula, see Automatically scale compute nodes in an Azure
-        /// Batch pool
+        /// applied to the Pool. To apply the formula to the Pool, 'Enable
+        /// automatic scaling on a Pool'. For more information about specifying
+        /// this formula, see Automatically scale Compute Nodes in an Azure
+        /// Batch Pool
         /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
         /// </remarks>
         [JsonProperty(PropertyName = "autoScaleFormula")]

@@ -1,0 +1,1135 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/providers/Microsoft.Batch?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2g/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f6b824f5-37d9-4b9b-ad77-6f5e2e704cf2"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "5a4f59b7-3dc5-4db1-a593-714a41d5af45"
+        ],
+        "x-ms-correlation-request-id": [
+          "5a4f59b7-3dc5-4db1-a593-714a41d5af45"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203009Z:5a4f59b7-3dc5-4db1-a593-714a41d5af45"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:08 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "4272"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/providers/Microsoft.Batch\",\r\n  \"namespace\": \"Microsoft.Batch\",\r\n  \"authorization\": {\r\n    \"applicationId\": \"ddbf3205-c6bd-46ae-8127-60eb93363864\",\r\n    \"roleDefinitionId\": \"b7f84953-1d03-4eab-9ea4-45f065258ff8\"\r\n  },\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"batchAccounts\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"North Central US\",\r\n        \"Brazil South\",\r\n        \"North Europe\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Australia Southeast\",\r\n        \"Japan West\",\r\n        \"Korea South\",\r\n        \"Korea Central\",\r\n        \"Southeast Asia\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-08-01\",\r\n        \"2019-04-01\",\r\n        \"2018-12-01\",\r\n        \"2017-09-01\",\r\n        \"2017-05-01\",\r\n        \"2017-01-01\",\r\n        \"2015-12-01\",\r\n        \"2015-09-01\",\r\n        \"2015-07-01\",\r\n        \"2014-05-01-privatepreview\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2017-09-01\"\r\n        }\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"operations\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"North Central US\",\r\n        \"Brazil South\",\r\n        \"North Europe\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Australia Southeast\",\r\n        \"Japan West\",\r\n        \"Korea South\",\r\n        \"Korea Central\",\r\n        \"Southeast Asia\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-08-01\",\r\n        \"2019-04-01\",\r\n        \"2018-12-01\",\r\n        \"2017-09-01\",\r\n        \"2017-05-01\",\r\n        \"2017-01-01\",\r\n        \"2015-12-01\",\r\n        \"2015-09-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2017-09-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations\",\r\n      \"locations\": [],\r\n      \"apiVersions\": [\r\n        \"2019-08-01\",\r\n        \"2019-04-01\",\r\n        \"2018-12-01\",\r\n        \"2017-09-01\",\r\n        \"2017-05-01\",\r\n        \"2017-01-01\",\r\n        \"2015-12-01\",\r\n        \"2015-09-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2017-09-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/quotas\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"North Central US\",\r\n        \"Brazil South\",\r\n        \"North Europe\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Australia Southeast\",\r\n        \"Japan West\",\r\n        \"Korea South\",\r\n        \"Korea Central\",\r\n        \"Southeast Asia\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-08-01\",\r\n        \"2019-04-01\",\r\n        \"2018-12-01\",\r\n        \"2017-09-01\",\r\n        \"2017-05-01\",\r\n        \"2017-01-01\",\r\n        \"2015-12-01\",\r\n        \"2015-09-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2017-09-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/checkNameAvailability\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"North Central US\",\r\n        \"Brazil South\",\r\n        \"North Europe\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Australia Southeast\",\r\n        \"Japan West\",\r\n        \"Korea South\",\r\n        \"Korea Central\",\r\n        \"Southeast Asia\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-08-01\",\r\n        \"2019-04-01\",\r\n        \"2018-12-01\",\r\n        \"2017-09-01\",\r\n        \"2017-05-01\"\r\n      ],\r\n      \"apiProfiles\": [\r\n        {\r\n          \"profileVersion\": \"2018-06-01-profile\",\r\n          \"apiVersion\": \"2017-09-01\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"resourceType\": \"locations/accountOperationResults\",\r\n      \"locations\": [\r\n        \"West Europe\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"West US\",\r\n        \"North Central US\",\r\n        \"Brazil South\",\r\n        \"North Europe\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"Japan East\",\r\n        \"Australia Southeast\",\r\n        \"Japan West\",\r\n        \"Korea South\",\r\n        \"Korea Central\",\r\n        \"Southeast Asia\",\r\n        \"South Central US\",\r\n        \"Australia East\",\r\n        \"South India\",\r\n        \"Central India\",\r\n        \"West India\",\r\n        \"Canada Central\",\r\n        \"Canada East\",\r\n        \"UK South\",\r\n        \"UK West\",\r\n        \"West Central US\",\r\n        \"West US 2\",\r\n        \"France Central\",\r\n        \"South Africa North\",\r\n        \"UAE North\",\r\n        \"Australia Central\",\r\n        \"East US 2 EUAP\",\r\n        \"Central US EUAP\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2019-08-01\",\r\n        \"2019-04-01\",\r\n        \"2018-12-01\",\r\n        \"2017-09-01\",\r\n        \"2017-05-01\",\r\n        \"2017-01-01\",\r\n        \"2015-12-01\",\r\n        \"2015-09-01\",\r\n        \"2015-07-01\",\r\n        \"2014-05-01-privatepreview\"\r\n      ]\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourcegroups/azsmnet7026?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ3MDI2P2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "f33f9aab-946d-4d36-a567-54f4219af4bc"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "eca7c67e-f082-4666-b534-6329a7393bd9"
+        ],
+        "x-ms-correlation-request-id": [
+          "eca7c67e-f082-4666-b534-6329a7393bd9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203010Z:eca7c67e-f082-4666-b534-6329a7393bd9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:09 GMT"
+        ],
+        "Content-Length": [
+          "175"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026\",\r\n  \"name\": \"azsmnet7026\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/providers/Microsoft.Batch/locations/East%20US/checkNameAvailability?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvbG9jYXRpb25zL0Vhc3QlMjBVUy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet358\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "03956aae-994d-4105-b4a0-1706ada99dce"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "72"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "3383d2f9-fa70-4a1c-a6f2-c4348929f5b7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "664c50b7-a144-4283-a5ac-ee802a36b559"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203011Z:664c50b7-a144-4283-a5ac-ee802a36b559"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:10 GMT"
+        ],
+        "Content-Length": [
+          "22"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nameAvailable\": true\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/providers/Microsoft.Batch/locations/East%20US/checkNameAvailability?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvbG9jYXRpb25zL0Vhc3QlMjBVUy9jaGVja05hbWVBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAxOS0wOC0wMQ==",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet358\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "42c1bc50-ee75-41e7-a824-77bd91e10d34"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "72"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-request-id": [
+          "d14af053-812d-470b-9ddf-1b827def186f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "3111ad4a-47b9-4287-aa44-0c226e9c7cbb"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203028Z:3111ad4a-47b9-4287-aa44-0c226e9c7cbb"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:27 GMT"
+        ],
+        "Content-Length": [
+          "109"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"nameAvailable\": false,\r\n  \"reason\": \"AlreadyExists\",\r\n  \"message\": \"An account named 'azsmnet358' is already in use.\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzU4P2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"East US\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2c6e8366-a555-4efc-842d-ec3dd2aa3b85"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358/operationResults/f0f23fe5-89eb-44bf-a71d-10180ae11e59?api-version=2019-08-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-request-id": [
+          "f0f23fe5-89eb-44bf-a71d-10180ae11e59"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "e3ed039e-c9ff-4f30-96e5-c299822fb549"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203012Z:e3ed039e-c9ff-4f30-96e5-c299822fb549"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:12 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358/operationResults/f0f23fe5-89eb-44bf-a71d-10180ae11e59?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzU4L29wZXJhdGlvblJlc3VsdHMvZjBmMjNmZTUtODllYi00NGJmLWE3MWQtMTAxODBhZTExZTU5P2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"0x8D71AACEB4B9136\""
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "b7d4285b-de51-4f75-8c23-d5eff06cd646"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "9fda3882-312d-45b6-854e-fc477369d9c5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203028Z:9fda3882-312d-45b6-854e-fc477369d9c5"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:27 GMT"
+        ],
+        "Content-Length": [
+          "1845"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Last-Modified": [
+          "Tue, 06 Aug 2019 20:30:28 GMT"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358\",\r\n  \"name\": \"azsmnet358\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"accountEndpoint\": \"azsmnet358.eastus.batch.azure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"dedicatedCoreQuota\": 700,\r\n    \"dedicatedCoreQuotaPerVMFamily\": [\r\n      {\r\n        \"name\": \"standardAv2Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardDv2Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardDv3Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardEv3Family\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardDSv2Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardDSv3Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardESv3Family\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardFFamily\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardFSFamily\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardA0_A7Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardA8_A11Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardDFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardGFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"basicAFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNVFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNVPromoFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCPromoFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHPromoFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardMSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardDSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardGSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardLSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCSv2Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNDSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCSv3Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardFSv2Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHBSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHCSFamily\",\r\n        \"coreQuota\": 0\r\n      }\r\n    ],\r\n    \"dedicatedCoreQuotaPerVMFamilyEnforced\": false,\r\n    \"lowPriorityCoreQuota\": 500,\r\n    \"poolQuota\": 100,\r\n    \"activeJobAndJobScheduleQuota\": 300,\r\n    \"poolAllocationMode\": \"BatchService\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzU4P2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "abbb5bcd-6103-4f78-bfa2-6157a5e32d28"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"0x8D71AACE2287311\""
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "e5d0e52a-617e-4262-be03-444613078a9a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "c2691244-1003-437a-9631-aec3c3a8d0bd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203028Z:c2691244-1003-437a-9631-aec3c3a8d0bd"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:27 GMT"
+        ],
+        "Content-Length": [
+          "1845"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Last-Modified": [
+          "Tue, 06 Aug 2019 20:30:12 GMT"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358\",\r\n  \"name\": \"azsmnet358\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"accountEndpoint\": \"azsmnet358.eastus.batch.azure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"dedicatedCoreQuota\": 700,\r\n    \"dedicatedCoreQuotaPerVMFamily\": [\r\n      {\r\n        \"name\": \"standardAv2Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardDv2Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardDv3Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardEv3Family\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardDSv2Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardDSv3Family\",\r\n        \"coreQuota\": 100\r\n      },\r\n      {\r\n        \"name\": \"standardESv3Family\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardFFamily\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardFSFamily\",\r\n        \"coreQuota\": 50\r\n      },\r\n      {\r\n        \"name\": \"standardA0_A7Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardA8_A11Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardDFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardGFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"basicAFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNVFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNVPromoFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCPromoFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHPromoFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardMSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardDSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardGSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardLSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCSv2Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNDSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardNCSv3Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardFSv2Family\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHBSFamily\",\r\n        \"coreQuota\": 0\r\n      },\r\n      {\r\n        \"name\": \"standardHCSFamily\",\r\n        \"coreQuota\": 0\r\n      }\r\n    ],\r\n    \"dedicatedCoreQuotaPerVMFamilyEnforced\": false,\r\n    \"lowPriorityCoreQuota\": 500,\r\n    \"poolQuota\": 100,\r\n    \"activeJobAndJobScheduleQuota\": 300,\r\n    \"poolAllocationMode\": \"BatchService\"\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzU4P2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "01bcbd65-678b-409f-a0f1-2c5d42fc8450"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-request-id": [
+          "1e2695b8-1b40-4653-ae13-a899d19b2029"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "ca11ebd4-bbcf-4fe6-8b3e-d80df82f36ec"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203045Z:ca11ebd4-bbcf-4fe6-8b3e-d80df82f36ec"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:44 GMT"
+        ],
+        "Content-Length": [
+          "193"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"AccountNotFound\",\r\n    \"message\": \"The specified account does not exist.\\nRequestId:1e2695b8-1b40-4653-ae13-a899d19b2029\\nTime:2019-08-06T20:30:45.0581699Z\",\r\n    \"target\": \"BatchAccount\"\r\n  }\r\n}",
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358/listKeys?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzU4L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0fc27cff-ee0d-4d18-8ef3-a2d32b1f109b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-request-id": [
+          "248775b6-ed76-4008-839d-c8278f28e691"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "63b6262c-194b-4b14-9eb9-a0d02317ed98"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203028Z:63b6262c-194b-4b14-9eb9-a0d02317ed98"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:27 GMT"
+        ],
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"accountName\": \"azsmnet358\",\r\n  \"primary\": \"RExyVcXanCgImUNDZinmUcoMMZISBKCyJ+RMSgj9qnT7wu6VxLAwTE/0NEQfI+6ALoAMaZERTQrU9DSpEdtClw==\",\r\n  \"secondary\": \"7u10TzmSm/amq/KU+Kv2ypUB6ZKs9fXOd/g5YL5ukAclS/8KVV5J5S2C0htOgE0MtCmPcNHOk0nnCdknYMOzFw==\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358/regenerateKeys?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzU4L3JlZ2VuZXJhdGVLZXlzP2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"keyName\": \"Primary\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "06e39c69-fd34-41ba-932e-fdb17ddf1d03"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "28"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "3e7c5f5b-d467-4ef3-a4fa-2fe83393beb0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "fb36b8e7-5d88-4b07-b482-50aa3ec371de"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203029Z:fb36b8e7-5d88-4b07-b482-50aa3ec371de"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:28 GMT"
+        ],
+        "Content-Length": [
+          "232"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"accountName\": \"azsmnet358\",\r\n  \"primary\": \"mH9eaO21O5bbsKqST4OL+JyNTCvhEk/2E/V+J8CiZQMdEBqg5AG7NLmGwblPuOR6+It+R+7p9QpqQ/bYJysR2w==\",\r\n  \"secondary\": \"7u10TzmSm/amq/KU+Kv2ypUB6ZKs9fXOd/g5YL5ukAclS/8KVV5J5S2C0htOgE0MtCmPcNHOk0nnCdknYMOzFw==\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cz9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5e368763-77f0-4e1d-96b3-6102724729e9"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "50df1edd-4e2d-4cfb-809f-8a6e73ba57a7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-correlation-request-id": [
+          "f723364a-072f-4114-a821-513abfebed85"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203029Z:f723364a-072f-4114-a821-513abfebed85"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:28 GMT"
+        ],
+        "Content-Length": [
+          "1857"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358\",\r\n      \"name\": \"azsmnet358\",\r\n      \"type\": \"Microsoft.Batch/batchAccounts\",\r\n      \"location\": \"eastus\",\r\n      \"properties\": {\r\n        \"accountEndpoint\": \"azsmnet358.eastus.batch.azure.com\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"dedicatedCoreQuota\": 700,\r\n        \"dedicatedCoreQuotaPerVMFamily\": [\r\n          {\r\n            \"name\": \"standardAv2Family\",\r\n            \"coreQuota\": 100\r\n          },\r\n          {\r\n            \"name\": \"standardDv2Family\",\r\n            \"coreQuota\": 100\r\n          },\r\n          {\r\n            \"name\": \"standardDv3Family\",\r\n            \"coreQuota\": 100\r\n          },\r\n          {\r\n            \"name\": \"standardEv3Family\",\r\n            \"coreQuota\": 50\r\n          },\r\n          {\r\n            \"name\": \"standardDSv2Family\",\r\n            \"coreQuota\": 100\r\n          },\r\n          {\r\n            \"name\": \"standardDSv3Family\",\r\n            \"coreQuota\": 100\r\n          },\r\n          {\r\n            \"name\": \"standardESv3Family\",\r\n            \"coreQuota\": 50\r\n          },\r\n          {\r\n            \"name\": \"standardFFamily\",\r\n            \"coreQuota\": 50\r\n          },\r\n          {\r\n            \"name\": \"standardFSFamily\",\r\n            \"coreQuota\": 50\r\n          },\r\n          {\r\n            \"name\": \"standardA0_A7Family\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardA8_A11Family\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardDFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardGFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"basicAFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardNVFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardNVPromoFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardNCFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardNCPromoFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardHFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardHPromoFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardMSFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardDSFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardGSFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardLSFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardNCSv2Family\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardNDSFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardNCSv3Family\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardFSv2Family\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardHBSFamily\",\r\n            \"coreQuota\": 0\r\n          },\r\n          {\r\n            \"name\": \"standardHCSFamily\",\r\n            \"coreQuota\": 0\r\n          }\r\n        ],\r\n        \"dedicatedCoreQuotaPerVMFamilyEnforced\": false,\r\n        \"lowPriorityCoreQuota\": 500,\r\n        \"poolQuota\": 100,\r\n        \"activeJobAndJobScheduleQuota\": 300,\r\n        \"poolAllocationMode\": \"BatchService\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourceGroups/azsmnet7026/providers/Microsoft.Batch/batchAccounts/azsmnet358?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MDI2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzU4P2FwaS12ZXJzaW9uPTIwMTktMDgtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "5866b6f8-2c73-46a5-a59e-28a32e637b9e"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/providers/Microsoft.Batch/locations/eastus/accountOperationResults/azsmnet358-521624ab-65cb-4de7-9231-47fe65091a19?api-version=2019-08-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-request-id": [
+          "521624ab-65cb-4de7-9231-47fe65091a19"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "b7e38498-3459-49df-b1a0-a6b51b5062f9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203029Z:b7e38498-3459-49df-b1a0-a6b51b5062f9"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:29 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/providers/Microsoft.Batch/locations/eastus/accountOperationResults/azsmnet358-521624ab-65cb-4de7-9231-47fe65091a19?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvbG9jYXRpb25zL2Vhc3R1cy9hY2NvdW50T3BlcmF0aW9uUmVzdWx0cy9henNtbmV0MzU4LTUyMTYyNGFiLTY1Y2ItNGRlNy05MjMxLTQ3ZmU2NTA5MWExOT9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "31da1a8e-3dce-4bbf-b05a-83559b9e4c73"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-correlation-request-id": [
+          "9efe9199-0c91-4470-86a3-a224783df22d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203044Z:9efe9199-0c91-4470-86a3-a224783df22d"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:44 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/providers/Microsoft.Batch/locations/eastus/accountOperationResults/azsmnet358-521624ab-65cb-4de7-9231-47fe65091a19?api-version=2019-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvbG9jYXRpb25zL2Vhc3R1cy9hY2NvdW50T3BlcmF0aW9uUmVzdWx0cy9henNtbmV0MzU4LTUyMTYyNGFiLTY1Y2ItNGRlNy05MjMxLTQ3ZmU2NTA5MWExOT9hcGktdmVyc2lvbj0yMDE5LTA4LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "06557dbb-7eb2-4130-bd13-118354300711"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-correlation-request-id": [
+          "a2fa413b-670e-4e59-b78c-37fa2d62db1d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203044Z:a2fa413b-670e-4e59-b78c-37fa2d62db1d"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:44 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/resourcegroups/azsmnet7026?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ3MDI2P2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "92f0775b-9151-479a-bc22-b631c3738bde"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNzAyNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "2c15d260-7c92-4db2-98e4-9c41567714f0"
+        ],
+        "x-ms-correlation-request-id": [
+          "2c15d260-7c92-4db2-98e4-9c41567714f0"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203046Z:2c15d260-7c92-4db2-98e4-9c41567714f0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:30:45 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNzAyNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOekF5TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNzAyNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "493c7108-24f8-47fa-94f2-8c5b6819791a"
+        ],
+        "x-ms-correlation-request-id": [
+          "493c7108-24f8-47fa-94f2-8c5b6819791a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203101Z:493c7108-24f8-47fa-94f2-8c5b6819791a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:31:00 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNzAyNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOekF5TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "78a9e81f-bd5e-45f9-8373-e71393ab6efc"
+        ],
+        "x-ms-correlation-request-id": [
+          "78a9e81f-bd5e-45f9-8373-e71393ab6efc"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203116Z:78a9e81f-bd5e-45f9-8373-e71393ab6efc"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:31:15 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/2915bbd6-1252-405f-8173-6c00428146d9/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNzAyNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjkxNWJiZDYtMTI1Mi00MDVmLTgxNzMtNmMwMDQyODE0NmQ5L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOekF5TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.27817.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18362.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "6b152284-a742-4270-861f-6842afc7b4da"
+        ],
+        "x-ms-correlation-request-id": [
+          "6b152284-a742-4270-861f-6842afc7b4da"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20190806T203116Z:6b152284-a742-4270-861f-6842afc7b4da"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 06 Aug 2019 20:31:15 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "BatchAccountEndToEndAsync": [
+      "azsmnet7026",
+      "azsmnet358"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "2915bbd6-1252-405f-8173-6c00428146d9"
+  }
+}

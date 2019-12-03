@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <param name="name">Resource name to verify.</param>
         /// <param name="type">Resource type used for verification. Possible
-        /// values include: 'Microsoft.NetApp/netAppAccount',
-        /// 'Microsoft.NetApp/netAppAccount/capacityPools',
-        /// 'Microsoft.NetApp/netAppAccount/capacityPools/volumes',
-        /// 'Microsoft.NetApp/netAppAccount/capacityPools/volumes/snapshots'</param>
+        /// values include: 'Microsoft.NetApp/netAppAccounts',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'</param>
         /// <param name="resourceGroup">Resource group name.</param>
         public ResourceNameAvailabilityRequest(string name, string type, string resourceGroup)
         {
@@ -60,10 +60,10 @@ namespace Microsoft.Azure.Management.NetApp.Models
 
         /// <summary>
         /// Gets or sets resource type used for verification. Possible values
-        /// include: 'Microsoft.NetApp/netAppAccount',
-        /// 'Microsoft.NetApp/netAppAccount/capacityPools',
-        /// 'Microsoft.NetApp/netAppAccount/capacityPools/volumes',
-        /// 'Microsoft.NetApp/netAppAccount/capacityPools/volumes/snapshots'
+        /// include: 'Microsoft.NetApp/netAppAccounts',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes',
+        /// 'Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

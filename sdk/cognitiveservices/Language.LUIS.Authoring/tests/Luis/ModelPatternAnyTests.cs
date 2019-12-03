@@ -8,11 +8,12 @@
     using Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models;
     using Xunit;
 
+    [Collection("TestCollection")]
     public class ModelPatternAnyTests : BaseTest
     {
         private const string versionId = "0.1";
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void ListEntities()
         {
             UseClientFor(async client =>
@@ -34,7 +35,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetEntity()
         {
             UseClientFor(async client =>
@@ -56,7 +57,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddEntity()
         {
             UseClientFor(async client =>
@@ -78,7 +79,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateEntity()
         {
             UseClientFor(async client =>
@@ -102,11 +103,11 @@
                 Assert.Equal("Pattern.Any Entity Extractor", result.ReadableType);
                 Assert.Equal("item1", result.ExplicitList.Single().ExplicitListItemProperty);
 
-                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteEntity()
         {
             UseClientFor(async client =>
@@ -125,7 +126,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetExplicitList()
         {
             UseClientFor(async client =>
@@ -146,7 +147,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void AddExplicitListItem()
         {
             UseClientFor(async client =>
@@ -171,7 +172,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void GetExplicitListItem()
         {
             UseClientFor(async client =>
@@ -196,7 +197,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void UpdateExplicitListItem()
         {
             UseClientFor(async client =>
@@ -226,7 +227,7 @@
             });
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6211")]
+        [Fact]
         public void DeleteExplicitListItem()
         {
             UseClientFor(async client =>

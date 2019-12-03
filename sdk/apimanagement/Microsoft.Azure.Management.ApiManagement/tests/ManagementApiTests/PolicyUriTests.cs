@@ -17,7 +17,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 {
     public class PolicyUriTests : TestBase
     {
-        protected const string ApiValid = "https://raw.githubusercontent.com/Azure/api-management-samples/master/sdkClientResources/ApiPolicy.xml";        
+        protected const string ApiValid = "https://raw.githubusercontent.com/Azure/api-management-samples/master/sdkClientResources/ApiPolicy.xml";
 
         protected const string ProductValid = "https://raw.githubusercontent.com/Azure/api-management-samples/master/sdkClientResources/ProductPolicy.xml";
 
@@ -25,7 +25,7 @@ namespace ApiManagement.Tests.ManagementApiTests
         public async Task CreateListUpdateDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
@@ -92,7 +92,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newApiId,
                         "*",
                         deleteRevisions: true);
-                }               
+                }
 
                 // test product policy
 

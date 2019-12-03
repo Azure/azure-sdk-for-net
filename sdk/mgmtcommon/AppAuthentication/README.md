@@ -44,7 +44,7 @@ Before running these test cases, ensure that you
 1. Have Azure CLI 2.0 installed. 
 2. Have logged into Azure CLI using **az login**
 3. Set an environment variable named **AppAuthenticationTestCertUrl** to a certificate in Azure Key Vault e.g. https://myvault.vault.azure.net/secrets/cert1
-4. Set an environment variable named **AppAuthenticationTestSqlDbEndpoint** to an Azure SQL database endpoint e.g. mydatabase.database.windows.net
+4. Set an environment variable named **AppAuthenticationTestSqlServerEndpoint** to an Azure SQL database endpoint e.g. mydatabase.database.windows.net
    
    Integration test cases use AzureServiceTokenProvider itself to get a token for Graph API (using Azure CLI), to create Azure AD applications and service principals, and then test those flows. Additionally, the integration test cases also use SqlAzureAppAuthProvider to get a token for SQL Azure and connect to the test database.
    
@@ -52,4 +52,4 @@ On Windows, open a command prompt, navigate to the integration test folder, and 
 
 On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f netcoreapp1.1**. This will run tests for .NET Standard 1.4. 
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSdkCommon%2FAppAuthentication%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmgmtcommon%2FAppAuthentication%2FREADME.png)

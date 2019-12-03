@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -29,16 +30,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PolicySettings class.
         /// </summary>
-        /// <param name="enabledState">Describes if the policy is in enabled
-        /// state or disabled state. Possible values include: 'Disabled',
+        /// <param name="state">Describes if the policy is in enabled state or
+        /// disabled state. Possible values include: 'Disabled',
         /// 'Enabled'</param>
-        /// <param name="mode">Describes if it is in detection mode  or
+        /// <param name="mode">Describes if it is in detection mode or
         /// prevention mode at policy level. Possible values include:
         /// 'Prevention', 'Detection'</param>
-        public PolicySettings(string enabledState = default(string), string mode = default(string))
+        /// <param name="requestBodyCheck">Whether to allow WAF to check
+        /// request Body.</param>
+        /// <param name="maxRequestBodySizeInKb">Maximum request body size in
+        /// Kb for WAF.</param>
+        /// <param name="fileUploadLimitInMb">Maximum file upload size in Mb
+        /// for WAF.</param>
+        public PolicySettings(string state = default(string), string mode = default(string), bool? requestBodyCheck = default(bool?), int? maxRequestBodySizeInKb = default(int?), int? fileUploadLimitInMb = default(int?))
         {
-            EnabledState = enabledState;
+            State = state;
             Mode = mode;
+            RequestBodyCheck = requestBodyCheck;
+            MaxRequestBodySizeInKb = maxRequestBodySizeInKb;
+            FileUploadLimitInMb = fileUploadLimitInMb;
             CustomInit();
         }
 
@@ -51,16 +61,55 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets describes if the policy is in enabled state or
         /// disabled state. Possible values include: 'Disabled', 'Enabled'
         /// </summary>
-        [JsonProperty(PropertyName = "enabledState")]
-        public string EnabledState { get; set; }
+        [JsonProperty(PropertyName = "state")]
+        public string State { get; set; }
 
         /// <summary>
-        /// Gets or sets describes if it is in detection mode  or prevention
+        /// Gets or sets describes if it is in detection mode or prevention
         /// mode at policy level. Possible values include: 'Prevention',
         /// 'Detection'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public string Mode { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether to allow WAF to check request Body.
+        /// </summary>
+        [JsonProperty(PropertyName = "requestBodyCheck")]
+        public bool? RequestBodyCheck { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum request body size in Kb for WAF.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxRequestBodySizeInKb")]
+        public int? MaxRequestBodySizeInKb { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum file upload size in Mb for WAF.
+        /// </summary>
+        [JsonProperty(PropertyName = "fileUploadLimitInMb")]
+        public int? FileUploadLimitInMb { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MaxRequestBodySizeInKb > 128)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxRequestBodySizeInKb", 128);
+            }
+            if (MaxRequestBodySizeInKb < 8)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySizeInKb", 8);
+            }
+            if (FileUploadLimitInMb < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "FileUploadLimitInMb", 0);
+            }
+        }
     }
 }

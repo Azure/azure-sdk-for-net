@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType integer).</param>
         /// <param name="storeSettings">DelimitedText store settings.</param>
         /// <param name="formatSettings">DelimitedText format settings.</param>
-        public DelimitedTextSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), ConnectorReadSetting storeSettings = default(ConnectorReadSetting), DelimitedTextReadSetting formatSettings = default(DelimitedTextReadSetting))
+        public DelimitedTextSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), StoreReadSettings storeSettings = default(StoreReadSettings), DelimitedTextReadSettings formatSettings = default(DelimitedTextReadSettings))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             StoreSettings = storeSettings;
@@ -60,13 +60,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets delimitedText store settings.
         /// </summary>
         [JsonProperty(PropertyName = "storeSettings")]
-        public ConnectorReadSetting StoreSettings { get; set; }
+        public StoreReadSettings StoreSettings { get; set; }
 
         /// <summary>
         /// Gets or sets delimitedText format settings.
         /// </summary>
         [JsonProperty(PropertyName = "formatSettings")]
-        public DelimitedTextReadSetting FormatSettings { get; set; }
+        public DelimitedTextReadSettings FormatSettings { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// The configuration for nodes in a pool based on the Azure Cloud Services
-    /// platform.
+    /// The configuration for Compute Nodes in a Pool based on the Azure Cloud
+    /// Services platform.
     /// </summary>
     public partial class CloudServiceConfiguration
     {
@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the CloudServiceConfiguration class.
         /// </summary>
         /// <param name="osFamily">The Azure Guest OS family to be installed on
-        /// the virtual machines in the pool.</param>
+        /// the virtual machines in the Pool.</param>
         /// <param name="osVersion">The Azure Guest OS version to be installed
-        /// on the virtual machines in the pool.</param>
+        /// on the virtual machines in the Pool.</param>
         public CloudServiceConfiguration(string osFamily, string osVersion = default(string))
         {
             OsFamily = osFamily;
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the Azure Guest OS family to be installed on the
-        /// virtual machines in the pool.
+        /// virtual machines in the Pool.
         /// </summary>
         /// <remarks>
         /// Possible values are:
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the Azure Guest OS version to be installed on the
-        /// virtual machines in the pool.
+        /// virtual machines in the Pool.
         /// </summary>
         /// <remarks>
         /// The default value is * which specifies the latest operating system

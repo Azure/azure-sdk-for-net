@@ -9,23 +9,11 @@
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.IdentityModel" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
-    <PackageReference Include="System.Runtime.Serialization.Primitives" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Reflection.TypeExtensions" />
-    <PackageReference Include="System.Net.WebSockets.Client" />
-    <PackageReference Include="System.ValueTuple" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
+
 </Project>

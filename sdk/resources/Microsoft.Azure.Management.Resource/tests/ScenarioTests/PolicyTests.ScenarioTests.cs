@@ -15,6 +15,7 @@ namespace Policy.Tests
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Resource.Tests.Helpers;
     using ResourceGroups.Tests;
@@ -26,7 +27,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyDefinition()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -78,9 +79,53 @@ namespace Policy.Tests
         }
 
         [Fact]
+        public void CanCrudDataPlanePolicyDefinition()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                var client = context.GetServiceClient<PolicyClient>();
+
+                // First, create with minimal properties
+                var policyName = TestUtilities.GenerateName();
+                var thisTestName = TestUtilities.GetCurrentMethodName();
+                var policyDefinition = this.CreateDataPlanePolicyDefinition($"{thisTestName} Policy Definition ${LivePolicyTests.NameTag}");
+
+                var result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(result);
+
+                // Validate result
+                var getResult = client.PolicyDefinitions.Get(policyName);
+                Assert.NotNull(policyDefinition);
+                Assert.NotNull(policyDefinition.Mode);
+                Assert.Null(policyDefinition.Description);
+                Assert.Null(policyDefinition.Parameters);                
+                this.AssertValid(policyName, policyDefinition, getResult, false);                
+
+                var listResult = client.PolicyDefinitions.List();
+                this.AssertInList(policyName, policyDefinition, listResult);
+
+                // Update definition
+                policyDefinition.DisplayName = "Audit certificates that are not protected by RSA - v2";
+
+                result = client.PolicyDefinitions.CreateOrUpdate(policyDefinitionName: policyName, parameters: policyDefinition);
+                Assert.NotNull(result);
+
+                // Validate result
+                getResult = client.PolicyDefinitions.Get(policyName);
+                this.AssertValid(policyName, policyDefinition, getResult, false);
+
+                Assert.Equal("Microsoft.KeyVault.Data", getResult.Mode);
+                Assert.Null(getResult.Parameters);
+
+                // Delete definition and validate
+                this.DeleteDefinitionAndValidate(client, policyName);                               
+            }
+        }
+
+        [Fact]
         public void CanCrudPolicySetDefinition()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -108,7 +153,7 @@ namespace Policy.Tests
                 this.AssertValid(setName, policySet, getResult, false);
                 Assert.Single(getResult.PolicyDefinitions);
                 Assert.Null(getResult.Description);
-                Assert.Null(getResult.Metadata);
+                AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
                 Assert.Equal("Custom", getResult.PolicyType);
 
@@ -177,7 +222,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignment()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -204,11 +249,15 @@ namespace Policy.Tests
 
                 // validate results
                 var getResult = client.PolicyAssignments.Get(assignmentScope, assignmentName);
-                this.AssertValid(assignmentName, policyAssignment, result);
+
+                // Default enforcement should be set even if not provided as input in PUT request.
+                policyAssignment.EnforcementMode = EnforcementMode.Default;
+                this.AssertValid(assignmentName, policyAssignment, getResult);
                 Assert.Null(getResult.NotScopes);
                 Assert.Null(getResult.Description);
-                Assert.Null(getResult.Metadata);
+                AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
+                Assert.Equal(EnforcementMode.Default, getResult.EnforcementMode);
 
                 var listResult = client.PolicyAssignments.List();
                 this.AssertInList(assignmentName, policyAssignment, listResult);
@@ -220,6 +269,7 @@ namespace Policy.Tests
                 policyAssignment.Sku = LivePolicyTests.A1Standard;
                 policyAssignment.Location = "eastus";
                 policyAssignment.Identity = new Identity(type: ResourceIdentityType.SystemAssigned);
+                policyAssignment.EnforcementMode = EnforcementMode.DoNotEnforce;
 
                 result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
                 Assert.NotNull(result);
@@ -257,7 +307,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignmentAtResourceGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var resourceGroupClient = context.GetServiceClient<ResourceManagementClient>();
@@ -303,7 +353,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignmentAtResource()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var resourceManagementClient = context.GetServiceClient<ResourceManagementClient>();
@@ -353,7 +403,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyDefinitionAtManagementGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var delegatingHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -400,7 +450,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicySetDefinitionAtManagementGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var delegatingHandler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
@@ -434,7 +484,7 @@ namespace Policy.Tests
                 this.AssertValid(setName, policySet, getResult, false);
                 Assert.Single(getResult.PolicyDefinitions);
                 Assert.Null(getResult.Description);
-                Assert.Null(getResult.Metadata);
+                AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
                 Assert.Equal("Custom", getResult.PolicyType);
 
@@ -503,7 +553,7 @@ namespace Policy.Tests
         [Fact]
         public void CanCrudPolicyAssignmentAtManagementGroup()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
                 var delegatingHandler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -544,7 +594,7 @@ namespace Policy.Tests
         [Fact]
         public void ValidatePolicyAssignmentErrorHandling()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -594,7 +644,7 @@ namespace Policy.Tests
         [Fact]
         public void ValidatePolicyDefinitionErrorHandling()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -631,7 +681,7 @@ namespace Policy.Tests
         [Fact]
         public void ValidatePolicySetDefinitionErrorHandling()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -698,7 +748,7 @@ namespace Policy.Tests
         [Fact]
         public void CanListAndGetBuiltinPolicyDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -713,7 +763,7 @@ namespace Policy.Tests
 
                     // validate that individual get matches list results
                     var getBuiltIn = client.PolicyDefinitions.GetBuiltIn(builtIn.Name);
-                    this.AssertEqual(builtIn, getBuiltIn);
+                    this.AssertEqual(builtIn, getBuiltIn, true);
                 }
             }
         }
@@ -721,7 +771,7 @@ namespace Policy.Tests
         [Fact]
         public void CannotDeleteBuiltInPolicyDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -748,7 +798,7 @@ namespace Policy.Tests
         [Fact]
         public void CanListAndGetBuiltinPolicySetDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -764,7 +814,7 @@ namespace Policy.Tests
                     // validate that individual get is valid and matches list results
                     var getBuiltIn = client.PolicySetDefinitions.GetBuiltIn(builtIn.Name);
                     this.AssertValid(getBuiltIn, true);
-                    this.AssertEqual(builtIn, getBuiltIn);
+                    this.AssertEqual(builtIn, getBuiltIn, true);
 
                     // validate that each policy reference points to a policy definition that exists and is builtin
                     foreach (var policyReference in builtIn.PolicyDefinitions)
@@ -781,7 +831,7 @@ namespace Policy.Tests
         [Fact]
         public void CannotDeleteBuiltInPolicySetDefinitions()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var client = context.GetServiceClient<PolicyClient>();
 
@@ -831,6 +881,24 @@ namespace Policy.Tests
             )
         };
 
+        // create a minimal dataplane policy definition model
+        private PolicyDefinition CreateDataPlanePolicyDefinition(string displayName) => new PolicyDefinition
+        {
+            DisplayName = displayName,
+            Mode = "Microsoft.KeyVault.Data",
+            PolicyRule = JToken.Parse(
+                @"{
+                    ""if"": {
+                        ""field"": ""Microsoft.KeyVault.Data/vaults/certificates/keyProperties.keyType"",
+                        ""notEquals"": ""RSA""
+                    },
+                    ""then"": {
+                        ""effect"": ""audit""
+                    }
+                }"
+            )
+        };
+
         // create a minimal policy definition model with parameter
         private PolicyDefinition CreatePolicyDefinitionWithParameters(string displayName) => new PolicyDefinition
         {
@@ -856,13 +924,17 @@ namespace Policy.Tests
                 resourceGroup.Name,
                 "Microsoft.Web",
                 string.Empty,
-                "sites",
+                "serverFarms",
                 resourceName,
-                "2016-08-01",
+                "2018-02-01",
                 new GenericResource
                 {
                     Location = resourceGroup.Location,
-                    Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode': 'Standard','computeMode':'Shared'}")
+                    Sku = new Sku
+                    {
+                        Name = "S1"
+                    },
+                    Properties = JObject.Parse("{}")
                 });
         }
 
@@ -870,7 +942,7 @@ namespace Policy.Tests
         {
             // get an existing test management group to be parent
             var allManagementGroups = client.ManagementGroups.List();
-            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals("AzGovLiveTest"));
+            var parentManagementGroup = allManagementGroups.First(item => item.Name.Equals("AzGovTest5"));
 
             // make a management group using the given parameters
             var managementGroupDetails = new CreateManagementGroupDetails(parent: new CreateParentGroupInfo(id: parentManagementGroup.Id), updatedBy: displayName);
@@ -888,9 +960,9 @@ namespace Policy.Tests
         private void AssertMinimal(PolicyDefinition definition)
         {
             Assert.NotNull(definition);
-            Assert.Null(definition.Mode);
+            Assert.Equal("Indexed", definition.Mode);
             Assert.Null(definition.Description);
-            Assert.Null(definition.Metadata);
+            AssertMetadataValid(definition.Metadata);
             Assert.Null(definition.Parameters);
         }
 
@@ -926,7 +998,13 @@ namespace Policy.Tests
             }
             if (result.Mode != null)
             {
-                Assert.True(result.Mode.Equals("NotSpecified") || result.Mode.Equals("All") || result.Mode.Equals("Indexed"));
+                Assert.True(result.Mode.Equals("NotSpecified") || 
+                            result.Mode.Equals("All") || 
+                            result.Mode.Equals("Indexed") ||
+                            result.Mode.Equals("Microsoft.KeyVault.Data") ||
+                            result.Mode.Equals("Microsoft.ContainerService.Data") ||
+                            result.Mode.Equals("Microsoft.CustomerLockbox.Data") ||
+                            result.Mode.Equals("Microsoft.DataCatalog.Data"));
             }
         }
 
@@ -937,22 +1015,22 @@ namespace Policy.Tests
             Assert.Equal(policyName, result.Name);
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.PolicyRule.ToString(), result.PolicyRule.ToString());
-            Assert.Equal(model.Mode, result.Mode);
+            AssertModeEqual(model.Mode, result.Mode);
             Assert.Equal(model.Description, result.Description);
-            Assert.Equal(model.Metadata, result.Metadata);
+            AssertMetadataEqual(model.Metadata, result.Metadata, isBuiltin);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
         }
 
         // validate that the given result policy definition is equal to the expected one
-        private void AssertEqual(PolicyDefinition expected, PolicyDefinition result)
+        private void AssertEqual(PolicyDefinition expected, PolicyDefinition result, bool isBuiltin)
         {
             Assert.NotNull(result);
             Assert.NotNull(expected);
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            Assert.Equal(expected.Metadata?.ToString(), result.Metadata?.ToString());
-            Assert.Equal(expected.Mode, result.Mode);
+            AssertMetadataEqual(expected.Metadata, result.Metadata, isBuiltin);
+            AssertModeEqual(expected.Mode, result.Mode);
             Assert.Equal(expected.Name, result.Name);
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyRule.ToString(), result.PolicyRule.ToString());
@@ -1025,7 +1103,7 @@ namespace Policy.Tests
 
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.Description, result.Description);
-            Assert.Equal(model.Metadata, result.Metadata);
+            AssertMetadataEqual(model.Metadata, result.Metadata, isBuiltin);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(model.PolicyDefinitions.Count, result.PolicyDefinitions.Count);  // not always true for update results?
             foreach (var expectedDefinition in model.PolicyDefinitions)
@@ -1035,14 +1113,14 @@ namespace Policy.Tests
         }
 
         // validate that the given result policy definition is equal to the expected one
-        private void AssertEqual(PolicySetDefinition expected, PolicySetDefinition result)
+        private void AssertEqual(PolicySetDefinition expected, PolicySetDefinition result, bool isBuiltin)
         {
             Assert.NotNull(result);
             Assert.NotNull(expected);
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            Assert.Equal(expected.Metadata?.ToString(), result.Metadata?.ToString());
+            AssertMetadataEqual(expected.Metadata, result.Metadata, isBuiltin);
             Assert.Equal(expected.Name, result.Name);
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyType, result.PolicyType);
@@ -1091,12 +1169,13 @@ namespace Policy.Tests
 
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.Description, result.Description);
-            Assert.Equal(model.Metadata, result.Metadata);
+            AssertMetadataValid(result.Metadata);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(model.PolicyDefinitionId, result.PolicyDefinitionId);
             Assert.Equal(model.Sku.Name, result.Sku.Name);
             Assert.Equal(model.Sku.Tier, result.Sku.Tier);
             Assert.Equal(model.Location, result.Location);
+            Assert.Equal(model.EnforcementMode, result.EnforcementMode);
             if (model.Identity != null)
             {
                 Assert.Equal(model.Identity.Type, result.Identity.Type);
@@ -1117,7 +1196,7 @@ namespace Policy.Tests
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            Assert.Equal(expected.Metadata?.ToString(), result.Metadata?.ToString());
+            AssertMetadataEqual(expected.Metadata, result.Metadata, false);
             Assert.Equal(expected.Name, result.Name);
             if (expected.NotScopes == null)
             {
@@ -1150,6 +1229,50 @@ namespace Policy.Tests
             var assignmentInList = listResult.FirstOrDefault(p => p.Name.Equals(assignmentName));
             Assert.NotNull(assignmentInList);
             this.AssertValid(assignmentName, model, assignmentInList);
+        }
+
+        private void AssertModeEqual(string expected, string actual)
+        {
+            if (expected == null)
+            {
+                Assert.Equal("Indexed", actual);
+            }
+            else
+            {
+                Assert.Equal(expected, actual);
+            }
+        }
+
+        private void AssertMetadataValid(object metaDataObject)
+        {
+            if (metaDataObject != null)
+            {
+                var metaData = (JObject)metaDataObject;
+                var createdBy = metaData["createdBy"];
+                Assert.NotNull(createdBy);
+                var createdOn = metaData["createdOn"];
+                Assert.NotNull(createdOn);
+                var updatedBy = metaData["updatedBy"];
+                Assert.NotNull(updatedBy);
+            }
+        }
+
+        private void AssertMetadataEqual(object expectedObject, object actualObject, bool isBuiltin)
+        {
+            if (!isBuiltin)
+            {
+                AssertMetadataValid(actualObject);
+            }
+
+            var expected = (JObject)expectedObject;
+            if (expected != null)
+            {
+                var actual = (JObject)actualObject;
+                foreach (JProperty property in expected.Properties())
+                {
+                    Assert.Contains(property.Value, actual.PropertyValues());
+                }
+            }
         }
 
         // validate that the given action throws an ErrorResponseException containing the given string

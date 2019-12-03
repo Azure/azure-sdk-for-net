@@ -6,13 +6,16 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.Backup</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
-		<Version>3.1.1-preview</Version>
+		<Version>4.0.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.Backup</AssemblyName>
-		<PackageTags>Recoveryservices;Backup;</PackageTags>
+		<PackageTags>Recoveryservices;Backup;RestoreWithDiskExclusion;SoftDeleteFeature</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Adding back the VaultId property to Backup status related classes.
+- MABFileFolderProtectedItem addition of field : LastBackuptime
+- New Operation Type in Job: Undelete
+- CreateOrUpdateProtectionPolicy API added a field to make the policy state consistent : MakePolicyConsistent
+- Enable/Disable softDeletefeature on newly created vault
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

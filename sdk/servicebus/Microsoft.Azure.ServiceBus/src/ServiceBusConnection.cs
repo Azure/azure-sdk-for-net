@@ -202,7 +202,7 @@ namespace Microsoft.Azure.ServiceBus
 
             if (callClose)
             {
-                await this.ConnectionManager.CloseAsync();
+                await this.ConnectionManager.CloseAsync().ConfigureAwait(false);
             }
         }
 
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.ServiceBus
             {
                 this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
-            else if (String.Equals(builder.Authentication, ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity, StringComparison.OrdinalIgnoreCase))
+            else if (builder.Authentication.Equals(ServiceBusConnectionStringBuilder.AuthenticationType.ManagedIdentity))
             {
                 this.TokenProvider = new ManagedIdentityTokenProvider();
             }
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.ServiceBus
         {
             var hostName = this.Endpoint.Host;
 
-            var timeoutHelper = new TimeoutHelper(timeout);
+            var timeoutHelper = new TimeoutHelper(timeout, true);
             var amqpSettings = AmqpConnectionHelper.CreateAmqpSettings(
                 amqpVersion: AmqpVersion,
                 useSslStreamSecurity: true,
@@ -274,7 +274,7 @@ namespace Microsoft.Azure.ServiceBus
 
         async Task<Controller> CreateControllerAsync(TimeSpan timeout)
         {
-            var timeoutHelper = new TimeoutHelper(timeout);
+            var timeoutHelper = new TimeoutHelper(timeout, true);
             var connection = await this.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime()).ConfigureAwait(false);
 
             var sessionSettings = new AmqpSessionSettings { Properties = new Fields() };

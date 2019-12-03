@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Search
             else
             {
                 return Client.DocumentsProxy.AutocompletePostWithHttpMessagesAsync(
-                    autocompleteParameters.ToRequest(searchText, suggesterName),
+                    (autocompleteParameters ?? new AutocompleteParameters()).ToRequest(searchText, suggesterName),
                     searchRequestOptions,
                     customHeaders,
                     cancellationToken);
@@ -290,7 +290,15 @@ namespace Microsoft.Azure.Search
                 HttpRequestMessage httpRequest = result.Request;
                 HttpResponseMessage httpResponse = result.Response;
 
+                // NOTE: It is not possible to read the http request's string content property here, 
+                // via .NET framework's HttpClient, as the Content gets disposed as soon as the request is sent.
+                // Thus the batch is re-serialized, which is what happens in the IndexWithHttpMessagesAsync() method
+                // In .NET Core, the Content doesn't get disposed, so it's safe to read the string content here.
+#if FullNetFx
+                string requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(batch, jsonSettings);
+#else
                 string requestContent = await httpRequest.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
                 string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var exception =
@@ -394,7 +402,7 @@ namespace Microsoft.Azure.Search
             else
             {
                 return Client.DocumentsProxy.SearchPostWithHttpMessagesAsync<T>(
-                    searchParameters.ToRequest(searchText),
+                    (searchParameters ?? new SearchParameters()).ToRequest(searchText),
                     searchRequestOptions,
                     EnsureCustomHeaders(customHeaders),
                     cancellationToken,
@@ -411,6 +419,8 @@ namespace Microsoft.Azure.Search
             JsonSerializerSettings deserializerSettings,
             CancellationToken cancellationToken)
         {
+            suggestParameters = suggestParameters ?? new SuggestParameters();
+
             if (Client.UseHttpGetForQueries)
             {
                 return Client.DocumentsProxy.SuggestGetWithHttpMessagesAsync<T>(

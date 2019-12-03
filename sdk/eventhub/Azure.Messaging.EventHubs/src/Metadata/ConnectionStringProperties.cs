@@ -21,10 +21,10 @@ namespace Azure.Messaging.EventHubs.Metadata
         public Uri Endpoint { get; }
 
         /// <summary>
-        ///   The path to the specific Event Hub under the namespace.
+        ///   The name of the specific Event Hub instance under the associated Event Hubs namespace.
         /// </summary>
         ///
-        public string EventHubPath { get; }
+        public string EventHubName { get; }
 
         /// <summary>
         ///   The name of the shared access key, either for the Event Hubs namespace
@@ -41,21 +41,21 @@ namespace Azure.Messaging.EventHubs.Metadata
         public string SharedAccessKey { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ConnectionStringProperties"/> struct.
+        ///   Initializes a new instance of the <see cref="ConnectionStringProperties"/> structure.
         /// </summary>
         ///
-        /// <param name="endpoint">The endpoint of the EVent Hubs namespace.</param>
-        /// <param name="eventHubPath">The path to the specific Event Hub under the namespace.</param>
+        /// <param name="endpoint">The endpoint of the Event Hubs namespace.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub under the namespace.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>
         ///
         public ConnectionStringProperties(Uri endpoint,
-                                          string eventHubPath,
+                                          string eventHubName,
                                           string sharedAccessKeyName,
                                           string sharedAccessKey)
         {
             Endpoint = endpoint;
-            EventHubPath = eventHubPath;
+            EventHubName = eventHubName;
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
         }

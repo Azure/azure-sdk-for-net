@@ -3,16 +3,16 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   The position of events in an Event Hub partition, typically used in the creation of
-    ///   an <see cref="EventHubProducer" />.
+    ///   an <see cref="EventHubConsumerClient" />.
     /// </summary>
     ///
-    public sealed class EventPosition
+    public struct EventPosition : IEquatable<EventPosition>
     {
         /// <summary>The token that represents the beginning event in the stream of a partition.</summary>
         private const string StartOfStreamOffset = "-1";
@@ -30,14 +30,14 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partion after an <see cref="EventHubConsumer"/>
+        ///   position to begin receiving from the next event to be enqueued in the partition after an <see cref="EventHubConsumerClient"/>
         ///   is created with this position.
         /// </summary>
         ///
         public static EventPosition Latest => FromOffset(EndOfStreamOffset, false);
 
         /// <summary>
-        ///   The offset of the eventidentified by this position.
+        ///   The offset of the event identified by this position.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Indicates if the specified offset is inclusive of the event which it identifies.  This
-        ///   information is only relevent if the event position was identified by an offset or sequence number.
+        ///   information is only relevant if the event position was identified by an offset or sequence number.
         /// </summary>
         ///
         /// <value><c>true</c> if the offset is inclusive; otherwise, <c>false</c>.</value>
@@ -63,15 +63,15 @@ namespace Azure.Messaging.EventHubs
         ///   The enqueue time of the event identified by this position.
         /// </summary>
         ///
-        /// <value>Excpected to be <c>null</c> if the event position represents an offset or sequence number.</value>
+        /// <value>Expected to be <c>null</c> if the event position represents an offset or sequence number.</value>
         ///
-        internal DateTime? EnqueuedTimeUtc { get; set; }
+        internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
-        ///   The sequence number of the event identified by this poistion;
+        ///   The sequence number of the event identified by this position.
         /// </summary>
         ///
-        /// <value>Excpected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
+        /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
         ///
         internal long? SequenceNumber { get; set; }
 
@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs
         ///   as events reach the age limit for retention and are no longer visible within the stream.
         /// </remarks>
         ///
-        public static EventPosition FromOffset(int offset) => FromOffset(offset.ToString(), true);
+        public static EventPosition FromOffset(long offset) => FromOffset(offset.ToString(), true);
 
         /// <summary>
         ///   Corresponds to the event in the partition having a specified sequence number associated with it.
@@ -112,18 +112,18 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued after the
-        ///   requested <paramref name="enqueuedTimeUtc" /> will become the current position.
+        ///   requested <paramref name="enqueuedTime" /> will become the current position.
         /// </summary>
         ///
-        /// <param name="enqueuedTimeUtc">The date and time, in UTC, from which the next available event should be chosen.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, from which the next available event should be chosen.</param>
         ///
         /// <returns>The position of the specified event.</returns>
         ///
-        public static EventPosition FromEnqueuedTime(DateTime enqueuedTimeUtc)
+        public static EventPosition FromEnqueuedTime(DateTimeOffset enqueuedTime)
         {
             return new EventPosition
             {
-                EnqueuedTimeUtc = enqueuedTimeUtc
+                EnqueuedTime = enqueuedTime
             };
         }
 
@@ -145,7 +145,7 @@ namespace Azure.Messaging.EventHubs
         private static EventPosition FromOffset(string offset,
                                                 bool isInclusive = false)
         {
-            Guard.ArgumentNotNullOrWhitespace(nameof(offset), offset);
+            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
 
             return new EventPosition
             {
@@ -155,7 +155,29 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        ///   Determines whether the specified <see cref="EventPosition" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="other">The <see cref="EventPosition" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="EventPosition" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool Equals(EventPosition other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+               return true;
+            }
+
+            return (Offset == other.Offset)
+                && (SequenceNumber == other.SequenceNumber)
+                && (EnqueuedTime == other.EnqueuedTime)
+                && (IsInclusive == other.IsInclusive);
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
@@ -163,7 +185,12 @@ namespace Azure.Messaging.EventHubs
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) =>
+            obj switch
+            {
+                EventPosition other => Equals(other),
+                _ => ReferenceEquals(this, obj)
+            };
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -172,7 +199,16 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Offset);
+            hashCode.Add(SequenceNumber);
+            hashCode.Add(EnqueuedTime);
+            hashCode.Add(IsInclusive);
+
+            return hashCode.ToHashCode();
+        }
 
         /// <summary>
         ///   Converts the instance to string representation.
@@ -182,7 +218,29 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-    }
 
-    //TODO: Implement the AMQP-specific methods from track 1 to a new abstraction. (They were not brought forward)
+        /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> instances are equal to each other.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator ==(EventPosition first,
+                                       EventPosition second) => first.Equals(second);
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> instances are not equal to each other.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are not equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator !=(EventPosition first,
+                                       EventPosition second) => (!first.Equals(second));
+    }
 }

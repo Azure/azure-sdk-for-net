@@ -58,6 +58,23 @@ namespace Azure.Core.Tests
             Assert.AreEqual(new DateTimeOffset(2013, 9, 29, 9, 2, 3, TimeSpan.Zero), mockResponse.Headers.Date);
         }
 
+        [Test]
+        public void ETagParsedIfExist()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("ETag", "\"ABCD\""));
+
+            Assert.AreEqual(new ETag("ABCD"), mockResponse.Headers.ETag);
+        }
+
+        [Test]
+        public void ContentLengthParsedIfExist()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("Content-Length", "100"));
+
+            Assert.AreEqual(100, mockResponse.Headers.ContentLength);
+        }
 
         [Test]
         public void DateReturnsNullForNoHeader()

@@ -1,4 +1,4 @@
-﻿using NetApp.Tests.Helpers;
+using NetApp.Tests.Helpers;
 using Microsoft.Azure.Management.NetApp;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -20,7 +20,7 @@ namespace NetApp.Tests.ResourceTests
         public void CreateDeleteSnapshot()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -30,6 +30,10 @@ namespace NetApp.Tests.ResourceTests
                 // check snapshot exists
                 var snapshotsBefore = netAppMgmtClient.Snapshots.List(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
                 Assert.Single(snapshotsBefore);
+                // check date created has been set to something
+                // can't check exact times becausefails in playback mode
+                Assert.True(true);
+                Assert.NotNull(snapshotsBefore.First().Created);
 
                 // delete the snapshot and check again
                 netAppMgmtClient.Snapshots.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName1);
@@ -47,7 +51,7 @@ namespace NetApp.Tests.ResourceTests
         public void ListSnapshots()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -74,7 +78,7 @@ namespace NetApp.Tests.ResourceTests
         public void GetSnapshotByName()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -97,7 +101,7 @@ namespace NetApp.Tests.ResourceTests
         public void CreateVolumeFromSnapshot()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -125,7 +129,7 @@ namespace NetApp.Tests.ResourceTests
         public void DeleteVolumeWithSnapshotPresent()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
@@ -158,7 +162,7 @@ namespace NetApp.Tests.ResourceTests
         public void PatchSnapshot()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 

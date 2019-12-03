@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Linq;
@@ -16,7 +16,7 @@ namespace AzureRedisCache.Tests
         [Fact]
         public void FirewallFunctionalTest()
         {
-            using (var context = MockContext.Start(this.GetType().FullName))
+            using (var context = MockContext.Start(this.GetType()))
             {
                 var _redisCacheManagementHelper = new RedisCacheManagementHelper(this, context);
                 _redisCacheManagementHelper.TryRegisterSubscriptionForResource();
@@ -42,7 +42,7 @@ namespace AzureRedisCache.Tests
                 RedisResource response = _client.Redis.Get(resourceGroupName, redisCacheName);
                 Assert.Contains(redisCacheName, response.Id);
                 Assert.Equal(redisCacheName, response.Name);
-                Assert.Equal("succeeded", response.ProvisioningState, ignoreCase: true);
+                Assert.Equal(ProvisioningState.Succeeded, response.ProvisioningState, ignoreCase: true);
                 Assert.Equal(SkuName.Premium, response.Sku.Name);
                 Assert.Equal(SkuFamily.P, response.Sku.Family);
 
@@ -89,3 +89,4 @@ namespace AzureRedisCache.Tests
         }
     }
 }
+

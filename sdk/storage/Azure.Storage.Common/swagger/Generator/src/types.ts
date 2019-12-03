@@ -47,7 +47,7 @@ export function isValueType(model: IModelType): boolean {
                 return false;
         }
     } else  if (isEnumType(model)) {
-        return !model.constant && !model.modelAsString;
+        return !model.constant;
     } else if (isPrimitiveType(model)) {
         switch (model.type.toLowerCase()) {
             case 'integer':

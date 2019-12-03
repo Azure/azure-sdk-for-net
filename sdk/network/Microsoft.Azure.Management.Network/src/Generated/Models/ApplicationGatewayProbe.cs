@@ -56,9 +56,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// marked healthy. Default value is 0.</param>
         /// <param name="match">Criterion for classifying a healthy probe
         /// response.</param>
-        /// <param name="provisioningState">Provisioning state of the backend
-        /// http settings resource. Possible values are: 'Updating',
-        /// 'Deleting', and 'Failed'.</param>
+        /// <param name="provisioningState">The provisioning state of the probe
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'</param>
         /// <param name="port">Custom port which will be used for probing the
         /// backend servers. The valid value ranges from 1 to 65535. In case
         /// not set, port from http settings will be used. This property is
@@ -159,12 +159,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the backend http settings
-        /// resource. Possible values are: 'Updating', 'Deleting', and
-        /// 'Failed'.
+        /// Gets the provisioning state of the probe resource. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets custom port which will be used for probing the backend
@@ -183,17 +182,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets type of the resource.
+        /// Gets type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
         /// <summary>
         /// Validate the object.

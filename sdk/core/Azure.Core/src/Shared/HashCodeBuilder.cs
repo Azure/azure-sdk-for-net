@@ -1,11 +1,14 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Core
 {
     /// <summary>
-    /// Copied from https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/HashCode.cs
+    /// Copied from https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/HashCode.cs.
     /// </summary>
     internal struct HashCodeBuilder
     {
@@ -219,7 +222,6 @@ namespace Azure.Core
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint RotateLeft(uint value, int offset)
             => (value << offset) | (value >> (64 - offset));
-
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static uint Round(uint hash, uint input)

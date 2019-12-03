@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
@@ -29,12 +28,12 @@ namespace Azure.Storage.Queues.Models
         /// </param>
         static partial void CustomizeFromXml(XElement root, StorageError error)
         {
-            foreach (var element in root.Elements())
+            foreach (XElement element in root.Elements())
             {
                 switch (element.Name.LocalName)
                 {
-                    case "Code":
-                    case "Message":
+                    case Constants.Xml.Code:
+                    case Constants.Xml.Message:
                         continue;
                     default:
                         error.AdditionalInformation[element.Name.LocalName] = element.Value;
@@ -50,9 +49,9 @@ namespace Azure.Storage.Queues.Models
         /// The failed response.
         /// </param>
         /// <returns>
-        /// A <see cref="StorageRequestFailedException"/>.
+        /// A <see cref="RequestFailedException"/>.
         /// </returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, this.Message, null, this.Code, this.AdditionalInformation);
+            => StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
     }
 }

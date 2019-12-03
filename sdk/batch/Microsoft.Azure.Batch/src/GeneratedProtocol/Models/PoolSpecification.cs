@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Specification for creating a new pool.
+    /// Specification for creating a new Pool.
     /// </summary>
     public partial class PoolSpecification
     {
@@ -31,49 +31,51 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolSpecification class.
         /// </summary>
-        /// <param name="vmSize">The size of the virtual machines in the pool.
-        /// All virtual machines in a pool are the same size.</param>
-        /// <param name="displayName">The display name for the pool.</param>
+        /// <param name="vmSize">The size of the virtual machines in the Pool.
+        /// All virtual machines in a Pool are the same size.</param>
+        /// <param name="displayName">The display name for the Pool.</param>
         /// <param name="cloudServiceConfiguration">The cloud service
-        /// configuration for the pool.</param>
+        /// configuration for the Pool.</param>
         /// <param name="virtualMachineConfiguration">The virtual machine
-        /// configuration for the pool.</param>
-        /// <param name="maxTasksPerNode">The maximum number of tasks that can
-        /// run concurrently on a single compute node in the pool.</param>
-        /// <param name="taskSchedulingPolicy">How tasks are distributed across
-        /// compute nodes in a pool.</param>
-        /// <param name="resizeTimeout">The timeout for allocation of compute
-        /// nodes to the pool.</param>
+        /// configuration for the Pool.</param>
+        /// <param name="maxTasksPerNode">The maximum number of Tasks that can
+        /// run concurrently on a single Compute Node in the Pool.</param>
+        /// <param name="taskSchedulingPolicy">How Tasks are distributed across
+        /// Compute Nodes in a Pool.</param>
+        /// <param name="resizeTimeout">The timeout for allocation of Compute
+        /// Nodes to the Pool.</param>
         /// <param name="targetDedicatedNodes">The desired number of dedicated
-        /// compute nodes in the pool.</param>
+        /// Compute Nodes in the Pool.</param>
         /// <param name="targetLowPriorityNodes">The desired number of
-        /// low-priority compute nodes in the pool.</param>
-        /// <param name="enableAutoScale">Whether the pool size should
+        /// low-priority Compute Nodes in the Pool.</param>
+        /// <param name="enableAutoScale">Whether the Pool size should
         /// automatically adjust over time.</param>
         /// <param name="autoScaleFormula">The formula for the desired number
-        /// of compute nodes in the pool.</param>
+        /// of Compute Nodes in the Pool.</param>
         /// <param name="autoScaleEvaluationInterval">The time interval at
-        /// which to automatically adjust the pool size according to the
+        /// which to automatically adjust the Pool size according to the
         /// autoscale formula.</param>
-        /// <param name="enableInterNodeCommunication">Whether the pool permits
-        /// direct communication between nodes.</param>
+        /// <param name="enableInterNodeCommunication">Whether the Pool permits
+        /// direct communication between Compute Nodes.</param>
         /// <param name="networkConfiguration">The network configuration for
-        /// the pool.</param>
-        /// <param name="startTask">A task to run on each compute node as it
-        /// joins the pool. The task runs when the node is added to the pool or
-        /// when the node is restarted.</param>
-        /// <param name="certificateReferences">A list of certificates to be
-        /// installed on each compute node in the pool.</param>
-        /// <param name="applicationPackageReferences">The list of application
-        /// packages to be installed on each compute node in the pool.</param>
+        /// the Pool.</param>
+        /// <param name="startTask">A Task to run on each Compute Node as it
+        /// joins the Pool. The Task runs when the Compute Node is added to the
+        /// Pool or when the Compute Node is restarted.</param>
+        /// <param name="certificateReferences">A list of Certificates to be
+        /// installed on each Compute Node in the Pool.</param>
+        /// <param name="applicationPackageReferences">The list of Packages to
+        /// be installed on each Compute Node in the Pool.</param>
         /// <param name="applicationLicenses">The list of application licenses
-        /// the Batch service will make available on each compute node in the
-        /// pool.</param>
-        /// <param name="userAccounts">The list of user accounts to be created
-        /// on each node in the pool.</param>
+        /// the Batch service will make available on each Compute Node in the
+        /// Pool.</param>
+        /// <param name="userAccounts">The list of user Accounts to be created
+        /// on each Compute Node in the Pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
-        /// the pool as metadata.</param>
-        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// the Pool as metadata.</param>
+        /// <param name="mountConfiguration">A list of file systems to mount on
+        /// each node in the pool.</param>
+        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -95,6 +97,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             ApplicationLicenses = applicationLicenses;
             UserAccounts = userAccounts;
             Metadata = metadata;
+            MountConfiguration = mountConfiguration;
             CustomInit();
         }
 
@@ -104,7 +107,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the display name for the pool.
+        /// Gets or sets the display name for the Pool.
         /// </summary>
         /// <remarks>
         /// The display name need not be unique and can contain any Unicode
@@ -114,38 +117,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the virtual machines in the pool. All
-        /// virtual machines in a pool are the same size.
+        /// Gets or sets the size of the virtual machines in the Pool. All
+        /// virtual machines in a Pool are the same size.
         /// </summary>
         /// <remarks>
-        /// For information about available sizes of virtual machines in pools,
-        /// see Choose a VM size for compute nodes in an Azure Batch pool
+        /// For information about available sizes of virtual machines in Pools,
+        /// see Choose a VM size for Compute Nodes in an Azure Batch Pool
         /// (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).
         /// </remarks>
         [JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the cloud service configuration for the pool.
+        /// Gets or sets the cloud service configuration for the Pool.
         /// </summary>
         /// <remarks>
-        /// This property must be specified if the pool needs to be created
+        /// This property must be specified if the Pool needs to be created
         /// with Azure PaaS VMs. This property and virtualMachineConfiguration
         /// are mutually exclusive and one of the properties must be specified.
         /// If neither is specified then the Batch service returns an error; if
         /// you are calling the REST API directly, the HTTP status code is 400
         /// (Bad Request). This property cannot be specified if the Batch
-        /// account was created with its poolAllocationMode property set to
+        /// Account was created with its poolAllocationMode property set to
         /// 'UserSubscription'.
         /// </remarks>
         [JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the virtual machine configuration for the pool.
+        /// Gets or sets the virtual machine configuration for the Pool.
         /// </summary>
         /// <remarks>
-        /// This property must be specified if the pool needs to be created
+        /// This property must be specified if the Pool needs to be created
         /// with Azure IaaS VMs. This property and cloudServiceConfiguration
         /// are mutually exclusive and one of the properties must be specified.
         /// If neither is specified then the Batch service returns an error; if
@@ -156,26 +159,29 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum number of tasks that can run concurrently
-        /// on a single compute node in the pool.
+        /// Gets or sets the maximum number of Tasks that can run concurrently
+        /// on a single Compute Node in the Pool.
         /// </summary>
         /// <remarks>
         /// The default value is 1. The maximum value is the smaller of 4 times
-        /// the number of cores of the vmSize of the pool or 256.
+        /// the number of cores of the vmSize of the Pool or 256.
         /// </remarks>
         [JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
         /// <summary>
-        /// Gets or sets how tasks are distributed across compute nodes in a
-        /// pool.
+        /// Gets or sets how Tasks are distributed across Compute Nodes in a
+        /// Pool.
         /// </summary>
+        /// <remarks>
+        /// If not specified, the default is spread.
+        /// </remarks>
         [JsonProperty(PropertyName = "taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets the timeout for allocation of compute nodes to the
-        /// pool.
+        /// Gets or sets the timeout for allocation of Compute Nodes to the
+        /// Pool.
         /// </summary>
         /// <remarks>
         /// This timeout applies only to manual scaling; it has no effect when
@@ -189,8 +195,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of dedicated compute nodes in the
-        /// pool.
+        /// Gets or sets the desired number of dedicated Compute Nodes in the
+        /// Pool.
         /// </summary>
         /// <remarks>
         /// This property must not be specified if enableAutoScale is set to
@@ -201,8 +207,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? TargetDedicatedNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the desired number of low-priority compute nodes in
-        /// the pool.
+        /// Gets or sets the desired number of low-priority Compute Nodes in
+        /// the Pool.
         /// </summary>
         /// <remarks>
         /// This property must not be specified if enableAutoScale is set to
@@ -213,26 +219,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public int? TargetLowPriorityNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the pool size should automatically adjust over
+        /// Gets or sets whether the Pool size should automatically adjust over
         /// time.
         /// </summary>
         /// <remarks>
         /// If false, at least one of targetDedicateNodes and
         /// targetLowPriorityNodes must be specified. If true, the
-        /// autoScaleFormula element is required. The pool automatically
+        /// autoScaleFormula element is required. The Pool automatically
         /// resizes according to the formula. The default value is false.
         /// </remarks>
         [JsonProperty(PropertyName = "enableAutoScale")]
         public bool? EnableAutoScale { get; set; }
 
         /// <summary>
-        /// Gets or sets the formula for the desired number of compute nodes in
-        /// the pool.
+        /// Gets or sets the formula for the desired number of Compute Nodes in
+        /// the Pool.
         /// </summary>
         /// <remarks>
         /// This property must not be specified if enableAutoScale is set to
         /// false. It is required if enableAutoScale is set to true. The
-        /// formula is checked for validity before the pool is created. If the
+        /// formula is checked for validity before the Pool is created. If the
         /// formula is not valid, the Batch service rejects the request with
         /// detailed error information.
         /// </remarks>
@@ -241,7 +247,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the time interval at which to automatically adjust the
-        /// pool size according to the autoscale formula.
+        /// Pool size according to the autoscale formula.
         /// </summary>
         /// <remarks>
         /// The default value is 15 minutes. The minimum and maximum value are
@@ -255,87 +261,87 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public System.TimeSpan? AutoScaleEvaluationInterval { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the pool permits direct communication between
-        /// nodes.
+        /// Gets or sets whether the Pool permits direct communication between
+        /// Compute Nodes.
         /// </summary>
         /// <remarks>
         /// Enabling inter-node communication limits the maximum size of the
-        /// pool due to deployment restrictions on the nodes of the pool. This
-        /// may result in the pool not reaching its desired size. The default
-        /// value is false.
+        /// Pool due to deployment restrictions on the Compute Nodes of the
+        /// Pool. This may result in the Pool not reaching its desired size.
+        /// The default value is false.
         /// </remarks>
         [JsonProperty(PropertyName = "enableInterNodeCommunication")]
         public bool? EnableInterNodeCommunication { get; set; }
 
         /// <summary>
-        /// Gets or sets the network configuration for the pool.
+        /// Gets or sets the network configuration for the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "networkConfiguration")]
         public NetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets a task to run on each compute node as it joins the
-        /// pool. The task runs when the node is added to the pool or when the
-        /// node is restarted.
+        /// Gets or sets a Task to run on each Compute Node as it joins the
+        /// Pool. The Task runs when the Compute Node is added to the Pool or
+        /// when the Compute Node is restarted.
         /// </summary>
         [JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of certificates to be installed on each compute
-        /// node in the pool.
+        /// Gets or sets a list of Certificates to be installed on each Compute
+        /// Node in the Pool.
         /// </summary>
         /// <remarks>
-        /// For Windows compute nodes, the Batch service installs the
-        /// certificates to the specified certificate store and location. For
-        /// Linux compute nodes, the certificates are stored in a directory
-        /// inside the task working directory and an environment variable
-        /// AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this
-        /// location. For certificates with visibility of 'remoteUser', a
+        /// For Windows Nodes, the Batch service installs the Certificates to
+        /// the specified Certificate store and location. For Linux Compute
+        /// Nodes, the Certificates are stored in a directory inside the Task
+        /// working directory and an environment variable
+        /// AZ_BATCH_CERTIFICATES_DIR is supplied to the Task to query for this
+        /// location. For Certificates with visibility of 'remoteUser', a
         /// 'certs' directory is created in the user's home directory (e.g.,
-        /// /home/{user-name}/certs) and certificates are placed in that
+        /// /home/{user-name}/certs) and Certificates are placed in that
         /// directory.
         /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of application packages to be installed on
-        /// each compute node in the pool.
+        /// Gets or sets the list of Packages to be installed on each Compute
+        /// Node in the Pool.
         /// </summary>
         /// <remarks>
-        /// Changes to application package references affect all new compute
-        /// nodes joining the pool, but do not affect compute nodes that are
-        /// already in the pool until they are rebooted or reimaged. There is a
-        /// maximum of 10 application package references on any given pool.
+        /// Changes to Package references affect all new Nodes joining the
+        /// Pool, but do not affect Compute Nodes that are already in the Pool
+        /// until they are rebooted or reimaged. There is a maximum of 10
+        /// Package references on any given Pool.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the list of application licenses the Batch service
-        /// will make available on each compute node in the pool.
+        /// will make available on each Compute Node in the Pool.
         /// </summary>
         /// <remarks>
         /// The list of application licenses must be a subset of available
         /// Batch service application licenses. If a license is requested which
-        /// is not supported, pool creation will fail. The permitted licenses
-        /// available on the pool are 'maya', 'vray', '3dsmax', 'arnold'. An
+        /// is not supported, Pool creation will fail. The permitted licenses
+        /// available on the Pool are 'maya', 'vray', '3dsmax', 'arnold'. An
         /// additional charge applies for each application license added to the
-        /// pool.
+        /// Pool.
         /// </remarks>
         [JsonProperty(PropertyName = "applicationLicenses")]
         public IList<string> ApplicationLicenses { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of user accounts to be created on each node
-        /// in the pool.
+        /// Gets or sets the list of user Accounts to be created on each
+        /// Compute Node in the Pool.
         /// </summary>
         [JsonProperty(PropertyName = "userAccounts")]
         public IList<UserAccount> UserAccounts { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of name-value pairs associated with the pool as
+        /// Gets or sets a list of name-value pairs associated with the Pool as
         /// metadata.
         /// </summary>
         /// <remarks>
@@ -344,6 +350,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataItem> Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of file systems to mount on each node in the
+        /// pool.
+        /// </summary>
+        /// <remarks>
+        /// This supports Azure Files, NFS, CIFS/SMB, and Blobfuse.
+        /// </remarks>
+        [JsonProperty(PropertyName = "mountConfiguration")]
+        public IList<MountConfiguration> MountConfiguration { get; set; }
 
     }
 }

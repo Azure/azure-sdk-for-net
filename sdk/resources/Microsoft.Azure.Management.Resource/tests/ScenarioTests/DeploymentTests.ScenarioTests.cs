@@ -51,7 +51,7 @@ namespace ResourceGroups.Tests
                     }}
                 };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -83,7 +83,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -111,7 +111,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -160,7 +160,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -201,7 +201,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -238,7 +238,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
 
@@ -285,7 +285,7 @@ namespace ResourceGroups.Tests
                     }}
                 };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 var parameters = new Deployment
@@ -325,7 +325,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string resourceName = TestUtilities.GenerateName("csmr");
@@ -373,7 +373,7 @@ namespace ResourceGroups.Tests
         public void CreateLargeWebDeploymentTemplateWorks()
         {
             var handler = new RecordedDelegatingHandler();
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 string resourceName = TestUtilities.GenerateName("csmr");
                 string groupName = TestUtilities.GenerateName("csmrg");
@@ -410,7 +410,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupName = "SDK-test";
@@ -452,7 +452,7 @@ namespace ResourceGroups.Tests
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
 
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var client = GetResourceManagementClient(context, handler);
                 string groupId = "tiano-mgtest01";
@@ -485,5 +485,223 @@ namespace ResourceGroups.Tests
                 Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
             }
         }
+
+        [Fact]
+        public void TenantLevelDeployment()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string deploymentName = TestUtilities.GenerateName("csharpsdktest");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "tenant_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "East US 2"
+                };
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtTenantScope(deploymentName, parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtTenantScope(deploymentName, parameters);
+
+                var deployment = client.Deployments.GetAtTenantScope(deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+
+                var deploymentOperations = client.DeploymentOperations.ListAtTenantScope(deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtTenant()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string deploymentName = TestUtilities.GenerateName("csharpsdktest");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "tenant_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'managementGroupId': {'value': 'tiano-mgtest01'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "East US 2"
+                };
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: "", deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: "", deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: "", deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: "", deploymentName: deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtManagementGroup()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupId = "tiano-mgtest01";
+                string deploymentName = TestUtilities.GenerateName("csharpsdktest");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "management_group_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'tianosatestgl'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "East US"
+                };
+
+                var managementGroupScope = $"/providers/Microsoft.Management/managementGroups/{groupId}";
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: managementGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: managementGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: managementGroupScope, deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: managementGroupScope, deploymentName: deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtSubscription()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = "SDK-test";
+                string deploymentName = TestUtilities.GenerateName("csmd");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "subscription_level_template.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'armbuilddemo1803'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    },
+                    Location = "WestUS"
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
+
+                var subscriptionScope = $"/subscriptions/{client.SubscriptionId}";
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: subscriptionScope, deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: subscriptionScope, deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: subscriptionScope, deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: subscriptionScope, deploymentName: deploymentName);
+                Assert.Equal(4, deploymentOperations.Count());
+            }
+        }
+
+        [Fact]
+        public void DeploymentWithScope_AtResourceGroup()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                string groupName = "SDK-test-01";
+                string deploymentName = TestUtilities.GenerateName("csmd");
+
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = JObject.Parse(File.ReadAllText(Path.Combine("ScenarioTests", "simple-storage-account.json"))),
+                        Parameters =
+                        JObject.Parse("{'storageAccountName': {'value': 'tianotest105'}}"),
+                        Mode = DeploymentMode.Incremental,
+                    }
+                };
+
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "WestUS" });
+
+                var resourceGroupScope = $"/subscriptions/{client.SubscriptionId}/resourceGroups/{groupName}";
+
+                //Validate
+                var validationResult = client.Deployments.ValidateAtScope(scope: resourceGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                //Assert
+                Assert.Null(validationResult.Error);
+                Assert.NotNull(validationResult.Properties);
+                Assert.NotNull(validationResult.Properties.Providers);
+
+                //Put deployment
+                var deploymentResult = client.Deployments.CreateOrUpdateAtScope(scope: resourceGroupScope, deploymentName: deploymentName, parameters: parameters);
+
+                var deployment = client.Deployments.GetAtScope(scope: resourceGroupScope, deploymentName: deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+
+                var deploymentOperations = client.DeploymentOperations.ListAtScope(scope: resourceGroupScope, deploymentName: deploymentName);
+                Assert.Equal(2, deploymentOperations.Count());
+            }
+        }
     }
 }
+

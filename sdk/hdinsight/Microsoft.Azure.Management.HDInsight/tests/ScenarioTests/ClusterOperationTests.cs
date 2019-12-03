@@ -336,6 +336,68 @@ namespace Management.HDInsight.Tests
         }
 
         [Fact]
+        public void TestCreateClusterWithAutoScaleLoadBasedType()
+        {
+            TestInitialize();
+            string clusterName = TestUtilities.GenerateName("hdisdk-loadbased");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            var workerNode = createParams.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode"));
+
+            //Add auto scale configuration Load-based type
+            workerNode.AutoscaleConfiguration = new Autoscale
+            {
+                Capacity = new AutoscaleCapacity
+                {
+                    MinInstanceCount = 4,
+                    MaxInstanceCount = 5
+                }
+            };
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateAutoScaleConfig(workerNode.AutoscaleConfiguration,
+                cluster.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration);
+        }
+
+        [Fact]
+        public void TestCreateClusterWithAutoScaleScheduleBasedType()
+        {
+            TestInitialize();
+            string clusterName = TestUtilities.GenerateName("hdisdk-schedulebased");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            var workerNode = createParams.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode"));
+
+            //Add auto scale configuration.
+            workerNode.AutoscaleConfiguration = new Autoscale
+            {
+                Recurrence = new AutoscaleRecurrence
+                {
+                    //"China Standard Time", "Central Standard Time","Central American Standard Time"
+                    TimeZone = "China Standard Time",
+                    Schedule = new List<AutoscaleSchedule>
+                    {
+                        new AutoscaleSchedule
+                        {
+                            Days = new List<DaysOfWeek?>
+                            {
+                                DaysOfWeek.Thursday
+                            },
+                            TimeAndCapacity = new AutoscaleTimeAndCapacity
+                            {
+                                Time = "16:00",
+                                MinInstanceCount = 4,
+                                MaxInstanceCount = 4
+                            }
+                        }
+                    }
+                }
+            };
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateAutoScaleConfig(workerNode.AutoscaleConfiguration,
+                cluster.Properties.ComputeProfile.Roles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration);
+        }
+
+        [Fact]
         public void TestCreateRServerCluster()
         {
             TestInitialize();

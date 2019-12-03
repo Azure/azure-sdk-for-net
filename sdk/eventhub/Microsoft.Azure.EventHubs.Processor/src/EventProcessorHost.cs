@@ -6,7 +6,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System;
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
-    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.Azure.Storage;
 
     /// <summary>
     /// Represents a host for processing Event Hubs event data.
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         /// <summary>
         /// Create a new host to process events from an Event Hub.
-        /// 
+        ///
         /// <para>Since Event Hubs are frequently used for scale-out, high-traffic scenarios, generally there will
         /// be only one host per process, and the processes will be run on separate machines. However, it is
         /// supported to run multiple hosts on one machine, or even within one process, if throughput is not
@@ -52,10 +52,10 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         /// <summary>
         /// Create a new host to process events from an Event Hub.
-        /// 
+        ///
         /// <para>This overload of the constructor uses the default, built-in lease and checkpoint managers.</para>
         /// </summary>
-        /// <param name="hostName">A name for this event processor host. See method notes.</param>
+        /// <param name="hostName">Name of the processor host. MUST BE UNIQUE. Strongly recommend including a Guid to ensure uniqueness.</param>
         /// <param name="eventHubPath">The name of the EventHub.</param>
         /// <param name="consumerGroupName">The name of the consumer group within the Event Hub.</param>
         /// <param name="eventHubConnectionString">Connection string for the Event Hub to receive from.</param>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         /// <summary>
         /// Create a new host to process events from an Event Hub.
-        /// 
+        ///
         /// <para>This overload of the constructor allows maximum flexibility.
         /// This one allows the caller to specify the name of the processor host as well.
         /// The overload also allows the caller to provide their own lease and checkpoint managers to replace the built-in
@@ -100,6 +100,7 @@ namespace Microsoft.Azure.EventHubs.Processor
              ICheckpointManager checkpointManager,
              ILeaseManager leaseManager)
         {
+            Guard.ArgumentNotNullOrWhiteSpace(nameof(hostName), hostName);
             Guard.ArgumentNotNullOrWhiteSpace(nameof(consumerGroupName), consumerGroupName);
             Guard.ArgumentNotNull(nameof(checkpointManager), checkpointManager);
             Guard.ArgumentNotNull(nameof(leaseManager), leaseManager);
@@ -190,31 +191,97 @@ namespace Microsoft.Azure.EventHubs.Processor
             string storageBlobPrefix = null,
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
+            : this(hostName,
+                  endpointAddress,
+                  eventHubPath,
+                  consumerGroupName,
+                  tokenProvider,
+                  new AzureStorageCheckpointLeaseManager(cloudStorageAccount, leaseContainerName, storageBlobPrefix),
+                  operationTimeout,
+                  transportType)
+        {
+        }
+
+        /// <summary>
+        /// Create a new host to process events from an Event Hub with provided <see cref="TokenProvider"/>
+        /// </summary>
+        /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
+        /// <param name="eventHubPath">The name of the EventHub.</param>
+        /// <param name="consumerGroupName">The name of the consumer group within the Event Hub.</param>
+        /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
+        /// <param name="cloudStorageAccount">Azure Storage account used for leases and checkpointing.</param>
+        /// <param name="leaseContainerName">Azure Storage container name for use by built-in lease and checkpoint manager.</param>
+        /// <param name="storageBlobPrefix">Prefix used when naming blobs within the storage container.</param>
+        /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
+        /// <param name="transportType">Transport type on connection.</param>
+        public EventProcessorHost(
+            Uri endpointAddress,
+            string eventHubPath,
+            string consumerGroupName,
+            ITokenProvider tokenProvider,
+            CloudStorageAccount cloudStorageAccount,
+            string leaseContainerName,
+            string storageBlobPrefix = null,
+            TimeSpan? operationTimeout = null,
+            TransportType transportType = TransportType.Amqp)
+            : this(EventProcessorHost.CreateHostName(null),
+                endpointAddress,
+                eventHubPath,
+                consumerGroupName,
+                tokenProvider,
+                cloudStorageAccount,
+                leaseContainerName,
+                storageBlobPrefix,
+                operationTimeout,
+                transportType)
+        {
+        }
+
+        /// <summary>
+        /// Create a new host to process events from an Event Hub with provided <see cref="TokenProvider"/>
+        /// </summary>
+        /// <param name="hostName">Name of the processor host. MUST BE UNIQUE. Strongly recommend including a Guid to ensure uniqueness.</param>
+        /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
+        /// <param name="eventHubPath">The name of the EventHub.</param>
+        /// <param name="consumerGroupName">The name of the consumer group within the Event Hub.</param>
+        /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
+        /// <param name="checkpointManager">Object implementing ICheckpointManager which handles partition checkpointing.</param>
+        /// <param name="leaseManager">Object implementing ILeaseManager which handles leases for partitions.</param>
+        /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
+        /// <param name="transportType">Transport type on connection.</param>
+        public EventProcessorHost(
+            string hostName,
+            Uri endpointAddress,
+            string eventHubPath,
+            string consumerGroupName,
+            ITokenProvider tokenProvider,
+            ICheckpointManager checkpointManager,
+            ILeaseManager leaseManager,
+            TimeSpan? operationTimeout = null,
+            TransportType transportType = TransportType.Amqp)
         {
             Guard.ArgumentNotNullOrWhiteSpace(nameof(hostName), hostName);
             Guard.ArgumentNotNull(nameof(endpointAddress), endpointAddress);
             Guard.ArgumentNotNullOrWhiteSpace(nameof(eventHubPath), eventHubPath);
             Guard.ArgumentNotNullOrWhiteSpace(nameof(consumerGroupName), consumerGroupName);
             Guard.ArgumentNotNull(nameof(tokenProvider), tokenProvider);
-            Guard.ArgumentNotNull(nameof(cloudStorageAccount), cloudStorageAccount);
-            Guard.ArgumentNotNullOrWhiteSpace(nameof(leaseContainerName), leaseContainerName);
+            Guard.ArgumentNotNull(nameof(checkpointManager), checkpointManager);
+            Guard.ArgumentNotNull(nameof(leaseManager), leaseManager);
 
             this.HostName = hostName;
             this.EndpointAddress = endpointAddress;
             this.EventHubPath = eventHubPath;
             this.ConsumerGroupName = consumerGroupName;
-            this.OperationTimeout = operationTimeout ?? ClientConstants.DefaultOperationTimeout;
-            this.TransportType = TransportType;
             this.tokenProvider = tokenProvider;
-
-            // Create default checkpoint-lease manager.
-            this.CheckpointManager = new AzureStorageCheckpointLeaseManager(cloudStorageAccount, leaseContainerName, storageBlobPrefix);
-            this.LeaseManager = (ILeaseManager)this.CheckpointManager;
+            this.CheckpointManager = checkpointManager;
+            this.LeaseManager = leaseManager;
+            this.TransportType = transportType;
+            this.OperationTimeout = operationTimeout ?? ClientConstants.DefaultOperationTimeout;
             this.PartitionManager = new PartitionManager(this);
             ProcessorEventSource.Log.EventProcessorHostCreated(this.HostName, this.EventHubPath);
         }
 
-        // Using this intermediate constructor to create single combined manager to be used as 
+        // Using this intermediate constructor to create single combined manager to be used as
         // both lease manager and checkpoint manager.
         EventProcessorHost(
                 string hostName,
@@ -228,6 +295,29 @@ namespace Microsoft.Azure.EventHubs.Processor
                   eventHubConnectionString,
                   combinedManager,
                   combinedManager)
+        {
+        }
+
+        // Using this intermediate constructor to create single combined manager to be used as
+        // both lease manager and checkpoint manager.
+        EventProcessorHost(
+            string hostName,
+            Uri endpointAddress,
+            string eventHubPath,
+            string consumerGroupName,
+            ITokenProvider tokenProvider,
+            AzureStorageCheckpointLeaseManager combinedManager,
+            TimeSpan? operationTimeout = null,
+            TransportType transportType = TransportType.Amqp)
+            : this(hostName,
+                endpointAddress,
+                eventHubPath,
+                consumerGroupName,
+                tokenProvider,
+                combinedManager,
+                combinedManager,
+                operationTimeout,
+                transportType)
         {
         }
 
@@ -262,9 +352,9 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// </summary>
         public TimeSpan OperationTimeout { get; internal set; }
 
-        /// <summary>Gets or sets the 
-        /// <see cref="PartitionManagerOptions" /> instance used by the 
-        /// <see cref="EventProcessorHost" /> object.</summary> 
+        /// <summary>Gets or sets the
+        /// <see cref="PartitionManagerOptions" /> instance used by the
+        /// <see cref="EventProcessorHost" /> object.</summary>
         /// <value>The <see cref="PartitionManagerOptions" /> instance.</value>
         public PartitionManagerOptions PartitionManagerOptions { get; set; }
 
@@ -280,7 +370,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         internal PartitionManager PartitionManager { get; private set; }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.  
+        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.
         /// This also starts the host and causes it to start participating in the partition distribution process.
         /// </summary>
         /// <typeparam name="T">Implementation of your application specific <see cref="IEventProcessor"/>.</typeparam>
@@ -291,11 +381,11 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.  
+        /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.
         /// This also starts the host and causes it to start participating in the partition distribution process.
         /// </summary>
         /// <typeparam name="T">Implementation of your application specific <see cref="IEventProcessor"/>.</typeparam>
-        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership 
+        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership
         /// is acquired for a particular partition of EventHub.</param>
         /// <returns>A task to indicate EventProcessorHost instance is started.</returns>
         public Task RegisterEventProcessorAsync<T>(EventProcessorOptions processorOptions) where T : IEventProcessor, new()
@@ -305,8 +395,8 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of 
-        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating 
+        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of
+        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating
         /// in the partition distribution process.
         /// </summary>
         /// <param name="factory">Instance of <see cref="IEventProcessorFactory"/> implementation.</param>
@@ -319,12 +409,12 @@ namespace Microsoft.Azure.EventHubs.Processor
         }
 
         /// <summary>
-        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of 
-        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating 
+        /// This registers <see cref="IEventProcessorFactory"/> implementation with the host which is used to create an instance of
+        /// <see cref="IEventProcessor"/> when it takes ownership of a partition.  This also starts the host and causes it to start participating
         /// in the partition distribution process.
         /// </summary>
         /// <param name="factory">Instance of <see cref="IEventProcessorFactory"/> implementation.</param>
-        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership 
+        /// <param name="processorOptions"><see cref="EventProcessorOptions"/> to control various aspects of message pump created when ownership
         /// is acquired for a particular partition of EventHub.</param>
         /// <returns>A task to indicate EventProcessorHost instance is started.</returns>
         public async Task RegisterEventProcessorFactoryAsync(IEventProcessorFactory factory, EventProcessorOptions processorOptions)
@@ -402,7 +492,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         /// <summary>
         /// Convenience method for generating unique host names, safe to pass to the EventProcessorHost constructors
         /// that take a hostName argument.
-        ///  
+        ///
         /// If a prefix is supplied, the constructed name begins with that string. If the prefix argument is null or
         /// an empty string, the constructed name begins with "host". Then a dash '-' and a unique ID are appended to
         /// create a unique name.

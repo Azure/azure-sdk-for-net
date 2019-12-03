@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-4f72b1b9-bb77-e403-d9f1-7d026b7599d4?sv=2018-11-09\u0026st=2019-06-17T19%3A59%3A54Z\u0026se=2019-06-17T21%3A59%3A54Z\u0026sp=raup\u0026sig=Sanitized",
+      "RequestUri": "http:\u002f\u002fseandevtest.queue.core.windows.net\u002ftest-queue-8a7a4872-23f6-21a0-ea58-9e860474f068?sv=2019-02-02\u0026st=2019-09-18T23%3A05%3A36Z\u0026se=2019-09-19T01%3A05%3A36Z\u0026sp=raup\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "traceparent": "00-7bfe0fa8eddf0d4693f56237c0df8467-f9c1cef17a27b049-00",
         "User-Agent": [
-          "azsdk-net-storage-queues/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190918.1\u002b4d11b69d11b884a7ac8d0c95d8a535f61880046a",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "b0a603c3384ee808237793f5d59d0fe0",
+        "x-ms-client-request-id": "5a91740c-23b1-8ac5-c20c-8cc01ee453ff",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
@@ -16,25 +17,26 @@
       "StatusCode": 403,
       "ResponseHeaders": {
         "Content-Length": "246",
-        "Content-Type": "application/xml",
-        "Date": "Mon, 17 Jun 2019 20:59:53 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Thu, 19 Sep 2019 00:05:35 GMT",
         "Server": [
-          "Windows-Azure-Queue/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Queue\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "AuthorizationFailure",
-        "x-ms-request-id": "a189e9aa-e003-0039-114f-25b612000000",
+        "x-ms-request-id": "14af740e-2003-003e-557d-6ebc2b000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eAuthorizationFailure\u003c/Code\u003e\u003cMessage\u003eThis request is not authorized to perform this operation.\n",
-        "RequestId:a189e9aa-e003-0039-114f-25b612000000\n",
-        "Time:2019-06-17T20:59:54.7173671Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eAuthorizationFailure\u003c\u002fCode\u003e\u003cMessage\u003eThis request is not authorized to perform this operation.\n",
+        "RequestId:14af740e-2003-003e-557d-6ebc2b000000\n",
+        "Time:2019-09-19T00:05:36.3599700Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-06-17T13:59:54.6816359-07:00",
-    "RandomSeed": "1982861466"
+    "DateTimeOffsetNow": "2019-09-18T17:05:36.4934797-07:00",
+    "RandomSeed": "1535542887",
+    "Storage_TestConfigDefault": "ProductionTenant\nseandevtest\nU2FuaXRpemVk\nhttp:\u002f\u002fseandevtest.blob.core.windows.net\nhttp:\u002f\u002fseandevtest.file.core.windows.net\nhttp:\u002f\u002fseandevtest.queue.core.windows.net\nhttp:\u002f\u002fseandevtest.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fseandevtest-secondary.blob.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.file.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.queue.core.windows.net\nhttp:\u002f\u002fseandevtest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fseandevtest.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fseandevtest.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fseandevtest.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fseandevtest.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fseandevtest-secondary.file.core.windows.net\u002f;AccountName=seandevtest;AccountKey=Sanitized"
   }
 }

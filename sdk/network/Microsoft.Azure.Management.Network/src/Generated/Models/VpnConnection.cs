@@ -61,15 +61,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// security.</param>
         /// <param name="useLocalAzureIpAddress">Use local azure ip to initiate
         /// connection.</param>
-        /// <param name="provisioningState">The provisioning state of the
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'</param>
+        /// <param name="provisioningState">The provisioning state of the VPN
+        /// connection resource. Possible values include: 'Succeeded',
+        /// 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="vpnLinkConnections">List of all vpn site link
+        /// connections to the gateway.</param>
         /// <param name="name">The name of the resource that is unique within a
         /// resource group. This name can be used to access the
         /// resource.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
-        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
+        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<VpnSiteLinkConnection> vpnLinkConnections = default(IList<VpnSiteLinkConnection>), string name = default(string), string etag = default(string))
             : base(id)
         {
             RemoteVpnSite = remoteVpnSite;
@@ -87,6 +89,7 @@ namespace Microsoft.Azure.Management.Network.Models
             EnableInternetSecurity = enableInternetSecurity;
             UseLocalAzureIpAddress = useLocalAzureIpAddress;
             ProvisioningState = provisioningState;
+            VpnLinkConnections = vpnLinkConnections;
             Name = name;
             Etag = etag;
             CustomInit();
@@ -185,11 +188,18 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? UseLocalAzureIpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the resource. Possible
-        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+        /// Gets the provisioning state of the VPN connection resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets list of all vpn site link connections to the gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vpnLinkConnections")]
+        public IList<VpnSiteLinkConnection> VpnLinkConnections { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a

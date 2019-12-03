@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
                 catch
                 {
                     // It takes time for Azure AD to realize a new application has been added. 
-                    await Task.Delay(15000);
+                    await Task.Delay(20000);
 
                     count--;
                 }

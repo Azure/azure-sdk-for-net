@@ -57,46 +57,69 @@ namespace Microsoft.Azure.ServiceBus
         {
             while (!this.pumpCancellationToken.IsCancellationRequested)
             {
-                Message message = null;
                 try
                 {
                     await this.maxConcurrentCallsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
-                    message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);
 
-                    if (message != null)
+                    TaskExtensionHelper.Schedule(async () =>
                     {
-                        MessagingEventSource.Log.MessageReceiverPumpTaskStart(this.messageReceiver.ClientId, message, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
-
-                        TaskExtensionHelper.Schedule(() =>
+                        Message message = null;
+                        try
                         {
-                            if (ServiceBusDiagnosticSource.IsEnabled())
+                            message = await this.messageReceiver.ReceiveAsync(this.registerHandlerOptions.ReceiveTimeOut).ConfigureAwait(false);
+                            if (message != null)
                             {
-                                return this.MessageDispatchTaskInstrumented(message);
+                                MessagingEventSource.Log.MessageReceiverPumpTaskStart(this.messageReceiver.ClientId, message, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
+
+                                TaskExtensionHelper.Schedule(() =>
+                                {
+                                    if (ServiceBusDiagnosticSource.IsEnabled())
+                                    {
+                                        return this.MessageDispatchTaskInstrumented(message);
+                                    }
+                                    else
+                                    {
+                                        return this.MessageDispatchTask(message);
+                                    }
+                                });
                             }
-                            else
+                        }
+                        catch (OperationCanceledException) when (pumpCancellationToken.IsCancellationRequested) 
+                        {
+                            // Ignore as we are stopping the pump
+                        }
+                        catch (ObjectDisposedException) when (pumpCancellationToken.IsCancellationRequested)
+                        {
+                            // Ignore as we are stopping the pump
+                        }
+                        catch (Exception exception)
+                        {
+                            MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                            await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
+                        }
+                        finally
+                        {
+                            // Either an exception or for some reason message was null, release semaphore and retry.
+                            if (message == null)
                             {
-                                return this.MessageDispatchTask(message);
+                                this.maxConcurrentCallsSemaphoreSlim.Release();
+                                MessagingEventSource.Log.MessageReceiverPumpTaskStop(this.messageReceiver.ClientId, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
                             }
-                        });
-                    }
+                        }
+                    });
+                }
+                catch (OperationCanceledException) when (pumpCancellationToken.IsCancellationRequested)
+                {
+                    // Ignore as we are stopping the pump
+                }
+                catch (ObjectDisposedException) when (pumpCancellationToken.IsCancellationRequested)
+                {
+                    // Ignore as we are stopping the pump
                 }
                 catch (Exception exception)
                 {
-                    // Not reporting an ObjectDisposedException as we're stopping the pump
-                    if (!(exception is ObjectDisposedException && this.pumpCancellationToken.IsCancellationRequested))
-                    {
-                        MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
-                        await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false); 
-                    }
-                }
-                finally
-                {
-                    // Either an exception or for some reason message was null, release semaphore and retry.
-                    if (message == null)
-                    {
-                        this.maxConcurrentCallsSemaphoreSlim.Release();
-                        MessagingEventSource.Log.MessageReceiverPumpTaskStop(this.messageReceiver.ClientId, this.maxConcurrentCallsSemaphoreSlim.CurrentCount);
-                    }
+                    MessagingEventSource.Log.MessageReceivePumpTaskException(this.messageReceiver.ClientId, string.Empty, exception);
+                    await this.RaiseExceptionReceived(exception, ExceptionReceivedEventArgsAction.Receive).ConfigureAwait(false);
                 }
             }
         }

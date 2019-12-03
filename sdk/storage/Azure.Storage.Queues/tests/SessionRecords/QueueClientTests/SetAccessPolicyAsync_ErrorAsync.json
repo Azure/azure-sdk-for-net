@@ -1,55 +1,46 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://storageteglazatesting.queue.core.windows.net/test-queue-73d98cba-40ae-3617-ef78-eda9fd691183?comp=acl",
+      "RequestUri": "http:\u002f\u002fgapradev.queue.core.windows.net\u002ftest-queue-81bd6c49-5852-ac3d-f9ef-2dd1204f1cce?comp=acl",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "Content-Length": "303",
-        "Content-Type": "application/xml",
+        "Content-Length": "251",
+        "Content-Type": "application\u002fxml",
+        "Request-Id": "|2a3f1d52-4d5d8cf65964664c.",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/1.0.0.0",
-          "(.NET Core 4.6.27414.06; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Queues\u002f12.0.0-dev.20190912.1\u002b9a86ae3367dccb76004b59b244c982904496250d",
+          "(.NET Core 4.6.27817.01; Microsoft Windows 10.0.18362 )"
         ],
-        "x-ms-client-request-id": "d5e837be6937993baa97d13599b1a37d",
-        "x-ms-date": "Sun, 30 Jun 2019 17:34:05 GMT",
+        "x-ms-client-request-id": "a67104ea-4617-f85b-a7d1-ff1149d55812",
+        "x-ms-date": "Thu, 12 Sep 2019 22:20:46 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2018-11-09"
       },
-      "RequestBody": [
-        "\u003cSignedIdentifiers\u003e\r\n",
-        "  \u003cSignedIdentifier\u003e\r\n",
-        "    \u003cId\u003eokwmhfyothkvobsucxpw\u003c/Id\u003e\r\n",
-        "    \u003cAccessPolicy\u003e\r\n",
-        "      \u003cStart\u003e2019-06-30T16:34:05.0558728Z\u003c/Start\u003e\r\n",
-        "      \u003cExpiry\u003e2019-06-30T18:34:05.0558728Z\u003c/Expiry\u003e\r\n",
-        "      \u003cPermission\u003eraup\u003c/Permission\u003e\r\n",
-        "    \u003c/AccessPolicy\u003e\r\n",
-        "  \u003c/SignedIdentifier\u003e\r\n",
-        "\u003c/SignedIdentifiers\u003e"
-      ],
+      "RequestBody": "\u003cSignedIdentifiers\u003e\u003cSignedIdentifier\u003e\u003cId\u003eodwxvnqjfbtdtwlfstus\u003c\u002fId\u003e\u003cAccessPolicy\u003e\u003cStart\u003e2019-09-12T21:20:46.4269850Z\u003c\u002fStart\u003e\u003cExpiry\u003e2019-09-12T23:20:46.4269850Z\u003c\u002fExpiry\u003e\u003cPermission\u003eraup\u003c\u002fPermission\u003e\u003c\u002fAccessPolicy\u003e\u003c\u002fSignedIdentifier\u003e\u003c\u002fSignedIdentifiers\u003e",
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "217",
-        "Content-Type": "application/xml",
-        "Date": "Sun, 30 Jun 2019 17:34:07 GMT",
+        "Content-Type": "application\u002fxml",
+        "Date": "Thu, 12 Sep 2019 22:20:46 GMT",
         "Server": [
-          "Windows-Azure-Queue/1.0",
-          "Microsoft-HTTPAPI/2.0"
+          "Windows-Azure-Queue\u002f1.0",
+          "Microsoft-HTTPAPI\u002f2.0"
         ],
         "x-ms-error-code": "QueueNotFound",
-        "x-ms-request-id": "b20f0368-0003-0088-7b6a-2fa807000000",
+        "x-ms-request-id": "e224bbff-b003-0013-36b8-69b637000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": [
-        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eQueueNotFound\u003c/Code\u003e\u003cMessage\u003eThe specified queue does not exist.\n",
-        "RequestId:b20f0368-0003-0088-7b6a-2fa807000000\n",
-        "Time:2019-06-30T17:34:08.0195600Z\u003c/Message\u003e\u003c/Error\u003e"
+        "\ufeff\u003c?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003e\u003cError\u003e\u003cCode\u003eQueueNotFound\u003c\u002fCode\u003e\u003cMessage\u003eThe specified queue does not exist.\n",
+        "RequestId:e224bbff-b003-0013-36b8-69b637000000\n",
+        "Time:2019-09-12T22:20:46.4894496Z\u003c\u002fMessage\u003e\u003c\u002fError\u003e"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-06-30T10:34:05.0558728-07:00",
-    "RandomSeed": "939851574"
+    "DateTimeOffsetNow": "2019-09-12T15:20:46.4269850-07:00",
+    "RandomSeed": "1170597524",
+    "Storage_TestConfigDefault": "ProductionTenant\ngapradev\nU2FuaXRpemVk\nhttp:\u002f\u002fgapradev.blob.core.windows.net\nhttp:\u002f\u002fgapradev.file.core.windows.net\nhttp:\u002f\u002fgapradev.queue.core.windows.net\nhttp:\u002f\u002fgapradev.table.core.windows.net\n\n\n\n\nhttp:\u002f\u002fgapradev-secondary.blob.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.file.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.queue.core.windows.net\nhttp:\u002f\u002fgapradev-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http:\u002f\u002fgapradev.blob.core.windows.net\u002f;QueueEndpoint=http:\u002f\u002fgapradev.queue.core.windows.net\u002f;TableEndpoint=http:\u002f\u002fgapradev.table.core.windows.net\u002f;FileEndpoint=http:\u002f\u002fgapradev.file.core.windows.net\u002f;BlobSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.blob.core.windows.net\u002f;QueueSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.queue.core.windows.net\u002f;TableSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.table.core.windows.net\u002f;FileSecondaryEndpoint=http:\u002f\u002fgapradev-secondary.file.core.windows.net\u002f;AccountName=gapradev;AccountKey=Sanitized"
   }
 }

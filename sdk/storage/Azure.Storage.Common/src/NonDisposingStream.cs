@@ -1,42 +1,53 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Azure.Storage.Common
+#pragma warning disable SA1402  // File may only contain a single type
+
+namespace Azure.Storage
 {
-    static partial class StreamExtensions
+    internal class NonDisposingStream : Stream
     {
-        public static Stream WithNoDispose(this Stream stream) => stream is NonDisposingStream ? stream : new NonDisposingStream(stream);
-    }
+        private readonly Stream _innerStream;
 
-    class NonDisposingStream : Stream
-    {
-        readonly Stream innerStream;
+        public NonDisposingStream(Stream innerStream) => _innerStream = innerStream;
 
-        public NonDisposingStream(Stream innerStream) => this.innerStream = innerStream;
+        public override bool CanRead => _innerStream.CanRead;
 
-        public override bool CanRead => this.innerStream.CanRead;
+        public override bool CanSeek => _innerStream.CanSeek;
 
-        public override bool CanSeek => this.innerStream.CanSeek;
+        public override bool CanWrite => _innerStream.CanWrite;
 
-        public override bool CanWrite => this.innerStream.CanWrite;
+        public override Task CopyToAsync(Stream destination, int bufferSize, CancellationToken cancellationToken) => _innerStream.CopyToAsync(destination, bufferSize, cancellationToken);
 
-        public override long Length => this.innerStream.Length;
+        public override long Length => _innerStream.Length;
 
-        public override long Position { get => this.innerStream.Position; set => this.innerStream.Position = value; }
+        public override long Position { get => _innerStream.Position; set => _innerStream.Position = value; }
 
-        public override void Flush() => this.innerStream.Flush();
+        public override void Flush() => _innerStream.Flush();
 
-        public override int Read(byte[] buffer, int offset, int count) => this.innerStream.Read(buffer, offset, count);
+        public override Task FlushAsync(CancellationToken cancellationToken) => _innerStream.FlushAsync(cancellationToken);
 
-        public override long Seek(long offset, SeekOrigin origin) => this.innerStream.Seek(offset, origin);
+        public override int Read(byte[] buffer, int offset, int count) => _innerStream.Read(buffer, offset, count);
 
-        public override void SetLength(long value) => this.innerStream.SetLength(value);
+        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) => _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
 
-        public override void Write(byte[] buffer, int offset, int count) => this.innerStream.Write(buffer, offset, count);
+        public override long Seek(long offset, SeekOrigin origin) => _innerStream.Seek(offset, origin);
+
+        public override void SetLength(long value) => _innerStream.SetLength(value);
+
+        public override void Write(byte[] buffer, int offset, int count) => _innerStream.Write(buffer, offset, count);
+
+        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) => _innerStream.WriteAsync(buffer, offset, count, cancellationToken);
 
         protected override void Dispose(bool disposing) { /* swallow disposal */ }
+    }
+
+    internal static partial class StreamExtensions
+    {
+        public static Stream WithNoDispose(this Stream stream) => stream is NonDisposingStream ? stream : new NonDisposingStream(stream);
     }
 }

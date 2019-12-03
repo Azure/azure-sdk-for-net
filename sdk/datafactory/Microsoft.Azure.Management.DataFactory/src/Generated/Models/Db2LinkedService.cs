@@ -51,11 +51,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="username">Username for authentication. Type: string
         /// (or Expression with resultType string).</param>
         /// <param name="password">Password for authentication.</param>
+        /// <param name="packageCollection">Under where packages are created
+        /// when querying database. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="certificateCommonName">Certificate Common Name when
+        /// TLS is enabled. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public Db2LinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object encryptedCredential = default(object))
+        public Db2LinkedService(object server, object database, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), string authenticationType = default(string), object username = default(object), SecretBase password = default(SecretBase), object packageCollection = default(object), object certificateCommonName = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Server = server;
@@ -63,6 +69,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             AuthenticationType = authenticationType;
             Username = username;
             Password = password;
+            PackageCollection = packageCollection;
+            CertificateCommonName = certificateCommonName;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -105,6 +113,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.password")]
         public SecretBase Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets under where packages are created when querying
+        /// database. Type: string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.packageCollection")]
+        public object PackageCollection { get; set; }
+
+        /// <summary>
+        /// Gets or sets certificate Common Name when TLS is enabled. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.certificateCommonName")]
+        public object CertificateCommonName { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.

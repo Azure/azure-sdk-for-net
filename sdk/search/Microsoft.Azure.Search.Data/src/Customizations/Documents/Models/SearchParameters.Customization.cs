@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Azure.Search.Common;
+
 namespace Microsoft.Azure.Search.Models
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Common;
-
     public partial class SearchParameters
     {
         private static readonly IList<string> Empty = new string[0];

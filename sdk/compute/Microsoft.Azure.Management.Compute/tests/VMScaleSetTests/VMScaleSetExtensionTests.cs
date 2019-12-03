@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute;
@@ -30,7 +30,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetExtensions()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 TestVMScaleSetExtensionsImpl(context);
             }
@@ -39,7 +39,7 @@ namespace Compute.Tests
         [Fact]
         public void TestVMScaleSetExtensionSequencing()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 // Create resource group
                 string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
@@ -48,11 +48,6 @@ namespace Compute.Tests
                 try
                 {
                     EnsureClientsInitialized(context);
-
-                    // This test's session record was recorded using the following parameters
-                    m_location = "EastUS2EUAP";
-                    m_subId = "5393f919-a68a-43d0-9063-4b2bda6bffdf";
-
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: false);
                     VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();
 
@@ -174,7 +169,7 @@ namespace Compute.Tests
 
                 // Perform a List operation on vmss extensions
                 var listVmssExtsResponse = m_CrpClient.VirtualMachineScaleSetExtensions.List(rgName, vmssName);
-                ValidateVmssExtension(vmssExtension, listVmssExtsResponse.FirstOrDefault());
+                ValidateVmssExtension(vmssExtension, listVmssExtsResponse.FirstOrDefault(c => c.ForceUpdateTag == "RerunExtension"));
 
                 // Validate the extension delete API
                 m_CrpClient.VirtualMachineScaleSetExtensions.Delete(rgName, vmssName, vmssExtension.Name);

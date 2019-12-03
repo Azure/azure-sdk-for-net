@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties used to create a user account on a Windows node.
+    /// Properties used to create a user Account on a Windows Compute Node.
     /// </summary>
     public partial class WindowsUserConfiguration
     {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the login mode for the user
         /// </summary>
         /// <remarks>
-        /// The default value for VirtualMachineConfiguration pools is 'batch'
-        /// and for CloudServiceConfiguration pools is 'interactive'. Possible
+        /// The default value for VirtualMachineConfiguration Pools is 'batch'
+        /// and for CloudServiceConfiguration Pools is 'interactive'. Possible
         /// values include: 'batch', 'interactive'
         /// </remarks>
         [JsonProperty(PropertyName = "loginMode")]
