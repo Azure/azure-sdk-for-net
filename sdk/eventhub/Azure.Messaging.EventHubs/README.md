@@ -24,7 +24,7 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 - **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  You can still use the library with older versions of C#, but some of its functionality won't be available.  In order to enable these features, you need to [target .NET Core 3.0](https://docs.microsoft.com/en-us/dotnet/standard/frameworks#how-to-specify-target-frameworks) or [specify the language version](https://docs.microsoft.com/en-gb/dotnet/csharp/language-reference/configure-language-version#override-a-default) you want to use (8.0 or above).  If you are using Visual Studio, versions prior to Visual Studio 2019 are not compatible with the tools needed to build C# 8.0 projects.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com/vs/).
 
-  **Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) below.  It's necessary to run them without modification.  You can still run the samples if you decide to tweak them.
+  **Important Note:** The use of C# 8.0 is mandatory to run the [examples](#examples) and the [samples](#next-steps) without modification.  You can still run the samples if you decide to tweak them.
 
 To quickly create the needed Event Hubs resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
@@ -103,16 +103,16 @@ var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-    
+
 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
 {
     using var cancellationSource = new CancellationTokenSource();
     cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
-    
+
     await foreach (PartitionEvent receivedEvent in consumer.ReadEvents(cancellationSource.Token))
     {
-        // At this point, the loop will wait for events to be available in the Event Hub.  When an event 
-        // is available, the loop will iterate with the event that was received.  Because we did not 
+        // At this point, the loop will wait for events to be available in the Event Hub.  When an event
+        // is available, the loop will iterate with the event that was received.  Because we did not
         // specify a maximum wait time, the loop will wait forever unless cancellation is requested using
         // the cancellation token.
     }
@@ -128,19 +128,19 @@ var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
 
 string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-    
+
 await using (var consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName))
 {
     EventPosition startingPosition = EventPosition.Earliest;
     string partitionId = (await consumer.GetPartitionIdsAsync()).First();
-    
+
     using var cancellationSource = new CancellationTokenSource();
     cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
-    
+
     await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, cancellationSource.Token))
     {
-        // At this point, the loop will wait for events to be available in the partition.  When an event 
-        // is available, the loop will iterate with the event that was received.  Because we did not 
+        // At this point, the loop will wait for events to be available in the partition.  When an event
+        // is available, the loop will iterate with the event that was received.  Because we did not
         // specify a maximum wait time, the loop will wait forever unless cancellation is requested using
         // the cancellation token.
     }
@@ -149,7 +149,7 @@ await using (var consumer = new EventHubConsumerClient(consumerGroup, connection
 
 ### Process events using an Event Processor Client
 
-For the majority of production scenarios, it is recommended that the  [Event Processor Client](./../Azure.Messaging.EventHubs.Processor) be used for reading and processing events.  The processor is intended to provide a robust experience for processing events across all partitions of an Event Hub in a performant and fault tolerant manner while providing a means to persist its state.  Event Processor clients are also capable of working cooperatively within the context of a consumer group for a given Event Hub, where they will automatically manage distribution and balancing of work as instances become available or unavailable for the group.
+For the majority of production scenarios, it is recommended that the [Event Processor Client](./../Azure.Messaging.EventHubs.Processor) be used for reading and processing events.  The processor is intended to provide a robust experience for processing events across all partitions of an Event Hub in a performant and fault tolerant manner while providing a means to persist its state.  Event Processor clients are also capable of working cooperatively within the context of a consumer group for a given Event Hub, where they will automatically manage distribution and balancing of work as instances become available or unavailable for the group.
 
 More details can be found in the Event Processor Client [README](./../Azure.Messaging.EventHubs.Processor/README.md) and the accompanying [samples](./../Azure.Messaging.EventHubs.Processor/samples).
 
@@ -165,12 +165,16 @@ This occurs when an operation has been requested on an Event Hub client that has
 
 This indicates that the Event Hubs service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Event Hubs service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.  
 
+#### Quota Exceeded
+
+This typically indicates that there are too many active read operations for a single consumer group.  This limit depends on the tier of the Event Hubs namespace, and moving to a higher tier may be desired.  An alternative would be do create additional consumer groups and ensure that the number of consumer client reads for any group is within the limit.  Please see [Azure Event Hubs quotas and limits](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quotas) for more information.
+
 #### Message Size Exceeded
 
 Event data, both individual and in batches, have a maximum size allowed.  This includes the data of the event, as well as any associated metadata and system overhead.  The best approach for resolving this error is to reduce the number of events being sent in a batch or the size of data included in the message.  Because size limits are subject to change, please refer to [Azure Event Hubs quotas and limits](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quotas) for specifics.  
 ### Other exceptions
 
-For detailed information about these and other exceptions that may occur, please refer to [Event Hubs messaging exceptions](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-messaging-exceptions). 
+For detailed information about these and other exceptions that may occur, please refer to [Event Hubs messaging exceptions](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-messaging-exceptions).
 
 ## Next steps
 
@@ -187,31 +191,31 @@ The available samples are:
 
 - [Create an Event Hub client with custom options](./samples/Sample02_ClientWithCustomOptions.cs)  
   An introduction to Event Hubs, exploring additional options for creating the different Event Hub clients.
-  
+
 - [Publish an event batch to an Event Hub](./samples/Sample03_PublishAnEventBatch.cs)  
   An introduction to publishing events, using a batch with single event.  
 
 - [Read events from an Event Hub](./samples/Sample04_ReadEvents.cs)  
   An introduction to reading all events available from an Event Hub.
-  
+
 - [Publish an event batch using a partition key](./samples/Sample05_PublishAnEventBatchWithPartitionKey.cs)  
   An introduction to publishing events using a partition key to group batches together.
-  
+
 - [Publish an event batch to a specific partition](./samples/Sample06_PublishAnEventBatchToASpecificPartition.cs)  
   An introduction to publishing events, specifying a specific partition for the batch to be published to.
-  
+
 - [Publish events with custom metadata](./samples/Sample07_PublishEventsWithCustomMetadata.cs)  
   An example of publishing events, extending the event data with custom metadata.
-  
+
 - [Read only new events from an Event Hub](./samples/Sample08_ReadOnlyNewEvents.cs)  
   An example of reading events, beginning with only those newly available from an Event Hub.
 
 - [Read events from a known position in an Event Hub partition](./samples/Sample09_ReadEventsFromAKnownPosition.cs)  
   An example of reading events from a single Event Hub partition, starting at a well-known position.
-  
+
 - [Publish an event batch with a custom size limit](./samples/Sample10_PublishAnEventBatchWithCustomSizeLimit.cs)  
   An example of publishing events using a custom size limitation with the batch.
-  
+
 - [Authorize using a service principal with client secret](./samples/Sample11_AuthenticateWithClientSecretCredential.cs)  
   An example of interacting with an Event Hub using an Azure Active Directory application with client secret for authorization.
 
@@ -224,5 +228,5 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 Please see our [contributing guide](./CONTRIBUTING.md) for more information.
-  
+
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FAzure.Messaging.EventHubs%2FREADME.png)

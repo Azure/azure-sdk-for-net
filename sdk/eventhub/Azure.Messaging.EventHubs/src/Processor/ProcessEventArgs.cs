@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public EventData Data { get; }
 
         /// <summary>
-        ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.
+        ///   A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.
         /// </summary>
         ///
         public CancellationToken CancellationToken { get; }
@@ -51,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The callback to be called upon <see cref="UpdateCheckpointAsync" /> call.
         /// </summary>
         ///
-        private Func<Task> UpdateCheckpointAsyncImplementation { get; }
+        private Func<CancellationToken, Task> UpdateCheckpointAsyncImplementation { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ProcessEventArgs"/> structure.
@@ -60,11 +60,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partition">The context of the Event Hub partition this instance is associated with.</param>
         /// <param name="data">The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.</param>
         /// <param name="updateCheckpointImplementation">The callback to be called upon <see cref="UpdateCheckpointAsync" /> call.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <param name="cancellationToken">A <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public ProcessEventArgs(PartitionContext partition,
                                 EventData data,
-                                Func<Task> updateCheckpointImplementation,
+                                Func<CancellationToken, Task> updateCheckpointImplementation,
                                 CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(updateCheckpointImplementation, nameof(updateCheckpointImplementation));
@@ -80,9 +80,10 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   this event.
         /// </summary>
         ///
-        /// <exception cref="ArgumentNullException">Occurs when <see cref="Data" /> is <c>null</c>.</exception>
-        /// <exception cref="EventHubsClientClosedException">Occurs when the <c>EventProcessorClient</c> needed to perform this operation is no longer available.</exception>
+        /// <param name="cancellationToken">An optional <see cref="System.Threading.CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public Task UpdateCheckpointAsync() => UpdateCheckpointAsyncImplementation();
+        /// <exception cref="InvalidOperationException">Occurs when <see cref="Partition" /> and <see cref="Data" /> are <c>null</c>.</exception>
+        ///
+        public Task UpdateCheckpointAsync(CancellationToken cancellationToken = default) => UpdateCheckpointAsyncImplementation(cancellationToken);
     }
 }

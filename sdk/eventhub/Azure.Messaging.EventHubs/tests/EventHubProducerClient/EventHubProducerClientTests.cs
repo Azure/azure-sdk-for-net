@@ -678,6 +678,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 SendCalledWith = (events, sendOptions);
                 return Task.CompletedTask;
             }
+
             public override Task SendAsync(EventDataBatch batch,
                                            CancellationToken cancellationToken)
             {
