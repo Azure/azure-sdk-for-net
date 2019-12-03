@@ -1127,7 +1127,8 @@ namespace DataFactory.Tests.JsonSamples
             securityToken: {
                 value : ""fakeToken"",
                 type : ""SecureString""
-            }
+            },
+            apiVersion: ""47.0""
         }
     }
 }";
@@ -1159,7 +1160,8 @@ namespace DataFactory.Tests.JsonSamples
                     type : ""LinkedServiceReference"",
                     referenceName : ""fakeAKVLinkedService""
                 }
-            }
+            },
+            apiVersion: ""47.0""
         }
     }
 }";
