@@ -55,8 +55,8 @@ namespace Azure.Messaging.EventHubs.Errors
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
         /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         ///
-        internal EventHubsException(bool isTransient,
-                                    string eventHubName) : this(isTransient, eventHubName, null, null)
+        public EventHubsException(bool isTransient,
+                                  string eventHubName) : this(isTransient, eventHubName, null, null)
         {
         }
 
@@ -68,9 +68,9 @@ namespace Azure.Messaging.EventHubs.Errors
         /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         ///
-        internal EventHubsException(bool isTransient,
-                                    string eventHubName,
-                                    string message) : this(isTransient, eventHubName, message, null)
+        public EventHubsException(bool isTransient,
+                                  string eventHubName,
+                                  string message) : this(isTransient, eventHubName, message, null)
         {
         }
 
@@ -83,10 +83,10 @@ namespace Azure.Messaging.EventHubs.Errors
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         ///
-        internal EventHubsException(bool isTransient,
-                                    string eventHubName,
-                                    string message,
-                                    Exception innerException) : base(message, innerException)
+        public EventHubsException(bool isTransient,
+                                  string eventHubName,
+                                  string message,
+                                  Exception innerException) : base(message, innerException)
         {
             IsTransient = isTransient;
             EventHubName = eventHubName;

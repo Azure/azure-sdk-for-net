@@ -97,7 +97,7 @@ Changing the above properties at run-time has the potential to hard code few thi
 
 Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` environment variable is consistent with the value in `AZURE_TEST_MODE` environment variable.
 
-##7. Connection string
+## 7. Connection string
 
 #### 7.1 Supported Key=Value pairs in Connectionstring
 	* ManagementCertificate

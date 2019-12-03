@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public override async Task SendAsync(IEnumerable<EventData> events,
-                                             SendOptions sendOptions,
+                                             SendEventOptions sendOptions,
                                              CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(events, nameof(events));

@@ -29,9 +29,9 @@ namespace Azure.Messaging.EventHubs
         private WeakReference<TransportConsumer> SourceConsumer { get; }
 
         /// <summary>
-        ///   A set of information about the last enqueued event of a partition, as observed by the <see cref="EventHubConsumerClient" />
+        ///   A set of information about the last enqueued event of a partition, as observed by the associated EventHubs client
         ///   associated with this context as events are received from the Event Hubs service.  This is only available if the consumer was
-        ///   created with <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> set.
+        ///   created with <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.
         /// </summary>
         ///
         /// <remarks>
@@ -41,10 +41,10 @@ namespace Azure.Messaging.EventHubs
         ///   against periodically making requests for partition properties using an Event Hub client.
         /// </remarks>
         ///
-        /// <exception cref="EventHubsClientClosedException">Occurs when the <see cref="EventHubConsumerClient" /> needed to read this information is no longer available.</exception>
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> set.</exception>
+        /// <exception cref="EventHubsClientClosedException">Occurs when the Event Hubs client needed to read this information is no longer available.</exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.</exception>
         ///
-        public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventInformation()
+        public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties()
         {
             var consumer = default(TransportConsumer);
 

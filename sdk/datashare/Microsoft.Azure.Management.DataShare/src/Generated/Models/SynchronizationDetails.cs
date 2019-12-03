@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// Synchronization details at dataset level
+    /// Synchronization details at data set level
     /// </summary>
     public partial class SynchronizationDetails
     {
@@ -29,31 +29,31 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <summary>
         /// Initializes a new instance of the SynchronizationDetails class.
         /// </summary>
-        /// <param name="dataSetId">id of dataSet</param>
-        /// <param name="dataSetType">type of DataSet. Possible values include:
-        /// 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
+        /// <param name="dataSetId">Id of data set</param>
+        /// <param name="dataSetType">Type of the data set. Possible values
+        /// include: 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
         /// 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
-        /// 'SqlDBTable', 'SqlDWTable'</param>
-        /// <param name="durationMs">duration of dataset level copy</param>
-        /// <param name="endTime">End time of dataset level copy</param>
+        /// 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'</param>
+        /// <param name="durationMs">Duration of data set level copy</param>
+        /// <param name="endTime">End time of data set level copy</param>
         /// <param name="filesRead">The number of files read from the source
-        /// dataset.</param>
+        /// data set</param>
         /// <param name="filesWritten">The number of files written into the
-        /// sink dataset.</param>
-        /// <param name="message">Error Message if any</param>
-        /// <param name="name">name of dataSet</param>
+        /// sink data set</param>
+        /// <param name="message">Error message if any</param>
+        /// <param name="name">Name of the data set</param>
         /// <param name="rowsCopied">The number of files copied into the sink
-        /// dataset.</param>
-        /// <param name="rowsRead">The number of rows read from the source
-        /// dataset.</param>
+        /// data set</param>
+        /// <param name="rowsRead">The number of rows read from the source data
+        /// set.</param>
         /// <param name="sizeRead">The size of the data read from the source
-        /// dataset in bytes.</param>
+        /// data set in bytes</param>
         /// <param name="sizeWritten">The size of the data written into the
-        /// sink dataset in bytes.</param>
-        /// <param name="startTime">start time of dataset level copy</param>
+        /// sink data set in bytes</param>
+        /// <param name="startTime">Start time of data set level copy</param>
         /// <param name="status">Raw Status</param>
-        /// <param name="vCore">The vCore units consumed for the dataset
-        /// synchronization.</param>
+        /// <param name="vCore">The vCore units consumed for the data set
+        /// synchronization</param>
         public SynchronizationDetails(string dataSetId = default(string), string dataSetType = default(string), int? durationMs = default(int?), System.DateTime? endTime = default(System.DateTime?), long? filesRead = default(long?), long? filesWritten = default(long?), string message = default(string), string name = default(string), long? rowsCopied = default(long?), long? rowsRead = default(long?), long? sizeRead = default(long?), long? sizeWritten = default(long?), System.DateTime? startTime = default(System.DateTime?), string status = default(string), long? vCore = default(long?))
         {
             DataSetId = dataSetId;
@@ -80,82 +80,82 @@ namespace Microsoft.Azure.Management.DataShare.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets id of dataSet
+        /// Gets id of data set
         /// </summary>
         [JsonProperty(PropertyName = "dataSetId")]
         public string DataSetId { get; private set; }
 
         /// <summary>
-        /// Gets type of DataSet. Possible values include: 'Blob', 'Container',
-        /// 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
-        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'SqlDBTable',
-        /// 'SqlDWTable'
+        /// Gets type of the data set. Possible values include: 'Blob',
+        /// 'Container', 'BlobFolder', 'AdlsGen2FileSystem', 'AdlsGen2Folder',
+        /// 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'KustoCluster',
+        /// 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'
         /// </summary>
         [JsonProperty(PropertyName = "dataSetType")]
         public string DataSetType { get; private set; }
 
         /// <summary>
-        /// Gets duration of dataset level copy
+        /// Gets duration of data set level copy
         /// </summary>
         [JsonProperty(PropertyName = "durationMs")]
         public int? DurationMs { get; private set; }
 
         /// <summary>
-        /// Gets end time of dataset level copy
+        /// Gets end time of data set level copy
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; private set; }
 
         /// <summary>
-        /// Gets the number of files read from the source dataset.
+        /// Gets the number of files read from the source data set
         /// </summary>
         [JsonProperty(PropertyName = "filesRead")]
         public long? FilesRead { get; private set; }
 
         /// <summary>
-        /// Gets the number of files written into the sink dataset.
+        /// Gets the number of files written into the sink data set
         /// </summary>
         [JsonProperty(PropertyName = "filesWritten")]
         public long? FilesWritten { get; private set; }
 
         /// <summary>
-        /// Gets error Message if any
+        /// Gets error message if any
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets name of dataSet
+        /// Gets name of the data set
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the number of files copied into the sink dataset.
+        /// Gets the number of files copied into the sink data set
         /// </summary>
         [JsonProperty(PropertyName = "rowsCopied")]
         public long? RowsCopied { get; private set; }
 
         /// <summary>
-        /// Gets the number of rows read from the source dataset.
+        /// Gets the number of rows read from the source data set.
         /// </summary>
         [JsonProperty(PropertyName = "rowsRead")]
         public long? RowsRead { get; private set; }
 
         /// <summary>
-        /// Gets the size of the data read from the source dataset in bytes.
+        /// Gets the size of the data read from the source data set in bytes
         /// </summary>
         [JsonProperty(PropertyName = "sizeRead")]
         public long? SizeRead { get; private set; }
 
         /// <summary>
-        /// Gets the size of the data written into the sink dataset in bytes.
+        /// Gets the size of the data written into the sink data set in bytes
         /// </summary>
         [JsonProperty(PropertyName = "sizeWritten")]
         public long? SizeWritten { get; private set; }
 
         /// <summary>
-        /// Gets start time of dataset level copy
+        /// Gets start time of data set level copy
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public System.DateTime? StartTime { get; private set; }
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets the vCore units consumed for the dataset synchronization.
+        /// Gets the vCore units consumed for the data set synchronization
         /// </summary>
         [JsonProperty(PropertyName = "vCore")]
         public long? VCore { get; private set; }

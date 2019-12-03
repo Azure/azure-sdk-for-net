@@ -481,8 +481,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.AppendBlob.CreateAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -698,39 +696,26 @@ namespace Azure.Storage.Blobs.Specialized
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    var appendAttempt = 0;
-                    return await ReliableOperation.DoSyncOrAsync(
-                        async,
-                        reset: () => content.Seek(0, SeekOrigin.Begin),
-                        predicate: e => true,
-                        maximumRetries: Constants.MaxReliabilityRetries,
-                        operation:
-                            () =>
-                            {
-                                Pipeline.LogTrace($"Append attempt {++appendAttempt}");
-                                return BlobRestClient.AppendBlob.AppendBlockAsync(
-                                    ClientDiagnostics,
-                                    Pipeline,
-                                    Uri,
-                                    body: content,
-                                    contentLength: content.Length,
-                                    transactionalContentHash: transactionalContentHash,
-                                    leaseId: conditions?.LeaseId,
-                                    maxSize: conditions?.IfMaxSizeLessThanOrEqual,
-                                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                                    appendPosition: conditions?.IfAppendPositionEqual,
-                                    ifModifiedSince: conditions?.IfModifiedSince,
-                                    ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                    ifMatch: conditions?.IfMatch,
-                                    ifNoneMatch: conditions?.IfNoneMatch,
-                                    async: async,
-                                    operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.AppendBlock",
-                                    cancellationToken: cancellationToken);
-                            },
-                        cleanup: () => { })
-                        .ConfigureAwait(false);
+                    return await BlobRestClient.AppendBlob.AppendBlockAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        transactionalContentHash: transactionalContentHash,
+                        leaseId: conditions?.LeaseId,
+                        maxSize: conditions?.IfMaxSizeLessThanOrEqual,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        appendPosition: conditions?.IfAppendPositionEqual,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        async: async,
+                        operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.AppendBlock",
+                        cancellationToken: cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -958,8 +943,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.AppendBlob.AppendBlockFromUriAsync(
                         ClientDiagnostics,
                         Pipeline,

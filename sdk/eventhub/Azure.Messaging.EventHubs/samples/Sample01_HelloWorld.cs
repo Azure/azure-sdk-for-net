@@ -9,7 +9,7 @@ using Azure.Messaging.EventHubs.Samples.Infrastructure;
 namespace Azure.Messaging.EventHubs.Samples
 {
     /// <summary>
-    ///   An introduction to Event Hubs, illustrating how to connect and query the service.
+    ///   An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.
     /// </summary>
     ///
     public class Sample01_HelloWorld : IEventHubsSample
@@ -18,13 +18,13 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample01_HelloWorld);
+        public string Name => nameof(Sample01_HelloWorld);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.";
+        public string Description => "An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.

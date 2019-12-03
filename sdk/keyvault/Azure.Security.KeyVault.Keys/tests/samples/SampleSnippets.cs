@@ -224,12 +224,12 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             try
             {
-                // Deleting a key when soft delete is enabled may not happen immediately.
-                Task.WaitAll(
+                // You only need to wait for completion if you want to purge or recover the key.
+                await Task.WhenAll(
                     rsaKeyOperation.WaitForCompletionAsync().AsTask(),
                     ecKeyOperation.WaitForCompletionAsync().AsTask());
 
-                Task.WaitAll(
+                await Task.WhenAll(
                     client.PurgeDeletedKeyAsync(rsaKeyOperation.Value.Name),
                     client.PurgeDeletedKeyAsync(ecKeyOperation.Value.Name));
             }
@@ -245,6 +245,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             #region Snippet:DeleteAndPurgeKey
             DeleteKeyOperation operation = client.StartDeleteKey("key-name");
 
+            // You only need to wait for completion if you want to purge or recover the key.
             while (!operation.HasCompleted)
             {
                 Thread.Sleep(2000);

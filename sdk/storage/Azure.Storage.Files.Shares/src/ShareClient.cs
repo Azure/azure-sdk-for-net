@@ -225,7 +225,6 @@ namespace Azure.Storage.Files.Shares
         {
             _uri = shareUri;
             _pipeline = pipeline;
-
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors

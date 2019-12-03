@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
-using Azure.Messaging.EventHubs.Tests.Infrastructure;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -77,10 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
-                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
-                ConnectionStringProperties properties = ConnectionStringParser.Parse(connectionString);
-
-                Assert.That(async () => await sample.RunAsync(properties.Endpoint.Host,
+                Assert.That(async () => await sample.RunAsync(TestEnvironment.FullyQualifiedNamespace,
                                                               scope.EventHubName,
                                                               TestEnvironment.EventHubsTenant,
                                                               TestEnvironment.EventHubsClient,

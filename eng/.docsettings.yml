@@ -55,7 +55,6 @@ known_presence_issues:
   - ['sdk/batch/Microsoft.Azure.Batch.FileStaging','#5499']
   - ['sdk/graphrbac/Microsoft.Azure.Graph.RBAC','#5499']
   - ['sdk/search','#5499']
-  - ['sdk/cognitiveservices/InkRecognizer','#5499']
 
 known_content_issues:
   - ['README.md','Root readme']
@@ -64,12 +63,15 @@ known_content_issues:
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
+  - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','#5499']
   - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','#5499']
+  - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/tests/Readme.md','#5499']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md','#5499']
   - ['sdk/core/Azure.Core/README.md','#5499']
   - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Blobs/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Blobs.Batch/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Files.Shares/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Files.DataLake/swagger/readme.md','azure-sdk-tools/issues/42']
   - ['sdk/storage/Azure.Storage.Queues/swagger/readme.md','azure-sdk-tools/issues/42']
@@ -99,6 +101,8 @@ package_indexing_exclusion_list:
   - 'Gallery'
   - 'Intune'
   - 'Common'
+  - 'SnippetGenerator'
+  - 'docgen'
 package_indexing_traversal_stops:
   - 'sdk/'
   - 'src/SDKs/'

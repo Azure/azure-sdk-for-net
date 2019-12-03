@@ -113,6 +113,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential)
             : this(directoryUri, credential.AsPolicy(), null)
         {
+            Errors.VerifyHttpsTokenAuth(directoryUri);
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential, DataLakeClientOptions options)
             : this(directoryUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(directoryUri);
         }
 
         /// <summary>

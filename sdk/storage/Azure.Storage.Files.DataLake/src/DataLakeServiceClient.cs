@@ -171,6 +171,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential)
             : this(serviceUri, credential.AsPolicy(), null)
         {
+            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -191,6 +192,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential, DataLakeClientOptions options)
             : this(serviceUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -239,37 +241,34 @@ namespace Azure.Storage.Files.DataLake
             options ??= new DataLakeClientOptions();
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
-            _blobUri = GetBlobUri(serviceUri);
+            _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
             _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
-            _blobServiceClient = new BlobServiceClient(
-                serviceUri: _blobUri,
-                authentication: authentication,
-                pipeline: _pipeline,
-                clientDiagnostics: _clientDiagnostics,
-                customerProvidedKey: null);
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                authentication,
+                _clientDiagnostics);
         }
-        #endregion ctors
 
         /// <summary>
-        /// Gets the blob Uri.
+        /// Helper to access protected static members of BlobServiceClient
+        /// that should not be exposed directly to customers.
         /// </summary>
-        private static Uri GetBlobUri(Uri uri)
+        private class BlobServiceClientInternals : BlobServiceClient
         {
-            Uri blobUri;
-            if (uri.Host.Contains(Constants.DataLake.DfsUriSuffix))
+            public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, ClientDiagnostics diagnostics)
             {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.DfsUriSuffix,
-                    Constants.DataLake.BlobUriSuffix);
-                blobUri = uriBuilder.Uri;
+                return BlobServiceClient.CreateClient(
+                    uri,
+                    new BlobClientOptions()
+                    {
+                        Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
+                    },
+                    authentication,
+                    pipeline);
             }
-            else
-            {
-                blobUri = uri;
-            }
-            return blobUri;
         }
+        #endregion ctors
 
         /// <summary>
         /// Create a new <see cref="DataLakeFileSystemClient"/> object by appending

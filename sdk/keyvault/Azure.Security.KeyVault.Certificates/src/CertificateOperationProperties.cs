@@ -14,7 +14,6 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private const string IdPropertyName = "id";
         private const string IssuerProperyName = "issuer";
-        private const string IssuerNamePropertyName = "name";
         private const string CsrPropertyName = "csr";
         private const string CancellationRequestedPropertyName = "cancellation_requested";
         private const string RequestIdPropertyName = "request_id";
@@ -22,6 +21,8 @@ namespace Azure.Security.KeyVault.Certificates
         private const string StatusDetailsPropertyName = "status_details";
         private const string TargetPropertyName = "target";
         private const string ErrorPropertyName = "error";
+
+        private IssuerParameters _issuer;
 
         internal CertificateOperationProperties()
         {
@@ -43,14 +44,36 @@ namespace Azure.Security.KeyVault.Certificates
         public Uri VaultUri { get; internal set; }
 
         /// <summary>
-        /// Gets the name of the <see cref="CertificateIssuer"/> for the certificate to which the operation applies.
+        /// Gets the name of the <see cref="CertificateIssuer"/> for the certificate to create.
         /// </summary>
-        public string IssuerName { get; internal set; }
+        public string IssuerName
+        {
+            get => _issuer.IssuerName;
+            internal set => _issuer.IssuerName = value;
+        }
 
         /// <summary>
-        /// Gets the certificate signing request (CSR) which is pending signature for the certificate operation.
+        /// Gets the type of the certificate to create.
         /// </summary>
-        public string CertificateSigningRequest { get; internal set; }
+        public string CertificateType
+        {
+            get => _issuer.CertificateType;
+            internal set => _issuer.CertificateType = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the certificate will be published to the certificate transparency list when created.
+        /// </summary>
+        public bool? CertificateTransparency
+        {
+            get => _issuer.CertificateTransparency;
+            internal set => _issuer.CertificateTransparency = value;
+        }
+
+        /// <summary>
+        /// Gets the certificate signing request (CSR) that is being used in the certificate operation.
+        /// </summary>
+        public byte[] Csr { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether a cancellation has been requested for the operation.
@@ -95,11 +118,12 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case IssuerProperyName:
-                        IssuerName = prop.Value.GetProperty(IssuerNamePropertyName).GetString();
+                        _issuer.ReadProperties(prop.Value);
                         break;
 
                     case CsrPropertyName:
-                        CertificateSigningRequest = prop.Value.GetString();
+                        string csr = prop.Value.GetString();
+                        Csr = Base64Url.Decode(csr);
                         break;
 
                     case CancellationRequestedPropertyName:

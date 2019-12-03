@@ -234,6 +234,7 @@ namespace Azure.Storage.Blobs
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
             : this(blobContainerUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(blobContainerUri);
         }
 
         /// <summary>
@@ -260,6 +261,7 @@ namespace Azure.Storage.Blobs
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
@@ -282,6 +284,32 @@ namespace Azure.Storage.Blobs
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobContainerClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="containerUri">
+        /// A <see cref="Uri"/> referencing the block blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <returns>
+        /// New instance of the <see cref="BlobContainerClient"/> class.
+        /// </returns>
+        protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline)
+        {
+            return new BlobContainerClient(containerUri, pipeline, new ClientDiagnostics(options), null);
         }
         #endregion ctor
 

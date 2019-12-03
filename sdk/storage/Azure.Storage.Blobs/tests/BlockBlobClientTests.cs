@@ -13,9 +13,9 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -38,7 +38,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -50,6 +50,35 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(containerName, builder.BlobContainerName);
             Assert.AreEqual(blobName, builder.BlobName);
             Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlockBlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlockBlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
         [Test]
@@ -134,41 +163,6 @@ namespace Azure.Storage.Blobs.Test
 
                 // Assert
                 Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
-            }
-        }
-
-        [Test]
-        public async Task StageBlockAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            BlockBlobClient httpBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            httpBlob = InstrumentClient(new BlockBlobClient(
-                httpBlob.Uri.ToHttp(),
-                httpBlob.Pipeline,
-                httpBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, httpBlob.Uri.Scheme);
-            BlockBlobClient httpsBlob = InstrumentClient(httpBlob.WithCustomerProvidedKey(customerProvidedKey));
-
-            var data = GetRandomBuffer(Size);
-
-            // Create BlockBlob
-            using (var stream = new MemoryStream(data))
-            {
-                await httpsBlob.UploadAsync(stream);
-            }
-
-            using (var stream = new MemoryStream(data))
-            {
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                    httpBlob.StageBlockAsync(
-                        base64BlockId: ToBase64(GetNewBlockName()),
-                        content: stream),
-                    actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
             }
         }
 
@@ -262,7 +256,7 @@ namespace Azure.Storage.Blobs.Test
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
 
@@ -346,38 +340,6 @@ namespace Azure.Storage.Blobs.Test
             await destBlob.StageBlockFromUriAsync(
                 sourceBlob.Uri,
                 ToBase64(GetNewBlockName()));
-        }
-
-        [Test]
-        public async Task StageBlockFromUriAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            const int blobSize = Constants.KB;
-            var data = GetRandomBuffer(blobSize);
-
-            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            using (var stream = new MemoryStream(data))
-            {
-                await sourceBlob.UploadAsync(stream);
-            }
-
-            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            destBlob = InstrumentClient(new BlockBlobClient(
-                destBlob.Uri.ToHttp(),
-                destBlob.Pipeline,
-                destBlob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, destBlob.Uri.Scheme);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                destBlob.StageBlockFromUriAsync(
-                    sourceBlob.Uri,
-                    ToBase64(GetNewBlockName())),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
         }
 
         [Test]
@@ -1172,29 +1134,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task UploadAsync_CpkHttpError()
-        {
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            // Arrange
-            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            blob = InstrumentClient(new BlockBlobClient(
-                blob.Uri.ToHttp(),
-                blob.Pipeline,
-                blob.ClientDiagnostics,
-                customerProvidedKey));
-            Assert.AreEqual(Constants.Blob.Http, blob.Uri.Scheme);
-            var data = GetRandomBuffer(Size);
-
-            // Act
-            using var stream = new MemoryStream(data);
-            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                blob.UploadAsync(content: stream),
-                actualException => Assert.AreEqual("Cannot use client-provided key without HTTPS.", actualException.Message));
-        }
-
-        [Test]
         public async Task UploadAsync_Headers()
         {
             var constants = new TestConstants(this);
@@ -1339,7 +1278,7 @@ namespace Azure.Storage.Blobs.Test
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 await blobFaulty.UploadAsync(stream, null, metadata, null, progressHandler: progressHandler);
 

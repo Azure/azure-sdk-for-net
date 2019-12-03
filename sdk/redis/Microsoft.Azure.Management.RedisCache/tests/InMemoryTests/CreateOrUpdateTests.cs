@@ -246,7 +246,22 @@ namespace AzureRedisCache.Tests.InMemoryTests
 		            ""hostName"" : ""hydraradiscache.cache.icbbvt.windows-int.net"",
 		            ""port"" : 6379,
 		            ""sslPort"" : 6380,
-                    ""minimumTlsVersion"": ""1.2""
+                    ""minimumTlsVersion"": ""1.2"",
+                    ""replicasPerMaster"": ""2"",
+                    ""instances"": [
+                    {
+                        ""sslPort"": 15000,
+                        ""nonSslPort"": 13000
+                    },
+                    {
+                        ""sslPort"": 15001,
+                        ""nonSslPort"": 13001
+                    },
+                    {
+                        ""sslPort"": 15002,
+                        ""nonSslPort"": 13002
+                    },
+                    ]
 	            }
             }
             ");
@@ -267,7 +282,8 @@ namespace AzureRedisCache.Tests.InMemoryTests
                                                                                 RedisConfiguration = new Dictionary<string, string>() {
                                                                                     {"maxmemory-policy","allkeys-lru"}
                                                                                 },
-                                                                                MinimumTlsVersion = TlsVersion.OneFullStopTwo
+                                                                                MinimumTlsVersion = TlsVersion.OneFullStopTwo,
+                                                                                ReplicasPerMaster = 2
                                                                             });
 
             Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Id);
@@ -286,6 +302,16 @@ namespace AzureRedisCache.Tests.InMemoryTests
             Assert.Equal(6379, response.Port);
             Assert.Equal(6380, response.SslPort);
             Assert.Equal(TlsVersion.OneFullStopTwo, response.MinimumTlsVersion);
+            Assert.Equal(2, response.ReplicasPerMaster);
+
+            Assert.Equal(3, response.Instances.Count);
+            for (int i = 0; i < response.Instances.Count; i++)
+            {
+                Assert.Equal(15000 + i, response.Instances[i].SslPort);
+                Assert.Equal(13000 + i, response.Instances[i].NonSslPort);
+                Assert.Null(response.Instances[i].ShardId);
+                Assert.Null(response.Instances[i].Zone);
+            }
         }
     }
 }

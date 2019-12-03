@@ -74,7 +74,9 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="largeFileSharesState">Allow large file shares if sets
         /// to Enabled. It cannot be disabled once it is enabled. Possible
         /// values include: 'Disabled', 'Enabled'</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string))
+        /// <param name="routingPreference">Maintains information about the
+        /// network routing choice opted by the user for data transfer</param>
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference))
         {
             Sku = sku;
             Kind = kind;
@@ -89,6 +91,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             EnableHttpsTrafficOnly = enableHttpsTrafficOnly;
             IsHnsEnabled = isHnsEnabled;
             LargeFileSharesState = largeFileSharesState;
+            RoutingPreference = routingPreference;
             CustomInit();
         }
 
@@ -195,6 +198,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.largeFileSharesState")]
         public string LargeFileSharesState { get; set; }
+
+        /// <summary>
+        /// Gets or sets maintains information about the network routing choice
+        /// opted by the user for data transfer
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routingPreference")]
+        public RoutingPreference RoutingPreference { get; set; }
 
         /// <summary>
         /// Validate the object.

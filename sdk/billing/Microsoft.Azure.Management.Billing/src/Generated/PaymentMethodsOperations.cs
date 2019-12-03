@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing account Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccountName", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccount", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing profile Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Billing
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingProfileName", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingProfile", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -417,7 +417,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing account Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2018-11-01-preview/paymentmethods" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/2019-10-01-preview/paymentmethods" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -443,7 +443,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingAccountNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingAccountNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccountNameNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccountNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Lists the Payment Methods by billing profile Id.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/billing/" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -612,7 +612,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingProfileNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingProfileNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Management.Billing
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingProfileNameNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingProfileNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

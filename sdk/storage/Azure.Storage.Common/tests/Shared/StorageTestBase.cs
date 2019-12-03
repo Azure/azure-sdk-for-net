@@ -11,7 +11,6 @@ using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -193,6 +192,23 @@ namespace Azure.Storage.Test.Shared
                 secret,
                 Recording.InstrumentClientOptions(
                     new TokenCredentialOptions() { AuthorityHost = authorityHost }));
+
+        internal SharedAccessSignatureCredentials GetAccountSasCredentials(
+            AccountSasServices services = AccountSasServices.All,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All)
+        {
+            var sasBuilder = new AccountSasBuilder
+            {
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = services,
+                ResourceTypes = resourceTypes,
+                Protocol = SasProtocol.Https,
+            };
+            sasBuilder.SetPermissions(permissions);
+            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
+        }
 
         public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {

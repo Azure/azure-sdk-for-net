@@ -16,10 +16,10 @@ namespace Azure.Messaging.EventHubs
         ///   The Event Hub partition that the <see cref="PartitionEvent.Data" /> is associated with.
         /// </summary>
         ///
-        public PartitionContext Context { get; }
+        public PartitionContext Partition { get; }
 
         /// <summary>
-        ///   An event that was read from the associated <see cref="PartitionEvent.Context" />.
+        ///   An event that was read from the associated <see cref="PartitionEvent.Partition" />.
         /// </summary>
         ///
         /// <value>
@@ -34,16 +34,16 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="PartitionEvent"/> structure.
         /// </summary>
         ///
-        /// <param name="partitionContext">The Event Hub partition that the <paramref name="eventData" /> is associated with.</param>
-        /// <param name="eventData">The event that was read, if events were available; otherwise, <c>null</c>.</param>
+        /// <param name="partition">The Event Hub partition that the <paramref name="data" /> is associated with.</param>
+        /// <param name="data">The event that was read, if events were available; otherwise, <c>null</c>.</param>
         ///
-        public PartitionEvent(PartitionContext partitionContext,
-                              EventData eventData)
+        public PartitionEvent(PartitionContext partition,
+                              EventData data)
         {
-            Argument.AssertNotNull(partitionContext, nameof(partitionContext));
+            Argument.AssertNotNull(partition, nameof(partition));
 
-            Context = partitionContext;
-            Data = eventData;
+            Partition = partition;
+            Data = data;
         }
     }
 }

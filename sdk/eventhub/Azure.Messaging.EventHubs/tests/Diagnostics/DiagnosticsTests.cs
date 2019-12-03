@@ -7,12 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using NUnit.Framework;
 
@@ -53,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportMock = new Mock<TransportProducer>();
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -101,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportMock = new Mock<TransportProducer>();
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             transportMock
@@ -146,8 +144,8 @@ namespace Azure.Messaging.EventHubs.Tests
             EventData[] writtenEventsData = null;
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
-                .Callback<IEnumerable<EventData>, SendOptions, CancellationToken>((e, _, __) => writtenEventsData = e.ToArray())
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<IEnumerable<EventData>, SendEventOptions, CancellationToken>((e, _, __) => writtenEventsData = e.ToArray())
                 .Returns(Task.CompletedTask);
 
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
@@ -198,7 +196,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 });
 
             transportMock
-                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendOptions>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.SendAsync(It.IsAny<IEnumerable<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             transportMock
@@ -229,102 +227,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(eventData3.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute), Is.False, "Events that were not accepted into the batch should not have been instrumented.");
-        }
-
-        /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CheckpointManagerCreatesScope()
-        {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-
-            var eventHubName = "SomeName";
-            var endpoint = new Uri("amqp://some.endpoint.com/path");
-            var fakeConnection = new MockConnection(endpoint, eventHubName);
-            var context = new PartitionContext("partition");
-            var data = new EventData(new byte[0], sequenceNumber: 0, offset: 0);
-
-            var processor = new EventProcessorClient("cg", new InMemoryPartitionManager(), fakeConnection, null);
-
-            await processor.UpdateCheckpointAsync(data, context);
-
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));
-        }
-
-        /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="PartitionPump" />
-        ///   class.
-        /// </summary>
-        ///
-        [Test]
-        public async Task PartitionPumpCreatesScopeForEventProcessing()
-        {
-            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-            var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var consumerMock = new Mock<TransportConsumer>();
-            bool returnedItems = false;
-            consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Returns(() =>
-                {
-                    if (returnedItems)
-                    {
-                        throw new InvalidOperationException("Something bad happened");
-                    }
-
-                    returnedItems = true;
-                    return Task.FromResult(
-                        (IEnumerable<EventData>)new[]
-                        {
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id" }
-                                }
-                            },
-                            new EventData(Array.Empty<byte>())
-                            {
-                                Properties =
-                                {
-                                    { "Diagnostic-Id", "id2" }
-                                }
-                            }
-                        });
-                });
-
-            var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
-            connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubConsumerClientOptions>())).Returns(consumerMock.Object);
-
-            Func<EventProcessorEvent, ValueTask> processEventAsync = processorEvent =>
-            {
-                processorCalledSource.SetResult(null);
-                return new ValueTask();
-            };
-
-            var updateCheckpointMock = Mock.Of<Func<EventData, PartitionContext, Task>>();
-            var manager = new PartitionPump(connectionMock.Object, "cg", new PartitionContext("pid"), EventPosition.Earliest, processEventAsync, updateCheckpointMock, new EventProcessorClientOptions());
-
-            await manager.StartAsync();
-            await processorCalledSource.Task;
-
-            // TODO: figure out why an exception is being thrown. The problem has always existed, but now the Pump won't swallow exceptions
-            // and throws them back to the caller.
-
-            try
-            {
-                await manager.StopAsync();
-            }
-            catch (InvalidOperationException) { }
-
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            Assert.That(scope.Links, Has.One.EqualTo("id"));
-            Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
         }
 
         /// <summary>

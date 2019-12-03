@@ -78,12 +78,6 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-
-// Create a certificate using the certificate client.
-CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
-
-// Retrieve a certificate using the certificate client.
-KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
 ```
 
 ## Key concepts
@@ -180,7 +174,7 @@ is not enabled for the Key Vault, this operation permanently deletes the certifi
 ```C# Snippet:DeleteAndPurgeCertificate
 DeleteCertificateOperation operation = client.StartDeleteCertificate("MyCertificate");
 
-// You only need to wait for completion if you want to purge or recover the secret.
+// You only need to wait for completion if you want to purge or recover the certificate.
 // You should call `UpdateStatus` in another thread or after doing additional work like pumping messages.
 while (!operation.HasCompleted)
 {
@@ -225,7 +219,7 @@ By default, this loops indefinitely but you can cancel it by passing a `Cancella
 ```C# Snippet:DeleteAndPurgeCertificateAsync
 DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync("MyCertificate");
 
-// You only need to wait for completion if you want to purge or recover the secret.
+// You only need to wait for completion if you want to purge or recover the certificate.
 await operation.WaitForCompletionAsync();
 
 DeletedCertificate secret = operation.Value;
@@ -279,13 +273,13 @@ Headers:
 
 ## Next steps
 Key Vault Certificates client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Key Vault:
-* [HelloWorld.cs][hello_world_sync] and [HelloWorldAsync.cs][hello_world_async] - for working with Azure Key Vault certificates, including:
+* [Sample1_HelloWorld.md][hello_world_sample] - for working with Azure Key Vault certificates, including:
   * Create a certificate
   * Get an existing certificate
   * Update an existing certificate
   * Delete a certificate
 
-* [GetCertificates.cs][get_cetificates_sync] and [GetCertificatesAsync.cs][get_cetificates_async] - Example code for working with Key Vault certificates, including:
+* [Sample2_GetCertificates.md][get_cetificates_sample] - Example code for working with Key Vault certificates, including:
   * Create certificates
   * List all certificates in the Key Vault
   * List versions of a specified certificate
@@ -319,10 +313,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [keyvault_rest]: https://docs.microsoft.com/en-us/rest/api/keyvault/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
-[hello_world_async]: samples/Sample1_HelloWorldAsync.cs
-[hello_world_sync]: samples/Sample1_HelloWorld.cs
-[get_cetificates_async]: samples/Sample2_GetCertificatesAsync.cs
-[get_cetificates_sync]: samples/Sample2_GetCertificates.cs
+[hello_world_sample]: samples/Sample1_HelloWorld.md
+[get_cetificates_sample]: samples/Sample2_GetCertificates.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 

@@ -80,7 +80,38 @@
   <PropertyGroup>
     <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
     <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
+    <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
+    <!-- Find all Azure projects -->
+    <AzureProjects Include="$(RepoRoot)/sdk/*/Azure.*/src/Azure.*.csproj" ProjectPath="%(Identity)" />
+    <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
+
+    <!-- Compute set of projects that intersect with the PackageReference's -->
+    <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
+    <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
+
+    <!-- Remove PackageReferences -->
+    <PackageReference Remove="@(ProjectsToConvert)" />
+
+    <!-- Add ProjectReferences -->
+    <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
+  </ItemGroup>
+
+  <!-- Added layer of checks to make sure we correctly switched to project references -->
+  <Target Name="VerifyProjectReferencesReferences" AfterTargets="Build">
+    <ItemGroup>
+      <AzureReferences Include="@(ReferencePath)" Condition="$([System.String]::Copy('%(Filename)').StartsWith('Azure.'))" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
+      <ShouldBeProjectReference Include="@(AzureReferences)" Exclude="@(AzureReferences->HasMetadata('MSBuildSourceProjectFile'))" />
+    </ItemGroup>
+
+    <Error Condition="'$(UseProjectReferenceToAzureClients)' == 'true' and '@(ShouldBeProjectReference)' != ''"
+           Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
+  </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
 </Project>

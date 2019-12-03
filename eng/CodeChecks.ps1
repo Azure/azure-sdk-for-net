@@ -72,7 +72,7 @@ try {
         & $PSScriptRoot\Update-Snippets.ps1 @script:PSBoundParameters
     }
 
-    Write-Host "Re-generating lisgings"
+    Write-Host "Re-generating listings"
     Invoke-Block {
         & $PSScriptRoot\Export-API.ps1 @script:PSBoundParameters
     }
@@ -84,7 +84,8 @@ try {
     }
 
     Write-Host "git diff"
-    & git diff --ignore-space-at-eol --exit-code
+    # prevent warning related to EOL differences which triggers an exception for some reason
+    & git -c core.safecrlf=false diff --ignore-space-at-eol --exit-code
     if ($LastExitCode -ne 0) {
         $status = git status -s | Out-String
         $status = $status -replace "`n","`n    "

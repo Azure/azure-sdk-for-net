@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.Redis
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Cache", "FirewallRules", "2018-03-01"),
-                new Tuple<string, string, string>("Cache", "LinkedServer", "2018-03-01"),
-                new Tuple<string, string, string>("Cache", "Operations", "2018-03-01"),
-                new Tuple<string, string, string>("Cache", "PatchSchedules", "2018-03-01"),
-                new Tuple<string, string, string>("Cache", "Redis", "2018-03-01"),
+                new Tuple<string, string, string>("Cache", "FirewallRules", "2019-07-01"),
+                new Tuple<string, string, string>("Cache", "LinkedServer", "2019-07-01"),
+                new Tuple<string, string, string>("Cache", "Operations", "2019-07-01"),
+                new Tuple<string, string, string>("Cache", "PatchSchedules", "2019-07-01"),
+                new Tuple<string, string, string>("Cache", "Redis", "2019-07-01"),
               }.AsEnumerable();
           }
       }

@@ -1732,31 +1732,18 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    var uploadAttempt = 0;
-                    return await ReliableOperation.DoSyncOrAsync(
-                        async,
-                        reset: () => content.Seek(0, SeekOrigin.Begin),
-                        predicate: e => true,
-                        maximumRetries: Constants.MaxReliabilityRetries,
-                        operation:
-                            () =>
-                            {
-                                Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                                return FileRestClient.File.UploadRangeAsync(
-                                    ClientDiagnostics,
-                                    Pipeline,
-                                    Uri,
-                                    optionalbody: content,
-                                    contentLength: content.Length,
-                                    range: range.ToString(),
-                                    fileRangeWrite: writeType,
-                                    contentHash: transactionalContentHash,
-                                    async: async,
-                                    cancellationToken: cancellationToken,
-                                    operationName: Constants.File.UploadRangeOperationName);
-                            },
-                        cleanup: () => { })
-                        .ConfigureAwait(false);
+                    return await FileRestClient.File.UploadRangeAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        optionalbody: content,
+                        contentLength: content.Length,
+                        range: range.ToString(),
+                        fileRangeWrite: writeType,
+                        contentHash: transactionalContentHash,
+                        async: async,
+                        cancellationToken: cancellationToken,
+                        operationName: Constants.File.UploadRangeOperationName);
                 }
                 catch (Exception ex)
                 {
@@ -2219,7 +2206,7 @@ namespace Azure.Storage.Files.Shares
                     $"{nameof(Uri)}: {Uri}");
                 try
                 {
-                    return await FileRestClient.File.GetRangeListAsync(
+                    Response<ShareFileRangeInfoInternal> response = await FileRestClient.File.GetRangeListAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
@@ -2228,6 +2215,7 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken: cancellationToken,
                         operationName: Constants.File.GetRangeListOperationName)
                         .ConfigureAwait(false);
+                    return Response.FromValue(new ShareFileRangeInfo(response.Value), response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

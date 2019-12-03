@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -24,8 +25,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubProducerClientOptions
             {
-                ConnectionOptions = new EventHubConnectionOptions { TransportType = TransportType.AmqpWebSockets },
-                RetryOptions = new RetryOptions { TryTimeout = TimeSpan.FromMinutes(36) }
+                ConnectionOptions = new EventHubConnectionOptions { TransportType = EventHubsTransportType.AmqpWebSockets },
+                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(36) }
             };
 
             EventHubProducerClientOptions clone = options.Clone();

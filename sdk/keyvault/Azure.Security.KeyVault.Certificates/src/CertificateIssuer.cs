@@ -33,7 +33,7 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_organizationIdPropertyNameBytes = JsonEncodedText.Encode(OrganizationIdPropertyName);
         private static readonly JsonEncodedText s_adminDetailsPropertyNameBytes = JsonEncodedText.Encode(AdminDetailsPropertyName);
 
-        private List<AdministratorContact> _administrators;
+        private List<AdministratorContact> _administratorContacts;
 
         internal CertificateIssuer(IssuerProperties properties = null)
         {
@@ -60,6 +60,15 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name => Properties.Name;
 
         /// <summary>
+        /// Gets or sets the provider name of the certificate issuer.
+        /// </summary>
+        public string Provider
+        {
+            get => Properties.Provider;
+            set => Properties.Provider = value;
+        }
+
+        /// <summary>
         /// Gets or sets the account identifier or username used to authenticate to the certificate issuer.
         /// </summary>
         public string AccountId { get; set; }
@@ -77,7 +86,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets a list of contacts who administer the certificate issuer account.
         /// </summary>
-        public IList<AdministratorContact> Administrators => LazyInitializer.EnsureInitialized(ref _administrators);
+        public IList<AdministratorContact> AdministratorContacts => LazyInitializer.EnsureInitialized(ref _administratorContacts);
 
         /// <summary>
         /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
@@ -153,7 +162,7 @@ namespace Azure.Security.KeyVault.Certificates
                         {
                             var admin = new AdministratorContact();
                             admin.ReadProperties(elem);
-                            Administrators.Add(admin);
+                            AdministratorContacts.Add(admin);
                         }
                         Password = prop.Value.GetString();
                         break;
@@ -195,7 +204,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteEndObject();
             }
 
-            if (!string.IsNullOrEmpty(OrganizationId) || !_administrators.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(OrganizationId) || !_administratorContacts.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_orgDetailsPropertyNameBytes);
 
@@ -234,11 +243,11 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_organizationIdPropertyNameBytes, AccountId);
             }
 
-            if (!_administrators.IsNullOrEmpty())
+            if (!_administratorContacts.IsNullOrEmpty())
             {
                 json.WriteStartArray(s_adminDetailsPropertyNameBytes);
 
-                foreach (AdministratorContact admin in _administrators)
+                foreach (AdministratorContact admin in _administratorContacts)
                 {
                     json.WriteStartObject();
 

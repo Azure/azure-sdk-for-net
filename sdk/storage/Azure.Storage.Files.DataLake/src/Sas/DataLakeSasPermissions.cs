@@ -4,9 +4,9 @@
 using System;
 using System.ComponentModel;
 using System.Text;
-using Azure.Storage.Files.DataLake.Sas;
+using Azure.Storage.Sas;
 
-namespace Azure.Storage.Files.DataLake.Sas
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="DataLakeSasPermissions"/> contains the list of

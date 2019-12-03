@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventHubs
     ///   retry options when creating one of the Event Hubs clients.
     /// </remarks>
     ///
-    /// <seealso cref="RetryOptions"/>
+    /// <seealso cref="EventHubsRetryOptions"/>
     ///
     public abstract class EventHubsRetryPolicy
     {

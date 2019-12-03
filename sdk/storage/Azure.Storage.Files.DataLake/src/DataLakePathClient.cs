@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -242,6 +243,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakePathClient(Uri pathUri, TokenCredential credential)
             : this(pathUri, credential.AsPolicy(), null)
         {
+            Errors.VerifyHttpsTokenAuth(pathUri);
         }
 
         /// <summary>
@@ -264,6 +266,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
             : this(pathUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(pathUri);
         }
 
         /// <summary>
@@ -285,14 +288,14 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         internal DataLakePathClient(Uri pathUri, HttpPipelinePolicy authentication, DataLakeClientOptions options)
         {
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathUri);
             options ??= new DataLakeClientOptions();
             _uri = pathUri;
-            _blobUri = GetBlobUri(pathUri);
-            _dfsUri = GetDfsUri(pathUri);
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _blockBlobClient = new BlockBlobClient(_blobUri, _pipeline, _clientDiagnostics, null);
-
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
         }
 
         /// <summary>
@@ -313,56 +316,33 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
         {
+            var uriBuilder = new DataLakeUriBuilder(pathUri);
             _uri = pathUri;
-            _blobUri = GetBlobUri(pathUri);
-            _dfsUri = GetDfsUri(pathUri);
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = new ClientDiagnostics(options ?? new DataLakeClientOptions());
-            _blockBlobClient = new BlockBlobClient(_blobUri, pipeline, _clientDiagnostics, null);
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of BlockBlobClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class BlockBlobClientInternals : BlockBlobClient
+        {
+            public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)
+            {
+                return BlockBlobClient.CreateClient(
+                    uri,
+                    new BlobClientOptions()
+                    {
+                        Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
+                    },
+                    pipeline);
+            }
         }
         #endregion
-
-        /// <summary>
-        /// Gets the blob Uri.
-        /// </summary>
-        private static Uri GetBlobUri(Uri uri)
-        {
-            Uri blobUri;
-            if (uri.Host.Contains(Constants.DataLake.DfsUriSuffix))
-            {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.DfsUriSuffix,
-                    Constants.DataLake.BlobUriSuffix);
-                blobUri = uriBuilder.Uri;
-            }
-            else
-            {
-                blobUri = uri;
-            }
-            return blobUri;
-        }
-
-        /// <summary>
-        /// Gets the dfs Uri.
-        /// </summary>
-        private static Uri GetDfsUri(Uri uri)
-        {
-            Uri dfsUri;
-            if (uri.Host.Contains(Constants.DataLake.BlobUriSuffix))
-            {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.BlobUriSuffix,
-                    Constants.DataLake.DfsUriSuffix);
-                dfsUri = uriBuilder.Uri;
-            }
-            else
-            {
-                dfsUri = uri;
-            }
-            return dfsUri;
-        }
 
         /// <summary>
         /// Converts metadata in DFS metadata string
