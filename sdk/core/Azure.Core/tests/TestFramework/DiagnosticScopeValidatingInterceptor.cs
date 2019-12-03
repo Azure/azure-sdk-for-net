@@ -71,6 +71,9 @@ namespace Azure.Core.Testing
                 }
                 finally
                 {
+                    // Remove subscribers before enumerating events.
+                    diagnosticListener.Dispose();
+
                     if (strict)
                     {
                         foreach (var expectedEvent in expectedEvents)
