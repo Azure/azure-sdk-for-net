@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -19,5 +20,14 @@ namespace Azure.Storage.Files.Shares
                 throw Errors.MustBeLessThanOrEqualTo(nameof(filePermission), Constants.File.MaxFilePermissionHeaderSize);
             }
         }
+
+        internal static Response<FileLease> ToLease(this Response<BrokenLease> response)
+            => Response.FromValue(
+                new FileLease
+                {
+                    ETag = response.Value.ETag,
+                    LastModified = response.Value.LastModified,
+                    LeaseId = response.Value.LeaseId
+                }, response.GetRawResponse());
     }
 }

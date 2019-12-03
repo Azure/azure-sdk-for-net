@@ -1743,6 +1743,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1762,6 +1766,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1771,6 +1776,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                conditions,
                 cancellationToken);
             return Response.FromValue(file, response.GetRawResponse());
         }
@@ -1800,6 +1806,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1819,6 +1829,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1828,6 +1839,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                conditions,
                 cancellationToken).ConfigureAwait(false);
             return Response.FromValue(file, response.GetRawResponse());
         }
@@ -1841,6 +1853,10 @@ namespace Azure.Storage.Files.Shares
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1855,8 +1871,11 @@ namespace Azure.Storage.Files.Shares
         [ForwardsClientCalls]
         public virtual Response DeleteFile(
             string fileName,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            GetFileClient(fileName).Delete(cancellationToken);
+            GetFileClient(fileName).Delete(
+                conditions,
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="DeleteFileAsync"/> operation immediately removes
@@ -1865,6 +1884,10 @@ namespace Azure.Storage.Files.Shares
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1879,9 +1902,12 @@ namespace Azure.Storage.Files.Shares
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileAsync(
             string fileName,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetFileClient(fileName)
-                .DeleteAsync(cancellationToken)
+                .DeleteAsync(
+                    conditions,
+                    cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteFile
     }

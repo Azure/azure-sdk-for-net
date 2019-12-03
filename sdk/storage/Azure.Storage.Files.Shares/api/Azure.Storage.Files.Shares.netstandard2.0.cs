@@ -63,14 +63,14 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Uri Uri { get { throw null; } }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareDirectoryInfo> Create(System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareDirectoryInfo>> CreateAsync(System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.ShareFileClient> CreateFile(string fileName, long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.ShareFileClient>> CreateFileAsync(string fileName, long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.ShareFileClient> CreateFile(string fileName, long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.ShareFileClient>> CreateFileAsync(string fileName, long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.ShareDirectoryClient> CreateSubdirectory(string subdirectoryName, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.ShareDirectoryClient>> CreateSubdirectoryAsync(string subdirectoryName, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response DeleteFile(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileAsync(string fileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteFile(string fileName, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileAsync(string fileName, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteSubdirectory(string subdirectoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSubdirectoryAsync(string subdirectoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.Shares.Models.CloseHandlesResult ForceCloseAllHandles(bool? recursive = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -103,12 +103,12 @@ namespace Azure.Storage.Files.Shares
         public virtual string Path { get { throw null; } }
         public virtual string ShareName { get { throw null; } }
         public virtual System.Uri Uri { get { throw null; } }
-        public virtual Azure.Response AbortCopy(string copyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AbortCopyAsync(string copyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> Create(long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo>> CreateAsync(long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response AbortCopy(string copyId, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AbortCopyAsync(string copyId, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> Create(long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo>> CreateAsync(long maxSize, Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Delete(Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileDownloadInfo> Download(Azure.HttpRange range = default(Azure.HttpRange), bool rangeGetContentHash = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileDownloadInfo>> DownloadAsync(Azure.HttpRange range = default(Azure.HttpRange), bool rangeGetContentHash = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.Shares.Models.CloseHandlesResult ForceCloseAllHandles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -121,18 +121,18 @@ namespace Azure.Storage.Files.Shares
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo> GetRangeList(Azure.HttpRange range, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfo>> GetRangeListAsync(Azure.HttpRange range, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> SetHttpHeaders(long? newSize = default(long?), Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo>> SetHttpHeadersAsync(long? newSize = default(long?), Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileCopyInfo> StartCopy(System.Uri sourceUri, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileCopyInfo>> StartCopyAsync(System.Uri sourceUri, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> Upload(System.IO.Stream content, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadAsync(System.IO.Stream content, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> UploadRange(Azure.Storage.Files.Shares.Models.ShareFileRangeWriteType writeType, Azure.HttpRange range, System.IO.Stream content, byte[] transactionalContentHash = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeAsync(Azure.Storage.Files.Shares.Models.ShareFileRangeWriteType writeType, Azure.HttpRange range, System.IO.Stream content, byte[] transactionalContentHash = null, System.IProgress<long> progressHandler = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> UploadRangeFromUri(System.Uri sourceUri, Azure.HttpRange range, Azure.HttpRange sourceRange, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeFromUriAsync(System.Uri sourceUri, Azure.HttpRange range, Azure.HttpRange sourceRange, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> SetHttpHeaders(long? newSize = default(long?), Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo>> SetHttpHeadersAsync(long? newSize = default(long?), Azure.Storage.Files.Shares.Models.ShareFileHttpHeaders httpHeaders = null, Azure.Storage.Files.Shares.Models.FileSmbProperties smbProperties = null, string filePermission = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileCopyInfo> StartCopy(System.Uri sourceUri, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileCopyInfo>> StartCopyAsync(System.Uri sourceUri, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> Upload(System.IO.Stream content, System.IProgress<long> progressHandler = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadAsync(System.IO.Stream content, System.IProgress<long> progressHandler = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> UploadRange(Azure.Storage.Files.Shares.Models.ShareFileRangeWriteType writeType, Azure.HttpRange range, System.IO.Stream content, byte[] transactionalContentHash = null, System.IProgress<long> progressHandler = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeAsync(Azure.Storage.Files.Shares.Models.ShareFileRangeWriteType writeType, Azure.HttpRange range, System.IO.Stream content, byte[] transactionalContentHash = null, System.IProgress<long> progressHandler = null, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> UploadRangeFromUri(System.Uri sourceUri, Azure.HttpRange range, Azure.HttpRange sourceRange, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeFromUriAsync(System.Uri sourceUri, Azure.HttpRange range, Azure.HttpRange sourceRange, Azure.Storage.Files.Shares.Models.FileRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.Shares.ShareFileClient WithSnapshot(string shareSnapshot) { throw null; }
     }
     public partial class ShareServiceClient
@@ -186,9 +186,30 @@ namespace Azure.Storage.Files.Shares.Models
         Aborted = 2,
         Failed = 3,
     }
+<<<<<<< HEAD
     public static partial class FileModelFactory
     {
         public static Azure.Storage.Files.Shares.Models.CloseHandlesResult ClosedHandlesInfo(int closedHandlesCount) { throw null; }
+=======
+    public partial class FileLease
+    {
+        internal FileLease() { }
+        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+    public partial class FileLeaseReleaseInfo
+    {
+        internal FileLeaseReleaseInfo() { }
+        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+    public partial class FileRequestConditions
+    {
+        public FileRequestConditions() { }
+        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public override string ToString() { throw null; }
+>>>>>>> Added FileLease
     }
     public partial class FileSmbProperties
     {
@@ -227,6 +248,11 @@ namespace Azure.Storage.Files.Shares.Models
         Offline = 128,
         NotContentIndexed = 256,
         NoScrubData = 512,
+    }
+    public enum PermissionCopyModeType
+    {
+        Source = 0,
+        Override = 1,
     }
     public partial class PermissionInfo
     {
@@ -494,6 +520,8 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public static partial class ShareModelFactory
     {
+        public static Azure.Storage.Files.Shares.Models.FileLease FileLease(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo FileLeaseReleaseInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.PermissionInfo PermissionInfo(string filePermissionKey) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileCopyInfo ShareFileCopyInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, string copyId, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?)) { throw null; }
@@ -501,10 +529,10 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileUploadInfo ShareFileUploadInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, bool isServerEncrypted) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareInfo ShareInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot = null) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareSnapshotInfo ShareSnapshotInfo(string snapshot, Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareStatistics ShareStatistics(int shareUsageBytes) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClosed) { throw null; }
     }
     public partial class ShareProperties
     {
@@ -512,6 +540,10 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag? ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.DateTimeOffset? LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? NextAllowedQuotaDowngradeTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int? ProvisionedEgressMBps { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int? ProvisionedIngressMBps { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int? ProvisionedIops { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public int? QuotaInGB { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class ShareRetentionPolicy
@@ -569,6 +601,31 @@ namespace Azure.Storage.Files.Shares.Models
         internal StorageClosedHandlesSegment() { }
         public string Marker { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public int NumberOfHandlesClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int NumberOfHandlesFailedToClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+}
+namespace Azure.Storage.Files.Shares.Specialized
+{
+    public partial class FileLeaseClient
+    {
+        protected FileLeaseClient() { }
+        public FileLeaseClient(Azure.Storage.Files.Shares.ShareFileClient client, string leaseId = null) { }
+        protected virtual Azure.Storage.Files.Shares.ShareFileClient FileClient { get { throw null; } }
+        public virtual string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> Acquire(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.FileLease>> AcquireAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> Break(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.FileLease>> BreakAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> Change(string proposedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.FileLease>> ChangeAsync(string proposedId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo> Release(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo>> ReleaseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo>> ReleaseInternal(bool async, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public static partial class SpecializedFileExtensions
+    {
+        public static Azure.Storage.Files.Shares.Specialized.FileLeaseClient GetFileLeaseClient(this Azure.Storage.Files.Shares.ShareFileClient client, string leaseId = null) { throw null; }
     }
 }
 namespace Azure.Storage.Sas
