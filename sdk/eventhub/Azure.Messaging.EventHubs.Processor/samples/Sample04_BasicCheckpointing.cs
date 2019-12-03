@@ -121,37 +121,65 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             async Task processEventHandler(ProcessEventArgs eventArgs)
             {
-               try
-               {
-                   ++eventIndex;
-                   ++eventsSinceLastCheckpoint;
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
 
-                   if (eventsSinceLastCheckpoint >= eventsPerBatch)
-                   {
-                       await eventArgs.UpdateCheckpointAsync();
+                try
+                {
+                    ++eventIndex;
+                    ++eventsSinceLastCheckpoint;
 
-                       Console.WriteLine("Created checkpoint");
-                       Console.WriteLine();
-                       eventsSinceLastCheckpoint = 0;
-                   }
+                    if (eventsSinceLastCheckpoint >= eventsPerBatch)
+                    {
+                        // Updating the checkpoint will interact with the Azure Storage.  As a service call,
+                        // this is done asynchronously and may be long-running.  You may want to influence its behavior,
+                        // such as limiting the time that it may execute in order to ensure throughput for
+                        // processing events.
+                        //
+                        // In our case, we'll limit the checkpoint operation to a second and request cancellation
+                        // if it runs longer.
 
-                   Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
-               }
-               catch (Exception ex)
-               {
-                   // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                   // the exception to the console.
+                        using CancellationTokenSource cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
-                   Console.WriteLine();
-                   Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
-                   Console.WriteLine();
-               }
+                        try
+                        {
+                            await eventArgs.UpdateCheckpointAsync(cancellationSource.Token);
+                            eventsSinceLastCheckpoint = 0;
+
+                            Console.WriteLine("Created checkpoint");
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            Console.WriteLine("Checkpoint creation took too long and was canceled.");
+                        }
+
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                }
+                catch (Exception ex)
+                {
+                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
+                    // the exception to the console.
+
+                    Console.WriteLine();
+                    Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
+                    Console.WriteLine();
+                }
             };
 
             // For this example, exceptions will just be logged to the console.
 
             Task processErrorHandler(ProcessErrorEventArgs eventArgs)
             {
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
+
                 Console.WriteLine("===============================");
                 Console.WriteLine($"The error handler was invoked during the operation: { eventArgs.Operation ?? "Unknown" }, for Exception: { eventArgs.Exception.Message }");
                 Console.WriteLine("===============================");
