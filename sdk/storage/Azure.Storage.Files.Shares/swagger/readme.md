@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-02-02/file.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-07-07/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -78,7 +78,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.parameters.ApiVersionParameter
-  transform: $.enum = ["2019-02-02"]
+  transform: $.enum = ["2019-07-07"]
 ```
 
 ### /?restype=service&comp=properties
@@ -758,6 +758,50 @@ directive:
   where: $.definitions
   transform: >
     $.Range["x-az-public"] = false;
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&acquire
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&acquire"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["201"]["x-az-response-name"] = "FileLease";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&release
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&release"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["201"]["x-az-response-name"] = "FileLease";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&change
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&change"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["201"]["x-az-response-name"] = "FileLease";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&break
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&break"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["201"]["x-az-response-name"] = "FileLease";
 ```
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.Shares%2Fswagger%2Freadme.png)
