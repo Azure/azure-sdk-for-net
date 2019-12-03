@@ -1,4 +1,4 @@
-# GA SDK Releases
+## GA SDK Releases
 
 Every minor version release targets the same (GA) REST API version as that of the corresponding major version release. The REST API version targeted by the major version releases are listed where appropriate.
 
@@ -6,29 +6,29 @@ Features and improvements in a GA SDK are considered generally available.
 
 # 10.1.0
 
-# Breaking Changes
+## Breaking Changes
 
 None
 
-# Improvements
+## Improvements
 
 - Re-branded "Azure Search" to "Azure Cognitive Search" (when appropriate) in doc comments. [PR 8316](https://github.com/Azure/azure-sdk-for-net/pull/8316)
 
-# Bug fixes
+## Bug fixes
 
 None
 
 # 10.0.1
 
-# Breaking Changes
+## Breaking Changes
 
 None
 
-# Improvements
+## Improvements
 
 None
 
-# Bug fixes
+## Bug fixes
 
 - Fixed missing Intellisense and reference documentation. This was caused by missing XML doc files in the NuGet packages. [PR 6298](https://github.com/Azure/azure-sdk-for-net/pull/7786).
 
@@ -36,11 +36,11 @@ None
 
 # 10.0.0
 
-# Target API Version
+## Target API Version
 
 2019-05-06
 
-# Breaking Changes
+## Breaking Changes
 
 For more details, visit the [SDK migration guide](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-10).
 
@@ -48,7 +48,7 @@ For more details, visit the [SDK migration guide](https://docs.microsoft.com/azu
 - Allow recursive inputs for `InputFieldMappingEntry`. [PR 7204](https://github.com/Azure/azure-sdk-for-net/pull/7204).
 - Skills can be optionally identified by `Name` property. [PR 7265](https://github.com/Azure/azure-sdk-for-net/pull/7265).
 
-# Improvements
+## Improvements
 
 - Introduce `urlEncode` and `urlDecode` field mapping functions. [PR 7126](https://github.com/Azure/azure-sdk-for-net/pull/7126).
 - Introduce conditional skill. [PR 7204](https://github.com/Azure/azure-sdk-for-net/pull/7204).
@@ -56,36 +56,36 @@ For more details, visit the [SDK migration guide](https://docs.microsoft.com/azu
 - Indexer execution status adds more detail for errors and warnings. [PR 7265](https://github.com/Azure/azure-sdk-for-net/pull/7265).
 - Service limits expose complex type limits and indexer execution status includes indexer limits/quotas. [PR 7031](https://github.com/Azure/azure-sdk-for-net/pull/7031).
 
-# Bug fixes
+## Bug fixes
 
 - Fix Web API skill validation error on creating a skillset. See first item in "Breaking changes". [Issue 6468](https://github.com/Azure/azure-sdk-for-net/issues/6468).
 
 # 9.1.0
 
-# Breaking Changes
+## Breaking Changes
 
 None
 
-# Improvements
+## Improvements
 
 - Improvements in error handling for `FieldBuilder`. [PR 6833](https://github.com/Azure/azure-sdk-for-net/pull/6833).
 
-# Bug fixes
+## Bug fixes
 
 - Prevent ObjectDisposedException when Indexing using "Merge" operation. [PR 7011](https://github.com/Azure/azure-sdk-for-net/pull/7011). [Issue 6910](https://github.com/Azure/azure-sdk-for-net/issues/6910).
 - Handle enum conversion exceptions gracefully in `FieldBuilder`. See first item in "Improvements". [Issue 6380](https://github.com/Azure/azure-sdk-for-net/issues/6380).
 
 # 9.0.1
 
-# Breaking Changes
+## Breaking Changes
 
 None
 
-# Improvements
+## Improvements
 
 None
 
-# Bug fixes
+## Bug fixes
 
 - Fix deadlock in Search when using POST. [PR 6298](https://github.com/Azure/azure-sdk-for-net/pull/6298). [Issue 6254](https://github.com/Azure/azure-sdk-for-net/issues/6254).
 
@@ -93,11 +93,11 @@ None
 
 # 9.0.0
 
-# Target API Version
+## Target API Version
 
 2019-05-06
 
-# Breaking Changes
+## Breaking Changes
 
 For more details, visit the [SDK migration guide](https://docs.microsoft.com/azure/search/search-dotnet-sdk-migration-version-9).
 
@@ -109,7 +109,7 @@ For more details, visit the [SDK migration guide](https://docs.microsoft.com/azu
 - `SynonymMap` constructor no longer has the redundant `enum` parameter for `SynonymMapFormat`. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 - `DataSourceType.DocumentDb` is deprecated in favor of `DataSourceType.CosmosDb`. [PR 5223](https://github.com/Azure/azure-sdk-for-net/pull/5223).
 
-# Improvements
+## Improvements
 
 - Introduces [cognitive search](https://docs.microsoft.com/azure/search/cognitive-search-concept-intro) capabilities as part of the SDK. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009). This includes:
     - The ability to create skillsets with one or more predefined or customer skills.

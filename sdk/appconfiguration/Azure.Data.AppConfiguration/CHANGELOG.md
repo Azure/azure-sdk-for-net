@@ -1,4 +1,5 @@
-# Release History
+Release Histroy
+=================
 
 ## 1.0.0-preview.6
 
@@ -11,15 +12,15 @@
 - Pair of methods `SetReadOnly`/`ClearReadOnly` in `ConfigurationClient` are replaced with single method `SetReadOnly` with boolean parameter.
 - `SettingSelector.AsOf` property is renamed into `SettingSelector.AcceptDateTime`.
 
-### Major changes
+## Major changes
 
 - Added support for AAD. `ConfigurationClient` can be created using endpoint and any type of `TokenCredential`.
 - Added new overload for the method `ConfigurationClient.GetRevisions` that accepts key and optional label.
 - Added new overload for the method `ConfigurationClient.GetConfigurationSetting` that accepts `ConfigurationSetting` and its datetime stamp.
 
-## 1.0.0-preview.4
+# 1.0.0-preview.4
 
-### Breaking changes
+## Breaking changes
 
 - Made `Keys` and `Labels` in `SettingSelector` read-only.
 - Removed `SetConfigurationSetting` overload that took `MatchCondition` as a parameter.
@@ -30,17 +31,17 @@
 - Changed `ConfigurationSetting.ReadOnly` to `ConfigurationSetting.IsReadOnly`.
 - Changed `Equals` and `GetHashCode` implementations in `ConfigurationSetting` and `SettingSelector` to use implementations inherited from `Object`.
 
-### Major changes
+## Major changes
 
 - Fixed a bug causing incorrect request signing on retries.
 - Made `ConfigurationSetting` serializable by `System.Text.Json` serializers.
 - Updated documentation and samples.
 
-## 1.0.0-preview.3
+# 1.0.0-preview.3
 
 - Fixed an issue where special characters were escaped incorrectly.
 
-## 1.0.0-preview.2
+# 1.0.0-preview.2
 
 - Enabled conditional requests.
 - Added support for setting `x-ms-client-request-id`, `x-ms-correlation-request-id`, and `correlation-context` headers.

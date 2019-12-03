@@ -1,5 +1,3 @@
-# Release History
-
 ## 4.0.0-preview.8
 
 ### Breaking changes
@@ -36,15 +34,15 @@
 - `ImportCertificateOptions.Value` has been renamed to `ImportCertificateOptions.Certificate`.
 - `KeyVaultCertificate.ContentType` has been removed.
 
-### Major changes
+## Major changes
 
 - The `SubjectAlternativeNames` class now allows you to add multiple types of subject alternative names using any of the `DnsNames`, `Emails`, and `UserPrincipalNames` collection properties.
 - A new `CertificatePolicy` constructor allows you to both pass in both the `subject` and `subjectAlternativeNames` parameters.
 - `CertificateIssuer.Provider` was added.
 
-## 4.0.0-preview.6 (2019-11)
+# 4.0.0-preview.6 (2019-11)
 
-### Breaking changes
+## Breaking changes
 
 - `Certificate` and `CertificateWithPolicy` have been renamed to `KeyVaultCertificate` and `KeyVaultCertificateWithPolicy` to avoid ambiguity with other libraries and to yield better search results.
 - `AdministratorDetails` has been renamed to `AdministratorContact`.
@@ -59,15 +57,15 @@
 - `Certificate.CER` has been renamed to `KeyVaultCertificate.Cer`.
 - `CertificateClient.RestoreCertificate` has been renamed to `CertificateClient.RestoreCertificateBackup` to better associate it with `CertificateClient.BackupCertificate`.
 
-### Major changes
+## Major changes
 
 - A new `CertificatePolicy.Default` property returns a new policy suitable for self-signed certificate requests.
 - `CertificateClient.VaultUri` has been added with the original value pass to `CertificateClient`.
 - `CertificateClient.GetDeletedCertificates` includes an optional `includePending` parameter to include certificates in a delete pending state.
 
-## 4.0.0-preview.5 (2019-10-07)
+# 4.0.0-preview.5 (2019-10-07)
 
-### Breaking changes
+## Breaking changes
 
 - `CertificateBase` has been renamed to `CertificateProperties`.
 - `Certificate` no longer extends `CertificateProperties`, but instead contains a `CertificateProperties` property named `Properties`.
