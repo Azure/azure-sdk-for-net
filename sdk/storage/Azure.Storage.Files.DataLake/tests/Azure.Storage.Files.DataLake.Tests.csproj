@@ -17,4 +17,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
 </Project>

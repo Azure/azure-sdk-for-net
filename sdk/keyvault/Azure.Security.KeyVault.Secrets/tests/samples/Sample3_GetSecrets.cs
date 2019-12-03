@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Testing;
 using Azure.Identity;
 using NUnit.Framework;
 using System;
@@ -16,7 +15,6 @@ namespace Azure.Security.KeyVault.Secrets.Samples
     /// and list deleted secrets in a soft delete-enabled key vault
     /// using the synchronous methods of the SecretClient.
     /// </summary>
-    [LiveOnly]
     public partial class GetSecrets
     {
         [Test]
@@ -24,11 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            GetSecretsSync(keyVaultUrl);
-        }
 
-        private void GetSecretsSync(string keyVaultUrl)
-        {
             #region Snippet:SecretsSample3SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -53,14 +47,21 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             IEnumerable<SecretProperties> secrets = client.GetPropertiesOfSecrets();
             foreach (SecretProperties secret in secrets)
             {
-                KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
-
-                if (secretValues.ContainsKey(secretWithValue.Value))
+                // Getting a disabled secret will fail, so skip disabled secrets.
+                if (!secret.Enabled.GetValueOrDefault())
                 {
-                    throw new InvalidOperationException($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+                    continue;
                 }
 
-                secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+                KeyVaultSecret secretWithValue = client.GetSecret(secret.Name);
+                if (secretValues.ContainsKey(secretWithValue.Value))
+                {
+                    Debug.WriteLine($"Secret {secretWithValue.Name} shares a value with secret {secretValues[secretWithValue.Value]}");
+                }
+                else
+                {
+                    secretValues.Add(secretWithValue.Value, secretWithValue.Name);
+                }
             }
             #endregion
 
@@ -70,10 +71,16 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             IEnumerable<SecretProperties> secretVersions = client.GetPropertiesOfSecretVersions(bankSecretName);
             foreach (SecretProperties secret in secretVersions)
             {
+                // Secret versions may also be disabled if compromised and new versions generated, so skip disabled versions, too.
+                if (!secret.Enabled.GetValueOrDefault())
+                {
+                    continue;
+                }
+
                 KeyVaultSecret oldBankSecret = client.GetSecret(secret.Name, secret.Version);
                 if (newBankSecretPassword == oldBankSecret.Value)
                 {
-                    throw new InvalidOperationException($"Secret {secret.Name} reuses a password");
+                    Debug.WriteLine($"Secret {secret.Name} reuses a password");
                 }
             }
 
@@ -84,6 +91,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
             DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
+            // You only need to wait for completion if you want to purge or recover the secret.
             while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted)
             {
                 Thread.Sleep(2000);

@@ -11,6 +11,7 @@ using Azure.Storage.Test;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -43,6 +44,19 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder1.AccountName);
             Assert.IsEmpty(builder2.QueueName);
             Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenCredential_Http()
+        {
+            // Arrange
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            Uri uri = new Uri(TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new QueueServiceClient(uri, tokenCredential),
+                new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
         [Test]

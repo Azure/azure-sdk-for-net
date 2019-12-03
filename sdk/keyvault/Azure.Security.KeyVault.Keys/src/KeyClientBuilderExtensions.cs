@@ -6,9 +6,7 @@ using Azure.Core.Extensions;
 using Azure.Security.KeyVault.Keys;
 using Azure.Security.KeyVault.Keys.Cryptography;
 
-#pragma warning disable AZC0001 // https://github.com/Azure/azure-sdk-tools/issues/213
 namespace Microsoft.Extensions.Azure
-#pragma warning restore AZC0001
 {
     /// <summary>
     /// Extension methods to <see cref="KeyClient"/> or <see cref="CryptographyClient"/> to clients builder.

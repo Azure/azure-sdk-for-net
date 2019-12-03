@@ -15,6 +15,7 @@ We support a number of extensions including using the vendor prefix `x-az-`:
 - `x-az-stream`: Whether to generate a non buffered request that takes owhership of the response stream. The default value is `false`.
 - `x-az-struct`: Indicates whether a model is struct or not. The default value is `false`.
 - `x-az-nullable-array`:  Allows list to be null. The default value is `false`.
+- `x-az-internal`: x-ms-external is only allowed on definitions so this does the same for parameters, etc.
 
 ### Autorest plugin configuration
 The AutoRest example at https://github.com/Azure/autorest-extension-helloworld

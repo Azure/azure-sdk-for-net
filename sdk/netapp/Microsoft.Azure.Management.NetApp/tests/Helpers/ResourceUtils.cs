@@ -12,10 +12,10 @@ namespace NetApp.Tests.Helpers
     {
         public const long gibibyte = 1024L * 1024L * 1024L;
 
-        public const string vnet = "sdk-net-tests-rg-cys-vnet";
-        public const string subsId = "0661b131-4a11-479b-96bf-2f95acca2f73";
-        public const string location = "westcentralus";
-        public const string resourceGroup = "sdk-net-tests-rg-cys";
+        public const string vnet = "sdk-test-qa2-vnet";
+        public const string subsId = "69a75bda-882e-44d5-8431-63421204132a";
+        public const string location = "eastus2";
+        public const string resourceGroup = "sdk-test-qa2";
         public const string accountName1 = "sdk-net-tests-acc-1";
         public const string accountName2 = "sdk-net-tests-acc-2";
         public const string poolName1 = "sdk-net-tests-pool-1";
@@ -31,7 +31,16 @@ namespace NetApp.Tests.Helpers
             Password = "sdkpass",
             Domain = "sdkdomain",
             Dns = "127.0.0.1",
-            SmbServerName = "SDKSMBServerName",
+            SmbServerName = "SDKSMBSeNa",
+        };
+
+        public static ActiveDirectory activeDirectory2 = new ActiveDirectory()
+        {
+            Username = "sdkuser1",
+            Password = "sdkpass1",
+            Domain = "sdkdomain",
+            Dns = "127.0.0.1",
+            SmbServerName = "SDKSMBSeNa",
         };
 
         public static ExportPolicyRule defaultExportPolicyRule = new ExportPolicyRule()
@@ -58,21 +67,18 @@ namespace NetApp.Tests.Helpers
         private const int delay = 5000;
         private const int retryAttempts = 4;
 
-        public static NetAppAccount CreateAccount(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, ActiveDirectory activeDirectory = null)
+        public static NetAppAccount CreateAccount(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, IDictionary<string, string> tags = default(IDictionary<string, string>), ActiveDirectory activeDirectory = null)
         {
             // request reference example
             // az netappfiles account update -g --account-name cli-lf-acc2  --active-directories '[{"username": "aduser", "password": "aduser", "smbservername": "SMBSERVER", "dns": "1.2.3.4", "domain": "westcentralus"}]' -l westus2
 
-            var activeDirectories = new List<ActiveDirectory> { activeDirectory };
+            var activeDirectories = activeDirectory != null ? new List <ActiveDirectory> { activeDirectory } : null;
 
             var netAppAccount = new NetAppAccount()
             {
                 Location = location,
                 Tags = tags,
-                // current limitations of active directories make this problematic
-                // omitting tests on active directory properties for now
-                //ActiveDirectories = activeDirectories
-                ActiveDirectories = null
+                ActiveDirectories = activeDirectories
             };
 
             var resource = netAppMgmtClient.Accounts.CreateOrUpdate(netAppAccount, resourceGroup, accountName);
@@ -83,7 +89,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static CapacityPool CreatePool(AzureNetAppFilesManagementClient netAppMgmtClient, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, bool poolOnly = false)
+        public static CapacityPool CreatePool(AzureNetAppFilesManagementClient netAppMgmtClient, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, IDictionary<string, string> tags = default(IDictionary<string, string>), bool poolOnly = false)
         {
             if (!poolOnly)
             {
@@ -115,7 +121,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, object tags = null, VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
+        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, List<string> protocolTypes = null, IDictionary<string, string> tags = default(IDictionary<string, string>), VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
         {
             if (!volumeOnly)
             {

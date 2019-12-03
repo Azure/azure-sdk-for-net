@@ -114,9 +114,14 @@ namespace Storage.Tests
 
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "westeurope",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS },
+                    LargeFileSharesState = LargeFileSharesState.Enabled
+                };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
-                StorageManagementTestUtilities.VerifyAccountProperties(account, true);
 
                 // implement case
                 try
@@ -128,7 +133,7 @@ namespace Storage.Tests
                     Dictionary<string, string> metaData = new Dictionary<string, string>();
                     metaData.Add("metadata1", "true");
                     metaData.Add("metadata2", "value2");
-                    int shareQuota = 501;
+                    int shareQuota = 5200;
                     var shareSet = storageMgmtClient.FileShares.Update(rgName, accountName, shareName, metaData, shareQuota);
                     Assert.NotNull(shareSet.Metadata);
                     Assert.Equal(shareQuota, shareSet.ShareQuota);

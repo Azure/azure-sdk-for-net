@@ -161,14 +161,14 @@ namespace Azure.Storage.Files.DataLake.Models
         public static PathAccessControl PathAccessControl(
             string owner,
             string group,
-            string permissions,
-            string acl)
+            PathPermissions permissions,
+            IList<PathAccessControlItem> acl)
             => new PathAccessControl()
             {
                 Owner = owner,
                 Group = group,
                 Permissions = permissions,
-                Acl = acl
+                AccessControlList = acl
             };
         #endregion PathAccessControl
 

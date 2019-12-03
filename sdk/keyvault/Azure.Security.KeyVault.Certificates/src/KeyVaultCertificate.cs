@@ -13,7 +13,6 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private const string KeyIdPropertyName = "kid";
         private const string SecretIdPropertyName = "sid";
-        private const string ContentTypePropertyName = "contentType";
         private const string CERPropertyName = "cer";
 
         private string _keyId;
@@ -25,17 +24,17 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The Id of the certificate.
+        /// Gets the identifier of the certificate.
         /// </summary>
         public Uri Id => Properties.Id;
 
         /// <summary>
-        /// The name of the certificate.
+        /// Gets the name of the certificate.
         /// </summary>
         public string Name => Properties.Name;
 
         /// <summary>
-        /// The Id of the Key Vault Key backing the certifcate.
+        /// Gets the identifier of the Key Vault Key backing the certificate.
         /// </summary>
         public Uri KeyId
         {
@@ -44,7 +43,7 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The Id of the Key Vault Secret which contains the PEM of PFX formatted content of the certficate and it's private key.
+        /// Gets the identifier of the Key Vault Secret which contains the PEM of PFX formatted content of the certificate and its private key.
         /// </summary>
         public Uri SecretId
         {
@@ -53,17 +52,12 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The content type of the key vault Secret corresponding to the certificate.
-        /// </summary>
-        public CertificateContentType ContentType { get; internal set; }
-
-        /// <summary>
-        /// Additional properties of the <see cref="KeyVaultCertificate"/>.
+        /// Gets additional properties of the <see cref="KeyVaultCertificate"/>.
         /// </summary>
         public CertificateProperties Properties { get; }
 
         /// <summary>
-        /// The CER formatted public X509 certificate
+        /// Gets the CER formatted public X509 certificate.
         /// </summary>
         public byte[] Cer { get; internal set; }
 
@@ -77,10 +71,6 @@ namespace Azure.Security.KeyVault.Certificates
 
                 case SecretIdPropertyName:
                     _secretId = prop.Value.GetString();
-                    break;
-
-                case ContentTypePropertyName:
-                    ContentType = prop.Value.GetString();
                     break;
 
                 case CERPropertyName:

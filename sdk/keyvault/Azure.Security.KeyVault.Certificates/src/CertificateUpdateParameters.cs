@@ -16,14 +16,12 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
 
-        private readonly CertificateProperties _properties;
-
         public CertificateUpdateParameters(CertificateProperties properties)
         {
-            _properties = properties;
+            Properties = properties;
         }
 
-        public CertificateProperties Properties => _properties;
+        public CertificateProperties Properties { get; }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {

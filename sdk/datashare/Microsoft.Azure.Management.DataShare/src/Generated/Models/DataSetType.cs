@@ -24,6 +24,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public const string AdlsGen2File = "AdlsGen2File";
         public const string AdlsGen1Folder = "AdlsGen1Folder";
         public const string AdlsGen1File = "AdlsGen1File";
+        public const string KustoCluster = "KustoCluster";
+        public const string KustoDatabase = "KustoDatabase";
         public const string SqlDBTable = "SqlDBTable";
         public const string SqlDWTable = "SqlDWTable";
     }

@@ -6,7 +6,7 @@ using System;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// Configuration Setting model factory that enables mocking for the App Configuration client library
+    /// Configuration Setting model factory that enables mocking for the App Configuration client library.
     /// </summary>
     public static class ConfigurationModelFactory
     {

@@ -44,11 +44,23 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>
         /// <param name="endpoint">Endpoint for the domain.</param>
-        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string endpoint = default(string))
+        /// <param name="inputSchema">This determines the format that Event
+        /// Grid should expect for incoming events published to the domain.
+        /// Possible values include: 'EventGridSchema', 'CustomEventSchema',
+        /// 'CloudEventSchemaV1_0'.</param>
+        /// <param name="inputSchemaMapping">Information about the
+        /// InputSchemaMapping which specified the info about mapping event
+        /// payload.</param>
+        /// <param name="metricResourceId">Metric resource id for the
+        /// domain.</param>
+        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
+            InputSchema = inputSchema;
+            InputSchemaMapping = inputSchemaMapping;
+            MetricResourceId = metricResourceId;
             CustomInit();
         }
 
@@ -70,6 +82,28 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; private set; }
+
+        /// <summary>
+        /// Gets or sets this determines the format that Event Grid should
+        /// expect for incoming events published to the domain. Possible values
+        /// include: 'EventGridSchema', 'CustomEventSchema',
+        /// 'CloudEventSchemaV1_0'.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inputSchema")]
+        public string InputSchema { get; set; }
+
+        /// <summary>
+        /// Gets or sets information about the InputSchemaMapping which
+        /// specified the info about mapping event payload.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inputSchemaMapping")]
+        public InputSchemaMapping InputSchemaMapping { get; set; }
+
+        /// <summary>
+        /// Gets metric resource id for the domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metricResourceId")]
+        public string MetricResourceId { get; private set; }
 
         /// <summary>
         /// Validate the object.

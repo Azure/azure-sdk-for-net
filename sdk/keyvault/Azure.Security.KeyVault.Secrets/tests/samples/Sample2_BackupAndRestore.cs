@@ -22,11 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            BackupAndRestoreSync(keyVaultUrl);
-        }
 
-        private void BackupAndRestoreSync(string keyVaultUrl)
-        {
             #region Snippet:SecretsSample2SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -69,6 +65,19 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             #endregion
 
             AssertSecretsEqual(storedSecret.Properties, restoreSecret);
+
+            // Delete and purge the restored secret.
+            operation = client.StartDeleteSecret(restoreSecret.Name);
+
+            // You only need to wait for completion if you want to purge or recover the secret.
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(2000);
+
+                operation.UpdateStatus();
+            }
+
+            client.PurgeDeletedSecret(restoreSecret.Name);
         }
 
         private static void AssertSecretsEqual(SecretProperties exp, SecretProperties act)

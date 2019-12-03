@@ -4,7 +4,7 @@
     <Description>This is the Microsoft Azure Key Vault Certificates client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
     <Version>4.0.0-preview.7</Version>
-    <PackageTags>Microsoft Azure Key Vault Certificates</PackageTags>
+    <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
       - Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.

@@ -18,13 +18,13 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample07_PublishEventsWithCustomMetadata);
+        public string Name => nameof(Sample07_PublishEventsWithCustomMetadata);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An example of publishing events, extending the event data with custom metadata.";
+        public string Description => "An example of publishing events, extending the event data with custom metadata.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -64,7 +64,11 @@ namespace Azure.Messaging.EventHubs.Samples
                 secondEvent.Properties.Add("priority", "17");
                 secondEvent.Properties.Add("blob", true);
 
-                await producerClient.SendAsync(new[] { firstEvent, secondEvent });
+                using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                eventBatch.TryAdd(firstEvent);
+                eventBatch.TryAdd(secondEvent);
+
+                await producerClient.SendAsync(eventBatch);
 
                 Console.WriteLine("The event batch has been published.");
             }

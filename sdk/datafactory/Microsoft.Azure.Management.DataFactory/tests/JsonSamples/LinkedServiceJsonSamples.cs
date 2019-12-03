@@ -1127,7 +1127,8 @@ namespace DataFactory.Tests.JsonSamples
             securityToken: {
                 value : ""fakeToken"",
                 type : ""SecureString""
-            }
+            },
+            apiVersion: ""47.0""
         }
     }
 }";
@@ -1159,7 +1160,8 @@ namespace DataFactory.Tests.JsonSamples
                     type : ""LinkedServiceReference"",
                     referenceName : ""fakeAKVLinkedService""
                 }
-            }
+            },
+            apiVersion: ""47.0""
         }
     }
 }";
@@ -2302,8 +2304,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                value : ""fakeConnString"",
+                type : ""SecureString""
             }
         }
     }
@@ -2317,8 +2319,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -2340,8 +2342,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             }
         }
     }
@@ -2355,8 +2357,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -2389,7 +2391,9 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 type : ""SecureString"",
                 value : ""some password""
-            }
+            },
+            packageCollection : ""fakepackageCollection"",
+            certificateCommonName : ""fakecertificateCommonName""
         }
     }
 }";

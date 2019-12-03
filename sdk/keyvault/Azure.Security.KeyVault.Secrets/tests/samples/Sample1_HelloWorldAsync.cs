@@ -21,11 +21,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            await HelloWorldAsync(keyVaultUrl);
-        }
 
-        private async Task HelloWorldAsync(string keyVaultUrl)
-        {
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
 
             string secretName = $"BankAccountPassword-{Guid.NewGuid()}";
@@ -50,6 +46,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation operation = await client.StartDeleteSecretAsync(secretName);
 
             #region Snippet:SecretsSample1PurgeSecretAsync
+            // You only need to wait for completion if you want to purge or recover the secret.
             await operation.WaitForCompletionAsync();
 
             await client.PurgeDeletedSecretAsync(secretName);

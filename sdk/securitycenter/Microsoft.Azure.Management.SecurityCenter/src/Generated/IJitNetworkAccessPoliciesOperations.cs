@@ -204,6 +204,9 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='virtualMachines'>
         /// A list of virtual machines &amp; ports to open access for
         /// </param>
+        /// <param name='justification'>
+        /// The justification for making the initiate request
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -219,7 +222,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Policies for protecting resources using Just-in-Time access
         /// control.
