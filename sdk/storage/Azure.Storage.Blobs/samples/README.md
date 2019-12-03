@@ -1,13 +1,13 @@
 ---
 page_type: sample
 languages:
-- dotnet
+- csharp
 products:
 - azure
 - azure-storage
 ---
 
-# Azure Storage Blob client library samples for .NET
+# Azure.Storage.Blobs client library samples for .NET
 
 These sample programs show how to use the .NET client libraries for Azure Storage Blobs in some common scenarios.
 
