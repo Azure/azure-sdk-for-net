@@ -1170,10 +1170,10 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient file = test.File;
 
             // Act
-            int handlesClosed = await file.ForceCloseAllHandlesAsync();
+            ClosedHandlesInfo reponse = await file.ForceCloseAllHandlesAsync();
 
             // Assert
-            Assert.AreEqual(0, handlesClosed);
+            Assert.AreEqual(0, reponse.HandlesClosed);
         }
 
         [Test]

@@ -534,10 +534,10 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directory = test.Directory;
 
             // Act
-            int handlesClosed = await directory.ForceCloseAllHandlesAsync();
+            ClosedHandlesInfo response = await directory.ForceCloseAllHandlesAsync();
 
             // Assert
-            Assert.AreEqual(0, handlesClosed);
+            Assert.AreEqual(0, response.HandlesClosed);
         }
 
         [Test]
@@ -548,10 +548,10 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directory = test.Directory;
 
             // Act
-            int handlesClosed = await directory.ForceCloseAllHandlesAsync(recursive: true);
+            ClosedHandlesInfo response = await directory.ForceCloseAllHandlesAsync(recursive: true);
 
             // Assert
-            Assert.AreEqual(0, handlesClosed);
+            Assert.AreEqual(0, response.HandlesClosed);
         }
 
         [Test]
