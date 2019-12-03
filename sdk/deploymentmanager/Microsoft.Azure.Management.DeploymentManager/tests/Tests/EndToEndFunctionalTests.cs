@@ -605,14 +605,14 @@ namespace DeploymentManager.Tests
                 }
             };
 
-            var stepGroup = new Step(
+            var stepGroup = new StepGroup(
                 name: "First_Region",
                 deploymentTargetId: serviceUnitId)
             {
                 PreDeploymentSteps = new List<PrePostStep> () { new PrePostStep(stepId) }
             };
 
-            var stepGroupForFailureRollout = new Step(
+            var stepGroupForFailureRollout = new StepGroup(
                 name: "FirstRegion",
                 deploymentTargetId: failureServiceUnitId);
 
@@ -622,7 +622,7 @@ namespace DeploymentManager.Tests
                 identity: identity,
                 targetServiceTopologyId: serviceTopologyId,
                 artifactSourceId: artifactSourceId,
-                stepGroups: new List<Step>() { stepGroup });
+                stepGroups: new List<StepGroup>() { stepGroup });
 
             var createRolloutResponse = deploymentManagerClient.Rollouts.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -638,7 +638,7 @@ namespace DeploymentManager.Tests
                 identity: identity,
                 targetServiceTopologyId: serviceTopologyId,
                 artifactSourceId: artifactSourceId,
-                stepGroups: new List<Step>() { stepGroupForFailureRollout });
+                stepGroups: new List<StepGroup>() { stepGroupForFailureRollout });
 
             var failureRolloutResponse = deploymentManagerClient.Rollouts.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
