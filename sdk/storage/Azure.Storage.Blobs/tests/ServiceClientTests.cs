@@ -100,36 +100,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            BlobUriBuilder builder = new BlobUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint))
-            {
-                Sas = GetNewBlobServiceSasCredentialsContainer(GetNewContainerName())
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobServiceClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobServiceClient(httpUri, new BlobClientOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-
-            // Arrange
-            StorageConnectionString conn = GetConnectionString(true);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobServiceClient(conn.ToString(true)),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobServiceClient(conn.ToString(true), GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-        }
-
-        [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange

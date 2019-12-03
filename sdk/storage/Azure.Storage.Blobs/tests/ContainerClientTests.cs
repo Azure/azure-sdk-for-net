@@ -54,20 +54,22 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas()
         {
             // Arrange
-            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
                 AccountSasPermissions.All);
 
-            StorageConnectionString conn1 = GetConnectionString();
+            StorageConnectionString conn1 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: true);
 
             BlobContainerClient containerClient1 = GetBlobContainerClient(conn1.ToString(exportSecrets: true));
 
             // Also test with a connection string not containing the blob endpoint.
             // This should still work provided account name and Sas credential are present.
-            StorageConnectionString conn2 = TestExtensions.CreateStorageConnectionString(
-                sasCred,
-                TestConfigDefault.AccountName);
+            StorageConnectionString conn2 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: false);
 
             BlobContainerClient containerClient2 = GetBlobContainerClient(conn2.ToString(exportSecrets: true));
 
@@ -107,7 +109,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Resource_Types_Container()
         {
             // Arrange
-            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.Container,
                 AccountSasPermissions.All);
@@ -142,7 +144,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Resource_Types_Service()
         {
             // Arrange
-            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.Service,
                 AccountSasPermissions.All);
@@ -161,7 +163,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Permissions_ReadOnly()
         {
             // Arrange
-            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
                 AccountSasPermissions.Read);
@@ -184,7 +186,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Permissions_WriteOnly()
         {
             // Arrange
-            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
                 // include Delete so we can clean up the test
@@ -214,37 +216,6 @@ namespace Azure.Storage.Blobs.Test
                 await containerClient.DeleteAsync();
             }
         }
-
-        [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            BlobUriBuilder builder = new BlobUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint))
-            {
-                Sas = GetNewBlobServiceSasCredentialsContainer(GetNewContainerName())
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(httpUri, new BlobClientOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-
-            // Arrange
-            StorageConnectionString conn = GetConnectionString(true);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(conn.ToString(true), GetNewContainerName()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobContainerClient(conn.ToString(true), GetNewContainerName(), GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-        }
-
         private BlobContainerClient GetBlobContainerClient(string connectionString) =>
             InstrumentClient(
                 new BlobContainerClient(

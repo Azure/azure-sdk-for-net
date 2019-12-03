@@ -53,38 +53,22 @@ namespace Azure.Storage.Queues.Test
         public async Task Ctor_ConnectionString_Sas()
         {
             // Arrange
-            var sasBuilder = new AccountSasBuilder
-            {
-                ExpiresOn = Recording.UtcNow.AddHours(1),
-                Services = AccountSasServices.All,
-                ResourceTypes = AccountSasResourceTypes.All,
-                Protocol = SasProtocol.Https,
-            };
-            sasBuilder.SetPermissions(AccountSasPermissions.All);
-            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            string sasToken = sasBuilder.ToSasQueryParameters(cred).ToString();
-            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
+                AccountSasServices.All,
+                AccountSasResourceTypes.All,
+                AccountSasPermissions.All);
 
-            (Uri, Uri) queueUri = StorageConnectionString.ConstructQueueEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
-
-            StorageConnectionString conn1 =
-                new StorageConnectionString(
-                    sasCred,
-                    (default, default),
-                    queueUri,
-                    (default, default));
+            StorageConnectionString conn1 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: true);
 
             QueueClient queueClient1 = GetClient(conn1.ToString(exportSecrets: true));
 
             // Also test with a connection string not containing the blob endpoint.
             // This should still work provided account name and Sas credential are present.
-            StorageConnectionString conn2 = TestExtensions.CreateStorageConnectionString(
-                sasCred,
-                TestConfigDefault.AccountName);
+            StorageConnectionString conn2 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: false);
 
             QueueClient queueClient2 = GetClient(conn2.ToString(exportSecrets: true));
 
@@ -143,50 +127,6 @@ namespace Azure.Storage.Queues.Test
             TestHelper.AssertExpectedException(
                 () => new QueueClient(uri, tokenCredential),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
-        }
-
-        [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            QueueUriBuilder builder = new QueueUriBuilder(new Uri(TestConfigDefault.QueueServiceEndpoint))
-            {
-                Sas = GetNewQueueServiceSasCredentials(GetNewQueueName())
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
-            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(httpUri, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(httpUri, tokenCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(httpUri, tokenCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(httpUri, sharedKeyCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(httpUri, sharedKeyCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-
-            // Arrange
-            StorageConnectionString conn = GetConnectionString(true);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(conn.ToString(true), GetNewQueueName()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new QueueClient(conn.ToString(true), GetNewQueueName(), GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
         }
 
         [Test]

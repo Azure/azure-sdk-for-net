@@ -430,17 +430,25 @@ namespace Azure.Storage.Test.Shared
             };
 
         internal StorageConnectionString GetConnectionString(
-            bool useHttp = false,
-            SharedAccessSignatureCredentials credentials = default)
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true)
         {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
             (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                useHttp ? Constants.Http : Constants.Https,
+                Constants.Https,
                 TestConfigDefault.AccountName,
                 default,
                 default);
 
             return new StorageConnectionString(
-                    credentials ?? GetSasCredentials(),
+                    credentials,
                     blobUri,
                     (default, default),
                     (default, default));

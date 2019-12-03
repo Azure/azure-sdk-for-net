@@ -144,7 +144,6 @@ namespace Azure.Storage.Files.Shares
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
-            Errors.VerifyHttpSas(_uri, builder.Sas);
         }
 
         /// <summary>
@@ -208,7 +207,6 @@ namespace Azure.Storage.Files.Shares
             _uri = shareUri;
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            Errors.VerifyHttpSas(_uri, new ShareUriBuilder(_uri).Sas);
         }
 
         /// <summary>
@@ -228,7 +226,6 @@ namespace Azure.Storage.Files.Shares
             _uri = shareUri;
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
-            Errors.VerifyHttpSas(_uri, new ShareUriBuilder(_uri).Sas);
         }
         #endregion ctors
 

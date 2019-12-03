@@ -172,16 +172,26 @@ namespace Azure.Storage.Queues.Tests
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
-        internal StorageConnectionString GetConnectionString(bool useHttp = false)
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true)
         {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
             (Uri, Uri) queueUri = StorageConnectionString.ConstructQueueEndpoint(
-                useHttp ? Constants.Http : Constants.Https,
+                Constants.Https,
                 TestConfigDefault.AccountName,
                 default,
                 default);
 
             return new StorageConnectionString(
-                    GetSasCredentials(),
+                    credentials,
                     (default, default),
                     queueUri,
                     (default, default));

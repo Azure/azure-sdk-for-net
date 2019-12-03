@@ -114,7 +114,7 @@ namespace Azure.Storage
                 {
                     accountName = sharedKeyCredentials.AccountName;
                 }
-                else if (string.Compare(sharedKeyCredentials.AccountName, accountName, System.StringComparison.Ordinal) != 0)
+                else if (string.Compare(sharedKeyCredentials.AccountName, accountName, StringComparison.Ordinal) != 0)
                 {
                     throw Errors.AccountMismatch(sharedKeyCredentials.AccountName, accountName);
                 }

@@ -166,7 +166,6 @@ namespace Azure.Storage.Queues
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
-            Errors.VerifyHttpSas(_uri, builder.Sas);
         }
 
         /// <summary>
@@ -257,7 +256,6 @@ namespace Azure.Storage.Queues
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            Errors.VerifyHttpSas(_uri, new QueueUriBuilder(_uri).Sas);
         }
 
         /// <summary>
@@ -279,7 +277,6 @@ namespace Azure.Storage.Queues
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
-            Errors.VerifyHttpSas(_uri, new QueueUriBuilder(_uri).Sas);
         }
         #endregion ctors
 

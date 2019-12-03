@@ -42,43 +42,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            ShareUriBuilder builder = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
-            {
-                Sas = GetNewFileServiceSasCredentialsShare(GetNewShareName())
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new ShareServiceClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareServiceClient(httpUri, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareServiceClient(httpUri, sharedKeyCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareServiceClient(httpUri, sharedKeyCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-
-            // Arrange
-            StorageConnectionString conn = GetConnectionString(true);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new ShareServiceClient(conn.ToString(true)),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareServiceClient(conn.ToString(true), GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-        }
-
-        [Test]
         public async Task GetPropertiesAsync()
         {
             // Arrange

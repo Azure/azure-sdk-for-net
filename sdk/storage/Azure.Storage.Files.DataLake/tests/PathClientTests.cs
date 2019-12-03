@@ -101,38 +101,5 @@ namespace Azure.Storage.Files.DataLake.Tests
                 () => new DataLakePathClient(uri, tokenCredential, new DataLakeClientOptions()),
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
-
-        [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            DataLakeUriBuilder builder = new DataLakeUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint))
-            {
-                Sas = GetNewDataLakeServiceSasCredentialsFileSystem(GetNewFileSystemName())
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
-            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new DataLakePathClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new DataLakePathClient(httpUri, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new DataLakePathClient(httpUri, tokenCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new DataLakePathClient(httpUri, tokenCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new DataLakePathClient(httpUri, sharedKeyCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new DataLakePathClient(httpUri, sharedKeyCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-        }
     }
 }

@@ -62,15 +62,17 @@ namespace Azure.Storage.Files.Shares.Test
             string sasToken = sasBuilder.ToSasQueryParameters(cred).ToString();
             var sasCred = new SharedAccessSignatureCredentials(sasToken);
 
-            StorageConnectionString conn1 = GetConnectionString();
+            StorageConnectionString conn1 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: true);
 
             ShareClient shareClient1 = GetShareClient(conn1.ToString(exportSecrets: true));
 
             // Also test with a connection string not containing the blob endpoint.
             // This should still work provided account name and Sas credential are present.
-            StorageConnectionString conn2 = TestExtensions.CreateStorageConnectionString(
-                sasCred,
-                TestConfigDefault.AccountName);
+            StorageConnectionString conn2 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: false);
 
             ShareClient shareClient2 = GetShareClient(conn2.ToString(exportSecrets: true));
 
@@ -114,44 +116,6 @@ namespace Azure.Storage.Files.Shares.Test
                 await shareClient1.DeleteAsync();
                 await shareClient2.DeleteAsync();
             }
-        }
-
-        [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            var shareName = GetNewShareName();
-            ShareUriBuilder builder = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
-            {
-                Sas = GetNewFileServiceSasCredentialsShare(shareName)
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new ShareClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareClient(httpUri, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareClient(httpUri, sharedKeyCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareClient(httpUri, sharedKeyCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-
-            // Arrange
-            StorageConnectionString conn = GetConnectionString(true);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new ShareClient(conn.ToString(true), shareName),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareClient(conn.ToString(true), shareName, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
         }
 
         [Test]

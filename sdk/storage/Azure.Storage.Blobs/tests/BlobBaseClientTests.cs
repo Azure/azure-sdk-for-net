@@ -100,50 +100,6 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
-        [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            BlobUriBuilder builder = new BlobUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint))
-            {
-                Sas = GetNewBlobServiceSasCredentialsContainer(GetNewContainerName())
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
-            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(httpUri, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(httpUri, tokenCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(httpUri, tokenCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(httpUri, sharedKeyCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(httpUri, sharedKeyCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-
-            // Arrange
-            StorageConnectionString conn = GetConnectionString(true);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(conn.ToString(true), GetNewContainerName(), GetNewBlobName()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new BlobBaseClient(conn.ToString(true), GetNewContainerName(), GetNewBlobName(), GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-        }
-
         #region Sequential Download
 
         [Test]

@@ -49,43 +49,6 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
-        public void Ctor_SAS_Http()
-        {
-            // Arrange
-            ShareUriBuilder builder = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
-            {
-                Sas = GetNewFileServiceSasCredentialsFile(GetNewShareName(), GetNewFileName())
-            };
-            Uri httpUri = builder.ToUri().ToHttp();
-            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new ShareFileClient(httpUri),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareFileClient(httpUri, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareFileClient(httpUri, sharedKeyCredential),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareFileClient(httpUri, sharedKeyCredential, GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-
-            // Arrange
-            StorageConnectionString conn = GetConnectionString(true);
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => new ShareFileClient(conn.ToString(true), GetNewShareName(), GetNewFileName()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-            TestHelper.AssertExpectedException(
-                () => new ShareFileClient(conn.ToString(true), GetNewShareName(), GetNewFileName(), GetOptions()),
-                new ArgumentException(Constants.ErrorMessages.SasHttps));
-        }
-
-        [Test]
         public void FilePathsParsing()
         {
             // nested directories

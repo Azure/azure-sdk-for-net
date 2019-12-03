@@ -4,7 +4,6 @@
 using System;
 using System.Globalization;
 using System.Security.Authentication;
-using Azure.Storage.Sas;
 
 namespace Azure.Storage
 {
@@ -115,14 +114,6 @@ namespace Azure.Storage
             if (uri.Scheme != Constants.Https)
             {
                 throw new ArgumentException("Cannot use TokenCredential without HTTPS.");
-            }
-        }
-
-        public static void VerifyHttpSas(Uri uri, SasQueryParameters sasQueryParameters)
-        {
-            if (sasQueryParameters != null && uri.Scheme != Constants.Https)
-            {
-                throw new ArgumentException(Constants.ErrorMessages.SasHttps);
             }
         }
     }

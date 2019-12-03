@@ -296,7 +296,6 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
-            Errors.VerifyHttpSas(_uri, uriBuilder.Sas);
         }
 
         /// <summary>
@@ -324,7 +323,6 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = pipeline;
             _clientDiagnostics = new ClientDiagnostics(options ?? new DataLakeClientOptions());
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
-            Errors.VerifyHttpSas(_uri, uriBuilder.Sas);
         }
 
         /// <summary>

@@ -193,7 +193,7 @@ namespace Azure.Storage.Test.Shared
                 Recording.InstrumentClientOptions(
                     new TokenCredentialOptions() { AuthorityHost = authorityHost }));
 
-        internal SharedAccessSignatureCredentials GetSasCredentials(
+        internal SharedAccessSignatureCredentials GetAccountSasCredentials(
             AccountSasServices services = AccountSasServices.All,
             AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
             AccountSasPermissions permissions = AccountSasPermissions.All)

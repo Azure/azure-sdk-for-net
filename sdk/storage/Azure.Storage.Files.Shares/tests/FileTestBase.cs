@@ -179,16 +179,26 @@ namespace Azure.Storage.Files.Shares.Tests
                 }
             };
 
-        internal StorageConnectionString GetConnectionString(bool useHttp = false)
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true)
         {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
             (Uri, Uri) fileUri = StorageConnectionString.ConstructFileEndpoint(
-                useHttp ? Constants.Http : Constants.Https,
+                Constants.Https,
                 TestConfigDefault.AccountName,
                 default,
                 default);
 
             return new StorageConnectionString(
-                    GetSasCredentials(),
+                    credentials,
                     (default, default),
                     (default, default),
                     fileUri);
