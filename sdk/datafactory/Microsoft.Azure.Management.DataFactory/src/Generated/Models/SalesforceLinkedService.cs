@@ -55,17 +55,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Salesforce instance.</param>
         /// <param name="securityToken">The security token is required to
         /// remotely access Salesforce instance.</param>
+        /// <param name="apiVersion">The Salesforce API version used in ADF.
+        /// Type: string (or Expression with resultType string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public SalesforceLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object environmentUrl = default(object), object username = default(object), SecretBase password = default(SecretBase), SecretBase securityToken = default(SecretBase), object encryptedCredential = default(object))
+        public SalesforceLinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object environmentUrl = default(object), object username = default(object), SecretBase password = default(SecretBase), SecretBase securityToken = default(SecretBase), object apiVersion = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             EnvironmentUrl = environmentUrl;
             Username = username;
             Password = password;
             SecurityToken = securityToken;
+            ApiVersion = apiVersion;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -106,6 +109,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.securityToken")]
         public SecretBase SecurityToken { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Salesforce API version used in ADF. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.apiVersion")]
+        public object ApiVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.
