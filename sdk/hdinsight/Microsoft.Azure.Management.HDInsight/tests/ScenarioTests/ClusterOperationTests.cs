@@ -248,8 +248,8 @@ namespace Management.HDInsight.Tests
                 {
                     LinuxOperatingSystemProfile = new LinuxOperatingSystemProfile
                     {
-                        Username = "kafkauser",
-                        Password = "Test123!"
+                        Username = CommonData.SshUsername,
+                        Password = CommonData.SshPassword
                     }
                 }
             });
