@@ -1,5 +1,9 @@
 Release History
 ===============
+12.1.0
+--------------------------
+- Add support for populating AccountName properties of the UriBuilders
+  for non-IP style Uris.
 
 12.0.0-preview.4 (2019-10)
 --------------------------
