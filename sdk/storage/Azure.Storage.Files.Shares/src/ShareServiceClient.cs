@@ -182,24 +182,6 @@ namespace Azure.Storage.Files.Shares
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="serviceUri">
-        /// A <see cref="Uri"/> referencing the file service.
-        /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal ShareServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
-        {
-            _uri = serviceUri;
-            _pipeline = pipeline;
-            _clientDiagnostics = clientDiagnostics;
-        }
         #endregion ctors
 
         /// <summary>
