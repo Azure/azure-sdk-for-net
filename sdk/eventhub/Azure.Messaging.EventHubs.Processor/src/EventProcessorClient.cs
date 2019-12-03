@@ -604,12 +604,11 @@ namespace Azure.Messaging.EventHubs
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
-            if (ActiveLoadBalancingTask != null)
+            try
             {
-                await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
-
-                try
+                if (ActiveLoadBalancingTask != null)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -661,10 +660,10 @@ namespace Azure.Messaging.EventHubs
                         }
                     }
                 }
-                finally
-                {
-                    RunningTaskSemaphore.Release();
-                }
+            }
+            finally
+            {
+                RunningTaskSemaphore.Release();
             }
         }
 
@@ -863,7 +862,7 @@ namespace Azure.Messaging.EventHubs
                 await Task.WhenAll(InstanceOwnership
                     .Select(async kvp =>
                     {
-                        if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out var t) || t.Item1.IsCompleted)
+                        if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out var activeTokenSource) || activeTokenSource.Item1.IsCompleted)
                         {
                             await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Shutdown, cancellationToken).ConfigureAwait(false);
                             await StartPartitionProcessingAsync(kvp.Key, cancellationToken).ConfigureAwait(false);
@@ -890,7 +889,7 @@ namespace Azure.Messaging.EventHubs
                     // without an updated ownership list.
 
                     var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListOwnership, ex, cancellationToken);
-                    await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
+                    _ = OnProcessErrorAsync(errorEventArgs);
                 }
 
                 // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
@@ -921,8 +920,8 @@ namespace Azure.Messaging.EventHubs
                     {
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                        var eventArgs = new ProcessErrorEventArgs(null, Resources.OperationGetPartitionIds, ex, cancellationToken);
-                        await OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
+                        var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationGetPartitionIds, ex, cancellationToken);
+                        _ = OnProcessErrorAsync(errorEventArgs);
                     }
 
                     if (partitionIds != default)
@@ -1088,8 +1087,7 @@ namespace Azure.Messaging.EventHubs
             await OnPartitionInitializingAsync(initializingEventArgs).ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            var availableCheckpoints = default(IEnumerable<Checkpoint>);
+            IEnumerable<Checkpoint> availableCheckpoints;
 
             try
             {
@@ -1104,7 +1102,7 @@ namespace Azure.Messaging.EventHubs
                 // partition.
 
                 var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListCheckpoints, ex, cancellationToken);
-                await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
+                _ = OnProcessErrorAsync(errorEventArgs);
 
                 return;
             }
@@ -1143,9 +1141,9 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            if (ActivePartitionProcessors.TryRemove(partitionId, out var t))
+            if (ActivePartitionProcessors.TryRemove(partitionId, out var activeTokenSource))
             {
-                var (processingTask, tokenSource) = t;
+                var (processingTask, tokenSource) = activeTokenSource;
 
                 try
                 {
@@ -1164,7 +1162,7 @@ namespace Azure.Messaging.EventHubs
                     // earlier.
 
                     var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
-                    await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
+                    _ = OnProcessErrorAsync(errorEventArgs);
                 }
                 finally
                 {
@@ -1178,7 +1176,7 @@ namespace Azure.Messaging.EventHubs
             // TODO: if reason = Shutdown or OwnershipLost and we got an exception when closing, what should the final reason be?
 
             var closingEventArgs = new PartitionClosingEventArgs(partitionId, reason, cancellationToken);
-            await OnPartitionClosingAsync(closingEventArgs).ConfigureAwait(false);
+            _ = OnPartitionClosingAsync(closingEventArgs);
         }
 
         /// <summary>
@@ -1226,7 +1224,7 @@ namespace Azure.Messaging.EventHubs
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
                 var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationClaimOwnership, ex, cancellationToken);
-                await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
+                _ = OnProcessErrorAsync(errorEventArgs);
 
                 return default;
             }
@@ -1274,7 +1272,7 @@ namespace Azure.Messaging.EventHubs
                 // end up losing some of its ownership.
 
                 var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationRenewOwnership, ex, cancellationToken);
-                await OnProcessErrorAsync(errorEventArgs).ConfigureAwait(false);
+                _ = OnProcessErrorAsync(errorEventArgs);
 
                 return;
             }
