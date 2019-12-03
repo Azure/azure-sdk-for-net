@@ -142,6 +142,7 @@ namespace Azure.Storage.Blobs
             _pipeline = options.Build(_authenticationPolicy);
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            Errors.VerifyHttpSas(_uri, new BlobUriBuilder(_uri).Sas);
         }
 
         /// <summary>
@@ -249,6 +250,7 @@ namespace Azure.Storage.Blobs
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            Errors.VerifyHttpSas(_uri, new BlobUriBuilder(_uri).Sas);
         }
 
         /// <summary>

@@ -54,21 +54,12 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas()
         {
             // Arrange
-            string sasToken = GetSasToken(AccountSasServices.All, AccountSasResourceTypes.All, AccountSasPermissions.All);
-            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+                AccountSasServices.All,
+                AccountSasResourceTypes.All,
+                AccountSasPermissions.All);
 
-            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
-
-            StorageConnectionString conn1 =
-                new StorageConnectionString(
-                    sasCred,
-                    blobUri,
-                    (default, default),
-                    (default, default));
+            StorageConnectionString conn1 = GetConnectionString();
 
             BlobContainerClient containerClient1 = GetBlobContainerClient(conn1.ToString(exportSecrets: true));
 
@@ -116,21 +107,12 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Resource_Types_Container()
         {
             // Arrange
-            string sasToken = GetSasToken(AccountSasServices.All, AccountSasResourceTypes.Container, AccountSasPermissions.All);
-            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+                AccountSasServices.All,
+                AccountSasResourceTypes.Container,
+                AccountSasPermissions.All);
 
-            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
-
-            StorageConnectionString conn =
-                new StorageConnectionString(
-                    sasCred,
-                    blobUri,
-                    (default, default),
-                    (default, default));
+            StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
             BlobContainerClient containerClient = GetBlobContainerClient(conn.ToString(exportSecrets: true));
 
@@ -160,21 +142,12 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Resource_Types_Service()
         {
             // Arrange
-            string sasToken = GetSasToken(AccountSasServices.All, AccountSasResourceTypes.Service, AccountSasPermissions.All);
-            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+                AccountSasServices.All,
+                AccountSasResourceTypes.Service,
+                AccountSasPermissions.All);
 
-            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
-
-            StorageConnectionString conn =
-                new StorageConnectionString(
-                    sasCred,
-                    blobUri,
-                    (default, default),
-                    (default, default));
+            StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
             BlobContainerClient containerClient = GetBlobContainerClient(conn.ToString(exportSecrets: true));
 
@@ -188,21 +161,12 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Permissions_ReadOnly()
         {
             // Arrange
-            string sasToken = GetSasToken(AccountSasServices.All, AccountSasResourceTypes.All, AccountSasPermissions.Read);
-            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
+                AccountSasServices.All,
+                AccountSasResourceTypes.All,
+                AccountSasPermissions.Read);
 
-            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
-
-            StorageConnectionString conn =
-                new StorageConnectionString(
-                    sasCred,
-                    blobUri,
-                    (default, default),
-                    (default, default));
+            StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
             BlobContainerClient containerClient = GetBlobContainerClient(conn.ToString(exportSecrets: true));
 
@@ -220,25 +184,13 @@ namespace Azure.Storage.Blobs.Test
         public async Task Ctor_ConnectionString_Sas_Permissions_WriteOnly()
         {
             // Arrange
-            string sasToken = GetSasToken(
+            SharedAccessSignatureCredentials sasCred = GetSasCredentials(
                 AccountSasServices.All,
                 AccountSasResourceTypes.All,
                 // include Delete so we can clean up the test
                 AccountSasPermissions.Write | AccountSasPermissions.Delete);
-            var sasCred = new SharedAccessSignatureCredentials(sasToken);
 
-            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
-                Constants.Https,
-                TestConfigDefault.AccountName,
-                default,
-                default);
-
-            StorageConnectionString conn =
-                new StorageConnectionString(
-                    sasCred,
-                    blobUri,
-                    (default, default),
-                    (default, default));
+            StorageConnectionString conn = GetConnectionString(credentials: sasCred);
 
             BlobContainerClient containerClient = GetBlobContainerClient(conn.ToString(exportSecrets: true));
 
@@ -263,6 +215,36 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public void Ctor_SAS_Http()
+        {
+            // Arrange
+            BlobUriBuilder builder = new BlobUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint))
+            {
+                Sas = GetNewBlobServiceSasCredentialsContainer(GetNewContainerName())
+            };
+            Uri httpUri = builder.ToUri().ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobContainerClient(httpUri),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new BlobContainerClient(httpUri, new BlobClientOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+
+            // Arrange
+            StorageConnectionString conn = GetConnectionString(true);
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobContainerClient(conn.ToString(true), GetNewContainerName()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new BlobContainerClient(conn.ToString(true), GetNewContainerName(), GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+        }
+
         private BlobContainerClient GetBlobContainerClient(string connectionString) =>
             InstrumentClient(
                 new BlobContainerClient(
@@ -270,19 +252,7 @@ namespace Azure.Storage.Blobs.Test
                     GetNewContainerName(),
                     GetOptions()));
 
-        private string GetSasToken(AccountSasServices services, AccountSasResourceTypes resourceTypes, AccountSasPermissions permissions)
-        {
-            var sasBuilder = new AccountSasBuilder
-            {
-                ExpiresOn = Recording.UtcNow.AddHours(1),
-                Services = services,
-                ResourceTypes = resourceTypes,
-                Protocol = SasProtocol.Https,
-            };
-            sasBuilder.SetPermissions(permissions);
-            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            return sasBuilder.ToSasQueryParameters(cred).ToString();
-        }
+
 
         [Test]
         public void Ctor_Uri()

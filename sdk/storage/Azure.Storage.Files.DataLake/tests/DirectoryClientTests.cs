@@ -122,6 +122,39 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void Ctor_SAS_Http()
+        {
+            // Arrange
+            DataLakeUriBuilder builder = new DataLakeUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint))
+            {
+                Sas = GetNewDataLakeServiceSasCredentialsFileSystem(GetNewFileSystemName())
+            };
+            Uri httpUri = builder.ToUri().ToHttp();
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new DataLakeDirectoryClient(httpUri),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeDirectoryClient(httpUri, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeDirectoryClient(httpUri, tokenCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeDirectoryClient(httpUri, tokenCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeDirectoryClient(httpUri, sharedKeyCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeDirectoryClient(httpUri, sharedKeyCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+        }
+
+        [Test]
         public async Task CreateAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

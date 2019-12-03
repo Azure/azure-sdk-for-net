@@ -45,6 +45,43 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public void Ctor_SAS_Http()
+        {
+            // Arrange
+            ShareUriBuilder builder = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
+            {
+                Sas = GetNewFileServiceSasCredentialsShare(GetNewShareName())
+            };
+            Uri httpUri = builder.ToUri().ToHttp();
+            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new ShareDirectoryClient(httpUri),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareDirectoryClient(httpUri, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareDirectoryClient(httpUri, sharedKeyCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareDirectoryClient(httpUri, sharedKeyCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+
+            // Arrange
+            StorageConnectionString conn = GetConnectionString(true);
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new ShareDirectoryClient(conn.ToString(true), GetNewShareName(), GetNewDirectoryName()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareDirectoryClient(conn.ToString(true), GetNewShareName(), GetNewDirectoryName(), GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+        }
+
+        [Test]
         public void DirectoryPathsParsing()
         {
             // nested directories

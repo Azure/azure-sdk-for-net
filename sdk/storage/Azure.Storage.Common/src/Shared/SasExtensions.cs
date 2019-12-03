@@ -22,6 +22,9 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A string representing which resource types are allowed.
         /// </returns>
+        /// <remarks>
+        /// The order here matches the order used by the portal when generating SAS signatures.
+        /// </remarks>
         internal static string ToPermissionsString(this AccountSasResourceTypes resourceTypes)
         {
             var sb = new StringBuilder();
@@ -50,6 +53,9 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// An <see cref="AccountSasResourceTypes"/> instance.
         /// </returns>
+        /// <remarks>
+        /// The order here matches the order used by the portal when generating SAS signatures.
+        /// </remarks>
         internal static AccountSasResourceTypes ParseResourceTypes(string s)
         {
             AccountSasResourceTypes types = default;
@@ -116,6 +122,9 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A string representing which services are allowed.
         /// </returns>
+        /// <remarks>
+        /// The order here matches the order used by the portal when generating SAS signatures.
+        /// </remarks>
         internal static string ToPermissionsString(this AccountSasServices services)
         {
             var sb = new StringBuilder();

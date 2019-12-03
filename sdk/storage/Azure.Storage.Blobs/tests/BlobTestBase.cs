@@ -429,6 +429,23 @@ namespace Azure.Storage.Test.Shared
                 }
             };
 
+        internal StorageConnectionString GetConnectionString(
+            bool useHttp = false,
+            SharedAccessSignatureCredentials credentials = default)
+        {
+            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
+                useHttp ? Constants.Http : Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            return new StorageConnectionString(
+                    credentials ?? GetSasCredentials(),
+                    blobUri,
+                    (default, default),
+                    (default, default));
+        }
+
         public async Task EnableSoftDelete()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();

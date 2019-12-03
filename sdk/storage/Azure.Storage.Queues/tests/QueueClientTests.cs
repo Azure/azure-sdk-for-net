@@ -146,6 +146,50 @@ namespace Azure.Storage.Queues.Test
         }
 
         [Test]
+        public void Ctor_SAS_Http()
+        {
+            // Arrange
+            QueueUriBuilder builder = new QueueUriBuilder(new Uri(TestConfigDefault.QueueServiceEndpoint))
+            {
+                Sas = GetNewQueueServiceSasCredentials(GetNewQueueName())
+            };
+            Uri httpUri = builder.ToUri().ToHttp();
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(httpUri),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(httpUri, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(httpUri, tokenCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(httpUri, tokenCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(httpUri, sharedKeyCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(httpUri, sharedKeyCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+
+            // Arrange
+            StorageConnectionString conn = GetConnectionString(true);
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(conn.ToString(true), GetNewQueueName()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new QueueClient(conn.ToString(true), GetNewQueueName(), GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+        }
+
+        [Test]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange

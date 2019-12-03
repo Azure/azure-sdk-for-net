@@ -252,6 +252,7 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
+            Errors.VerifyHttpSas(_uri, uriBuilder.Sas);
         }
 
         /// <summary>
@@ -265,7 +266,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-       /// <param name="clientDiagnostics"></param>
+        /// <param name="clientDiagnostics"></param>
         internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
@@ -275,6 +276,7 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, _clientDiagnostics);
+            Errors.VerifyHttpSas(_uri, uriBuilder.Sas);
         }
 
         /// <summary>

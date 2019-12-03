@@ -184,6 +184,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            Errors.VerifyHttpSas(_uri, builder.Sas);
         }
 
         /// <summary>
@@ -279,6 +280,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            Errors.VerifyHttpSas(_uri, new BlobUriBuilder(_uri).Sas);
         }
 
         /// <summary>
@@ -303,6 +305,7 @@ namespace Azure.Storage.Blobs.Specialized
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            Errors.VerifyHttpSas(_uri, new BlobUriBuilder(_uri).Sas);
         }
         #endregion ctors
 

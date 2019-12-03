@@ -179,6 +179,21 @@ namespace Azure.Storage.Files.Shares.Tests
                 }
             };
 
+        internal StorageConnectionString GetConnectionString(bool useHttp = false)
+        {
+            (Uri, Uri) fileUri = StorageConnectionString.ConstructFileEndpoint(
+                useHttp ? Constants.Http : Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            return new StorageConnectionString(
+                    GetSasCredentials(),
+                    (default, default),
+                    (default, default),
+                    fileUri);
+        }
+
         public static void AssertValidStorageFileInfo(ShareFileInfo storageFileInfo)
         {
             Assert.IsNotNull(storageFileInfo.ETag);

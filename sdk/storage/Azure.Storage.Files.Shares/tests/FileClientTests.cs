@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
@@ -45,6 +46,43 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(shareName, builder.ShareName);
             Assert.AreEqual(filePath, builder.DirectoryOrFilePath);
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public void Ctor_SAS_Http()
+        {
+            // Arrange
+            ShareUriBuilder builder = new ShareUriBuilder(new Uri(TestConfigDefault.FileServiceEndpoint))
+            {
+                Sas = GetNewFileServiceSasCredentialsFile(GetNewShareName(), GetNewFileName())
+            };
+            Uri httpUri = builder.ToUri().ToHttp();
+            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new ShareFileClient(httpUri),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareFileClient(httpUri, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareFileClient(httpUri, sharedKeyCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareFileClient(httpUri, sharedKeyCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+
+            // Arrange
+            StorageConnectionString conn = GetConnectionString(true);
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new ShareFileClient(conn.ToString(true), GetNewShareName(), GetNewFileName()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new ShareFileClient(conn.ToString(true), GetNewShareName(), GetNewFileName(), GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
         }
 
         [Test]

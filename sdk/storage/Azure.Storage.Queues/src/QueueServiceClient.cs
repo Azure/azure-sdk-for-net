@@ -116,6 +116,7 @@ namespace Azure.Storage.Queues
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
+            Errors.VerifyHttpSas(_uri, new QueueUriBuilder(_uri).Sas);
         }
 
         /// <summary>
@@ -201,25 +202,7 @@ namespace Azure.Storage.Queues
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="QueueServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="serviceUri">
-        /// A <see cref="Uri"/> referencing the queue service.
-        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
-        /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
-        {
-            _uri = serviceUri;
-            _pipeline = pipeline;
-            _clientDiagnostics = clientDiagnostics;
+            Errors.VerifyHttpSas(_uri, new QueueUriBuilder(_uri).Sas);
         }
         #endregion ctors
 

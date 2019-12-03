@@ -87,6 +87,39 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void Ctor_SAS_Http()
+        {
+            // Arrange
+            DataLakeUriBuilder builder = new DataLakeUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint))
+            {
+                Sas = GetNewDataLakeServiceSasCredentialsFileSystem(GetNewFileSystemName())
+            };
+            Uri httpUri = builder.ToUri().ToHttp();
+            TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
+            StorageSharedKeyCredential sharedKeyCredential = GetNewSharedKeyCredentials();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(httpUri),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(httpUri, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(httpUri, tokenCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(httpUri, tokenCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(httpUri, sharedKeyCredential),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+            TestHelper.AssertExpectedException(
+                () => new DataLakeServiceClient(httpUri, sharedKeyCredential, GetOptions()),
+                new ArgumentException(Constants.ErrorMessages.SasHttps));
+        }
+
+        [Test]
         public async Task GetUserDelegationKey()
         {
             // Arrange

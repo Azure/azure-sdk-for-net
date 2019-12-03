@@ -573,5 +573,10 @@ namespace Azure.Storage
         {
             internal const int NotFound = 404;
         }
+
+        internal static class ErrorMessages
+        {
+            internal const string SasHttps = "Cannot use SAS token without HTTPS.";
+        }
     }
 }
