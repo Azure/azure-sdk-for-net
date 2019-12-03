@@ -1,5 +1,6 @@
 Release History
 ===============
+
 12.1.0
 --------------------------
 Removed internal dependencies

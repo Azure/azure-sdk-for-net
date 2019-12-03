@@ -1,5 +1,6 @@
 Breaking Changes
 ================
+
 12.0.0-preview.7
 --------------------------
 - Renamed DataLakeFileSystemClient.ListPaths to GetPaths
