@@ -6,8 +6,8 @@ Release History
 - Added check to enforce TokenCredential is used only over HTTPS
 - Support using SAS token from connection string
 - Updated ShareFileRangeInfo to use HttpRange
-- Update return types of ForceCloseAllHandles/ForceCloseHandle to be ClosedHandlesInfo
-  and Response<ClosedHandlesInfo>, respectively
+- Update return types of ForceCloseAllHandles/ForceCloseHandle to be CloseHandlesResult
+  and Response<CloseHandlesResult>, respectively
 - Fixed issue where AccountName on ShareUriBuilder would not be populated
   for non-IP style Uris.
 
