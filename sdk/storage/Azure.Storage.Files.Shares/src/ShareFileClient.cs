@@ -2428,7 +2428,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<CloseHandlesResult> ForceCloseHandleAsync(
+        public virtual async Task<Response<CloseHandlesResult>> ForceCloseHandleAsync(
             string handleId,
             CancellationToken cancellationToken = default)
         {
