@@ -1,0 +1,101 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/test-share-0e6843ee-9c94-3a81-f2cc-e3f34b53edaf?restype=share",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-37c65270a84a594aaef5fd4908d3ca07-1e1500ad44b48243-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "58c983c6-ae86-3fcf-8a47-b41c89a46785",
+        "x-ms-date": "Wed, 04 Dec 2019 23:02:50 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-07-07"
+      },
+      "RequestBody": null,
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "ETag": "\u00220x8D7790E1712E424\u0022",
+        "Last-Modified": "Wed, 04 Dec 2019 23:02:51 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "58c983c6-ae86-3fcf-8a47-b41c89a46785",
+        "x-ms-request-id": "d2cbbc0d-101a-0037-37f6-aa4163000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/?comp=list",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "c72d1753-948a-df28-d9ad-932119938a85",
+        "x-ms-date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-07-07"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/xml",
+        "Date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "c72d1753-948a-df28-d9ad-932119938a85",
+        "x-ms-request-id": "d2cbbc12-101a-0037-38f6-aa4163000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Etest-share-0e6843ee-9c94-3a81-f2cc-e3f34b53edaf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 23:02:51 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7790E1712E424\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EWed, 04 Dec 2019 23:02:51 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-4f448f0a-b9a5-3581-bff4-b852cd2a616e\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 21 Nov 2019 23:58:27 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D76EDEB41D146D\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 21 Nov 2019 23:58:27 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-bde8486f-e193-78f9-914e-19c3418dae0d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 22 Nov 2019 00:24:32 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D76EE25888B159\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EFri, 22 Nov 2019 00:24:32 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    },
+    {
+      "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/test-share-0e6843ee-9c94-3a81-f2cc-e3f34b53edaf?restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ab27d65604e47b44b924361c7716d20a-faccbb6580330543-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "71c8105e-a077-55fa-b0dd-8f79c6440500",
+        "x-ms-date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "x-ms-delete-snapshots": "include",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-07-07"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Transfer-Encoding": "chunked",
+        "x-ms-client-request-id": "71c8105e-a077-55fa-b0dd-8f79c6440500",
+        "x-ms-request-id": "d2cbbc13-101a-0037-39f6-aa4163000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1256214080",
+    "Storage_TestConfigPremiumBlob": "PremiumBlobTenant\ne88xscnapdz5ptf01d\nU2FuaXRpemVk\nhttp://e88xscnapdz5ptf01d.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.table.preprod.core.windows.net\n\n\n\n\nhttp://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.table.preprod.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://e88xscnapdz5ptf01d.blob.preprod.core.windows.net/;QueueEndpoint=http://e88xscnapdz5ptf01d.queue.preprod.core.windows.net/;FileEndpoint=http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/;BlobSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net/;AccountName=e88xscnapdz5ptf01d;AccountKey=Sanitized"
+  }
+}
