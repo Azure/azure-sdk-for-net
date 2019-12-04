@@ -186,11 +186,6 @@ namespace Azure.Storage.Files.Shares.Models
         Aborted = 2,
         Failed = 3,
     }
-<<<<<<< HEAD
-    public static partial class FileModelFactory
-    {
-        public static Azure.Storage.Files.Shares.Models.CloseHandlesResult ClosedHandlesInfo(int closedHandlesCount) { throw null; }
-=======
     public partial class FileLease
     {
         internal FileLease() { }
@@ -204,12 +199,15 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
+    public static partial class FileModelFactory
+    {
+        public static Azure.Storage.Files.Shares.Models.CloseHandlesResult ClosedHandlesInfo(int closedHandlesCount) { throw null; }
+    }
     public partial class FileRequestConditions
     {
         public FileRequestConditions() { }
         public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public override string ToString() { throw null; }
->>>>>>> Added FileLease
     }
     public partial class FileSmbProperties
     {
