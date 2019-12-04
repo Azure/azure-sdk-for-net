@@ -11,14 +11,12 @@ namespace Azure.AI.TextAnalytics
         {
             Id = id;
             Statistics = statistics;
-            ErrorMessage = default;
         }
 
         internal TextAnalysisResult(string id, string errorMessage)
         {
             Id = id;
             ErrorMessage = errorMessage;
-            Statistics = default;
         }
 
         /// <summary>

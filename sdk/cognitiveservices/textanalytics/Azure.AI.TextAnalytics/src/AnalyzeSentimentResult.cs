@@ -29,6 +29,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public ReadOnlyCollection<TextSentiment> SentenceSentiments { get; }
+        public IReadOnlyCollection<TextSentiment> SentenceSentiments { get; }
     }
 }

@@ -23,6 +23,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public ReadOnlyCollection<string> KeyPhrases { get; }
+        public IReadOnlyCollection<string> KeyPhrases { get; }
     }
 }

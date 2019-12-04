@@ -4,6 +4,7 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -24,9 +25,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string input = "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs.";
 
             Debug.WriteLine($"Recognizing PII entities for input: \"{input}\"");
-            //var entities = client.RecognizeEntities(input, NamedEntityType.PersonallyIdentifiableInformation).Value;
-            var result = client.RecognizePiiEntities(input).Value;
-            var entities = result.NamedEntities;
+            RecognizeEntitiesResult result = client.RecognizePiiEntities(input);
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
             Debug.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
             foreach (NamedEntity entity in entities)

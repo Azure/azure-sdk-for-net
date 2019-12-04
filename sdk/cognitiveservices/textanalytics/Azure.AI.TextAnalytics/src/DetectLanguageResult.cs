@@ -20,14 +20,15 @@ namespace Azure.AI.TextAnalytics
         internal DetectLanguageResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
+            DetectedLanguages = new ReadOnlyCollection<DetectedLanguage>(new List<DetectedLanguage>());
         }
 
         /// <summary>
         /// </summary>
-        public ReadOnlyCollection<DetectedLanguage> DetectedLanguages { get; }
+        public IReadOnlyCollection<DetectedLanguage> DetectedLanguages { get; }
 
         /// <summary>
         /// </summary>
-        public DetectedLanguage PrimaryLanguage => DetectedLanguages.OrderBy(l => l.Score).First();
+        public DetectedLanguage PrimaryLanguage => DetectedLanguages?.OrderBy(l => l.Score).FirstOrDefault() ?? default;
     }
 }

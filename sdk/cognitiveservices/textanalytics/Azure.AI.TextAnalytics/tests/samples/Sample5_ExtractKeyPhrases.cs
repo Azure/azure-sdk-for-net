@@ -4,6 +4,7 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -24,8 +25,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string input = "My cat might need to see a veterinarian.";
 
             Debug.WriteLine($"Extracting key phrases for input: \"{input}\"");
-            var result = client.ExtractKeyPhrases(input).Value;
-            var keyPhrases = result.KeyPhrases;
+            ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
+            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
 
             Debug.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
             foreach (string keyPhrase in keyPhrases)

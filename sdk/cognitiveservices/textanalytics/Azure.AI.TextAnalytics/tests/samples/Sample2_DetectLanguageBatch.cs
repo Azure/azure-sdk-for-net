@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 new DetectLanguageInput("1")
                 {
                      CountryHint = "us",
-                     Text = "Hello world"
+                     Text = "Hello world",
                 },
                 new DetectLanguageInput("2")
                 {
@@ -41,11 +41,11 @@ namespace Azure.AI.TextAnalytics.Samples
                 new DetectLanguageInput("4")
                 {
                      CountryHint = "us",
-                     Text = ":) :( :D"
+                     Text = ":) :( :D",
                 }
             };
 
-            var results = client.DetectLanguages(inputs, new TextAnalysisOptions { IncludeStatistics = true }).Value;
+            DetectLanguageResultCollection results = client.DetectLanguages(inputs, new TextAnalysisOptions { IncludeStatistics = true });
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");

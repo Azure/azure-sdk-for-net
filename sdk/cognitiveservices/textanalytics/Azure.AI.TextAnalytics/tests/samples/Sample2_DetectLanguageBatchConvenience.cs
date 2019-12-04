@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Hello world",
                 "Bonjour tout le monde",
                 "Hola mundo",
-                ":) :( :D"
+                ":) :( :D",
             };
 
             Debug.WriteLine($"Detecting language for inputs:");
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 Debug.WriteLine($"    {input}");
             }
-            var results = client.DetectLanguages(inputs).Value;
+            DetectLanguageResultCollection results = client.DetectLanguages(inputs);
 
             Debug.WriteLine($"Detected languages are:");
             foreach (DetectLanguageResult result in results)

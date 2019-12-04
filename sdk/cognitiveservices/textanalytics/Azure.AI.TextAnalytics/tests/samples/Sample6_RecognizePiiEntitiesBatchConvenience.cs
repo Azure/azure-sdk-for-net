@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Is 998.214.865-68 your Brazilian CPF number?",
             };
 
-            var results = client.RecognizePiiEntities(inputs).Value;
+            RecognizeEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
 
             Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
             int i = 0;

@@ -4,6 +4,7 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"Recognizing entities for input: \"{input}\"");
             RecognizeEntitiesResult result = client.RecognizeEntities(input);
-            var entities = result.NamedEntities;
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
             Debug.WriteLine($"Recognized {entities.Count()} entities:");
             foreach (NamedEntity entity in entities)

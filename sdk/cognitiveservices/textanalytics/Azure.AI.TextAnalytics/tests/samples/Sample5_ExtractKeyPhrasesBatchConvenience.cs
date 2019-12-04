@@ -26,10 +26,10 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 "Microsoft was founded by Bill Gates and Paul Allen.",
                 "Text Analytics is one of the Azure Cognitive Services.",
-                "My cat might need to see a veterinarian."
+                "My cat might need to see a veterinarian.",
             };
 
-            var results = client.ExtractKeyPhrases(inputs).Value;
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs);
 
             Debug.WriteLine($"Extracted key phrases for each input are:");
             int i = 0;

@@ -23,6 +23,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public ReadOnlyCollection<NamedEntity> NamedEntities { get; }
+        public IReadOnlyCollection<NamedEntity> NamedEntities { get; }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 "That was the best day of my life!",
                 "This food is very bad.",
                 "I'm not sure how I feel about this product.",
-                "Pike place market is my favorite Seattle attraction."
+                "Pike place market is my favorite Seattle attraction.",
             };
 
             Debug.WriteLine($"Analyzing sentiment for inputs:");
@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 Debug.WriteLine($"    {input}");
             }
 
-            var results = client.AnalyzeSentiment(inputs).Value;
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs);
 
             Debug.WriteLine($"Predicted sentiments are:");
             foreach (AnalyzeSentimentResult result in results)

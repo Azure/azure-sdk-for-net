@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 "A key technology in Text Analytics is Named Entity Recognition (NER).",
             };
 
-            var results = client.RecognizeEntities(inputs).Value;
+            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
 
             Debug.WriteLine($"Recognized entities for each input are:");
             int i = 0;

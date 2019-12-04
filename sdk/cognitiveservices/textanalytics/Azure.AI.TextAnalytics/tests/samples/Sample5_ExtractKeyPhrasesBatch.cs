@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            var results = client.ExtractKeyPhrases(inputs, new TextAnalysisOptions { IncludeStatistics = true }).Value;
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalysisOptions { IncludeStatistics = true });
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");
