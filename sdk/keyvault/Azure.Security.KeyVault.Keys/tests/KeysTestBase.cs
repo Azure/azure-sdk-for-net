@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Identity;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
@@ -34,11 +35,17 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             recording = recording ?? Recording;
 
-            return InstrumentClient
-                (new KeyClient(
+            // Until https://github.com/Azure/azure-sdk-for-net/issues/8575 is fixed,
+            // we need to delay creation of keys due to aggressive service limits on key creation:
+            // https://docs.microsoft.com/azure/key-vault/key-vault-service-limits
+            IInterceptor[] interceptors = new[] { new DelayCreateKeyInterceptor(Mode) };
+
+            return InstrumentClient(
+                new KeyClient(
                     new Uri(recording.GetVariableFromEnvironment(AzureKeyVaultUrlEnvironmentVariable)),
                     recording.GetCredential(new DefaultAzureCredential()),
-                    recording.InstrumentClientOptions(new KeyClientOptions())));
+                    recording.InstrumentClientOptions(new KeyClientOptions())),
+                interceptors);
         }
 
         public override void StartTestRecording()
