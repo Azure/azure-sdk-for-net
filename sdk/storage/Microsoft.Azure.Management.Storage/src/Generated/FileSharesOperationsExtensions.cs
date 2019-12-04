@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
             /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 100000.
+            /// is 102400.
             /// </param>
             public static FileShare Create(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
             {
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
             /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 100000.
+            /// is 102400.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
             /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 100000.
+            /// is 102400.
             /// </param>
             public static FileShare Update(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?))
             {
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='shareQuota'>
             /// The maximum size of the share, in gigabytes. Must be greater than 0, and
             /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-            /// is 100000.
+            /// is 102400.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
