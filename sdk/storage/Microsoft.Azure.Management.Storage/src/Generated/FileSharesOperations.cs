@@ -333,7 +333,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than 0, and
         /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-        /// is 100000.
+        /// is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -429,9 +429,9 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            if (shareQuota > 100000)
+            if (shareQuota > 102400)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 100000);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 102400);
             }
             if (shareQuota < 1)
             {
@@ -644,7 +644,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than 0, and
         /// less than or equal to 5TB (5120). For Large File Shares, the maximum size
-        /// is 100000.
+        /// is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -740,9 +740,9 @@ namespace Microsoft.Azure.Management.Storage
                     throw new ValidationException(ValidationRules.MinLength, "Client.SubscriptionId", 1);
                 }
             }
-            if (shareQuota > 100000)
+            if (shareQuota > 102400)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 100000);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "shareQuota", 102400);
             }
             if (shareQuota < 1)
             {
