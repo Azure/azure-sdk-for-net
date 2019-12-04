@@ -555,6 +555,56 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessErrorAsyncCanStopTheEventProcessorClient()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new InvalidCastException());
+
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockPartitionEventEnumerable(20, token));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            var completionSource = new TaskCompletionSource<bool>();
+
+            mockProcessor.Object.ProcessErrorAsync += async eventArgs =>
+            {
+                await mockProcessor.Object.StopProcessingAsync();
+                completionSource.SetResult(true);
+            };
+
+            // Start the processor and wait for the event handler to be triggered.
+
+            await mockProcessor.Object.StartProcessingAsync();
+            await completionSource.Task;
+
+            // Ensure that the processor has been stopped.
+
+            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should have stopped.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
         /// </summary>
         ///
