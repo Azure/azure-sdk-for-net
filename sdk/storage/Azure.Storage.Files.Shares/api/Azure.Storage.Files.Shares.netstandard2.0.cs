@@ -178,6 +178,7 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal CloseHandlesResult() { }
         public int ClosedHandlesCount { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int FailedHandlesCount { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public enum CopyStatus
     {
@@ -186,9 +187,40 @@ namespace Azure.Storage.Files.Shares.Models
         Aborted = 2,
         Failed = 3,
     }
+    public partial class FileAcquireLeaseResult
+    {
+        internal FileAcquireLeaseResult() { }
+        public string ClientRequestId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+    public partial class FileBreakLeaseResult
+    {
+        internal FileBreakLeaseResult() { }
+        public string ClientRequestId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+    public partial class FileChangeLeaseResult
+    {
+        internal FileChangeLeaseResult() { }
+        public string ClientRequestId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public string LeaseId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
     public static partial class FileModelFactory
     {
-        public static Azure.Storage.Files.Shares.Models.CloseHandlesResult ClosedHandlesInfo(int closedHandlesCount) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.CloseHandlesResult ClosedHandlesInfo(int closedHandlesCount, int failedHandlesCount) { throw null; }
+    }
+    public partial class FileReleaseLeaseResult
+    {
+        internal FileReleaseLeaseResult() { }
+        public string ClientRequestId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.ETag ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class FileSmbProperties
     {
@@ -227,6 +259,11 @@ namespace Azure.Storage.Files.Shares.Models
         Offline = 128,
         NotContentIndexed = 256,
         NoScrubData = 512,
+    }
+    public enum PermissionCopyModeType
+    {
+        Source = 0,
+        Override = 1,
     }
     public partial class PermissionInfo
     {
@@ -494,6 +531,10 @@ namespace Azure.Storage.Files.Shares.Models
     }
     public static partial class ShareModelFactory
     {
+        public static Azure.Storage.Files.Shares.Models.FileAcquireLeaseResult FileAcquireLeaseResult(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId, string clientRequestId) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.FileBreakLeaseResult FileBreakLeaseResult(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId, string clientRequestId) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.FileChangeLeaseResult FileChangeLeaseResult(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId, string clientRequestId) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.FileReleaseLeaseResult FileReleaseLeaseResult(Azure.ETag eTag, System.DateTimeOffset lastModified, string clientRequestId) { throw null; }
         public static Azure.Storage.Files.Shares.Models.PermissionInfo PermissionInfo(string filePermissionKey) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileCopyInfo ShareFileCopyInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, string copyId, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileHandle ShareFileHandle(string handleId, string path, string fileId, string sessionId, string clientIp, string parentId = null, System.DateTimeOffset? openedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastReconnectedOn = default(System.DateTimeOffset?)) { throw null; }
@@ -501,10 +542,10 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileUploadInfo ShareFileUploadInfo(Azure.ETag eTag, System.DateTimeOffset lastModified, byte[] contentHash, bool isServerEncrypted) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareInfo ShareInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareItem ShareItem(string name, Azure.Storage.Files.Shares.Models.ShareProperties properties, string snapshot = null) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.ShareProperties ShareProperties(System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), int? provisionedIops = default(int?), int? provisionedIngressMBps = default(int?), int? provisionedEgressMBps = default(int?), System.DateTimeOffset? nextAllowedQuotaDowngradeTime = default(System.DateTimeOffset?), int? quotaInGB = default(int?), System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareSnapshotInfo ShareSnapshotInfo(string snapshot, Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareStatistics ShareStatistics(int shareUsageBytes) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClosed) { throw null; }
     }
     public partial class ShareProperties
     {
@@ -512,6 +553,10 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag? ETag { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.DateTimeOffset? LastModified { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public System.DateTimeOffset? NextAllowedQuotaDowngradeTime { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int? ProvisionedEgressMBps { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int? ProvisionedIngressMBps { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int? ProvisionedIops { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public int? QuotaInGB { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     public partial class ShareRetentionPolicy
@@ -569,6 +614,7 @@ namespace Azure.Storage.Files.Shares.Models
         internal StorageClosedHandlesSegment() { }
         public string Marker { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public int NumberOfHandlesClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int NumberOfHandlesFailedToClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
 }
 namespace Azure.Storage.Sas
