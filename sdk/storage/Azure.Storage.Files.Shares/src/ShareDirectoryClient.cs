@@ -1274,14 +1274,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ClosedHandlesResult"/> describing the status of the
+        /// A <see cref="Response{CloseHandlesResult}"/> describing the status of the
         /// <see cref="ForceCloseHandle"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual ClosedHandlesResult ForceCloseHandle(
+        public virtual Response<CloseHandlesResult> ForceCloseHandle(
             string handleId,
             CancellationToken cancellationToken = default)
         {
@@ -1294,10 +1294,12 @@ namespace Azure.Storage.Files.Shares
                 Constants.File.Directory.ForceCloseHandleOperationName)
                 .EnsureCompleted();
 
-            return new ClosedHandlesResult()
-            {
-                ClosedHandlesCount = response.Value.NumberOfHandlesClosed
-            };
+            return Response.FromValue(
+                new CloseHandlesResult()
+                {
+                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
+                },
+                response.GetRawResponse());
         }
 
         /// <summary>
@@ -1320,14 +1322,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ClosedHandlesResult"/> describing the status of the
+        /// A <see cref="Response{CloseHandlesResult}"/> describing the status of the
         /// <see cref="ForceCloseHandleAsync"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<ClosedHandlesResult> ForceCloseHandleAsync(
+        public virtual async Task<Response<CloseHandlesResult>> ForceCloseHandleAsync(
             string handleId,
             CancellationToken cancellationToken = default)
         {
@@ -1340,10 +1342,12 @@ namespace Azure.Storage.Files.Shares
                 Constants.File.Directory.ForceCloseHandleOperationName)
                 .ConfigureAwait(false);
 
-            return new ClosedHandlesResult()
-            {
-                ClosedHandlesCount = response.Value.NumberOfHandlesClosed
-            };
+            return Response.FromValue(
+                new CloseHandlesResult()
+                {
+                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
+                },
+                response.GetRawResponse());
         }
 
         /// <summary>
@@ -1367,14 +1371,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ClosedHandlesResult"/> describing the status of the
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
         /// <see cref="ForceCloseAllHandles"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual ClosedHandlesResult ForceCloseAllHandles(
+        public virtual CloseHandlesResult ForceCloseAllHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             ForceCloseAllHandlesInternal(
@@ -1404,14 +1408,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ClosedHandlesResult"/> describing the status of the
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
         /// <see cref="ForceCloseAllHandlesAsync"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<ClosedHandlesResult> ForceCloseAllHandlesAsync(
+        public virtual async Task<CloseHandlesResult> ForceCloseAllHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             await ForceCloseAllHandlesInternal(
@@ -1444,14 +1448,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="ClosedHandlesResult"/> describing the status of the
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
         /// <see cref="ForceCloseAllHandlesInternal"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<ClosedHandlesResult> ForceCloseAllHandlesInternal(
+        private async Task<CloseHandlesResult> ForceCloseAllHandlesInternal(
             bool? recursive,
             bool async,
             CancellationToken cancellationToken)
@@ -1473,7 +1477,7 @@ namespace Azure.Storage.Files.Shares
 
             } while (!string.IsNullOrEmpty(marker));
 
-            return new ClosedHandlesResult()
+            return new CloseHandlesResult()
             {
                 ClosedHandlesCount = handlesClosed
             };
