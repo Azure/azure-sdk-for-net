@@ -8,18 +8,18 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// The result of a force close handle or force close all handles operation.
     /// </summary>
-    public class ClosedHandlesInfo
+    public class ClosedHandlesResult
     {
         /// <summary>
         /// The number of file handles that were closed.
         /// </summary>
-        public int HandlesClosed { get; internal set; }
+        public int ClosedHandlesCount { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of ClosedHandlesInfo instances.
         /// You can use FileModelFactory.ClosedHandlesInfo instead.
         /// </summary>
-        internal ClosedHandlesInfo() { }
+        internal ClosedHandlesResult() { }
     }
 
     /// <summary>
@@ -30,11 +30,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new ClosedHandlesInfo instance for mocking.
         /// </summary>
-        public static ClosedHandlesInfo ClosedHandlesInfo(
-            int handlesClosed)
-            => new ClosedHandlesInfo()
+        public static ClosedHandlesResult ClosedHandlesInfo(
+            int closedHandlesCount)
+            => new ClosedHandlesResult()
             {
-                HandlesClosed = handlesClosed
+                ClosedHandlesCount = closedHandlesCount
             };
     }
 }
