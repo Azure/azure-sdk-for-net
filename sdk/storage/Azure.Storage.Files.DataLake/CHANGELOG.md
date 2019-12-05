@@ -1,3 +1,6 @@
+Release History
+================
+
 # 12.0.0-preview.7
 - Added check to enforce TokenCredential is used only over HTTPS
 - Enabled diagnostic tracing

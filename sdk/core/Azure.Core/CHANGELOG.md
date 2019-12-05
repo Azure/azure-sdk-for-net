@@ -1,3 +1,6 @@
+Release History
+================
+
 # 1.1.0-preview.1
 
 - Block bearer token authentication for non TLS protected endpoints.
