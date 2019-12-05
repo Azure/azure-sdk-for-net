@@ -84,8 +84,8 @@ namespace Azure.Data.AppConfiguration
 
         private static HttpPipeline CreatePipeline(ConfigurationClientOptions options, HttpPipelinePolicy authenticationPolicy)
             => HttpPipelineBuilder.Build(options,
-                new HttpPipelinePolicy[] { new CustomHeadersPolicy() },
-                new HttpPipelinePolicy[] { new ApiVersionPolicy(options.GetVersionString()), authenticationPolicy, new SyncTokenPolicy() },
+                new HttpPipelinePolicy[] { new CustomHeadersPolicy(), new ApiVersionPolicy(options.GetVersionString()) },
+                new HttpPipelinePolicy[] { authenticationPolicy, new SyncTokenPolicy() },
                 new ResponseClassifier());
 
         private static string GetDefaultScope(Uri uri)
@@ -686,7 +686,7 @@ namespace Azure.Data.AppConfiguration
             if (acceptDateTime != default)
             {
                 var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.Add(AcceptDatetimeHeader, dateTime);
+                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
             }
 
             if (requestOptions != null)
@@ -773,7 +773,7 @@ namespace Azure.Data.AppConfiguration
             if (selector.AcceptDateTime.HasValue)
             {
                 var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.Add(AcceptDatetimeHeader, dateTime);
+                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
             }
 
             return request;
@@ -854,7 +854,7 @@ namespace Azure.Data.AppConfiguration
             if (selector.AcceptDateTime.HasValue)
             {
                 var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-                request.Headers.Add(AcceptDatetimeHeader, dateTime);
+                request.Headers.SetValue(AcceptDatetimeHeader, dateTime);
             }
 
             return request;
