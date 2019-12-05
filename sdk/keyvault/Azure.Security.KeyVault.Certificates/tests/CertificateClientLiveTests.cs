@@ -175,11 +175,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             CertificateIssuer certIssuer = new CertificateIssuer(issuerName)
             {
+                Provider = "DigiCert",
                 AccountId = "test",
                 Password = "test",
                 OrganizationId = "test",
             };
-            certIssuer.Properties.Provider = "DigiCert";
 
             await Client.CreateIssuerAsync(certIssuer);
 

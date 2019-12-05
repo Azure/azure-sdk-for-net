@@ -67,8 +67,7 @@ namespace Azure.Storage.Files.Shares
         private int _port;
 
         /// <summary>
-        /// Gets or sets the Azure Storage account name.  This is only
-        /// populated for IP-style <see cref="System.Uri"/>s.
+        /// Gets or sets the Azure Storage account name.
         /// </summary>
         public string AccountName
         {
@@ -222,7 +221,7 @@ namespace Azure.Storage.Files.Shares
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = new SasQueryParameters(paramsMap);
+                Sas = SasQueryParametersInternals.Create(paramsMap);
             }
 
             Query = paramsMap.ToString();

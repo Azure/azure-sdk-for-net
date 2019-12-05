@@ -6,7 +6,7 @@ using Azure.Storage;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
 
-namespace Azure.Storage.Common.Samples
+namespace Azure.Storage.Samples
 {
     /// <summary>
     /// Basic Azure Storage samples

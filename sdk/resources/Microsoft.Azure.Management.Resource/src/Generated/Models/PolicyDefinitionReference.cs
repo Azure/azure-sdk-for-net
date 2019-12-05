@@ -10,7 +10,10 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,12 +34,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="policyDefinitionId">The ID of the policy definition or
         /// policy set definition.</param>
-        /// <param name="parameters">Required if a parameter is used in policy
-        /// rule.</param>
-        public PolicyDefinitionReference(string policyDefinitionId = default(string), object parameters = default(object))
+        /// <param name="parameters">The parameter values for the referenced
+        /// policy rule. The keys are the parameter names.</param>
+        /// <param name="policyDefinitionReferenceId">A unique id (within the
+        /// policy set definition) for this policy definition
+        /// reference.</param>
+        /// <param name="groupNames">The name of the groups that this policy
+        /// definition reference belongs to.</param>
+        public PolicyDefinitionReference(string policyDefinitionId, IDictionary<string, ParameterValuesValue> parameters = default(IDictionary<string, ParameterValuesValue>), string policyDefinitionReferenceId = default(string), IList<string> groupNames = default(IList<string>))
         {
             PolicyDefinitionId = policyDefinitionId;
             Parameters = parameters;
+            PolicyDefinitionReferenceId = policyDefinitionReferenceId;
+            GroupNames = groupNames;
             CustomInit();
         }
 
@@ -53,10 +63,38 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string PolicyDefinitionId { get; set; }
 
         /// <summary>
-        /// Gets or sets required if a parameter is used in policy rule.
+        /// Gets or sets the parameter values for the referenced policy rule.
+        /// The keys are the parameter names.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public object Parameters { get; set; }
+        public IDictionary<string, ParameterValuesValue> Parameters { get; set; }
 
+        /// <summary>
+        /// Gets or sets a unique id (within the policy set definition) for
+        /// this policy definition reference.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyDefinitionReferenceId")]
+        public string PolicyDefinitionReferenceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the groups that this policy definition
+        /// reference belongs to.
+        /// </summary>
+        [JsonProperty(PropertyName = "groupNames")]
+        public IList<string> GroupNames { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PolicyDefinitionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "PolicyDefinitionId");
+            }
+        }
     }
 }

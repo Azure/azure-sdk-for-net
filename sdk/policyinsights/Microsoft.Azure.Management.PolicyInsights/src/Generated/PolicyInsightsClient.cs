@@ -87,6 +87,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IPolicyMetadataOperations.
+        /// </summary>
+        public virtual IPolicyMetadataOperations PolicyMetadata { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the PolicyInsightsClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -332,6 +337,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             PolicyEvents = new PolicyEventsOperations(this);
             PolicyStates = new PolicyStatesOperations(this);
             Operations = new Operations(this);
+            PolicyMetadata = new PolicyMetadataOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

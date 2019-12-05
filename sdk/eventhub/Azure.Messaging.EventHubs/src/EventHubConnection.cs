@@ -91,7 +91,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventHubConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the connection with.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs
                     break;
 
                 case EventHubSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.ConvertToSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
                     break;
             }
 

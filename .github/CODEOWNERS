@@ -35,6 +35,9 @@
 # Management Plane
 /**/*Management*/ @erich-wang
 
+# Reviewers to double check any API changes
+/sdk/**/api/ @KrzysztofCwalina @pakrym @tg-msft
+
 ###########
 # Eng Sys
 ###########

@@ -1,8 +1,12 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 14.2.0
+
+- Change the maximum limitation for share size from 100000(GiB) to 102400(GiB)
+
 ### Changes in 14.1.0
 
-- Change the maximum limitation for share size from 5120(GB) too 100000(GB)
+- Change the maximum limitation for share size from 5120(GiB) to 100000(GiB)
 - Add Sku to Blob Service Properties
 - Support Share Delete Retention Policy on File Service Properties
 

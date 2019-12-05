@@ -273,13 +273,13 @@ Headers:
 
 ## Next steps
 Key Vault Certificates client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Key Vault:
-* [HelloWorld.cs][hello_world_sync] and [HelloWorldAsync.cs][hello_world_async] - for working with Azure Key Vault certificates, including:
+* [Sample1_HelloWorld.md][hello_world_sample] - for working with Azure Key Vault certificates, including:
   * Create a certificate
   * Get an existing certificate
   * Update an existing certificate
   * Delete a certificate
 
-* [GetCertificates.cs][get_cetificates_sync] and [GetCertificatesAsync.cs][get_cetificates_async] - Example code for working with Key Vault certificates, including:
+* [Sample2_GetCertificates.md][get_cetificates_sample] - Example code for working with Key Vault certificates, including:
   * Create certificates
   * List all certificates in the Key Vault
   * List versions of a specified certificate
@@ -313,10 +313,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [keyvault_rest]: https://docs.microsoft.com/en-us/rest/api/keyvault/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
-[hello_world_async]: samples/Sample1_HelloWorldAsync.cs
-[hello_world_sync]: samples/Sample1_HelloWorld.cs
-[get_cetificates_async]: samples/Sample2_GetCertificatesAsync.cs
-[get_cetificates_sync]: samples/Sample2_GetCertificates.cs
+[hello_world_sample]: samples/Sample1_HelloWorld.md
+[get_cetificates_sample]: samples/Sample2_GetCertificates.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 

@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineUpdate class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="plan">Specifies information about the marketplace
         /// image used to create the virtual machine. This element is only used
         /// for marketplace images. Before you can use a marketplace image from
@@ -85,13 +88,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2018-04-01.</param>
         /// <param name="priority">Specifies the priority for the virtual
         /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
-        /// Possible values include: 'Regular', 'Low'</param>
+        /// Possible values include: 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
-        /// low priority virtual machine. Only supported value is 'Deallocate'.
+        /// Azure Spot virtual machine. Only supported value is 'Deallocate'.
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. Possible
         /// values include: 'Deallocate', 'Delete'</param>
         /// <param name="billingProfile">Specifies the billing related details
-        /// of a low priority virtual machine. &lt;br&gt;&lt;br&gt;Minimum
+        /// of a Azure Spot virtual machine. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2019-03-01.</param>
         /// <param name="host">Specifies information about the dedicated host
         /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
@@ -117,8 +120,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="identity">The identity of the virtual machine, if
         /// configured.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
-            : base(tags)
+        public VirtualMachineUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), SubResource virtualMachineScaleSet = default(SubResource), SubResource proximityPlacementGroup = default(SubResource), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), SubResource host = default(SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), VirtualMachineIdentity identity = default(VirtualMachineIdentity), IList<string> zones = default(IList<string>))
+            : base(tags, id, name, type)
         {
             Plan = plan;
             HardwareProfile = hardwareProfile;
@@ -249,13 +252,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the priority for the virtual machine.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01. Possible values include: 'Regular', 'Low'
+        /// 2019-03-01. Possible values include: 'Regular', 'Low', 'Spot'
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
         public string Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the eviction policy for the low priority
+        /// Gets or sets specifies the eviction policy for the Azure Spot
         /// virtual machine. Only supported value is 'Deallocate'.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
         /// 2019-03-01. Possible values include: 'Deallocate', 'Delete'
@@ -264,10 +267,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string EvictionPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the billing related details of a low
-        /// priority virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01.
+        /// Gets or sets specifies the billing related details of a Azure Spot
+        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
+        /// api-version: 2019-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfile")]
         public BillingProfile BillingProfile { get; set; }

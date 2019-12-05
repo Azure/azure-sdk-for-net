@@ -13,9 +13,12 @@ namespace Azure.Core.Pipeline
     {
         private readonly DiagnosticListener? _source;
 
+        public bool IsActivityEnabled { get;  }
+
         public ClientDiagnostics(string clientNamespace, bool isActivityEnabled)
         {
-            if (isActivityEnabled)
+            IsActivityEnabled = isActivityEnabled;
+            if (IsActivityEnabled)
             {
                 _source = new DiagnosticListener(clientNamespace);
             }

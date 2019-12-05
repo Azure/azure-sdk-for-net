@@ -348,7 +348,7 @@ namespace Microsoft.Azure.Management.Redis
             PatchSchedules = new PatchSchedulesOperations(this);
             LinkedServer = new LinkedServerOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01";
+            ApiVersion = "2019-07-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
