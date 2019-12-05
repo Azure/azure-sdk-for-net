@@ -157,34 +157,6 @@ namespace Azure.AI.TextAnalytics
             return errors;
         }
 
-        //        private static void ReadSentimentResultErrors(JsonElement documentElement, SentimentResultCollection results)
-        //        {
-        //            if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
-        //            {
-        //                foreach (JsonElement errorElement in errorsValue.EnumerateArray())
-        //                {
-        //                    string id = default;
-        //                    string message = default;
-
-        //                    if (errorElement.TryGetProperty("id", out JsonElement idValue))
-        //                        id = idValue.ToString();
-        //                    if (errorElement.TryGetProperty("error", out JsonElement errorValue))
-        //                    {
-        //                        if (errorsValue.TryGetProperty("message", out JsonElement messageValue))
-        //                        {
-        //                            message = messageValue.ToString();
-        //                        }
-        //                    }
-
-        //                    results.Add(new TextDocumentSentiment(id, message));
-        //                }
-
-        //                // TODO: This makes the assumption that input ids are passed-in in order.
-        //                // Can we make that assumption?
-        //                results.OrderBy(result => result.Id);
-        //            }
-        //        }
-
         private static string ReadModelVersion(JsonElement documentElement)
         {
             if (documentElement.TryGetProperty("modelVersion", out JsonElement modelVersionValue))

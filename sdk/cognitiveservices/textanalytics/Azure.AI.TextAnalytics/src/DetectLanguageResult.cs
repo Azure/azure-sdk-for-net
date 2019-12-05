@@ -29,6 +29,6 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public DetectedLanguage PrimaryLanguage => DetectedLanguages?.OrderBy(l => l.Score).FirstOrDefault() ?? default;
+        public DetectedLanguage PrimaryLanguage => DetectedLanguages.OrderBy(l => l.Score).FirstOrDefault();
     }
 }
