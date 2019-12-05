@@ -38,6 +38,15 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ClosedHandlesInfo instance for mocking.
         /// </summary>
         public static CloseHandlesResult ClosedHandlesInfo(
+            int closedHandlesCount)
+            => ClosedHandlesInfo(
+                closedHandlesCount: closedHandlesCount,
+                failedHandlesCount: 0);
+
+        /// <summary>
+        /// Creates a new ClosedHandlesInfo instance for mocking.
+        /// </summary>
+        public static CloseHandlesResult ClosedHandlesInfo(
             int closedHandlesCount,
             int failedHandlesCount)
             => new CloseHandlesResult()
