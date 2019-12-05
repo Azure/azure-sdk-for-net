@@ -250,9 +250,12 @@ namespace Cdn.Tests.ScenarioTests
                     .GetAwaiter()
                     .GetResult();
 
-                // Delete profile in creating state should fail
-                Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Profiles.Delete(resourceGroupName, profileName); });
+                // Delete profile in creating state should succeed
+                cdnMgmtClient.Profiles.Delete(resourceGroupName, profileName);
+
+                // Verify profile was deleted
+                Assert.ThrowsAny<ErrorResponseException>(() =>
+                    cdnMgmtClient.Profiles.Get(resourceGroupName, profileName));
 
                 // Wait for second profile to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
