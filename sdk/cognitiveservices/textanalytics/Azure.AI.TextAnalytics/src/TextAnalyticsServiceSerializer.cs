@@ -5,7 +5,6 @@ using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -80,7 +79,7 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<DocumentInput> inputs)
+        public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<TextDocumentInput> inputs)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -112,7 +111,7 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        private static DocumentStatistics ReadDocumentStatistics(JsonElement documentElement)
+        private static TextDocumentStatistics ReadDocumentStatistics(JsonElement documentElement)
         {
             if (documentElement.TryGetProperty("statistics", out JsonElement statisticsValue))
             {
@@ -124,14 +123,16 @@ namespace Azure.AI.TextAnalytics
                 if (statisticsValue.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
                     transactionCount = transactionCountValue.GetInt32();
 
-                return new DocumentStatistics(characterCount, transactionCount);
+                return new TextDocumentStatistics(characterCount, transactionCount);
             }
 
             return default;
         }
 
-        private static void ReadDocumentErrors(JsonElement documentElement, List<DocumentError> errors)
+        private static IEnumerable<TextAnalysisResult> ReadDocumentErrors(JsonElement documentElement)
         {
+            List<TextAnalysisResult> errors = new List<TextAnalysisResult>();
+
             if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
             {
                 foreach (JsonElement errorElement in errorsValue.EnumerateArray())
@@ -143,15 +144,17 @@ namespace Azure.AI.TextAnalytics
                         id = idValue.ToString();
                     if (errorElement.TryGetProperty("error", out JsonElement errorValue))
                     {
-                        if (errorsValue.TryGetProperty("message", out JsonElement messageValue))
+                        if (errorValue.TryGetProperty("message", out JsonElement messageValue))
                         {
                             message = messageValue.ToString();
                         }
                     }
 
-                    errors.Add(new DocumentError(id, message));
+                    errors.Add(new TextAnalysisResult(id, message));
                 }
             }
+
+            return errors;
         }
 
         private static string ReadModelVersion(JsonElement documentElement)
@@ -164,7 +167,7 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        private static DocumentBatchStatistics ReadDocumentBatchStatistics(JsonElement documentElement)
+        private static TextBatchStatistics ReadDocumentBatchStatistics(JsonElement documentElement)
         {
             if (documentElement.TryGetProperty("statistics", out JsonElement statisticsElement))
             {
@@ -182,7 +185,7 @@ namespace Azure.AI.TextAnalytics
                 if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
                     transactionCount = transactionCountValue.GetInt64();
 
-                return new DocumentBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
+                return new TextBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
             }
 
             return default;
@@ -192,86 +195,52 @@ namespace Azure.AI.TextAnalytics
 
         #region Detect Languages
 
-        public static async Task<DocumentResultCollection<DetectedLanguage>> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<DetectLanguageResultCollection> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadDetectLanguageResultCollection(root);
         }
 
-        public static DocumentResultCollection<DetectedLanguage> DeserializeDetectLanguageResponse(Stream content)
+        public static DetectLanguageResultCollection DeserializeDetectLanguageResponse(Stream content)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadDetectLanguageResultCollection(root);
         }
 
-        public static async Task<IEnumerable<DetectedLanguage>> DeserializeDetectedLanguageCollectionAsync(Stream content, CancellationToken cancellation)
+        private static DetectLanguageResultCollection ReadDetectLanguageResultCollection(JsonElement root)
         {
-            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-            JsonElement root = json.RootElement;
-            return ReadDetectedLanguageCollection(root);
-        }
-
-        public static IEnumerable<DetectedLanguage> DeserializeDetectedLanguageCollection(Stream content)
-        {
-            using JsonDocument json = JsonDocument.Parse(content);
-            JsonElement root = json.RootElement;
-            return ReadDetectedLanguageCollection(root);
-        }
-
-        private static DocumentResultCollection<DetectedLanguage> ReadDetectLanguageResultCollection(JsonElement root)
-        {
-            var result = new DocumentResultCollection<DetectedLanguage>();
+            var collection = new List<DetectLanguageResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
                 {
-                    result.Add(ReadDetectedLanguageResult(documentElement));
+                    collection.Add(ReadDetectedLanguageResult(documentElement));
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
-            result.ModelVersion = ReadModelVersion(root);
-            result.Statistics = ReadDocumentBatchStatistics(root);
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
 
-            return result;
+            return new DetectLanguageResultCollection(collection, statistics, modelVersion);
         }
 
-        private static IEnumerable<DetectedLanguage> ReadDetectedLanguageCollection(JsonElement root)
+        private static DetectLanguageResult ReadDetectedLanguageResult(JsonElement documentElement)
         {
-            var result = new List<DetectedLanguage>();
-            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-            {
-                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-                {
-                    DocumentResult<DetectedLanguage> results = ReadDetectedLanguageResult(documentElement);
-
-                    // TODO: If needed, sort by score to get the value with the highest confidence.
-                    DetectedLanguage language = results.FirstOrDefault();
-                    result.Add(language);
-                }
-            }
-
-            return result;
-        }
-
-        private static DocumentResult<DetectedLanguage> ReadDetectedLanguageResult(JsonElement documentElement)
-        {
-            var documentResult = new DocumentResult<DetectedLanguage>(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement));
-
+            List<DetectedLanguage> languages = new List<DetectedLanguage>();
             if (documentElement.TryGetProperty("detectedLanguages", out JsonElement detectedLanguagesValue))
             {
                 foreach (JsonElement languageElement in detectedLanguagesValue.EnumerateArray())
                 {
-                    documentResult.Add(ReadDetectedLanguage(languageElement));
+                    languages.Add(ReadDetectedLanguage(languageElement));
                 }
             }
 
-
-            return documentResult;
+            return new DetectLanguageResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                languages);
         }
 
         private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
@@ -294,85 +263,60 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Entities
 
-        public static async Task<DocumentResultCollection<NamedEntity>> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
-            return ReadEntityResultCollection(root);
+            return ReadRecognizeEntitiesResultCollection(root);
         }
 
-        public static DocumentResultCollection<NamedEntity> DeserializeRecognizeEntitiesResponse(Stream content)
+        public static RecognizeEntitiesResultCollection DeserializeRecognizeEntitiesResponse(Stream content)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
-            return ReadEntityResultCollection(root);
+            return ReadRecognizeEntitiesResultCollection(root);
         }
 
-        public static async Task<IEnumerable<IEnumerable<NamedEntity>>> DeserializeEntityCollectionAsync(Stream content, CancellationToken cancellation)
+        private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root)
         {
-            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-            JsonElement root = json.RootElement;
-            return ReadEntityCollection(root);
-        }
-
-        public static IEnumerable<IEnumerable<NamedEntity>> DeserializeEntityCollection(Stream content)
-        {
-            using JsonDocument json = JsonDocument.Parse(content);
-            JsonElement root = json.RootElement;
-            return ReadEntityCollection(root);
-        }
-
-        private static DocumentResultCollection<NamedEntity> ReadEntityResultCollection(JsonElement root)
-        {
-            var result = new DocumentResultCollection<NamedEntity>();
+            var collection = new List<RecognizeEntitiesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
                 {
-                    result.Add(ReadEntityResult(documentElement));
+                    collection.Add(ReadRecognizeEntityResult(documentElement));
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
-            result.ModelVersion = ReadModelVersion(root);
-            result.Statistics = ReadDocumentBatchStatistics(root);
-
-            return result;
-        }
-
-        private static IEnumerable<IEnumerable<NamedEntity>> ReadEntityCollection(JsonElement root)
-        {
-            var result = new List<List<NamedEntity>>();
-            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            foreach (var error in ReadDocumentErrors(root))
             {
-                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-                {
-                    result.Add(ReadEntityResult(documentElement).ToList());
-                }
+                collection.Add(new RecognizeEntitiesResult(error.Id, error.ErrorMessage));
             }
 
-            return result;
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
         }
 
-        private static DocumentResult<NamedEntity> ReadEntityResult(JsonElement documentElement)
+        private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentResult<NamedEntity>(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement)
-            );
-
+            List<NamedEntity> entities = new List<NamedEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
                 {
-                    documentResult.Add(ReadEntity(entityElement));
+                    entities.Add(ReadNamedEntity(entityElement));
                 }
             }
 
-            return documentResult;
+            return new RecognizeEntitiesResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                entities);
         }
 
-        private static NamedEntity ReadEntity(JsonElement entityElement)
+        private static NamedEntity ReadNamedEntity(JsonElement entityElement)
         {
             string text = default;
             string type = default;
@@ -401,89 +345,59 @@ namespace Azure.AI.TextAnalytics
 
         #region Analyze Sentiment
 
-        public static async Task<SentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<AnalyzeSentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadSentimentResult(root);
         }
 
-        public static SentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content)
+        public static AnalyzeSentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadSentimentResult(root);
         }
 
-        public static async Task<IEnumerable<Sentiment>> DeserializeSentimentCollectionAsync(Stream content, CancellationToken cancellation)
+        private static AnalyzeSentimentResultCollection ReadSentimentResult(JsonElement root)
         {
-            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-            JsonElement root = json.RootElement;
-            return ReadSentimentCollection(root);
-        }
-
-        public static IEnumerable<Sentiment> DeserializeSentimentCollection(Stream content)
-        {
-            using JsonDocument json = JsonDocument.Parse(content);
-            JsonElement root = json.RootElement;
-            return ReadSentimentCollection(root);
-        }
-
-        private static SentimentResultCollection ReadSentimentResult(JsonElement root)
-        {
-            var result = new SentimentResultCollection();
+            var collection = new List<AnalyzeSentimentResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
                 {
-                    result.Add(ReadDocumentSentimentResult(documentElement));
+                    collection.Add(ReadDocumentSentimentResult(documentElement));
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
-            result.ModelVersion = ReadModelVersion(root);
-            result.Statistics = ReadDocumentBatchStatistics(root);
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
 
-            return result;
+            return new AnalyzeSentimentResultCollection(collection, statistics, modelVersion);
         }
 
-        private static IEnumerable<Sentiment> ReadSentimentCollection(JsonElement root)
+        private static AnalyzeSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
         {
-            var result = new List<Sentiment>();
-            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-            {
-                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-                {
-                    result.Add(ReadDocumentSentimentResult(documentElement).DocumentSentiment);
-                }
-            }
-
-            return result;
-        }
-
-        private static SentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
-        {
-            var documentResult = new SentimentResult(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement))
-            {
-                DocumentSentiment = ReadSentiment(documentElement, "documentScores")
-            };
-
+            var documentSentiment = ReadSentiment(documentElement, "documentScores");
+            var sentenceSentiments = new List<TextSentiment>();
             if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
             {
                 foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
                 {
-                    documentResult.Add(ReadSentiment(sentenceElement, "sentenceScores"));
+                    sentenceSentiments.Add(ReadSentiment(sentenceElement, "sentenceScores"));
                 }
             }
 
-            return documentResult;
+            return new AnalyzeSentimentResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                documentSentiment,
+                sentenceSentiments);
         }
 
-        private static Sentiment ReadSentiment(JsonElement documentElement, string scoresElementName)
+        private static TextSentiment ReadSentiment(JsonElement documentElement, string scoresElementName)
         {
-            SentimentClass sentimentClass = default;
+            TextSentimentClass sentimentClass = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
@@ -492,7 +406,7 @@ namespace Azure.AI.TextAnalytics
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentimentClass = (SentimentClass)Enum.Parse(typeof(SentimentClass), sentimentValue.ToString(), ignoreCase: true);
+                sentimentClass = (TextSentimentClass)Enum.Parse(typeof(TextSentimentClass), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -513,168 +427,116 @@ namespace Azure.AI.TextAnalytics
             if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
                 lengthValue.TryGetInt32(out length);
 
-            return new Sentiment(sentimentClass, positiveScore, neutralScore, negativeScore, offset, length);
+            return new TextSentiment(sentimentClass, positiveScore, neutralScore, negativeScore, offset, length);
         }
+
         #endregion
 
         #region Extract Key Phrases
 
-        public static async Task<DocumentResultCollection<string>> DeserializeKeyPhraseResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<ExtractKeyPhrasesResultCollection> DeserializeKeyPhraseResponseAsync(Stream content, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadKeyPhraseResultCollection(root);
         }
 
-        public static DocumentResultCollection<string> DeserializeKeyPhraseResponse(Stream content)
+        public static ExtractKeyPhrasesResultCollection DeserializeKeyPhraseResponse(Stream content)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadKeyPhraseResultCollection(root);
         }
 
-        public static async Task<IEnumerable<IEnumerable<string>>> DeserializeKeyPhraseCollectionAsync(Stream content, CancellationToken cancellation)
+        private static ExtractKeyPhrasesResultCollection ReadKeyPhraseResultCollection(JsonElement root)
         {
-            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-            JsonElement root = json.RootElement;
-            return ReadKeyPhraseCollection(root);
-        }
-
-        public static IEnumerable<IEnumerable<string>> DeserializeKeyPhraseCollection(Stream content)
-        {
-            using JsonDocument json = JsonDocument.Parse(content);
-            JsonElement root = json.RootElement;
-            return ReadKeyPhraseCollection(root);
-        }
-
-        private static DocumentResultCollection<string> ReadKeyPhraseResultCollection(JsonElement root)
-        {
-            var result = new DocumentResultCollection<string>();
+            var collection = new List<ExtractKeyPhrasesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
                 {
-                    result.Add(ReadKeyPhraseResult(documentElement));
+                    collection.Add(ReadKeyPhraseResult(documentElement));
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
-            result.ModelVersion = ReadModelVersion(root);
-            result.Statistics = ReadDocumentBatchStatistics(root);
-
-            return result;
-        }
-
-        private static IEnumerable<IEnumerable<string>> ReadKeyPhraseCollection(JsonElement root)
-        {
-            var result = new List<List<string>>();
-            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            foreach (var error in ReadDocumentErrors(root))
             {
-                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-                {
-                    result.Add(ReadKeyPhraseResult(documentElement).ToList());
-                }
+                collection.Add(new ExtractKeyPhrasesResult(error.Id, error.ErrorMessage));
             }
 
-            return result;
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            return new ExtractKeyPhrasesResultCollection(collection, statistics, modelVersion);
         }
 
-        private static DocumentResult<string> ReadKeyPhraseResult(JsonElement documentElement)
+        private static ExtractKeyPhrasesResult ReadKeyPhraseResult(JsonElement documentElement)
         {
-            var documentResult = new DocumentResult<string>(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement));
-
+            List<string> keyPhrases = new List<string>();
             if (documentElement.TryGetProperty("keyPhrases", out JsonElement keyPhrasesValue))
             {
                 foreach (JsonElement keyPhraseElement in keyPhrasesValue.EnumerateArray())
                 {
-                    documentResult.Add(keyPhraseElement.ToString());
+                    keyPhrases.Add(keyPhraseElement.ToString());
                 }
             }
 
-            return documentResult;
+            return new ExtractKeyPhrasesResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                keyPhrases);
         }
 
         #endregion Extract Key Phrases
 
         #region Entity Linking
 
-        public static async Task<DocumentResultCollection<LinkedEntity>> DeserializeLinkedEntityResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<ExtractLinkedEntitiesResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadLinkedEntityResultCollection(root);
         }
 
-        public static DocumentResultCollection<LinkedEntity> DeserializeLinkedEntityResponse(Stream content)
+        public static ExtractLinkedEntitiesResultCollection DeserializeLinkedEntityResponse(Stream content)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadLinkedEntityResultCollection(root);
         }
 
-        public static async Task<IEnumerable<IEnumerable<LinkedEntity>>> DeserializeLinkedEntityCollectionAsync(Stream content, CancellationToken cancellation)
+        private static ExtractLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root)
         {
-            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
-            JsonElement root = json.RootElement;
-            return ReadLinkedEntityCollection(root);
-        }
-
-        public static IEnumerable<IEnumerable<LinkedEntity>> DeserializeLinkedEntityCollection(Stream content)
-        {
-            using JsonDocument json = JsonDocument.Parse(content);
-            JsonElement root = json.RootElement;
-            return ReadLinkedEntityCollection(root);
-        }
-
-        private static DocumentResultCollection<LinkedEntity> ReadLinkedEntityResultCollection(JsonElement root)
-        {
-            var result = new DocumentResultCollection<LinkedEntity>();
+            var collection = new List<ExtractLinkedEntitiesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
                 {
-                    result.Add(ReadLinkedEntityResult(documentElement));
+                    collection.Add(ReadLinkedEntityResult(documentElement));
                 }
             }
 
-            ReadDocumentErrors(root, result.Errors);
-            result.ModelVersion = ReadModelVersion(root);
-            result.Statistics = ReadDocumentBatchStatistics(root);
+            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
 
-            return result;
+            return new ExtractLinkedEntitiesResultCollection(collection, statistics, modelVersion);
         }
 
-        private static IEnumerable<IEnumerable<LinkedEntity>> ReadLinkedEntityCollection(JsonElement root)
+        private static ExtractLinkedEntitiesResult ReadLinkedEntityResult(JsonElement documentElement)
         {
-            var result = new List<List<LinkedEntity>>();
-            if (root.TryGetProperty("documents", out JsonElement documentsValue))
-            {
-                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
-                {
-                    result.Add(ReadLinkedEntityResult(documentElement).ToList());
-                }
-            }
-
-            return result;
-        }
-
-        private static DocumentResult<LinkedEntity> ReadLinkedEntityResult(JsonElement documentElement)
-        {
-            var documentResult = new DocumentResult<LinkedEntity>(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement));
-
+            List<LinkedEntity> entities = new List<LinkedEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
                 {
-                    documentResult.Add(ReadLinkedEntity(entityElement));
+                    entities.Add(ReadLinkedEntity(entityElement));
                 }
             }
 
-            return documentResult;
+            return new ExtractLinkedEntitiesResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                entities);
         }
 
         private static LinkedEntity ReadLinkedEntity(JsonElement entityElement)

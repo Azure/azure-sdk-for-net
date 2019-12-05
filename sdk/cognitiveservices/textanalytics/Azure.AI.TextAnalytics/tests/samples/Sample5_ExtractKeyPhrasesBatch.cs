@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractKeyPhrasesBatch()
+        public void ExtractKeyPhrasesBatchAdvanced()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -22,27 +22,61 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            var inputs = new List<string>
+
+            var inputs = new List<TextDocumentInput>
             {
-                "Microsoft was founded by Bill Gates and Paul Allen.",
-                "Text Analytics is one of the Azure Cognitive Services.",
-                "My cat might need to see a veterinarian."
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", "My cat might need to see a veterinarian.")
+                {
+                     Language = "en",
+                }
             };
 
-            var resultCollection = client.ExtractKeyPhrases(inputs).Value;
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalysisOptions { IncludeStatistics = true });
 
-            Debug.WriteLine($"Extracted key phrases for each input are:");
             int i = 0;
-            foreach (var keyPhrases in resultCollection)
-            {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {keyPhrases.Count()} key phrases were found: ");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine("");
 
-                foreach (var keyPhrase in keyPhrases)
+            foreach (var result in results)
+            {
+                var document = inputs[i++];
+
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+
+                if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"    {keyPhrase}");
+                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                }
+                else
+                {
+                    Debug.WriteLine($"    Extracted the following {result.KeyPhrases.Count()} key phrases:");
+
+                    foreach (var keyPhrase in result.KeyPhrases)
+                    {
+                        Debug.WriteLine($"        {keyPhrase}");
+                    }
+
+                    Debug.WriteLine($"    Document statistics:");
+                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine("");
                 }
             }
+
+            Debug.WriteLine($"Batch operation statistics:");
+            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
+            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
+            Debug.WriteLine("");
         }
     }
 }

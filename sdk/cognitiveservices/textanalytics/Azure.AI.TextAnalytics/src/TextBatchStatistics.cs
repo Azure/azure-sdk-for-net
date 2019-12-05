@@ -5,9 +5,9 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public readonly struct DocumentBatchStatistics
+    public class TextBatchStatistics
     {
-        internal DocumentBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount)
+        internal TextBatchStatistics(int documentCount, int validDocumentCount, int invalidDocumentCount, long transactionCount)
         {
             DocumentCount = documentCount;
             ValidDocumentCount = validDocumentCount;

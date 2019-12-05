@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -14,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void RecognizeEntities()
+        public void DetectLanguageBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -22,16 +21,25 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
-
-            Debug.WriteLine($"Recognizing entities for input: \"{input}\"");
-            RecognizeEntitiesResult result = client.RecognizeEntities(input);
-            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
-
-            Debug.WriteLine($"Recognized {entities.Count()} entities:");
-            foreach (NamedEntity entity in entities)
+            var inputs = new List<string>
             {
-                Debug.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                "Hello world",
+                "Bonjour tout le monde",
+                "Hola mundo",
+                ":) :( :D",
+            };
+
+            Debug.WriteLine($"Detecting language for inputs:");
+            foreach (var input in inputs)
+            {
+                Debug.WriteLine($"    {input}");
+            }
+            DetectLanguageResultCollection results = client.DetectLanguages(inputs);
+
+            Debug.WriteLine($"Detected languages are:");
+            foreach (DetectLanguageResult result in results)
+            {
+                Debug.WriteLine($"    {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score:0.00}.");
             }
         }
     }

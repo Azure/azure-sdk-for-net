@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractEntityLinkingBatch()
+        public void ExtractEntityLinkingBatchAdvanced()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -22,33 +22,64 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            var inputs = new List<string>
+            var inputs = new List<TextDocumentInput>
             {
-                "Microsoft was founded by Bill Gates and Paul Allen.",
-                "Text Analytics is one of the Azure Cognitive Services.",
-                "Pike place market is my favorite Seattle attraction."
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
+                {
+                     Language = "en",
+                }
             };
 
-            var resultCollection = client.ExtractEntityLinking(inputs).Value;
+            ExtractLinkedEntitiesResultCollection results = client.ExtractEntityLinking(inputs, new TextAnalysisOptions { IncludeStatistics = true });
 
-            Debug.WriteLine($"Linked entities for each input are:\n");
             int i = 0;
-            foreach (var linkedEntities in resultCollection)
+            Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{results.ModelVersion}\"");
+            Debug.WriteLine("");
+
+            foreach (var result in results)
             {
-                Debug.Write($"For input: \"{inputs[i++]}\", ");
-                Debug.WriteLine($"extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
+                var document = inputs[i++];
 
-                foreach (LinkedEntity linkedEntity in linkedEntities)
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+
+                if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
-                    foreach (LinkedEntityMatch match in linkedEntity.Matches)
-                    {
-                        Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
-                    }
+                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 }
+                else
+                {
+                    Debug.WriteLine($"    Extracted the following {result.LinkedEntities.Count()} linked entities:");
 
-                Debug.WriteLine("");
+                    foreach (var linkedEntity in result.LinkedEntities)
+                    {
+                        Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
+                        foreach (LinkedEntityMatch match in linkedEntity.Matches)
+                        {
+                            Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
+                        }
+                    }
+
+                    Debug.WriteLine($"    Document statistics:");
+                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine("");
+                }
             }
+
+            Debug.WriteLine($"Batch operation statistics:");
+            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
+            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
+            Debug.WriteLine("");
         }
     }
 }
