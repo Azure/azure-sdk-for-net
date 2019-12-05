@@ -250,7 +250,7 @@ namespace Azure.Messaging.EventHubs
         ///   Lazily evaluated.
         /// </summary>
         ///
-        private Lazy<PartitionManager> StorageManager { get; }
+        internal virtual Lazy<PartitionManager> StorageManager { get; set; }
 
         /// <summary>
         ///   The set of options to use for consumers responsible for partition processing.
@@ -649,6 +649,9 @@ namespace Azure.Messaging.EventHubs
                             .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown)))
                             .ConfigureAwait(false);
 
+                        // Relinquish ownership of all owned partitions
+                        await RelinquishOwnershipAsync();
+
                         InstanceOwnership.Clear();
 
                         // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
@@ -858,7 +861,7 @@ namespace Azure.Messaging.EventHubs
                 var utcNow = DateTimeOffset.UtcNow;
 
                 IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList
-                    .Where(ownership => utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
+                    .Where(ownership => !ownership.OwnerIdentifier.Equals(string.Empty) && utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
 
                 // Dispose of all previous partition ownership instances and get a whole new dictionary.
 
@@ -1176,6 +1179,31 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Relinquishes this instance's ownership so they can be claimed by other processors.
+        /// </summary>
+        ///
+        private Task RelinquishOwnershipAsync()
+        {
+            IEnumerable<PartitionOwnership> ownershipToRelinquish = InstanceOwnership.Values
+                .Select(ownership => new PartitionOwnership
+                (
+                    ownership.FullyQualifiedNamespace,
+                    ownership.EventHubName,
+                    ownership.ConsumerGroup,
+                    string.Empty, //set ownership to Empty so that it is treated as avaible to claim
+                    ownership.PartitionId,
+                    ownership.LastModifiedTime,
+                    ownership.ETag
+                ));
+
+            // We cannot rely on the ownership returned by ClaimOwnershipAsync to update our InstanceOwnership dictionary.
+            // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
+            // will fail in claiming it here, but this instance still owns it.
+
+            return StorageManager.Value.ClaimOwnershipAsync(ownershipToRelinquish);
+        }
+
+        /// <summary>
         ///   Starts running a task responsible for receiving and processing events in the context of a specified partition.
         /// </summary>
         ///
@@ -1185,7 +1213,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The running task that is currently receiving and processing events in the context of the specified partition.</returns>
         ///
-        private Task RunPartitionProcessingAsync(string partitionId,
+        internal virtual Task RunPartitionProcessingAsync(string partitionId,
                                                  EventPosition startingPosition,
                                                  CancellationToken cancellationToken) => Task.Run(async () =>
             {
