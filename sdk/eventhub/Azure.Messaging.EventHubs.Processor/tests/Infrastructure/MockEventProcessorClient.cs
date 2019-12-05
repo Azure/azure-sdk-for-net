@@ -223,19 +223,19 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         internal IEnumerable<PartitionOwnership> CreatePartitionOwnerships(IEnumerable<string> partitionIds, string identifier)
-            {
-                return partitionIds
-                    .Select(partitionId =>
-                        new PartitionOwnership
-                            (
-                                this.FullyQualifiedNamespace,
-                                this.EventHubName,
-                                this.ConsumerGroup,
-                                identifier,
-                                partitionId,
-                                DateTimeOffset.UtcNow,
-                                Guid.NewGuid().ToString()
-                            )).ToList();
-            }
+        {
+            return partitionIds
+                .Select(partitionId =>
+                    new PartitionOwnership
+                        (
+                            this.FullyQualifiedNamespace,
+                            this.EventHubName,
+                            this.ConsumerGroup,
+                            identifier,
+                            partitionId,
+                            DateTimeOffset.UtcNow,
+                            Guid.NewGuid().ToString()
+                        )).ToList();
+        }
     }
 }

@@ -1238,7 +1238,7 @@ namespace Azure.Messaging.EventHubs
 
             // We cannot rely on the ownership returned by ClaimOwnershipAsync to update our InstanceOwnership dictionary.
             // If the user issues a checkpoint update, the associated ownership will have its eTag updated as well, so we
-            // will fail in claiming it here, but this instance still owns it.
+            // will fail in relinquishing it here, but this instance still owns it.
 
             return StorageManager.Value.ClaimOwnershipAsync(ownershipToRelinquish);
         }
