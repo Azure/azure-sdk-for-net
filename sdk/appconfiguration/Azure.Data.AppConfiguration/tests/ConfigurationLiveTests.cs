@@ -543,8 +543,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(testSettingUpdate);
 
                 // Test
-                var selector = new SettingSelector(setting.Key)
+                var selector = new SettingSelector
                 {
+                    KeyFilter = setting.Key,
                     AcceptDateTime = DateTimeOffset.MaxValue
                 };
 
@@ -802,7 +803,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var key = await SetMultipleKeys(service, expectedEvents);
 
             int resultsReturned = 0;
-            SettingSelector selector = new SettingSelector(key);
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
 
             await foreach (ConfigurationSetting item in service.GetConfigurationSettingsAsync(selector, CancellationToken.None))
             {
@@ -825,11 +826,10 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 var selector = new SettingSelector();
 
-                Assert.AreEqual("*", selector.Keys.First());
-                Assert.AreEqual("*", selector.Labels.First());
+                Assert.AreEqual(null, selector.KeyFilter);
+                Assert.AreEqual(null, selector.LabelFilter);
 
-                var resultsReturned = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
-                    .Count();
+                var resultsReturned = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).Count;
 
                 //At least there should be one key available
                 Assert.GreaterOrEqual(resultsReturned, 1);
@@ -850,7 +850,12 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(testSetting.Key, testSetting.Label);
+                var selector = new SettingSelector
+                {
+                    KeyFilter = testSetting.Key,
+                    LabelFilter = testSetting.Label
+                };
+
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
@@ -874,7 +879,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(testSetting.Key);
+                var selector = new SettingSelector{ KeyFilter = testSetting.Key };
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
 
@@ -897,9 +902,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(null, testSetting.Label);
+                var selector = new SettingSelector {LabelFilter = testSetting.Label};
 
-                Assert.AreEqual("*", selector.Keys.First());
+                Assert.AreEqual(null, selector.KeyFilter);
 
                 ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
                     .ToArray();
@@ -924,8 +929,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector(key)
+                SettingSelector selector = new SettingSelector
                 {
+                    KeyFilter = key,
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.ETag
                 };
 
@@ -958,8 +964,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector(key)
+                SettingSelector selector = new SettingSelector
                 {
+                    KeyFilter = key,
                     Fields = SettingFields.Key | SettingFields.IsReadOnly
                 };
 
@@ -992,8 +999,9 @@ namespace Azure.Data.AppConfiguration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector(key)
+                SettingSelector selector = new SettingSelector
                 {
+                    KeyFilter = key,
                     Fields = SettingFields.All
                 };
 
@@ -1026,7 +1034,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector(testSetting.Key);
+                var selector = new SettingSelector{KeyFilter = testSetting.Key};
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1051,7 +1059,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector("abc*");
+                var selector = new SettingSelector{KeyFilter = "abc*"};
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1080,7 +1088,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector($"*{endsWith}");
+                var selector = new SettingSelector{KeyFilter = $"*{endsWith}"};
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1108,7 +1116,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.SetConfigurationSettingAsync(testSetting);
 
-                var selector = new SettingSelector("*abc*");
+                var selector = new SettingSelector { KeyFilter = "*abc*" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1139,8 +1147,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector("ab,cd");
-                selector.Keys.Add("wx,yz");
+                var selector = new SettingSelector {KeyFilter = @"ab\,cd,wx\,yz"};
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1168,7 +1175,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector($"{abcSetting.Key},{xyzSetting.Key}");
+                var selector = new SettingSelector { KeyFilter = $@"{abcSetting.Key}\,{xyzSetting.Key}" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1194,8 +1201,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector("abc");
-                selector.Keys.Add("xyz");
+                var selector = new SettingSelector { KeyFilter = "abc,xyz" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
@@ -1223,8 +1229,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.SetConfigurationSettingAsync(abcSetting);
                 await service.SetConfigurationSettingAsync(xyzSetting);
 
-                var selector = new SettingSelector(null, "abc");
-                selector.Labels.Add("xyz");
+                var selector = new SettingSelector { LabelFilter = "abc,xyz" };
 
                 ConfigurationSetting[] settings = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync()).ToArray();
 
