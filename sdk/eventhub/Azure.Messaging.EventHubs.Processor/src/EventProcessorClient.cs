@@ -304,6 +304,12 @@ namespace Azure.Messaging.EventHubs
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
 
         /// <summary>
+        /// A partition distribution dictionary, mapping an owner's identifier to the amount of partitions it owns and its list of partitions.
+        /// </summary>
+        ///
+        private Dictionary<string, List<PartitionOwnership>> ActiveOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>>();
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
@@ -855,25 +861,65 @@ namespace Azure.Messaging.EventHubs
                     .ConfigureAwait(false))
                     .ToList();
 
+                // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
+                // it may change in the future.
+
+                var partitionIds = await consumer.GetPartitionIdsAsync().ConfigureAwait(false);
+                var unclaimedPartitions = new HashSet<string>(partitionIds);
+
                 // Filter the complete ownership list to obtain only the ones that are still active.  The expiration time defaults to 30 seconds,
                 // but it may be overridden by a derived class.
+                // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
+                // partitions it owns and its list of partitions.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
+                // by others.
 
                 var utcNow = DateTimeOffset.UtcNow;
 
-                IEnumerable<PartitionOwnership> activeOwnership = completeOwnershipList
-                    .Where(ownership => !ownership.OwnerIdentifier.Equals(string.Empty) && utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration);
+                ActiveOwnershipWithDistribution.Clear();
+                ActiveOwnershipWithDistribution[Identifier] = new List<PartitionOwnership>();
+
+                foreach (PartitionOwnership ownership in completeOwnershipList)
+                {
+                    if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrWhiteSpace(ownership.OwnerIdentifier))
+                    {
+                        if (ActiveOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
+                        {
+                            ActiveOwnershipWithDistribution[ownership.OwnerIdentifier].Add(ownership);
+                            unclaimedPartitions.Remove(ownership.PartitionId);
+                        }
+                        else
+                        {
+                            ActiveOwnershipWithDistribution[ownership.OwnerIdentifier] = new List<PartitionOwnership> { ownership };
+                            unclaimedPartitions.Remove(ownership.PartitionId);
+                        }
+                    }
+                }
 
                 // Dispose of all previous partition ownership instances and get a whole new dictionary.
 
-                InstanceOwnership = activeOwnership
-                    .Where(ownership => ownership.OwnerIdentifier == Identifier)
-                    .ToDictionary(ownership => ownership.PartitionId);
+                if (ActiveOwnershipWithDistribution.TryGetValue(Identifier, out var owned))
+                {
+                    InstanceOwnership = owned
+                        .ToDictionary(ownership => ownership.PartitionId);
+                }
+                else
+                {
+                    InstanceOwnership.Clear();
+                }
 
                 // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
                 // the processing tasks we don't need anymore.
 
-                await Task.WhenAll(ActivePartitionProcessors.Keys
-                    .Except(InstanceOwnership.Keys)
+                var partitionIdsToStop = new List<string>();
+                foreach (var partitionId in InstanceOwnership.Keys)
+                {
+                    if (!InstanceOwnership.ContainsKey(partitionId))
+                    {
+                        partitionIdsToStop.Add(partitionId);
+                    }
+                }
+
+                await Task.WhenAll(partitionIdsToStop
                     .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.OwnershipLost)))
                     .ConfigureAwait(false);
 
@@ -893,15 +939,10 @@ namespace Azure.Messaging.EventHubs
                     }))
                     .ConfigureAwait(false);
 
-                // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
-                // it may change in the future.
-
-                var partitionIds = await consumer.GetPartitionIdsAsync().ConfigureAwait(false);
-
                 // Find an ownership to claim and try to claim it.  The method will return null if this instance was not eligible to
                 // increase its ownership list, if no claimable ownership could be found or if a claim attempt has failed.
 
-                var claimedOwnership = await FindAndClaimOwnershipAsync(partitionIds, completeOwnershipList, activeOwnership).ConfigureAwait(false);
+                var claimedOwnership = await FindAndClaimOwnershipAsync(completeOwnershipList, unclaimedPartitions, partitionIds.Length).ConfigureAwait(false);
 
                 if (claimedOwnership != null)
                 {
@@ -929,44 +970,23 @@ namespace Azure.Messaging.EventHubs
         ///   Finds and tries to claim an ownership if this processor instance is eligible to increase its ownership list.
         /// </summary>
         ///
-        /// <param name="partitionIds">The set of identifiers for the partitions within the Event Hub that this processor is associated with.</param>
-        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the storage service provided by the user.</param>
-        /// <param name="activeOwnership">The set of ownership that are still active.</param>
+        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
+        /// <param name="unclaimedPartitions">The set of partitionIds that are currently unclaimed.</param>
+        /// <param name="partitionCount">The count of partitions.</param>
         ///
         /// <returns>The claimed ownership. <c>null</c> if this instance is not eligible, if no claimable ownership was found or if the claim attempt failed.</returns>
         ///
-        private ValueTask<PartitionOwnership> FindAndClaimOwnershipAsync(string[] partitionIds,
-                                                                         IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
-                                                                         IEnumerable<PartitionOwnership> activeOwnership)
+        private ValueTask<PartitionOwnership> FindAndClaimOwnershipAsync(IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
+                                                                         HashSet<string> unclaimedPartitions,
+                                                                         int partitionCount)
         {
-            // Create a partition distribution dictionary from the active ownership list we have, mapping an owner's identifier to the amount of
-            // partitions it owns.  When an event processor goes down and it has only expired ownership, it will not be taken into consideration
-            // by others.
-
-            var partitionDistribution = new Dictionary<string, int>
-            {
-                { Identifier, 0 }
-            };
-
-            foreach (PartitionOwnership ownership in activeOwnership)
-            {
-                if (partitionDistribution.TryGetValue(ownership.OwnerIdentifier, out var value))
-                {
-                    partitionDistribution[ownership.OwnerIdentifier] = value + 1;
-                }
-                else
-                {
-                    partitionDistribution[ownership.OwnerIdentifier] = 1;
-                }
-            }
-
             // The minimum owned partitions count is the minimum amount of partitions every event processor needs to own when the distribution
             // is balanced.  If n = minimumOwnedPartitionsCount, a balanced distribution will only have processors that own n or n + 1 partitions
             // each.  We can guarantee the partition distribution has at least one key, which corresponds to this event processor instance, even
             // if it owns no partitions.
 
-            var minimumOwnedPartitionsCount = partitionIds.Length / partitionDistribution.Keys.Count;
-            var ownedPartitionsCount = partitionDistribution[Identifier];
+            var minimumOwnedPartitionsCount = partitionCount / ActiveOwnershipWithDistribution.Keys.Count;
+            var ownedPartitionsCount = ActiveOwnershipWithDistribution[Identifier].Count;
 
             // There are two possible situations in which we may need to claim a partition ownership.
             //
@@ -979,20 +999,16 @@ namespace Azure.Messaging.EventHubs
             // avoid overlooking this kind of situation, we may want to claim an ownership when we have exactly the minimum amount of ownership,
             // but we are making sure there are no better candidates among the other event processors.
 
-            if (ownedPartitionsCount < minimumOwnedPartitionsCount
-                || ownedPartitionsCount == minimumOwnedPartitionsCount
-                && !partitionDistribution.Values.Any(partitions => partitions < minimumOwnedPartitionsCount))
+            if (ownedPartitionsCount < minimumOwnedPartitionsCount ||
+                (ownedPartitionsCount == minimumOwnedPartitionsCount &&
+                    !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
-                var unclaimedPartitions = partitionIds
-                    .Except(activeOwnership.Select(ownership => ownership.PartitionId))
-                    .ToArray();
-
-                if (unclaimedPartitions.Length > 0)
+                if (unclaimedPartitions.Count > 0)
                 {
-                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Length);
-                    var returnTask = ClaimOwnershipAsync(unclaimedPartitions[index], completeOwnershipEnumerable);
+                    var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count);
+                    var returnTask = ClaimOwnershipAsync(unclaimedPartitions.ElementAt(index), completeOwnershipEnumerable);
 
                     return new ValueTask<PartitionOwnership>(returnTask);
                 }
@@ -1002,30 +1018,54 @@ namespace Azure.Messaging.EventHubs
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
 
-                var stealablePartitions = activeOwnership
-                    .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] > maximumOwnedPartitionsCount)
-                    .Select(ownership => ownership.PartitionId)
-                    .ToArray();
+                var partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount = new List<string>();
+                var partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount = new List<string>();
+
+                // Build a list of partitions owned by processors owninng exactly maximumOwnedPartitionsCount partitions
+                // and a list of partitions owned by processors owninng greater than maximumOwnedPartitionsCount partitions.
+                // Ignore the partitions already owned by this processor even though the current processor should never meet either criteria
+                foreach (var key in ActiveOwnershipWithDistribution.Keys)
+                {
+                    if (ActiveOwnershipWithDistribution[key].Count < maximumOwnedPartitionsCount || key == Identifier)
+                    {
+                        // skip if the common case is true
+                        continue;
+                    }
+                    if (ActiveOwnershipWithDistribution[key].Count == maximumOwnedPartitionsCount)
+                    {
+                        ActiveOwnershipWithDistribution[key]
+                            .ForEach(ownership => partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
+                    }
+                    else if (ActiveOwnershipWithDistribution[key].Count > maximumOwnedPartitionsCount)
+                    {
+                        ActiveOwnershipWithDistribution[key]
+                            .ForEach(ownership => partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
+                    }
+                }
 
                 // Here's the important part.  If there are no processors that have exceeded the maximum owned partition count allowed, we may
                 // need to steal from the processors that have exactly the maximum amount.  If this instance is below the minimum count, then
                 // we have no choice as we need to enforce balancing.  Otherwise, leave it as it is because the distribution wouldn't change.
 
-                if (stealablePartitions.Length == 0
-                    && ownedPartitionsCount < minimumOwnedPartitionsCount)
+                if (!partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any() && ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
-                    stealablePartitions = activeOwnership
-                        .Where(ownership => partitionDistribution[ownership.OwnerIdentifier] == maximumOwnedPartitionsCount)
-                        .Select(ownership => ownership.PartitionId)
-                        .ToArray();
+                    // If any stealable partitions were found, randomly pick one of them to claim.
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
+
+                    var returnTask = ClaimOwnershipAsync(
+                        partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index],
+                        completeOwnershipEnumerable);
+
+                    return new ValueTask<PartitionOwnership>(returnTask);
                 }
-
-                // If any stealable partitions were found, randomly pick one of them to claim.
-
-                if (stealablePartitions.Length > 0)
+                else if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any())
                 {
-                    var index = RandomNumberGenerator.Value.Next(stealablePartitions.Length);
-                    var returnTask = ClaimOwnershipAsync(stealablePartitions[index], completeOwnershipEnumerable);
+                    // If any stealable partitions were found, randomly pick one of them to claim.
+                    var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
+
+                    var returnTask = ClaimOwnershipAsync(
+                        partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index],
+                        completeOwnershipEnumerable);
 
                     return new ValueTask<PartitionOwnership>(returnTask);
                 }
