@@ -45,6 +45,8 @@ namespace Azure.Identity.Tests
         {
             Matcher.ExcludeHeaders.Add("client-request-id");
             Matcher.ExcludeHeaders.Add("x-client-OS");
+            Matcher.ExcludeHeaders.Add("x-client-SKU");
+            Matcher.ExcludeHeaders.Add("x-client-CPU");
         }
 
         [SetUp]
@@ -70,7 +72,7 @@ namespace Azure.Identity.Tests
         {
             var username = Recording.GetVariableFromEnvironment("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_USERNAME");
 
-            var password = Recording.GetVariableFromEnvironment("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_PASSWORD");
+            var password = Environment.GetEnvironmentVariable("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_PASSWORD") ?? "SANITIZED";
 
             var tenantId = Recording.GetVariableFromEnvironment("IDENTITYTEST_USERNAMEPASSWORDCREDENTIAL_TENANTID");
 
