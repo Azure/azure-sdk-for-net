@@ -55,6 +55,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
         /// <summary>
+        ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
+        /// </summary>
+        ///
+        private PartitionManager StorageManager { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
         /// </summary>
         ///
@@ -74,6 +80,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                         bool fakePartitionPRocessing = true,
                                         int numberOfPartitions = 3) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, options)
         {
+            StorageManager = storageManager;
+
             var partitionIds = Enumerable
                     .Range(1, numberOfPartitions)
                     .Select(p => p.ToString())
