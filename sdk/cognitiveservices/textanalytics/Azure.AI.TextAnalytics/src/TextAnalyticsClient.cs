@@ -22,6 +22,8 @@ namespace Azure.AI.TextAnalytics
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
 
+        private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
@@ -49,7 +51,11 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new TextAnalyticsClientOptions();
 
-            throw new NotImplementedException();
+            _baseUri = endpoint;
+            _apiVersion = options.GetVersionString();
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultCognitiveScope));
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _options = options;
         }
 
         /// <summary>
