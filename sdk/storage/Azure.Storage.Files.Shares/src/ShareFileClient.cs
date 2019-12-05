@@ -506,8 +506,8 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         cancellationToken: cancellationToken,
@@ -541,6 +541,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
+        /// <param name="smbParameters">
+        /// Optional SMB paramters to set on the target file.
+        /// </param>
+        /// <param name="ignoreReadOnly">
+        /// Optional boolean specifying to overwrite the target file if it already
+        /// exists and has read-only attribute set.
+        /// </param>
+        /// <param name="setArchiveAttribute">
+        /// Optional boolean Specifying to set archive attribute on a target file. True
+        /// means archive attribute will be set on a target file despite attribute
+        /// overrides or a source file state.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -556,10 +568,16 @@ namespace Azure.Storage.Files.Shares
         public virtual Response<ShareFileCopyInfo> StartCopy(
             Uri sourceUri,
             Metadata metadata = default,
+            FileCopySmbParameters smbParameters = default,
+            bool? ignoreReadOnly = default,
+            bool? setArchiveAttribute = default,
             CancellationToken cancellationToken = default) =>
             StartCopyInternal(
                 sourceUri,
                 metadata,
+                smbParameters,
+                ignoreReadOnly,
+                setArchiveAttribute,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -574,6 +592,18 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbParameters">
+        /// Optional SMB paramters to set on the target file.
+        /// </param>
+        /// <param name="ignoreReadOnly">
+        /// Optional boolean specifying to overwrite the target file if it already
+        /// exists and has read-only attribute set.
+        /// </param>
+        /// <param name="setArchiveAttribute">
+        /// Optional boolean Specifying to set archive attribute on a target file. True
+        /// means archive attribute will be set on a target file despite attribute
+        /// overrides or a source file state.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -590,10 +620,16 @@ namespace Azure.Storage.Files.Shares
         public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
             Uri sourceUri,
             Metadata metadata = default,
+            FileCopySmbParameters smbParameters = default,
+            bool? ignoreReadOnly = default,
+            bool? setArchiveAttribute = default,
             CancellationToken cancellationToken = default) =>
             await StartCopyInternal(
                 sourceUri,
                 metadata,
+                smbParameters,
+                ignoreReadOnly,
+                setArchiveAttribute,
                 true, // async
                 cancellationToken).
                 ConfigureAwait(false);
@@ -608,6 +644,18 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbParameters">
+        /// Optional SMB paramters to set on the target file.
+        /// </param>
+        /// <param name="ignoreReadOnly">
+        /// Optional boolean specifying to overwrite the target file if it already
+        /// exists and has read-only attribute set.
+        /// </param>
+        /// <param name="setArchiveAttribute">
+        /// Optional boolean Specifying to set archive attribute on a target file. True
+        /// means archive attribute will be set on a target file despite attribute
+        /// overrides or a source file state.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -627,6 +675,9 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareFileCopyInfo>> StartCopyInternal(
             Uri sourceUri,
             Metadata metadata,
+            FileCopySmbParameters smbParameters,
+            bool? ignoreReadOnly,
+            bool? setArchiveAttribute,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -645,6 +696,14 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         copySource: sourceUri,
                         metadata: metadata,
+                        filePermission: smbParameters?.FilePermission,
+                        filePermissionKey: smbParameters?.FilePermissionKey,
+                        filePermissionCopyMode: smbParameters?.FilePermissionCopyMode,
+                        ignoreReadOnly: ignoreReadOnly,
+                        fileAttributes: smbParameters?.FileAttributes?.ToAttributesString(),
+                        fileCreationTime: smbParameters?.FileCreatedOn.ToFileDateTimeString(),
+                        fileLastWriteTime: smbParameters?.FileLastWrittenOn.ToFileDateTimeString(),
+                        setArchiveAttribute: setArchiveAttribute,
                         async: async,
                         cancellationToken: cancellationToken,
                         operationName: Constants.File.StartCopyOperationName)
@@ -1411,8 +1470,8 @@ namespace Azure.Storage.Files.Shares
                         fileContentDisposition: httpHeaders?.ContentDisposition,
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         operationName: Constants.File.SetHttpHeadersOperationName,
