@@ -11,19 +11,57 @@ namespace Azure.Core.Testing
 {
     public class RecordEntry
     {
+        public class Message
+        {
+            public SortedDictionary<string, string[]> Headers { get; set; } = new SortedDictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
+
+            public byte[] Body { get; set; }
+
+            public bool TryGetContentType(out string contentType)
+            {
+                contentType = null;
+                if (Headers.TryGetValue("Content-Type", out var contentTypes) &&
+                    contentTypes.Length == 1)
+                {
+                    contentType = contentTypes[0];
+                    return true;
+                }
+                return false;
+            }
+
+            public bool IsTextContentType(out Encoding encoding)
+            {
+                encoding = null;
+                return TryGetContentType(out string contentType) &&
+                       TestFrameworkContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
+            }
+
+            public bool TryGetBodyAsText(out string text)
+            {
+                text = null;
+
+                if (IsTextContentType(out Encoding encoding))
+                {
+                    text = encoding.GetString(Body);
+
+                    return true;
+                }
+
+                return false;
+            }
+
+        }
+
+        public Message Request { get; } = new Message();
+
+        public Message Response { get; } = new Message();
+
         public string RequestUri { get; set; }
 
         public RequestMethod RequestMethod { get; set; }
 
-        public byte[] RequestBody { get; set; }
-
-        public SortedDictionary<string, string[]> RequestHeaders { get; set; } = new SortedDictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
-
-        public SortedDictionary<string, string[]> ResponseHeaders { get; set; } = new SortedDictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
-
-        public byte[] ResponseBody { get; set; }
-
         public int StatusCode { get; set; }
+
 
         public static RecordEntry Deserialize(JsonElement element)
         {
@@ -39,14 +77,14 @@ namespace Azure.Core.Testing
                 record.RequestUri = property.GetString();
             }
 
-            if (element.TryGetProperty(nameof(RequestHeaders), out property))
+            if (element.TryGetProperty("RequestHeaders", out property))
             {
-                DeserializeHeaders(record.RequestHeaders, property);
+                DeserializeHeaders(record.Request.Headers, property);
             }
 
-            if (element.TryGetProperty(nameof(RequestBody), out property))
+            if (element.TryGetProperty("RequestBody", out property))
             {
-                record.RequestBody = DeserializeBody(record.RequestHeaders, property);
+                record.Request.Body = DeserializeBody(record.Request.Headers, property);
             }
 
             if (element.TryGetProperty(nameof(StatusCode), out property) &&
@@ -55,14 +93,14 @@ namespace Azure.Core.Testing
                 record.StatusCode = statusCode;
             }
 
-            if (element.TryGetProperty(nameof(ResponseHeaders), out property))
+            if (element.TryGetProperty("ResponseHeaders", out property))
             {
-                DeserializeHeaders(record.ResponseHeaders, property);
+                DeserializeHeaders(record.Response.Headers, property);
             }
 
-            if (element.TryGetProperty(nameof(ResponseBody), out property))
+            if (element.TryGetProperty("ResponseBody", out property))
             {
-                record.ResponseBody = DeserializeBody(record.ResponseHeaders, property);
+                record.Response.Body = DeserializeBody(record.Response.Headers, property);
             }
 
             return record;
@@ -137,19 +175,19 @@ namespace Azure.Core.Testing
 
             jsonWriter.WriteString(nameof(RequestUri), RequestUri);
             jsonWriter.WriteString(nameof(RequestMethod), RequestMethod.Method);
-            jsonWriter.WriteStartObject(nameof(RequestHeaders));
-            SerializeHeaders(jsonWriter, RequestHeaders);
+            jsonWriter.WriteStartObject("RequestHeaders");
+            SerializeHeaders(jsonWriter, Request.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, nameof(RequestBody), RequestBody, RequestHeaders);
+            SerializeBody(jsonWriter, "RequestBody", Request.Body, Request.Headers);
 
             jsonWriter.WriteNumber(nameof(StatusCode), StatusCode);
 
-            jsonWriter.WriteStartObject(nameof(ResponseHeaders));
-            SerializeHeaders(jsonWriter, ResponseHeaders);
+            jsonWriter.WriteStartObject("ResponseHeaders");
+            SerializeHeaders(jsonWriter, Response.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, nameof(ResponseBody), ResponseBody, ResponseHeaders);
+            SerializeBody(jsonWriter, nameof(Response.Body), Response.Body, Response.Headers);
             jsonWriter.WriteEndObject();
         }
 
@@ -250,7 +288,7 @@ namespace Azure.Core.Testing
             }
         }
 
-        private static bool TryGetContentType(IDictionary<string, string[]> requestHeaders, out string contentType)
+        public static bool TryGetContentType(IDictionary<string, string[]> requestHeaders, out string contentType)
         {
             contentType = null;
             if (requestHeaders.TryGetValue("Content-Type", out var contentTypes) &&
@@ -262,49 +300,25 @@ namespace Azure.Core.Testing
             return false;
         }
 
-        private static bool IsTextContentType(IDictionary<string, string[]> requestHeaders, out Encoding encoding)
+        public static bool IsTextContentType(IDictionary<string, string[]> requestHeaders, out Encoding encoding)
         {
             encoding = null;
             return TryGetContentType(requestHeaders, out string contentType) &&
                    TestFrameworkContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
         }
 
-        public void Sanitize(RecordedTestSanitizer sanitizer)
+        public static bool TryGetBodyAsText(IDictionary<string, string[]> headers, byte[] body, out string text)
         {
-            RequestUri = sanitizer.SanitizeUri(RequestUri);
-            if (RequestBody != null)
+            text = null;
+
+            if (IsTextContentType(headers, out Encoding encoding))
             {
-                int contentLength = RequestBody.Length;
-                TryGetContentType(RequestHeaders, out string contentType);
-                if (IsTextContentType(RequestHeaders, out Encoding encoding))
-                {
-                    RequestBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(contentType, encoding.GetString(RequestBody)));
-                }
-                else
-                {
-                    RequestBody = sanitizer.SanitizeBody(contentType, RequestBody);
-                }
-                UpdateSanitizedContentLength(RequestHeaders, contentLength, RequestBody?.Length ?? 0);
+                text = encoding.GetString(body);
+
+                return true;
             }
 
-            sanitizer.SanitizeHeaders(RequestHeaders);
-
-            if (ResponseBody != null)
-            {
-                int contentLength = ResponseBody.Length;
-                TryGetContentType(ResponseHeaders, out string contentType);
-                if (IsTextContentType(ResponseHeaders, out Encoding encoding))
-                {
-                    ResponseBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(contentType, encoding.GetString(ResponseBody)));
-                }
-                else
-                {
-                    ResponseBody = sanitizer.SanitizeBody(contentType, ResponseBody);
-                }
-                UpdateSanitizedContentLength(ResponseHeaders, contentLength, ResponseBody?.Length ?? 0);
-            }
-
-            sanitizer.SanitizeHeaders(ResponseHeaders);
+            return false;
         }
 
         /// <summary>

@@ -71,10 +71,16 @@ namespace Azure.Core.Testing
             {
                 RequestUri = request.Uri.ToString(),
                 RequestMethod = request.Method,
-                RequestHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
-                ResponseHeaders = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
-                RequestBody = ReadToEnd(request.Content),
-                ResponseBody = ReadToEnd(response),
+                Request =
+                {
+                    Headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
+                    Body = ReadToEnd(request.Content),
+                },
+                Response =
+                {
+                    Headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
+                    Body = ReadToEnd(response),
+                },
                 StatusCode = response.Status
             };
 
@@ -82,20 +88,20 @@ namespace Azure.Core.Testing
             {
                 var gotHeader = request.Headers.TryGetValues(requestHeader.Name, out IEnumerable<string> headerValues);
                 Debug.Assert(gotHeader);
-                entry.RequestHeaders.Add(requestHeader.Name, headerValues.ToArray());
+                entry.Request.Headers.Add(requestHeader.Name, headerValues.ToArray());
             }
 
             // Make sure we record Content-Length even if it's not set explicitly
             if (!request.Headers.TryGetValue("Content-Length", out _) && request.Content != null && request.Content.TryComputeLength(out long computedLength))
             {
-                entry.RequestHeaders.Add("Content-Length", new[] { computedLength.ToString(CultureInfo.InvariantCulture) });
+                entry.Request.Headers.Add("Content-Length", new[] { computedLength.ToString(CultureInfo.InvariantCulture) });
             }
 
             foreach (HttpHeader responseHeader in response.Headers)
             {
                 var gotHeader = response.Headers.TryGetValues(responseHeader.Name, out IEnumerable<string> headerValues);
                 Debug.Assert(gotHeader);
-                entry.ResponseHeaders.Add(responseHeader.Name, headerValues.ToArray());
+                entry.Response.Headers.Add(responseHeader.Name, headerValues.ToArray());
             }
 
             return entry;
