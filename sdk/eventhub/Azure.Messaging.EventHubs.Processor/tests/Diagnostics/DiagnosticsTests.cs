@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Diagnostics;
@@ -49,17 +50,17 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
 
             var storageManager = new Mock<PartitionManager>();
-            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<BlobContainerClient>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
+            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
 
             storageManager
-                .Setup(manager => manager.UpdateCheckpointAsync(It.IsAny<Checkpoint>()))
+                .Setup(manager => manager.UpdateCheckpointAsync(It.IsAny<Checkpoint>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             eventProcessor
                 .Setup(processor => processor.CreateStorageManager(It.IsAny<BlobContainerClient>()))
                 .Returns(storageManager.Object);
 
-            await eventProcessor.Object.UpdateCheckpointAsync(data, context);
+            await eventProcessor.Object.UpdateCheckpointAsync(data, context, default);
 
             ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
             Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorCheckpointActivityName));

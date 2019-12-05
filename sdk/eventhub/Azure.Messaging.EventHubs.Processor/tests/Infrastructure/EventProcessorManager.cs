@@ -227,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 // Remember to filter expired ownership.
 
                 var activeOwnership = (await InnerPartitionManager
-                    .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
+                    .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, timeoutToken)
                     .ConfigureAwait(false))
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
                     .ToList();
@@ -336,19 +336,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             internal override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
             internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
-            private PartitionManager _partitionManager;
-
             public ShortWaitTimeMock(PartitionManager partitionManager,
                                      string consumerGroup,
                                      string fullyQualifiedNamespace,
                                      string eventHubName,
                                      Func<EventHubConnection> connectionFactory,
-                                     EventProcessorClientOptions clientOptions) : base(Mock.Of<BlobContainerClient>(), consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
+                                     EventProcessorClientOptions clientOptions) : base(partitionManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
             {
-                _partitionManager = partitionManager;
             }
-
-            internal override PartitionManager CreateStorageManager(BlobContainerClient checkpointStore) => _partitionManager;
         }
     }
 }

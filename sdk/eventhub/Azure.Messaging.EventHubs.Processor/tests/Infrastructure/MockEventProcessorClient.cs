@@ -7,9 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
 using Moq;
-using static Azure.Messaging.EventHubs.Processor.Tests.EventProcessorClientTests;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -60,21 +58,21 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
         /// </summary>
         ///
-        /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
+        /// <param name="storageManager">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="connectionFactory">A factory used to provide new <see cref="EventHubConnection" /> instances.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
-        internal MockEventProcessorClient(BlobContainerClient checkpointStore,
+        internal MockEventProcessorClient(PartitionManager storageManager,
                                         string consumerGroup = "consumerGroup",
                                         string fullyQualifiedNamespace = "somehost.com",
                                         string eventHubName = "somehub",
                                         Func<EventHubConnection> connectionFactory = default,
                                         EventProcessorClientOptions options = default,
                                         bool fakePartitionPRocessing = true,
-                                        int numberOfPartitions = 3) : base(checkpointStore, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, options)
+                                        int numberOfPartitions = 3) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, options)
         {
             var partitionIds = Enumerable
                     .Range(1, numberOfPartitions)
@@ -187,8 +185,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             {
                 // Remember to filter expired ownership.
 
-                var activeOwnership = (await StorageManager.Value
-                    .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup)
+                var activeOwnership = (await StorageManager
+                    .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, timeoutToken)
                     .ConfigureAwait(false))
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortOwnershipExpiration)
                     .ToList();

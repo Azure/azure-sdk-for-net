@@ -38,10 +38,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEquivalentToDetectsDifferentDifferentOffset()
         {
             var firstEvent = new MockEventData(
-                 eventBody: new byte[] { 0x22, 0x44 },
-                 offset: 1,
-                 partitionKey: "hello",
-                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
+                eventBody: new byte[] { 0x22, 0x44 },
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
@@ -61,10 +61,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEquivalentToDetectsDifferentDifferentSequenceNumbers()
         {
             var firstEvent = new MockEventData(
-                 eventBody: new byte[] { 0x22, 0x44 },
-                 offset: 1,
-                 partitionKey: "hello",
-                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
+                eventBody: new byte[] { 0x22, 0x44 },
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },
@@ -84,10 +84,10 @@ namespace Azure.Messaging.EventHubs.Tests
         public void IsEquivalentToDetectsDifferentDifferentPartitionKey()
         {
             var firstEvent = new MockEventData(
-                 eventBody: new byte[] { 0x22, 0x44 },
-                 offset: 1,
-                 partitionKey: "hello",
-                 systemProperties: new Dictionary<string, object> { { "test", new object() } });
+                eventBody: new byte[] { 0x22, 0x44 },
+                offset: 1,
+                partitionKey: "hello",
+                systemProperties: new Dictionary<string, object> { { "test", new object() } });
 
             var secondEvent = new MockEventData(
                 eventBody: new byte[] { 0x22, 0x44 },

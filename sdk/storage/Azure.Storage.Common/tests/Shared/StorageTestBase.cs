@@ -193,6 +193,23 @@ namespace Azure.Storage.Test.Shared
                 Recording.InstrumentClientOptions(
                     new TokenCredentialOptions() { AuthorityHost = authorityHost }));
 
+        internal SharedAccessSignatureCredentials GetAccountSasCredentials(
+            AccountSasServices services = AccountSasServices.All,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All)
+        {
+            var sasBuilder = new AccountSasBuilder
+            {
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = services,
+                ResourceTypes = resourceTypes,
+                Protocol = SasProtocol.Https,
+            };
+            sasBuilder.SetPermissions(permissions);
+            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
+        }
+
         public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
             Assert.IsNotNull(expected, "Expected metadata is null");

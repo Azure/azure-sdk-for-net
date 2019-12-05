@@ -89,13 +89,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 2018-04-01.</param>
         /// <param name="priority">Specifies the priority for the virtual
         /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
-        /// Possible values include: 'Regular', 'Low'</param>
+        /// Possible values include: 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
-        /// low priority virtual machine. Only supported value is 'Deallocate'.
+        /// Azure Spot virtual machine. Only supported value is 'Deallocate'.
         /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. Possible
         /// values include: 'Deallocate', 'Delete'</param>
         /// <param name="billingProfile">Specifies the billing related details
-        /// of a low priority virtual machine. &lt;br&gt;&lt;br&gt;Minimum
+        /// of a Azure Spot virtual machine. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2019-03-01.</param>
         /// <param name="host">Specifies information about the dedicated host
         /// that the virtual machine resides in. &lt;br&gt;&lt;br&gt;Minimum
@@ -256,13 +256,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the priority for the virtual machine.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01. Possible values include: 'Regular', 'Low'
+        /// 2019-03-01. Possible values include: 'Regular', 'Low', 'Spot'
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
         public string Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the eviction policy for the low priority
+        /// Gets or sets specifies the eviction policy for the Azure Spot
         /// virtual machine. Only supported value is 'Deallocate'.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
         /// 2019-03-01. Possible values include: 'Deallocate', 'Delete'
@@ -271,10 +271,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string EvictionPolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the billing related details of a low
-        /// priority virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01.
+        /// Gets or sets specifies the billing related details of a Azure Spot
+        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
+        /// api-version: 2019-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfile")]
         public BillingProfile BillingProfile { get; set; }

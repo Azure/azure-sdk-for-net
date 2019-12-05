@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.PolicyInsights.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,14 +34,17 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="policyDefinitionId">Policy definition ID.</param>
         /// <param name="policyDefinitionReferenceId">Policy definition
         /// reference ID.</param>
+        /// <param name="policyDefinitionGroupNames">Policy definition group
+        /// names.</param>
         /// <param name="effect">Policy effect, i.e. policy definition
         /// action.</param>
-        /// <param name="results">Non-compliance summary for the policy
+        /// <param name="results">Compliance summary for the policy
         /// definition.</param>
-        public PolicyDefinitionSummary(string policyDefinitionId = default(string), string policyDefinitionReferenceId = default(string), string effect = default(string), SummaryResults results = default(SummaryResults))
+        public PolicyDefinitionSummary(string policyDefinitionId = default(string), string policyDefinitionReferenceId = default(string), IList<string> policyDefinitionGroupNames = default(IList<string>), string effect = default(string), SummaryResults results = default(SummaryResults))
         {
             PolicyDefinitionId = policyDefinitionId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
+            PolicyDefinitionGroupNames = policyDefinitionGroupNames;
             Effect = effect;
             Results = results;
             CustomInit();
@@ -63,13 +68,19 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string PolicyDefinitionReferenceId { get; set; }
 
         /// <summary>
+        /// Gets or sets policy definition group names.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyDefinitionGroupNames")]
+        public IList<string> PolicyDefinitionGroupNames { get; set; }
+
+        /// <summary>
         /// Gets or sets policy effect, i.e. policy definition action.
         /// </summary>
         [JsonProperty(PropertyName = "effect")]
         public string Effect { get; set; }
 
         /// <summary>
-        /// Gets or sets non-compliance summary for the policy definition.
+        /// Gets or sets compliance summary for the policy definition.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
         public SummaryResults Results { get; set; }

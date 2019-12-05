@@ -172,6 +172,31 @@ namespace Azure.Storage.Queues.Tests
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true)
+        {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
+            (Uri, Uri) queueUri = StorageConnectionString.ConstructQueueEndpoint(
+                Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            return new StorageConnectionString(
+                    credentials,
+                    (default, default),
+                    queueUri,
+                    (default, default));
+        }
+
         public class DisposingQueue : IAsyncDisposable
         {
             public QueueClient Queue { get; private set; }

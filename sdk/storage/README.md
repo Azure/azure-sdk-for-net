@@ -12,6 +12,8 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Files.Shares][files] offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB) protocol.  Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, Linux, and macOS.
 
+- [Azure.Storage.Files.DataLake][datalake] includes all the capabilities required to make it easy for developers, data scientists, and analysts to store data of any size, shape, and speed, and do all types of processing and analytics across platforms and languages.
+
 - [Azure.Storage.Common][common] provides infrastructure shared by the other Azure Storage client libraries like shared key authentication and exceptions.
 
 - [Microsoft.Azure.Management.Storage][management] supports managing Azure Storage resources, including the creation of new storage accounts.
@@ -39,6 +41,7 @@ additional questions or comments.
 [blobs_cryptography]: ./Azure.Storage.Blobs.Cryptography/README.md
 [queues]: ./Azure.Storage.Queues/README.md
 [files]: ./Azure.Storage.Files.Shares/README.md
+[datalake]: ./Azure.Storage.Files.DataLake/README.md
 [common]: ./Azure.Storage.Common/README.md
 [management]: ./Microsoft.Azure.Management.Storage/
 [storage_contrib]: ./CONTRIBUTING.md
