@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="backendAddressPool">A reference to a pool of DIPs.
         /// Inbound traffic is randomly load balanced across IPs in the backend
         /// IPs.</param>
-        /// <param name="probe">The reference to the load balancer probe used
+        /// <param name="probe">The reference of the load balancer probe used
         /// by the load balancing rule.</param>
         /// <param name="loadDistribution">The load distribution policy for
         /// this rule. Possible values include: 'Default', 'SourceIP',
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference to the load balancer probe used by the
+        /// Gets or sets the reference of the load balancer probe used by the
         /// load balancing rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.probe")]

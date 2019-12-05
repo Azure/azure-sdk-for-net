@@ -1,14 +1,6 @@
 ﻿Installing AutoRest version: latest
-AutoRest installed successfully.
-Commencing code generation
-Generating CSharp code
-Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/irrogozh/azure-rest-api-specs/blob/network-december-release/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\git\azure-sdk-for-net\sdk
-ERROR: Referenced file 'https://github.com/irrogozh/azure-rest-api-specs/blob/network-december-release/specification/network/resource-manager/Microsoft.Network/stable/2019-11-01/examples/NetworkWatcherConnectionMonitorUpdateTags.json' not found
-    - https://raw.githubusercontent.com/irrogozh/azure-rest-api-specs/network-december-release/specification/network/resource-manager/Microsoft.Network/stable/2019-11-01/networkWatcher.json:1778:12 ($.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}"].patch["x-ms-examples"]["Update connection monitor tags"]["$ref"])
-FATAL: swagger-document/loader - FAILED
-FATAL: Error: [OperationAbortedException] Error occurred. Exiting.
-Process() cancelled due to exception : [OperationAbortedException] Error occurred. Exiting.
+'npm.cmd' is not recognized as an internal or external command,
+operable program or batch file.
 
 System.Management.Automation.RuntimeException: Cannot convert value to type System.String. ---> System.Management.Automation.PSInvalidCastException: Cannot convert value to type System.String. ---> System.InvalidOperationException: Process has exited, so the requested information is not available.
    at System.Diagnostics.Process.EnsureState(State state)
@@ -18,8 +10,6 @@ System.Management.Automation.RuntimeException: Cannot convert value to type Syst
    --- End of inner exception stack trace ---
    at System.Management.Automation.PSObject.ToStringParser(ExecutionContext context, Object obj)
    at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
-   at CallSite.Target(Closure , CallSite , Object , ExecutionContext )
-   at CallSite.Target(Closure , CallSite , Object , ExecutionContext )
    at System.Dynamic.UpdateDelegates.UpdateAndExecute2[T0,T1,TRet](CallSite site, T0 arg0, T1 arg1)
    at System.Management.Automation.Interpreter.DynamicInstruction`3.Run(InterpretedFrame frame)
    at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
@@ -33,4 +23,4 @@ System.Management.Automation.RuntimeException: Cannot convert value to type Syst
    at System.Management.Automation.PSScriptCmdlet.RunClause(Action`1 clause, Object dollarUnderbar, Object inputToProcess)
    at System.Management.Automation.PSScriptCmdlet.DoEndProcessing()
    at System.Management.Automation.CommandProcessorBase.Complete()
-AutoRest code generation for https://github.com/irrogozh/azure-rest-api-specs/blob/network-december-release/specification/network/resource-manager/readme.md failed. Please try again
+AutoRest Installation failed

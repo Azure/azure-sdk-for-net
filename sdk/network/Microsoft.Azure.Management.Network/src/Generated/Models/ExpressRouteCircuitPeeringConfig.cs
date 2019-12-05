@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ExpressRouteCircuitPeeringConfig
         /// class.
         /// </summary>
-        /// <param name="advertisedPublicPrefixes">The reference to
+        /// <param name="advertisedPublicPrefixes">The reference of
         /// AdvertisedPublicPrefixes.</param>
         /// <param name="advertisedCommunities">The communities of bgp peering.
         /// Specified for microsoft peering.</param>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference to AdvertisedPublicPrefixes.
+        /// Gets or sets the reference of AdvertisedPublicPrefixes.
         /// </summary>
         [JsonProperty(PropertyName = "advertisedPublicPrefixes")]
         public IList<string> AdvertisedPublicPrefixes { get; set; }

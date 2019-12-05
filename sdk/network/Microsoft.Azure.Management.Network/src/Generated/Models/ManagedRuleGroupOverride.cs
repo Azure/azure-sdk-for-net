@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ManagedRuleGroupOverride class.
         /// </summary>
-        /// <param name="ruleGroupName">The managed rule group to
+        /// <param name="ruleGroupName">Describes the managed rule group to
         /// override.</param>
         /// <param name="rules">List of rules that will be disabled. If none
         /// specified, all rules in the group will be disabled.</param>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the managed rule group to override.
+        /// Gets or sets describes the managed rule group to override.
         /// </summary>
         [JsonProperty(PropertyName = "ruleGroupName")]
         public string RuleGroupName { get; set; }

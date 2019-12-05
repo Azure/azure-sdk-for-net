@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="gatewayManagerEtag">The GatewayManager Etag.</param>
         /// <param name="lastModifiedBy">Who was the last to modify the
         /// peering.</param>
-        /// <param name="routeFilter">The reference to the RouteFilter
+        /// <param name="routeFilter">The reference of the RouteFilter
         /// resource.</param>
         /// <param name="ipv6PeeringConfig">The IPv6 peering
         /// configuration.</param>
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string LastModifiedBy { get; private set; }
 
         /// <summary>
-        /// Gets or sets the reference to the RouteFilter resource.
+        /// Gets or sets the reference of the RouteFilter resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.routeFilter")]
         public SubResource RouteFilter { get; set; }

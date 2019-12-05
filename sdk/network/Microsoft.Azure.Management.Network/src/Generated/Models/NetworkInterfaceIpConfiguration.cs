@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualNetworkTaps">The reference to Virtual Network
         /// Taps.</param>
         /// <param name="applicationGatewayBackendAddressPools">The reference
-        /// to ApplicationGatewayBackendAddressPool resource.</param>
-        /// <param name="loadBalancerBackendAddressPools">The reference to
+        /// of ApplicationGatewayBackendAddressPool resource.</param>
+        /// <param name="loadBalancerBackendAddressPools">The reference of
         /// LoadBalancerBackendAddressPool resource.</param>
         /// <param name="loadBalancerInboundNatRules">A list of references of
         /// LoadBalancerInboundNatRules.</param>
@@ -103,14 +103,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<VirtualNetworkTap> VirtualNetworkTaps { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference to ApplicationGatewayBackendAddressPool
+        /// Gets or sets the reference of ApplicationGatewayBackendAddressPool
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
         public IList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference to LoadBalancerBackendAddressPool
+        /// Gets or sets the reference of LoadBalancerBackendAddressPool
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]

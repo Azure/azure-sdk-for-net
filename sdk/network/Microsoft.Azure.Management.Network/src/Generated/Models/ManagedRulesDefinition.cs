@@ -32,10 +32,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ManagedRulesDefinition class.
         /// </summary>
-        /// <param name="managedRuleSets">The managed rule sets that are
+        /// <param name="managedRuleSets">Describes the ruleSets that are
         /// associated with the policy.</param>
-        /// <param name="exclusions">The Exclusions that are applied on the
-        /// policy.</param>
+        /// <param name="exclusions">Describes the Exclusions that are applied
+        /// on the policy.</param>
         public ManagedRulesDefinition(IList<ManagedRuleSet> managedRuleSets, IList<OwaspCrsExclusionEntry> exclusions = default(IList<OwaspCrsExclusionEntry>))
         {
             Exclusions = exclusions;
@@ -49,13 +49,14 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Exclusions that are applied on the policy.
+        /// Gets or sets describes the Exclusions that are applied on the
+        /// policy.
         /// </summary>
         [JsonProperty(PropertyName = "exclusions")]
         public IList<OwaspCrsExclusionEntry> Exclusions { get; set; }
 
         /// <summary>
-        /// Gets or sets the managed rule sets that are associated with the
+        /// Gets or sets describes the ruleSets that are associated with the
         /// policy.
         /// </summary>
         [JsonProperty(PropertyName = "managedRuleSets")]

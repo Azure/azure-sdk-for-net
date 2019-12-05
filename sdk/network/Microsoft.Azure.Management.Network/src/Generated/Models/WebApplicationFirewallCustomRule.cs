@@ -34,10 +34,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the WebApplicationFirewallCustomRule
         /// class.
         /// </summary>
-        /// <param name="priority">Priority of the rule. Rules with a lower
-        /// value will be evaluated before rules with a higher value.</param>
-        /// <param name="ruleType">The rule type. Possible values include:
-        /// 'MatchRule', 'Invalid'</param>
+        /// <param name="priority">Describes priority of the rule. Rules with a
+        /// lower value will be evaluated before rules with a higher
+        /// value.</param>
+        /// <param name="ruleType">Describes type of rule. Possible values
+        /// include: 'MatchRule', 'Invalid'</param>
         /// <param name="matchConditions">List of match conditions.</param>
         /// <param name="action">Type of Actions. Possible values include:
         /// 'Allow', 'Block', 'Log'</param>
@@ -76,15 +77,15 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets priority of the rule. Rules with a lower value will be
-        /// evaluated before rules with a higher value.
+        /// Gets or sets describes priority of the rule. Rules with a lower
+        /// value will be evaluated before rules with a higher value.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets the rule type. Possible values include: 'MatchRule',
-        /// 'Invalid'
+        /// Gets or sets describes type of rule. Possible values include:
+        /// 'MatchRule', 'Invalid'
         /// </summary>
         [JsonProperty(PropertyName = "ruleType")]
         public string RuleType { get; set; }

@@ -30,9 +30,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PolicySettings class.
         /// </summary>
-        /// <param name="state">The state of the policy. Possible values
-        /// include: 'Disabled', 'Enabled'</param>
-        /// <param name="mode">The mode of the policy. Possible values include:
+        /// <param name="state">Describes if the policy is in enabled state or
+        /// disabled state. Possible values include: 'Disabled',
+        /// 'Enabled'</param>
+        /// <param name="mode">Describes if it is in detection mode or
+        /// prevention mode at policy level. Possible values include:
         /// 'Prevention', 'Detection'</param>
         /// <param name="requestBodyCheck">Whether to allow WAF to check
         /// request Body.</param>
@@ -56,15 +58,16 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the state of the policy. Possible values include:
-        /// 'Disabled', 'Enabled'
+        /// Gets or sets describes if the policy is in enabled state or
+        /// disabled state. Possible values include: 'Disabled', 'Enabled'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
         /// <summary>
-        /// Gets or sets the mode of the policy. Possible values include:
-        /// 'Prevention', 'Detection'
+        /// Gets or sets describes if it is in detection mode or prevention
+        /// mode at policy level. Possible values include: 'Prevention',
+        /// 'Detection'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public string Mode { get; set; }

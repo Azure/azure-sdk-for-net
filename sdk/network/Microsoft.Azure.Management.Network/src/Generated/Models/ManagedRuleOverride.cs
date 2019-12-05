@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ManagedRuleOverride class.
         /// </summary>
         /// <param name="ruleId">Identifier for the managed rule.</param>
-        /// <param name="state">The state of the managed rule. Defaults to
-        /// Disabled if not specified. Possible values include:
+        /// <param name="state">Describes the state of the managed rule.
+        /// Defaults to Disabled if not specified. Possible values include:
         /// 'Disabled'</param>
         public ManagedRuleOverride(string ruleId, string state = default(string))
         {
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string RuleId { get; set; }
 
         /// <summary>
-        /// Gets or sets the state of the managed rule. Defaults to Disabled if
-        /// not specified. Possible values include: 'Disabled'
+        /// Gets or sets describes the state of the managed rule. Defaults to
+        /// Disabled if not specified. Possible values include: 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; set; }

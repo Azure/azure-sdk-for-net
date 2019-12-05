@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "BastionHosts", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "BgpServiceCommunities", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "CheckDnsNameAvailability", "2019-11-01"),
-                new Tuple<string, string, string>("Network", "ConnectionMonitors", "2019-11-01"),
+                new Tuple<string, string, string>("Network", "ConnectionMonitors", "2019-06-01"),
                 new Tuple<string, string, string>("Network", "DdosCustomPolicies", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "DdosProtectionPlans", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "DefaultSecurityRules", "2019-11-01"),

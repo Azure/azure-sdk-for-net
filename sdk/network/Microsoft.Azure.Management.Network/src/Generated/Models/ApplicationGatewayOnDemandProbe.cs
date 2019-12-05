@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// value is false.</param>
         /// <param name="match">Criterion for classifying a healthy probe
         /// response.</param>
-        /// <param name="backendAddressPool">Reference to backend pool of
+        /// <param name="backendAddressPool">Reference of backend pool of
         /// application gateway to which probe request will be sent.</param>
-        /// <param name="backendHttpSettings">Reference to backend http setting
+        /// <param name="backendHttpSettings">Reference of backend http setting
         /// of application gateway to be used for test probe.</param>
         public ApplicationGatewayOnDemandProbe(string protocol = default(string), string host = default(string), string path = default(string), int? timeout = default(int?), bool? pickHostNameFromBackendHttpSettings = default(bool?), ApplicationGatewayProbeHealthResponseMatch match = default(ApplicationGatewayProbeHealthResponseMatch), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource))
         {
@@ -110,14 +110,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
 
         /// <summary>
-        /// Gets or sets reference to backend pool of application gateway to
+        /// Gets or sets reference of backend pool of application gateway to
         /// which probe request will be sent.
         /// </summary>
         [JsonProperty(PropertyName = "backendAddressPool")]
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets or sets reference to backend http setting of application
+        /// Gets or sets reference of backend http setting of application
         /// gateway to be used for test probe.
         /// </summary>
         [JsonProperty(PropertyName = "backendHttpSettings")]

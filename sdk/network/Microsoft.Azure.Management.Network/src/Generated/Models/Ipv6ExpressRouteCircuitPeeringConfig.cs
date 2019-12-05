@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// prefix.</param>
         /// <param name="microsoftPeeringConfig">The Microsoft peering
         /// configuration.</param>
-        /// <param name="routeFilter">The reference to the RouteFilter
+        /// <param name="routeFilter">The reference of the RouteFilter
         /// resource.</param>
         /// <param name="state">The state of peering. Possible values include:
         /// 'Disabled', 'Enabled'</param>
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference to the RouteFilter resource.
+        /// Gets or sets the reference of the RouteFilter resource.
         /// </summary>
         [JsonProperty(PropertyName = "routeFilter")]
         public SubResource RouteFilter { get; set; }

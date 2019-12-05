@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="serviceName">The name of the service and
         /// resource.</param>
-        /// <param name="actions">The actions permitted to the service upon
-        /// delegation.</param>
+        /// <param name="actions">Describes the actions permitted to the
+        /// service upon delegation.</param>
         public AvailableDelegation(string name = default(string), string id = default(string), string type = default(string), string serviceName = default(string), IList<string> actions = default(IList<string>))
         {
             Name = name;
@@ -82,7 +82,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ServiceName { get; set; }
 
         /// <summary>
-        /// Gets or sets the actions permitted to the service upon delegation.
+        /// Gets or sets describes the actions permitted to the service upon
+        /// delegation.
         /// </summary>
         [JsonProperty(PropertyName = "actions")]
         public IList<string> Actions { get; set; }

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayBackendHealthOnDemand class.
         /// </summary>
-        /// <param name="backendAddressPool">Reference to an
+        /// <param name="backendAddressPool">Reference of an
         /// ApplicationGatewayBackendAddressPool resource.</param>
         /// <param name="backendHealthHttpSettings">Application gateway
         /// BackendHealthHttp settings.</param>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reference to an ApplicationGatewayBackendAddressPool
+        /// Gets or sets reference of an ApplicationGatewayBackendAddressPool
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "backendAddressPool")]

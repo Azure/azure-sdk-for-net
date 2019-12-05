@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the MatchCondition class.
         /// </summary>
         /// <param name="matchVariables">List of match variables.</param>
-        /// <param name="operatorProperty">The operator to be matched. Possible
-        /// values include: 'IPMatch', 'Equal', 'Contains', 'LessThan',
-        /// 'GreaterThan', 'LessThanOrEqual', 'GreaterThanOrEqual',
+        /// <param name="operatorProperty">Describes operator to be matched.
+        /// Possible values include: 'IPMatch', 'Equal', 'Contains',
+        /// 'LessThan', 'GreaterThan', 'LessThanOrEqual', 'GreaterThanOrEqual',
         /// 'BeginsWith', 'EndsWith', 'Regex', 'GeoMatch'</param>
         /// <param name="matchValues">Match value.</param>
-        /// <param name="negationConditon">Whether this is negate condition or
-        /// not.</param>
+        /// <param name="negationConditon">Describes if this is negate
+        /// condition or not.</param>
         /// <param name="transforms">List of transforms.</param>
         public MatchCondition(IList<MatchVariable> matchVariables, string operatorProperty, IList<string> matchValues, bool? negationConditon = default(bool?), IList<string> transforms = default(IList<string>))
         {
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<MatchVariable> MatchVariables { get; set; }
 
         /// <summary>
-        /// Gets or sets the operator to be matched. Possible values include:
-        /// 'IPMatch', 'Equal', 'Contains', 'LessThan', 'GreaterThan',
+        /// Gets or sets describes operator to be matched. Possible values
+        /// include: 'IPMatch', 'Equal', 'Contains', 'LessThan', 'GreaterThan',
         /// 'LessThanOrEqual', 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith',
         /// 'Regex', 'GeoMatch'
         /// </summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string OperatorProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets whether this is negate condition or not.
+        /// Gets or sets describes if this is negate condition or not.
         /// </summary>
         [JsonProperty(PropertyName = "negationConditon")]
         public bool? NegationConditon { get; set; }
