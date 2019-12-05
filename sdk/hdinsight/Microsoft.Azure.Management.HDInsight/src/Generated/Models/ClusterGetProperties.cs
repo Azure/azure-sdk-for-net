@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// include: 'Windows', 'Linux'</param>
         /// <param name="tier">The cluster tier. Possible values include:
         /// 'Standard', 'Premium'</param>
-        /// <param name="kafkaRestProperties">The cluster kafaka rest proxy
+        /// <param name="kafkaRestProperties">The cluster kafka rest proxy
         /// configuration.</param>
         /// <param name="securityProfile">The security profile.</param>
         /// <param name="computeProfile">The compute profile.</param>
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public ClusterDefinition ClusterDefinition { get; set; }
 
         /// <summary>
-        /// Gets or sets the cluster kafaka rest proxy configuration.
+        /// Gets or sets the cluster kafka rest proxy configuration.
         /// </summary>
         [JsonProperty(PropertyName = "kafkaRestProperties")]
         public KafkaRestProperties KafkaRestProperties { get; set; }

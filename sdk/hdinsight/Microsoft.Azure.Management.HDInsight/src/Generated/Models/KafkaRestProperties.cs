@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using System.Linq;
 
     /// <summary>
-    /// The kafaka rest proxy configuration which contains AAD security group
+    /// The kafka rest proxy configuration which contains AAD security group
     /// information.
     /// </summary>
     public partial class KafkaRestProperties
