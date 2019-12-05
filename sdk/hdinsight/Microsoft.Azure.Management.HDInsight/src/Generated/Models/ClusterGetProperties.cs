@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// include: 'Windows', 'Linux'</param>
         /// <param name="tier">The cluster tier. Possible values include:
         /// 'Standard', 'Premium'</param>
+        /// <param name="kafkaRestProperties">The cluster kafka rest proxy
+        /// configuration.</param>
         /// <param name="securityProfile">The security profile.</param>
         /// <param name="computeProfile">The compute profile.</param>
         /// <param name="provisioningState">The provisioning state, which only
@@ -52,12 +54,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// endpoints.</param>
         /// <param name="diskEncryptionProperties">The disk encryption
         /// properties.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
             Tier = tier;
             ClusterDefinition = clusterDefinition;
+            KafkaRestProperties = kafkaRestProperties;
             SecurityProfile = securityProfile;
             ComputeProfile = computeProfile;
             ProvisioningState = provisioningState;
@@ -100,6 +103,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "clusterDefinition")]
         public ClusterDefinition ClusterDefinition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cluster kafka rest proxy configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "kafkaRestProperties")]
+        public KafkaRestProperties KafkaRestProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the security profile.
