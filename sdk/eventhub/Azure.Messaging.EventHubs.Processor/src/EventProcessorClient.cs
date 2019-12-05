@@ -913,7 +913,7 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
-                        partitionIds = await consumer.GetPartitionIdsAsync().ConfigureAwait(false);
+                        partitionIds = await consumer.GetPartitionIdsAsync(cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
