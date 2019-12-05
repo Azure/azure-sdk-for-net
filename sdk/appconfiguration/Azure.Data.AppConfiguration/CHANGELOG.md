@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.0-preview.6
+
+- Bugfixes
+
 ## 1.0.0-preview.5
 
 ### Breaking changes
