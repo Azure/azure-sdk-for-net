@@ -854,6 +854,10 @@ namespace Azure.Storage.Files.Shares
         /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -870,10 +874,12 @@ namespace Azure.Storage.Files.Shares
         public virtual Response<ShareFileDownloadInfo> Download(
             HttpRange range = default,
             bool rangeGetContentHash = default,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
                 range,
                 rangeGetContentHash,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -895,6 +901,10 @@ namespace Azure.Storage.Files.Shares
         /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -911,10 +921,12 @@ namespace Azure.Storage.Files.Shares
         public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await DownloadInternal(
                 range,
                 rangeGetContentHash,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -936,6 +948,10 @@ namespace Azure.Storage.Files.Shares
         /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
         /// is thrown.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -955,6 +971,7 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
             HttpRange range,
             bool rangeGetContentHash,
+            FileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -971,6 +988,7 @@ namespace Azure.Storage.Files.Shares
                     (Response<FlattenedStorageFileProperties> response, Stream stream) = await StartDownloadAsync(
                         range,
                         rangeGetContentHash,
+                        conditions: conditions,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -985,6 +1003,7 @@ namespace Azure.Storage.Files.Shares
                                 range,
                                 rangeGetContentHash,
                                 startOffset,
+                                conditions,
                                 async,
                                 cancellationToken)
                                 .EnsureCompleted()
@@ -994,6 +1013,7 @@ namespace Azure.Storage.Files.Shares
                                 range,
                                 rangeGetContentHash,
                                 startOffset,
+                                conditions,
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
@@ -1037,6 +1057,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="startOffset">
         /// Optional. Starting offset to request - in the event of a retry.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1053,6 +1077,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
+            FileRequestConditions conditions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1069,6 +1094,7 @@ namespace Azure.Storage.Files.Shares
                     Uri,
                     range: pageRange.ToString(),
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
+                    leaseId: conditions?.LeaseId,
                     async: async,
                     cancellationToken: cancellationToken,
                     operationName: Constants.File.DownloadOperationName)
@@ -1204,6 +1230,10 @@ namespace Azure.Storage.Files.Shares
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1217,8 +1247,10 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileProperties> GetProperties(
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1231,6 +1263,10 @@ namespace Azure.Storage.Files.Shares
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1244,8 +1280,10 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareFileProperties>> GetPropertiesAsync(
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1258,6 +1296,10 @@ namespace Azure.Storage.Files.Shares
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1274,6 +1316,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileProperties>> GetPropertiesInternal(
+            FileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1289,6 +1332,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         cancellationToken: cancellationToken,
                         operationName: Constants.File.GetPropertiesOperationName)
@@ -2290,6 +2334,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
         /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2304,9 +2352,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareFileRangeInfo> GetRangeList(
             HttpRange range,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetRangeListInternal(
                 range,
+                conditions,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2318,6 +2368,10 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2333,9 +2387,11 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
             HttpRange range,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetRangeListInternal(
                 range,
+                conditions,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2347,6 +2403,10 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="range">
         /// Optional. Specifies the range of bytes over which to list ranges, inclusively. If omitted, then all ranges for the file are returned.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2365,6 +2425,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileRangeInfo>> GetRangeListInternal(
             HttpRange range,
+            FileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2381,6 +2442,7 @@ namespace Azure.Storage.Files.Shares
                         Pipeline,
                         Uri,
                         range: range.ToString(),
+                        leaseId: conditions?.LeaseId,
                         async: async,
                         cancellationToken: cancellationToken,
                         operationName: Constants.File.GetRangeListOperationName)

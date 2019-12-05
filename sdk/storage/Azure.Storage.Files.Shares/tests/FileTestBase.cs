@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public FileTestBase(bool async) : this(async, null) { }
 
         public FileTestBase(bool async, RecordedTestMode? mode = null)
-            : base(async, mode)
+            : base(async, RecordedTestMode.Live)
         {
         }
 

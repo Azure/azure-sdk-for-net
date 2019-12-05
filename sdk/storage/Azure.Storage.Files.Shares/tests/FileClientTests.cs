@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.Shares.Test
             file.CreateAsync(
                     maxSize: Constants.MB,
                     conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -382,7 +382,7 @@ namespace Azure.Storage.Files.Shares.Test
                 file.SetMetadataAsync(
                     metadata: metadata,
                     conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -404,14 +404,14 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task GetPropertiesAsync()
         {
+            // Arrange
             await using DisposingDirectory test = await GetTestDirectoryAsync();
             ShareDirectoryClient directory = test.Directory;
 
-            // Arrange
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
 
             // Act
-            Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
             Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
 
             // Assert
@@ -419,6 +419,72 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(createResponse.Value.LastModified, getPropertiesResponse.Value.LastModified);
             Assert.AreEqual(createResponse.Value.IsServerEncrypted, getPropertiesResponse.Value.IsServerEncrypted);
             AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_NoLease()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
+            await InstrumentClient(file.GetFileLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+
+            // Act
+            Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(createResponse.Value.ETag, getPropertiesResponse.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_Lease()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
+
+            FileLease fileLease = await InstrumentClient(file.GetFileLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            FileRequestConditions conditions = new FileRequestConditions
+            {
+                LeaseId = fileLease.LeaseId
+            };
+
+            // Act
+            Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync(
+                conditions: conditions);
+
+            // Assert
+            Assert.AreEqual(LeaseDurationType.Infinite, getPropertiesResponse.Value.LeaseDuration);
+            Assert.AreEqual(LeaseStateType.Leased, getPropertiesResponse.Value.LeaseState);
+            Assert.AreEqual(LeaseStatusType.Locked, getPropertiesResponse.Value.LeaseStatus);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_InvalidLease()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+            Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
+
+            FileRequestConditions conditions = new FileRequestConditions
+            {
+                LeaseId = Recording.Random.NewGuid().ToString()
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetPropertiesAsync(
+                    conditions: conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -571,7 +637,7 @@ namespace Azure.Storage.Files.Shares.Test
                         ContentType = constants.ContentType
                     },
                     conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -742,7 +808,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.DeleteAsync(conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -844,7 +910,7 @@ namespace Azure.Storage.Files.Shares.Test
                 dest.StartCopyAsync(
                     sourceUri: source.Uri,
                     conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -1013,7 +1079,7 @@ namespace Azure.Storage.Files.Shares.Test
             dest.AbortCopyAsync(
                     copyId: copyResponse.Value.CopyId,
                     conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -1082,7 +1148,8 @@ namespace Azure.Storage.Files.Shares.Test
 
                 // Act
                 Response<ShareFileProperties> getPropertiesResponse = await file.GetPropertiesAsync();
-                Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(range: new HttpRange(Constants.KB, data.LongLength));
+                Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(
+                    range: new HttpRange(Constants.KB, data.LongLength));
 
                 // Assert
 
@@ -1109,6 +1176,97 @@ namespace Azure.Storage.Files.Shares.Test
                 Assert.AreEqual(getPropertiesResponse.Value.CopyStatus, downloadResponse.Value.Details.CopyStatus);
                 Assert.AreEqual(getPropertiesResponse.Value.IsServerEncrypted, downloadResponse.Value.Details.IsServerEncrypted);
                 AssertPropertiesEqual(getPropertiesResponse.Value.SmbProperties, downloadResponse.Value.Details.SmbProperties);
+            }
+        }
+
+        [Test]
+        public async Task DownloadAsync_NoLease()
+        {
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(Constants.KB, data.LongLength),
+                    content: stream);
+
+                await InstrumentClient(file.GetFileLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+
+                // Act
+                Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(
+                    range: new HttpRange(Constants.KB, data.LongLength));
+
+                // Assert
+                Assert.IsNotNull(downloadResponse.Value.Details.ETag);
+            }
+        }
+
+        [Test]
+        public async Task DownloadAsync_Lease()
+        {
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(Constants.KB, data.LongLength),
+                    content: stream);
+
+                FileLease fileLease = await InstrumentClient(file.GetFileLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+                FileRequestConditions conditions = new FileRequestConditions
+                {
+                    LeaseId = fileLease.LeaseId
+                };
+
+                // Act
+                Response<ShareFileDownloadInfo> downloadResponse = await file.DownloadAsync(
+                    range: new HttpRange(Constants.KB, data.LongLength),
+                    conditions: conditions);
+
+                // Assert
+                Assert.AreEqual(LeaseDurationType.Infinite, downloadResponse.Value.Details.LeaseDuration);
+                Assert.AreEqual(LeaseStateType.Available, downloadResponse.Value.Details.LeaseState);
+                Assert.AreEqual(LeaseStatusType.Locked, downloadResponse.Value.Details.LeaseStatus);
+            }
+        }
+
+        [Test]
+        public async Task DownloadAsync_InvalidLease()
+        {
+            // Arrange
+            var data = GetRandomBuffer(Constants.KB);
+
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(Constants.KB, data.LongLength),
+                    content: stream);
+
+                FileRequestConditions conditions = new FileRequestConditions
+                {
+                    LeaseId = Recording.Random.NewGuid().ToString()
+                };
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.DownloadAsync(
+                        range: new HttpRange(Constants.KB, data.LongLength),
+                        conditions: conditions),
+                    e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
             }
         }
 
@@ -1158,15 +1316,75 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task GetRangeListAsync()
         {
+            // Arrange
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
 
+            // Act
             Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
 
-            Assert.IsNotNull(response);
-            Assert.AreNotEqual("<null>", response.Value.ETag.ToString());
-            Assert.AreNotEqual(default(DateTimeOffset), response.Value.LastModified);
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.LastModified);
             Assert.IsTrue(response.Value.FileContentLength > 0);
+        }
+
+        [Test]
+        public async Task GetRangeListAsync_NoLease()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            await InstrumentClient(file.GetFileLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+
+            // Act
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetRangeListAsync_Lease()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            FileLease fileLease = await InstrumentClient(file.GetFileLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            FileRequestConditions conditions = new FileRequestConditions
+            {
+                LeaseId = fileLease.LeaseId
+            };
+
+            // Act
+            Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(
+                range: new HttpRange(0, Constants.MB),
+                conditions: conditions);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        public async Task GetRangeListAsync_InvalidLease()
+        {
+            // Arrange
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            FileRequestConditions conditions = new FileRequestConditions
+            {
+                LeaseId = Recording.Random.NewGuid().ToString()
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.GetRangeListAsync(
+                    range: new HttpRange(0, Constants.MB),
+                    conditions: conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -1248,7 +1466,7 @@ namespace Azure.Storage.Files.Shares.Test
                         range: new HttpRange(Constants.KB, Constants.KB),
                         content: stream,
                         conditions: conditions),
-                    e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                    e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
             }
         }
 
@@ -1353,7 +1571,7 @@ namespace Azure.Storage.Files.Shares.Test
                 file.UploadAsync(
                     content: stream,
                     conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
@@ -1610,7 +1828,7 @@ namespace Azure.Storage.Files.Shares.Test
                     range: destRange,
                     sourceRange: sourceRange,
                     conditions: conditions),
-                e => Assert.AreEqual("There is currently no lease on the file.", e.Message.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
         [Test]
