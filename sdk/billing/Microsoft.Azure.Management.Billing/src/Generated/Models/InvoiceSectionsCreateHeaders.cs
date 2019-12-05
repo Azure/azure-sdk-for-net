@@ -34,13 +34,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="location">Location URI to poll for result</param>
         /// <param name="retryAfter">Recommends the retryable time after
         /// receiving this.</param>
-        /// <param name="azureAsyncOperation">URI to poll for the operation
-        /// status</param>
-        public InvoiceSectionsCreateHeaders(string location = default(string), int? retryAfter = default(int?), string azureAsyncOperation = default(string))
+        public InvoiceSectionsCreateHeaders(string location = default(string), int? retryAfter = default(int?))
         {
             Location = location;
             RetryAfter = retryAfter;
-            AzureAsyncOperation = azureAsyncOperation;
             CustomInit();
         }
 
@@ -60,12 +57,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "Retry-After")]
         public int? RetryAfter { get; set; }
-
-        /// <summary>
-        /// Gets or sets URI to poll for the operation status
-        /// </summary>
-        [JsonProperty(PropertyName = "Azure-AsyncOperation")]
-        public string AzureAsyncOperation { get; set; }
 
     }
 }

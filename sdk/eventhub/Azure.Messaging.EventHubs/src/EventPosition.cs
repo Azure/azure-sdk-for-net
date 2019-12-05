@@ -3,16 +3,16 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Messaging.EventHubs.Core;
+using Azure.Core;
 
 namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   The position of events in an Event Hub partition, typically used in the creation of
-    ///   an <see cref="EventHubProducer" />.
+    ///   an <see cref="EventHubConsumerClient" />.
     /// </summary>
     ///
-    public sealed class EventPosition
+    public struct EventPosition : IEquatable<EventPosition>
     {
         /// <summary>The token that represents the beginning event in the stream of a partition.</summary>
         private const string StartOfStreamOffset = "-1";
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
-        ///   position to begin receiving from the next event to be enqueued in the partition after an <see cref="EventHubConsumer"/>
+        ///   position to begin receiving from the next event to be enqueued in the partition after an <see cref="EventHubConsumerClient"/>
         ///   is created with this position.
         /// </summary>
         ///
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs
         internal DateTimeOffset? EnqueuedTime { get; set; }
 
         /// <summary>
-        ///   The sequence number of the event identified by this position;
+        ///   The sequence number of the event identified by this position.
         /// </summary>
         ///
         /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
@@ -145,13 +145,35 @@ namespace Azure.Messaging.EventHubs
         private static EventPosition FromOffset(string offset,
                                                 bool isInclusive = false)
         {
-            Guard.ArgumentNotNullOrWhitespace(nameof(offset), offset);
+            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
 
             return new EventPosition
             {
                 Offset = offset,
                 IsInclusive = isInclusive
             };
+        }
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> is equal to this instance.
+        /// </summary>
+        ///
+        /// <param name="other">The <see cref="EventPosition" /> to compare with this instance.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="EventPosition" /> is equal to this instance; otherwise, <c>false</c>.</returns>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool Equals(EventPosition other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+               return true;
+            }
+
+            return (Offset == other.Offset)
+                && (SequenceNumber == other.SequenceNumber)
+                && (EnqueuedTime == other.EnqueuedTime)
+                && (IsInclusive == other.IsInclusive);
         }
 
         /// <summary>
@@ -163,7 +185,12 @@ namespace Azure.Messaging.EventHubs
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) =>
+            obj switch
+            {
+                EventPosition other => Equals(other),
+                _ => ReferenceEquals(this, obj)
+            };
 
         /// <summary>
         ///   Returns a hash code for this instance.
@@ -172,7 +199,16 @@ namespace Azure.Messaging.EventHubs
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Offset);
+            hashCode.Add(SequenceNumber);
+            hashCode.Add(EnqueuedTime);
+            hashCode.Add(IsInclusive);
+
+            return hashCode.ToHashCode();
+        }
 
         /// <summary>
         ///   Converts the instance to string representation.
@@ -182,7 +218,29 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
-    }
 
-    //TODO: Implement the AMQP-specific methods from track 1 to a new abstraction. (They were not brought forward)
+        /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> instances are equal to each other.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator ==(EventPosition first,
+                                       EventPosition second) => first.Equals(second);
+
+        /// <summary>
+        ///   Determines whether the specified <see cref="EventPosition" /> instances are not equal to each other.
+        /// </summary>
+        ///
+        /// <param name="first">The first <see cref="EventPosition" /> to consider.</param>
+        /// <param name="second">The second <see cref="EventPosition" /> to consider.</param>
+        ///
+        /// <returns><c>true</c> if the two specified <see cref="EventPosition" /> instances are not equal; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool operator !=(EventPosition first,
+                                       EventPosition second) => (!first.Equals(second));
+    }
 }

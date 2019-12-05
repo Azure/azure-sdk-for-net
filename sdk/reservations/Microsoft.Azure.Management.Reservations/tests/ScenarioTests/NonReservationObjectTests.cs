@@ -45,7 +45,52 @@ namespace Reservations.Tests.ScenarioTests
                     x.Terms != null
                 ));
 
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.SqlDataWarehouse, "eastus");
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations != null &&
+                    x.Terms != null
+                ));
+
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.VMwareCloudSimple, "eastus");
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations != null &&
+                    x.Terms != null
+                ));
+
                 catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.SuseLinux);
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations == null &&
+                    x.Terms != null
+                ));
+
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.CosmosDb);
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations == null &&
+                    x.Terms != null
+                ));
+
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.RedHat);
+                Assert.True(catalog.All(x =>
+                    x.ResourceType != null &&
+                    x.Name != null &&
+                    x.SkuProperties != null &&
+                    x.Locations == null &&
+                    x.Terms != null
+                ));
+
+                catalog = reservationsClient.GetCatalog(SubscriptionId, ReservedResourceType.RedHatOsa);
                 Assert.True(catalog.All(x =>
                     x.ResourceType != null &&
                     x.Name != null &&

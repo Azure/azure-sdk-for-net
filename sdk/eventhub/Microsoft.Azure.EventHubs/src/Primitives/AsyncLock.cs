@@ -36,6 +36,15 @@ namespace Microsoft.Azure.EventHubs
         }
 
         /// <summary>
+        /// Sets a lock.
+        /// </summary>
+        public LockRelease LockSync()
+        {
+            asyncSemaphore.Wait();
+            return new LockRelease(this);
+        }
+
+        /// <summary>
         /// Sets a lock, which allows for cancellation, using a <see cref="CancellationToken"/>.
         /// </summary>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> which can be used to cancel the lock</param>

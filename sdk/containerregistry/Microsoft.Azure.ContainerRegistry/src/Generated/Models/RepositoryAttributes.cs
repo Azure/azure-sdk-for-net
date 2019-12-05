@@ -36,7 +36,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="manifestCount">Number of the manifests</param>
         /// <param name="tagCount">Number of the tags</param>
         /// <param name="changeableAttributes">Changeable attributes</param>
-        public RepositoryAttributes(string registry = default(string), string imageName = default(string), string createdTime = default(string), string lastUpdateTime = default(string), double? manifestCount = default(double?), double? tagCount = default(double?), ChangeableAttributes changeableAttributes = default(ChangeableAttributes))
+        public RepositoryAttributes(string registry = default(string), string imageName = default(string), string createdTime = default(string), string lastUpdateTime = default(string), int? manifestCount = default(int?), int? tagCount = default(int?), ChangeableAttributes changeableAttributes = default(ChangeableAttributes))
         {
             Registry = registry;
             ImageName = imageName;
@@ -81,13 +81,13 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets number of the manifests
         /// </summary>
         [JsonProperty(PropertyName = "manifestCount")]
-        public double? ManifestCount { get; set; }
+        public int? ManifestCount { get; set; }
 
         /// <summary>
         /// Gets or sets number of the tags
         /// </summary>
         [JsonProperty(PropertyName = "tagCount")]
-        public double? TagCount { get; set; }
+        public int? TagCount { get; set; }
 
         /// <summary>
         /// Gets or sets changeable attributes

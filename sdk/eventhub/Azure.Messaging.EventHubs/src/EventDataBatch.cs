@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core.Pipeline;
+using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
@@ -16,9 +16,6 @@ namespace Azure.Messaging.EventHubs
     ///
     public sealed class EventDataBatch : IDisposable
     {
-        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as
         ///   well as any overhead for the batch itself when sent to the Event Hubs service.
@@ -43,11 +40,11 @@ namespace Azure.Messaging.EventHubs
         ///   The set of options that should be used when publishing the batch.
         /// </summary>
         ///
-        internal SendOptions SendOptions { get; }
+        internal SendEventOptions SendOptions { get; }
 
         /// <summary>
         ///   The transport-specific batch responsible for performing the batch operations
-        ///   in a manner compatible with the associated <see cref="TransportEventHubProducer" />.
+        ///   in a manner compatible with the associated <see cref="TransportProducer" />.
         /// </summary>
         ///
         private TransportEventBatch InnerBatch { get; }
@@ -69,15 +66,13 @@ namespace Azure.Messaging.EventHubs
         /// </remarks>
         ///
         internal EventDataBatch(TransportEventBatch transportBatch,
-                                SendOptions sendOptions)
+                                SendEventOptions sendOptions)
         {
-            Guard.ArgumentNotNull(nameof(transportBatch), transportBatch);
-            Guard.ArgumentNotNull(nameof(sendOptions), sendOptions);
+            Argument.AssertNotNull(transportBatch, nameof(transportBatch));
+            Argument.AssertNotNull(sendOptions, nameof(sendOptions));
 
             InnerBatch = transportBatch;
             SendOptions = sendOptions;
-
-            _clientDiagnostics = new ClientDiagnostics(isActivityEnabled: true);
         }
 
         /// <summary>
@@ -91,7 +86,7 @@ namespace Azure.Messaging.EventHubs
         ///
         public bool TryAdd(EventData eventData)
         {
-            bool instrumented = EventDataInstrumentation.InstrumentEvent(_clientDiagnostics, eventData);
+            bool instrumented = EventDataInstrumentation.InstrumentEvent(eventData);
             bool added = InnerBatch.TryAdd(eventData);
 
             if (!added && instrumented)

@@ -3,14 +3,11 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <PackageTags>Microsoft Azure Identity</PackageTags>
+    <Version>1.2.0-preview</Version>
+    <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      Adding user authentication credential types:
-        - UsernamePasswordCredential
-        - DeviceCodeCredential
-        - InteractiveBrowserCredential
+      GA release of Azure.Identity package.
       ]]>
     </PackageReleaseNotes>
 
@@ -25,11 +22,15 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="Microsoft.Identity.Client" />
-    
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
   </ItemGroup>
 
   <!-- Import the Azure.Base project -->

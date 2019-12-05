@@ -30,11 +30,19 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Initializes a new instance of the ManagedRuleDefinition class.
         /// </summary>
         /// <param name="ruleId">Identifier for the managed rule.</param>
+        /// <param name="defaultState">Describes the default state for the
+        /// managed rule. Possible values include: 'Disabled',
+        /// 'Enabled'</param>
+        /// <param name="defaultAction">Describes the default action to be
+        /// applied when the managed rule matches. Possible values include:
+        /// 'Allow', 'Block', 'Log', 'Redirect'</param>
         /// <param name="description">Describes the functionality of the
         /// managed rule.</param>
-        public ManagedRuleDefinition(string ruleId = default(string), string description = default(string))
+        public ManagedRuleDefinition(string ruleId = default(string), string defaultState = default(string), string defaultAction = default(string), string description = default(string))
         {
             RuleId = ruleId;
+            DefaultState = defaultState;
+            DefaultAction = defaultAction;
             Description = description;
             CustomInit();
         }
@@ -49,6 +57,21 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "ruleId")]
         public string RuleId { get; private set; }
+
+        /// <summary>
+        /// Gets describes the default state for the managed rule. Possible
+        /// values include: 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultState")]
+        public string DefaultState { get; private set; }
+
+        /// <summary>
+        /// Gets describes the default action to be applied when the managed
+        /// rule matches. Possible values include: 'Allow', 'Block', 'Log',
+        /// 'Redirect'
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultAction")]
+        public string DefaultAction { get; private set; }
 
         /// <summary>
         /// Gets describes the functionality of the managed rule.

@@ -1,75 +1,74 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisGetList5965/providers/Microsoft.Cache/Redis/RedisGetList3946/listKeys?api-version=2017-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTkyY2M5ZGUtYTNjZC00ZDcwLTliYzEtYzFhMjhhMzYyNWI1L3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDU5NjUvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3QzOTQ2L2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList5011/providers/Microsoft.Cache/Redis/RedisGetList8041/listKeys?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Jlc291cmNlR3JvdXBzL1JlZGlzR2V0TGlzdDUwMTEvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9SZWRpc0dldExpc3Q4MDQxL2xpc3RLZXlzP2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d1e60231-e985-4f61-933a-08c39d5f51bd"
+          "930c574d-93c0-45c6-8090-274a4df1fc40"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.3.0.0"
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"TCY14JWx0Upa8HGamlAwQLTZFEo9v5k0j8bVaBDSxag=\",\r\n  \"secondaryKey\": \"uY2/xD9NwAijrWxIu3miCoyMN65vsxMMGxgipxaMJxM=\"\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Dec 2017 23:58:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
         "x-ms-request-id": [
-          "90074ad9-d7b9-4963-9a10-92d9809b830d"
+          "2fef5f79-59f7-4df9-8d3b-03026d71be84"
         ],
         "x-rp-server-mvid": [
-          "aae8b77a-d9ee-4150-a289-95fc7f9ee59c"
+          "d4a16663-d537-49d1-8ba4-e2fdb635702d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-content-type-options": [
+        "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "c52778a1-64fd-4adf-b7ff-39dc6ace0f48"
+          "a030ffa7-ecc4-4217-a7c5-c393263cd352"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20171205T235844Z:c52778a1-64fd-4adf-b7ff-39dc6ace0f48"
+          "WESTUS:20191125T012438Z:a030ffa7-ecc4-4217-a7c5-c393263cd352"
+        ],
+        "Date": [
+          "Mon, 25 Nov 2019 01:24:38 GMT"
+        ],
+        "Content-Length": [
+          "123"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"primaryKey\": \"fXqvUHXrT9OJSRS7sZw1Cqg9IBPyRe41ixFRBmOqGuY=\",\r\n  \"secondaryKey\": \"RZSp75LIIhFzpj5YeOyM2einxECWgf2+TSnj45SEky4=\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "592cc9de-a3cd-4d70-9bc1-c1a28a3625b5"
+    "SubscriptionId": "bc130894-c5b3-4adc-a077-0b51f3714abe"
   }
 }

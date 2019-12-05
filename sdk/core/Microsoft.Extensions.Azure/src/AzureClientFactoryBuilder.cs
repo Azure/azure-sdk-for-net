@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.Extensions;
-using Azure.Core.Pipeline;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -12,6 +11,9 @@ using System;
 
 namespace Microsoft.Extensions.Azure
 {
+    /// <summary>
+    /// The builder type for registering Azure SDK clients.
+    /// </summary>
     public sealed class AzureClientFactoryBuilder : IAzureClientFactoryBuilderWithConfiguration<IConfiguration>, IAzureClientFactoryBuilderWithCredential
     {
         private readonly IServiceCollection _serviceCollection;
@@ -45,12 +47,22 @@ namespace Microsoft.Extensions.Azure
             return clientBuilder;
         }
 
+        /// <summary>
+        /// Adds a configuration delegate that gets executed for all clients.
+        /// </summary>
+        /// <param name="configureOptions">The configuration delegate.</param>
+        /// <returns>This instance.</returns>
         public AzureClientFactoryBuilder ConfigureDefaults(Action<ClientOptions> configureOptions)
         {
             ConfigureDefaults((options, provider) => configureOptions(options));
             return this;
         }
 
+        /// <summary>
+        /// Adds a configuration delegate that gets executed for all clients.
+        /// </summary>
+        /// <param name="configureOptions">The configuration delegate.</param>
+        /// <returns>This instance.</returns>
         public AzureClientFactoryBuilder ConfigureDefaults(Action<ClientOptions, IServiceProvider> configureOptions)
         {
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.ConfigureOptionDelegates.Add(configureOptions));
@@ -58,6 +70,11 @@ namespace Microsoft.Extensions.Azure
             return this;
         }
 
+        /// <summary>
+        /// Adds a configuration instance to initialize all clients from.
+        /// </summary>
+        /// <param name="configuration">The configuration instance.</param>
+        /// <returns>This instance.</returns>
         public AzureClientFactoryBuilder ConfigureDefaults(IConfiguration configuration)
         {
             ConfigureDefaults(options => configuration.Bind(options));
@@ -91,12 +108,21 @@ namespace Microsoft.Extensions.Azure
             return new AzureClientBuilder<TClient, TOptions>(clientRegistration, _serviceCollection);
         }
 
-
+        /// <summary>
+        /// Sets the credential to use by default for all clients.
+        /// </summary>
+        /// <param name="tokenCredential">The credential to use.</param>
+        /// <returns>This instance.</returns>
         public AzureClientFactoryBuilder UseCredential(TokenCredential tokenCredential)
         {
             return UseCredential(_ => tokenCredential);
         }
 
+        /// <summary>
+        /// Sets the credential to use by default for all clients.
+        /// </summary>
+        /// <param name="tokenCredentialFactory">The credential factory to use.</param>
+        /// <returns>This instance.</returns>
         public AzureClientFactoryBuilder UseCredential(Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
         {
             _serviceCollection.Configure<AzureClientsGlobalOptions>(options => options.CredentialFactory = tokenCredentialFactory);

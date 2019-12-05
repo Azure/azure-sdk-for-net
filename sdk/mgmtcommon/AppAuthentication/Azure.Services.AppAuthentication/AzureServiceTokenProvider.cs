@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// KeyVaultClient keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
         /// </code>
         /// </example>
-        public TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) =>
+        public virtual TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) =>
         {
             var authResult = await GetAuthResultAsyncImpl(resource, authority).ConfigureAwait(false);
             return authResult.AccessToken;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <summary>
         /// The principal used to acquire token. This will be of type "User" for local development scenarios, and "App" when client credentials flow is used. 
         /// </summary>
-        public Principal PrincipalUsed => _principalUsed;
+        public virtual Principal PrincipalUsed => _principalUsed;
 
         /// <summary>
         /// Creates an instance of the AzureServiceTokenProvider class.
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string),
+        public virtual async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var authResult = await GetAuthenticationResultAsync(resource, tenantId, cancellationToken).ConfigureAwait(false);
@@ -248,9 +248,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return authResult.AccessToken;
         }
 
-        public async Task<string> GetAccessTokenAsync(string resource, string tenantId)
+        public virtual Task<string> GetAccessTokenAsync(string resource, string tenantId)
         {
-            return await GetAccessTokenAsync(resource, tenantId, default(CancellationToken)).ConfigureAwait(false);
+            return GetAccessTokenAsync(resource, tenantId, default(CancellationToken));
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
+        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
             CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(resource))
@@ -277,12 +277,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
 
-            return await GetAuthResultAsyncImpl(resource, authority, cancellationToken).ConfigureAwait(false);
+            return GetAuthResultAsyncImpl(resource, authority, cancellationToken);
         }
 
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
+        public virtual Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId)
         {
-            return await GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken)).ConfigureAwait(false);
+            return GetAuthenticationResultAsync(resource, tenantId, default(CancellationToken));
         }
     }
 }

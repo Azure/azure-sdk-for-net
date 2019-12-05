@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.0/areaOfInterest",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL2FyZWFPZkludGVyZXN0",
+      "RequestUri": "/vision/v2.1/areaOfInterest",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4xL2FyZWFPZkludGVyZXN0",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/house.jpg\"\r\n}",
       "RequestHeaders": {
@@ -10,33 +10,30 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
+          "FxVersion/4.8.3815.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.2.0.0"
+          "OSVersion/10.0.18362.0",
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "188"
+          "186"
         ]
       },
       "ResponseHeaders": {
         "apim-request-id": [
-          "42a39e7d-9df2-4718-be6e-0cac4e68fc3b"
+          "04fc2f4a-b58e-448c-9449-6a251d68179e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
-        "X-Content-Type-Options": [
+        "x-content-type-options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 11 Dec 2018 20:57:28 GMT"
-        ],
-        "Connection": [
-          "close"
+          "Thu, 22 Aug 2019 04:06:33 GMT"
         ],
         "Content-Length": [
           "155"
@@ -45,7 +42,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 112,\r\n    \"y\": 0,\r\n    \"w\": 462,\r\n    \"h\": 462\r\n  },\r\n  \"requestId\": \"42a39e7d-9df2-4718-be6e-0cac4e68fc3b\",\r\n  \"metadata\": {\r\n    \"width\": 600,\r\n    \"height\": 462,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"areaOfInterest\": {\r\n    \"x\": 112,\r\n    \"y\": 0,\r\n    \"w\": 462,\r\n    \"h\": 462\r\n  },\r\n  \"requestId\": \"04fc2f4a-b58e-448c-9449-6a251d68179e\",\r\n  \"metadata\": {\r\n    \"width\": 600,\r\n    \"height\": 462,\r\n    \"format\": \"Jpeg\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

@@ -57,7 +57,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="authentication">Authentication method used for calling
         /// the endpoint.</param>
-        public WebHookActivity(string name, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), string timeout = default(string), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication))
+        /// <param name="reportStatusOnCallBack">When set to true, statusCode,
+        /// output and error in callback request body will be consumed by
+        /// activity. The activity can be marked as failed by setting
+        /// statusCode &gt;= 400 in callback request. Default is false. Type:
+        /// boolean (or Expression with resultType boolean).</param>
+        public WebHookActivity(string name, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), string timeout = default(string), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication), object reportStatusOnCallBack = default(object))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             Url = url;
@@ -65,6 +70,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Headers = headers;
             Body = body;
             Authentication = authentication;
+            ReportStatusOnCallBack = reportStatusOnCallBack;
             CustomInit();
         }
         /// <summary>
@@ -119,6 +125,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authentication")]
         public WebActivityAuthentication Authentication { get; set; }
+
+        /// <summary>
+        /// Gets or sets when set to true, statusCode, output and error in
+        /// callback request body will be consumed by activity. The activity
+        /// can be marked as failed by setting statusCode &amp;gt;= 400 in
+        /// callback request. Default is false. Type: boolean (or Expression
+        /// with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.reportStatusOnCallBack")]
+        public object ReportStatusOnCallBack { get; set; }
 
         /// <summary>
         /// Rest API method for target endpoint.

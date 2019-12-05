@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Queues;
 
 namespace Azure.Storage.Sas
 {
@@ -12,7 +12,7 @@ namespace Azure.Storage.Sas
     /// Signature (SAS) for an Azure Storage queue.
     /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
     /// </summary>
-    public struct QueueSasBuilder : IEquatable<QueueSasBuilder>
+    public class QueueSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -36,14 +36,14 @@ namespace Azure.Storage.Sas
         /// start time for this call is assumed to be the time when the
         /// storage service receives the request.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public DateTimeOffset ExpiryTime { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions associated with the shared access signature. The
@@ -53,7 +53,7 @@ namespace Azure.Storage.Sas
         /// <see cref="QueueAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        public string Permissions { get; private set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -63,7 +63,7 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public IPRange IPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -75,6 +75,37 @@ namespace Azure.Storage.Sas
         /// The optional name of the blob being made accessible.
         /// </summary>
         public string QueueName { get; set; }
+
+        /// <summary>
+        /// Sets the permissions for a queue SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="QueueSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(QueueSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for a queue account level SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="QueueAccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(QueueAccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -91,38 +122,44 @@ namespace Azure.Storage.Sas
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
-
-            this.Permissions = QueueAccountSasPermissions.Parse(this.Permissions).ToString();
-            if (String.IsNullOrEmpty(this.Version))
+            if (ExpiresOn == default)
             {
-                this.Version = SasQueryParameters.DefaultSasVersion;
+                throw Errors.SasMissingData(nameof(ExpiresOn));
+            }
+            if (string.IsNullOrEmpty(Permissions))
+            {
+                throw Errors.SasMissingData(nameof(Permissions));
+            }
+            if (string.IsNullOrEmpty(Version))
+            {
+                Version = SasQueryParameters.DefaultSasVersion;
             }
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(this.StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(this.ExpiryTime);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
-            var stringToSign = String.Join("\n",
-                this.Permissions,
+            var stringToSign = string.Join("\n",
+                Permissions,
                 startTime,
                 expiryTime,
-                GetCanonicalName(sharedKeyCredential.AccountName, this.QueueName ?? String.Empty),
-                this.Identifier,
-                this.IPRange.ToString(),
-                this.Protocol.ToString(),
-                this.Version);
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = new SasQueryParameters(
-                version: this.Version,
-                services: null,
-                resourceTypes: null,
-                protocol: this.Protocol,
-                startTime: this.StartTime,
-                expiryTime: this.ExpiryTime,
-                ipRange: this.IPRange,
-                identifier: this.Identifier,
+                GetCanonicalName(sharedKeyCredential.AccountName, QueueName ?? string.Empty),
+                Identifier,
+                IPRange.ToString(),
+                SasExtensions.ToProtocolString(Protocol),
+                Version);
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
+            var p = SasQueryParametersInternals.Create(
+                version: Version,
+                services: default,
+                resourceTypes: default,
+                protocol: Protocol,
+                startsOn: StartsOn,
+                expiresOn: ExpiresOn,
+                ipRange: IPRange,
+                identifier: Identifier,
                 resource: null,
-                permissions: this.Permissions,
+                permissions: Permissions,
                 signature: signature);
             return p;
         }
@@ -139,17 +176,16 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// Canonical name as a string.
         /// </returns>
-        static string GetCanonicalName(string account, string queueName) =>
+        private static string GetCanonicalName(string account, string queueName) =>
             // Queue: "/queue/account/queuename"
-            String.Join("", new[] { "/queue/", account, "/", queueName });
+            string.Join("", new[] { "/queue/", account, "/", queueName });
 
         /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() =>
-            base.ToString();
+        public override string ToString() => base.ToString();
 
         /// <summary>
         /// Check if two QueueSasBuilder instances are equal.
@@ -157,56 +193,13 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) =>
-            obj is QueueSasBuilder other && this.Equals(other);
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the QueueSasBuilder.
         /// </summary>
         /// <returns>Hash code for the QueueSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            this.ExpiryTime.GetHashCode() ^
-            this.Identifier.GetHashCode() ^
-            this.IPRange.GetHashCode() ^
-            this.Permissions.GetHashCode() ^
-            this.Protocol.GetHashCode() ^
-            this.QueueName.GetHashCode() ^
-            this.StartTime.GetHashCode() ^
-            this.Version.GetHashCode();
-
-        /// <summary>
-        /// Check if two QueueSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(QueueSasBuilder left, QueueSasBuilder right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two QueueSasBuilder instances are not equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-
-        public static bool operator !=(QueueSasBuilder left, QueueSasBuilder right) =>
-            !(left == right);
-
-        /// <summary>
-        /// Check if two QueueSasBuilder instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(QueueSasBuilder other) =>
-            this.ExpiryTime == other.ExpiryTime &&
-            this.Identifier == other.Identifier &&
-            this.IPRange == other.IPRange &&
-            this.Permissions == other.Permissions &&
-            this.Protocol == other.Protocol &&
-            this.QueueName == other.QueueName &&
-            this.StartTime == other.StartTime &&
-            this.Version == other.Version;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

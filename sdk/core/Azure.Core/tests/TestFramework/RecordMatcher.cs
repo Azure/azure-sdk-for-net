@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
@@ -26,7 +24,8 @@ namespace Azure.Core.Testing
             "x-ms-date",
             "x-ms-client-request-id",
             "User-Agent",
-            "Request-Id"
+            "Request-Id",
+            "traceparent"
         };
 
         // Headers that don't indicate meaningful changes between updated recordings
@@ -57,7 +56,7 @@ namespace Azure.Core.Testing
         {
             SortedDictionary<string, string[]> headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase);
 
-            foreach (var header in request.Headers)
+            foreach (HttpHeader header in request.Headers)
             {
                 var gotHeader = request.Headers.TryGetValues(header.Name, out IEnumerable<string> values);
                 Debug.Assert(gotHeader);
@@ -66,7 +65,7 @@ namespace Azure.Core.Testing
 
             _sanitizer.SanitizeHeaders(headers);
 
-            string uri = _sanitizer.SanitizeUri(request.UriBuilder.ToString());
+            string uri = _sanitizer.SanitizeUri(request.Uri.ToString());
 
             int bestScore = int.MaxValue;
             RecordEntry bestScoreEntry = null;
@@ -153,7 +152,7 @@ namespace Azure.Core.Testing
                 builder.AppendLine($"Method doesn't match, request <{requestMethod}> record <{bestScoreEntry.RequestMethod}>");
             }
 
-            if (uri != bestScoreEntry.RequestUri)
+            if (!AreUrisSame(uri, bestScoreEntry.RequestUri))
             {
                 builder.AppendLine("Uri doesn't match:");
                 builder.AppendLine($"    request <{uri}>");
@@ -162,30 +161,7 @@ namespace Azure.Core.Testing
 
             builder.AppendLine("Header differences:");
 
-            var entryHeaders = new SortedDictionary<string, string[]>(bestScoreEntry.RequestHeaders, bestScoreEntry.RequestHeaders.Comparer);
-            foreach (KeyValuePair<string, string[]> header in headers)
-            {
-                if (entryHeaders.TryGetValue(header.Key, out string[] values))
-                {
-                    entryHeaders.Remove(header.Key);
-                    if (!ExcludeHeaders.Contains(header.Key) &&
-                        !values.SequenceEqual(header.Value))
-                    {
-                        builder.AppendLine($"    <{header.Key}> values differ, request <{JoinHeaderValues(header.Value)}>, record <{JoinHeaderValues(values)}>");
-
-                    }
-                }
-                else
-                {
-                    builder.AppendLine($"    <{header.Key}> is absent in record, value <{JoinHeaderValues(header.Value)}>");
-                }
-            }
-
-            foreach (KeyValuePair<string, string[]> header in entryHeaders)
-            {
-                builder.AppendLine($"    <{header.Key}> is absent in request, value <{JoinHeaderValues(header.Value)}>");
-
-            }
+            CompareHeaderDictionaries(headers, bestScoreEntry.RequestHeaders, ExcludeHeaders, builder);
 
             return builder.ToString();
         }
@@ -195,7 +171,7 @@ namespace Azure.Core.Testing
             return string.Join(",", values);
         }
 
-        private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, HashSet<string> ignoredHeaders)
+        private int CompareHeaderDictionaries(SortedDictionary<string, string[]> headers, SortedDictionary<string, string[]> entryHeaders, HashSet<string> ignoredHeaders, StringBuilder descriptionBuilder = null)
         {
             int difference = 0;
             var remaining = new SortedDictionary<string, string[]>(entryHeaders, entryHeaders.Comparer);
@@ -208,14 +184,25 @@ namespace Azure.Core.Testing
                         !values.SequenceEqual(header.Value))
                     {
                         difference++;
+                        descriptionBuilder?.AppendLine($"    <{header.Key}> values differ, request <{JoinHeaderValues(header.Value)}>, record <{JoinHeaderValues(values)}>");
                     }
                 }
                 else if (!ignoredHeaders.Contains(header.Key))
                 {
                     difference++;
+                    descriptionBuilder?.AppendLine($"    <{header.Key}> is absent in record, value <{JoinHeaderValues(header.Value)}>");
                 }
             }
-            difference += remaining.Count;
+
+            foreach (KeyValuePair<string, string[]> header in remaining)
+            {
+                if (!ignoredHeaders.Contains(header.Key))
+                {
+                    difference++;
+                    descriptionBuilder?.AppendLine($"    <{header.Key}> is absent in request, value <{JoinHeaderValues(header.Value)}>");
+                }
+            }
+
             return difference;
         }
 

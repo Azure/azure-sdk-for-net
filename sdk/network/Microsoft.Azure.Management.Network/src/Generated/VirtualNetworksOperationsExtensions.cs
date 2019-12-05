@@ -428,52 +428,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a virtual network tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update virtual network tags.
-            /// </param>
-            public static VirtualNetwork BeginUpdateTags(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, TagsObject parameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, virtualNetworkName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a virtual network tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='virtualNetworkName'>
-            /// The name of the virtual network.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to update virtual network tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VirtualNetwork> BeginUpdateTagsAsync(this IVirtualNetworksOperations operations, string resourceGroupName, string virtualNetworkName, TagsObject parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all virtual networks in a subscription.
             /// </summary>
             /// <param name='operations'>

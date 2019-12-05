@@ -10,7 +10,7 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionDomainModelTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeCelebritiesDomainImageInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -31,14 +31,14 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.98);
+                    Assert.True(celebrity.Confidence > 0.97);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeCelebritiesDomainImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -60,14 +60,14 @@ namespace ComputerVisionSDK.Tests
 
                     var celebrity = celebrities.Celebrities[0];
                     Assert.Equal("Satya Nadella", celebrity.Name);
-                    Assert.True(celebrity.Confidence > 0.98);
+                    Assert.True(celebrity.Confidence > 0.97);
                     Assert.True(celebrity.FaceRectangle.Width > 0);
                     Assert.True(celebrity.FaceRectangle.Height > 0);
                 }
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void AnalyzeLandmarksDomainImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

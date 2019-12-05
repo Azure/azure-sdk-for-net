@@ -1,5 +1,12 @@
 trigger: none
 
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: azure
+
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
@@ -10,3 +17,4 @@ jobs:
       AZURE_CLIENT_ID: $(net-keyvault-azure-client-id)
       AZURE_CLIENT_SECRET: $(net-keyvault-azure-client-secret)
       AZURE_KEYVAULT_URL: $(net-keyvault-azure-keyvault-url)
+      AZURE_KEYVAULT_TEST_MODE: Live

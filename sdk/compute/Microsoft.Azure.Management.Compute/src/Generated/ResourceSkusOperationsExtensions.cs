@@ -27,9 +27,12 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ResourceSku> List(this IResourceSkusOperations operations)
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
+            public static IPage<ResourceSku> List(this IResourceSkusOperations operations, string filter = default(string))
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListAsync(filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -38,12 +41,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='filter'>
+            /// The filter to apply on the operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ResourceSku>> ListAsync(this IResourceSkusOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ResourceSku>> ListAsync(this IResourceSkusOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

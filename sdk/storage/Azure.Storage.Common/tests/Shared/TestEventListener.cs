@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 
 using System;
@@ -9,40 +8,36 @@ using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Storage.Test
 {
     /// <summary>
     /// The TestEventListener listens for the AzureSDK logging event source
     /// and traces the output so it's easy to view the logs when testing.
-    /// 
+    ///
     /// Simply create an instance of the TestEventListener before you start
     /// running your tests.
     /// </summary>
-    internal class TestEventListener : EventListener
+    internal class TestEventListener : AzureEventSourceListener
     {
-        /// <summary>
-        /// Listen for the SDK logging to start.
-        /// </summary>
-        /// <param name="eventSource">The new event source.</param>
-        protected override void OnEventSourceCreated(EventSource eventSource)
+        public TestEventListener() : base((e, _) => LogEvent(e), EventLevel.Verbose)
         {
-            // Only trace SDK events while we're debugging because it's too
-            // noisy otherwise
-            if (Debugger.IsAttached && eventSource.Name == "AzureSDK")
-            {
-                this.EnableEvents(eventSource, EventLevel.LogAlways, EventKeywords.All);
-            }
         }
 
         /// <summary>
         /// Trace any SDK events.
         /// </summary>
         /// <param name="args">Event arguments.</param>
-        protected override void OnEventWritten(EventWrittenEventArgs args)
+        public static void LogEvent(EventWrittenEventArgs args)
         {
+            if (!Debugger.IsAttached)
+            {
+                return;
+            }
+
             var category = args.EventName;
-            var payload = GetPayload(args);
+            IDictionary<string, string> payload = GetPayload(args);
 
             // If there's a request ID, use it after the category
             var message = new StringBuilder();
@@ -54,7 +49,7 @@ namespace Azure.Storage.Test
             message.AppendLine();
 
             // Add the rest of the payload
-            foreach (var arg in payload)
+            foreach (KeyValuePair<string, string> arg in payload)
             {
                 message.AppendFormat("  {0}: ", arg.Key);
 
@@ -109,7 +104,7 @@ namespace Azure.Storage.Test
                         value = Encoding.UTF8.GetString(content);
                         // Control characters mess up copy/pasting so we'll
                         // swap them with the SUB character
-                        value = new string(value.Select(ch => !Char.IsControl(ch) ? ch : '�').ToArray());
+                        value = new string(value.Select(ch => !char.IsControl(ch) ? ch : '�').ToArray());
                         break;
                     default:
                         value = args.Payload[i].ToString();

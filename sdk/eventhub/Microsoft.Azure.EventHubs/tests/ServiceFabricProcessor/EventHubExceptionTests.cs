@@ -11,35 +11,35 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
     public class EventHubExceptionTests
     {
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void SoftTransientClientCreationFailure()
         {
             SoftTransientFailures("ClientCreation", EHErrorLocation.EventHubClientCreation);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void SoftTransientGetRuntimeInfoFailure()
         {
             SoftTransientFailures("GetRuntimeInfo", EHErrorLocation.GetRuntimeInformation);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void SoftTransientReceiverCreationFailure()
         {
             SoftTransientFailures("ReceiverCreation", EHErrorLocation.CreateReceiver);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void SoftTransientReceiverClosingFailure()
         {
             SoftTransientFailures("ReceiverClosing", EHErrorLocation.ReceiverClosing);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void SoftTransientEventHubClientClosingFailure()
         {
@@ -88,28 +88,28 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.Null(state.ShutdownException);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardTransientClientCreationFailure()
         {
             HardTransientStartupFailure("ClientCreation", EHErrorLocation.EventHubClientCreation);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardTransientGetRuntimeInfoFailure()
         {
             HardTransientStartupFailure("GetRuntimeInfo", EHErrorLocation.GetRuntimeInformation);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardTransientReceiverCreationFailure()
         {
             HardTransientStartupFailure("ReceiverCreation", EHErrorLocation.CreateReceiver);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardTransientReceiverClosingFailure()
         {
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             NoFailures("HardTransientReceiverClosingFailure", injector);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardTransientEventHubClientClosingFailure()
         {
@@ -171,50 +171,49 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             }
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void NontransientClientCreationFailure()
         {
             GeneralStartupFailure("NontransientClientCreationFailure", EHErrorLocation.EventHubClientCreation, true);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardClientCreationFailure()
         {
             GeneralStartupFailure("HardClientCreationFailure", EHErrorLocation.EventHubClientCreation, false);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void NontransientGetRuntimeInfoFailure()
         {
             GeneralStartupFailure("NontransientGetRuntimeInfoFailure", EHErrorLocation.GetRuntimeInformation, true);
         }
-#if !FullNetFx
-        // Issue https://github.com/Azure/azure-sdk-for-net/issues/5995 tracking this test being re-enabled for netfx
-        [Fact]
+
+        [Fact(Skip="Results have been non-deterministic in CI and nightly runs.  Tracking with #5995")]
         [DisplayTestMethodName]
         public void HardGetRuntimeInfoFailure()
         {
             GeneralStartupFailure("HardGetRuntimeInfoFailure", EHErrorLocation.GetRuntimeInformation, false);
         }
-#endif
-        [Fact]
+
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void NontransientReceiverCreationFailure()
         {
             GeneralStartupFailure("NontransientReceiverCreationFailure", EHErrorLocation.CreateReceiver, true);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardReceiverCreationFailure()
         {
             GeneralStartupFailure("HardReceiverCreationFailure", EHErrorLocation.CreateReceiver, false);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void NontransientReceiverClosingFailure()
         {
@@ -223,7 +222,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             NoFailures("NontransientReceiverClosingFailure", injector);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardReceiverClosingFailure()
         {
@@ -232,7 +231,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             NoFailures("HardReceiverClosingFailure", injector);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         void NontransientEventHubClientClosingFailure()
         {
@@ -241,7 +240,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             NoFailures("NontransientEventHubClientClosingFailure", injector);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardEventHubClientClosingFailure()
         {
@@ -298,7 +297,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             }
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void TransientEventHubReceiveFailure()
         {
@@ -347,7 +346,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             Assert.Null(state.ShutdownException);
         }
 
-        [Fact]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void NonTransientEventHubReceiveFailure()
         {
@@ -357,7 +356,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             EventHubReceiveFailure("NonTransient", new ReceiverDisconnectedException("ErrorInjector"), true);
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/7335")]
+        [Fact(Skip="Causing instability in CI and nightly runs.  Issue: #7472")]
         [DisplayTestMethodName]
         public void HardEventHubReceiveFailure()
         {

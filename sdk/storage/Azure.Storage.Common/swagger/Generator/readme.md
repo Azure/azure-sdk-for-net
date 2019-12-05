@@ -8,9 +8,14 @@ We support a number of extensions including using the vendor prefix `x-az-`:
 - `x-az-response-schema-name`: If we combine headers and a schema into a response type, this allows you to provide the name of the scehma property.  The default value is `Body`.
 - `x-az-create-exception`: `true` denotes that this partial type will provide an implementation of the method `Exception CreateException()` to turn an error object into something that can be thrown.  The default value is `false`.
 - `x-az-trace`: Indicates whether a parameter will be logged as part of our distributed tracing.  The default value is `false`.
+- `x-az-enum-skip-value`: The name of a default value to skip while serializing.
 - `x-az-disable-warnings`: Wraps a declaration in a `#pragma disable` when specified.
 - `x-az-skip-path-components`: Whether to skip any path components and always assume a fully formed URL to the resource (this currently must be set to `true`).
 - `x-az-include-sync-methods`: Whether to generate support for sync methods.  The default value is `false` (this flag should go away soon and always be `true`).
+- `x-az-stream`: Whether to generate a non buffered request that takes owhership of the response stream. The default value is `false`.
+- `x-az-struct`: Indicates whether a model is struct or not. The default value is `false`.
+- `x-az-nullable-array`:  Allows list to be null. The default value is `false`.
+- `x-az-internal`: x-ms-external is only allowed on definitions so this does the same for parameters, etc.
 
 ### Autorest plugin configuration
 The AutoRest example at https://github.com/Azure/autorest-extension-helloworld
@@ -43,3 +48,6 @@ scope-azure-track2-csharp-generator/emitter:
 output-artifact: azure-track2-csharp-generator-code
 
 ```
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2Fswagger%2FGenerator%2Freadme.png)

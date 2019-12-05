@@ -1,52 +1,52 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Http;
-using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
     public partial class ConfigurationClient
     {
-        const string AcceptDateTimeFormat = "R";
-        const string AcceptDatetimeHeader = "Accept-Datetime";
-        const string KvRoute = "/kv/";
-        const string RevisionsRoute = "/revisions/";
-        const string KeyQueryFilter = "key";
-        const string LabelQueryFilter = "label";
-        const string FieldsQueryFilter = "$select";
-        const string IfMatchName = "If-Match";
-        const string IfNoneMatch = "If-None-Match";
+        private const string AcceptDateTimeFormat = "R";
+        private const string AcceptDatetimeHeader = "Accept-Datetime";
+        private const string KvRoute = "/kv/";
+        private const string RevisionsRoute = "/revisions/";
+        private const string LocksRoute = "/locks/";
+        private const string KeyQueryFilter = "key";
+        private const string LabelQueryFilter = "label";
+        private const string FieldsQueryFilter = "$select";
 
-        static readonly char[] ReservedCharacters = new char[] { ',', '\\' };
+        private static readonly char[] s_reservedCharacters = new char[] { ',', '\\' };
 
-        static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
+        private static readonly HttpHeader s_mediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
             "application/vnd.microsoft.appconfig.kv+json"
         );
 
-        static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
             ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation).ConfigureAwait(false);
-            return new Response<ConfigurationSetting>(response, result);
+            return Response.FromValue(result, response);
         }
 
-        static Response<ConfigurationSetting> CreateResponse(Response response)
+        private static Response<ConfigurationSetting> CreateResponse(Response response)
         {
-            return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream));
+            return Response.FromValue(ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream), response);
         }
 
-        static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
+        private static Response<ConfigurationSetting> CreateResourceModifiedResponse(Response response)
+        {
+            return new NoBodyResponse<ConfigurationSetting>(response);
+        }
+
+        private static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)
         {
             Debug.Assert(connectionString != null); // callers check this
 
@@ -87,13 +87,25 @@ namespace Azure.Data.AppConfiguration
             };
         }
 
-        void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
+        private void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
             => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
+        private void BuildUriForKvRoute(RequestUriBuilder builder, string key, string label)
         {
-            builder.Uri = _baseUri;
-            builder.AppendPath(KvRoute);
+            builder.Reset(_endpoint);
+            builder.AppendPath(KvRoute, escape: false);
+            builder.AppendPath(key);
+
+            if (label != null)
+            {
+                builder.AppendQuery(LabelQueryFilter, label);
+            }
+        }
+
+        private void BuildUriForLocksRoute(RequestUriBuilder builder, string key, string label)
+        {
+            builder.Reset(_endpoint);
+            builder.AppendPath(LocksRoute, escape: false);
             builder.AppendPath(key);
 
             if (label != null)
@@ -105,9 +117,9 @@ namespace Azure.Data.AppConfiguration
         private static string EscapeReservedCharacters(string input)
         {
             string resp = string.Empty;
-            for (int i=0; i<input.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                if (ReservedCharacters.Contains(input[i]))
+                if (s_reservedCharacters.Contains(input[i]))
                 {
                     resp += $"\\{input[i]}";
                 }
@@ -126,7 +138,7 @@ namespace Azure.Data.AppConfiguration
                 var keysCopy = new List<string>();
                 foreach (var key in selector.Keys)
                 {
-                    if (key.IndexOfAny(ReservedCharacters) != -1)
+                    if (key.IndexOfAny(s_reservedCharacters) != -1)
                     {
                         keysCopy.Add(EscapeReservedCharacters(key));
                     }
@@ -141,54 +153,37 @@ namespace Azure.Data.AppConfiguration
 
             if (selector.Labels.Count > 0)
             {
-                var labelsCopy = new List<string>();
-                foreach (var label in selector.Labels)
-                {
-                    if (string.IsNullOrEmpty(label))
-                    {
-                        labelsCopy.Add("\0");
-                    }
-                    else
-                    {
-                        labelsCopy.Add(EscapeReservedCharacters(label));
-                    }
-                }
+                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? "\0" : EscapeReservedCharacters(label));
                 var labels = string.Join(",", labelsCopy);
                 builder.AppendQuery(LabelQueryFilter, labels);
             }
 
             if (selector.Fields != SettingFields.All)
             {
-                var filter = selector.Fields.ToString().ToLowerInvariant();
+                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
 
             if (!string.IsNullOrEmpty(pageLink))
             {
-                builder.AppendQuery("after", pageLink);
+                builder.AppendQuery("after", pageLink, escapeValue: false);
             }
         }
 
-        void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        private void BuildUriForGetBatch(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Uri = _baseUri;
-            builder.AppendPath(KvRoute);
+            builder.Reset(_endpoint);
+            builder.AppendPath(KvRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
-        void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
+        private void BuildUriForRevisions(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            builder.Uri = _baseUri;
-            builder.AppendPath(RevisionsRoute);
+            builder.Reset(_endpoint);
+            builder.AppendPath(RevisionsRoute, escape: false);
             BuildBatchQuery(builder, selector, pageLink);
         }
 
-        static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            ConfigurationServiceSerializer.Serialize(setting, writer);
-            return writer.WrittenMemory;
-        }
         #region nobody wants to see these
         /// <summary>
         /// Check if two ConfigurationSetting instances are equal.
@@ -198,7 +193,7 @@ namespace Azure.Data.AppConfiguration
         public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
-        /// Get a hash code for the ConfigurationSetting
+        /// Get a hash code for the ConfigurationSetting.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();

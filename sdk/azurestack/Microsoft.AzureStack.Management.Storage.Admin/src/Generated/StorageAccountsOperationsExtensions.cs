@@ -27,18 +27,18 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
+            /// <param name='filter'>
+            /// Filter string
             /// </param>
             /// <param name='summary'>
             /// Switch for whether summary or detailed information is returned.
             /// </param>
-            public static IPage<StorageAccount> List(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, bool summary)
+            public static IPage<StorageAccount> List(this IStorageAccountsOperations operations, string location, string filter = default(string), bool? summary = default(bool?))
             {
-                return operations.ListAsync(resourceGroupName, farmId, summary).GetAwaiter().GetResult();
+                return operations.ListAsync(location, filter, summary).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -47,11 +47,11 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
+            /// <param name='filter'>
+            /// Filter string
             /// </param>
             /// <param name='summary'>
             /// Switch for whether summary or detailed information is returned.
@@ -59,9 +59,9 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<StorageAccount>> ListAsync(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, bool summary, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<StorageAccount>> ListAsync(this IStorageAccountsOperations operations, string location, string filter = default(string), bool? summary = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, farmId, summary, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(location, filter, summary, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -73,18 +73,15 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
-            /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='accountId'>
             /// Internal storage account ID, which is not visible to tenant.
             /// </param>
-            public static StorageAccount Get(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, string accountId)
+            public static StorageAccount Get(this IStorageAccountsOperations operations, string location, string accountId)
             {
-                return operations.GetAsync(resourceGroupName, farmId, accountId).GetAwaiter().GetResult();
+                return operations.GetAsync(location, accountId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -93,11 +90,8 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
-            /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='accountId'>
             /// Internal storage account ID, which is not visible to tenant.
@@ -105,55 +99,170 @@ namespace Microsoft.AzureStack.Management.Storage.Admin
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<StorageAccount> GetAsync(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, string accountId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<StorageAccount> GetAsync(this IStorageAccountsOperations operations, string location, string accountId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, farmId, accountId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(location, accountId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Undelete a deleted storage account.
+            /// Undelete a deleted storage account with new account name if the a new name
+            /// is provided.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
-            /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='accountId'>
             /// Internal storage account ID, which is not visible to tenant.
             /// </param>
-            public static void Undelete(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, string accountId)
+            /// <param name='newAccountName'>
+            /// New storage account name when doing undelete storage account operation.
+            /// </param>
+            public static UndeleteStorageAccount Undelete(this IStorageAccountsOperations operations, string location, string accountId, string newAccountName = default(string))
             {
-                operations.UndeleteAsync(resourceGroupName, farmId, accountId).GetAwaiter().GetResult();
+                return operations.UndeleteAsync(location, accountId, newAccountName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Undelete a deleted storage account.
+            /// Undelete a deleted storage account with new account name if the a new name
+            /// is provided.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Resource group name.
-            /// </param>
-            /// <param name='farmId'>
-            /// Farm Id.
+            /// <param name='location'>
+            /// Resource location.
             /// </param>
             /// <param name='accountId'>
             /// Internal storage account ID, which is not visible to tenant.
+            /// </param>
+            /// <param name='newAccountName'>
+            /// New storage account name when doing undelete storage account operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UndeleteAsync(this IStorageAccountsOperations operations, string resourceGroupName, string farmId, string accountId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UndeleteStorageAccount> UndeleteAsync(this IStorageAccountsOperations operations, string location, string accountId, string newAccountName = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UndeleteWithHttpMessagesAsync(resourceGroupName, farmId, accountId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UndeleteWithHttpMessagesAsync(location, accountId, newAccountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Start reclaim storage capacity on deleted storage objects.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            public static void ReclaimStorageCapacity(this IStorageAccountsOperations operations, string location)
+            {
+                operations.ReclaimStorageCapacityAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start reclaim storage capacity on deleted storage objects.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ReclaimStorageCapacityAsync(this IStorageAccountsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ReclaimStorageCapacityWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Undelete a deleted storage account with new account name if the a new name
+            /// is provided.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='accountId'>
+            /// Internal storage account ID, which is not visible to tenant.
+            /// </param>
+            /// <param name='newAccountName'>
+            /// New storage account name when doing undelete storage account operation.
+            /// </param>
+            public static UndeleteStorageAccount BeginUndelete(this IStorageAccountsOperations operations, string location, string accountId, string newAccountName = default(string))
+            {
+                return operations.BeginUndeleteAsync(location, accountId, newAccountName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Undelete a deleted storage account with new account name if the a new name
+            /// is provided.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='accountId'>
+            /// Internal storage account ID, which is not visible to tenant.
+            /// </param>
+            /// <param name='newAccountName'>
+            /// New storage account name when doing undelete storage account operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<UndeleteStorageAccount> BeginUndeleteAsync(this IStorageAccountsOperations operations, string location, string accountId, string newAccountName = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUndeleteWithHttpMessagesAsync(location, accountId, newAccountName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Start reclaim storage capacity on deleted storage objects.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            public static void BeginReclaimStorageCapacity(this IStorageAccountsOperations operations, string location)
+            {
+                operations.BeginReclaimStorageCapacityAsync(location).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Start reclaim storage capacity on deleted storage objects.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='location'>
+            /// Resource location.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginReclaimStorageCapacityAsync(this IStorageAccountsOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginReclaimStorageCapacityWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

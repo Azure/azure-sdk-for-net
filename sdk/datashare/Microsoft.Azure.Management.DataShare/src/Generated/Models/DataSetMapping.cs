@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// A dataset mapping data transfer object.
+    /// A data set mapping data transfer object.
     /// </summary>
     public partial class DataSetMapping : ProxyDto
     {

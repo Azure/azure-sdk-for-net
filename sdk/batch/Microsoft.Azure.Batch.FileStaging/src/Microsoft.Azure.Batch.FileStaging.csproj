@@ -4,7 +4,7 @@
       Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
       For technical overview, see http://azure.microsoft.com/documentation/articles/batch-technical-overview/.
       API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</Description>
-    <VersionPrefix>8.3.0</VersionPrefix>
+    <Version>8.4.0-preview.1</Version>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyTitle>Microsoft.Azure.Batch.FileStaging</AssemblyTitle>

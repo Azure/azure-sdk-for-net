@@ -65,18 +65,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "storeSettings")]
         public StoreWriteSettings StoreSettings { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (StoreSettings != null)
-            {
-                StoreSettings.Validate();
-            }
-        }
     }
 }

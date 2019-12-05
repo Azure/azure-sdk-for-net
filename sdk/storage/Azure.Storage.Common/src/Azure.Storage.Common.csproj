@@ -4,10 +4,11 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
+    <Version>12.1.0</Version>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <PackageReleaseNotes>
-      For release notes and more information please visit https://aka.ms/azure-sdk-preview1-net
+      For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
     </PackageReleaseNotes>
     <Description>
       This client library enables working with the Microsoft Azure Storage services which include the blob and file services for storing binary and text data, and the queue service for storing messages that may be accessed by a client.
@@ -16,13 +17,25 @@
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
     </Description>
+    <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <!--
-    Compile in ArrayBufferWriter which is needed for our recorded tests
-    (and shared via InternalsVisibleTo with the other libraries)
-    -->
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="AzureCoreShared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Shared\*.cs" />
+    <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
+    <Compile Include="Shared\Constants.cs" />
+    <Compile Include="Shared\Errors.cs" />
+    <Compile Include="Shared\GeoRedundantReadPolicy.cs" />
+    <Compile Include="Shared\SasExtensions.cs" />
+    <Compile Include="Shared\SasQueryParametersInternals.cs" />
+    <Compile Include="Shared\SharedAccessSignatureCredentials.cs" />
+    <Compile Include="Shared\StorageExceptionExtensions.cs" />
+    <Compile Include="Shared\StorageConnectionString.cs" />
+    <Compile Include="Shared\StorageResponseClassifier.cs" />
+    <Compile Include="Shared\TaskExtensions.cs" />
+    <Compile Include="Shared\UriExtensions.cs" />
+    <Compile Include="Shared\UriQueryParamsCollection.cs" />
   </ItemGroup>
 </Project>

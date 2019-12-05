@@ -1,5 +1,41 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 14.2.0
+
+- Change the maximum limitation for share size from 100000(GiB) to 102400(GiB)
+
+### Changes in 14.1.0
+
+- Change the maximum limitation for share size from 5120(GiB) to 100000(GiB)
+- Add Sku to Blob Service Properties
+- Support Share Delete Retention Policy on File Service Properties
+
+### Changes in 14.0.0
+
+- StorageAccounts.GetProperties() will also return PrivateEndpointConnections of the Stroage account
+- Support Get/Put one PrivateEndpointConnection of a Stroage account
+- Support List PrivateLinkResources of a Stroage account
+
+**Breaking changes**
+
+- Remove parameter "skipToken" from BlobContainers.List()
+
+### Changes in 13.3.0
+
+- Support enable Files Azure Active Directory Domain Service Authentication when create or update Storage account
+- Support regenerateKey for Kerberos keys on Storage account
+- Support list Kerberos keys on Storage account
+
+### Changes in 13.2.0
+
+- Support set LargeFileSharesState as Enabled on Create or Update Storage account
+- Support list Storage Account with NextPageLink
+
+### Changes in 13.1.0
+
+- Support Create/Get/List/Delete File share
+- Support Get/Set File service properties 
+
 ### Changes in 13.0.0
 
 - Add back StorageManagementClient constructor that takes HttpClient as a parameter

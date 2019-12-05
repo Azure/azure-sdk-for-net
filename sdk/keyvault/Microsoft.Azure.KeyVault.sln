@@ -18,7 +18,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.Extensions.Tests", "Microsoft.Azure.KeyVault.Extensions\tests\Microsoft.Azure.KeyVault.Extensions.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E274A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.TestFramework", "Microsoft.Azure.KeyVault\tests\TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.TestFramework", "Microsoft.Azure.KeyVault.TestFramework\src\Microsoft.Azure.KeyVault.TestFramework.csproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.KeyVault.WebKey", "Microsoft.Azure.KeyVault.WebKey\src\Microsoft.Azure.KeyVault.WebKey.csproj", "{643372AD-2DBC-4395-95B9-61183D3F2904}"
 EndProject

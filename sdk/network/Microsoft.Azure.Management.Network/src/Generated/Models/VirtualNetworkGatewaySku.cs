@@ -31,12 +31,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="name">Gateway SKU name. Possible values include:
         /// 'Basic', 'HighPerformance', 'Standard', 'UltraPerformance',
-        /// 'VpnGw1', 'VpnGw2', 'VpnGw3', 'VpnGw1AZ', 'VpnGw2AZ', 'VpnGw3AZ',
-        /// 'ErGw1AZ', 'ErGw2AZ', 'ErGw3AZ'</param>
+        /// 'VpnGw1', 'VpnGw2', 'VpnGw3', 'VpnGw4', 'VpnGw5', 'VpnGw1AZ',
+        /// 'VpnGw2AZ', 'VpnGw3AZ', 'VpnGw4AZ', 'VpnGw5AZ', 'ErGw1AZ',
+        /// 'ErGw2AZ', 'ErGw3AZ'</param>
         /// <param name="tier">Gateway SKU tier. Possible values include:
         /// 'Basic', 'HighPerformance', 'Standard', 'UltraPerformance',
-        /// 'VpnGw1', 'VpnGw2', 'VpnGw3', 'VpnGw1AZ', 'VpnGw2AZ', 'VpnGw3AZ',
-        /// 'ErGw1AZ', 'ErGw2AZ', 'ErGw3AZ'</param>
+        /// 'VpnGw1', 'VpnGw2', 'VpnGw3', 'VpnGw4', 'VpnGw5', 'VpnGw1AZ',
+        /// 'VpnGw2AZ', 'VpnGw3AZ', 'VpnGw4AZ', 'VpnGw5AZ', 'ErGw1AZ',
+        /// 'ErGw2AZ', 'ErGw3AZ'</param>
         /// <param name="capacity">The capacity.</param>
         public VirtualNetworkGatewaySku(string name = default(string), string tier = default(string), int? capacity = default(int?))
         {
@@ -54,8 +56,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets gateway SKU name. Possible values include: 'Basic',
         /// 'HighPerformance', 'Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2', 'VpnGw3', 'VpnGw1AZ', 'VpnGw2AZ', 'VpnGw3AZ', 'ErGw1AZ',
-        /// 'ErGw2AZ', 'ErGw3AZ'
+        /// 'VpnGw2', 'VpnGw3', 'VpnGw4', 'VpnGw5', 'VpnGw1AZ', 'VpnGw2AZ',
+        /// 'VpnGw3AZ', 'VpnGw4AZ', 'VpnGw5AZ', 'ErGw1AZ', 'ErGw2AZ', 'ErGw3AZ'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -63,17 +65,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets gateway SKU tier. Possible values include: 'Basic',
         /// 'HighPerformance', 'Standard', 'UltraPerformance', 'VpnGw1',
-        /// 'VpnGw2', 'VpnGw3', 'VpnGw1AZ', 'VpnGw2AZ', 'VpnGw3AZ', 'ErGw1AZ',
-        /// 'ErGw2AZ', 'ErGw3AZ'
+        /// 'VpnGw2', 'VpnGw3', 'VpnGw4', 'VpnGw5', 'VpnGw1AZ', 'VpnGw2AZ',
+        /// 'VpnGw3AZ', 'VpnGw4AZ', 'VpnGw5AZ', 'ErGw1AZ', 'ErGw2AZ', 'ErGw3AZ'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the capacity.
+        /// Gets the capacity.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
-        public int? Capacity { get; set; }
+        public int? Capacity { get; private set; }
 
     }
 }

@@ -48,9 +48,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// pipeline.</param>
         /// <param name="annotations">List of tags that can be used for
         /// describing the Pipeline.</param>
+        /// <param name="runDimensions">Dimensions emitted by Pipeline.</param>
         /// <param name="folder">The folder that this Pipeline is in. If not
         /// specified, Pipeline will appear at the root level.</param>
-        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IDictionary<string, VariableSpecification> variables = default(IDictionary<string, VariableSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>), PipelineFolder folder = default(PipelineFolder))
+        public PipelineResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<Activity> activities = default(IList<Activity>), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IDictionary<string, VariableSpecification> variables = default(IDictionary<string, VariableSpecification>), int? concurrency = default(int?), IList<object> annotations = default(IList<object>), IDictionary<string, object> runDimensions = default(IDictionary<string, object>), PipelineFolder folder = default(PipelineFolder))
             : base(id, name, type, etag)
         {
             AdditionalProperties = additionalProperties;
@@ -60,6 +61,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             Variables = variables;
             Concurrency = concurrency;
             Annotations = annotations;
+            RunDimensions = runDimensions;
             Folder = folder;
             CustomInit();
         }
@@ -112,6 +114,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.annotations")]
         public IList<object> Annotations { get; set; }
+
+        /// <summary>
+        /// Gets or sets dimensions emitted by Pipeline.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.runDimensions")]
+        public IDictionary<string, object> RunDimensions { get; set; }
 
         /// <summary>
         /// Gets or sets the folder that this Pipeline is in. If not specified,

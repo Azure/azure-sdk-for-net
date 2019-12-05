@@ -47,18 +47,26 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.</param>
         /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
         /// server port (6379) is enabled.</param>
+        /// <param name="replicasPerMaster">The number of replicas to be
+        /// created per master.</param>
         /// <param name="tenantSettings">A dictionary of tenant
         /// settings</param>
         /// <param name="shardCount">The number of shards to be created on a
         /// Premium Cluster Cache.</param>
+        /// <param name="minimumTlsVersion">Optional: requires clients to use a
+        /// specified TLS version (or higher) to connect (e,g, '1.0', '1.1',
+        /// '1.2'). Possible values include: '1.0', '1.1', '1.2'</param>
         /// <param name="subnetId">The full resource ID of a subnet in a
         /// virtual network to deploy the Redis cache in. Example format:
-        /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
         /// <param name="staticIP">Static IP address. Required when deploying a
         /// Redis cache inside an existing Azure Virtual Network.</param>
         /// <param name="redisVersion">Redis version.</param>
-        /// <param name="provisioningState">Redis instance provisioning
-        /// status.</param>
+        /// <param name="provisioningState">Redis instance provisioning status.
+        /// Possible values include: 'Creating', 'Deleting', 'Disabled',
+        /// 'Failed', 'Linking', 'Provisioning', 'RecoveringScaleFailure',
+        /// 'Scaling', 'Succeeded', 'Unlinking', 'Unprovisioning',
+        /// 'Updating'</param>
         /// <param name="hostName">Redis host name.</param>
         /// <param name="port">Redis non-SSL port.</param>
         /// <param name="sslPort">Redis SSL port.</param>
@@ -67,15 +75,19 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// cache</param>
         /// <param name="linkedServers">List of the linked servers associated
         /// with the cache</param>
+        /// <param name="instances">List of the Redis instances associated with
+        /// the cache</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
-        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string), string redisVersion = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), RedisAccessKeys accessKeys = default(RedisAccessKeys), IList<RedisLinkedServer> linkedServers = default(IList<RedisLinkedServer>), IList<string> zones = default(IList<string>))
+        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string subnetId = default(string), string staticIP = default(string), string redisVersion = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), RedisAccessKeys accessKeys = default(RedisAccessKeys), IList<RedisLinkedServer> linkedServers = default(IList<RedisLinkedServer>), IList<RedisInstanceDetails> instances = default(IList<RedisInstanceDetails>), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             RedisConfiguration = redisConfiguration;
             EnableNonSslPort = enableNonSslPort;
+            ReplicasPerMaster = replicasPerMaster;
             TenantSettings = tenantSettings;
             ShardCount = shardCount;
+            MinimumTlsVersion = minimumTlsVersion;
             Sku = sku;
             SubnetId = subnetId;
             StaticIP = staticIP;
@@ -86,6 +98,7 @@ namespace Microsoft.Azure.Management.Redis.Models
             SslPort = sslPort;
             AccessKeys = accessKeys;
             LinkedServers = linkedServers;
+            Instances = instances;
             Zones = zones;
             CustomInit();
         }
@@ -111,6 +124,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         public bool? EnableNonSslPort { get; set; }
 
         /// <summary>
+        /// Gets or sets the number of replicas to be created per master.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicasPerMaster")]
+        public int? ReplicasPerMaster { get; set; }
+
+        /// <summary>
         /// Gets or sets a dictionary of tenant settings
         /// </summary>
         [JsonProperty(PropertyName = "properties.tenantSettings")]
@@ -124,6 +143,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         public int? ShardCount { get; set; }
 
         /// <summary>
+        /// Gets or sets optional: requires clients to use a specified TLS
+        /// version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). Possible
+        /// values include: '1.0', '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
+
+        /// <summary>
         /// Gets or sets the SKU of the Redis cache to deploy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
@@ -132,7 +159,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Gets or sets the full resource ID of a subnet in a virtual network
         /// to deploy the Redis cache in. Example format:
-        /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnetId")]
         public string SubnetId { get; set; }
@@ -151,7 +178,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         public string RedisVersion { get; private set; }
 
         /// <summary>
-        /// Gets redis instance provisioning status.
+        /// Gets redis instance provisioning status. Possible values include:
+        /// 'Creating', 'Deleting', 'Disabled', 'Failed', 'Linking',
+        /// 'Provisioning', 'RecoveringScaleFailure', 'Scaling', 'Succeeded',
+        /// 'Unlinking', 'Unprovisioning', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -186,6 +216,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.linkedServers")]
         public IList<RedisLinkedServer> LinkedServers { get; private set; }
+
+        /// <summary>
+        /// Gets list of the Redis instances associated with the cache
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.instances")]
+        public IList<RedisInstanceDetails> Instances { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting where the

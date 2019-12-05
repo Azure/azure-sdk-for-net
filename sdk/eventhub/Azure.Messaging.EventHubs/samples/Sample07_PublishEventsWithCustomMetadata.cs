@@ -18,13 +18,13 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample07_PublishEventsWithCustomMetadata);
+        public string Name => nameof(Sample07_PublishEventsWithCustomMetadata);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An example of publishing events, extending the event data with custom metadata.";
+        public string Description => "An example of publishing events, extending the event data with custom metadata.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
@@ -36,10 +36,9 @@ namespace Azure.Messaging.EventHubs.Samples
         public async Task RunAsync(string connectionString,
                                    string eventHubName)
         {
-            // We will start by creating a client and a producer, each using their default set of options.
+            // We will start by creating a producer client, using its default options.
 
-            await using (var client = new EventHubClient(connectionString, eventHubName))
-            await using (EventHubProducer producer = client.CreateProducer())
+            await using (var producerClient = new EventHubProducerClient(connectionString, eventHubName))
             {
                 // Because an event consists mainly of an opaque set of bytes, it may be difficult for consumers of those events to
                 // make informed decisions about how to process them.
@@ -65,12 +64,16 @@ namespace Azure.Messaging.EventHubs.Samples
                 secondEvent.Properties.Add("priority", "17");
                 secondEvent.Properties.Add("blob", true);
 
-                await producer.SendAsync(new[] { firstEvent, secondEvent });
+                using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                eventBatch.TryAdd(firstEvent);
+                eventBatch.TryAdd(secondEvent);
+
+                await producerClient.SendAsync(eventBatch);
 
                 Console.WriteLine("The event batch has been published.");
             }
 
-            // At this point, our client and producer have passed their "using" scope and have safely been disposed of.  We
+            // At this point, our client has passed its "using" scope and has safely been disposed of.  We
             // have no further obligations.
 
             Console.WriteLine();

@@ -102,7 +102,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             int retries = 0;
             while (!this.Processor.IsOpened && !this.HasShutDown && (retries < maxRetries))
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
                 retries++;
             }
             Assert.False(this.HasShutDown, "Shut down before open");

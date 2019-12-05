@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [EnumMember(Value = "Country")]
         Country,
         /// <summary>
-        /// SKU is not available to push data to the requested storage account
-        /// region.
+        /// SKU is not available to push data to the requested Azure region.
         /// </summary>
         [EnumMember(Value = "Region")]
         Region,
@@ -46,7 +45,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Subscription does not have required offer types for the SKU.
         /// </summary>
         [EnumMember(Value = "OfferType")]
-        OfferType
+        OfferType,
+        /// <summary>
+        /// Subscription has not registered to Microsoft.DataBox and Service
+        /// does not have the subscription notification.
+        /// </summary>
+        [EnumMember(Value = "NoSubscriptionInfo")]
+        NoSubscriptionInfo
     }
     internal static class SkuDisabledReasonEnumExtension
     {
@@ -69,6 +74,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return "Feature";
                 case SkuDisabledReason.OfferType:
                     return "OfferType";
+                case SkuDisabledReason.NoSubscriptionInfo:
+                    return "NoSubscriptionInfo";
             }
             return null;
         }
@@ -87,6 +94,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
                     return SkuDisabledReason.Feature;
                 case "OfferType":
                     return SkuDisabledReason.OfferType;
+                case "NoSubscriptionInfo":
+                    return SkuDisabledReason.NoSubscriptionInfo;
             }
             return null;
         }

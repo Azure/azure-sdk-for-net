@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Tells the indexer to assume that all blobs contain JSON, which it will then parse such that each blob's JSON will map to a single
-        /// document in the Azure Search index.
+        /// document in the search index.
         /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs/" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Tells the indexer to assume that all blobs contain new-line separated JSON, which it will then parse such that individual JSON entities in each blob
-        /// will map to a single document in the Azure Search index.
+        /// will map to a single document in the search index.
         /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs/" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Tells the indexer to assume that all blobs contain JSON arrays, which it will then parse such that each JSON object in each array will
-        /// map to a single document in the Azure Search index.
+        /// map to a single document in the search index.
         /// See <see href="https://docs.microsoft.com/azure/search/search-howto-index-json-blobs" /> for details.
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="parameters">IndexingParameters to configure.</param>
         /// <param name="headers">
-        /// Specifies column headers that the indexer will use to map values to specific fields in the Azure Search index. If you don't specify any
+        /// Specifies column headers that the indexer will use to map values to specific fields in the search index. If you don't specify any
         /// headers, the indexer assumes that the first non-blank line of each blob contains comma-separated headers.
         /// </param>
         /// <remarks>

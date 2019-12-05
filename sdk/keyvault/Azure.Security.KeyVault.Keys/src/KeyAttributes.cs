@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
 using System.Text.Json;
@@ -9,51 +8,30 @@ namespace Azure.Security.KeyVault.Keys
 {
     internal struct KeyAttributes
     {
-        /// <summary>
-        /// Specifies whether the key is enabled and useable for cryptographic operations.
-        /// </summary>
-        public bool? Enabled { get; set; }
-
-        /// <summary>
-        /// Identifies the time (in UTC) before which the key must not be used for cryptographic operations.
-        /// </summary>
-        public System.DateTimeOffset? NotBefore { get; set; }
-
-        /// <summary>
-        /// Identifies the expiration time (in UTC) on or after which the key must not be used.
-        /// </summary>
-        public System.DateTimeOffset? Expires { get; set; }
-
-        /// <summary>
-        /// Gets creation time in UTC.
-        /// </summary>
-        public System.DateTimeOffset? Created { get; private set; }
-
-        /// <summary>
-        /// Gets last updated time in UTC.
-        /// </summary>
-        public System.DateTimeOffset? Updated { get; private set; }
-
-        /// <summary>
-        /// Gets reflects the deletion recovery level currently in effect for
-        /// secrets in the current vault. If it contains 'Purgeable', the
-        /// secret can be permanently deleted by a privileged user; otherwise,
-        /// only the system can purge the secret, at the end of the retention
-        /// interval. Possible values include: 'Purgeable',
-        /// 'Recoverable+Purgeable', 'Recoverable',
-        /// 'Recoverable+ProtectedSubscription'
-        /// </summary>
-        public string RecoveryLevel { get; private set; }
-
         private const string EnabledPropertyName = "enabled";
-        private static readonly JsonEncodedText EnabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
         private const string NotBeforePropertyName = "nbf";
-        private static readonly JsonEncodedText NotBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
         private const string ExpiresPropertyName = "exp";
-        private static readonly JsonEncodedText ExpiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
         private const string RecoveryLevelPropertyName = "recoveryLevel";
+
+        private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+        private static readonly JsonEncodedText s_notBeforePropertyNameBytes = JsonEncodedText.Encode(NotBeforePropertyName);
+        private static readonly JsonEncodedText s_expiresPropertyNameBytes = JsonEncodedText.Encode(ExpiresPropertyName);
+
+        public bool? Enabled { get; set; }
+
+        public DateTimeOffset? NotBefore { get; set; }
+
+        public DateTimeOffset? ExpiresOn { get; set; }
+
+        public DateTimeOffset? CreatedOn { get; internal set; }
+
+        public DateTimeOffset? UpdatedOn { get; internal set; }
+
+        public string RecoveryLevel { get; internal set; }
+
+        internal bool ShouldSerialize => Enabled.HasValue && NotBefore.HasValue && ExpiresOn.HasValue;
 
         internal void ReadProperties(JsonElement json)
         {
@@ -65,16 +43,16 @@ namespace Azure.Security.KeyVault.Keys
                         Enabled = prop.Value.GetBoolean();
                         break;
                     case NotBeforePropertyName:
-                        NotBefore = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        NotBefore = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case ExpiresPropertyName:
-                        Expires = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        ExpiresOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case CreatedPropertyName:
-                        Created = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        CreatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case UpdatedPropertyName:
-                        Updated = DateTimeOffset.FromUnixTimeMilliseconds(prop.Value.GetInt64());
+                        UpdatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                         break;
                     case RecoveryLevelPropertyName:
                         RecoveryLevel = prop.Value.GetString();
@@ -83,21 +61,21 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal void WriteProperties(ref Utf8JsonWriter json)
+        internal void WriteProperties(Utf8JsonWriter json)
         {
             if (Enabled.HasValue)
             {
-                json.WriteBoolean(EnabledPropertyNameBytes, Enabled.Value);
+                json.WriteBoolean(s_enabledPropertyNameBytes, Enabled.Value);
             }
 
             if (NotBefore.HasValue)
             {
-                json.WriteNumber(NotBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(s_notBeforePropertyNameBytes, NotBefore.Value.ToUnixTimeSeconds());
             }
 
-            if (Expires.HasValue)
+            if (ExpiresOn.HasValue)
             {
-                json.WriteNumber(ExpiresPropertyNameBytes, Expires.Value.ToUnixTimeMilliseconds());
+                json.WriteNumber(s_expiresPropertyNameBytes, ExpiresOn.Value.ToUnixTimeSeconds());
             }
 
             // Created is read-only don't serialize

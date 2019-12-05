@@ -15,7 +15,7 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "Existing Entity Test"
                 });
@@ -34,7 +34,7 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "New Entity Test"
                 });
@@ -54,7 +54,7 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "New Entity Test"
                 });
@@ -70,35 +70,11 @@
         }
 
         [Fact]
-        public void UpdateEntity()
-        {
-            UseClientFor(async client =>
-            {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
-                {
-                    Name = "Rename Entity Test"
-                });
-
-                await client.Model.UpdateEntityAsync(GlobalAppId, versionId, entityId, new ModelUpdateObject
-                {
-                    Name = "Entity Test Renamed"
-                });
-
-                var result = await client.Model.GetEntityAsync(GlobalAppId, versionId, entityId);
-
-                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
-
-                Assert.NotNull(result);
-                Assert.Equal("Entity Test Renamed", result.Name);
-            });
-        }
-
-        [Fact]
         public void DeleteEntity()
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "Delete Entity Test"
                 });
@@ -116,7 +92,7 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, versionId, new EntityModelCreateObject
                 {
                     Name = "Suggestions Entity Test"
                 });

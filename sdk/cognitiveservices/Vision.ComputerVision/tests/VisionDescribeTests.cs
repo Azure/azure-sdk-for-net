@@ -10,7 +10,7 @@ namespace ComputerVisionSDK.Tests
 {
     public class VisionDescribeTests : BaseTests
     {
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void DescribeImageInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -57,7 +57,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void DescribeImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

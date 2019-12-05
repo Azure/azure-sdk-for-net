@@ -39,10 +39,24 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// the destination of an event subscription.</param>
         /// <param name="endpointBaseUrl">The base URL that represents the
         /// endpoint of the destination of an event subscription.</param>
-        public WebHookEventSubscriptionDestination(string endpointUrl = default(string), string endpointBaseUrl = default(string))
+        /// <param name="maxEventsPerBatch">Maximum number of events per
+        /// batch.</param>
+        /// <param name="preferredBatchSizeInKilobytes">Preferred batch size in
+        /// Kilobytes.</param>
+        /// <param name="azureActiveDirectoryTenantId">The Azure Active
+        /// Directory Tenant ID to get the access token that will be included
+        /// as the bearer token in delivery requests.</param>
+        /// <param name="azureActiveDirectoryApplicationIdOrUri">The Azure
+        /// Active Directory Application ID or URI to get the access token that
+        /// will be included as the bearer token in delivery requests.</param>
+        public WebHookEventSubscriptionDestination(string endpointUrl = default(string), string endpointBaseUrl = default(string), int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?), string azureActiveDirectoryTenantId = default(string), string azureActiveDirectoryApplicationIdOrUri = default(string))
         {
             EndpointUrl = endpointUrl;
             EndpointBaseUrl = endpointBaseUrl;
+            MaxEventsPerBatch = maxEventsPerBatch;
+            PreferredBatchSizeInKilobytes = preferredBatchSizeInKilobytes;
+            AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
+            AzureActiveDirectoryApplicationIdOrUri = azureActiveDirectoryApplicationIdOrUri;
             CustomInit();
         }
 
@@ -64,6 +78,34 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpointBaseUrl")]
         public string EndpointBaseUrl { get; private set; }
+
+        /// <summary>
+        /// Gets or sets maximum number of events per batch.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maxEventsPerBatch")]
+        public int? MaxEventsPerBatch { get; set; }
+
+        /// <summary>
+        /// Gets or sets preferred batch size in Kilobytes.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.preferredBatchSizeInKilobytes")]
+        public int? PreferredBatchSizeInKilobytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory Tenant ID to get the access
+        /// token that will be included as the bearer token in delivery
+        /// requests.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureActiveDirectoryTenantId")]
+        public string AzureActiveDirectoryTenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Active Directory Application ID or URI to
+        /// get the access token that will be included as the bearer token in
+        /// delivery requests.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.azureActiveDirectoryApplicationIdOrUri")]
+        public string AzureActiveDirectoryApplicationIdOrUri { get; set; }
 
     }
 }

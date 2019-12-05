@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
-        /// <param name="outputs">The output of a skill is either a field in an
-        /// Azure Search index, or a value that can be consumed as an input by
+        /// <param name="outputs">The output of a skill is either a field in a
+        /// search index, or a value that can be consumed as an input by
         /// another skill.</param>
         /// <param name="name">The name of the skill which uniquely identifies
         /// it within the skillset. A skill with no name defined will be given
@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Search.Models
         public IList<InputFieldMappingEntry> Inputs { get; set; }
 
         /// <summary>
-        /// Gets or sets the output of a skill is either a field in an Azure
-        /// Search index, or a value that can be consumed as an input by
-        /// another skill.
+        /// Gets or sets the output of a skill is either a field in a search
+        /// index, or a value that can be consumed as an input by another
+        /// skill.
         /// </summary>
         [JsonProperty(PropertyName = "outputs")]
         public IList<OutputFieldMappingEntry> Outputs { get; set; }

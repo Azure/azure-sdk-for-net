@@ -1,36 +1,35 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for
-// license information.
+// Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about an dencryption operation
+    /// Represents information about a decrypt operation.
     /// </summary>
     public class DecryptResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string PlaintextPropertyName = "value";
 
-        /// <summary>
-        /// The <see cref="KeyBase.Id"/> of the <see cref="Key"/> used to decrypt
-        /// </summary>
-        public string KeyId { get; private set; }
+        internal DecryptResult()
+        {
+        }
 
         /// <summary>
-        /// The decrypted data
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to decrypt.
         /// </summary>
-        public byte[] Plaintext { get; private set; }
+        public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The algorithm used for the decryption
+        /// Gets the decrypted data.
+        /// </summary>
+        public byte[] Plaintext { get; internal set; }
+
+        /// <summary>
+        /// Gets the <see cref="EncryptionAlgorithm"/> used for the decryption.
         /// </summary>
         public EncryptionAlgorithm Algorithm { get; internal set; }
 

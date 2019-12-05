@@ -195,7 +195,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     };
 
                     partitionReceiver.SetReceiveHandler(handler, true);
-                    await tcs.Task.WithTimeout(TimeSpan.FromSeconds(120));
+                    await tcs.Task.WithTimeout(TimeSpan.FromSeconds(240));
                 }
                 finally
                 {

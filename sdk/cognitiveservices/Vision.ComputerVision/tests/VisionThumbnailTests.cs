@@ -11,7 +11,7 @@ namespace ComputerVisionSDK.Tests
     {
         const int EOF = -1;
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void ThumbnailImageInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -38,7 +38,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void ThumbnailImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -63,7 +63,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void ThumbnailInvalidSizeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
