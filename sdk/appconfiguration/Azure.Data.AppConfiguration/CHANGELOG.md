@@ -2,7 +2,7 @@
 
 ## 1.0.0-preview.6
 
-- Bugfixes
+- Bugfixes: [#8920](https://github.com/Azure/azure-sdk-for-net/issues/8920)
 
 ## 1.0.0-preview.5
 
