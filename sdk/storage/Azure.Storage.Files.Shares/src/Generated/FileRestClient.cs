@@ -4195,10 +4195,7 @@ namespace Azure.Storage.Files.Shares
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-07-07");
-<<<<<<< HEAD
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
-=======
->>>>>>> feature/storage/stg71-base
 
                 return _message;
             }
@@ -4918,13 +4915,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-<<<<<<< HEAD
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileLease>> AcquireLeaseAsync(
-=======
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileAcquireLeaseResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileAcquireLeaseResult>> AcquireLeaseAsync(
->>>>>>> feature/storage/stg71-base
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5024,13 +5016,8 @@ namespace Azure.Storage.Files.Shares
             /// Create the File.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-<<<<<<< HEAD
             /// <returns>The File.AcquireLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> AcquireLeaseAsync_CreateResponse(
-=======
-            /// <returns>The File.AcquireLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileAcquireLeaseResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileAcquireLeaseResult> AcquireLeaseAsync_CreateResponse(
->>>>>>> feature/storage/stg71-base
                 Azure.Response response)
             {
                 // Process the response
@@ -5039,11 +5026,7 @@ namespace Azure.Storage.Files.Shares
                     case 201:
                     {
                         // Create the result
-<<<<<<< HEAD
                         Azure.Storage.Files.Shares.Models.FileLease _value = new Azure.Storage.Files.Shares.Models.FileLease();
-=======
-                        Azure.Storage.Files.Shares.Models.FileAcquireLeaseResult _value = new Azure.Storage.Files.Shares.Models.FileAcquireLeaseResult();
->>>>>>> feature/storage/stg71-base
 
                         // Get response headers
                         string _header;
@@ -5056,17 +5039,8 @@ namespace Azure.Storage.Files.Shares
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
-<<<<<<< HEAD
                         {
                             _value.LeaseId = _header;
-=======
-                        {
-                            _value.LeaseId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
-                        {
-                            _value.ClientRequestId = _header;
->>>>>>> feature/storage/stg71-base
                         }
 
                         // Create the response
@@ -5097,13 +5071,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-<<<<<<< HEAD
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo>> ReleaseLeaseAsync(
-=======
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileReleaseLeaseResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileReleaseLeaseResult>> ReleaseLeaseAsync(
->>>>>>> feature/storage/stg71-base
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5202,13 +5171,8 @@ namespace Azure.Storage.Files.Shares
             /// Create the File.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-<<<<<<< HEAD
             /// <returns>The File.ReleaseLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo> ReleaseLeaseAsync_CreateResponse(
-=======
-            /// <returns>The File.ReleaseLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileReleaseLeaseResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileReleaseLeaseResult> ReleaseLeaseAsync_CreateResponse(
->>>>>>> feature/storage/stg71-base
                 Azure.Response response)
             {
                 // Process the response
@@ -5217,11 +5181,7 @@ namespace Azure.Storage.Files.Shares
                     case 200:
                     {
                         // Create the result
-<<<<<<< HEAD
                         Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo _value = new Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo();
-=======
-                        Azure.Storage.Files.Shares.Models.FileReleaseLeaseResult _value = new Azure.Storage.Files.Shares.Models.FileReleaseLeaseResult();
->>>>>>> feature/storage/stg71-base
 
                         // Get response headers
                         string _header;
@@ -5233,13 +5193,6 @@ namespace Azure.Storage.Files.Shares
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-<<<<<<< HEAD
-=======
-                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
-                        {
-                            _value.ClientRequestId = _header;
-                        }
->>>>>>> feature/storage/stg71-base
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -5270,13 +5223,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-<<<<<<< HEAD
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileLease>> ChangeLeaseAsync(
-=======
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileChangeLeaseResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileChangeLeaseResult>> ChangeLeaseAsync(
->>>>>>> feature/storage/stg71-base
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5380,13 +5328,8 @@ namespace Azure.Storage.Files.Shares
             /// Create the File.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
             /// <param name="response">The raw Response.</param>
-<<<<<<< HEAD
             /// <returns>The File.ChangeLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> ChangeLeaseAsync_CreateResponse(
-=======
-            /// <returns>The File.ChangeLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileChangeLeaseResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileChangeLeaseResult> ChangeLeaseAsync_CreateResponse(
->>>>>>> feature/storage/stg71-base
                 Azure.Response response)
             {
                 // Process the response
@@ -5395,17 +5338,11 @@ namespace Azure.Storage.Files.Shares
                     case 200:
                     {
                         // Create the result
-<<<<<<< HEAD
                         Azure.Storage.Files.Shares.Models.FileLease _value = new Azure.Storage.Files.Shares.Models.FileLease();
-=======
-                        Azure.Storage.Files.Shares.Models.FileChangeLeaseResult _value = new Azure.Storage.Files.Shares.Models.FileChangeLeaseResult();
->>>>>>> feature/storage/stg71-base
 
                         // Get response headers
                         string _header;
                         if (response.Headers.TryGetValue("ETag", out _header))
-<<<<<<< HEAD
-=======
                         {
                             _value.ETag = new Azure.ETag(_header);
                         }
@@ -5414,23 +5351,8 @@ namespace Azure.Storage.Files.Shares
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
                         if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
->>>>>>> feature/storage/stg71-base
                         {
                             _value.LeaseId = _header;
-                        }
-<<<<<<< HEAD
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
-                        {
-                            _value.LeaseId = _header;
-=======
-                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
-                        {
-                            _value.ClientRequestId = _header;
->>>>>>> feature/storage/stg71-base
                         }
 
                         // Create the response
@@ -5461,13 +5383,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-<<<<<<< HEAD
             /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.BrokenLease}</returns>
             public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.BrokenLease>> BreakLeaseAsync(
-=======
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileBreakLeaseResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileBreakLeaseResult>> BreakLeaseAsync(
->>>>>>> feature/storage/stg71-base
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5558,7 +5475,6 @@ namespace Azure.Storage.Files.Shares
                 _request.Headers.SetValue("x-ms-lease-id", leaseId);
                 _request.Headers.SetValue("x-ms-version", "2019-07-07");
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
-<<<<<<< HEAD
 
                 return _message;
             }
@@ -6328,780 +6244,6 @@ namespace Azure.Storage.Files.Shares
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
-=======
->>>>>>> feature/storage/stg71-base
-
-                return _message;
-            }
-
-            /// <summary>
-            /// Create the File.BreakLeaseAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The File.BreakLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileBreakLeaseResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileBreakLeaseResult> BreakLeaseAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 202:
-                    {
-                        // Create the result
-                        Azure.Storage.Files.Shares.Models.FileBreakLeaseResult _value = new Azure.Storage.Files.Shares.Models.FileBreakLeaseResult();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-lease-id", out _header))
-                        {
-                            _value.LeaseId = _header;
-                        }
-                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
-                        {
-                            _value.ClientRequestId = _header;
-                        }
-
-                        // Create the response
-                        return Response.FromValue(_value, response);
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion File.BreakLeaseAsync
-
-            #region File.UploadRangeAsync
-            /// <summary>
-            /// Upload a range of bytes to a file.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="range">Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file's full size. The File service accepts only a single byte range for the Range and 'x-ms-range' headers, and the byte range must be specified in the following format: bytes=startByte-endByte.</param>
-            /// <param name="fileRangeWrite">Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size.</param>
-            /// <param name="contentLength">Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.</param>
-            /// <param name="optionalbody">Initial data.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-<<<<<<< HEAD
-=======
-            /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
->>>>>>> feature/storage/stg71-base
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
-            /// <param name="operationName">Operation name.</param>
-            /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileUploadInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo>> UploadRangeAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-<<<<<<< HEAD
-=======
-                string range,
-                Azure.Storage.Files.Shares.Models.ShareFileRangeWriteType fileRangeWrite,
-                long contentLength,
-                System.IO.Stream optionalbody = default,
-                int? timeout = default,
-                byte[] contentHash = default,
-                string leaseId = default,
-                bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.UploadRange",
-                System.Threading.CancellationToken cancellationToken = default)
-            {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
-                try
-                {
-                    _scope.AddAttribute("url", resourceUri);
-                    _scope.Start();
-                    using (Azure.Core.HttpMessage _message = UploadRangeAsync_CreateMessage(
-                        pipeline,
-                        resourceUri,
-                        range,
-                        fileRangeWrite,
-                        contentLength,
-                        optionalbody,
-                        timeout,
-                        contentHash,
-                        leaseId))
-                    {
-                        if (async)
-                        {
-                            // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            // Send the request synchronously through the API that blocks if we're being called via a sync path
-                            // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.Send(_message, cancellationToken);
-                        }
-                        Azure.Response _response = _message.Response;
-                        cancellationToken.ThrowIfCancellationRequested();
-                        return UploadRangeAsync_CreateResponse(_response);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    _scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    _scope.Dispose();
-                }
-            }
-
-            /// <summary>
-            /// Create the File.UploadRangeAsync request.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="range">Specifies the range of bytes to be written. Both the start and end of the range must be specified. For an update operation, the range can be up to 4 MB in size. For a clear operation, the range can be up to the value of the file's full size. The File service accepts only a single byte range for the Range and 'x-ms-range' headers, and the byte range must be specified in the following format: bytes=startByte-endByte.</param>
-            /// <param name="fileRangeWrite">Specify one of the following options: - Update: Writes the bytes specified by the request body into the specified range. The Range and Content-Length headers must match to perform the update. - Clear: Clears the specified range and releases the space used in storage for that range. To clear a range, set the Content-Length header to zero, and set the Range header to a value that indicates the range to clear, up to maximum file size.</param>
-            /// <param name="contentLength">Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.</param>
-            /// <param name="optionalbody">Initial data.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="contentHash">An MD5 hash of the content. This hash is used to verify the integrity of the data during transport. When the Content-MD5 header is specified, the File service compares the hash of the content that has arrived with the header value that was sent. If the two hashes do not match, the operation will fail with error code 400 (Bad Request).</param>
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <returns>The File.UploadRangeAsync Message.</returns>
-            internal static Azure.Core.HttpMessage UploadRangeAsync_CreateMessage(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                string range,
-                Azure.Storage.Files.Shares.Models.ShareFileRangeWriteType fileRangeWrite,
-                long contentLength,
-                System.IO.Stream optionalbody = default,
-                int? timeout = default,
-                byte[] contentHash = default,
-                string leaseId = default)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-                if (range == null)
-                {
-                    throw new System.ArgumentNullException(nameof(range));
-                }
-
-                // Create the request
-                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
-                Azure.Core.Request _request = _message.Request;
-
-                // Set the endpoint
-                _request.Method = Azure.Core.RequestMethod.Put;
-                _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "range", escapeValue: false);
-                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-range", range);
-                _request.Headers.SetValue("x-ms-write", Azure.Storage.Files.Shares.FileRestClient.Serialization.ToString(fileRangeWrite));
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Headers.SetValue("x-ms-version", "2019-07-07");
-                if (contentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(contentHash)); }
-                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
-
-                // Create the body
-                _request.Content = Azure.Core.RequestContent.Create(optionalbody);
-
-                return _message;
-            }
-
-            /// <summary>
-            /// Create the File.UploadRangeAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The File.UploadRangeAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileUploadInfo}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> UploadRangeAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 201:
-                    {
-                        // Create the result
-                        Azure.Storage.Files.Shares.Models.ShareFileUploadInfo _value = new Azure.Storage.Files.Shares.Models.ShareFileUploadInfo();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("Content-MD5", out _header))
-                        {
-                            _value.ContentHash = System.Convert.FromBase64String(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
-                        {
-                            _value.IsServerEncrypted = bool.Parse(_header);
-                        }
-
-                        // Create the response
-                        return Response.FromValue(_value, response);
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion File.UploadRangeAsync
-
-            #region File.UploadRangeFromURLAsync
-            /// <summary>
-            /// Upload a range of bytes to a file where the contents are read from a URL.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="range">Writes data to the specified byte range in the file.</param>
-            /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
-            /// <param name="contentLength">Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="sourceRange">Bytes of source data in the specified range.</param>
-            /// <param name="sourceContentCrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
-            /// <param name="sourceIfMatchCrc64">Specify the crc64 value to operate only on range with a matching crc64 checksum.</param>
-            /// <param name="sourceIfNoneMatchCrc64">Specify the crc64 value to operate only on range without a matching crc64 checksum.</param>
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
-            /// <param name="operationName">Operation name.</param>
-            /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult>> UploadRangeFromURLAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                string range,
-                System.Uri copySource,
-                long contentLength,
-                int? timeout = default,
-                string sourceRange = default,
-                byte[] sourceContentCrc64 = default,
-                byte[] sourceIfMatchCrc64 = default,
-                byte[] sourceIfNoneMatchCrc64 = default,
-                string leaseId = default,
-                bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.UploadRangeFromURL",
-                System.Threading.CancellationToken cancellationToken = default)
-            {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
-                try
-                {
-                    _scope.AddAttribute("url", resourceUri);
-                    _scope.Start();
-                    using (Azure.Core.HttpMessage _message = UploadRangeFromURLAsync_CreateMessage(
-                        pipeline,
-                        resourceUri,
-                        range,
-                        copySource,
-                        contentLength,
-                        timeout,
-                        sourceRange,
-                        sourceContentCrc64,
-                        sourceIfMatchCrc64,
-                        sourceIfNoneMatchCrc64,
-                        leaseId))
-                    {
-                        if (async)
-                        {
-                            // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            // Send the request synchronously through the API that blocks if we're being called via a sync path
-                            // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.Send(_message, cancellationToken);
-                        }
-                        Azure.Response _response = _message.Response;
-                        cancellationToken.ThrowIfCancellationRequested();
-                        return UploadRangeFromURLAsync_CreateResponse(_response);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    _scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    _scope.Dispose();
-                }
-            }
-
-            /// <summary>
-            /// Create the File.UploadRangeFromURLAsync request.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="range">Writes data to the specified byte range in the file.</param>
-            /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
-            /// <param name="contentLength">Specifies the number of bytes being transmitted in the request body. When the x-ms-write header is set to clear, the value of this header must be set to zero.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="sourceRange">Bytes of source data in the specified range.</param>
-            /// <param name="sourceContentCrc64">Specify the crc64 calculated for the range of bytes that must be read from the copy source.</param>
-            /// <param name="sourceIfMatchCrc64">Specify the crc64 value to operate only on range with a matching crc64 checksum.</param>
-            /// <param name="sourceIfNoneMatchCrc64">Specify the crc64 value to operate only on range without a matching crc64 checksum.</param>
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <returns>The File.UploadRangeFromURLAsync Message.</returns>
-            internal static Azure.Core.HttpMessage UploadRangeFromURLAsync_CreateMessage(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                string range,
-                System.Uri copySource,
-                long contentLength,
-                int? timeout = default,
-                string sourceRange = default,
-                byte[] sourceContentCrc64 = default,
-                byte[] sourceIfMatchCrc64 = default,
-                byte[] sourceIfNoneMatchCrc64 = default,
-                string leaseId = default)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-                if (range == null)
-                {
-                    throw new System.ArgumentNullException(nameof(range));
-                }
-                if (copySource == null)
-                {
-                    throw new System.ArgumentNullException(nameof(copySource));
-                }
-
-                // Create the request
-                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
-                Azure.Core.Request _request = _message.Request;
-
-                // Set the endpoint
-                _request.Method = Azure.Core.RequestMethod.Put;
-                _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "range", escapeValue: false);
-                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-range", range);
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
-                _request.Headers.SetValue("x-ms-write", "update");
-                _request.Headers.SetValue("Content-Length", contentLength.ToString(System.Globalization.CultureInfo.InvariantCulture));
-                _request.Headers.SetValue("x-ms-version", "2019-07-07");
-                if (sourceRange != null) { _request.Headers.SetValue("x-ms-source-range", sourceRange); }
-                if (sourceContentCrc64 != null) { _request.Headers.SetValue("x-ms-source-content-crc64", System.Convert.ToBase64String(sourceContentCrc64)); }
-                if (sourceIfMatchCrc64 != null) { _request.Headers.SetValue("x-ms-source-if-match-crc64", System.Convert.ToBase64String(sourceIfMatchCrc64)); }
-                if (sourceIfNoneMatchCrc64 != null) { _request.Headers.SetValue("x-ms-source-if-none-match-crc64", System.Convert.ToBase64String(sourceIfNoneMatchCrc64)); }
-                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
-
-                return _message;
-            }
-
-            /// <summary>
-            /// Create the File.UploadRangeFromURLAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The File.UploadRangeFromURLAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult> UploadRangeFromURLAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 201:
-                    {
-                        // Create the result
-                        Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult _value = new Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult();
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-content-crc64", out _header))
-                        {
-                            _value.XMSContentCrc64 = System.Convert.FromBase64String(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
-                        {
-                            _value.IsServerEncrypted = bool.Parse(_header);
-                        }
-
-                        // Create the response
-                        return Response.FromValue(_value, response);
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion File.UploadRangeFromURLAsync
-
-            #region File.GetRangeListAsync
-            /// <summary>
-            /// Returns the list of valid ranges for a file.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
-            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
-            /// <param name="operationName">Operation name.</param>
-            /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal>> GetRangeListAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                string sharesnapshot = default,
-                int? timeout = default,
-                string range = default,
-                bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.GetRangeList",
-                System.Threading.CancellationToken cancellationToken = default)
-            {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
-                try
-                {
-                    _scope.AddAttribute("url", resourceUri);
-                    _scope.Start();
-                    using (Azure.Core.HttpMessage _message = GetRangeListAsync_CreateMessage(
-                        pipeline,
-                        resourceUri,
-                        sharesnapshot,
-                        timeout,
-                        range))
-                    {
-                        if (async)
-                        {
-                            // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            // Send the request synchronously through the API that blocks if we're being called via a sync path
-                            // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.Send(_message, cancellationToken);
-                        }
-                        Azure.Response _response = _message.Response;
-                        cancellationToken.ThrowIfCancellationRequested();
-                        return GetRangeListAsync_CreateResponse(_response);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    _scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    _scope.Dispose();
-                }
-            }
-
-            /// <summary>
-            /// Create the File.GetRangeListAsync request.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="sharesnapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="range">Specifies the range of bytes over which to list ranges, inclusively.</param>
-            /// <returns>The File.GetRangeListAsync Message.</returns>
-            internal static Azure.Core.HttpMessage GetRangeListAsync_CreateMessage(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                string sharesnapshot = default,
-                int? timeout = default,
-                string range = default)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-
-                // Create the request
-                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
-                Azure.Core.Request _request = _message.Request;
-
-                // Set the endpoint
-                _request.Method = Azure.Core.RequestMethod.Get;
-                _request.Uri.Reset(resourceUri);
-                _request.Uri.AppendQuery("comp", "rangelist", escapeValue: false);
-                if (sharesnapshot != null) { _request.Uri.AppendQuery("sharesnapshot", sharesnapshot); }
-                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2019-07-07");
-                if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
-
-                return _message;
-            }
-
-            /// <summary>
-            /// Create the File.GetRangeListAsync response or throw a failure exception.
-            /// </summary>
-            /// <param name="response">The raw Response.</param>
-            /// <returns>The File.GetRangeListAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal> GetRangeListAsync_CreateResponse(
-                Azure.Response response)
-            {
-                // Process the response
-                switch (response.Status)
-                {
-                    case 200:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal _value = new Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal();
-                        _value.Ranges =
-                            System.Linq.Enumerable.ToList(
-                                System.Linq.Enumerable.Select(
-                                    _xml.Element(System.Xml.Linq.XName.Get("Ranges", "")).Elements(System.Xml.Linq.XName.Get("Range", "")),
-                                    Azure.Storage.Files.Shares.Models.Range.FromXml));
-
-                        // Get response headers
-                        string _header;
-                        if (response.Headers.TryGetValue("Last-Modified", out _header))
-                        {
-                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-                        if (response.Headers.TryGetValue("ETag", out _header))
-                        {
-                            _value.ETag = new Azure.ETag(_header);
-                        }
-                        if (response.Headers.TryGetValue("x-ms-content-length", out _header))
-                        {
-                            _value.FileContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
-                        }
-
-                        // Create the response
-                        return Response.FromValue(_value, response);
-                    }
-                    case 304:
-                    {
-                        return new Azure.NoBodyResponse<Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal>(response);
-                    }
-                    default:
-                    {
-                        // Create the result
-                        System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
-                        Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
-
-                        throw _value.CreateException(response);
-                    }
-                }
-            }
-            #endregion File.GetRangeListAsync
-
-            #region File.StartCopyAsync
-            /// <summary>
-            /// Copies a blob or file to a destination file within the storage account.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <param name="filePermissionCopyMode">Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key.</param>
-            /// <param name="ignoreReadOnly">Specifies the option to overwrite the target file if it already exists and has read-only attribute set.</param>
-            /// <param name="fileAttributes">Specifies either the option to copy file attributes from a source file(source) to a target file or a list of attributes to set on a target file.</param>
-            /// <param name="fileCreationTime">Specifies either the option to copy file creation time from a source file(source) to a target file or a time value in ISO 8601 format to set as creation time on a target file.</param>
-            /// <param name="fileLastWriteTime">Specifies either the option to copy file last write time from a source file(source) to a target file or a time value in ISO 8601 format to set as last write time on a target file.</param>
-            /// <param name="setArchiveAttribute">Specifies the option to set archive attribute on a target file. True means archive attribute will be set on a target file despite attribute overrides or a source file state.</param>
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
-            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
-            /// <param name="operationName">Operation name.</param>
-            /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileCopyInfo}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileCopyInfo>> StartCopyAsync(
-                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                System.Uri copySource,
-                int? timeout = default,
-                System.Collections.Generic.IDictionary<string, string> metadata = default,
-                string filePermission = default,
-                string filePermissionKey = default,
-                Azure.Storage.Files.Shares.Models.PermissionCopyModeType? filePermissionCopyMode = default,
-                bool? ignoreReadOnly = default,
-                string fileAttributes = default,
-                string fileCreationTime = default,
-                string fileLastWriteTime = default,
-                bool? setArchiveAttribute = default,
-                string leaseId = default,
-                bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.StartCopy",
-                System.Threading.CancellationToken cancellationToken = default)
-            {
-                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
-                try
-                {
-                    _scope.AddAttribute("url", resourceUri);
-                    _scope.Start();
-                    using (Azure.Core.HttpMessage _message = StartCopyAsync_CreateMessage(
-                        pipeline,
-                        resourceUri,
-                        copySource,
-                        timeout,
-                        metadata,
-                        filePermission,
-                        filePermissionKey,
-                        filePermissionCopyMode,
-                        ignoreReadOnly,
-                        fileAttributes,
-                        fileCreationTime,
-                        fileLastWriteTime,
-                        setArchiveAttribute,
-                        leaseId))
-                    {
-                        if (async)
-                        {
-                            // Send the request asynchronously if we're being called via an async path
-                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            // Send the request synchronously through the API that blocks if we're being called via a sync path
-                            // (this is safe because the Task will complete before the user can call Wait)
-                            pipeline.Send(_message, cancellationToken);
-                        }
-                        Azure.Response _response = _message.Response;
-                        cancellationToken.ThrowIfCancellationRequested();
-                        return StartCopyAsync_CreateResponse(_response);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    _scope.Failed(ex);
-                    throw;
-                }
-                finally
-                {
-                    _scope.Dispose();
-                }
-            }
-
-            /// <summary>
-            /// Create the File.StartCopyAsync request.
-            /// </summary>
-            /// <param name="pipeline">The pipeline used for sending requests.</param>
-            /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="copySource">Specifies the URL of the source file or blob, up to 2 KB in length. To copy a file to another file within the same storage account, you may use Shared Key to authenticate the source file. If you are copying a file from another storage account, or if you are copying a blob from the same storage account or another storage account, then you must authenticate the source file or blob using a shared access signature. If the source is a public blob, no authentication is required to perform the copy operation. A file in a share snapshot can also be specified as a copy source.</param>
-            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="metadata">A name-value pair to associate with a file storage object.</param>
-            /// <param name="filePermission">If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <param name="filePermissionKey">Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified.</param>
-            /// <param name="filePermissionCopyMode">Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key.</param>
-            /// <param name="ignoreReadOnly">Specifies the option to overwrite the target file if it already exists and has read-only attribute set.</param>
-            /// <param name="fileAttributes">Specifies either the option to copy file attributes from a source file(source) to a target file or a list of attributes to set on a target file.</param>
-            /// <param name="fileCreationTime">Specifies either the option to copy file creation time from a source file(source) to a target file or a time value in ISO 8601 format to set as creation time on a target file.</param>
-            /// <param name="fileLastWriteTime">Specifies either the option to copy file last write time from a source file(source) to a target file or a time value in ISO 8601 format to set as last write time on a target file.</param>
-            /// <param name="setArchiveAttribute">Specifies the option to set archive attribute on a target file. True means archive attribute will be set on a target file despite attribute overrides or a source file state.</param>
-            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
-            /// <returns>The File.StartCopyAsync Message.</returns>
-            internal static Azure.Core.HttpMessage StartCopyAsync_CreateMessage(
-                Azure.Core.Pipeline.HttpPipeline pipeline,
-                System.Uri resourceUri,
-                System.Uri copySource,
-                int? timeout = default,
-                System.Collections.Generic.IDictionary<string, string> metadata = default,
-                string filePermission = default,
-                string filePermissionKey = default,
-                Azure.Storage.Files.Shares.Models.PermissionCopyModeType? filePermissionCopyMode = default,
-                bool? ignoreReadOnly = default,
-                string fileAttributes = default,
-                string fileCreationTime = default,
-                string fileLastWriteTime = default,
-                bool? setArchiveAttribute = default,
-                string leaseId = default)
-            {
-                // Validation
-                if (resourceUri == null)
-                {
-                    throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-                if (copySource == null)
-                {
-                    throw new System.ArgumentNullException(nameof(copySource));
-                }
-
-                // Create the request
-                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
-                Azure.Core.Request _request = _message.Request;
-
-                // Set the endpoint
-                _request.Method = Azure.Core.RequestMethod.Put;
-                _request.Uri.Reset(resourceUri);
-                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
-
-                // Add request headers
-                _request.Headers.SetValue("x-ms-version", "2019-07-07");
-                _request.Headers.SetValue("x-ms-copy-source", copySource.ToString());
-                if (metadata != null) {
-                    foreach (System.Collections.Generic.KeyValuePair<string, string> _pair in metadata)
-                    {
-                        _request.Headers.SetValue("x-ms-meta-" + _pair.Key, _pair.Value);
-                    }
-                }
-                if (filePermission != null) { _request.Headers.SetValue("x-ms-file-permission", filePermission); }
-                if (filePermissionKey != null) { _request.Headers.SetValue("x-ms-file-permission-key", filePermissionKey); }
-                if (filePermissionCopyMode != null) { _request.Headers.SetValue("x-ms-file-permission-copy-mode", Azure.Storage.Files.Shares.FileRestClient.Serialization.ToString(filePermissionCopyMode.Value)); }
-                if (ignoreReadOnly != null) {
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                _request.Headers.SetValue("x-ms-file-copy-ignore-read-only", ignoreReadOnly.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-                }
-                if (fileAttributes != null) { _request.Headers.SetValue("x-ms-file-attributes", fileAttributes); }
-                if (fileCreationTime != null) { _request.Headers.SetValue("x-ms-file-creation-time", fileCreationTime); }
-                if (fileLastWriteTime != null) { _request.Headers.SetValue("x-ms-file-last-write-time", fileLastWriteTime); }
-                if (setArchiveAttribute != null) {
-                #pragma warning disable CA1308 // Normalize strings to uppercase
-                _request.Headers.SetValue("x-ms-file-copy-set-archive", setArchiveAttribute.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
-                #pragma warning restore CA1308 // Normalize strings to uppercase
-                }
-                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 return _message;
             }
@@ -7174,7 +6316,6 @@ namespace Azure.Storage.Files.Shares
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
->>>>>>> feature/storage/stg71-base
                 string copyId,
                 int? timeout = default,
                 string leaseId = default,
@@ -7810,243 +6951,6 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class FailureNoContent
-
-#region class FileAcquireLeaseResult
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// File AcquireLeaseResult
-    /// </summary>
-    public partial class FileAcquireLeaseResult
-    {
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public Azure.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// Uniquely identifies a blobs's lease
-        /// </summary>
-        public string LeaseId { get; internal set; }
-
-        /// <summary>
-        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
-        /// </summary>
-        public string ClientRequestId { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of FileAcquireLeaseResult instances.
-        /// You can use ShareModelFactory.FileAcquireLeaseResult instead.
-        /// </summary>
-        internal FileAcquireLeaseResult() { }
-    }
-
-    /// <summary>
-    /// ShareModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class ShareModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileAcquireLeaseResult instance for mocking.
-        /// </summary>
-        public static FileAcquireLeaseResult FileAcquireLeaseResult(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string leaseId,
-            string clientRequestId)
-        {
-            return new FileAcquireLeaseResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                LeaseId = leaseId,
-                ClientRequestId = clientRequestId,
-            };
-        }
-    }
-}
-#endregion class FileAcquireLeaseResult
-
-#region class FileBreakLeaseResult
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// File BreakLeaseResult
-    /// </summary>
-    public partial class FileBreakLeaseResult
-    {
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public Azure.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// Uniquely identifies a blobs's lease
-        /// </summary>
-        public string LeaseId { get; internal set; }
-
-        /// <summary>
-        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
-        /// </summary>
-        public string ClientRequestId { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of FileBreakLeaseResult instances.
-        /// You can use ShareModelFactory.FileBreakLeaseResult instead.
-        /// </summary>
-        internal FileBreakLeaseResult() { }
-    }
-
-    /// <summary>
-    /// ShareModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class ShareModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileBreakLeaseResult instance for mocking.
-        /// </summary>
-        public static FileBreakLeaseResult FileBreakLeaseResult(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string leaseId,
-            string clientRequestId)
-        {
-            return new FileBreakLeaseResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                LeaseId = leaseId,
-                ClientRequestId = clientRequestId,
-            };
-        }
-    }
-}
-#endregion class FileBreakLeaseResult
-
-#region class FileChangeLeaseResult
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// File ChangeLeaseResult
-    /// </summary>
-    public partial class FileChangeLeaseResult
-    {
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public Azure.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// Uniquely identifies a blobs's lease
-        /// </summary>
-        public string LeaseId { get; internal set; }
-
-        /// <summary>
-        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
-        /// </summary>
-        public string ClientRequestId { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of FileChangeLeaseResult instances.
-        /// You can use ShareModelFactory.FileChangeLeaseResult instead.
-        /// </summary>
-        internal FileChangeLeaseResult() { }
-    }
-
-    /// <summary>
-    /// ShareModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class ShareModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileChangeLeaseResult instance for mocking.
-        /// </summary>
-        public static FileChangeLeaseResult FileChangeLeaseResult(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string leaseId,
-            string clientRequestId)
-        {
-            return new FileChangeLeaseResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                LeaseId = leaseId,
-                ClientRequestId = clientRequestId,
-            };
-        }
-    }
-}
-#endregion class FileChangeLeaseResult
-
-#region class FileReleaseLeaseResult
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// File ReleaseLeaseResult
-    /// </summary>
-    public partial class FileReleaseLeaseResult
-    {
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public Azure.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
-        /// </summary>
-        public string ClientRequestId { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of FileReleaseLeaseResult instances.
-        /// You can use ShareModelFactory.FileReleaseLeaseResult instead.
-        /// </summary>
-        internal FileReleaseLeaseResult() { }
-    }
-
-    /// <summary>
-    /// ShareModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class ShareModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileReleaseLeaseResult instance for mocking.
-        /// </summary>
-        public static FileReleaseLeaseResult FileReleaseLeaseResult(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string clientRequestId)
-        {
-            return new FileReleaseLeaseResult()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                ClientRequestId = clientRequestId,
-            };
-        }
-    }
-}
-#endregion class FileReleaseLeaseResult
 
 #region class FileUploadRangeFromURLResult
 namespace Azure.Storage.Files.Shares.Models

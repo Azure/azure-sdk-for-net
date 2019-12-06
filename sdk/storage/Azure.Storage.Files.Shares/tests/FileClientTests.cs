@@ -1235,7 +1235,7 @@ namespace Azure.Storage.Files.Shares.Test
 
                 // Assert
                 Assert.AreEqual(LeaseDurationType.Infinite, downloadResponse.Value.Details.LeaseDuration);
-                Assert.AreEqual(LeaseStateType.Available, downloadResponse.Value.Details.LeaseState);
+                Assert.AreEqual(LeaseStateType.Leased, downloadResponse.Value.Details.LeaseState);
                 Assert.AreEqual(LeaseStatusType.Locked, downloadResponse.Value.Details.LeaseStatus);
             }
         }
