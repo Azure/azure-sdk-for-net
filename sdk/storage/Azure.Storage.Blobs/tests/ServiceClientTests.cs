@@ -415,10 +415,11 @@ namespace Azure.Storage.Blobs.Test
                 service.GetUserDelegationKeyAsync(
                     startsOn: null,
                     // ensure the time used is not UTC, as DateTimeOffset.Now could actually be UTC based on OS settings
+                    // Use a custom time zone so we aren't dependent on OS having specific standard time zone.
                     expiresOn: TimeZoneInfo.ConvertTime(
                         Recording.Now.AddHours(1),
-                        TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"))),
-                e => Assert.AreEqual("expiresOn must be UTC", e.Message));
+                        TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ"))),
+                e => Assert.AreEqual("expiresOn must be UTC", e.Message)); ;
         }
 
         [Test]
