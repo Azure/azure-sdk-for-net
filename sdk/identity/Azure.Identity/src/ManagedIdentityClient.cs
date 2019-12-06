@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -18,6 +20,8 @@ namespace Azure.Identity
 
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        private static readonly IPAddress s_imdsHostIp = IPAddress.Parse("169.254.169.254");
+        private const int s_imdsPort = 80;
         private const string ImdsApiVersion = "2018-02-01";
         private const int ImdsAvailableTimeoutMs = 500;
 
@@ -76,7 +80,7 @@ namespace Azure.Identity
             // if we haven't already determined the msi type
             if (s_msiType == MsiType.Unknown)
             {
-                // aquire the init lock
+                // acquire the init lock
                 s_initLock.Wait(cancellationToken);
 
                 try
@@ -116,7 +120,7 @@ namespace Azure.Identity
                             s_endpoint = s_imdsEndpoint;
                             s_msiType = MsiType.Imds;
                         }
-                        // if MSI_ENDPOINT is NOT set and IMDS enpoint is not available ManagedIdentity is not available
+                        // if MSI_ENDPOINT is NOT set and IMDS endpoint is not available ManagedIdentity is not available
                         else
                         {
                             s_msiType = MsiType.Unavailable;
@@ -138,7 +142,7 @@ namespace Azure.Identity
             // if we haven't already determined the msi type
             if (s_msiType == MsiType.Unknown)
             {
-                // aquire the init lock
+                // acquire the init lock
                 await s_initLock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                 try
@@ -178,7 +182,7 @@ namespace Azure.Identity
                             s_endpoint = s_imdsEndpoint;
                             s_msiType = MsiType.Imds;
                         }
-                        // if MSI_ENDPOINT is NOT set and IMDS enpoint is not available ManagedIdentity is not available
+                        // if MSI_ENDPOINT is NOT set and IMDS endpoint is not available ManagedIdentity is not available
                         else
                         {
                             s_msiType = MsiType.Unavailable;
@@ -194,7 +198,6 @@ namespace Azure.Identity
 
             return s_msiType;
         }
-
         private Request CreateAuthRequest(MsiType msiType, string[] scopes, string clientId)
         {
             return msiType switch
@@ -206,85 +209,47 @@ namespace Azure.Identity
             };
         }
 
-        private bool ImdsAvailable(CancellationToken cancellationToken)
+        public virtual bool ImdsAvailable(CancellationToken cancellationToken)
         {
-            // send a request without the Metadata header.  This will result in a failed request,
-            // but we're just interested in if we get a response before the timeout of 500ms
-            // if we don't get a response we assume the imds endpoint is not available
-            using (Request request = _pipeline.HttpPipeline.CreateRequest())
+            // try to create a TCP connection to the IMDS IP address. If the connection can be established
+            // we assume that IMDS is available. If connecting times out or fails to connect assume that
+            // IMDS is not available in this environment.
+            try
             {
-                request.Method = RequestMethod.Get;
-
-                request.Uri.Reset(s_imdsEndpoint);
-
-                request.Uri.AppendQuery("api-version", ImdsApiVersion);
-
-                CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
-
-                try
+                using (var client = new TcpClient())
                 {
-                    Response response = _pipeline.HttpPipeline.SendRequest(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token);
+                    var result = client.BeginConnect(s_imdsHostIp, s_imdsPort, null, null);
 
-                    return true;
+                    var success = result.AsyncWaitHandle.WaitOne(ImdsAvailableTimeoutMs);
+
+                    return success && client.Connected;
                 }
-                // we only want to handle the case when the imdsTimeout resulted in the request being canceled
-                // this indicates that the request timed out and that imds is not available.  If the operation
-                // was user canceled we don't want to handle the exception so s_identityAvailable will
-                // remain unset, as we still haven't determined if the imds endpoint is available.
-                catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
-                {
-                    return false;
-                }
-                // in the case that the request failed in a manner that we didn't receive any response other,
-                // than being canceled, take this to indicate that the imds endpoint is not available.
-                catch (Exception e) when (!(e is OperationCanceledException))
-                {
-                    return false;
-                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
-        private async Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
+        public virtual async Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
         {
-            // send a request without the Metadata header.  This will result in a failed request,
-            // but we're just interested in if we get a response before the timeout of 500ms
-            // if we don't get a response we assume the imds endpoint is not available
-            using (Request request = _pipeline.HttpPipeline.CreateRequest())
+            // try to create a TCP connection to the IMDS IP address. If the connection can be established
+            // we assume that IMDS is available. If connecting times out or fails to connect assume that
+            // IMDS is not available in this environment.
+            try
             {
-                request.Method = RequestMethod.Get;
-
-                request.Uri.Reset(s_imdsEndpoint);
-
-                request.Uri.AppendQuery("api-version", ImdsApiVersion);
-
-                CancellationToken imdsTimeout = new CancellationTokenSource(ImdsAvailableTimeoutMs).Token;
-
-                try
+                using (var client = new TcpClient())
                 {
-                    AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(request.Uri);
+                    var result = client.BeginConnect(s_imdsHostIp, s_imdsPort, null, null);
 
-                    Response response = await _pipeline.HttpPipeline.SendRequestAsync(request, CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, imdsTimeout).Token).ConfigureAwait(false);
+                    var success = await Task.Run<bool>(() => result.AsyncWaitHandle.WaitOne(ImdsAvailableTimeoutMs), cancellationToken).ConfigureAwait(false);
 
-                    AzureIdentityEventSource.Singleton.ImdsEndpointFound(request.Uri);
-
-                    return true;
+                    return success && client.Connected;
                 }
-                // we only want to handle the case when the imdsTimeout resulted in the request being canceled.
-                // this indicates that the request timed out and that imds is not available.  If the operation
-                // was user canceled we don't wan't to handle the exception so s_identityAvailable will
-                // remain unset, as we still haven't determined if the imds endpoint is available.
-                catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
-                {
-                    AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(request.Uri);
-
-                    return false;
-                }
-                // in the case that the request failed in a manner that we didn't receive any response other,
-                // than being canceled, take this to indicate that the imds endpoint is not available.
-                catch (Exception e) when (!(e is OperationCanceledException))
-                {
-                    return false;
-                }
+            }
+            catch (Exception e) when (!(e is OperationCanceledException))
+            {
+                return false;
             }
         }
 

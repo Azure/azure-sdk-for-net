@@ -18,8 +18,8 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void ResetManagedIdenityClient()
         {
-            typeof(ManagedIdentityCredential).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
-            typeof(ManagedIdentityCredential).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
+            typeof(ManagedIdentityClient).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
+            typeof(ManagedIdentityClient).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
         }
 
         [Test]
