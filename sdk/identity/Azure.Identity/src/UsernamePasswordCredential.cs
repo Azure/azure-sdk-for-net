@@ -40,7 +40,7 @@ namespace Azure.Identity
         /// <param name="tenantId">The Azure Active Directory tenant (directory) ID or name.</param>
         /// <param name="clientId">The client (application) ID of an App Registration in the tenant.</param>
         public UsernamePasswordCredential(string username, string password, string tenantId, string clientId)
-            : this(username, password, clientId, tenantId, (TokenCredentialOptions)null)
+            : this(username, password, tenantId, clientId, (TokenCredentialOptions)null)
         {
 
         }
