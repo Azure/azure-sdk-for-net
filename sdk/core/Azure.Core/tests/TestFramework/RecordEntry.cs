@@ -187,7 +187,7 @@ namespace Azure.Core.Testing
             SerializeHeaders(jsonWriter, Response.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, nameof(Response.Body), Response.Body, Response.Headers);
+            SerializeBody(jsonWriter, "ResponseBody", Response.Body, Response.Headers);
             jsonWriter.WriteEndObject();
         }
 
@@ -305,42 +305,6 @@ namespace Azure.Core.Testing
             encoding = null;
             return TryGetContentType(requestHeaders, out string contentType) &&
                    TestFrameworkContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
-        }
-
-        public static bool TryGetBodyAsText(IDictionary<string, string[]> headers, byte[] body, out string text)
-        {
-            text = null;
-
-            if (IsTextContentType(headers, out Encoding encoding))
-            {
-                text = encoding.GetString(body);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Optionally update the Content-Length header if we've sanitized it
-        /// and the new value is a different length from the original
-        /// Content-Length header.  We don't add a Content-Length header if it
-        /// wasn't already present.
-        /// </summary>
-        /// <param name="headers">The Request or Response headers</param>
-        /// <param name="originalLength">THe original Content-Length</param>
-        /// <param name="sanitizedLength">The sanitized Content-Length</param>
-        private static void UpdateSanitizedContentLength(IDictionary<string, string[]> headers, int originalLength, int sanitizedLength)
-        {
-            // Note: If the RequestBody/ResponseBody was set to null by our
-            // sanitizer, we'll pass 0 as the sanitizedLength and use that as
-            // our new Content-Length.  That's fine for all current scenarios
-            // (i.e., we never do that), but it's possible we may want to
-            // remove the Content-Length header in the future.
-            if (originalLength != sanitizedLength && headers.ContainsKey("Content-Length"))
-            {
-                headers["Content-Length"] = new string[] { sanitizedLength.ToString() };
-            }
         }
     }
 }
