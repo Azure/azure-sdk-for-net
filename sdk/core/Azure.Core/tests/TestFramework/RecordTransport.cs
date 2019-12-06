@@ -73,12 +73,10 @@ namespace Azure.Core.Testing
                 RequestMethod = request.Method,
                 Request =
                 {
-                    Headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
                     Body = ReadToEnd(request.Content),
                 },
                 Response =
                 {
-                    Headers = new SortedDictionary<string, string[]>(StringComparer.OrdinalIgnoreCase),
                     Body = ReadToEnd(response),
                 },
                 StatusCode = response.Status

@@ -11,57 +11,15 @@ namespace Azure.Core.Testing
 {
     public class RecordEntry
     {
-        public class Message
-        {
-            public SortedDictionary<string, string[]> Headers { get; set; } = new SortedDictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
+        public RecordEntryMessage Request { get; } = new RecordEntryMessage();
 
-            public byte[] Body { get; set; }
-
-            public bool TryGetContentType(out string contentType)
-            {
-                contentType = null;
-                if (Headers.TryGetValue("Content-Type", out var contentTypes) &&
-                    contentTypes.Length == 1)
-                {
-                    contentType = contentTypes[0];
-                    return true;
-                }
-                return false;
-            }
-
-            public bool IsTextContentType(out Encoding encoding)
-            {
-                encoding = null;
-                return TryGetContentType(out string contentType) &&
-                       TestFrameworkContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
-            }
-
-            public bool TryGetBodyAsText(out string text)
-            {
-                text = null;
-
-                if (IsTextContentType(out Encoding encoding))
-                {
-                    text = encoding.GetString(Body);
-
-                    return true;
-                }
-
-                return false;
-            }
-
-        }
-
-        public Message Request { get; } = new Message();
-
-        public Message Response { get; } = new Message();
+        public RecordEntryMessage Response { get; } = new RecordEntryMessage();
 
         public string RequestUri { get; set; }
 
         public RequestMethod RequestMethod { get; set; }
 
         public int StatusCode { get; set; }
-
 
         public static RecordEntry Deserialize(JsonElement element)
         {

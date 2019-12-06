@@ -43,7 +43,7 @@ namespace Azure.Core.Testing
         {
         }
 
-        public virtual void SanitizeBody(RecordEntry.Message message)
+        public virtual void SanitizeBody(RecordEntryMessage message)
         {
             if (message.Body != null)
             {
