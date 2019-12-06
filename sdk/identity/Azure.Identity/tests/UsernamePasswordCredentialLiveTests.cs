@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
     {
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
-        public UsernamePasswordCredentialLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public UsernamePasswordCredentialLiveTests(bool isAsync) : base(isAsync)
         {
             Matcher.ExcludeHeaders.Add("Content-Length");
             Matcher.ExcludeHeaders.Add("client-request-id");
