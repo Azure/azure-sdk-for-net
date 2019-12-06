@@ -6,28 +6,29 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
 using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs.Processor.Samples
 {
     /// <summary>
-    ///   An introduction to the Event Processor client, illustrating how to perform basic event processing.
+    ///   An example of stopping and restarting the Event Processor client when a specific error is encountered.
     /// </summary>
     ///
-    public class Sample03_BasicEventProcessing : IEventHubsBlobCheckpointSample
+    public class Sample07_RestartProcessingOnError : IEventHubsBlobCheckpointSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name => nameof(Sample03_BasicEventProcessing);
+        public string Name => nameof(Sample07_RestartProcessingOnError);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description => "An introduction to the Event Processor client, illustrating how to perform basic event processing.";
+        public string Description => "An example of stopping and restarting the Event Processor client when a specific error is encountered.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs and Azure storage connection information.
@@ -59,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
                new EventData(Encoding.UTF8.GetBytes("First Event, Third Batch")),
                new EventData(Encoding.UTF8.GetBytes("Second Event, Third Batch")),
-               new EventData(Encoding.UTF8.GetBytes("Third Event, Third Batch")),
+               new EventData(Encoding.UTF8.GetBytes("Third Event, Third Batch"))
             };
 
             int sentIndex = 0;
@@ -88,29 +89,12 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
             BlobContainerClient storageClient = new BlobContainerClient(blobStorageConnectionString, blobContainerName);
             EventProcessorClient processor = new EventProcessorClient(storageClient, consumerGroup, eventHubsConnectionString, eventHubName);
 
-            // When creating a handler for processing events, it is important to note that you are responsible for ensuring that exception handling
-            // takes place within your handler code.  Should an exception go unhandled, the processor will allow it to bubble and will not attempt
-            // to route it through the exception handler.
+            // Create a simple handler for event processing.
 
             int eventIndex = 0;
 
             Task processEventHandler(ProcessEventArgs eventArgs)
             {
-                // The event arguments contain a cancellation token that the Event Processor client uses to signal
-                // your handler that processing should stop when possible.  This is most commonly used in the
-                // case that the event processor is stopping or has otherwise encountered an unrecoverable problem.
-                //
-                // Each of the handlers should respect cancellation as they are able in order to ensure that the
-                // Event Processor client is able to perform its operations efficiently.
-                //
-                // In the case of the process event handler, the Event Processor client must await the result in
-                // order to ensure that the ordering of events within a partition is maintained.  This makes respecting
-                // the cancellation token important.
-                //
-                // Also of note, because the Event Processor client must await this handler, you are unable to safely
-                // perform operations on the client, such as stopping or starting.  Doing so is likely to result in a
-                // deadlock unless it is carefully queued as a background task.
-
                 if (eventArgs.CancellationToken.IsCancellationRequested)
                 {
                     return Task.CompletedTask;
@@ -118,22 +102,11 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
                 try
                 {
-                    // For our example, we'll just track that the event was received and write its data to the
-                    // console.
-                    //
-                    // Because there is no long-running or I/O operation, inspecting the cancellation
-                    // token again does not make sense in this scenario.  However, in real-world processing, it is
-                    // highly recommended that you do so as you are able.   It is also recommended that the cancellation
-                    // token be passed to any asynchronous operations that are awaited in this handler.
-
                     ++eventIndex;
                     Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
                 }
                 catch (Exception ex)
                 {
-                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                    // the exception to the console.
-
                     Console.WriteLine();
                     Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
                     Console.WriteLine();
@@ -150,21 +123,14 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
             // processing.  Should an exception that cannot be recovered from is encountered, the processor will forfeit ownership of all partitions
             // that it was processing so that work may redistributed.
             //
-            // The exceptions surfaced to this handler may be fatal or non-fatal; because the processor may not be able to accurately predict
-            // whether an exception was fatal or whether its state was corrupted, this handler has responsibility for making the determination as to
-            // whether processing should be terminated or restarted.  The handler may do so by calling Stop on the processor instance and then, if desired,
-            // calling Start on the processor.
+            // For this example, arbitrarily choose to restart processing when an Event Hubs service exception is encountered and simply
+            // log other exceptions to the console.
             //
-            // It is recommended that, for production scenarios, the decision be made by considering observations made by this error handler, the
-            // handler invoked when initializing processing for a partition, and the handler invoked when processing for a partition is stopped.  Many
-            // developers will also include data from their monitoring platforms in this decision as well.
-            //
-            // As with event processing, should an exception occur in your code for this handler, processor will allow it to bubble and will not attempt
-            // further action.
-            //
-            // For this example, exceptions will just be logged to the console.
+            // It is important to note that this selection is for demonstration purposes only; it does not constitute the recommended course
+            // of action for service errors.  Because the right approach for handling errors can vary greatly between different types of
+            // application, you will need to determine the error handling strategy that best suits your scenario.
 
-            Task processErrorHandler(ProcessErrorEventArgs eventArgs)
+            async Task processErrorHandler(ProcessErrorEventArgs eventArgs)
             {
                 // As with the process event handler, the event arguments contain a cancellation token used by the Event Processor client to signal
                 // that the operation should be canceled.  The handler should respect cancellation as it is able in order to ensure that the Event
@@ -175,7 +141,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
                 if (eventArgs.CancellationToken.IsCancellationRequested)
                 {
-                    return Task.CompletedTask;
+                    return;
                 }
 
                 // Because there is no long-running or I/O operation, inspecting the cancellation token again does not make sense in this scenario.
@@ -190,7 +156,19 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 Console.WriteLine("===============================");
                 Console.WriteLine();
 
-                return Task.CompletedTask;
+                // We will not pass the cancellation token from the event arguments here, as it will be
+                // signaled when we request that the processor stop.
+
+                if (eventArgs.Exception is EventHubsException)
+                {
+                    Console.WriteLine("Detected an service error.  Restarting the processor...");
+
+                    await processor.StopProcessingAsync();
+                    await processor.StartProcessingAsync();
+
+                    Console.WriteLine("Processor has been restarted....");
+                    Console.WriteLine();
+                }
             }
 
             processor.ProcessEventAsync += processEventHandler;
@@ -198,18 +176,27 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             try
             {
-                // In order to begin processing, an explicit call must be made to the processor.  This will instruct the processor to begin
-                // processing in the background, invoking your handlers when they are needed.
+                Console.WriteLine("Starting the Event Processor client...");
 
                 eventIndex = 0;
                 await processor.StartProcessingAsync();
 
-                // Because processing takes place in the background, we'll continue to wait until all of our events were
-                // read and handled before stopping.  To ensure that we don't wait indefinitely should an unrecoverable
-                // error be encountered, we'll also add a timed cancellation.
-
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+                // Unfortunately, because the handler is invoked when exceptions are encountered in the Event Processor client and not for the code
+                // developers write in the event handlers, there is no reliable way to force an exception.  As a result, it is unlikely that you will
+                // be able to observe the error handler in action by just running the Event Processor.
+                //
+                // Instead, we will wait a short bit to allow processing to take place and then artificially trigger the event handler for illustration
+                // purposes.
+
+                await Task.Delay(TimeSpan.FromMilliseconds(250));
+
+                Console.WriteLine("Triggering the error handler...");
+
+                ProcessErrorEventArgs eventArgs = new ProcessErrorEventArgs("fake", "artificial invoke", new EventHubsException(true, eventHubName), cancellationSource.Token);
+                await processErrorHandler(eventArgs);
 
                 while ((!cancellationSource.IsCancellationRequested) && (eventIndex <= expectedEvents.Count))
                 {
@@ -218,6 +205,9 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
                 // Once we arrive at this point, either cancellation was requested or we have processed all of our events.  In
                 // both cases, we'll want to shut down the processor.
+
+                Console.WriteLine();
+                Console.WriteLine("Stopping the processor...");
 
                 await processor.StopProcessingAsync();
             }

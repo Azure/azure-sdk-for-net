@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.csproj" />
   </ItemGroup>
 </Project>
