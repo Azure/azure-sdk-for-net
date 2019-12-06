@@ -1003,7 +1003,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Serves a mock context for a partition.
         /// </summary>
         ///
-        private class MockPartitionContext : PartitionContext
+        internal class MockPartitionContext : PartitionContext
         {
             public MockPartitionContext(string partitionId) : base(partitionId)
             {
