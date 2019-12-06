@@ -4,7 +4,7 @@
 ## Configuration
 ``` yaml
 # Generate file storage
-input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-02-02/file.json
+input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/storage-dataplane-preview/specification/storage/data-plane/Microsoft.FileStorage/preview/2019-07-07/file.json
 output-folder: ../src/Generated
 clear-output-folder: false
 
@@ -78,7 +78,7 @@ directive:
 directive:
 - from: swagger-document
   where: $.parameters.ApiVersionParameter
-  transform: $.enum = ["2019-02-02"]
+  transform: $.enum = ["2019-07-07"]
 ```
 
 ### /?restype=service&comp=properties
