@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Net;
 using Microsoft.Azure.Management.CosmosDB;
-using Microsoft.Azure.Management.CosmosDB.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System.Threading;
-using Xunit;
 
 namespace CosmosDB.Tests
 {
     public class CosmosDBTestUtilities
     {
-        // User name and password for admin user configured on compute cluster and file servers.
-        public static string ADMIN_USER_NAME = "demoUser";
-        public static string ADMIN_USER_PASSWORD = "Dem0Pa$$w0rd";
         // Location to run tests.
         public static string LOCATION = "eastus";
 
@@ -34,6 +27,7 @@ namespace CosmosDB.Tests
             {
                 Location = LOCATION
             };
+
             if(!(bool)resourcesClient.ResourceGroups.CheckExistenceAsync(rgname).GetAwaiter().GetResult())
                 resourcesClient.ResourceGroups.CreateOrUpdate(rgname, resourceGroupDefinition);
             return rgname;
