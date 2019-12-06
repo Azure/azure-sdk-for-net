@@ -23,24 +23,27 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
         /// <summary>A value used to override event processors' ownership expiration time span.</summary>
         public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
-        private readonly bool fakeRunPartitionProcessingAsync;
 
-        /// <summary>A dictionary used to track calls to InitializeProcessingForPartitionAsync.</summary>
-        public ConcurrentDictionary<string, int> initializeCalls = new ConcurrentDictionary<string, int>();
+        /// <summary>Indicates that <see cref="RunPartitionProcessingAsync" /> should be mocked.</summary>
+        private readonly bool FakeRunPartitionProcessingAsync;
 
-        /// <summary>A dictionary used to track calls to ProcessEventAsync.</summary>
-        public ConcurrentDictionary<string, EventData[]> processEventCalls = new ConcurrentDictionary<string, EventData[]>();
+        /// <summary>A dictionary used to track calls to <see cref="PartitionInitializingAsync" />.</summary>
+        public ConcurrentDictionary<string, int> InitializeCalls = new ConcurrentDictionary<string, int>();
 
-        /// <summary>A dictionary used to track calls to ProcessingForPartitionStoppedAsync.</summary>
-        public ConcurrentDictionary<string, int> closeCalls = new ConcurrentDictionary<string, int>();
+        /// <summary>A dictionary used to track calls to <see cref="ProcessEventAsync" />.</summary>
+        public ConcurrentDictionary<string, EventData[]> ProcessEventCalls = new ConcurrentDictionary<string, EventData[]>();
 
-        /// <summary>A dictionary used to track ProcessingStoppedReasons for calls to ProcessingForPartitionStoppedAsync.</summary>
-        public ConcurrentDictionary<string, ProcessingStoppedReason> stopReasons = new ConcurrentDictionary<string, ProcessingStoppedReason>();
+        /// <summary>A dictionary used to track calls to <see cref="PartitionClosingAsync" />.</summary>
+        public ConcurrentDictionary<string, int> CloseCalls = new ConcurrentDictionary<string, int>();
 
-        /// <summary>A dictionary used to track calls to ProcessExceptionAsync.</summary>
-        public ConcurrentDictionary<string, Exception[]> exceptionCalls = new ConcurrentDictionary<string, Exception[]>();
+        /// <summary>A dictionary used to track ProcessingStoppedReasons for calls to <see cref="PartitionClosingAsync" />.</summary>
+        public ConcurrentDictionary<string, ProcessingStoppedReason> StopReasons = new ConcurrentDictionary<string, ProcessingStoppedReason>();
 
-        internal readonly Dictionary<string, ConcurrentQueue<EventData>> eventPipeline = new Dictionary<string, ConcurrentQueue<EventData>>();
+        /// <summary>A dictionary used to track calls to <see cref="ProcessExceptionAsync" />.</summary>
+        public ConcurrentDictionary<string, Exception[]> ExceptionCalls = new ConcurrentDictionary<string, Exception[]>();
+
+        /// <summary>A dictionary used to store <see cref="EventData" /> to be received by the mock <see cref="EventHubConsumerClient" />.</summary>
+        internal readonly Dictionary<string, ConcurrentQueue<EventData>> EventPipeline = new Dictionary<string, ConcurrentQueue<EventData>>();
 
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
@@ -61,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private PartitionManager StorageManager { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ShortWaitTimeMock"/> class.
+        ///   Initializes a new instance of the <see cref="ShortWaitTimeMock" /> class.
         /// </summary>
         ///
         /// <param name="storageManager">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
@@ -72,13 +75,13 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         internal MockEventProcessorClient(PartitionManager storageManager,
-                                        string consumerGroup = "consumerGroup",
-                                        string fullyQualifiedNamespace = "somehost.com",
-                                        string eventHubName = "somehub",
-                                        Func<EventHubConnection> connectionFactory = default,
-                                        EventProcessorClientOptions options = default,
-                                        bool fakePartitionPRocessing = true,
-                                        int numberOfPartitions = 3) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, options)
+                                          string consumerGroup = "consumerGroup",
+                                          string fullyQualifiedNamespace = "somehost.com",
+                                          string eventHubName = "somehub",
+                                          Func<EventHubConnection> connectionFactory = default,
+                                          EventProcessorClientOptions options = default,
+                                          bool fakePartitionPRocessing = true,
+                                          int numberOfPartitions = 3) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, options)
         {
             StorageManager = storageManager;
 
@@ -89,14 +92,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             foreach (var partitionId in partitionIds)
             {
-                eventPipeline[partitionId] = new ConcurrentQueue<EventData>();
+                EventPipeline[partitionId] = new ConcurrentQueue<EventData>();
             }
 
-            this.fakeRunPartitionProcessingAsync = fakePartitionPRocessing;
+            this.FakeRunPartitionProcessingAsync = fakePartitionPRocessing;
             ProcessErrorAsync += async errorContext =>
             {
                 Exception[] newException = new Exception[] { errorContext.Exception };
-                exceptionCalls.AddOrUpdate(
+                ExceptionCalls.AddOrUpdate(
                     errorContext.PartitionId,
                     newException,
                     (partitionId, value) => value.Concat(newException).ToArray());
@@ -106,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             ProcessEventAsync += async processorEvent =>
             {
                 EventData[] newEvent = new EventData[] { processorEvent.Data };
-                processEventCalls.AddOrUpdate(
+                ProcessEventCalls.AddOrUpdate(
                     processorEvent.Partition.PartitionId,
                     newEvent,
                     (partitionId, value) => value.Concat(newEvent).ToArray());
@@ -116,19 +119,29 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             PartitionInitializingAsync += async initializationContext =>
             {
-                initializeCalls.AddOrUpdate(initializationContext.PartitionId, 1, (partitionId, value) => value + 1);
+                InitializeCalls.AddOrUpdate(initializationContext.PartitionId, 1, (partitionId, value) => value + 1);
                 await Task.Delay(1);
             };
 
             PartitionClosingAsync += async stopContext =>
             {
-                closeCalls.AddOrUpdate(stopContext.PartitionId, 1, (partitionId, value) => value + 1);
-                stopReasons[stopContext.PartitionId] = stopContext.Reason;
+                CloseCalls.AddOrUpdate(stopContext.PartitionId, 1, (partitionId, value) => value + 1);
+                StopReasons[stopContext.PartitionId] = stopContext.Reason;
                 await Task.Delay(1);
             };
 
         }
 
+        /// <summary>
+        ///   Creates an <see cref="EventHubConsumerClient" /> to use for mock processing.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group to associate with the consumer client.</param>
+        /// <param name="connection">The connection to use for the consumer client.</param>
+        /// <param name="options">The options to use for configuring the consumer client.</param>
+        ///
+        /// <returns>An <see cref="EventHubConsumerClient" /> with the requested configuration.</returns>
+        ///
         internal override EventHubConsumerClient CreateConsumer(string consumerGroup, EventHubConnection connection, EventHubConsumerClientOptions options)
         {
             var mockConsumer = new Mock<EventHubConsumerClient>();
@@ -136,18 +149,26 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 .Setup(m => m.ReadEventsFromPartitionAsync(It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<ReadEventOptions>(), It.IsAny<CancellationToken>()))
                 .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((paritionId, EventPosition, options, token) =>
                 {
-                    return CreateAsyncEnumerable(paritionId);
+                    return CreateReadEventsFromPartitionResponse(paritionId);
                 });
 
             mockConsumer
                 .Setup(m => m.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(eventPipeline.Keys.ToArray()));
+                .Returns(Task.FromResult(EventPipeline.Keys.ToArray()));
             return mockConsumer.Object;
         }
 
-        private async IAsyncEnumerable<PartitionEvent> CreateAsyncEnumerable(string partitionId)
+        /// <summary>
+        ///   Creates a mocked response for <see cref="CreateReadEventsFromPartitionResponse" />.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The partitionId to read events from.</param>
+        ///
+        /// <returns>An <see cref="IAsyncEnumerable<PartitionEvent>" /> for the requested partitionId.</returns>
+        ///
+        private async IAsyncEnumerable<PartitionEvent> CreateReadEventsFromPartitionResponse(string partitionId)
         {
-            if (eventPipeline.TryGetValue(partitionId, out var eventQueue))
+            if (EventPipeline.TryGetValue(partitionId, out var eventQueue))
             {
                 while (eventQueue.TryDequeue(out var eventData))
                 {
@@ -161,9 +182,20 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             }
         }
 
+        /// <summary>
+        ///   Starts running a task responsible for receiving and processing events in the context of a specified partition.
+        ///   If <see cref="FakeRunPartitionProcessingAsync" /> is true, the operation is mocked.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition the task is associated with.  Events will be read only from this partition.</param>
+        /// <param name="startingPosition">The position within the partition where the task should begin reading events.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>The running task that is currently receiving and processing events in the context of the specified partition. Or a timed expiring task for mocking.</returns>
+        ///
         internal override Task RunPartitionProcessingAsync(string partitionId, EventPosition startingPosition, CancellationToken cancellationToken)
         {
-            if (fakeRunPartitionProcessingAsync)
+            if (FakeRunPartitionProcessingAsync)
             {
                 // return a task that will only reasonably return when cancelled
                 return Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
@@ -175,7 +207,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///   Waits until the partition load distribution is stabilized.  Throws an <see cref="OperationCanceledException"/>
+        ///   Waits until the partition load distribution is stabilized.  Throws an <see cref="OperationCanceledException" />
         ///   if the load takes too long to stabilize.
         /// </summary>
         ///
@@ -228,6 +260,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             }
         }
 
+        /// <summary>
+        ///   Creates a collection of <see cref="PartitionOwnership" /> based on the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="partitionIds">A collection of partition identifiers that the collection will be associated with.</param>
+        /// <param name="identifier">The onwer identifier of the EventProcessorClient owning the collection.</param>
+        /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
+        ///
         internal IEnumerable<PartitionOwnership> CreatePartitionOwnerships(IEnumerable<string> partitionIds, string identifier)
         {
             return partitionIds

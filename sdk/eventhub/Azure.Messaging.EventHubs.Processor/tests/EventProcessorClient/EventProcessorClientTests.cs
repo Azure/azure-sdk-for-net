@@ -602,8 +602,13 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(() => processor.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
         }
 
+        /// <summary>
+        ///   Verifies that paritions owned by an <see cref="EventProcessorClient" /> are immediately availabe to be claimed by another procesor
+        ///   after <see cref="StartProcessingAsync" /> is called.
+        /// </summary>
+        ///
         [Test]
-        public async Task StoppedClient_RelinquishesPartitionOwnerships_OtherClients_ConsiderThemClaimableImmediately()
+        public async Task StoppedClientRelinquishesPartitionOwnershipsOtherClientsConsiderThemClaimableImmediately()
         {
             const int NumberOfPartitions = 3;
             Func<EventHubConnection> connectionFactory = () => new MockConnection();
@@ -654,8 +659,12 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor2.StopProcessingAsync();
         }
 
+        /// <summary>
+        ///   Verifies that claimable paritions are claimed by an <see cref="EventProcessorClient" /> after <see cref="StartProcessingAsync" /> is called.
+        /// </summary>
+        ///
         [Test]
-        public async Task FindAndClaimOwnershipAsync_ClaimsAllClaimablePartitions()
+        public async Task FindAndClaimOwnershipAsyncClaimsAllClaimablePartitions()
         {
             const int NumberOfPartitions = 3;
             Func<EventHubConnection> connectionFactory = () => new MockConnection();
@@ -682,8 +691,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StopProcessingAsync();
         }
 
+        /// <summary>
+        ///   Verifies that paritions ownership load balancing will direct an <see cref="EventProcessorClient" /> to claim ownership of a claimable parition
+        ///   when it owns exactly the calculated MinimumOwnedPartitionsCount.
+        /// </summary>
+        ///
         [Test]
-        public async Task FindAndClaimOwnershipAsync_ClaimsPartitions_WhenOwned_Equals_MinimumOwnedPartitionsCount()
+        public async Task FindAndClaimOwnershipAsyncClaimsPartitionsWhenOwnedEqualsMinimumOwnedPartitionsCount()
         {
             const int minimumParitionCount = 4;
             const int NumberOfPartitions = 13;
@@ -747,8 +761,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StopProcessingAsync();
         }
 
+        /// <summary>
+        ///   Verifies that paritions ownership load balancing will direct an <see cref="EventProcessorClient" /> steal ownership of a parition
+        ///   from another <see cref="EventProcessorClient" /> the other processor owns greater than the calculated MaximumOwnedPartitionsCount.
+        /// </summary>
+        ///
         [Test]
-        public async Task FindAndClaimOwnershipAsync_StealsPartitions_WhenThisProcessor_OwnsMinPartitions_AndOtherProcessorOwnsGreatherThanMaxPartitions()
+        public async Task FindAndClaimOwnershipAsyncStealsPartitionsWhenThisProcessorOwnsMinPartitionsAndOtherProcessorOwnsGreatherThanMaxPartitions()
         {
             const int minimumParitionCount = 4;
             const int maximumParitionCount = 5;
@@ -814,8 +833,13 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StopProcessingAsync();
         }
 
+        /// <summary>
+        ///   Verifies that paritions ownership load balancing will direct an <see cref="EventProcessorClient" /> steal ownership of a parition
+        ///   from another <see cref="EventProcessorClient" /> the other processor owns exactly the calculated MaximumOwnedPartitionsCount.
+        /// </summary>
+        ///
         [Test]
-        public async Task FindAndClaimOwnershipAsync_StealsPartitions_WhenThisProcessor_OwnsLessThanMinPartitions_AndOtherProcessor_OwnsMaxPartitions()
+        public async Task FindAndClaimOwnershipAsyncStealsPartitionsWhenThisProcessorOwnsLessThanMinPartitionsAndOtherProcessorOwnsMaxPartitions()
         {
             const int minimumParitionCount = 4;
             const int maximumParitionCount = 5;
@@ -962,6 +986,10 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
+        /// <summary>
+        ///   Serves a mock MockEventHubProperties.
+        /// </summary>
+        ///
         internal class MockEventHubProperties : EventHubProperties
         {
             public MockEventHubProperties(string name,
