@@ -5,6 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+<<<<<<< HEAD
         "traceparent": "00-74ca7a052956584f8f16a86dfb827aa6-8daad526284da34e-00",
         "User-Agent": [
           "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191203.1\u002Bfb8a3e76e923ddd8093ad431ccf5d23b2c851a14",
@@ -12,6 +13,15 @@
         ],
         "x-ms-client-request-id": "5d8a9f08-976a-e6f1-48dd-c7ecfddde0f4",
         "x-ms-date": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "traceparent": "00-1b4291cc2cf98b408374c0f2b387551f-404c0ea8bccb5a41-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "5d8a9f08-976a-e6f1-48dd-c7ecfddde0f4",
+        "x-ms-date": "Wed, 04 Dec 2019 19:48:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1",
         "x-ms-version": "2019-07-07"
@@ -20,15 +30,25 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
+<<<<<<< HEAD
         "Date": "Wed, 04 Dec 2019 05:17:14 GMT",
         "ETag": "\u00220x8D778793A1CB39B\u0022",
         "Last-Modified": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "Date": "Wed, 04 Dec 2019 19:48:05 GMT",
+        "ETag": "\u00220x8D778F2E1CF38CA\u0022",
+        "Last-Modified": "Wed, 04 Dec 2019 19:48:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "5d8a9f08-976a-e6f1-48dd-c7ecfddde0f4",
+<<<<<<< HEAD
         "x-ms-request-id": "b5592871-301a-000d-6e62-aa5aef000000",
+=======
+        "x-ms-request-id": "0114e99b-f01a-0002-5cdb-aa2c83000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
@@ -38,6 +58,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+<<<<<<< HEAD
         "traceparent": "00-84007fb9ccd760439e9e089e399390da-607f89abed75a94c-00",
         "User-Agent": [
           "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191203.1\u002Bfb8a3e76e923ddd8093ad431ccf5d23b2c851a14",
@@ -45,6 +66,15 @@
         ],
         "x-ms-client-request-id": "790c2647-b559-35a6-93cf-9f83423b7edf",
         "x-ms-date": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "traceparent": "00-e6db3d8e6b78744fb841655522af080b-b3ed106078a9ea43-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "790c2647-b559-35a6-93cf-9f83423b7edf",
+        "x-ms-date": "Wed, 04 Dec 2019 19:48:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-meta-Capital": "letter",
         "x-ms-meta-foo": "bar",
         "x-ms-meta-meta": "data",
@@ -56,15 +86,25 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
+<<<<<<< HEAD
         "Date": "Wed, 04 Dec 2019 05:17:14 GMT",
         "ETag": "\u00220x8D778793A282547\u0022",
         "Last-Modified": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "Date": "Wed, 04 Dec 2019 19:48:05 GMT",
+        "ETag": "\u00220x8D778F2E1DC62C3\u0022",
+        "Last-Modified": "Wed, 04 Dec 2019 19:48:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "790c2647-b559-35a6-93cf-9f83423b7edf",
+<<<<<<< HEAD
         "x-ms-request-id": "b5592874-301a-000d-7062-aa5aef000000",
+=======
+        "x-ms-request-id": "0114e99d-f01a-0002-5ddb-aa2c83000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
@@ -74,6 +114,7 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+<<<<<<< HEAD
         "traceparent": "00-c3e6ed766ad7744eb7004d8e4bacdf30-6d1d4cf49fbf7b48-00",
         "User-Agent": [
           "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191203.1\u002Bfb8a3e76e923ddd8093ad431ccf5d23b2c851a14",
@@ -81,6 +122,15 @@
         ],
         "x-ms-client-request-id": "d6a47eda-66d0-619a-160a-47366dfb14ce",
         "x-ms-date": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "traceparent": "00-865fd01001403f4090befd6691f68525-3497d3d9f7396143-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "d6a47eda-66d0-619a-160a-47366dfb14ce",
+        "x-ms-date": "Wed, 04 Dec 2019 19:48:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -90,9 +140,15 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-meta-foo,x-ms-meta-meta,x-ms-meta-Capital,x-ms-meta-UPPER",
         "Content-Length": "0",
+<<<<<<< HEAD
         "Date": "Wed, 04 Dec 2019 05:17:14 GMT",
         "ETag": "\u00220x8D778793A282547\u0022",
         "Last-Modified": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "Date": "Wed, 04 Dec 2019 19:48:05 GMT",
+        "ETag": "\u00220x8D778F2E1DC62C3\u0022",
+        "Last-Modified": "Wed, 04 Dec 2019 19:48:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
@@ -104,7 +160,11 @@
         "x-ms-meta-foo": "bar",
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
+<<<<<<< HEAD
         "x-ms-request-id": "b5592875-301a-000d-7162-aa5aef000000",
+=======
+        "x-ms-request-id": "0114e99e-f01a-0002-5edb-aa2c83000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-share-quota": "1",
         "x-ms-version": "2019-07-07"
       },
@@ -115,6 +175,7 @@
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+<<<<<<< HEAD
         "traceparent": "00-2c74b001b212914da614a69efe63d8f7-fcd1ff4d7a0bd345-00",
         "User-Agent": [
           "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191203.1\u002Bfb8a3e76e923ddd8093ad431ccf5d23b2c851a14",
@@ -122,6 +183,15 @@
         ],
         "x-ms-client-request-id": "c4a817c1-a796-b30e-8f5f-1d778ff08e26",
         "x-ms-date": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "traceparent": "00-6156ac58e0be6348b77258b914b05859-4423d9ecc8662843-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "c4a817c1-a796-b30e-8f5f-1d778ff08e26",
+        "x-ms-date": "Wed, 04 Dec 2019 19:48:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
@@ -130,13 +200,21 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
+<<<<<<< HEAD
         "Date": "Wed, 04 Dec 2019 05:17:15 GMT",
+=======
+        "Date": "Wed, 04 Dec 2019 19:48:05 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "c4a817c1-a796-b30e-8f5f-1d778ff08e26",
+<<<<<<< HEAD
         "x-ms-request-id": "b5592877-301a-000d-7362-aa5aef000000",
+=======
+        "x-ms-request-id": "0114e99f-f01a-0002-5fdb-aa2c83000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []

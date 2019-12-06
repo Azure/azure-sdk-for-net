@@ -5,6 +5,7 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
+<<<<<<< HEAD
         "traceparent": "00-cba96ab80a5914449a982442692dde5d-171d0c0b811a5a43-00",
         "User-Agent": [
           "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191203.1\u002Bfb8a3e76e923ddd8093ad431ccf5d23b2c851a14",
@@ -12,6 +13,15 @@
         ],
         "x-ms-client-request-id": "45885028-112b-646b-aef6-25054cceec1b",
         "x-ms-date": "Wed, 04 Dec 2019 05:17:12 GMT",
+=======
+        "traceparent": "00-c62c594a989d174ba165e00fccacfaf3-b1862c94224aed42-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "45885028-112b-646b-aef6-25054cceec1b",
+        "x-ms-date": "Wed, 04 Dec 2019 19:48:02 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -20,20 +30,33 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
+<<<<<<< HEAD
         "Date": "Wed, 04 Dec 2019 05:17:11 GMT",
+=======
+        "Date": "Wed, 04 Dec 2019 19:48:02 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "45885028-112b-646b-aef6-25054cceec1b",
         "x-ms-error-code": "ShareNotFound",
+<<<<<<< HEAD
         "x-ms-request-id": "b5592827-301a-000d-2f62-aa5aef000000",
+=======
+        "x-ms-request-id": "0114e95e-f01a-0002-2adb-aa2c83000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
+<<<<<<< HEAD
         "RequestId:b5592827-301a-000d-2f62-aa5aef000000\n",
         "Time:2019-12-04T05:17:12.5720040Z\u003C/Message\u003E\u003C/Error\u003E"
+=======
+        "RequestId:0114e95e-f01a-0002-2adb-aa2c83000000\n",
+        "Time:2019-12-04T19:48:02.8557301Z\u003C/Message\u003E\u003C/Error\u003E"
+>>>>>>> feature/storage/stg71-base
       ]
     }
   ],

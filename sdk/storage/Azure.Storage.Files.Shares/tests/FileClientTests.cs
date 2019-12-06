@@ -1916,6 +1916,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.AreEqual(0, reponse.ClosedHandlesCount);
+            Assert.AreEqual(0, reponse.FailedHandlesCount);
         }
 
         [Test]
