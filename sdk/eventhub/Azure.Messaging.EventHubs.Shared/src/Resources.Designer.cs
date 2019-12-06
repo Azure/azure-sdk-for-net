@@ -506,5 +506,16 @@ namespace Azure.Messaging.EventHubs {
                 return ResourceManager.GetString("OperationReadEvents", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The last enqueued event properties cannot be read when an event is not available..
+        /// </summary>
+        internal static string CannotReadLastEnqueuedEventPropertiesWithoutEvent
+        {
+            get
+            {
+                return ResourceManager.GetString("CannotReadLastEnqueuedEventPropertiesWithoutEvent", resourceCulture);
+            }
+        }
     }
 }

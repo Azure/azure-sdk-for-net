@@ -605,6 +605,65 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessEventAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessEventAsyncReceivesAnEmptyPartitionContextForNoData()
+        {
+            var partitionId = "expectedPartition";
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new[] { partitionId }));
+
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockEmptyPartitionEventEnumerable(5, token));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            var completionSource = new TaskCompletionSource<bool>();
+            var emptyEventArgs = default(ProcessEventArgs);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs =>
+            {
+                emptyEventArgs = eventArgs;
+                completionSource.SetResult(true);
+
+                return Task.CompletedTask;
+            };
+
+            // Start the processor and wait for the event handler to be triggered.
+
+            await mockProcessor.Object.StartProcessingAsync();
+            await completionSource.Task;
+            await mockProcessor.Object.StopProcessingAsync();
+
+            // Validate the empty event arguments.
+
+            Assert.That(emptyEventArgs, Is.Not.Null, "The event arguments should have been populated.");
+            Assert.That(emptyEventArgs.Data, Is.Null, "The event arguments should not have an event available.");
+            Assert.That(emptyEventArgs.Partition, Is.Not.Null, "The event arguments should have a partition context.");
+            Assert.That(emptyEventArgs.Partition.PartitionId, Is.EqualTo(partitionId), "The partition identifier should match.");
+            Assert.That(() => emptyEventArgs.Partition.ReadLastEnqueuedEventProperties(), Throws.InstanceOf<InvalidOperationException>(), "The last event properties should not be available.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
         /// </summary>
         ///
@@ -700,13 +759,31 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Creates a mock async enumerable to simulate reading events from a partition.
         /// </summary>
         ///
-        private static async IAsyncEnumerable<PartitionEvent> MockPartitionEventEnumerable(int eventCount, [EnumeratorCancellation]CancellationToken cancellationToken)
+        private static async IAsyncEnumerable<PartitionEvent> MockPartitionEventEnumerable(int eventCount,
+                                                                                           [EnumeratorCancellation]CancellationToken cancellationToken)
         {
             for (var index = 0; index < eventCount; ++index)
             {
                 if (cancellationToken.IsCancellationRequested) { break; }
                 await Task.Delay(25).ConfigureAwait(false);
                 yield return new PartitionEvent(new MockPartitionContext("fake"), new EventData(Encoding.UTF8.GetBytes($"Event { index }")));
+            }
+
+            yield break;
+        }
+
+        /// <summary>
+        ///   Creates a mock async enumerable to simulate reading events from a partition.
+        /// </summary>
+        ///
+        private static async IAsyncEnumerable<PartitionEvent> MockEmptyPartitionEventEnumerable(int eventCount,
+                                                                                                [EnumeratorCancellation]CancellationToken cancellationToken)
+        {
+            for (var index = 0; index < eventCount; ++index)
+            {
+                if (cancellationToken.IsCancellationRequested) { break; }
+                await Task.Delay(25).ConfigureAwait(false);
+                yield return new PartitionEvent();
             }
 
             yield break;

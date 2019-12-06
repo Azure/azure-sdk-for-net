@@ -66,8 +66,8 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
                 RetryOptions = new EventHubsRetryOptions
                 {
-                   MaximumRetries = 5,
-                   TryTimeout = TimeSpan.FromMinutes(1)
+                    MaximumRetries = 5,
+                    TryTimeout = TimeSpan.FromMinutes(1)
                 }
             };
 
