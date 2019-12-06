@@ -1,0 +1,47 @@
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: azure/azure-sdk-tools
+      endpoint: azure
+
+jobs:
+  - job: GenerateDocIndex
+    variables:
+      - template: ../../eng/pipelines/templates/variables/globals.yml
+    pool:
+      vmImage: windows-2019
+    steps:
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: '3.6'
+      - template: eng/pipelines/templates/scripts/replace-relative-links.yml@azure-sdk-tools
+        parameters:
+          TargetFolder: '.'
+          RootFolder: '.'
+          BuildSHA: $(Build.SourceVersion)
+          RepoId: 'Azure/azure-sdk-for-net'
+      - pwsh: |
+          . $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1
+          Build-DocIndex -RepoRoot $(Build.SourcesDirectory) -verbose
+        displayName: 'Generate Doc Index'
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: '3.6'
+      - template: eng/pipelines/templates/scripts/mashup-doc-index.yml@azure-sdk-tools
+        parameters:
+          SourceDirectory: $(Build.SourcesDirectory)
+      - task: CopyFiles@2
+        displayName: Copy HTML to Artifacts Directory
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/docfx_project/
+          content: '**\*'
+          targetFolder: $(Build.ArtifactStagingDirectory)/docfx_project
+          overWrite: true
+      - task: PublishPipelineArtifact@0
+        condition: succeeded()
+        inputs:
+          artifactName: "Doc.Index"
+          targetPath: $(Build.ArtifactStagingDirectory)/docfx_project/_site
