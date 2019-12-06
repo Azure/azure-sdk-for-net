@@ -36,6 +36,14 @@ namespace Azure.AI.TextAnalytics
         internal ServiceVersion Version { get; }
 
         /// <summary>
+        /// </summary>
+        public string DefaultCountryHint { get; set; } = "us";
+
+        /// <summary>
+        /// </summary>
+        public string DefaultLanguage { get; set; } = "en";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsClientOptions"/>
         /// class.
         /// </summary>

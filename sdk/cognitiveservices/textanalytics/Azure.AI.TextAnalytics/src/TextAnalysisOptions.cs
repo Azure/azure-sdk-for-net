@@ -5,24 +5,20 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
-    public enum SentimentClass
-    #pragma warning restore
+    public class TextAnalysisOptions
     {
         /// <summary>
         /// </summary>
-        Positive,
+        public TextAnalysisOptions()
+        {
+        }
 
         /// <summary>
         /// </summary>
-        Neutral,
+        public bool IncludeStatistics { get; set; }
 
         /// <summary>
         /// </summary>
-        Negative,
-
-        /// <summary>
-        /// </summary>
-        Mixed,
+        public string ModelVersion { get; set; }
     }
 }

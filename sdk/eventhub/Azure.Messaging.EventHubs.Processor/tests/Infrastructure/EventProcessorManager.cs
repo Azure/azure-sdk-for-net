@@ -7,8 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Storage.Blobs;
-using Moq;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {

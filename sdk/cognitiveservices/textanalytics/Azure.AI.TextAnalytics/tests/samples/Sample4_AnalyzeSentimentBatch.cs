@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void AnalyzeSentimentBatch()
+        public void AnalyzeSentimentBatchAdvanced()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -21,30 +21,72 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-
-            var inputs = new List<string>
+            var inputs = new List<TextDocumentInput>
             {
-                "That was the best day of my life!",
-                "This food is very bad.",
-                "I'm not sure how I feel about this product.",
-                "Pike place market is my favorite Seattle attraction."
+                new TextDocumentInput("1", "That was the best day of my life!")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "This food is very bad. Everyone who ate with us got sick.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", "I'm not sure how I feel about this product.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("4", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
+                {
+                     Language = "en",
+                }
             };
 
-            Debug.WriteLine($"Analyzing sentiment for inputs:");
-            foreach (var input in inputs)
-            {
-                Debug.WriteLine($"    {input}");
-            }
-            var sentiments = client.AnalyzeSentiment(inputs).Value;
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalysisOptions { IncludeStatistics = true });
 
-            Debug.WriteLine($"Predicted sentiments are:");
-            foreach (var sentiment in sentiments)
+            int i = 0;
+            Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine("");
+
+            foreach (var result in results)
             {
-                Debug.WriteLine($"Document sentiment is {sentiment.SentimentClass.ToString()}, with scores: ");
-                Debug.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-                Debug.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
-                Debug.WriteLine($"    Negative score: {sentiment.NegativeScore:0.00}.");
+                var document = inputs[i++];
+
+                if (result.ErrorMessage != default)
+                {
+                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                }
+                else
+                {
+                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
+                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
+                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
+                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
+
+                    Debug.WriteLine($"    Sentence sentiment results:");
+
+                    foreach (var sentenceSentiment in result.SentenceSentiments)
+                    {
+                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
+
+                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
+                        Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
+                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
+                        Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
+                    }
+
+                    Debug.WriteLine($"    Document statistics:");
+                    Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");
+                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
+                    Debug.WriteLine("");
+                }
             }
+
+            Debug.WriteLine($"Batch operation statistics:");
+            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
+            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
+            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
+            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
+            Debug.WriteLine("");
         }
     }
 }
