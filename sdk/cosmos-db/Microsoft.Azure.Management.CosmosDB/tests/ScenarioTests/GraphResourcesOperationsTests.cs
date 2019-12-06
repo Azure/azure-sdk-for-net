@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using System.Linq;
+
 using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.CosmosDB;
@@ -8,7 +8,6 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System.Globalization;
 using System;
 
 namespace CosmosDB.Tests.ScenarioTests
@@ -48,8 +47,8 @@ namespace CosmosDB.Tests.ScenarioTests
                     //databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 }
 
-                string databaseName = CosmosDBTestUtilities.GetResourceName("databaseName");
-                string databaseName2 = CosmosDBTestUtilities.GetResourceName("databaseName2");
+                string databaseName = "databaseName1002";
+                string databaseName2 = "databaseName21002";
                 GremlinDatabaseCreateUpdateParameters gremlinDatabaseCreateUpdateParameters = new GremlinDatabaseCreateUpdateParameters
                 {
                     Resource = new GremlinDatabaseResource { Id = databaseName },
@@ -94,7 +93,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(throughputSettingsGetResults.Name);
                 Assert.Equal("Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings", throughputSettingsGetResults.Type);
 
-                string gremlinGraphName = CosmosDBTestUtilities.GetResourceName("containerName");
+                string gremlinGraphName = "gremlinGraphName1002";
 
                 GremlinGraphCreateUpdateParameters gremlinGraphCreateUpdateParameters = new GremlinGraphCreateUpdateParameters
                 {
@@ -118,27 +117,9 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable<GremlinGraphGetResults> gremlinGraphs = cosmosDBManagementClient.GremlinResources.ListGremlinGraphsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(gremlinGraphs);
 
-                try
-                {
-                    cosmosDBManagementClient.GremlinResources.DeleteGremlinGraphWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2, gremlinGraphName);
-                    Assert.True(false, "should throw exception");
-                }
-                catch (Exception)
-                {
-                }
-
                 foreach (GremlinGraphGetResults gremlinGraph in gremlinGraphs)
                 {
                     cosmosDBManagementClient.GremlinResources.DeleteGremlinGraphWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, gremlinGraph.Name);
-                }
-
-                try
-                {
-                    cosmosDBManagementClient.GremlinResources.DeleteGremlinDatabaseWithHttpMessagesAsync(resourceGroupName, "IncorrectDatabaseAccountName", databaseName);
-                    Assert.True(false, "should throw exception");
-                }
-                catch (Exception)
-                {
                 }
 
                 foreach (GremlinDatabaseGetResults gremlinDatabase in gremlinDatabases)

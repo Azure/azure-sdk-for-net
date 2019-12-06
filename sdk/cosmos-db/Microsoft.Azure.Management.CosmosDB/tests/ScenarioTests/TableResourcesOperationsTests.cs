@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using System.Linq;
+
 using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.CosmosDB;
@@ -8,7 +8,6 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System.Globalization;
 using System;
 
 namespace CosmosDB.Tests.ScenarioTests
@@ -34,20 +33,22 @@ namespace CosmosDB.Tests.ScenarioTests
                 DatabaseAccountGetResults databaseAccount = null;
                 if (!isDatabaseNameExists)
                 {
-                    return; 
-                   // List<Location> locations = new List<Location>();
-                   // locations.Add(new Location(locationName: "East US"));
-                   // DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
-                   // {
-                   //     Location = "EAST US",
-                   //     Locations = locations
-                   // };
+                    return;
+                    // SDK doesnt support creation of Cassandra, Table, Gremlin Accounts, use accounts created using Azure portal
 
-                   //databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    // List<Location> locations = new List<Location>();
+                    // locations.Add(new Location(locationName: "East US"));
+                    // DatabaseAccountCreateUpdateParameters databaseAccountCreateUpdateParameters = new DatabaseAccountCreateUpdateParameters
+                    // {
+                    //     Location = "EAST US",
+                    //     Locations = locations
+                    // };
+
+                    //databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 }
 
-                string tableName = GetResourceName("tableName");
-                string tableName2 = GetResourceName("tableName2");
+                string tableName = "tableName2527";
+                string tableName2 = "tableName22527";
                 TableCreateUpdateParameters tableCreateUpdateParameters = new TableCreateUpdateParameters
                 {
                     Resource = new TableResource { Id = tableName },
@@ -92,25 +93,11 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(throughputSettingsGetResults.Name);
                 Assert.Equal("Microsoft.DocumentDB/databaseAccounts/tables/throughputSettings", throughputSettingsGetResults.Type);
 
-                try
-                {
-                    cosmosDBManagementClient.TableResources.DeleteTableWithHttpMessagesAsync(resourceGroupName, "IncorrectDatabaseAccountName", tableName);
-                    Assert.True(false, "should throw exception");
-                }
-                catch (Exception)
-                {
-                }
-
                 foreach (TableGetResults table in tables)
                 {
                     cosmosDBManagementClient.TableResources.DeleteTableWithHttpMessagesAsync(resourceGroupName, databaseAccountName, table.Name);
                 }
             }
-        }
-
-        private string GetResourceName(string prefix)
-        {
-            return string.Concat(prefix, (DateTime.Now).ToString("yyyyMMddHHmmssffff"));
         }
 
         private void VerifyEqualTables(TableGetResults expectedValue, TableGetResults actualValue)

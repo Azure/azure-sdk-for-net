@@ -39,10 +39,5 @@ namespace CosmosDB.Tests
             ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
             return resourcesClient;
         }
-
-        public static string GetResourceName(string prefix)
-        {
-            return string.Concat(prefix, (DateTime.Now).ToString("yyyyMMddHHmmssffff"));
-        }
     }
 }

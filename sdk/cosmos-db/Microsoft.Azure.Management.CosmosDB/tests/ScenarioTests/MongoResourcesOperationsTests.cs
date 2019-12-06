@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using System.Linq;
+
 using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.CosmosDB;
@@ -8,7 +8,6 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System.Globalization;
 using System;
 
 namespace CosmosDB.Tests.ScenarioTests
@@ -46,8 +45,8 @@ namespace CosmosDB.Tests.ScenarioTests
                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 }
 
-                string databaseName = GetResourceName("databaseName");
-                string databaseName2 = GetResourceName("databaseName2");
+                string databaseName = "databaseName3668";
+                string databaseName2 = "databaseName23668";
                 MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
                 {
                     Resource = new MongoDBDatabaseResource { Id = databaseName },
@@ -90,51 +89,28 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(throughputSettingsGetResults.Name);
                 Assert.Equal("Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings", throughputSettingsGetResults.Type);
 
-                string collectionName = GetResourceName("collectionName");
+                string collectionName = "collectionName3668";
 
-                //MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
-                //{
-                //    Resource = new MongoDBCollectionResource
-                //    {
-                //        Id = collectionName,
-                //        ShardKey = new Dictionary<string, string>
-                //        {
-                //            { "shardKey", "shardKey" }
-                //        }
-                //        //Indexes = new List<MongoIndex> { new MongoIndex() }
-                //    },
-                //        Options = new Dictionary<string, string>(){
-                //        { "foo", "bar" },
-                //    }
-                //};
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                    },
+                    Options = new Dictionary<string, string>(){
+                        { "foo", "bar" },
+                    }
+                };
 
-                //MongoDBCollectionGetResults mongoDBCollectionGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
-                //Assert.NotNull(mongoDBCollectionGetResults);
+                MongoDBCollectionGetResults mongoDBCollectionGetResults = cosmosDBManagementClient.MongoDBResources.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollectionGetResults);
 
                 IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = cosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(mongoDBCollections);
 
-                try
-                {
-                    cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2, collectionName);
-                    Assert.True(false, "should throw exception");             
-                }
-                catch (Exception)
-                {
-                }
-
                 foreach(MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
                 {
                     cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
-                }
-
-                try
-                {
-                    cosmosDBManagementClient.MongoDBResources.DeleteMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, "IncorrectDatabaseAccountName", databaseName);
-                    Assert.True(false, "should throw exception");
-                }
-                catch (Exception)
-                {
                 }
 
                 foreach (MongoDBDatabaseGetResults mongoDBDatabase in mongoDBDatabases)
@@ -142,11 +118,6 @@ namespace CosmosDB.Tests.ScenarioTests
                     cosmosDBManagementClient.MongoDBResources.DeleteMongoDBDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, mongoDBDatabase.Name);
                 }
             }
-        }
-
-        private string GetResourceName(string prefix)
-        {
-            return string.Concat(prefix, (DateTime.Now).ToString("yyyyMMddHHmmssffff"));
         }
 
         private void VerifyEqualMongoDBDatabases(MongoDBDatabaseGetResults expectedValue, MongoDBDatabaseGetResults actualValue)

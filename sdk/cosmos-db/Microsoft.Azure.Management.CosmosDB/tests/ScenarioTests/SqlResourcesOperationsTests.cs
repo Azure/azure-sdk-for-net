@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-using System.Linq;
+
 using System.Net;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.CosmosDB;
@@ -8,7 +8,6 @@ using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
-using System.Globalization;
 using System;
 
 namespace CosmosDB.Tests.ScenarioTests
@@ -46,8 +45,8 @@ namespace CosmosDB.Tests.ScenarioTests
                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 }
 
-                string databaseName = CosmosDBTestUtilities.GetResourceName("databaseName");
-                string databaseName2 = CosmosDBTestUtilities.GetResourceName("databaseName2");
+                string databaseName = "databaseName822";
+                string databaseName2 = "databaseName2822";
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
                 {
                     Resource = new SqlDatabaseResource { Id = databaseName },
@@ -92,7 +91,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(throughputSettingsGetResults.Name);
                 Assert.Equal("Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings", throughputSettingsGetResults.Type);
 
-                string containerName = CosmosDBTestUtilities.GetResourceName("containerName");
+                string containerName = "containerName822";
 
                 SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
                 {
@@ -115,27 +114,9 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable< SqlContainerGetResults > sqlContainers = cosmosDBManagementClient.SqlResources.ListSqlContainersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlContainers);
 
-                try
-                {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2, containerName);
-                    Assert.True(false, "should throw exception");
-                }
-                catch (Exception)
-                {
-                }
-
                 foreach (SqlContainerGetResults sqlContainer in sqlContainers)
                 {
                     cosmosDBManagementClient.SqlResources.DeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, sqlContainer.Name);
-                }
-
-                try
-                {
-                    cosmosDBManagementClient.SqlResources.DeleteSqlDatabaseWithHttpMessagesAsync(resourceGroupName, "IncorrectDatabaseAccountName", databaseName);
-                    Assert.True(false, "should throw exception");
-                }
-                catch (Exception)
-                {
                 }
 
                 foreach (SqlDatabaseGetResults sqlDatabase in sqlDatabases)
