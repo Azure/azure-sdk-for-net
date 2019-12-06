@@ -1288,7 +1288,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <returns>The running task that is currently receiving and processing events in the context of the specified partition.</returns>
         ///
-        private Task RunPartitionProcessingAsync(string partitionId,
+        internal virtual Task RunPartitionProcessingAsync(string partitionId,
                                                  EventPosition startingPosition,
                                                  CancellationToken cancellationToken) => Task.Run(async () =>
             {

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
@@ -495,6 +497,88 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> initializes processing properly for its partitions.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartAsyncCallsPartitionProcessorInitializeAsync()
+        {
+            Func<EventHubConnection> connectionFactory = () => new MockConnection();
+            MockConnection connection = connectionFactory() as MockConnection;
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var processor = new MockEventProcessorClient(
+                partitionManager,
+                connectionFactory: connectionFactory,
+                options: default);
+
+            // InitializeAsync should have not been called when constructing the event processors.
+            Assert.That(processor.InitializeCalls.Keys, Is.Empty);
+
+            // Start the event processors.
+            await processor.StartProcessingAsync();
+
+            // Make sure the event processors have enough time to stabilize.
+            await processor.WaitStabilization();
+
+            // CloseAsync should have not been called when constructing the event processor or during processing initialization.
+            Assert.That(processor.CloseCalls.Keys, Is.Empty);
+
+            // Validate results before calling stop.  This way, we can make sure the initialize calls were
+            // triggered by start.
+            var consumer = processor.CreateConsumer(processor.ConsumerGroup, connection, default);
+            var partitionIds = await consumer.GetPartitionIdsAsync();
+
+            Assert.That(partitionIds, Is.Not.Empty);
+
+            foreach (var partitionId in partitionIds)
+            {
+                Assert.That(processor.InitializeCalls.TryGetValue(partitionId, out var calls), Is.True, $"{ partitionId }: InitializeAsync should have been called.");
+                Assert.That(calls, Is.EqualTo(1), $"{ partitionId }: InitializeAsync should have been called only once.");
+            }
+
+            Assert.That(processor.InitializeCalls.Keys.Count, Is.EqualTo(partitionIds.Length));
+
+            // Stop the event processor
+            await processor.StopProcessingAsync();
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> initializes processing properly for its partitions.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartAsyncDoesNothingWhenEventProcessorIsRunning()
+        {
+            Func<EventHubConnection> connectionFactory = () => new MockConnection();
+            MockConnection connection = connectionFactory() as MockConnection;
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var processor = new MockEventProcessorClient(
+                partitionManager,
+                connectionFactory: connectionFactory,
+                options: default);
+
+            // InitializeAsync should have not been called when constructing the event processors.
+            Assert.That(processor.InitializeCalls.Keys, Is.Empty);
+
+            // Start the event processors.
+            await processor.StartProcessingAsync();
+
+            // Make sure the event processors have enough time to stabilize.
+            await processor.WaitStabilization();
+
+            // We should be able to call StartAsync again without getting an exception.
+            Assert.That(async () => await processor.StartProcessingAsync(), Throws.Nothing);
+
+            // Stop the event processor
+            await processor.StopProcessingAsync();
+
+            // Validate Results
+            var consumer = processor.CreateConsumer(processor.ConsumerGroup, connection, default);
+            var partitionIds = await consumer.GetPartitionIdsAsync();
+            Assert.That(processor.InitializeCalls.Keys.Count, Is.EqualTo(partitionIds.Length));
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
         ///   event.
         /// </summary>
@@ -628,6 +712,157 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task PartitionProcessorProcessEventsAsyncReceivesAllEvents()
+        {
+            Func<EventHubConnection> connectionFactory = () => new MockConnection();
+            MockConnection connection = connectionFactory() as MockConnection;
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var processor = new MockEventProcessorClient(
+                partitionManager,
+                connectionFactory: connectionFactory,
+                options: default,
+                fakePartitionPRocessing: false);
+
+            var consumer = processor.CreateConsumer(processor.ConsumerGroup, connection, default);
+            var partitionIds = await consumer.GetPartitionIdsAsync();
+            var expectedEvents = new Dictionary<string, List<EventData>>();
+
+            foreach (var partitionId in partitionIds)
+            {
+                // Send a similar set of events for every partition.
+
+                expectedEvents[partitionId] = new List<EventData>
+                {
+                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: event processor tests are so long.")),
+                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: there are so many of them.")),
+                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: will they ever end?")),
+                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: let's add a few more messages.")),
+                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: this is a monologue.")),
+                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: loneliness is what I feel.")),
+                    new EventData(Encoding.UTF8.GetBytes($"{ partitionId }: the end has come."))
+                };
+
+                // fill the mock event store with the events
+                expectedEvents[partitionId]
+                    .ForEach(e => processor.EventPipeline[partitionId].Enqueue(e));
+            }
+
+            // Start the event processors.
+            await processor.StartProcessingAsync();
+
+            // Make sure the event processors have enough time to stabilize.
+            await processor.WaitStabilization(verifyAllEventsAreProcessed: true);
+
+            // Stop the event processor
+            await processor.StopProcessingAsync();
+
+            foreach (var partitionId in partitionIds)
+            {
+                Assert.That(processor.ProcessEventCalls.TryGetValue(partitionId, out var partitionReceivedEvents), Is.True, $"{ partitionId }: there should have been a set of events received.");
+                Assert.That(partitionReceivedEvents.Count(evts => evts != null), Is.EqualTo(expectedEvents[partitionId].Count), $"{ partitionId }: amount of received events should match.");
+
+                var index = 0;
+
+                foreach (EventData receivedEvent in partitionReceivedEvents.Where(evt => evt != null))
+                {
+                    Assert.That(receivedEvent.IsEquivalentTo(expectedEvents[partitionId][index]), Is.True, $"{ partitionId }: the received event at index { index } did not match the sent set of events.");
+                    ++index;
+                }
+            }
+
+            Assert.That(processor.ProcessEventCalls.Keys.Count, Is.EqualTo(partitionIds.Count()));
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> calls Close for each of its partitions
+        ///   with the appropriate reason.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StopAsyncCallsPartitionProcessorCloseAsyncWithShutdownReason()
+        {
+            Func<EventHubConnection> connectionFactory = () => new MockConnection();
+            MockConnection connection = connectionFactory() as MockConnection;
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var processor = new MockEventProcessorClient(
+                partitionManager,
+                connectionFactory: connectionFactory,
+                options: default);
+
+            // Start the event processors.
+            await processor.StartProcessingAsync();
+
+            // Make sure the event processors have enough time to stabilize.
+            await processor.WaitStabilization();
+
+            // CloseAsync should have not been called when constructing the event processor or during processing initialization.
+            Assert.That(processor.CloseCalls.Keys, Is.Empty);
+
+            // Stop the event processor
+            await processor.StopProcessingAsync();
+
+            // Validate results.
+
+            var consumer = processor.CreateConsumer(processor.ConsumerGroup, connection, default);
+            var partitionIds = await consumer.GetPartitionIdsAsync();
+
+            Assert.That(partitionIds.Length, Is.GreaterThan(0));
+
+            foreach (var partitionId in partitionIds)
+            {
+                Assert.That(processor.CloseCalls.TryGetValue(partitionId, out var calls), Is.True, $"{ partitionId }: CloseAsync should have been called.");
+                Assert.That(calls, Is.EqualTo(1), $"{ partitionId }: CloseAsync should have been called only once.");
+
+                Assert.That(processor.StopReasons.TryGetValue(partitionId, out ProcessingStoppedReason reason), Is.True, $"{ partitionId }: processing stopped reason should have been set.");
+                Assert.That(reason, Is.EqualTo(ProcessingStoppedReason.Shutdown), $"{ partitionId }: unexpected processing stopped reason.");
+            }
+
+            Assert.That(processor.CloseCalls.Keys.Count, Is.EqualTo(partitionIds.Length));
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StopAsyncDoesNothingWhenEventProcessorIsNotRunning()
+        {
+            Func<EventHubConnection> connectionFactory = () => new MockConnection();
+            MockConnection connection = connectionFactory() as MockConnection;
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var processor = new MockEventProcessorClient(
+                partitionManager,
+                connectionFactory: connectionFactory,
+                options: default);
+
+            // InitializeAsync should have not been called when constructing the event processors.
+            Assert.That(processor.InitializeCalls.Keys, Is.Empty);
+
+            // Start the event processors.
+            await processor.StartProcessingAsync();
+
+            // Make sure the event processors have enough time to stabilize.
+            await processor.WaitStabilization();
+
+            // Stop the event processor
+            await processor.StopProcessingAsync();
+
+            // We should be able to call StopAsync again without getting an exception.
+            Assert.That(async () => await processor.StopProcessingAsync(), Throws.Nothing);
+
+            // Validate Results
+            var consumer = processor.CreateConsumer(processor.ConsumerGroup, connection, default);
+            var partitionIds = await consumer.GetPartitionIdsAsync();
+            Assert.That(processor.InitializeCalls.Keys.Count, Is.EqualTo(partitionIds.Length));
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
         /// </summary>
         ///
@@ -716,12 +951,13 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Serves as a non-functional connection for testing consumer functionality.
         /// </summary>
         ///
-        private class MockConnection : EventHubConnection
+        internal class MockConnection : EventHubConnection
         {
             public MockConnection(string namespaceName = "fakeNamespace",
-                                  string eventHubName = "fakeEventHub") : base(namespaceName, eventHubName, CreateCredentials())
-            {
-            }
+                                  string eventHubName = "fakeEventHub",
+                                  EventHubConnectionOptions options = null) : base(namespaceName, eventHubName, CreateCredentials(), options)
+            { }
+
 
             private static EventHubTokenCredential CreateCredentials()
             {
@@ -730,10 +966,23 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Serves a mock MockEventHubProperties.
+        /// </summary>
+        ///
+        internal class MockEventHubProperties : EventHubProperties
+        {
+            public MockEventHubProperties(string name,
+                                              DateTimeOffset createdOn,
+                                              string[] partitionIds) : base(name, createdOn, partitionIds)
+            { }
+
+        }
+
+        /// <summary>
         ///   Serves a mock context for a partition.
         /// </summary>
         ///
-        private class MockPartitionContext : PartitionContext
+        internal class MockPartitionContext : PartitionContext
         {
             public MockPartitionContext(string partitionId) : base(partitionId)
             {
