@@ -46,21 +46,23 @@ namespace CosmosDB.Tests.ScenarioTests
                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 }
 
-                string databaseName = GetResourceName("databaseName");
-                string databaseName2 = GetResourceName("databaseName2");
+                string databaseName = CosmosDBTestUtilities.GetResourceName("databaseName");
+                string databaseName2 = CosmosDBTestUtilities.GetResourceName("databaseName2");
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
                 {
                     Resource = new SqlDatabaseResource { Id = databaseName },
                     Options = new Dictionary<string, string>(){
-                        { "Throughput", "600"}
+                        { "foo", "bar"}
                     }
                 };
 
                 SqlDatabaseGetResults sqlDatabaseGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, sqlDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults);
+                Assert.Equal(databaseName, sqlDatabaseGetResults.Name);
 
                 SqlDatabaseGetResults sqlDatabaseGetResults2 = cosmosDBManagementClient.SqlResources.GetSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults2);
+                Assert.Equal(databaseName, sqlDatabaseGetResults2.Name);
 
                 VerifyEqualSqlDatabases(sqlDatabaseGetResults, sqlDatabaseGetResults2);
 
@@ -80,18 +82,28 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 SqlDatabaseGetResults sqlDatabaseGetResults3 = cosmosDBManagementClient.SqlResources.CreateUpdateSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2, sqlDatabaseCreateUpdateParameters2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabaseGetResults3);
+                Assert.Equal(databaseName2, sqlDatabaseGetResults3.Name);
 
                 IEnumerable<SqlDatabaseGetResults> sqlDatabases = cosmosDBManagementClient.SqlResources.ListSqlDatabasesWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlDatabases);
 
                 ThroughputSettingsGetResults throughputSettingsGetResults = cosmosDBManagementClient.SqlResources.GetSqlDatabaseThroughputWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2).GetAwaiter().GetResult().Body;
                 Assert.NotNull(throughputSettingsGetResults);
+                Assert.NotNull(throughputSettingsGetResults.Name);
+                Assert.Equal("Microsoft.DocumentDB/databaseAccounts/sqlDatabases/throughputSettings", throughputSettingsGetResults.Type);
 
-                string containerName = GetResourceName("containerName");
+                string containerName = CosmosDBTestUtilities.GetResourceName("containerName");
 
                 SqlContainerCreateUpdateParameters sqlContainerCreateUpdateParameters = new SqlContainerCreateUpdateParameters
                 {
-                    Resource = new SqlContainerResource { Id = containerName },
+                    Resource = new SqlContainerResource { 
+                        Id = containerName,
+                        PartitionKey = new ContainerPartitionKey
+                        {
+                            Kind = "Hash",
+                            Paths = new List<string> { "/address/zipCode"}
+                        }
+                    },
                     Options = new Dictionary<string, string>(){
                         { "Throughput", "700"}
                     }
@@ -100,15 +112,37 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlContainerGetResults sqlContainerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlContainerGetResults);
 
-                IEnumerable< SqlContainerGetResults > sqlContainerGetResults1 = cosmosDBManagementClient.SqlResources.ListSqlContainersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
-                Assert.NotNull(sqlContainerGetResults1);
+                IEnumerable< SqlContainerGetResults > sqlContainers = cosmosDBManagementClient.SqlResources.ListSqlContainersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlContainers);
 
+                try
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName2, containerName);
+                    Assert.True(false, "should throw exception");
+                }
+                catch (Exception)
+                {
+                }
+
+                foreach (SqlContainerGetResults sqlContainer in sqlContainers)
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, sqlContainer.Name);
+                }
+
+                try
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteSqlDatabaseWithHttpMessagesAsync(resourceGroupName, "IncorrectDatabaseAccountName", databaseName);
+                    Assert.True(false, "should throw exception");
+                }
+                catch (Exception)
+                {
+                }
+
+                foreach (SqlDatabaseGetResults sqlDatabase in sqlDatabases)
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteSqlDatabaseWithHttpMessagesAsync(resourceGroupName, databaseAccountName, sqlDatabase.Name);
+                }
             }
-        }
-
-        private string GetResourceName(string prefix)
-        {
-            return string.Concat(prefix, (DateTime.Now).ToString("yyyyMMddHHmmssffff"));
         }
 
         private void VerifyEqualSqlDatabases(SqlDatabaseGetResults expectedValue, SqlDatabaseGetResults actualValue)

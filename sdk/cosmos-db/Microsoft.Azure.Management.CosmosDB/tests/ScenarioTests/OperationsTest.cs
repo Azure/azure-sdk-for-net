@@ -29,7 +29,6 @@ namespace CosmosDB.Tests.ScenarioTests
                 // Verify operations are returned
                 Assert.NotNull(operations);
                 Assert.NotEmpty(operations);
-
             }
         }
     }

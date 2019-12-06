@@ -34,7 +34,8 @@ namespace CosmosDB.Tests
             {
                 Location = LOCATION
             };
-            resourcesClient.ResourceGroups.CreateOrUpdate(rgname, resourceGroupDefinition);
+            if(!(bool)resourcesClient.ResourceGroups.CheckExistenceAsync(rgname).GetAwaiter().GetResult())
+                resourcesClient.ResourceGroups.CreateOrUpdate(rgname, resourceGroupDefinition);
             return rgname;
         }
     
@@ -43,6 +44,11 @@ namespace CosmosDB.Tests
             handler.IsPassThrough = true;
             ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
             return resourcesClient;
+        }
+
+        public static string GetResourceName(string prefix)
+        {
+            return string.Concat(prefix, (DateTime.Now).ToString("yyyyMMddHHmmssffff"));
         }
     }
 }

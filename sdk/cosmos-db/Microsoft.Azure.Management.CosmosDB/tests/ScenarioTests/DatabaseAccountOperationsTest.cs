@@ -27,7 +27,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
 
                 string resourceGroupName = CosmosDBTestUtilities.CreateResourceGroup(resourcesClient);
-                string databaseAccountName = "db9938";
+                string databaseAccountName = "db993812";
 
                 List<Location> locations = new List<Location>();
                 locations.Add(new Location(locationName: "East US"));
@@ -122,17 +122,10 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 DatabaseAccountListKeysResult databaseAccountListRegeneratedKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
 
-                //Takes time for the regeneration of keys
-                //Assert.NotEqual(databaseAccountListKeysResult.PrimaryMasterKey, databaseAccountListRegeneratedKeysResult.PrimaryMasterKey);
-                //Assert.NotEqual(databaseAccountListKeysResult.SecondaryMasterKey, databaseAccountListRegeneratedKeysResult.SecondaryMasterKey);
-                //Assert.NotEqual(databaseAccountListKeysResult.PrimaryReadonlyMasterKey, databaseAccountListRegeneratedKeysResult.PrimaryReadonlyMasterKey);
-                //Assert.NotEqual(databaseAccountListKeysResult.SecondaryReadonlyMasterKey, databaseAccountListRegeneratedKeysResult.SecondaryReadonlyMasterKey);
+                bool isNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
+                Assert.True(isNameExists);
 
                 cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
-
-                bool isNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
-
-                Assert.False(isNameExists);
             }
         }
 
