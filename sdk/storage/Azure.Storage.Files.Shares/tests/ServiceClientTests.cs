@@ -165,7 +165,7 @@ namespace Azure.Storage.Files.Shares.Test
             }
 
             // Assert
-           ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).First();
+            ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).First();
             Assert.IsNotNull(premiumShareItem.Properties.ETag);
             Assert.IsNotNull(premiumShareItem.Properties.LastModified);
             Assert.IsNotNull(premiumShareItem.Properties.NextAllowedQuotaDowngradeTime);
