@@ -7,6 +7,7 @@ using Azure.Core.Buffers;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Buffers;
+using System.Text;
 
 namespace Azure.Core
 {
@@ -172,6 +173,8 @@ namespace Azure.Core
             {
                 await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
             }
+
+            public override string ToString() => Encoding.UTF8.GetString(_bytes, 0, _bytes.Length);
         }
 
         private sealed class MemoryContent : RequestContent
@@ -199,6 +202,8 @@ namespace Azure.Core
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
             }
+
+            public override string ToString() => Encoding.UTF8.GetString(_bytes.ToArray(), 0, _bytes.Length);
         }
 
         private sealed class ReadOnlySequenceContent : RequestContent
@@ -226,6 +231,8 @@ namespace Azure.Core
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
             }
+
+            public override string ToString() => Encoding.UTF8.GetString(_bytes.ToArray(), 0, (int)_bytes.Length);
         }
     }
 }
