@@ -5,29 +5,29 @@
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-37c65270a84a594aaef5fd4908d3ca07-1e1500ad44b48243-00",
+        "traceparent": "00-76734812576dce49af69ae981eefad7c-fae3fa4a144fd642-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "58c983c6-ae86-3fcf-8a47-b41c89a46785",
-        "x-ms-date": "Wed, 04 Dec 2019 23:02:50 GMT",
+        "x-ms-date": "Fri, 06 Dec 2019 00:28:24 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Date": "Wed, 04 Dec 2019 23:02:52 GMT",
-        "ETag": "\u00220x8D7790E1712E424\u0022",
-        "Last-Modified": "Wed, 04 Dec 2019 23:02:51 GMT",
+        "Date": "Fri, 06 Dec 2019 00:28:25 GMT",
+        "ETag": "\u00220x8D779E33546DACD\u0022",
+        "Last-Modified": "Fri, 06 Dec 2019 00:28:25 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "58c983c6-ae86-3fcf-8a47-b41c89a46785",
-        "x-ms-request-id": "d2cbbc0d-101a-0037-37f6-aa4163000000",
+        "x-ms-request-id": "1e44865f-a01a-00c0-7acc-ab6788000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
@@ -38,11 +38,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c72d1753-948a-df28-d9ad-932119938a85",
-        "x-ms-date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "x-ms-date": "Fri, 06 Dec 2019 00:28:25 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -50,30 +50,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "Date": "Fri, 06 Dec 2019 00:28:25 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "c72d1753-948a-df28-d9ad-932119938a85",
-        "x-ms-request-id": "d2cbbc12-101a-0037-38f6-aa4163000000",
+        "x-ms-request-id": "1e448663-a01a-00c0-7bcc-ab6788000000",
         "x-ms-version": "2019-07-07"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Etest-share-0e6843ee-9c94-3a81-f2cc-e3f34b53edaf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 23:02:51 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7790E1712E424\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EWed, 04 Dec 2019 23:02:51 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-4f448f0a-b9a5-3581-bff4-b852cd2a616e\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 21 Nov 2019 23:58:27 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D76EDEB41D146D\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 21 Nov 2019 23:58:27 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-bde8486f-e193-78f9-914e-19c3418dae0d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 22 Nov 2019 00:24:32 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D76EE25888B159\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EFri, 22 Nov 2019 00:24:32 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceapitestslistshareswithpremiumshare0038723930\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 19:25:55 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779B8F32EE1E0\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 19:25:55 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceapitestslistshareswithpremiumshare07537755af\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:37:58 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779C30379688F\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 20:37:57 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceasyncapitestslistshareswithpremiumshare0229959a\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 19:34:11 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779BA1AA09CDE\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 19:34:11 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceasyncapitestslistshareswithpremiumshare056496c5\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:38:37 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779C31B4C492D\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 20:38:37 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceasyncapitestslistshareswithpremiumshare05687330\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:16:46 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779C00D582B1D\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 20:16:46 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceasyncapitestslistshareswithpremiumshare0588960d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 19:31:12 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779B9AFFA6838\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 19:31:12 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceasyncapitestslistshareswithpremiumshare07866844\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:16:55 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779C013258493\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 20:16:55 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsfileserviceasyncapitestslistshareswithpremiumshare0799469d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 19:35:52 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779BA56C81E32\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 19:35:52 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsshareapitestsgetpropertiespremium083320a655990a80\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 19:16:45 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779B7AB2E6AE9\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 19:16:45 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Ejtsshareasyncapitestsgetpropertiespremium004757e6d7da63\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:20:32 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779C094778270\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 05 Dec 2019 20:20:32 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-0e6843ee-9c94-3a81-f2cc-e3f34b53edaf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 06 Dec 2019 00:28:25 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779E33546DACD\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EFri, 06 Dec 2019 00:28:25 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-4f448f0a-b9a5-3581-bff4-b852cd2a616e\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 21 Nov 2019 23:58:27 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D76EDEB41D146D\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EThu, 21 Nov 2019 23:58:27 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-bde8486f-e193-78f9-914e-19c3418dae0d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 22 Nov 2019 00:24:32 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D76EE25888B159\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EFri, 22 Nov 2019 00:24:32 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
       "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/test-share-0e6843ee-9c94-3a81-f2cc-e3f34b53edaf?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-ab27d65604e47b44b924361c7716d20a-faccbb6580330543-00",
+        "traceparent": "00-617da5d028404d48b6a685fa8db5f744-c8d6eb11ac44584e-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "71c8105e-a077-55fa-b0dd-8f79c6440500",
-        "x-ms-date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "x-ms-date": "Fri, 06 Dec 2019 00:28:25 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
@@ -81,14 +81,14 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Date": "Wed, 04 Dec 2019 23:02:52 GMT",
+        "Date": "Fri, 06 Dec 2019 00:28:25 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "71c8105e-a077-55fa-b0dd-8f79c6440500",
-        "x-ms-request-id": "d2cbbc13-101a-0037-39f6-aa4163000000",
+        "x-ms-request-id": "1e448666-a01a-00c0-7dcc-ab6788000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
