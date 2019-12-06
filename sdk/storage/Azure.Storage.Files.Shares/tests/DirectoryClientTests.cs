@@ -538,6 +538,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.AreEqual(0, response.ClosedHandlesCount);
+            Assert.AreEqual(0, response.FailedHandlesCount);
         }
 
         [Test]
@@ -552,6 +553,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.AreEqual(0, response.ClosedHandlesCount);
+            Assert.AreEqual(0, response.FailedHandlesCount);
         }
 
         [Test]

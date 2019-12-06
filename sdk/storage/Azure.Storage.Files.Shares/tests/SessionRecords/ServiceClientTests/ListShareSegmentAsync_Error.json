@@ -10,7 +10,11 @@
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f6197ea3-d7bc-7c69-3f11-0b5bc6f71b5d",
+<<<<<<< HEAD
         "x-ms-date": "Wed, 04 Dec 2019 23:12:05 GMT",
+=======
+        "x-ms-date": "Wed, 04 Dec 2019 19:49:06 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -19,6 +23,7 @@
       "ResponseHeaders": {
         "Content-Length": "328",
         "Content-Type": "application/xml",
+<<<<<<< HEAD
         "Date": "Wed, 04 Dec 2019 23:12:05 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "x-ms-request-id": "d07805b1-e01a-000c-01f8-aab7f2000000"
@@ -27,6 +32,16 @@
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
         "RequestId:d07805b1-e01a-000c-01f8-aab7f2000000\n",
         "Time:2019-12-04T23:12:05.8165785Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-07-07\u003C/HeaderValue\u003E\u003C/Error\u003E"
+=======
+        "Date": "Wed, 04 Dec 2019 19:49:05 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-request-id": "1507fe35-201a-013c-37db-aaab8d000000"
+      },
+      "ResponseBody": [
+        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
+        "RequestId:1507fe35-201a-013c-37db-aaab8d000000\n",
+        "Time:2019-12-04T19:49:06.5779806Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-07-07\u003C/HeaderValue\u003E\u003C/Error\u003E"
+>>>>>>> feature/storage/stg71-base
       ]
     }
   ],
