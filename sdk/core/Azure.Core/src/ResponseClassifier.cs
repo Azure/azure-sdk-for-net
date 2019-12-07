@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Azure.Core
 {
@@ -25,7 +26,8 @@ namespace Azure.Core
         public virtual bool IsRetriableException(Exception exception)
         {
             return (exception is IOException) ||
-                   (exception is RequestFailedException requestFailed && requestFailed.Status == 0);
+                   (exception is RequestFailedException requestFailed && requestFailed.Status == 0) ||
+                   (exception is TaskCanceledException);
         }
 
         /// <summary>

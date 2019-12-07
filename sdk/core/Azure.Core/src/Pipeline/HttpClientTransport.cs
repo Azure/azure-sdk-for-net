@@ -35,6 +35,7 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(HttpClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
+            _client.Timeout = TimeSpan.FromSeconds(600);
         }
 
         /// <summary>
@@ -227,7 +228,6 @@ namespace Azure.Core.Pipeline
                 }
 
                 currentRequest.RequestUri = Uri.ToUri();
-
 
                 if (Content != null)
                 {

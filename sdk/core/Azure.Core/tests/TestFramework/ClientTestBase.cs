@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace Azure.Core.Testing
     public class ClientTestBase
     {
         private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
-
+        private static int count = 0;
         private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
         private static readonly IInterceptor s_diagnosticScopeValidatingInterceptor = new DiagnosticScopeValidatingInterceptor();
@@ -40,7 +41,10 @@ namespace Azure.Core.Testing
         public virtual TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class
         {
             Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
-
+            ThreadPool.GetAvailableThreads(out int worker, out int port);
+            TestContext.Progress.WriteLine($"available worker: {worker}, available port: {port}");
+            TestContext.Progress.WriteLine($"active threads: {Process.GetCurrentProcess().Threads.Count}");
+            TestContext.Progress.WriteLine($"{GetType().FullName}: {count++}");
             if (ClientValidation<TClient>.Validated == false)
             {
                 foreach (MethodInfo methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))

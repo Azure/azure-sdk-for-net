@@ -3,7 +3,7 @@
     <AzureCoreSharedSources>$(MSBuildThisFileDirectory)\Shared\</AzureCoreSharedSources>
   </PropertyGroup>
 
-  <ItemGroup>
+   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 

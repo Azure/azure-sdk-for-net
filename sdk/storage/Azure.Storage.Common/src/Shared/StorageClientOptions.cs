@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -88,9 +89,11 @@ namespace Azure.Storage
             {
                 perRetryClientPolicies.Add(new GeoRedundantReadPolicy(geoRedundantSecondaryStorageUri));
                 // we use a custom response classifier so that we can retry in case of a 404 that occurs against the secondary host. The retry will happen on the primary host.
-                classifier = new StorageResponseClassifier(geoRedundantSecondaryStorageUri);
             }
-
+            classifier = new StorageResponseClassifier(geoRedundantSecondaryStorageUri);
+            HttpClient client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(1000);
+            options.Transport = new HttpClientTransport(client);
             perRetryClientPolicies.Add(StorageRequestValidationPipelinePolicy.Shared);
             perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
             return HttpPipelineBuilder.Build(

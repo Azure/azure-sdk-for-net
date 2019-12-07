@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
@@ -28,6 +29,22 @@ namespace Azure.Storage.Test.Shared
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
+            ThreadPool.GetAvailableThreads(out int worker, out int port);
+            TestContext.Progress.WriteLine($"worker: {worker}, port: {port}");
+            // Our live sync tests tend to suffer from thread starvation due to sync over async.
+            // So for sync tests, we set the min threads to 1000 to avoid timeouts,
+            // and for async we switch back to whatever the default values are.
+            //if (mode == RecordedTestMode.Live)
+            //{
+            //    if (async)
+            //    {
+            //        ThreadPool.SetMinThreads(s_defaultMinWorkerThreads, s_defaultMinPortThreads);
+            //    }
+            //    else
+            //    {
+            //        ThreadPool.SetMinThreads(1000, 1000);
+            //    }
+            //}
             Sanitizer = new StorageRecordedTestSanitizer();
             Matcher = new StorageRecordMatcher(Sanitizer);
         }
