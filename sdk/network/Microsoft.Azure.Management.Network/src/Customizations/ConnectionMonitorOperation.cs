@@ -23,38 +23,14 @@ namespace Microsoft.Azure.Management.Network
         public static async Task<ConnectionMonitorResult> CreateOrUpdateV1(this IConnectionMonitorsOperations operations,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<ConnectionMonitorResult> _respons = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(null, null, null, null, null, default(CancellationToken)).ConfigureAwait(false);
+            AzureOperationResponse<ConnectionMonitorResult> _respons = await operations.BeginCreateOrUpdateWithHttpMessagesV1Async(null, null, null, null, null, default(CancellationToken)).ConfigureAwait(false);
 
             return _respons.Body;
         }
     }
 
-
-    internal partial class ConnnectioMonitorCustomization : IServiceOperations<NetworkManagementClient>, IConnectionMonitorsOperations
+    internal partial class ConnectionMonitorsOperations : IServiceOperations<NetworkManagementClient>, IConnectionMonitorsOperations
     {
-        /// <summary>
-        /// Initializes a new instance of the ConnectionMonitorsOperations class.
-        /// </summary>
-        /// <param name='client'>
-        /// Reference to the service client.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        internal ConnnectioMonitorCustomization(NetworkManagementClient client)
-        {
-            if (client == null)
-            {
-                throw new System.ArgumentNullException("client");
-            }
-            Client = client;
-        }
-
-        /// <summary>
-        /// Gets a reference to the NetworkManagementClient
-        /// </summary>
-        public NetworkManagementClient Client { get; private set; }
-
         /// <summary>
         /// Create or update a connection monitor.
         /// </summary>
@@ -91,7 +67,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ConnectionMonitorResult>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionMonitorResult>> BeginCreateOrUpdateWithHttpMessagesV1Async(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -287,62 +263,6 @@ namespace Microsoft.Azure.Management.Network
                 ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
-        }
-
-        public async Task<AzureOperationResponse<ConnectionMonitorResult>> CreateOrUpdateWithHttpMessages(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-        public async Task<AzureOperationResponse<ConnectionMonitorResult>> GetWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-
-        public async Task<AzureOperationResponse<ConnectionMonitorResult>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, TagsObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-
-        public async Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-
-        public async Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-
-        public async Task<AzureOperationResponse<ConnectionMonitorQueryResult>> QueryWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-
-        public async Task<AzureOperationResponse<IEnumerable<ConnectionMonitorResult>>> ListWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-
-        public async Task<AzureOperationResponse> BeginStopWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-        public async Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-        public async Task<AzureOperationResponse<ConnectionMonitorQueryResult>> BeginQueryWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
-        }
-
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            return null;
         }
     }
 }
