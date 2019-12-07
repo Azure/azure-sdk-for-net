@@ -9,6 +9,13 @@
                 "description": "The base resource name."
             }
         },
+        "provisionerTenantId": {
+            "type": "string",
+            "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+            "metadata": {
+                "description": "The tenant ID to which the client OID belongs."
+            }
+        },
         "testApplicationOid": {
             "type": "string",
             "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
@@ -38,10 +45,10 @@
                     "family": "A",
                     "name": "premium"
                 },
-                "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                "tenantId": "[parameters('provisionerTenantId')]",
                 "accessPolicies": [
                     {
-                        "tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                        "tenantId": "[parameters('provisionerTenantId')]",
                         "objectId": "[parameters('testApplicationOid')]",
                         "permissions": {
                             "keys": [

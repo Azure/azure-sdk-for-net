@@ -88,14 +88,19 @@ if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
 }
 
 # Populate the template parameters and merge any additional specified.
-$templateParameters = @{
-    baseName = $BaseName
-    provisionerTenantId = $ProvisionerTenantId
-    provisionerClientId = $ProvisionerClientId
-    provisionerClientSecret = $ProvisionerClientSecret
-    testApplicationOid = $TestApplicationOid
+$templateParameters = @{baseName = $BaseName}
+if ($ProvisionerTenantId) {
+    $templateParameters.Add('provisionerTenantId', $ProvisionerTenantId)
 }
-
+if ($ProvisionerClientId) {
+    $templateParameters.Add('provisionerClientId', $ProvisionerClientId)
+}
+if ($ProvisionerClientSecret) {
+    $templateParameters.Add('provisionerClientSecret', $ProvisionerClientSecret)
+}
+if ($TestApplicationOid) {
+    $templateParameters.Add('testApplicationOid', $TestApplicationOid)
+}
 if ($AdditionalParameters) {
     $templateParameters += $AdditionalParameters
 }
