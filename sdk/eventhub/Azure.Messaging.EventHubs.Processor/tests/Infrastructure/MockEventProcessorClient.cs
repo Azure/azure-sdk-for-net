@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
+using static Azure.Messaging.EventHubs.Tests.EventProcessorClientTests;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -173,8 +174,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 while (eventQueue.TryDequeue(out var eventData))
                 {
                     await Task.Delay(0);
-                    yield return new PartitionEvent(Mock.Of<PartitionContext>(), eventData);
+                    yield return new PartitionEvent(new MockPartitionContext(partitionId), eventData);
                 }
+                yield break;
             }
             else
             {
