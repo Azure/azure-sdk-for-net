@@ -945,13 +945,13 @@ namespace Azure.Messaging.EventHubs
                                 if (ActiveOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
                                 {
                                     ActiveOwnershipWithDistribution[ownership.OwnerIdentifier].Add(ownership);
-                                    unclaimedPartitions.Remove(ownership.PartitionId);
                                 }
                                 else
                                 {
                                     ActiveOwnershipWithDistribution[ownership.OwnerIdentifier] = new List<PartitionOwnership> { ownership };
-                                    unclaimedPartitions.Remove(ownership.PartitionId);
                                 }
+
+                                unclaimedPartitions.Remove(ownership.PartitionId);
                             }
                         }
 
@@ -1095,7 +1095,7 @@ namespace Azure.Messaging.EventHubs
                 // need to steal from the processors that have exactly the maximum amount.  If this instance is below the minimum count, then
                 // we have no choice as we need to enforce balancing.  Otherwise, leave it as it is because the distribution wouldn't change.
 
-                if (!partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any() && ownedPartitionsCount < minimumOwnedPartitionsCount)
+                if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count == 0 && ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
                     // If any stealable partitions were found, randomly pick one of them to claim.
                     var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
@@ -1107,7 +1107,7 @@ namespace Azure.Messaging.EventHubs
 
                     return new ValueTask<PartitionOwnership>(returnTask);
                 }
-                else if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Any())
+                else if (partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0)
                 {
                     // If any stealable partitions were found, randomly pick one of them to claim.
                     var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
