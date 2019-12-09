@@ -37,16 +37,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// repairs are suspended due to a state change on VM. The grace time
         /// starts after the state change has completed. This helps avoid
         /// premature or accidental repairs. The time duration should be
-        /// specified in ISO 8601 format. The default value is 5 minutes
-        /// (PT5M).</param>
-        /// <param name="maxInstanceRepairsPercent">The percentage (capacity of
-        /// scaleset) of virtual machines that will be simultaneously repaired.
-        /// The default value is 20%.</param>
-        public AutomaticRepairsPolicy(bool? enabled = default(bool?), string gracePeriod = default(string), int? maxInstanceRepairsPercent = default(int?))
+        /// specified in ISO 8601 format. The minimum allowed grace period is
+        /// 30 minutes (PT30M), which is also the default value.</param>
+        public AutomaticRepairsPolicy(bool? enabled = default(bool?), string gracePeriod = default(string))
         {
             Enabled = enabled;
             GracePeriod = gracePeriod;
-            MaxInstanceRepairsPercent = maxInstanceRepairsPercent;
             CustomInit();
         }
 
@@ -67,18 +63,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// suspended due to a state change on VM. The grace time starts after
         /// the state change has completed. This helps avoid premature or
         /// accidental repairs. The time duration should be specified in ISO
-        /// 8601 format. The default value is 5 minutes (PT5M).
+        /// 8601 format. The minimum allowed grace period is 30 minutes
+        /// (PT30M), which is also the default value.
         /// </summary>
         [JsonProperty(PropertyName = "gracePeriod")]
         public string GracePeriod { get; set; }
-
-        /// <summary>
-        /// Gets or sets the percentage (capacity of scaleset) of virtual
-        /// machines that will be simultaneously repaired. The default value is
-        /// 20%.
-        /// </summary>
-        [JsonProperty(PropertyName = "maxInstanceRepairsPercent")]
-        public int? MaxInstanceRepairsPercent { get; set; }
 
     }
 }
