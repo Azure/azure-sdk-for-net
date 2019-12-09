@@ -11,7 +11,7 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
     ///
     /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity" />
     ///
-    public interface IEventHubsIdentitySample: ISample
+    public interface IEventHubsIdentitySample : ISample
     {
         /// <summary>
         ///   Allows for executing the sample.
