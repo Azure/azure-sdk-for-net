@@ -36,14 +36,14 @@ namespace Azure.AI.TextAnalytics
         #endregion
 
         #region Recognize Entities
-        private static async Task<Response<RecognizeEntitiesResultCollection>> CreateRecognizeEntitiesResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<RecognizeEntitiesResultCollection>> CreateRecognizeEntitiesResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
-            RecognizeEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            RecognizeEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<RecognizeEntitiesResultCollection> CreateRecognizeEntitiesResponse(Response response) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream), response);
+        private static Response<RecognizeEntitiesResultCollection> CreateRecognizeEntitiesResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
 

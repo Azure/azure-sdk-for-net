@@ -5,6 +5,7 @@ using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -263,21 +264,21 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Entities
 
-        public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
-            return ReadRecognizeEntitiesResultCollection(root);
+            return ReadRecognizeEntitiesResultCollection(root, idToIndexMap);
         }
 
-        public static RecognizeEntitiesResultCollection DeserializeRecognizeEntitiesResponse(Stream content)
+        public static RecognizeEntitiesResultCollection DeserializeRecognizeEntitiesResponse(Stream content, Dictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
-            return ReadRecognizeEntitiesResultCollection(root);
+            return ReadRecognizeEntitiesResultCollection(root, idToIndexMap);
         }
 
-        private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root)
+        private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root, Dictionary<string, int> idToIndexMap)
         {
             var collection = new List<RecognizeEntitiesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -293,10 +294,17 @@ namespace Azure.AI.TextAnalytics
                 collection.Add(new RecognizeEntitiesResult(error.Id, error.ErrorMessage));
             }
 
+            collection = SortHeterogeneousCollection(collection, idToIndexMap).ToList();
+
             TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
             return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
+        }
+
+        private static IEnumerable<T> SortHeterogeneousCollection<T>(IEnumerable<T> collection, Dictionary<string, int> idToIndexMap) where T : TextAnalysisResult
+        {
+            return collection.OrderBy(result => idToIndexMap[result.Id]);
         }
 
         private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
