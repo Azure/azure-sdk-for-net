@@ -24,14 +24,14 @@ namespace Azure.AI.TextAnalytics
         private const string ModelVersion = "model-version";
 
         #region Detect Language
-        private static async Task<Response<DetectLanguageResultCollection>> CreateDetectLanguageResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<DetectLanguageResultCollection>> CreateDetectLanguageResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
-            DetectLanguageResultCollection result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            DetectLanguageResultCollection result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<DetectLanguageResultCollection> CreateDetectLanguageResponse(Response response) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream), response);
+        private static Response<DetectLanguageResultCollection> CreateDetectLanguageResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
 
@@ -48,38 +48,38 @@ namespace Azure.AI.TextAnalytics
         #endregion
 
         #region Analyze Sentiment
-        private static async Task<Response<AnalyzeSentimentResultCollection>> CreateAnalyzeSentimentResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<AnalyzeSentimentResultCollection>> CreateAnalyzeSentimentResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
-            AnalyzeSentimentResultCollection result = await TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            AnalyzeSentimentResultCollection result = await TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<AnalyzeSentimentResultCollection> CreateAnalyzeSentimentResponse(Response response) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream), response);
+        private static Response<AnalyzeSentimentResultCollection> CreateAnalyzeSentimentResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion  Analyze Sentiment
 
         #region Extract KeyPhrases
-        private static async Task<Response<ExtractKeyPhrasesResultCollection>> CreateKeyPhraseResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<ExtractKeyPhrasesResultCollection>> CreateKeyPhraseResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
-            ExtractKeyPhrasesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            ExtractKeyPhrasesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<ExtractKeyPhrasesResultCollection> CreateKeyPhraseResponse(Response response) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream), response);
+        private static Response<ExtractKeyPhrasesResultCollection> CreateKeyPhraseResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion Extract KeyPhrases
 
         #region Entity Linking
-        private static async Task<Response<ExtractLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, CancellationToken cancellation)
+        private static async Task<Response<ExtractLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
-            ExtractLinkedEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, cancellation).ConfigureAwait(false);
+            ExtractLinkedEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<ExtractLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response) =>
-            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream), response);
+        private static Response<ExtractLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
 

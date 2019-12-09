@@ -106,13 +106,15 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
+                List<DetectLanguageInput> inputs = ConvertToDetectLanguageInputs(new string[] { inputText }, countryHint);
+                using Request request = CreateDetectLanguageRequest(inputs, new TextAnalysisOptions());
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
                     case 200:
-                        DetectLanguageResultCollection result = await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        DetectLanguageResultCollection result = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -146,13 +148,15 @@ namespace Azure.AI.TextAnalytics
 
             try
             {
-                using Request request = CreateDetectLanguageRequest(new string[] { inputText }, countryHint);
+                List<DetectLanguageInput> inputs = ConvertToDetectLanguageInputs(new string[] { inputText }, countryHint);
+                using Request request = CreateDetectLanguageRequest(inputs, new TextAnalysisOptions());
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
                 {
                     case 200:
-                        DetectLanguageResultCollection result = CreateDetectLanguageResponse(response);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        DetectLanguageResultCollection result = CreateDetectLanguageResponse(response, map);
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -217,7 +221,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateDetectLanguageResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync();
                 }
@@ -247,51 +252,20 @@ namespace Azure.AI.TextAnalytics
                 using Request request = CreateDetectLanguageRequest(inputs, options);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                return response.Status switch
+                switch (response.Status)
                 {
-                    200 => CreateDetectLanguageResponse(response),
-                    _ => throw response.CreateRequestFailedException(),
-                };
+                    case 200:
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return CreateDetectLanguageResponse(response, map);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        private Request CreateDetectLanguageRequest(IEnumerable<string> inputs, string countryHint)
-        {
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, countryHint);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForRoute(LanguagesRoute, request.Uri, new TextAnalysisOptions());
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
-        }
-
-        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, TextAnalysisOptions options)
-        {
-            Request request = _pipeline.CreateRequest();
-
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs);
-
-            request.Method = RequestMethod.Post;
-            BuildUriForRoute(LanguagesRoute, request.Uri, options);
-
-            request.Headers.Add(HttpHeader.Common.JsonContentType);
-            request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
-            return request;
         }
 
         #endregion
@@ -436,7 +410,6 @@ namespace Azure.AI.TextAnalytics
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
-
             }
             catch (Exception e)
             {
@@ -506,7 +479,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -547,7 +521,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response, map);
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -609,11 +584,14 @@ namespace Azure.AI.TextAnalytics
                 using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-                return response.Status switch
+                switch (response.Status)
                 {
-                    200 => await CreateAnalyzeSentimentResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    _ => throw await response.CreateRequestFailedExceptionAsync(),
-                };
+                    case 200:
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -640,11 +618,14 @@ namespace Azure.AI.TextAnalytics
                 using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                return response.Status switch
+                switch (response.Status)
                 {
-                    200 => CreateAnalyzeSentimentResponse(response),
-                    _ => throw response.CreateRequestFailedException(),
-                };
+                    case 200:
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return CreateAnalyzeSentimentResponse(response, map);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
             }
             catch (Exception e)
             {
@@ -680,7 +661,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        ExtractKeyPhrasesResultCollection result = await CreateKeyPhraseResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        ExtractKeyPhrasesResultCollection result = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -721,7 +703,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        ExtractKeyPhrasesResultCollection result = CreateKeyPhraseResponse(response);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        ExtractKeyPhrasesResultCollection result = CreateKeyPhraseResponse(response, map);
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -783,11 +766,14 @@ namespace Azure.AI.TextAnalytics
                 using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-                return response.Status switch
+                switch (response.Status)
                 {
-                    200 => await CreateKeyPhraseResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    _ => throw await response.CreateRequestFailedExceptionAsync(),
-                };
+                    case 200:
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
             }
             catch (Exception e)
             {
@@ -814,11 +800,14 @@ namespace Azure.AI.TextAnalytics
                 using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                return response.Status switch
+                switch (response.Status)
                 {
-                    200 => CreateKeyPhraseResponse(response),
-                    _ => throw response.CreateRequestFailedException(),
-                };
+                    case 200:
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return CreateKeyPhraseResponse(response, map);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
             }
             catch (Exception e)
             {
@@ -1036,7 +1025,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        ExtractLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, cancellationToken).ConfigureAwait(false);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        ExtractLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1077,7 +1067,8 @@ namespace Azure.AI.TextAnalytics
                 switch (response.Status)
                 {
                     case 200:
-                        ExtractLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response);
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        ExtractLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1139,11 +1130,14 @@ namespace Azure.AI.TextAnalytics
                 using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
 
-                return response.Status switch
+                switch (response.Status)
                 {
-                    200 => await CreateLinkedEntityResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    _ => throw await response.CreateRequestFailedExceptionAsync(),
-                };
+                    case 200:
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                    default:
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -1170,11 +1164,14 @@ namespace Azure.AI.TextAnalytics
                 using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                return response.Status switch
+                switch (response.Status)
                 {
-                    200 => CreateLinkedEntityResponse(response),
-                    _ => throw response.CreateRequestFailedException(),
-                };
+                    case 200:
+                        Dictionary<string, int> map = CreateIdToIndexMap(inputs);
+                        return CreateLinkedEntityResponse(response, map);
+                    default:
+                        throw response.CreateRequestFailedException();
+                }
             }
             catch (Exception e)
             {
@@ -1188,6 +1185,19 @@ namespace Azure.AI.TextAnalytics
         #region Common
 
         private static Dictionary<string, int> CreateIdToIndexMap(IEnumerable<TextDocumentInput> inputs)
+        {
+            var map = new Dictionary<string, int>();
+
+            int i = 0;
+            foreach (var item in inputs)
+            {
+                map[item.Id] = i++;
+            }
+
+            return map;
+        }
+
+        private static Dictionary<string, int> CreateIdToIndexMap(IEnumerable<DetectLanguageInput> inputs)
         {
             var map = new Dictionary<string, int>();
 
@@ -1243,6 +1253,23 @@ namespace Azure.AI.TextAnalytics
 
             request.Method = RequestMethod.Post;
             BuildUriForRoute(route, request.Uri, options);
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = RequestContent.Create(content);
+
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+
+            return request;
+        }
+
+        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, TextAnalysisOptions options)
+        {
+            Request request = _pipeline.CreateRequest();
+
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs);
+
+            request.Method = RequestMethod.Post;
+            BuildUriForRoute(LanguagesRoute, request.Uri, options);
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
