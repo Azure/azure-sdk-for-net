@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Network
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ConnectionMonitorResult>> CreateOrUpdateWithHttpMessages(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConnectionMonitorResult>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a connection monitor by name.
         /// </summary>
