@@ -11,7 +11,7 @@
 		<PackageTags>AzureDataBoxEdge;DataBox;</PackageTags>
     <PackageReleaseNotes>
 	      <![CDATA[
-        This is a public release of the Azure DataBoxEdge SDK(Previously Microsoft.Azure.Management.EdgeGateway). Included with this release are VM management
+        This is a public release of the Azure DataBoxEdge SDK(Previously Microsoft.Azure.Management.EdgeGateway). Included object store APIs, ARM user management.
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
