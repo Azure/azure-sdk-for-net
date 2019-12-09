@@ -4849,6 +4849,41 @@ namespace DataFactory.Tests.JsonSamples
             ""type"": ""DatasetReference""
           }
         ]
+      },
+      {
+        ""type"": ""Copy"",
+        ""typeProperties"": {
+          ""source"": {
+            ""type"": ""BinarySource"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageReadSettings"",
+              ""recursive"": true,
+              ""enablePartitionDiscovery"": true,
+              ""prefix"": ""test""
+            }
+          },
+          ""sink"": {
+            ""type"": ""BinarySink"",
+            ""storeSettings"": {
+              ""type"": ""AzureBlobStorageWriteSettings"",
+              ""maxConcurrentConnections"": 3,
+              ""copyBehavior"": ""PreserveHierarchy"",
+              ""blockSizeInMB"": 8
+            }
+          }
+        },
+        ""inputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ],
+        ""outputs"": [
+          {
+            ""referenceName"": ""exampleDataset"",
+            ""type"": ""DatasetReference""
+          }
+        ]
       }
     ]
   }
