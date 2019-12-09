@@ -24,13 +24,13 @@ namespace Azure.Data.AppConfiguration
         public static readonly string Any = "*";
 
         /// <summary>
-        /// Key or key filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Key filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public string KeyFilter { get; set; }
 
         /// <summary>
-        /// Label or label filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Label filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public string LabelFilter { get; set; }
@@ -48,8 +48,7 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the
-        /// configuration store by setting both Key and Label filters to Any.
+        /// Creates a default <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the configuration store.
         /// </summary>
         public SettingSelector() { }
 
