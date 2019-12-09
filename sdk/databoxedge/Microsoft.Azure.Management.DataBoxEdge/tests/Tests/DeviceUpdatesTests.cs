@@ -45,7 +45,7 @@ namespace DataBoxEdge.Tests
 
         /// <summary>
         /// Tests install  device updates APIs.
-        /// </summary>
+        /// </summary>      
         //[Fact]
         //public void Test_InstallUpdates()
         //{
