@@ -100,7 +100,7 @@ namespace Azure.Identity
                     builder.Append(" AZURE_PASSWORD");
                 }
 
-                _unavailbleErrorMessage = builder.Append(" ]").ToString();
+                _unavailbleErrorMessage = builder.Append(" ].").ToString();
             }
         }
 

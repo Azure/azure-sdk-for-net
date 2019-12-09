@@ -40,11 +40,11 @@ namespace Azure.Identity
             {
                 if (innerExceptions[i] is CredentialUnavailableException)
                 {
-                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} is unavailable {innerExceptions[i].Message}.");
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} is unavailable. {innerExceptions[i].Message}");
                 }
                 else
                 {
-                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions[i].Message}.");
+                    exStr.AppendLine($"  {credentials.Span[i].GetType().Name} failed with {innerExceptions[i].Message}");
                 }
             }
 

@@ -19,9 +19,9 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential, IExtendedTokenCredential
     {
-        internal const string NoAccountsInCacheMessage = "No accounts were found in thecache.  To authenticate with the SharedTokenCacheCredential, login an account through developer tooling supporting Azure single sign on.";
+        internal const string NoAccountsInCacheMessage = "No accounts were found in the cache. To authenticate with the SharedTokenCacheCredential, log in an account with a development tool that supports Azure single sign on.";
         internal const string MultipleAccountsInCacheMessage = "Multiple accounts were found in the cache. To authenticate with the SharedTokenCacheCredential, set the AZURE_USERNAME and AZURE_TENANT_ID environment variables to the preferred username and tenantId, or specify them to the constructor. {0}";
-        internal const string NoMatchingAccountsInCacheMessage = "No account matching the specified{0}{1} was found in the cache. To authenticate with the SharedTokenCacheCredential, login an account through developer tooling supporting Azure single sign on. {2}";
+        internal const string NoMatchingAccountsInCacheMessage = "No account matching the specified{0}{1} was found in the cache. To authenticate with the SharedTokenCacheCredential, login an account with a development tool that supports Azure single sign on. {2}";
         internal const string MultipleMatchingAccountsInCacheMessage = "Multiple accounts matching the specified{0}{1} were found in the cache. To authenticate with the SharedTokenCacheCredential, set the AZURE_USERNAME and AZURE_TENANT_ID environment variables to the preferred username and tenantId, or specify them to the constructor. {2}";
 
         private readonly MsalPublicClient _client;
