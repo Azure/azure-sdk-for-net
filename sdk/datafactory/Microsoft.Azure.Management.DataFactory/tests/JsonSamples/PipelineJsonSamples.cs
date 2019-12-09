@@ -5956,5 +5956,61 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySapHanaToCsvWithPartition = @"
+{
+    ""name"": ""MyPipelineName"",
+    ""properties"": 
+    {
+        ""description"" : ""Copy from SAP HANA for Customer to Azure Data Lake Store"",
+        ""activities"":
+        [
+            {
+                ""type"": ""Copy"",
+                ""name"": ""TestActivity"",
+                ""description"": ""Test activity description"", 
+                ""typeProperties"":
+                {
+                    ""source"":
+                    {
+                        ""type"": ""SapHanaSource"",
+                        ""query"": ""$select=Column0"",
+                        ""partitionOption"": ""SapHanaDynamicRange"",
+                        ""partitionSettings"": {
+                            ""partitionColumnName"": ""INTEGERTYPE""
+                        }                        
+                    },
+                    ""sink"": {
+                      ""type"": ""DelimitedTextSink"",
+                      ""storeSettings"": {
+                        ""type"": ""AzureDataLakeStoreWriteSettings"",
+                        ""maxConcurrentConnections"": 3,
+                        ""copyBehavior"": ""PreserveHierarchy""
+                      },
+                      ""formatSettings"": {
+                        ""type"": ""DelimitedTextWriteSettings"",
+                        ""quoteAllText"": true,
+                        ""fileExtension"": "".csv""
+                      }
+                    }
+                },
+                ""inputs"": [
+                  {
+                    ""referenceName"": ""exampleDataset"",
+                    ""type"": ""DatasetReference""
+                  }
+                ],
+                ""outputs"": [
+                  {
+                    ""referenceName"": ""exampleDataset"",
+                    ""type"": ""DatasetReference""
+                  }
+                ]
+            }
+        ]
+    }
+}
+";
     }
 }
