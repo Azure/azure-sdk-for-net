@@ -628,7 +628,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> with the specified <paramref name="keyFilter"/> and <paramref name="labelFilter"/>.
+        /// Retrieves the different revisions of one or more <see cref="ConfigurationSetting"/> entities that match the specified <paramref name="keyFilter"/> and <paramref name="labelFilter"/>.
         /// </summary>
         /// <param name="keyFilter">The primary identifier of the configuration setting.</param>
         /// <param name="labelFilter">A label filter used to group this configuration setting with others.</param>
@@ -640,7 +640,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> with the specified <paramref name="keyFilter"/> and <paramref name="labelFilter"/>.
+        /// Retrieves the different revisions of one or more <see cref="ConfigurationSetting"/> entities that match the specified <paramref name="keyFilter"/> and <paramref name="labelFilter"/>.
         /// </summary>
         /// <param name="keyFilter">The primary identifier of the configuration setting.</param>
         /// <param name="labelFilter">A label filter used to group this configuration setting with others.</param>
@@ -652,7 +652,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> that satisfy the options of the <see cref="SettingSelector"/>.
+        /// Retrieves the different revisions of one or more <see cref="ConfigurationSetting"/> entities that satisfy the options of the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -663,7 +663,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Retrieves the different revisions of a specific <see cref="ConfigurationSetting"/> that satisfy the options of the <see cref="SettingSelector"/>.
+        /// Retrieves the different revisions of one or more <see cref="ConfigurationSetting"/> entities that satisfy the options of the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
