@@ -31,15 +31,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the JsonWriteSettings class.
         /// </summary>
-        /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="filePattern">File pattern of JSON. This setting
         /// controls the way a collection of JSON objects will be treated. The
         /// default value is 'setOfObjects'. It is case-sensitive. Possible
         /// values include: 'setOfObjects', 'arrayOfObjects'</param>
-        public JsonWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string filePattern = default(string))
-            : base(type, additionalProperties)
+        public JsonWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string filePattern = default(string))
+            : base(additionalProperties)
         {
             FilePattern = filePattern;
             CustomInit();
@@ -59,15 +58,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "filePattern")]
         public string FilePattern { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
