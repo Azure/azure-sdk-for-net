@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
             var producerOptions = new EventHubProducerClientOptions
             {
-               ConnectionOptions = new EventHubConnectionOptions
+                ConnectionOptions = new EventHubConnectionOptions
                 {
                     TransportType = EventHubsTransportType.AmqpWebSockets,
                     Proxy = (IWebProxy)null
@@ -63,8 +63,8 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 RetryOptions = new EventHubsRetryOptions
                 {
-                   MaximumRetries = 5,
-                   TryTimeout = TimeSpan.FromMinutes(1)
+                    MaximumRetries = 5,
+                    TryTimeout = TimeSpan.FromMinutes(1)
                 }
             };
 
