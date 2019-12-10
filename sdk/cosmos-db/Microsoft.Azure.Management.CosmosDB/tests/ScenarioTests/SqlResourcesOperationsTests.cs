@@ -9,6 +9,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
 using System;
+using Xunit.Sdk;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -111,8 +112,94 @@ namespace CosmosDB.Tests.ScenarioTests
                 SqlContainerGetResults sqlContainerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlContainerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlContainerCreateUpdateParameters).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlContainerGetResults);
 
-                IEnumerable< SqlContainerGetResults > sqlContainers = cosmosDBManagementClient.SqlResources.ListSqlContainersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                IEnumerable<SqlContainerGetResults> sqlContainers = cosmosDBManagementClient.SqlResources.ListSqlContainersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(sqlContainers);
+
+                string storedProcedureName = "storedProcedureName822";
+
+                SqlStoredProcedureCreateUpdateParameters sqlStoredProcedureCreateUpdateParameters = new SqlStoredProcedureCreateUpdateParameters
+                {
+                    Resource = new SqlStoredProcedureResource
+                    {
+                        Id = storedProcedureName,
+                        Body = "function () { var context = getContext(); " +
+                        "var response = context.getResponse();" +
+                        "response.setBody('Hello, World');" +
+                        "}"
+                    },
+                    Options = new Dictionary<string, string>(){
+                        { "foo", "bar"}
+                    }
+                };
+
+                SqlStoredProcedureGetResults sqlStoredProcedureGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, storedProcedureName, sqlStoredProcedureCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlStoredProcedureGetResults);
+
+                IEnumerable<SqlStoredProcedureGetResults> sqlStoredProcedures = cosmosDBManagementClient.SqlResources.ListSqlStoredProceduresWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlStoredProcedures);
+
+                foreach (SqlStoredProcedureGetResults sqlStoredProcedure in sqlStoredProcedures)
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteSqlStoredProcedureWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlStoredProcedure.Name);
+                }
+
+                string userDefinedFunctionName = "userDefinedFunctionName822";
+
+                SqlUserDefinedFunctionCreateUpdateParameters sqlUserDefinedFunctionCreateUpdateParameters = new SqlUserDefinedFunctionCreateUpdateParameters
+                {
+                    Resource = new SqlUserDefinedFunctionResource
+                    {
+                        Id = userDefinedFunctionName,
+                        Body = "function () { var context = getContext(); " +
+                        "var response = context.getResponse();" +
+                        "response.setBody('Hello, World');" +
+                        "}"
+                    },
+                    Options = new Dictionary<string, string>(){
+                        { "foo", "bar"}
+                    }
+                };
+
+                SqlUserDefinedFunctionGetResults sqlUserDefinedFunctionGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, userDefinedFunctionName, sqlUserDefinedFunctionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlStoredProcedureGetResults);
+
+                IEnumerable<SqlUserDefinedFunctionGetResults> sqlUserDefinedFunctions = cosmosDBManagementClient.SqlResources.ListSqlUserDefinedFunctionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlUserDefinedFunctions);
+
+                foreach (SqlUserDefinedFunctionGetResults sqlUserDefinedFunction in sqlUserDefinedFunctions)
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteSqlUserDefinedFunctionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlUserDefinedFunction.Name);
+                }
+
+                string triggerName = "triggerName822";
+
+                SqlTriggerCreateUpdateParameters sqlTriggerCreateUpdateParameters = new SqlTriggerCreateUpdateParameters
+                {
+                    Resource = new SqlTriggerResource
+                    {
+                        Id = triggerName,
+                        TriggerOperation = "All",
+                        TriggerType = "Pre",
+                        Body = "function () { var context = getContext(); " +
+                        "var response = context.getResponse();" +
+                        "response.setBody('Hello, World');" +
+                        "}"
+                    },
+                    Options = new Dictionary<string, string>(){
+                        { "foo", "bar"}
+                    }
+                };
+
+                SqlTriggerGetResults sqlTriggerGetResults = cosmosDBManagementClient.SqlResources.CreateUpdateSqlTriggerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, triggerName, sqlTriggerCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlTriggerGetResults);
+
+                IEnumerable<SqlTriggerGetResults> sqlTriggers = cosmosDBManagementClient.SqlResources.ListSqlTriggersWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(sqlTriggers);
+
+                foreach (SqlTriggerGetResults sqlTrigger in sqlTriggers)
+                {
+                    cosmosDBManagementClient.SqlResources.DeleteSqlTriggerWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, containerName, sqlTrigger.Name);
+                }
 
                 foreach (SqlContainerGetResults sqlContainer in sqlContainers)
                 {
