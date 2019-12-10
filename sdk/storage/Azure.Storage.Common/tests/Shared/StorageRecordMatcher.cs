@@ -206,9 +206,9 @@ namespace Azure.Storage.Test.Shared
         private static object ParseBody(RecordEntry entry)
         {
             // Switch on the Content-Type to check for XML or JSON
-            var body = entry.ResponseBody ?? Array.Empty<byte>();
+            var body = entry.Response.Body ?? Array.Empty<byte>();
             if (body.Length > 0 &&
-                entry.ResponseHeaders.TryGetValue("Content-Type", out var types) &&
+                entry.Response.Headers.TryGetValue("Content-Type", out var types) &&
                 types?.Length > 0)
             {
                 if (types.Any(t => t.Contains("xml")))

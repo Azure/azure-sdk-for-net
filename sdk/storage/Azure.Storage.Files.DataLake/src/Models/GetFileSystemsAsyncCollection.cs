@@ -1,19 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// This class wraps the BlobServiceClient.GetContainersAsync return values
+    /// This class wraps the DateLakeServiceClient.GetFileSystemsAsync return values
     /// and maps them into DataLake types.
     /// </summary>
     internal class GetFileSystemsAsyncCollection
@@ -64,7 +61,7 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary>
-        /// Abstract the Storage pattern for async iteration
+        /// Abstract the Storage pattern for async iteration.
         /// </summary>
         private class StoragePageable : Pageable<FileSystemItem>
         {
@@ -105,7 +102,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
             /// <summary>
             /// Enumerate the values in the collection synchronously.  This may
-            /// make mutliple service requests.
+            /// make multiple service requests.
             /// </summary>
             /// <returns>A sequence of values.</returns>
             public override IEnumerator<FileSystemItem> GetEnumerator()
@@ -120,7 +117,7 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary>
-        /// Abstract the Storage pattern for async iteration
+        /// Abstract the Storage pattern for async iteration.
         /// </summary>
         private class StorageAsyncPageable : AsyncPageable<FileSystemItem>
         {

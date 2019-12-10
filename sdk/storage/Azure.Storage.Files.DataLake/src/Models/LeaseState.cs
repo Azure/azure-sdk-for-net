@@ -4,32 +4,32 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// LeaseState values
+    /// Lease state values.
     /// </summary>
     public enum LeaseState
     {
         /// <summary>
-        /// available
+        /// Available.
         /// </summary>
         Available,
 
         /// <summary>
-        /// leased
+        /// Leased.
         /// </summary>
         Leased,
 
         /// <summary>
-        /// expired
+        /// Expired.
         /// </summary>
         Expired,
 
         /// <summary>
-        /// breaking
+        /// Breaking.
         /// </summary>
         Breaking,
 
         /// <summary>
-        /// broken
+        /// Broken.
         /// </summary>
         Broken
     }

@@ -96,28 +96,53 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             Task processEventHandler(ProcessEventArgs eventArgs)
             {
-               try
-               {
-                   // For our example, we'll just track that the event was received and write its data to the
-                   // console.
+                // The event arguments contain a cancellation token that the Event Processor client uses to signal
+                // your handler that processing should stop when possible.  This is most commonly used in the
+                // case that the event processor is stopping or has otherwise encountered an unrecoverable problem.
+                //
+                // Each of the handlers should respect cancellation as they are able in order to ensure that the
+                // Event Processor client is able to perform its operations efficiently.
+                //
+                // In the case of the process event handler, the Event Processor client must await the result in
+                // order to ensure that the ordering of events within a partition is maintained.  This makes respecting
+                // the cancellation token important.
+                //
+                // Also of note, because the Event Processor client must await this handler, you are unable to safely
+                // perform operations on the client, such as stopping or starting.  Doing so is likely to result in a
+                // deadlock unless it is carefully queued as a background task.
 
-                   ++eventIndex;
-                   Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
-               }
-               catch (Exception ex)
-               {
-                   // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                   // the exception to the console.
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
 
-                   Console.WriteLine();
-                   Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
-                   Console.WriteLine();
-               }
+                try
+                {
+                    // For our example, we'll just track that the event was received and write its data to the
+                    // console.
+                    //
+                    // Because there is no long-running or I/O operation, inspecting the cancellation
+                    // token again does not make sense in this scenario.  However, in real-world processing, it is
+                    // highly recommended that you do so as you are able.   It is also recommended that the cancellation
+                    // token be passed to any asynchronous operations that are awaited in this handler.
 
-               // Because our example handler is running synchronously, we'll manually return a completed
-               // task.
+                    ++eventIndex;
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                }
+                catch (Exception ex)
+                {
+                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
+                    // the exception to the console.
 
-               return Task.CompletedTask;
+                    Console.WriteLine();
+                    Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
+                    Console.WriteLine();
+                }
+
+                // Because our example handler is running synchronously, we'll manually return a completed
+                // task.
+
+                return Task.CompletedTask;
             };
 
             // The error handler is invoked when there is an exception observed within the Event Processor client; it is not invoked for
@@ -141,6 +166,24 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             Task processErrorHandler(ProcessErrorEventArgs eventArgs)
             {
+                // As with the process event handler, the event arguments contain a cancellation token used by the Event Processor client to signal
+                // that the operation should be canceled.  The handler should respect cancellation as it is able in order to ensure that the Event
+                // Processor client is able to perform its operations efficiently.
+                //
+                // The process error handler is not awaited by the Event Processor client and is, instead, executed in a fire-and-forget manner.  This
+                // means that you may safely interact with the Event Processor client, such as requesting that it stop processing.
+
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
+
+                // Because there is no long-running or I/O operation, inspecting the cancellation token again does not make sense in this scenario.
+                // However, in real-world processing, it is recommended that you do so as you are able without compromising your ability to capture
+                // and troubleshooting information.
+                //
+                // It is also recommended that the cancellation token be passed to any asynchronous operations that are awaited in this handler.
+
                 Console.WriteLine();
                 Console.WriteLine("===============================");
                 Console.WriteLine($"The error handler was invoked during the operation: { eventArgs.Operation ?? "Unknown" }, for Exception: { eventArgs.Exception.Message }");

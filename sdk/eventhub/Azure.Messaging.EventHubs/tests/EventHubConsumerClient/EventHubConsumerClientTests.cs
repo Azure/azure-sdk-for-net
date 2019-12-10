@@ -615,7 +615,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (++receivedEvents >= expectedEvents)
                     {
-                       break;
+                        break;
                     }
                 }
             }, Throws.Nothing, "The iterator should not have been canceled.");
@@ -1427,7 +1427,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (++receivedEvents >= expectedEvents)
                     {
-                       break;
+                        break;
                     }
                 }
             }, Throws.Nothing, "The iterator should not have been canceled.");
@@ -1795,7 +1795,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
                 .ToList();
 
-            var mockConnection = new MockConnection(() =>  new PublishingTransportConsumerMock(events));
+            var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
             var receivedEvents = new Dictionary<string, int>();
             var partitions = await mockConnection.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>());

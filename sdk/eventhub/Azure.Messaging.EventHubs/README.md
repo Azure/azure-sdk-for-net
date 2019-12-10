@@ -178,46 +178,7 @@ For detailed information about these and other exceptions that may occur, please
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the Azure Event Hubs client library offers support for many additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the Event Hubs client library offers a [project of samples](./samples) to serve as an illustration for common scenarios.
-
-The samples are accompanied by a console application which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred editor and provide the Event Hubs connection information in response to the prompts.  
-
-Each of the samples is self-contained and focused on illustrating one specific scenario.  Each is numbered, with the lower numbers concentrating on basic scenarios and building to more complex scenarios as they increase; though each sample is independent, it will assume an understanding of the content discussed in earlier samples.
-
-The available samples are:
-
-- [Hello world](./samples/Sample01_HelloWorld.cs)  
-  An introduction to Event Hubs, illustrating how to create a client and explore an Event Hub.
-
-- [Create an Event Hub client with custom options](./samples/Sample02_ClientWithCustomOptions.cs)  
-  An introduction to Event Hubs, exploring additional options for creating the different Event Hub clients.
-
-- [Publish an event batch to an Event Hub](./samples/Sample03_PublishAnEventBatch.cs)  
-  An introduction to publishing events, using a batch with single event.  
-
-- [Read events from an Event Hub](./samples/Sample04_ReadEvents.cs)  
-  An introduction to reading all events available from an Event Hub.
-
-- [Publish an event batch using a partition key](./samples/Sample05_PublishAnEventBatchWithPartitionKey.cs)  
-  An introduction to publishing events using a partition key to group batches together.
-
-- [Publish an event batch to a specific partition](./samples/Sample06_PublishAnEventBatchToASpecificPartition.cs)  
-  An introduction to publishing events, specifying a specific partition for the batch to be published to.
-
-- [Publish events with custom metadata](./samples/Sample07_PublishEventsWithCustomMetadata.cs)  
-  An example of publishing events, extending the event data with custom metadata.
-
-- [Read only new events from an Event Hub](./samples/Sample08_ReadOnlyNewEvents.cs)  
-  An example of reading events, beginning with only those newly available from an Event Hub.
-
-- [Read events from a known position in an Event Hub partition](./samples/Sample09_ReadEventsFromAKnownPosition.cs)  
-  An example of reading events from a single Event Hub partition, starting at a well-known position.
-
-- [Publish an event batch with a custom size limit](./samples/Sample10_PublishAnEventBatchWithCustomSizeLimit.cs)  
-  An example of publishing events using a custom size limitation with the batch.
-
-- [Authorize using a service principal with client secret](./samples/Sample11_AuthenticateWithClientSecretCredential.cs)  
-  An example of interacting with an Event Hub using an Azure Active Directory application with client secret for authorization.
+Beyond the introductory scenarios discussed, the Azure Event Hubs client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Event Hubs service.  In order to help explore some of these scenarios, the Event Hubs client library offers a project of samples to serve as an illustration for common scenarios.  Please see the samples [README](./samples/README.md) for details.
 
 ## Contributing  
 

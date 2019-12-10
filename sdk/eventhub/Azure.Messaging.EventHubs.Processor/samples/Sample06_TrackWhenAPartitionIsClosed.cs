@@ -76,46 +76,56 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             Task partitionInitializingHandler(PartitionInitializingEventArgs eventArgs)
             {
-               try
-               {
-                  ownedPartitions[eventArgs.PartitionId] = default(ProcessEventArgs);
-                  Console.WriteLine($"Initialized partition: { eventArgs.PartitionId }");
-               }
-               catch (Exception ex)
-               {
-                   // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                   // the exception to the console.
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
 
-                   Console.WriteLine();
-                   Console.WriteLine($"An error was observed while initializing partition: { eventArgs.PartitionId }.  Message: { ex.Message }");
-                   Console.WriteLine();
-               }
+                try
+                {
+                    ownedPartitions[eventArgs.PartitionId] = default(ProcessEventArgs);
+                    Console.WriteLine($"Initialized partition: { eventArgs.PartitionId }");
+                }
+                catch (Exception ex)
+                {
+                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
+                    // the exception to the console.
 
-               return Task.CompletedTask;
+                    Console.WriteLine();
+                    Console.WriteLine($"An error was observed while initializing partition: { eventArgs.PartitionId }.  Message: { ex.Message }");
+                    Console.WriteLine();
+                }
+
+                return Task.CompletedTask;
             }
 
             // The handler for partition close will stop tracking the partition and checkpoint if an event was processed for it.
 
             async Task partitionClosingHandler(PartitionClosingEventArgs eventArgs)
             {
-               try
-               {
-                  if (ownedPartitions.TryRemove(eventArgs.PartitionId, out ProcessEventArgs lastProcessEventArgs))
-                  {
-                      await lastProcessEventArgs.UpdateCheckpointAsync();
-                  }
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
 
-                  Console.WriteLine($"Closing partition: { eventArgs.PartitionId }");
-               }
-               catch (Exception ex)
-               {
-                   // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                   // the exception to the console.
+                try
+                {
+                    if (ownedPartitions.TryRemove(eventArgs.PartitionId, out ProcessEventArgs lastProcessEventArgs))
+                    {
+                        await lastProcessEventArgs.UpdateCheckpointAsync();
+                    }
 
-                   Console.WriteLine();
-                   Console.WriteLine($"An error was observed while closing partition: { eventArgs.PartitionId }.  Message: { ex.Message }");
-                   Console.WriteLine();
-               }
+                    Console.WriteLine($"Closing partition: { eventArgs.PartitionId }");
+                }
+                catch (Exception ex)
+                {
+                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
+                    // the exception to the console.
+
+                    Console.WriteLine();
+                    Console.WriteLine($"An error was observed while closing partition: { eventArgs.PartitionId }.  Message: { ex.Message }");
+                    Console.WriteLine();
+                }
             }
 
             // When an event is received, update the partition if tracked.  In the case that the value changes in the
@@ -123,30 +133,40 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             Task processEventHandler(ProcessEventArgs eventArgs)
             {
-               try
-               {
-                  ownedPartitions[eventArgs.Partition.PartitionId] = eventArgs;
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
 
-                  ++eventsProcessed;
-                  Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
-               }
-               catch (Exception ex)
-               {
-                   // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                   // the exception to the console.
+                try
+                {
+                    ownedPartitions[eventArgs.Partition.PartitionId] = eventArgs;
 
-                   Console.WriteLine();
-                   Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
-                   Console.WriteLine();
-               }
+                    ++eventsProcessed;
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                }
+                catch (Exception ex)
+                {
+                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
+                    // the exception to the console.
 
-               return Task.CompletedTask;
+                    Console.WriteLine();
+                    Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
+                    Console.WriteLine();
+                }
+
+                return Task.CompletedTask;
             };
 
             // For this example, exceptions will just be logged to the console.
 
             Task processErrorHandler(ProcessErrorEventArgs eventArgs)
             {
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
+
                 Console.WriteLine("===============================");
                 Console.WriteLine($"The error handler was invoked during the operation: { eventArgs.Operation ?? "Unknown" }, for Exception: { eventArgs.Exception.Message }");
                 Console.WriteLine("===============================");
