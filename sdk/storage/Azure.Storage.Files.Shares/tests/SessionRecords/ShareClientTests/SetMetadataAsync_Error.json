@@ -1,6 +1,7 @@
 {
   "Entries": [
     {
+<<<<<<< HEAD
       "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-823676c0-759d-f98b-ed14-0c686e60706a?restype=share\u0026comp=metadata",
       "RequestMethod": "PUT",
       "RequestHeaders": {
@@ -12,6 +13,19 @@
         ],
         "x-ms-client-request-id": "e49cb2b8-f62c-85e4-1311-9d308eb7d631",
         "x-ms-date": "Fri, 06 Dec 2019 00:55:23 GMT",
+=======
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-b4cbb40c-aafe-8034-fe0d-76e3c9c68613?restype=share\u0026comp=metadata",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-170a09881adc484fbbb07f19f5dfb4c2-016636a31540fa47-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "bda0d5d7-a2cf-e621-2808-cb178a514534",
+        "x-ms-date": "Fri, 06 Dec 2019 00:28:35 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-meta-Capital": "letter",
         "x-ms-meta-foo": "bar",
         "x-ms-meta-meta": "data",
@@ -24,25 +38,44 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
+<<<<<<< HEAD
         "Date": "Fri, 06 Dec 2019 00:55:23 GMT",
+=======
+        "Date": "Fri, 06 Dec 2019 00:28:34 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+<<<<<<< HEAD
         "x-ms-client-request-id": "e49cb2b8-f62c-85e4-1311-9d308eb7d631",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "6a22e49d-f01a-003d-4fcf-abe420000000",
+=======
+        "x-ms-client-request-id": "bda0d5d7-a2cf-e621-2808-cb178a514534",
+        "x-ms-error-code": "ShareNotFound",
+        "x-ms-request-id": "207a5b1c-c01a-0026-7bcc-abda23000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
+<<<<<<< HEAD
         "RequestId:6a22e49d-f01a-003d-4fcf-abe420000000\n",
         "Time:2019-12-06T00:55:23.9215456Z\u003C/Message\u003E\u003C/Error\u003E"
+=======
+        "RequestId:207a5b1c-c01a-0026-7bcc-abda23000000\n",
+        "Time:2019-12-06T00:28:35.6585314Z\u003C/Message\u003E\u003C/Error\u003E"
+>>>>>>> feature/storage/stg71-base
       ]
     }
   ],
   "Variables": {
+<<<<<<< HEAD
     "RandomSeed": "1085149071",
+=======
+    "RandomSeed": "823166608",
+>>>>>>> feature/storage/stg71-base
     "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized"
   }
 }

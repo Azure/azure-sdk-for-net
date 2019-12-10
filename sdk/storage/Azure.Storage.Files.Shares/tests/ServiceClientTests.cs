@@ -146,6 +146,36 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task ListSharesSegmentAsync_Premium()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_Premium();
+            string shareName = GetNewShareName();
+
+            // Ensure at least one premium share
+            await using DisposingShare test = await GetTestShareAsync(
+                service: service,
+                shareName: shareName);
+            ShareClient share = test.Share;
+
+            var shares = new List<ShareItem>();
+            await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
+            {
+                shares.AddRange(page.Values);
+            }
+
+            // Assert
+            ShareItem premiumShareItem = shares.Where(r => r.Name == shareName).First();
+            Assert.IsNotNull(premiumShareItem.Properties.ETag);
+            Assert.IsNotNull(premiumShareItem.Properties.LastModified);
+            Assert.IsNotNull(premiumShareItem.Properties.NextAllowedQuotaDowngradeTime);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedEgressMBps);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIngressMBps);
+            Assert.IsNotNull(premiumShareItem.Properties.ProvisionedIops);
+            Assert.IsNotNull(premiumShareItem.Properties.QuotaInGB);
+        }
+
+        [Test]
         public async Task ListSharesSegmentAsync_Metadata()
         {
             // Arrange
