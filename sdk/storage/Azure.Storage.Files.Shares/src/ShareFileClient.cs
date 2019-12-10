@@ -541,8 +541,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="smbParameters">
+        /// <param name="smbProperties">
         /// Optional SMB paramters to set on the target file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionCopyMode">
+        /// Specifies the option to copy file security descriptor from source file or
+        /// to set it using the value which is defined by the header value of FilePermission
+        /// or FilePermissionKey.
         /// </param>
         /// <param name="ignoreReadOnly">
         /// Optional boolean specifying to overwrite the target file if it already
@@ -568,17 +576,62 @@ namespace Azure.Storage.Files.Shares
         public virtual Response<ShareFileCopyInfo> StartCopy(
             Uri sourceUri,
             Metadata metadata = default,
-            FileCopySmbParameters smbParameters = default,
+            FileSmbProperties smbProperties = default,
+            string filePermission = default,
+            PermissionCopyModeType? filePermissionCopyMode = default,
             bool? ignoreReadOnly = default,
             bool? setArchiveAttribute = default,
             CancellationToken cancellationToken = default) =>
             StartCopyInternal(
                 sourceUri,
                 metadata,
-                smbParameters,
+                smbProperties,
+                filePermission,
+                filePermissionCopyMode,
                 ignoreReadOnly,
                 setArchiveAttribute,
-                false, // async
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+        public virtual Response<ShareFileCopyInfo> StartCopy(
+            Uri sourceUri,
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            StartCopyInternal(
+                sourceUri,
+                metadata,
+                smbProperties: default,
+                filePermission: default,
+                filePermissionCopyMode: default,
+                ignoreReadOnly: default,
+                setArchiveAttribute: default,
+                async: false,
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -593,8 +646,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="smbParameters">
-        /// Optional SMB paramters to set on the target file.
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set on the target file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionCopyMode">
+        /// Specifies the option to copy file security descriptor from source file or
+        /// to set it using the value which is defined by the header value of FilePermission
+        /// or FilePermissionKey.
         /// </param>
         /// <param name="ignoreReadOnly">
         /// Optional boolean specifying to overwrite the target file if it already
@@ -620,17 +681,62 @@ namespace Azure.Storage.Files.Shares
         public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
             Uri sourceUri,
             Metadata metadata = default,
-            FileCopySmbParameters smbParameters = default,
+            FileSmbProperties smbProperties = default,
+            string filePermission = default,
+            PermissionCopyModeType? filePermissionCopyMode = default,
             bool? ignoreReadOnly = default,
             bool? setArchiveAttribute = default,
             CancellationToken cancellationToken = default) =>
             await StartCopyInternal(
                 sourceUri,
                 metadata,
-                smbParameters,
+                smbProperties,
+                filePermission,
+                filePermissionCopyMode,
                 ignoreReadOnly,
                 setArchiveAttribute,
-                true, // async
+                async: true,
+                cancellationToken).
+                ConfigureAwait(false);
+
+
+        /// <summary>
+        /// Copies a blob or file to a destination file within the storage account.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/copy-file"/>.
+        /// </summary>
+        /// <param name="sourceUri">
+        /// Required. Specifies the URL of the source file or blob.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file copy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+        public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+            Uri sourceUri,
+            Metadata metadata,
+            CancellationToken cancellationToken) =>
+            await StartCopyInternal(
+                sourceUri,
+                metadata,
+                smbProperties: default,
+                filePermission: default,
+                filePermissionCopyMode: default,
+                ignoreReadOnly: default,
+                setArchiveAttribute: default,
+                async: true,
                 cancellationToken).
                 ConfigureAwait(false);
 
@@ -645,8 +751,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata">
         /// Optional custom metadata to set for the file.
         /// </param>
-        /// <param name="smbParameters">
-        /// Optional SMB paramters to set on the target file.
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set on the target file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="filePermissionCopyMode">
+        /// Specifies the option to copy file security descriptor from source file or
+        /// to set it using the value which is defined by the header value of FilePermission
+        /// or FilePermissionKey.
         /// </param>
         /// <param name="ignoreReadOnly">
         /// Optional boolean specifying to overwrite the target file if it already
@@ -675,7 +789,9 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareFileCopyInfo>> StartCopyInternal(
             Uri sourceUri,
             Metadata metadata,
-            FileCopySmbParameters smbParameters,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            PermissionCopyModeType? filePermissionCopyMode,
             bool? ignoreReadOnly,
             bool? setArchiveAttribute,
             bool async,
@@ -696,13 +812,13 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         copySource: sourceUri,
                         metadata: metadata,
-                        filePermission: smbParameters?.FilePermission,
-                        filePermissionKey: smbParameters?.FilePermissionKey,
-                        filePermissionCopyMode: smbParameters?.FilePermissionCopyMode,
+                        filePermission: filePermission,
+                        filePermissionKey: smbProperties?.FilePermissionKey,
+                        filePermissionCopyMode: filePermissionCopyMode,
                         ignoreReadOnly: ignoreReadOnly,
-                        fileAttributes: smbParameters?.FileAttributes?.ToAttributesString(),
-                        fileCreationTime: smbParameters?.FileCreatedOn.ToFileDateTimeString(),
-                        fileLastWriteTime: smbParameters?.FileLastWrittenOn.ToFileDateTimeString(),
+                        fileAttributes: smbProperties?.FileAttributes?.ToAttributesString(),
+                        fileCreationTime: smbProperties?.FileCreatedOn.ToFileDateTimeString(),
+                        fileLastWriteTime: smbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
                         setArchiveAttribute: setArchiveAttribute,
                         async: async,
                         cancellationToken: cancellationToken,
