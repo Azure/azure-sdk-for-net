@@ -6012,5 +6012,54 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyBlobToSftp = @"
+{
+    ""name"": ""MyPipelineName"",
+    ""properties"":
+    {
+        ""description"" : ""Copy from SAP HANA for Customer to Azure Data Lake Store"",
+        ""activities"":
+        [
+            {
+                  ""type"": ""Copy"",
+                  ""typeProperties"": {
+                    ""source"": {
+                      ""type"": ""BinarySource"",
+                      ""storeSettings"": {
+                        ""type"": ""FileServerReadSettings"",
+                        ""recursive"": true,
+                        ""enablePartitionDiscovery"": true
+                      }
+                    },
+                    ""sink"": {
+                      ""type"": ""BinarySink"",
+                      ""storeSettings"": {
+                        ""type"": ""SftpWriteSettings"",
+                        ""maxConcurrentConnections"": 3,
+                        ""copyBehavior"": ""PreserveHierarchy"",
+                        ""operationTimeout"": ""01:00:00""
+                      }
+                    }
+                  },
+                  ""inputs"": [
+                    {
+                      ""referenceName"": ""exampleDataset"",
+                      ""type"": ""DatasetReference""
+                    }
+                  ],
+                  ""outputs"": [
+                    {
+                      ""referenceName"": ""exampleDataset"",
+                      ""type"": ""DatasetReference""
+                    }
+                  ],
+                  ""name"": ""ExampleCopyActivity""
+                }
+        ]
+    }
+}
+";
     }
 }

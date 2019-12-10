@@ -4,6 +4,7 @@
 ###  Feature Additions
 - Added SAP HANA partition support in Copy Activity
 - Added property prefix for azure blob source
+- Added support for writing data into SFTP server using Copy activity
 
 ## Version 4.5.0
 ###  Feature Additions
