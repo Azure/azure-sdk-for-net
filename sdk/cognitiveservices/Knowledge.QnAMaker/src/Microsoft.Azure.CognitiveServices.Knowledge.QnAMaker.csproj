@@ -6,8 +6,8 @@
     <Version>1.1.0-preview.1</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;QnAMaker;QnAMaker API;QnAMaker SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
-    <![CDATA[ 
-        This is SDK for QnAMaker v4 API.	
+    <![CDATA[
+        This is SDK for QnAMaker v4 API.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
@@ -19,5 +19,9 @@
   <PropertyGroup>
     <AzureApiTag />
     <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup >
+    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
 </Project>
