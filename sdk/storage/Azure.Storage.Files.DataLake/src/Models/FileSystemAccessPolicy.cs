@@ -13,23 +13,24 @@ namespace Azure.Storage.Files.DataLake.Models
     public class FileSystemAccessPolicy
     {
         /// <summary>
-        /// Indicated whether data in the file system may be accessed publicly and the level of access.
+        /// A <see cref="PublicAccessType"/> indicating whether data in the file system may
+        /// be accessed publicly and the level of access.
         /// </summary>
         public PublicAccessType DataLakePublicAccess { get; internal set; }
 
         /// <summary>
         /// The ETag contains a value that you can use to perform operations conditionally.
-        /// If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// If the request service version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
         public ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the file system was last modified.
+        /// Returns the <see cref="DateTimeOffset"/> the file system was last modified.
         /// </summary>
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// A collection of signed identifiers.
+        /// A collection of signed identifiers stored on the file system.
         /// </summary>
         public IEnumerable<DataLakeSignedIdentifier> SignedIdentifiers { get; internal set; }
 

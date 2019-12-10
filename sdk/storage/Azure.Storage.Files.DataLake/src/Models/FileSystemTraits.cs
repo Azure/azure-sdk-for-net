@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Specifies options for listing blob containers with the
+    /// Specifies options for listing file systems with the
     /// <see cref="DataLakeServiceClient.GetFileSystemsAsync"/> operation.
     /// </summary>
     [Flags]
@@ -21,7 +18,7 @@ namespace Azure.Storage.Files.DataLake.Models
         None = 0,
 
         /// <summary>
-        /// Flag specifying that the container's metadata should
+        /// Flag specifying that the file system's metadata should
         /// be included.
         /// </summary>
         Metadata = 1,

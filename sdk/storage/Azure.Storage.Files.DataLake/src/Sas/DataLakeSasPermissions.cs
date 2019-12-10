@@ -10,7 +10,7 @@ namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="DataLakeSasPermissions"/> contains the list of
-    /// permissions that can be set for a blob's access policy.  Use
+    /// permissions that can be set for a path's access policy.  Use
     /// <see cref="DataLakeSasBuilder.SetPermissions(DataLakeSasPermissions)"/>
     /// to set the permissions on the <see cref="DataLakeSasBuilder"/>.
     /// </summary>

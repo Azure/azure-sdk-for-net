@@ -59,7 +59,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="refreshToken">The refresh token obtained from Google
         /// for authorizing access to BigQuery for UserAuthentication.</param>
         /// <param name="clientId">The client id of the google application used
-        /// to acquire the refresh token.</param>
+        /// to acquire the refresh token. Type: string (or Expression with
+        /// resultType string).</param>
         /// <param name="clientSecret">The client secret of the google
         /// application used to acquire the refresh token.</param>
         /// <param name="email">The service account email ID that is used for
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public GoogleBigQueryLinkedService(object project, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object additionalProjects = default(object), object requestGoogleDriveScope = default(object), SecretBase refreshToken = default(SecretBase), SecretBase clientId = default(SecretBase), SecretBase clientSecret = default(SecretBase), object email = default(object), object keyFilePath = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object encryptedCredential = default(object))
+        public GoogleBigQueryLinkedService(object project, string authenticationType, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object additionalProjects = default(object), object requestGoogleDriveScope = default(object), SecretBase refreshToken = default(SecretBase), object clientId = default(object), SecretBase clientSecret = default(SecretBase), object email = default(object), object keyFilePath = default(object), object trustedCertPath = default(object), object useSystemTrustStore = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Project = project;
@@ -143,10 +144,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the client id of the google application used to
-        /// acquire the refresh token.
+        /// acquire the refresh token. Type: string (or Expression with
+        /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.clientId")]
-        public SecretBase ClientId { get; set; }
+        public object ClientId { get; set; }
 
         /// <summary>
         /// Gets or sets the client secret of the google application used to

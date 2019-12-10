@@ -6,7 +6,7 @@ using System.IO;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// The properties and Content returned from downloading a blob
+    /// The properties and content returned from downloading a file.
     /// </summary>
     public class FileDownloadInfo
     {
@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public long ContentLength { get; internal set; }
 
         /// <summary>
-        /// Content
+        /// Content.
         /// </summary>
         public Stream Content { get; internal set; }
 
@@ -29,7 +29,7 @@ namespace Azure.Storage.Files.DataLake.Models
 #pragma warning restore CA1819 // Properties should not return arrays
 
         /// <summary>
-        /// Properties returned when downloading a File
+        /// Properties returned when downloading a file.
         /// </summary>
         public FileDownloadDetails Properties { get; internal set; }
 
