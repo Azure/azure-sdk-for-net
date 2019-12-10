@@ -96,6 +96,15 @@ namespace Azure.Storage.Files.Shares.Tests
                         TestConfigDefault.AccountKey),
                     GetOptions()));
 
+        public ShareServiceClient GetServiceClient_Premium()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigPremiumBlob.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigPremiumBlob.AccountName,
+                        TestConfigPremiumBlob.AccountKey),
+                    GetOptions()));
+
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
@@ -249,7 +258,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                await share.CreateAsync(metadata: metadata, quotaInGB: 1);
+                await share.CreateAsync(metadata: metadata);
                 return new DisposingShare(share);
             }
 

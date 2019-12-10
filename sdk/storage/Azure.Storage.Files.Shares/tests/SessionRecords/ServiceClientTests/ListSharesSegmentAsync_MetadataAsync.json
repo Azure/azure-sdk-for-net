@@ -1,6 +1,7 @@
 {
   "Entries": [
     {
+<<<<<<< HEAD
       "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-e061ea94-1eef-43ed-036b-811855c261a9?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
@@ -12,27 +13,54 @@
         ],
         "x-ms-client-request-id": "c2f599a9-50e8-f4c5-032e-d923e6330de5",
         "x-ms-date": "Thu, 05 Dec 2019 04:12:48 GMT",
+=======
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-6adb48b4-fff1-8bba-cf77-38d7b7343704?restype=share",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-5cdbc3e043d6224c849e0db43b93ae4c-5dd216d9d808284d-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "76f74a71-12c2-7abf-fa65-3970c6c281e0",
+        "x-ms-date": "Fri, 06 Dec 2019 00:28:28 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-meta-Capital": "letter",
         "x-ms-meta-foo": "bar",
         "x-ms-meta-meta": "data",
         "x-ms-meta-UPPER": "case",
         "x-ms-return-client-request-id": "true",
+<<<<<<< HEAD
         "x-ms-share-quota": "1",
+=======
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
+<<<<<<< HEAD
         "Date": "Thu, 05 Dec 2019 04:12:47 GMT",
         "ETag": "\u00220x8D77939633911B3\u0022",
         "Last-Modified": "Thu, 05 Dec 2019 04:12:48 GMT",
+=======
+        "Date": "Fri, 06 Dec 2019 00:28:27 GMT",
+        "ETag": "\u00220x8D779E336DD0019\u0022",
+        "Last-Modified": "Fri, 06 Dec 2019 00:28:28 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+<<<<<<< HEAD
         "x-ms-client-request-id": "c2f599a9-50e8-f4c5-032e-d923e6330de5",
         "x-ms-request-id": "011a0d92-f01a-0002-6022-ab2c83000000",
+=======
+        "x-ms-client-request-id": "76f74a71-12c2-7abf-fa65-3970c6c281e0",
+        "x-ms-request-id": "207a5a2f-c01a-0026-2acc-abda23000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
@@ -43,11 +71,19 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
+<<<<<<< HEAD
           "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191204.1\u002B5028d723e0cdeb10a227db4dee6ed6afa7cb4fa8",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "bc6f24b1-9fcd-fcc0-4289-890d1d4150c9",
         "x-ms-date": "Thu, 05 Dec 2019 04:12:48 GMT",
+=======
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "6c66e602-c03c-3f41-73d6-d6821ff880c4",
+        "x-ms-date": "Fri, 06 Dec 2019 00:28:28 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -56,12 +92,17 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/xml",
+<<<<<<< HEAD
         "Date": "Thu, 05 Dec 2019 04:12:47 GMT",
+=======
+        "Date": "Fri, 06 Dec 2019 00:28:27 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
+<<<<<<< HEAD
         "x-ms-client-request-id": "bc6f24b1-9fcd-fcc0-4289-890d1d4150c9",
         "x-ms-request-id": "011a0d98-f01a-0002-6522-ab2c83000000",
         "x-ms-version": "2019-07-07"
@@ -80,6 +121,26 @@
         ],
         "x-ms-client-request-id": "c17295a0-51c3-8a18-50ec-c6dcbeb67f43",
         "x-ms-date": "Thu, 05 Dec 2019 04:12:48 GMT",
+=======
+        "x-ms-client-request-id": "6c66e602-c03c-3f41-73d6-d6821ff880c4",
+        "x-ms-request-id": "207a5a34-c01a-0026-2ecc-abda23000000",
+        "x-ms-version": "2019-07-07"
+      },
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seanstagetest.file.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Edefaultshare14\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCBD5C193E\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Eemptyheadershare1\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:10:58 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCFDCE2C47\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Epublicshare14\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCBD7CE20E\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-20c05b73-7f41-ef79-7e8f-5999fc51d173\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:11:42 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779BF587AAD26\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-2af7b6da-1c27-ac5d-dff4-6459fe40def5\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 04:58:19 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7787694CC7920\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-65d43b7e-cb37-b1b9-e40f-283f52463f43\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 03:46:49 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7786C97864095\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-69afbbc1-464c-d35c-23e2-73dcbeeba31c\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 22:57:54 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7790D65D6D5F3\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-6adb48b4-fff1-8bba-cf77-38d7b7343704\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 06 Dec 2019 00:28:28 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779E336DD0019\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Cfoo\u003Ebar\u003C/foo\u003E\u003Cmeta\u003Edata\u003C/meta\u003E\u003CCapital\u003Eletter\u003C/Capital\u003E\u003CUPPER\u003Ecase\u003C/UPPER\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-dafeffd6-c43a-9e73-a184-2ff1e9d5ff37\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 03:43:52 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7786C2E5A7B71\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-fe85f38f-ca6b-14a6-2ad6-45a286162480\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 04:58:23 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D778769773070A\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc17dc23911679466c9a1b75fb4b4ec512\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:46 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCD2C4E078\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Ckey1\u003Evalue1\u003C/key1\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc27fa065d94904b52a59300232e19b00a\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD04FBE78D\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc6cef116557fe4ce183d82dc634ed5564\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:02 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD00753351\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Ckey1\u003Evalue1\u003C/key1\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc9d06c06a61ef45aaa8109307bf451a61\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:43 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCD0EC7012\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcbc9e2ec198f149c583ecadd63f886d1d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:10:40 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCF3422E54\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcd295a8e0ed58417b920932ecbdc5e24f\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:08 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD03FAE0E9\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestce4b6a7be40554e088e008422a12006b2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:06:37 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FC626E6759\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestce79cae3d207c47fcb1ae1128236831b2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:11 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD05D2161B\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcf03faf94cec8445bb7d82ca414dc5641\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:12 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD05FDD438\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+    },
+    {
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-6adb48b4-fff1-8bba-cf77-38d7b7343704?restype=share",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b40230e08362df4580e2c6cd4a95d26e-1b9e0dcbd28d8e4c-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "df6eabb5-155c-98a4-0916-39b0a2953ce6",
+        "x-ms-date": "Fri, 06 Dec 2019 00:28:28 GMT",
+>>>>>>> feature/storage/stg71-base
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
@@ -88,20 +149,33 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
+<<<<<<< HEAD
         "Date": "Thu, 05 Dec 2019 04:12:48 GMT",
+=======
+        "Date": "Fri, 06 Dec 2019 00:28:27 GMT",
+>>>>>>> feature/storage/stg71-base
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
+<<<<<<< HEAD
         "x-ms-client-request-id": "c17295a0-51c3-8a18-50ec-c6dcbeb67f43",
         "x-ms-request-id": "011a0d9e-f01a-0002-6a22-ab2c83000000",
+=======
+        "x-ms-client-request-id": "df6eabb5-155c-98a4-0916-39b0a2953ce6",
+        "x-ms-request-id": "207a5a39-c01a-0026-32cc-abda23000000",
+>>>>>>> feature/storage/stg71-base
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
+<<<<<<< HEAD
     "RandomSeed": "1950264070",
+=======
+    "RandomSeed": "820395531",
+>>>>>>> feature/storage/stg71-base
     "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized"
   }
 }

@@ -2569,10 +2569,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
             return Response.FromValue(
-                new CloseHandlesResult()
-                {
-                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
-                },
+                response.ToCloseHandlesResult(),
                 response.GetRawResponse());
         }
 
@@ -2616,10 +2613,7 @@ namespace Azure.Storage.Files.Shares
                 .ConfigureAwait(false);
 
             return Response.FromValue(
-                new CloseHandlesResult()
-                {
-                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
-                },
+                response.ToCloseHandlesResult(),
                 response.GetRawResponse());
         }
 
@@ -2717,6 +2711,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
         {
             int handlesClosed = 0;
+            int handlesFailed = 0;
             string marker = null;
             do
             {
@@ -2724,12 +2719,14 @@ namespace Azure.Storage.Files.Shares
                     await ForceCloseHandlesInternal(Constants.CloseAllHandles, marker, async, cancellationToken).ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
+                handlesFailed += response.Value.NumberOfHandlesFailedToClosed;
 
             } while (!string.IsNullOrEmpty(marker));
 
             return new CloseHandlesResult()
             {
-                ClosedHandlesCount = handlesClosed
+                ClosedHandlesCount = handlesClosed,
+                FailedHandlesCount = handlesFailed
             };
         }
 
