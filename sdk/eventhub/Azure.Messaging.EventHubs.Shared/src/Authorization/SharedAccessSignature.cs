@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Net;
 using System.Security.Cryptography;

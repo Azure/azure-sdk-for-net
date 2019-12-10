@@ -3,17 +3,17 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// LeaseDurationType values
+    /// Lease duration type values.
     /// </summary>
     public enum LeaseDurationType
     {
         /// <summary>
-        /// infinite
+        /// Infinite.
         /// </summary>
         Infinite,
 
         /// <summary>
-        /// fixed
+        /// Fixed.
         /// </summary>
         Fixed
     }

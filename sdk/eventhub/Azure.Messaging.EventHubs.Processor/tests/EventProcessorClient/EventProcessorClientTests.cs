@@ -764,7 +764,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             for (var index = 0; index < eventCount; ++index)
             {
-                if (cancellationToken.IsCancellationRequested) { break; }
+                if (cancellationToken.IsCancellationRequested)
+                { break; }
                 await Task.Delay(25).ConfigureAwait(false);
                 yield return new PartitionEvent(new MockPartitionContext("fake"), new EventData(Encoding.UTF8.GetBytes($"Event { index }")));
             }
@@ -781,7 +782,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             for (var index = 0; index < eventCount; ++index)
             {
-                if (cancellationToken.IsCancellationRequested) { break; }
+                if (cancellationToken.IsCancellationRequested)
+                { break; }
                 await Task.Delay(25).ConfigureAwait(false);
                 yield return new PartitionEvent();
             }
