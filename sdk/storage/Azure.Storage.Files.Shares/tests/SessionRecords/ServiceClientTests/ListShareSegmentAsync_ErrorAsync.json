@@ -6,19 +6,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-<<<<<<< HEAD
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002Bbcc7ff3f89054c1f852e74087cb37cd8a1dde912",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "c90255cc-2518-875a-5e99-e5675c3accd1",
-        "x-ms-date": "Fri, 06 Dec 2019 00:55:16 GMT",
-=======
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
-          "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "54c788b0-8d59-e47b-6525-8244218b2447",
-        "x-ms-date": "Fri, 06 Dec 2019 00:28:27 GMT",
->>>>>>> feature/storage/stg71-base
+        "x-ms-client-request-id": "d7043496-c0eb-4d7d-29c7-3a59d6330eb8",
+        "x-ms-date": "Tue, 10 Dec 2019 05:34:02 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -27,34 +19,19 @@
       "ResponseHeaders": {
         "Content-Length": "328",
         "Content-Type": "application/xml",
-<<<<<<< HEAD
-        "Date": "Fri, 06 Dec 2019 00:55:15 GMT",
+        "Date": "Tue, 10 Dec 2019 05:34:02 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "ac4d87ad-401a-0082-0bcf-abf853000000"
+        "x-ms-request-id": "30a27cc0-c01a-00ba-5a1b-afb90a000000"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
-        "RequestId:ac4d87ad-401a-0082-0bcf-abf853000000\n",
-        "Time:2019-12-06T00:55:16.0370753Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-07-07\u003C/HeaderValue\u003E\u003C/Error\u003E"
-=======
-        "Date": "Fri, 06 Dec 2019 00:28:27 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "7d52141b-f01a-013e-07cc-aba977000000"
-      },
-      "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
-        "RequestId:7d52141b-f01a-013e-07cc-aba977000000\n",
-        "Time:2019-12-06T00:28:27.7249004Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-07-07\u003C/HeaderValue\u003E\u003C/Error\u003E"
->>>>>>> feature/storage/stg71-base
+        "RequestId:30a27cc0-c01a-00ba-5a1b-afb90a000000\n",
+        "Time:2019-12-10T05:34:02.8706240Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-07-07\u003C/HeaderValue\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-<<<<<<< HEAD
-    "RandomSeed": "1711188349",
-=======
-    "RandomSeed": "1586978876",
->>>>>>> feature/storage/stg71-base
+    "RandomSeed": "163234590",
     "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized"
   }
 }
