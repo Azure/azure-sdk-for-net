@@ -9,18 +9,30 @@
                 "description": "The base resource name."
             }
         },
-        "provisionerTenantId": {
+        "tenantId": {
             "type": "string",
             "defaultValue": "72f988bf-86f1-41af-91ab-2d7cd011db47",
             "metadata": {
-                "description": "The tenant ID to which the client OID belongs."
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationId": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client ID used to run tests."
+            }
+        },
+        "testApplicationSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client secret used to run tests."
             }
         },
         "testApplicationOid": {
             "type": "string",
             "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
-                "description": "The client OID to grant access."
+                "description": "The client OID to grant access to test resources."
             }
         },
         "location": {
@@ -39,16 +51,16 @@
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2016-10-01",
             "name": "[parameters('baseName')]",
-            "location": "westus2",
+            "location": "[parameters('location')]",
             "properties": {
                 "sku": {
                     "family": "A",
                     "name": "premium"
                 },
-                "tenantId": "[parameters('provisionerTenantId')]",
+                "tenantId": "[parameters('tenantId')]",
                 "accessPolicies": [
                     {
-                        "tenantId": "[parameters('provisionerTenantId')]",
+                        "tenantId": "[parameters('tenantId')]",
                         "objectId": "[parameters('testApplicationOid')]",
                         "permissions": {
                             "keys": [
@@ -108,6 +120,18 @@
         }
     ],
     "outputs": {
+        "AZURE_TENANT_ID": {
+            "type": "string",
+            "value": "[parameters('tenantId')]"
+        },
+        "AZURE_CLIENT_ID": {
+            "type": "string",
+            "value": "[parameters('testApplicationId')]"
+        },
+        "AZURE_CLIENT_SECRET": {
+            "type": "string",
+            "value": "[parameters('testApplicationSecret')]"
+        },
         "AZURE_KEYVAULT_URL": {
             "type": "string",
             "value": "[variables('azureKeyVaultUrl')]"

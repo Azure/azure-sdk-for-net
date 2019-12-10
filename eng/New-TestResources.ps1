@@ -5,31 +5,43 @@
 
 #Requires -Version 6.0
 #Requires -PSEdition Core
+#Requires -Modules @{ModuleName='Az.Accounts'; ModuleVersion='1.6.4'}
 #Requires -Modules @{ModuleName='Az.Resources'; ModuleVersion='1.8.0'}
 
-[CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
+[CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param (
+    # Limit $BaseName to enough characters to be under limit plus prefixes, and https://docs.microsoft.com/azure/architecture/best-practices/resource-naming.
     [Parameter(Mandatory = $true, Position = 0)]
+    [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
 
     [Parameter(Mandatory = $true)]
     [string] $ServiceDirectory,
 
-    [Parameter()]
+    [Parameter(Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
-    [string] $ProvisionerTenantId,
+    [string] $TestApplicationId,
 
-    [Parameter()]
-    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
-    [string] $ProvisionerClientId,
-
-    [Parameter()]
-    [ValidateNotNullOrEmpty()]
-    [string] $ProvisionerClientSecret,
+    [Parameter(Mandatory = $true)]
+    [string] $TestApplicationSecret,
 
     [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationOid,
+
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [ValidateNotNullOrEmpty()]
+    [string] $TenantId,
+
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
+    [string] $ProvisionerApplicationId,
+
+    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [string] $ProvisionerApplicationSecret,
+
+    [Parameter(ParameterSetName = 'Provisioner')]
+    [switch] $NoProvisionerAutoSave,
 
     [Parameter()]
     [ValidateRange(0, [int]::MaxValue)]
@@ -37,11 +49,11 @@ param (
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
-    [hashtable] $AdditionalParameters,
+    [string] $Location = 'westus2',
 
     [Parameter()]
     [ValidateNotNullOrEmpty()]
-    [string] $Location = 'westus2',
+    [hashtable] $AdditionalParameters,
 
     [Parameter()]
     [switch] $Force
@@ -56,6 +68,19 @@ function Log($Message) {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
+# Support actions to invoke on exit.
+$exitActions = @({
+    if ($exitActions.Count -gt 1) {
+        Write-Verbose 'Running registered exit actions.'
+    }
+})
+
+trap {
+    # Like using try..finally in PowerShell, but without keeping track of more braces or tabbing content.
+    $exitActions.Invoke()
+}
+
+# Enumerate test resources to deploy. Fail if none found.
 $root = Resolve-Path -Path "$PSScriptRoot/../sdk/$ServiceDirectory"
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
@@ -69,19 +94,61 @@ Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
 }
 
 if (!$templateFiles) {
-    Write-Error -Message "No template files found under '$root'" -Category 'ObjectNotFound' -TargetObject $templateFileName
-    exit 2
+    Write-Warning -Message "No template files found under '$root'"
+    exit
 }
 
+# Log in if requested; otherwise, the user is expected to already be authenticated via Connect-AzAccount.
+if ($ProvisionerApplicationId) {
+    $null = Disable-AzContextAutosave -Scope Process
+
+    Log "Logging into service principal '$ProvisionerApplicationId'"
+    $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
+    $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
+    $provisionerAccount = Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+
+    $exitActions += {
+        Write-Verbose "Logging out of service principal '$($provisionerAccount.Context.Account)'"
+        $null = Disconnect-AzAccount -AzureContext $provisionerAccount.Context
+    }
+}
+
+# Get test application OID from ID if not already provided.
+if ($TestApplicationId -and !$TestApplicationOid) {
+    $testServicePrincipal = Get-AzADServicePrincipal -ApplicationId $TestApplicationId
+    if ($testServicePrincipal -and $testServicePrincipal.Id) {
+        $script:TestApplicationOid = $testServicePrincipal.Id
+    }
+}
+
+# Format the resource group name based on resource group naming recommendations and limitations.
+$resourceGroupName = "rg-{0}-$baseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+
 # Tag the resource group to be deleted after a certain number of hours if specified.
-$tags = @{}
+$tags = @{
+    ServiceDirectory = $ServiceDirectory
+}
+
 if ($PSBoundParameters.ContainsKey('DeleteAfterHours')) {
     $deleteAfter = [DateTime]::UtcNow.AddHours($DeleteAfterHours)
     $tags.Add('DeleteAfter', $deleteAfter.ToString('o'))
 }
 
-Log "Creating resource group '${BaseName}rg' in location '$Location'"
-$resourceGroup = New-AzResourceGroup -Name "${BaseName}rg" -Location $Location -Tag $tags -Force:$Force
+if ($env:SYSTEM_TEAMPROJECTID) {
+    # Add tags for the current CI job.
+    $tags += @{
+        BuildId = "${env:BUILD_BUILDID}"
+        BuildJob = "${env:AGENT_JOBNAME}"
+        BuildNumber = "${env:BUILD_BUILDNUMBER}"
+        BuildReason = "${env:BUILD_REASON}"
+    }
+
+    # Set the resource group name variable.
+    Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$resourceGroupName"
+}
+
+Log "Creating resource group '${resourceGroupName}' in location '$Location'"
+$resourceGroup = New-AzResourceGroup -Name "${resourceGroupName}" -Location $Location -Tag $tags -Force:$Force
 if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
     # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
     Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
@@ -89,14 +156,14 @@ if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
 
 # Populate the template parameters and merge any additional specified.
 $templateParameters = @{baseName = $BaseName}
-if ($ProvisionerTenantId) {
-    $templateParameters.Add('provisionerTenantId', $ProvisionerTenantId)
+if ($TenantId) {
+    $templateParameters.Add('tenantId', $TenantId)
 }
-if ($ProvisionerClientId) {
-    $templateParameters.Add('provisionerClientId', $ProvisionerClientId)
+if ($TestApplicationId) {
+    $templateParameters.Add('testApplicationId', $TestApplicationId)
 }
-if ($ProvisionerClientSecret) {
-    $templateParameters.Add('provisionerClientSecret', $ProvisionerClientSecret)
+if ($TestApplicationSecret) {
+    $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
 }
 if ($TestApplicationOid) {
     $templateParameters.Add('testApplicationOid', $TestApplicationOid)
@@ -149,7 +216,7 @@ foreach ($templateFile in $templateFiles) {
         if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
             if ($env:SYSTEM_TEAMPROJECTID) {
                 # Running in Azure Pipelines.
-                Write-Host "##vso[task.setvariable variable=$key;]$($variable.Value)"
+                Write-Host "##vso[task.setvariable variable=$key;issecret=true;]$($variable.Value)"
             } else {
                 Write-Host ($shellExportFormat -f $key, $variable.Value)
             }
@@ -162,3 +229,5 @@ foreach ($templateFile in $templateFiles) {
         $key = $null
     }
 }
+
+$exitActions.Invoke()
