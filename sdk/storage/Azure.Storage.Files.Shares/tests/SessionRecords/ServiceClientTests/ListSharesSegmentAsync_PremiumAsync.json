@@ -1,33 +1,33 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/test-share-c4b5252f-c011-bbc4-32f9-86a2ec0b42e7?restype=share",
+      "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/test-share-e4fc8b00-6f40-acf1-4d92-693e85e4562f?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-8e2b4182e9eaf443802eb4c62ee231f8-799d9b0fe939734e-00",
+        "traceparent": "00-5f79feccb1b65e4d8c61adc0474feffa-f5a165b57a3ee34c-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B2accb37068f0a0c9382fa117525bb968c5397cf7",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "af4bbd5c-7c7c-71fd-d6d3-150dc9fd419d",
-        "x-ms-date": "Fri, 06 Dec 2019 00:28:28 GMT",
+        "x-ms-client-request-id": "3ada6d3b-525c-84c7-9336-61ef6154d99e",
+        "x-ms-date": "Wed, 11 Dec 2019 23:09:29 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Date": "Fri, 06 Dec 2019 00:28:27 GMT",
-        "ETag": "\"0x8D779E3370E58A1\"",
-        "Last-Modified": "Fri, 06 Dec 2019 00:28:28 GMT",
+        "Date": "Wed, 11 Dec 2019 23:09:29 GMT",
+        "ETag": "\u00220x8D77E8F2D2BFB03\u0022",
+        "Last-Modified": "Wed, 11 Dec 2019 23:09:29 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-client-request-id": "af4bbd5c-7c7c-71fd-d6d3-150dc9fd419d",
-        "x-ms-request-id": "1e448668-a01a-00c0-7ecc-ab6788000000",
+        "x-ms-client-request-id": "3ada6d3b-525c-84c7-9336-61ef6154d99e",
+        "x-ms-request-id": "0edf89a0-101a-009d-1778-b0978c000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
@@ -38,11 +38,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B2accb37068f0a0c9382fa117525bb968c5397cf7",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "2e45a574-93bf-d06a-1b28-085b9b53eb9e",
-        "x-ms-date": "Fri, 06 Dec 2019 00:28:28 GMT",
+        "x-ms-client-request-id": "1803f709-1b09-2fd2-2c6e-b501433d212f",
+        "x-ms-date": "Wed, 11 Dec 2019 23:09:30 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -50,30 +50,30 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Fri, 06 Dec 2019 00:28:27 GMT",
+        "Date": "Wed, 11 Dec 2019 23:09:29 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-client-request-id": "2e45a574-93bf-d06a-1b28-085b9b53eb9e",
-        "x-ms-request-id": "1e44866a-a01a-00c0-7fcc-ab6788000000",
+        "x-ms-client-request-id": "1803f709-1b09-2fd2-2c6e-b501433d212f",
+        "x-ms-request-id": "0edf89a2-101a-009d-1878-b0978c000000",
         "x-ms-version": "2019-07-07"
       },
-      "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><EnumerationResults ServiceEndpoint=\"http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/\"><Shares><Share><Name>jtsfileserviceapitestslistshareswithpremiumshare0038723930</Name><Properties><Last-Modified>Thu, 05 Dec 2019 19:25:55 GMT</Last-Modified><Etag>\"0x8D779B8F32EE1E0\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 19:25:55 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsfileserviceapitestslistshareswithpremiumshare07537755af</Name><Properties><Last-Modified>Thu, 05 Dec 2019 20:37:58 GMT</Last-Modified><Etag>\"0x8D779C30379688F\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 20:37:57 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsfileserviceasyncapitestslistshareswithpremiumshare0229959a</Name><Properties><Last-Modified>Thu, 05 Dec 2019 19:34:11 GMT</Last-Modified><Etag>\"0x8D779BA1AA09CDE\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 19:34:11 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsfileserviceasyncapitestslistshareswithpremiumshare056496c5</Name><Properties><Last-Modified>Thu, 05 Dec 2019 20:38:37 GMT</Last-Modified><Etag>\"0x8D779C31B4C492D\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 20:38:37 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsfileserviceasyncapitestslistshareswithpremiumshare05687330</Name><Properties><Last-Modified>Thu, 05 Dec 2019 20:16:46 GMT</Last-Modified><Etag>\"0x8D779C00D582B1D\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 20:16:46 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsfileserviceasyncapitestslistshareswithpremiumshare0588960d</Name><Properties><Last-Modified>Thu, 05 Dec 2019 19:31:12 GMT</Last-Modified><Etag>\"0x8D779B9AFFA6838\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 19:31:12 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsfileserviceasyncapitestslistshareswithpremiumshare07866844</Name><Properties><Last-Modified>Thu, 05 Dec 2019 20:16:55 GMT</Last-Modified><Etag>\"0x8D779C013258493\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 20:16:55 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsfileserviceasyncapitestslistshareswithpremiumshare0799469d</Name><Properties><Last-Modified>Thu, 05 Dec 2019 19:35:52 GMT</Last-Modified><Etag>\"0x8D779BA56C81E32\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 19:35:52 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsshareapitestsgetpropertiespremium083320a655990a80</Name><Properties><Last-Modified>Thu, 05 Dec 2019 19:16:45 GMT</Last-Modified><Etag>\"0x8D779B7AB2E6AE9\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 19:16:45 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>jtsshareasyncapitestsgetpropertiespremium004757e6d7da63</Name><Properties><Last-Modified>Thu, 05 Dec 2019 20:20:32 GMT</Last-Modified><Etag>\"0x8D779C094778270\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 05 Dec 2019 20:20:32 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>test-share-4f448f0a-b9a5-3581-bff4-b852cd2a616e</Name><Properties><Last-Modified>Thu, 21 Nov 2019 23:58:27 GMT</Last-Modified><Etag>\"0x8D76EDEB41D146D\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Thu, 21 Nov 2019 23:58:27 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>test-share-bde8486f-e193-78f9-914e-19c3418dae0d</Name><Properties><Last-Modified>Fri, 22 Nov 2019 00:24:32 GMT</Last-Modified><Etag>\"0x8D76EE25888B159\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Fri, 22 Nov 2019 00:24:32 GMT</NextAllowedQuotaDowngradeTime></Properties></Share><Share><Name>test-share-c4b5252f-c011-bbc4-32f9-86a2ec0b42e7</Name><Properties><Last-Modified>Fri, 06 Dec 2019 00:28:28 GMT</Last-Modified><Etag>\"0x8D779E3370E58A1\"</Etag><Quota>100</Quota><EnabledProtocols>SMB</EnabledProtocols><ProvisionedIops>100</ProvisionedIops><ProvisionedIngressMBps>44</ProvisionedIngressMBps><ProvisionedEgressMBps>66</ProvisionedEgressMBps><NextAllowedQuotaDowngradeTime>Fri, 06 Dec 2019 00:28:28 GMT</NextAllowedQuotaDowngradeTime></Properties></Share></Shares><NextMarker /></EnumerationResults>"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Etest-share-e4fc8b00-6f40-acf1-4d92-693e85e4562f\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 11 Dec 2019 23:09:29 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D77E8F2D2BFB03\u0022\u003C/Etag\u003E\u003CQuota\u003E100\u003C/Quota\u003E\u003CEnabledProtocols\u003ESMB\u003C/EnabledProtocols\u003E\u003CProvisionedIops\u003E100\u003C/ProvisionedIops\u003E\u003CProvisionedIngressMBps\u003E44\u003C/ProvisionedIngressMBps\u003E\u003CProvisionedEgressMBps\u003E66\u003C/ProvisionedEgressMBps\u003E\u003CNextAllowedQuotaDowngradeTime\u003EWed, 11 Dec 2019 23:09:29 GMT\u003C/NextAllowedQuotaDowngradeTime\u003E\u003C/Properties\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/test-share-c4b5252f-c011-bbc4-32f9-86a2ec0b42e7?restype=share",
+      "RequestUri": "http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/test-share-e4fc8b00-6f40-acf1-4d92-693e85e4562f?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-f029aea14c187245bd4e85ef35ee6b9c-858661c5ba8f6a43-00",
+        "traceparent": "00-d6b7bcafc94ab04b91b427032ac58c90-a37c5433de7cbd4b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B2accb37068f0a0c9382fa117525bb968c5397cf7",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "2398f585-12b7-85de-7db4-ae295bfde271",
-        "x-ms-date": "Fri, 06 Dec 2019 00:28:28 GMT",
+        "x-ms-client-request-id": "6ae528e1-c151-b695-72d1-eda3455c1720",
+        "x-ms-date": "Wed, 11 Dec 2019 23:09:30 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
@@ -81,21 +81,21 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Date": "Fri, 06 Dec 2019 00:28:28 GMT",
+        "Date": "Wed, 11 Dec 2019 23:09:29 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-client-request-id": "2398f585-12b7-85de-7db4-ae295bfde271",
-        "x-ms-request-id": "1e44866b-a01a-00c0-80cc-ab6788000000",
+        "x-ms-client-request-id": "6ae528e1-c151-b695-72d1-eda3455c1720",
+        "x-ms-request-id": "0edf89a3-101a-009d-1978-b0978c000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "1532964935",
+    "RandomSeed": "533999405",
     "Storage_TestConfigPremiumBlob": "PremiumBlobTenant\ne88xscnapdz5ptf01d\nU2FuaXRpemVk\nhttp://e88xscnapdz5ptf01d.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.table.preprod.core.windows.net\n\n\n\n\nhttp://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.table.preprod.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://e88xscnapdz5ptf01d.blob.preprod.core.windows.net/;QueueEndpoint=http://e88xscnapdz5ptf01d.queue.preprod.core.windows.net/;FileEndpoint=http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/;BlobSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net/;AccountName=e88xscnapdz5ptf01d;AccountKey=Sanitized\n"
   }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -471,8 +472,8 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.FileTimeNow,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.FileTimeNow,
+                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         operationName: Constants.File.Directory.CreateOperationName,
@@ -834,8 +835,8 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                         filePermission: filePermission,
-                        fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
-                        fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
+                        fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                        fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         operationName: Constants.File.Directory.SetHttpHeadersOperationName,
@@ -1722,7 +1723,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(ShareFileRangeWriteType, HttpRange, System.IO.Stream, byte[], IProgress{long}, FileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1739,6 +1740,10 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1759,6 +1764,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1768,6 +1774,7 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                conditions,
                 cancellationToken);
             return Response.FromValue(file, response.GetRawResponse());
         }
@@ -1779,7 +1786,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadRange(ShareFileRangeWriteType, HttpRange, System.IO.Stream, byte[], IProgress{long}, FileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1808,6 +1815,71 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileClient> CreateFile(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            long maxSize,
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken)
+        {
+            ShareFileClient file = GetFileClient(fileName);
+            Response<ShareFileInfo> response = file.Create(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                conditions: default,
+                cancellationToken);
+            return Response.FromValue(file, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(ShareFileRangeWriteType, HttpRange, System.IO.Stream, byte[], IProgress{long}, FileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileClient}"/> referencing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<ShareFileClient>> CreateFileAsync(
             string fileName,
@@ -1816,6 +1888,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1825,6 +1898,68 @@ namespace Azure.Storage.Files.Shares
                 metadata,
                 smbProperties,
                 filePermission,
+                conditions,
+                cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(file, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates a new file or replaces an existing file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-file"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method only initializes the file.
+        /// To add content, use <see cref="ShareFileClient.UploadRange(ShareFileRangeWriteType, HttpRange, System.IO.Stream, byte[], IProgress{long}, FileRequestConditions, CancellationToken)"/>.
+        /// </remarks>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="maxSize">
+        /// Required. Specifies the maximum size for the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for the file.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the file.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set for the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileClient}"/> referencing the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileClient>> CreateFileAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            long maxSize,
+            ShareFileHttpHeaders httpHeaders,
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken)
+        {
+            ShareFileClient file = GetFileClient(fileName);
+            Response<ShareFileInfo> response = await file.CreateAsync(
+                maxSize,
+                httpHeaders,
+                metadata,
+                smbProperties,
+                filePermission,
+                conditions: default,
                 cancellationToken).ConfigureAwait(false);
             return Response.FromValue(file, response.GetRawResponse());
         }
@@ -1832,12 +1967,16 @@ namespace Azure.Storage.Files.Shares
 
         #region DeleteFile
         /// <summary>
-        /// The <see cref="DeleteFile"/> operation immediately removes
-        /// the file from the storage account.
+        /// The <see cref="DeleteFile(string, FileRequestConditions, CancellationToken)"/>
+        /// operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1852,12 +1991,15 @@ namespace Azure.Storage.Files.Shares
         [ForwardsClientCalls]
         public virtual Response DeleteFile(
             string fileName,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            GetFileClient(fileName).Delete(cancellationToken);
+            GetFileClient(fileName).Delete(
+                conditions,
+                cancellationToken);
 
         /// <summary>
-        /// The <see cref="DeleteFileAsync"/> operation immediately removes
-        /// the file from the storage account.
+        /// The <see cref="DeleteFile(string, CancellationToken)"/>
+        /// operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
@@ -1873,12 +2015,79 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response DeleteFile(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            CancellationToken cancellationToken) =>
+            GetFileClient(fileName).Delete(
+                conditions: default,
+                cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DeleteFile(string, FileRequestConditions, CancellationToken)"/>
+        /// operation immediately removes the file from the storage account.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="conditions">
+        /// Optional <see cref="FileRequestConditions"/> to add conditions
+        /// on creating the file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileAsync(
             string fileName,
+            FileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetFileClient(fileName)
-                .DeleteAsync(cancellationToken)
+                .DeleteAsync(
+                    conditions,
+                    cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteFileAsync(string, CancellationToken)"/>
+        /// operation immediately removesthe file from the storage account.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will bse thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> DeleteFileAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string fileName,
+            CancellationToken cancellationToken) =>
+            await GetFileClient(fileName)
+                .DeleteAsync(
+                    conditions: default,
+                    cancellationToken)
                 .ConfigureAwait(false);
         #endregion DeleteFile
     }

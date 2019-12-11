@@ -238,7 +238,7 @@ namespace Azure.Storage
             internal static class Lease
             {
                 /// <summary>
-                /// Lease Duration is set as infinite when passed -1
+                /// Lease Duration is set as infinite when passed -1.
                 /// </summary>
                 public const int InfiniteLeaseDuration = -1;
                 /// <summary>
@@ -337,6 +337,10 @@ namespace Azure.Storage
                 "Azure.Storage.Files.Shares.ShareFileClient.SetMetadata";
             public const string GetRangeListOperationName =
                 "Azure.Storage.Files.Shares.ShareFileClient.GetRangeList";
+
+            public const string LeaseNotPresentWithFileOperation =
+                "LeaseNotPresentWithFileOperation";
+
             internal static class Directory
             {
                 public const string CreateOperationName =
@@ -391,6 +395,26 @@ namespace Azure.Storage
                     "Azure.Storage.Files.Shares.ShareClient.GetPermission";
                 public const string CreatePermissionOperationName =
                     "Azure.Storage.Files.Shares.ShareClient.CreatePermission";
+            }
+
+            internal static class Lease
+            {
+                /// <summary>
+                /// Lease Duration is set as infinite when passed -1.
+                /// </summary>
+                public const int InfiniteLeaseDuration = -1;
+
+                /// <summary>
+                /// The Azure Storage Operation Names for Blob Lease Client.
+                /// </summary>
+                public const string AcquireOperationName =
+                    "Azure.Storage.Files.Shares.Specialized.FileLeaseClient.Acquire";
+                public const string ReleaseOperationName =
+                    "Azure.Storage.Files.Shares.Specialized.FileLeaseClient.Release";
+                public const string ChangeOperationName =
+                    "Azure.Storage.Files.Shares.Specialized.FileLeaseClient.Change";
+                public const string BreakOperationName =
+                    "Azure.Storage.Files.Shares.Specialized.FileLeaseClient.Break";
             }
         }
 

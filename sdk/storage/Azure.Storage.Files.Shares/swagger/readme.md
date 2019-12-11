@@ -59,6 +59,10 @@ directive:
   where: $["x-ms-paths"]..responses..headers["Date"]
   transform: >
     $["x-az-demote-header"] = true;
+- from: swagger-document
+  where: $["x-ms-paths"]..responses..headers["x-ms-client-request-id"]
+  transform: >
+    $["x-az-demote-header"] = true;
 ```
 
 ### Clean up Failure response
@@ -758,6 +762,48 @@ directive:
   where: $.definitions
   transform: >
     $.Range["x-az-public"] = false;
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&acquire
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&acquire"]
+  transform: >
+    $.put.responses["201"].description = "The lease operation completed successfully.";
+    $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a file's lease";
+    $.put.responses["201"]["x-az-response-name"] = "FileLease";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&release
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&release"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"]["x-az-response-name"] = "FileLeaseReleaseInfo";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&change
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&change"]
+  transform: >
+    $.put.responses["200"].description = "The lease operation completed successfully.";
+    $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
+    $.put.responses["200"]["x-az-response-name"] = "FileLease";
+```
+
+### /{shareName}/{directory}/{fileName}?comp=lease&break
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}?comp=lease&break"]
+  transform: >
+    $.put.responses["202"]["x-az-response-name"] = "BrokenLease";
+    $.put.responses["202"]["x-az-public"] = false;
 ```
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.Shares%2Fswagger%2Freadme.png)
