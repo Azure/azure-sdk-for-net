@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -1814,9 +1815,11 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [ForwardsClientCalls]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileClient> CreateFile(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string fileName,
             long maxSize,
             ShareFileHttpHeaders httpHeaders,
@@ -1936,15 +1939,18 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileClient>> CreateFileAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string fileName,
             long maxSize,
             ShareFileHttpHeaders httpHeaders,
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             ShareFileClient file = GetFileClient(fileName);
             Response<ShareFileInfo> response = await file.CreateAsync(
@@ -2009,9 +2015,11 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [ForwardsClientCalls]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteFile(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string fileName,
             CancellationToken cancellationToken) =>
             GetFileClient(fileName).Delete(
@@ -2069,9 +2077,11 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will bse thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [ForwardsClientCalls]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteFileAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string fileName,
             CancellationToken cancellationToken) =>
             await GetFileClient(fileName)

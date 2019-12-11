@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -379,7 +380,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
@@ -416,8 +416,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileInfo> Create(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long maxSize,
             ShareFileHttpHeaders httpHeaders,
             Metadata metadata,
@@ -494,7 +496,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
         /// <summary>
         /// Creates a new file or replaces an existing file.
         ///
@@ -531,8 +532,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileInfo>> CreateAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long maxSize,
             ShareFileHttpHeaders httpHeaders,
             Metadata metadata,
@@ -731,7 +734,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// Copies a blob or file to a destination file within the storage account.
         ///
@@ -755,8 +757,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileCopyInfo> StartCopy(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             Metadata metadata,
             CancellationToken cancellationToken) =>
@@ -866,8 +870,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileCopyInfo>> StartCopyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             Metadata metadata,
             CancellationToken cancellationToken) =>
@@ -1025,7 +1031,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
@@ -1045,8 +1050,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response AbortCopy(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string copyId,
             CancellationToken cancellationToken) =>
             AbortCopyInternal(
@@ -1090,7 +1097,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
         /// <summary>
         /// Attempts to cancel a pending copy that was previously started and leaves a destination file with zero length and full metadata.
         ///
@@ -1110,8 +1116,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> AbortCopyAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string copyId,
             CancellationToken cancellationToken) =>
             await AbortCopyInternal(
@@ -1266,7 +1274,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileDownloadInfo> Download(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             HttpRange range,
             bool rangeGetContentHash,
             CancellationToken cancellationToken) =>
@@ -1279,7 +1290,8 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadAsync"/> operation reads or downloads a file from the system, including its metadata and properties.
+        /// The <see cref="DownloadAsync(HttpRange, bool, FileRequestConditions, CancellationToken)"/>
+        /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
         /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
         /// </summary>
@@ -1321,7 +1333,53 @@ namespace Azure.Storage.Files.Shares
                 range,
                 rangeGetContentHash,
                 conditions,
-                true, // async
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DownloadAsync(HttpRange, bool, CancellationToken)"/> operation reads
+        /// or downloads a file from the system, including its metadata and properties.
+        ///
+        /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
+        /// </summary>
+        /// <param name="range">
+        /// Optional. Only download the bytes of the file in the specified
+        /// range.  If not provided, download the entire file.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// When set to true and specified together with the <paramref name="range"/>,
+        /// the service returns the MD5 hash for the range, as long as the
+        /// range is less than or equal to 4 MB in size.  If this value is
+        /// specified without <paramref name="range"/> or set to true when the
+        /// range exceeds 4 MB in size, a <see cref="RequestFailedException"/>
+        /// is thrown.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileDownloadInfo}"/> describing the
+        /// downloaded file.  <see cref="ShareFileDownloadInfo.Content"/> contains
+        /// the file's data.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            HttpRange range,
+            bool rangeGetContentHash,
+            CancellationToken cancellationToken) =>
+            await DownloadInternal(
+                range,
+                rangeGetContentHash,
+                conditions: default,
+                async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1529,7 +1587,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="Delete(CancellationToken)"/> operation immediately
         /// removes the file from the storage account.
@@ -1547,8 +1604,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Delete(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             CancellationToken cancellationToken) =>
             DeleteInternal(
                 conditions: default,
@@ -1586,7 +1645,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
         /// <summary>
         /// The <see cref="DeleteAsync(CancellationToken)"/> operation
         /// immediately removes the file from the storage account.
@@ -1604,8 +1662,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             CancellationToken cancellationToken) =>
             await DeleteInternal(
                 conditions: default,
@@ -1725,7 +1785,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareFileProperties> GetProperties(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             CancellationToken cancellationToken) =>
             GetPropertiesInternal(
                 conditions: default,
@@ -1734,10 +1797,9 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
-        /// user-defined metadata, standard HTTP properties, and system
-        /// properties for the file. It does not return the content of the
-        /// file.
+        /// The <see cref="GetPropertiesAsync(FileRequestConditions, CancellationToken)"/>
+        /// operation returns all user-defined metadata, standard HTTP properties, and system
+        /// properties for the file. It does not return the content of the file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
@@ -1767,7 +1829,38 @@ namespace Azure.Storage.Files.Shares
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system
+        /// properties for the file. It does not return the content of the
+        /// file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileProperties}"/> describing the
+        /// file's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareFileProperties>> GetPropertiesAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            CancellationToken cancellationToken) =>
+            await GetPropertiesInternal(
+                conditions: default,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetPropertiesInternal"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the file. It does not return the content of the
         /// file.
@@ -1889,7 +1982,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="SetHttpHeaders(long?, ShareFileHttpHeaders, FileSmbProperties, string, CancellationToken)"/>
         /// operation sets system
@@ -1924,8 +2016,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileInfo> SetHttpHeaders(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long? newSize,
             ShareFileHttpHeaders httpHeaders,
             FileSmbProperties smbProperties,
@@ -1995,7 +2089,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
         /// <summary>
         /// The <see cref="SetHttpHeadersAsync(long?, ShareFileHttpHeaders, FileSmbProperties, string, CancellationToken)"/>
         /// operation sets system properties on the file.
@@ -2029,8 +2122,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileInfo>> SetHttpHeadersAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             long? newSize,
             ShareFileHttpHeaders httpHeaders,
             FileSmbProperties smbProperties,
@@ -2187,7 +2282,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="SetMetadata(Metadata, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
@@ -2209,8 +2303,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileInfo> SetMetadata(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Metadata metadata,
             CancellationToken cancellationToken) =>
             SetMetadataInternal(
@@ -2256,7 +2352,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
         /// <summary>
         /// The <see cref="SetMetadata(Metadata, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
@@ -2278,8 +2373,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileInfo>> SetMetadataAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Metadata metadata,
             CancellationToken cancellationToken) =>
             await SetMetadataInternal(
@@ -2419,7 +2516,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="UploadRange(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
@@ -2459,8 +2555,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileUploadInfo> UploadRange(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             ShareFileRangeWriteType writeType,
             HttpRange range,
             Stream content,
@@ -2540,7 +2638,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
         /// <summary>
         /// The <see cref="UploadRangeAsync(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
@@ -2580,8 +2677,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             ShareFileRangeWriteType writeType,
             HttpRange range,
             Stream content,
@@ -2741,7 +2840,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, CancellationToken)"/>
         /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
@@ -2769,8 +2867,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileUploadInfo> UploadRangeFromUri(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
@@ -2831,6 +2931,7 @@ namespace Azure.Storage.Files.Shares
                 .ConfigureAwait(false);
 
 
+
         /// <summary>
         /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, CancellationToken)"/>
         /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
@@ -2856,10 +2957,12 @@ namespace Azure.Storage.Files.Shares
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.s
+        /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeFromUriAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
@@ -3029,9 +3132,11 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [ForwardsClientCalls]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileUploadInfo> Upload(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken) =>
@@ -3113,9 +3218,11 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [ForwardsClientCalls]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken) =>
@@ -3293,7 +3400,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .EnsureCompleted();
 
-
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
@@ -3315,8 +3421,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ShareFileRangeInfo> GetRangeList(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             HttpRange range,
             CancellationToken cancellationToken) =>
             GetRangeListInternal(
@@ -3362,7 +3470,6 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken)
                 .ConfigureAwait(false);
 
-
         /// <summary>
         /// Returns the list of valid ranges for a file.
         ///
@@ -3384,8 +3491,10 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "AZC0002:DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.", Justification = "<Pending>")]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             HttpRange range,
             CancellationToken cancellationToken) =>
             await GetRangeListInternal(

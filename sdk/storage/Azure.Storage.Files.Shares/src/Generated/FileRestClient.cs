@@ -7073,7 +7073,7 @@ namespace Azure.Storage.Files.Shares.Models
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Uniquely identifies a files's lease
+        /// Uniquely identifies a file's lease
         /// </summary>
         public string LeaseId { get; internal set; }
 
