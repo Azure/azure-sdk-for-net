@@ -17,11 +17,11 @@ jobs:
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
       matrix:
-        Linux:
+        Linux_21:
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
-        Linux:
+        Linux_31:
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp3.1
