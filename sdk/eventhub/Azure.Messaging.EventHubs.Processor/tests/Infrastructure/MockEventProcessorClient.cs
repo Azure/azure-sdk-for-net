@@ -8,13 +8,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using static Azure.Messaging.EventHubs.Tests.EventProcessorClientTests;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
     /// <summary>
-    ///   Allows the load balance update and ownership expiration time spans to be overridden
-    ///   for testing purposes.
+    ///   A mock <see cref="EventProcessorClient" /> used for testing purposes.
     /// </summary>
     ///
     public class MockEventProcessorClient : EventProcessorClient
@@ -65,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private PartitionManager StorageManager { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ShortWaitTimeMock" /> class.
+        ///   Initializes a new instance of the <see cref="MockEventProcessorClient" /> class.
         /// </summary>
         ///
         /// <param name="storageManager">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
@@ -74,63 +72,68 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="connectionFactory">A factory used to provide new <see cref="EventHubConnection" /> instances.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
+        /// <param name="fakePartitionProcessing"><c>true</c> if <see cref="RunPartitionProcessingAsync" /> should be overridden; otherwise, <c>false</c>.</param>
+        /// <param name="numberOfPartitions">The amount of partitions the associated Event Hub has.</param>
         ///
         internal MockEventProcessorClient(PartitionManager storageManager,
                                           string consumerGroup = "consumerGroup",
                                           string fullyQualifiedNamespace = "somehost.com",
                                           string eventHubName = "somehub",
                                           Func<EventHubConnection> connectionFactory = default,
-                                          EventProcessorClientOptions options = default,
-                                          bool fakePartitionPRocessing = true,
-                                          int numberOfPartitions = 3) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, options)
+                                          EventProcessorClientOptions clientOptions = default,
+                                          bool fakePartitionProcessing = true,
+                                          int numberOfPartitions = 3) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
         {
             StorageManager = storageManager;
 
             var partitionIds = Enumerable
-                    .Range(1, numberOfPartitions)
-                    .Select(p => p.ToString())
-                    .ToArray();
+                .Range(1, numberOfPartitions)
+                .Select(p => p.ToString())
+                .ToArray();
 
             foreach (var partitionId in partitionIds)
             {
                 EventPipeline[partitionId] = new ConcurrentQueue<EventData>();
             }
 
-            this.FakeRunPartitionProcessingAsync = fakePartitionPRocessing;
-            ProcessErrorAsync += async errorContext =>
+            FakeRunPartitionProcessingAsync = fakePartitionProcessing;
+
+            ProcessErrorAsync += eventArgs =>
             {
-                Exception[] newException = new Exception[] { errorContext.Exception };
+                Exception[] newException = new Exception[] { eventArgs.Exception };
                 ExceptionCalls.AddOrUpdate(
-                    errorContext.PartitionId,
+                    eventArgs.PartitionId,
                     newException,
                     (partitionId, value) => value.Concat(newException).ToArray());
-                await Task.Delay(1);
+
+                return Task.CompletedTask;
             };
 
-            ProcessEventAsync += async processorEvent =>
+            ProcessEventAsync += eventArgs =>
             {
-                EventData[] newEvent = new EventData[] { processorEvent.Data };
+                EventData[] newEvent = new EventData[] { eventArgs.Data };
                 ProcessEventCalls.AddOrUpdate(
-                    processorEvent.Partition.PartitionId,
+                    eventArgs.Partition.PartitionId,
                     newEvent,
                     (partitionId, value) => value.Concat(newEvent).ToArray());
 
-                await Task.Delay(1);
+                return Task.CompletedTask;
             };
 
-            PartitionInitializingAsync += async initializationContext =>
+            PartitionInitializingAsync += eventArgs =>
             {
-                InitializeCalls.AddOrUpdate(initializationContext.PartitionId, 1, (partitionId, value) => value + 1);
-                await Task.Delay(1);
+                InitializeCalls.AddOrUpdate(eventArgs.PartitionId, 1, (partitionId, value) => value + 1);
+
+                return Task.CompletedTask;
             };
 
-            PartitionClosingAsync += async stopContext =>
-            {
-                CloseCalls.AddOrUpdate(stopContext.PartitionId, 1, (partitionId, value) => value + 1);
-                StopReasons[stopContext.PartitionId] = stopContext.Reason;
-                await Task.Delay(1);
-            };
+            PartitionClosingAsync += eventArgs =>
+           {
+               CloseCalls.AddOrUpdate(eventArgs.PartitionId, 1, (partitionId, value) => value + 1);
+               StopReasons[eventArgs.PartitionId] = eventArgs.Reason;
 
+               return Task.CompletedTask;
+           };
         }
 
         /// <summary>
@@ -143,14 +146,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         /// <returns>An <see cref="EventHubConsumerClient" /> with the requested configuration.</returns>
         ///
-        internal override EventHubConsumerClient CreateConsumer(string consumerGroup, EventHubConnection connection, EventHubConsumerClientOptions options)
+        internal override EventHubConsumerClient CreateConsumer(string consumerGroup,
+                                                                EventHubConnection connection,
+                                                                EventHubConsumerClientOptions options)
         {
             var mockConsumer = new Mock<EventHubConsumerClient>();
             mockConsumer
                 .Setup(m => m.ReadEventsFromPartitionAsync(It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<ReadEventOptions>(), It.IsAny<CancellationToken>()))
-                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((paritionId, EventPosition, options, token) =>
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partitionId, eventPosition, options, token) =>
                 {
-                    return CreateReadEventsFromPartitionResponse(paritionId);
+                    return CreateReadEventsFromPartitionResponse(partitionId);
                 });
 
             mockConsumer
@@ -176,11 +181,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     await Task.Delay(0);
                     yield return new PartitionEvent(new MockPartitionContext(partitionId), eventData);
                 }
-                yield break;
             }
             else
             {
-                yield break;
+                yield return new PartitionEvent();
             }
         }
 
@@ -195,11 +199,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         /// <returns>The running task that is currently receiving and processing events in the context of the specified partition. Or a timed expiring task for mocking.</returns>
         ///
-        internal override Task RunPartitionProcessingAsync(string partitionId, EventPosition startingPosition, CancellationToken cancellationToken)
+        internal override Task RunPartitionProcessingAsync(string partitionId,
+                                                           EventPosition startingPosition,
+                                                           CancellationToken cancellationToken)
         {
             if (FakeRunPartitionProcessingAsync)
             {
-                // return a task that will only reasonably return when cancelled
+                // Return a task that will only reasonably return when cancelled.
+
                 return Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
             }
             else
@@ -233,10 +240,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortOwnershipExpiration)
                     .ToList();
 
-                // Increment stabilized status count if current partition distribution matches the previous one.  Reset it
-                // otherwise.
+                // Increment stabilized status count if current partition distribution matches the previous one.  Reset it otherwise.
 
-                if (EventProcessorManager.AreOwnershipDistributionsTheSame(previousActiveOwnership, activeOwnership))
+                if (AreOwnershipDistributionsTheSame(previousActiveOwnership, activeOwnership))
                 {
                     ++consecutiveStabilizedStatus;
                 }
@@ -267,23 +273,98 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         /// <param name="partitionIds">A collection of partition identifiers that the collection will be associated with.</param>
-        /// <param name="identifier">The onwer identifier of the EventProcessorClient owning the collection.</param>
+        /// <param name="identifier">The owner identifier of the EventProcessorClient owning the collection.</param>
+        ///
         /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
         ///
-        internal IEnumerable<PartitionOwnership> CreatePartitionOwnerships(IEnumerable<string> partitionIds, string identifier)
+        internal IEnumerable<PartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,
+                                                                          string identifier)
         {
             return partitionIds
                 .Select(partitionId =>
                     new PartitionOwnership
                         (
-                            this.FullyQualifiedNamespace,
-                            this.EventHubName,
-                            this.ConsumerGroup,
+                            FullyQualifiedNamespace,
+                            EventHubName,
+                            ConsumerGroup,
                             identifier,
                             partitionId,
                             DateTimeOffset.UtcNow,
                             Guid.NewGuid().ToString()
                         )).ToList();
+        }
+
+        /// <summary>
+        ///   Compares two ownership distributions among event processors to determine if they represent the same
+        ///   distribution.
+        /// </summary>
+        ///
+        /// <param name="first">The first distribution to consider.</param>
+        /// <param name="second">The second distribution to consider.</param>
+        ///
+        /// <returns><c>true</c>, if there are no owner changes between distributions; otherwise, <c>false</c>.</returns>
+        ///
+        /// <remarks>
+        ///   Filtering expired ownership is assumed to be responsibility of the caller.
+        /// </remarks>
+        ///
+        private bool AreOwnershipDistributionsTheSame(IEnumerable<PartitionOwnership> first,
+                                                      IEnumerable<PartitionOwnership> second)
+        {
+            // If the distributions are the same instance, they're equal.  This should only happen
+            // if both are null or if they are the exact same instance.
+
+            if (Object.ReferenceEquals(first, second))
+            {
+                return true;
+            }
+
+            // If one or the other is null, then they cannot be equal, since we know that
+            // they are not both null.
+
+            if ((first == null) || (second == null))
+            {
+                return false;
+            }
+
+            // If the owners of each partition are equal, the instances are equal.
+
+            var firstOrderedDistribution = first.OrderBy(ownership => ownership.PartitionId).ToList();
+            var secondOrderedDistribution = second.OrderBy(ownership => ownership.PartitionId).ToList();
+
+            if (firstOrderedDistribution.Count != secondOrderedDistribution.Count)
+            {
+                return false;
+            }
+
+            for (var index = 0; index < firstOrderedDistribution.Count; ++index)
+            {
+                // We must check assert the partitions are the same as well, otherwise we might have matching
+                // owners by chance.
+
+                if (firstOrderedDistribution[index].PartitionId != secondOrderedDistribution[index].PartitionId)
+                {
+                    return false;
+                }
+
+                if (firstOrderedDistribution[index].OwnerIdentifier != secondOrderedDistribution[index].OwnerIdentifier)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        ///   Serves as a mock <see cref="PartitionContext" />.
+        /// </summary>
+        ///
+        private class MockPartitionContext : PartitionContext
+        {
+            public MockPartitionContext(string partitionId) : base(partitionId)
+            {
+            }
         }
     }
 }

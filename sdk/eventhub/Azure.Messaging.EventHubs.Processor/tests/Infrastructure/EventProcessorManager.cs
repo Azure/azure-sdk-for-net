@@ -273,7 +273,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Filtering expired ownership is assumed to be responsibility of the caller.
         /// </remarks>
         ///
-        internal static bool AreOwnershipDistributionsTheSame(IEnumerable<PartitionOwnership> first,
+        private bool AreOwnershipDistributionsTheSame(IEnumerable<PartitionOwnership> first,
                                                       IEnumerable<PartitionOwnership> second)
         {
             // If the distributions are the same instance, they're equal.  This should only happen
