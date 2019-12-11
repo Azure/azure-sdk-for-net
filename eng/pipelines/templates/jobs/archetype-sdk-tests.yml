@@ -21,6 +21,10 @@ jobs:
           OSName: "Linux"
           OSVmImage: "ubuntu-16.04"
           TestTargetFramework: netcoreapp2.1
+        Linux:
+          OSName: "Linux"
+          OSVmImage: "ubuntu-16.04"
+          TestTargetFramework: netcoreapp3.1
         Windows_NetCoreApp:
           OSName: "Windows"
           OSVmImage: "windows-2019"
