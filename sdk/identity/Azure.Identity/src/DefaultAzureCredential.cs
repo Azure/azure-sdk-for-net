@@ -28,8 +28,8 @@ namespace Azure.Identity
     /// </remarks>
     public class DefaultAzureCredential : TokenCredential
     {
-        private const string DefaultExceptionMessage = "The DefaultAzureCredential failed to retrieve a token from the included credentials.";
-        private const string UnhandledExceptionMessage = "The DefaultAzureCredential failed due to an unhandled exception: ";
+        private const string DefaultExceptionMessage = "DefaultAzureCredential was unable to retrieve a token. Please review the Azure Identity documentation for instructions on how to configure each credential.";
+        private const string UnhandledExceptionMessage = "DefaultAzureCredential failed due to an unhandled exception: ";
         private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
         private readonly IExtendedTokenCredential[] _sources;
@@ -106,7 +106,6 @@ namespace Azure.Identity
                 {
                     return scope.Succeeded(exToken.AccessToken);
                 }
-
                 if (exToken.Exception is CredentialUnavailableException)
                 {
                     exceptions.Add(exToken.Exception);
@@ -115,7 +114,8 @@ namespace Azure.Identity
                 {
                     exceptions.Add(exToken.Exception);
 
-                    throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage} {_sources[i].GetType().Name} failed with unhandled exception. {exToken.Exception.Message}", new ReadOnlyMemory<object>(_sources, 0, i+1 ), exceptions));
+                    //throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage} {_sources[i].GetType().Name} failed with unhandled exception. {exToken.Exception.Message}", new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions));
+                    throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage}", new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions));
                 }
             }
 

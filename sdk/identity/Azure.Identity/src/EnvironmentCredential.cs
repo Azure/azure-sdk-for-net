@@ -28,7 +28,8 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly TokenCredential _credential;
-        private readonly string _unavailbleErrorMessage;
+        //private readonly string _unavailbleErrorMessage;
+        private const string UnavailableErrorMessage = "Environment variables not set";
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -71,37 +72,37 @@ namespace Azure.Identity
                 }
             }
 
-            if (_credential is null)
-            {
-                StringBuilder builder = new StringBuilder("Environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
+            //if (_credential is null)
+            //{
+            //    StringBuilder builder = new StringBuilder("Environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
 
-                if (tenantId != null)
-                {
-                    builder.Append(" AZURE_TENANT_ID");
-                }
+            //    if (tenantId != null)
+            //    {
+            //        builder.Append(" AZURE_TENANT_ID");
+            //    }
 
-                if (clientId != null)
-                {
-                    builder.Append(" AZURE_CLIENT_ID");
-                }
+            //    if (clientId != null)
+            //    {
+            //        builder.Append(" AZURE_CLIENT_ID");
+            //    }
 
-                if (clientSecret != null)
-                {
-                    builder.Append(" AZURE_CLIENT_SECRET");
-                }
+            //    if (clientSecret != null)
+            //    {
+            //        builder.Append(" AZURE_CLIENT_SECRET");
+            //    }
 
-                if (username != null)
-                {
-                    builder.Append(" AZURE_USERNAME");
-                }
+            //    if (username != null)
+            //    {
+            //        builder.Append(" AZURE_USERNAME");
+            //    }
 
-                if (password != null)
-                {
-                    builder.Append(" AZURE_PASSWORD");
-                }
+            //    if (password != null)
+            //    {
+            //        builder.Append(" AZURE_PASSWORD");
+            //    }
 
-                _unavailbleErrorMessage = builder.Append(" ].").ToString();
-            }
+            //    _unavailbleErrorMessage = builder.Append(" ]").ToString();
+            //}
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
@@ -159,7 +160,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailableErrorMessage)));
             }
 
             try
@@ -186,7 +187,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailableErrorMessage)));
             }
 
             try
