@@ -1,11 +1,11 @@
 Release History
 ================
 
-# 4.1.0-preview.1
+## 4.1.0-preview.1
 
-# 4.0.0 (2019-11)
+## 4.0.0 (2019-11)
 
-## Breaking changes
+### Breaking changes
 
 - `Key` has been renamed to `KeyVaultKey` to avoid ambiguity with other libraries and to yield better search results.
 - `Key.KeyMaterial` has been renamed to `KeyVaultKey.Key`.
@@ -27,7 +27,7 @@ Release History
 - `RsaKeyCreateOptions` has been renamed to `CreateRsaKeyOptions`.
 - The `keySize` optional parameter has been removed from  the `CreateRsaKeyOptions` constructor. Set it using the `KeySize` property instead.
 
-## Major changes
+### Major changes
 
 - Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.
 - `JsonWebKey.KeyType` and `JsonWebKey.KeyOps` have been exposed as `KeyVaultKey.KeyType` and `KeyVaultKey.KeyOperations` respectively.
@@ -36,9 +36,9 @@ Release History
 - Added ETW trace logger "Azure-Security-KeyVault-Keys" with provider ID "{657a121e-762e-50da-b233-05d7cdb24eb8}"
   for cases in `CryptographyClient` when the available `KeyVaultKey` cannot be used for an operation and the service will perform the operation instead.
 
-# 4.0.0-preview.5 (2019-10-07)
+## 4.0.0-preview.5 (2019-10-07)
 
-## Breaking changes
+### Breaking changes
 
 - `KeyType` enumeration values have been changed to match other languages, e.g. `KeyType.EllipticCurve` is now `KeyType.Ec`.
 - `KeyOperations` has been renamed `KeyOperation`.
@@ -47,12 +47,12 @@ Release History
 - `Key` and `DeletedKey` no longer extend `KeyProperties`, but instead contain a `KeyProperties` property named `Properties`.
 - `KeyClient.UpdateKey` has been renamed to `KeyClient.UpdateKeyProperties`.
 
-## Major changes
+### Major changes
 
 - `KeyClient.UpdateKey` and `KeyClient.UpdateKeyAsync` now allow the `keyOperations` parameter to be null, resulting in no changes to the allowed key operations.
 - `RSA` and `ECDsa` support have been implemented for `CryptographyClient` to use locally if key operations and key material allow; otherwise, operations will be performed in Azure Key Vault.
 
-# 4.0.0-preview.1 (2019-06-28)
+## 4.0.0-preview.1 (2019-06-28)
 
 Version 4.0.0-preview.1 is the first preview of our efforts to create a user-friendly client library for Azure Key Vault. For more information about
 preview releases of other Azure SDK libraries, please visit
@@ -66,7 +66,7 @@ and
 [samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys/samples)
 demonstrate the new API.
 
-## Major changes from `Microsoft.Azure.KeyVault`
+### Major changes from `Microsoft.Azure.KeyVault`
 
 - Packages scoped by functionality
   - `Azure.Security.KeyVault.Keys` contains a client for key operations.
@@ -81,7 +81,7 @@ only).
   [Azure Identity documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity)
   for more information
 
-## `Microsoft.Azure.KeyVault` features not implemented in this release:
+### `Microsoft.Azure.KeyVault` features not implemented in this release:
 
 - Certificate management APIs
 - Cryptographic operations, e.g. sign, un/wrap, verify, en- and
