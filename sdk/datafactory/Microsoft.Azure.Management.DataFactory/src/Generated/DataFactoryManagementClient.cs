@@ -469,10 +469,18 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetCompression>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetStorageFormat>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetStorageFormat>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DatasetLocation>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DatasetLocation>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StoreReadSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StoreReadSettings>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FormatReadSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FormatReadSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySource>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySource>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<StoreWriteSettings>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StoreWriteSettings>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FormatWriteSettings>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<FormatWriteSettings>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopySink>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopySink>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<LinkedIntegrationRuntimeType>("authorizationType"));

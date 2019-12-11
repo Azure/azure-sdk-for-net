@@ -1038,6 +1038,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
         // TODO: #7645
         public async Task UploadRangeFromUriAsync()
         {
