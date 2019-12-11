@@ -126,6 +126,7 @@ $resourceGroupName = "rg-{0}-$baseName" -f ($ServiceDirectory -replace '[\\\/]',
 
 # Tag the resource group to be deleted after a certain number of hours if specified.
 $tags = @{
+    Creator = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
     ServiceDirectory = $ServiceDirectory
 }
 
@@ -194,7 +195,7 @@ foreach ($templateFile in $templateFiles) {
         }
     }
 
-    $preDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-pre-deploy.ps1'
+    $preDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-pre.ps1'
     if (Test-Path $preDeploymentScript) {
         Log "Invoking pre-deployment script '$preDeploymentScript'"
         &$preDeploymentScript -ResourceGroupName $resourceGroupName @PSBoundParameters
@@ -223,7 +224,8 @@ foreach ($templateFile in $templateFiles) {
             $deploymentOutputs[$key] = $variable.Value
 
             if ($env:SYSTEM_TEAMPROJECTID) {
-                # Running in Azure Pipelines.
+                # Running in Azure Pipelines. Unfortunately, there's no good way to know which outputs are truly secrets
+                # because we have to set all output variables to "String" instead of "SecureString" or we will never get back a value.
                 Write-Host "##vso[task.setvariable variable=$key;issecret=true;]$($variable.Value)"
             } else {
                 Write-Host ($shellExportFormat -f $key, $variable.Value)
@@ -237,7 +239,7 @@ foreach ($templateFile in $templateFiles) {
         $key = $null
     }
 
-    $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post-deploy.ps1'
+    $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post.ps1'
     if (Test-Path $postDeploymentScript) {
         Log "Invoking post-deployment script '$postDeploymentScript'"
         &$postDeploymentScript -ResourceGroupName $resourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
