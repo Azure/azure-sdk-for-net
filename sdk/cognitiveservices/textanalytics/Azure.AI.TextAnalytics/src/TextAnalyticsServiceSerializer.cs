@@ -5,6 +5,7 @@ using Azure.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -195,21 +196,21 @@ namespace Azure.AI.TextAnalytics
 
         #region Detect Languages
 
-        public static async Task<DetectLanguageResultCollection> DeserializeDetectLanguageResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<DetectLanguageResultCollection> DeserializeDetectLanguageResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
-            return ReadDetectLanguageResultCollection(root);
+            return ReadDetectLanguageResultCollection(root, idToIndexMap);
         }
 
-        public static DetectLanguageResultCollection DeserializeDetectLanguageResponse(Stream content)
+        public static DetectLanguageResultCollection DeserializeDetectLanguageResponse(Stream content, IDictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
-            return ReadDetectLanguageResultCollection(root);
+            return ReadDetectLanguageResultCollection(root, idToIndexMap);
         }
 
-        private static DetectLanguageResultCollection ReadDetectLanguageResultCollection(JsonElement root)
+        private static DetectLanguageResultCollection ReadDetectLanguageResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<DetectLanguageResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -219,6 +220,13 @@ namespace Azure.AI.TextAnalytics
                     collection.Add(ReadDetectedLanguageResult(documentElement));
                 }
             }
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new DetectLanguageResult(error.Id, error.ErrorMessage));
+            }
+
+            collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
             TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
@@ -263,21 +271,21 @@ namespace Azure.AI.TextAnalytics
 
         #region Recognize Entities
 
-        public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<RecognizeEntitiesResultCollection> DeserializeRecognizeEntitiesResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
-            return ReadRecognizeEntitiesResultCollection(root);
+            return ReadRecognizeEntitiesResultCollection(root, idToIndexMap);
         }
 
-        public static RecognizeEntitiesResultCollection DeserializeRecognizeEntitiesResponse(Stream content)
+        public static RecognizeEntitiesResultCollection DeserializeRecognizeEntitiesResponse(Stream content, IDictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
-            return ReadRecognizeEntitiesResultCollection(root);
+            return ReadRecognizeEntitiesResultCollection(root, idToIndexMap);
         }
 
-        private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root)
+        private static RecognizeEntitiesResultCollection ReadRecognizeEntitiesResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<RecognizeEntitiesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -293,10 +301,17 @@ namespace Azure.AI.TextAnalytics
                 collection.Add(new RecognizeEntitiesResult(error.Id, error.ErrorMessage));
             }
 
+            collection = SortHeterogeneousCollection(collection, idToIndexMap);
+
             TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
             return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
+        }
+
+        private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalysisResult
+        {
+            return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();
         }
 
         private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
@@ -345,21 +360,21 @@ namespace Azure.AI.TextAnalytics
 
         #region Analyze Sentiment
 
-        public static async Task<AnalyzeSentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<AnalyzeSentimentResultCollection> DeserializeAnalyzeSentimentResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
-            return ReadSentimentResult(root);
+            return ReadSentimentResult(root, idToIndexMap);
         }
 
-        public static AnalyzeSentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content)
+        public static AnalyzeSentimentResultCollection DeserializeAnalyzeSentimentResponse(Stream content, IDictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
-            return ReadSentimentResult(root);
+            return ReadSentimentResult(root, idToIndexMap);
         }
 
-        private static AnalyzeSentimentResultCollection ReadSentimentResult(JsonElement root)
+        private static AnalyzeSentimentResultCollection ReadSentimentResult(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<AnalyzeSentimentResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -369,6 +384,13 @@ namespace Azure.AI.TextAnalytics
                     collection.Add(ReadDocumentSentimentResult(documentElement));
                 }
             }
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new AnalyzeSentimentResult(error.Id, error.ErrorMessage));
+            }
+
+            collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
             TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
@@ -434,21 +456,21 @@ namespace Azure.AI.TextAnalytics
 
         #region Extract Key Phrases
 
-        public static async Task<ExtractKeyPhrasesResultCollection> DeserializeKeyPhraseResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<ExtractKeyPhrasesResultCollection> DeserializeKeyPhraseResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
-            return ReadKeyPhraseResultCollection(root);
+            return ReadKeyPhraseResultCollection(root, idToIndexMap);
         }
 
-        public static ExtractKeyPhrasesResultCollection DeserializeKeyPhraseResponse(Stream content)
+        public static ExtractKeyPhrasesResultCollection DeserializeKeyPhraseResponse(Stream content, IDictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
-            return ReadKeyPhraseResultCollection(root);
+            return ReadKeyPhraseResultCollection(root, idToIndexMap);
         }
 
-        private static ExtractKeyPhrasesResultCollection ReadKeyPhraseResultCollection(JsonElement root)
+        private static ExtractKeyPhrasesResultCollection ReadKeyPhraseResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<ExtractKeyPhrasesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -463,6 +485,8 @@ namespace Azure.AI.TextAnalytics
             {
                 collection.Add(new ExtractKeyPhrasesResult(error.Id, error.ErrorMessage));
             }
+
+            collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
             TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
@@ -491,21 +515,21 @@ namespace Azure.AI.TextAnalytics
 
         #region Entity Linking
 
-        public static async Task<ExtractLinkedEntitiesResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, CancellationToken cancellation)
+        public static async Task<ExtractLinkedEntitiesResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
-            return ReadLinkedEntityResultCollection(root);
+            return ReadLinkedEntityResultCollection(root, idToIndexMap);
         }
 
-        public static ExtractLinkedEntitiesResultCollection DeserializeLinkedEntityResponse(Stream content)
+        public static ExtractLinkedEntitiesResultCollection DeserializeLinkedEntityResponse(Stream content, IDictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
-            return ReadLinkedEntityResultCollection(root);
+            return ReadLinkedEntityResultCollection(root, idToIndexMap);
         }
 
-        private static ExtractLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root)
+        private static ExtractLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
             var collection = new List<ExtractLinkedEntitiesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
@@ -515,6 +539,13 @@ namespace Azure.AI.TextAnalytics
                     collection.Add(ReadLinkedEntityResult(documentElement));
                 }
             }
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new ExtractLinkedEntitiesResult(error.Id, error.ErrorMessage));
+            }
+
+            collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
             TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
