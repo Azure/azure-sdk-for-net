@@ -22,7 +22,7 @@ param (
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $TestApplicationId,
 
-    [Parameter(Mandatory = $true)]
+    [Parameter()]
     [string] $TestApplicationSecret,
 
     [Parameter()]
@@ -71,7 +71,7 @@ function Log($Message) {
 # Support actions to invoke on exit.
 $exitActions = @({
     if ($exitActions.Count -gt 1) {
-        Write-Verbose 'Running registered exit actions.'
+        Write-Verbose 'Running registered exit actions'
     }
 })
 
@@ -155,18 +155,17 @@ if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
 }
 
 # Populate the template parameters and merge any additional specified.
-$templateParameters = @{baseName = $BaseName}
+$templateParameters = @{
+    baseName = $BaseName
+    testApplicationId = $TestApplicationId
+    testApplicationOid = "$TestApplicationOid"
+}
+
 if ($TenantId) {
     $templateParameters.Add('tenantId', $TenantId)
 }
-if ($TestApplicationId) {
-    $templateParameters.Add('testApplicationId', $TestApplicationId)
-}
 if ($TestApplicationSecret) {
     $templateParameters.Add('testApplicationSecret', $TestApplicationSecret)
-}
-if ($TestApplicationOid) {
-    $templateParameters.Add('testApplicationOid', $TestApplicationOid)
 }
 if ($AdditionalParameters) {
     $templateParameters += $AdditionalParameters
@@ -195,6 +194,12 @@ foreach ($templateFile in $templateFiles) {
         }
     }
 
+    $preDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-pre-deploy.ps1'
+    if (Test-Path $preDeploymentScript) {
+        Log "Invoking pre-deployment script '$preDeploymentScript'"
+        &$preDeploymentScript -ResourceGroupName $resourceGroupName @PSBoundParameters
+    }
+
     Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
     $deployment = New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
     if ($deployment.ProvisioningState -eq 'Succeeded') {
@@ -207,6 +212,7 @@ foreach ($templateFile in $templateFiles) {
         Log "Persist the following environment variables based on your detected shell ($shell):`n"
     }
 
+    $deploymentOutputs = @{}
     foreach ($key in $deployment.Outputs.Keys) {
         $variable = $deployment.Outputs[$key]
 
@@ -214,6 +220,8 @@ foreach ($templateFile in $templateFiles) {
         $key = $key.ToUpperInvariant()
 
         if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
+            $deploymentOutputs[$key] = $variable.Value
+
             if ($env:SYSTEM_TEAMPROJECTID) {
                 # Running in Azure Pipelines.
                 Write-Host "##vso[task.setvariable variable=$key;issecret=true;]$($variable.Value)"
@@ -228,6 +236,70 @@ foreach ($templateFile in $templateFiles) {
         Write-Host "`n"
         $key = $null
     }
+
+    $postDeploymentScript = $templateFile | Split-Path | Join-Path -ChildPath 'test-resources-post-deploy.ps1'
+    if (Test-Path $postDeploymentScript) {
+        Log "Invoking post-deployment script '$postDeploymentScript'"
+        &$postDeploymentScript -ResourceGroupName $resourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
+    }
 }
 
 $exitActions.Invoke()
+
+<#
+.SYNOPSIS
+Deploys resources defined for a service directory to Azure.
+
+.DESCRIPTION
+If a service directory contains one or more ARM templates named test-resources.json, they will be deployed to Azure.
+
+A service principal must first be created before this script is run and passed to $TestApplicationId and $TestApplicationSecret. Test resources will grant this service principal access.
+
+If you are not currently logged into an account in the Az PowerShell module, you will be asked to log in with Connect-AzAccount. Alternatively, you (or a build pipeline) can pass $ProvisionerApplicationId and $ProvisionerApplicationSecret to authenticate a service principal with access to create resources.
+
+.PARAMETER BaseName
+A name to use in the resource group and passed to the ARM template as 'baseName'.
+
+.PARAMETER ServiceDirectory
+A directory under 'sdk' in the repository root - optionally with subdirectories specified - in which to discover ARM templates named 'test-resources.json'.
+
+.PARAMETER TestApplicationId
+A service principal ID to authenticate the test runner against deployed resources.
+
+.PARAMETER TestApplicationSecret
+Optional service principal secret (password) to authenticate the test runner against deployed resources.
+
+.PARAMETER TenantId
+The tenant ID of a service principal when a provisioner is specified.
+
+.PARAMETER ProvisionerApplicationId
+A service principal ID to provision test resources when a provisioner is specified.
+
+.PARAMETER ProvisionerApplicationSecret
+A service principal secret (password) to provision test resources when a provisioner is specified.
+
+.PARAMETER NoProvisionerAutoSave
+Do not save credentials for the provisioner in the current process.
+
+.PARAMETER DeleteAfterHours
+Optional number of hours after which the resource group is deleted. By default, the resource group will persist until you delete it.
+
+.PARAMETER Location
+Optional location where resources should be created. By default this is 'westus2'.
+
+.PARAMETER AdditionalParameters
+Optional key-value pairs of parameters to pass to the ARM template(s).
+
+.PARAMETER Force
+Force creation of resources instead of being prompted.
+
+.EXAMPLE
+./New-Template.ps1 -BaseName uuid123 -ServiceDirectory keyvault -TestApplicationId $env:AZURE_CLIENT_ID -TestApplicationSecret $env:AZURE_CLIENT_SECRET
+
+Use the currently logged-in account to provision new resources in the sdk/keyvault/test-resources.json ARM template and allow the service principal ID in environment variable AZURE_CLIENT_ID to access it.
+
+To create a service principal in your current subscription, run: New-AzADServicePrincipal. Save the returned Id as $env:AZURE_CLIENT_ID and Secret (piped to ConvertFrom-SecureString) as $env:AZURE_CLIENT_SECRET.
+
+.LINK
+Remove-TestResources.ps1
+#>

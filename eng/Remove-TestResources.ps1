@@ -15,6 +15,7 @@ param (
     [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
 
+    # TODO: When https://github.com/Azure/azure-sdk-for-net/issues/9061 is resolved, default this to previously saved data.
     [Parameter(Mandatory = $true)]
     [string] $ServiceDirectory,
 
@@ -77,3 +78,42 @@ if (Remove-AzResourceGroup -Name "${resourceGroupName}" -Force:$Force) {
 }
 
 $exitActions.Invoke()
+
+<#
+.SYNOPSIS
+Deletes the resource group deployed for a service directory from Azure.
+
+.DESCRIPTION
+Removes a resource group and all its resources previously deployed for the specified $ServiceDirectory using New-TestResources.ps1. The $ServiceDirectory must match the previously specified value, e.g. 'keyvault' as shown in examples.
+
+If you are not currently logged into an account in the Az PowerShell module, you will be asked to log in with Connect-AzAccount. Alternatively, you (or a build pipeline) can pass $ProvisionerApplicationId and $ProvisionerApplicationSecret to authenticate a service principal with access to create resources.
+
+.PARAMETER BaseName
+A name to use in the resource group and passed to the ARM template as 'baseName'.
+
+.PARAMETER ServiceDirectory
+A directory under 'sdk' in the repository root - optionally with subdirectories specified - in which to discover ARM templates named 'test-resources.json'.
+
+.PARAMETER TenantId
+The tenant ID of a service principal when a provisioner is specified.
+
+.PARAMETER ProvisionerApplicationId
+A service principal ID to provision test resources when a provisioner is specified.
+
+.PARAMETER ProvisionerApplicationSecret
+A service principal secret (password) to provision test resources when a provisioner is specified.
+
+.PARAMETER NoProvisionerAutoSave
+Do not save credentials for the provisioner in the current process.
+
+.PARAMETER Force
+Force creation of resources instead of being prompted.
+
+.EXAMPLE
+./Remove-Template.ps1 -BaseName uuid123 -ServiceDirectory keyvault -Force
+
+Use the currently logged-in account to delete the resource group provisioned by the sdk/keyvault/test-resources.json ARM template.
+
+.LINK
+Remove-TestResources.ps1
+#>
