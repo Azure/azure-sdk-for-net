@@ -12,7 +12,7 @@
     <PackageTags>Microsoft Azure IotCentral;IotCentral management;IotCentral;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This release adds new sku name, ST0, ST1, ST2 for Microsoft.Azure.Management.IotCentral application.
+        This release adds new skus: ST0, ST1, ST2 for Microsoft.Azure.Management.IotCentral.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
