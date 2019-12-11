@@ -5,13 +5,13 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-6a971f95ac44b843818bed47e559bc65-352bdf4fcfaa6040-00",
+        "traceparent": "00-841e179dd32147479967556561d58c65-c9ae1663e6c9794e-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002B61bda4d1783b0e05dba0d434ff14b2840726d3b1",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "51f1441b-5cdc-4bdc-254a-05e867250d2b",
-        "x-ms-date": "Fri, 06 Dec 2019 00:28:27 GMT",
+        "x-ms-client-request-id": "5603ce21-9701-845e-fb30-03a8979cb7b8",
+        "x-ms-date": "Tue, 10 Dec 2019 06:02:27 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -20,19 +20,19 @@
       "ResponseHeaders": {
         "Content-Length": "328",
         "Content-Type": "application/xml",
-        "Date": "Fri, 06 Dec 2019 00:28:27 GMT",
+        "Date": "Tue, 10 Dec 2019 06:02:26 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
-        "x-ms-request-id": "7d52141a-f01a-013e-06cc-aba977000000"
+        "x-ms-request-id": "f2737a69-001a-002f-4b1f-afd839000000"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidHeaderValue\u003C/Code\u003E\u003CMessage\u003EThe value for one of the HTTP headers is not in the correct format.\n",
-        "RequestId:7d52141a-f01a-013e-06cc-aba977000000\n",
-        "Time:2019-12-06T00:28:27.6678598Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-07-07\u003C/HeaderValue\u003E\u003C/Error\u003E"
+        "RequestId:f2737a69-001a-002f-4b1f-afd839000000\n",
+        "Time:2019-12-10T06:02:27.6075498Z\u003C/Message\u003E\u003CHeaderName\u003Ex-ms-version\u003C/HeaderName\u003E\u003CHeaderValue\u003E2019-07-07\u003C/HeaderValue\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "RandomSeed": "2131496751",
+    "RandomSeed": "1456799983",
     "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized"
   }
 }
