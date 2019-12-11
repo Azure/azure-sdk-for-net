@@ -454,7 +454,7 @@ namespace Compute.Tests.DiskRPTests
                 EnsureClientsInitialized(context);
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                var desName = "longlivedBvtDES";
+                var desName = "longlivedSwaggerDES";
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.Location = location;
 
@@ -474,6 +474,51 @@ namespace Compute.Tests.DiskRPTests
                     Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
 
                     Validate(disk, diskOut, disk.Location);
+                    Assert.Equal(desOut.Id.ToLower(), diskOut.Encryption.DiskEncryptionSetId.ToLower());
+                    Assert.Equal(EncryptionType.EncryptionAtRestWithCustomerKey, diskOut.Encryption.Type);
+
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        protected void DiskEncryptionSet_UpdateDisk_Execute(string methodName, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                var desName = "longlivedSwaggerDES";
+                Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
+                disk.Location = location;
+
+                try
+                {
+                    m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
+                    // Put Disk with PlatformManagedKey
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
+                    Validate(disk, diskOut, disk.Location);
+                    Assert.Null(diskOut.Encryption.DiskEncryptionSetId);
+                    Assert.Equal(EncryptionType.EncryptionAtRestWithPlatformKey, diskOut.Encryption.Type);
+
+                    // Update Disk with CustomerManagedKey
+                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.Get("longrunningrg-centraluseuap", desName);
+                    Assert.NotNull(desOut);
+                    disk.Encryption = new Encryption
+                    {
+                        Type = EncryptionType.EncryptionAtRestWithCustomerKey.ToString(),
+                        DiskEncryptionSetId = desOut.Id
+                    };
+                    m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+
                     Assert.Equal(desOut.Id.ToLower(), diskOut.Encryption.DiskEncryptionSetId.ToLower());
                     Assert.Equal(EncryptionType.EncryptionAtRestWithCustomerKey, diskOut.Encryption.Type);
                     m_CrpClient.Disks.Delete(rgName, diskName);
