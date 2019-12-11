@@ -552,7 +552,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        LeaseId,
+                        leaseId: LeaseId,
                         async: async,
                         operationName: Constants.File.Lease.BreakOperationName,
                         cancellationToken: cancellationToken)

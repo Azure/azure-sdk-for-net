@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-4a229773-a3f9-fc39-79fe-45df3feb199a?restype=share",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-45909eee-7d61-c13b-bdf1-aed94d81b3cf?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-cf313f8e3218174ebda2dd81574f3f10-a56865224060df46-00",
+        "traceparent": "00-c63ba63a89a12946a86842535e5433e3-302af3631a1ac64a-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "cadfcf2d-92bc-0d6f-13ae-ef949469ba41",
-        "x-ms-date": "Tue, 10 Dec 2019 05:34:03 GMT",
+        "x-ms-client-request-id": "e6a5cbcf-e76d-c9c7-a090-0ea88ef9b974",
+        "x-ms-date": "Wed, 11 Dec 2019 20:42:17 GMT",
         "x-ms-meta-Capital": "letter",
         "x-ms-meta-foo": "bar",
         "x-ms-meta-meta": "data",
@@ -23,15 +23,15 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 10 Dec 2019 05:34:02 GMT",
-        "ETag": "\u00220x8D77D32911E20EE\u0022",
-        "Last-Modified": "Tue, 10 Dec 2019 05:34:03 GMT",
+        "Date": "Wed, 11 Dec 2019 20:42:16 GMT",
+        "ETag": "\u00220x8D77E7A9C7B249E\u0022",
+        "Last-Modified": "Wed, 11 Dec 2019 20:42:17 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "cadfcf2d-92bc-0d6f-13ae-ef949469ba41",
-        "x-ms-request-id": "4fd8e3b9-701a-0023-231b-af08f8000000",
+        "x-ms-client-request-id": "e6a5cbcf-e76d-c9c7-a090-0ea88ef9b974",
+        "x-ms-request-id": "ef3e448f-c01a-0019-2963-b01280000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
@@ -42,11 +42,11 @@
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "70b23478-4f0c-7ade-3255-6e357e88ff26",
-        "x-ms-date": "Tue, 10 Dec 2019 05:34:03 GMT",
+        "x-ms-client-request-id": "81094e58-cddb-7362-dc4a-2c1c28b0fa44",
+        "x-ms-date": "Wed, 11 Dec 2019 20:42:17 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -55,30 +55,30 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/xml",
-        "Date": "Tue, 10 Dec 2019 05:34:02 GMT",
+        "Date": "Wed, 11 Dec 2019 20:42:16 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
-        "x-ms-client-request-id": "70b23478-4f0c-7ade-3255-6e357e88ff26",
-        "x-ms-request-id": "4fd8e3bb-701a-0023-241b-af08f8000000",
+        "x-ms-client-request-id": "81094e58-cddb-7362-dc4a-2c1c28b0fa44",
+        "x-ms-request-id": "ef3e4491-c01a-0019-2a63-b01280000000",
         "x-ms-version": "2019-07-07"
       },
-      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seanstagetest.file.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Edefaultshare14\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCBD5C193E\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Eemptyheadershare1\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:10:58 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCFDCE2C47\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Epublicshare14\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCBD7CE20E\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-20c05b73-7f41-ef79-7e8f-5999fc51d173\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:11:42 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779BF587AAD26\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-2af7b6da-1c27-ac5d-dff4-6459fe40def5\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 04:58:19 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7787694CC7920\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-4a229773-a3f9-fc39-79fe-45df3feb199a\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003ETue, 10 Dec 2019 05:34:03 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D77D32911E20EE\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Cfoo\u003Ebar\u003C/foo\u003E\u003Cmeta\u003Edata\u003C/meta\u003E\u003CCapital\u003Eletter\u003C/Capital\u003E\u003CUPPER\u003Ecase\u003C/UPPER\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-65d43b7e-cb37-b1b9-e40f-283f52463f43\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 03:46:49 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7786C97864095\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-69afbbc1-464c-d35c-23e2-73dcbeeba31c\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 22:57:54 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7790D65D6D5F3\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-dafeffd6-c43a-9e73-a184-2ff1e9d5ff37\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 03:43:52 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7786C2E5A7B71\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-fe85f38f-ca6b-14a6-2ad6-45a286162480\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 04:58:23 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D778769773070A\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc17dc23911679466c9a1b75fb4b4ec512\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:46 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCD2C4E078\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Ckey1\u003Evalue1\u003C/key1\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc27fa065d94904b52a59300232e19b00a\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD04FBE78D\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc6cef116557fe4ce183d82dc634ed5564\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:02 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD00753351\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Ckey1\u003Evalue1\u003C/key1\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc9d06c06a61ef45aaa8109307bf451a61\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:43 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCD0EC7012\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcbc9e2ec198f149c583ecadd63f886d1d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:10:40 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCF3422E54\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcd295a8e0ed58417b920932ecbdc5e24f\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:08 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD03FAE0E9\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestce4b6a7be40554e088e008422a12006b2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:06:37 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FC626E6759\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestce79cae3d207c47fcb1ae1128236831b2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:11 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD05D2161B\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcf03faf94cec8445bb7d82ca414dc5641\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:12 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD05FDD438\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
+      "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022http://seanstagetest.file.core.windows.net/\u0022\u003E\u003CShares\u003E\u003CShare\u003E\u003CName\u003Edefaultshare14\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCBD5C193E\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Eemptyheadershare1\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:10:58 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCFDCE2C47\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Epublicshare14\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCBD7CE20E\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-20c05b73-7f41-ef79-7e8f-5999fc51d173\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EThu, 05 Dec 2019 20:11:42 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D779BF587AAD26\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-2af7b6da-1c27-ac5d-dff4-6459fe40def5\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 04:58:19 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7787694CC7920\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-45909eee-7d61-c13b-bdf1-aed94d81b3cf\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 11 Dec 2019 20:42:17 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D77E7A9C7B249E\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Cfoo\u003Ebar\u003C/foo\u003E\u003Cmeta\u003Edata\u003C/meta\u003E\u003CCapital\u003Eletter\u003C/Capital\u003E\u003CUPPER\u003Ecase\u003C/UPPER\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-65d43b7e-cb37-b1b9-e40f-283f52463f43\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 03:46:49 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7786C97864095\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-69afbbc1-464c-d35c-23e2-73dcbeeba31c\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 22:57:54 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7790D65D6D5F3\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-dafeffd6-c43a-9e73-a184-2ff1e9d5ff37\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 03:43:52 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D7786C2E5A7B71\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etest-share-fe85f38f-ca6b-14a6-2ad6-45a286162480\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EWed, 04 Dec 2019 04:58:23 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D778769773070A\u0022\u003C/Etag\u003E\u003CQuota\u003E1\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc17dc23911679466c9a1b75fb4b4ec512\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:46 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCD2C4E078\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Ckey1\u003Evalue1\u003C/key1\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc27fa065d94904b52a59300232e19b00a\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:10 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD04FBE78D\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc6cef116557fe4ce183d82dc634ed5564\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:02 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD00753351\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata\u003E\u003Ckey1\u003Evalue1\u003C/key1\u003E\u003C/Metadata\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestc9d06c06a61ef45aaa8109307bf451a61\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:09:43 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCD0EC7012\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcbc9e2ec198f149c583ecadd63f886d1d\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:10:40 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FCF3422E54\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcd295a8e0ed58417b920932ecbdc5e24f\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:08 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD03FAE0E9\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestce4b6a7be40554e088e008422a12006b2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:06:37 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FC626E6759\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestce79cae3d207c47fcb1ae1128236831b2\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:11 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD05D2161B\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003CShare\u003E\u003CName\u003Etestcf03faf94cec8445bb7d82ca414dc5641\u003C/Name\u003E\u003CProperties\u003E\u003CLast-Modified\u003EFri, 26 Jul 2019 19:11:12 GMT\u003C/Last-Modified\u003E\u003CEtag\u003E\u00220x8D711FD05FDD438\u0022\u003C/Etag\u003E\u003CQuota\u003E5120\u003C/Quota\u003E\u003C/Properties\u003E\u003CMetadata /\u003E\u003C/Share\u003E\u003C/Shares\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-4a229773-a3f9-fc39-79fe-45df3feb199a?restype=share",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-45909eee-7d61-c13b-bdf1-aed94d81b3cf?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-b2950656443d3b4aa5fdfcfac3f4a490-65f71aceb8519743-00",
+        "traceparent": "00-808bd72b50745146aec87664b04ce02f-2785930eb515c046-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "601b6779-4ab7-5134-2d26-48cfdd6f87f2",
-        "x-ms-date": "Tue, 10 Dec 2019 05:34:03 GMT",
+        "x-ms-client-request-id": "3f50017f-37ef-9399-a648-f42b807d8e94",
+        "x-ms-date": "Wed, 11 Dec 2019 20:42:17 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
@@ -87,20 +87,20 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 10 Dec 2019 05:34:02 GMT",
+        "Date": "Wed, 11 Dec 2019 20:42:16 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "601b6779-4ab7-5134-2d26-48cfdd6f87f2",
-        "x-ms-request-id": "4fd8e3bc-701a-0023-251b-af08f8000000",
+        "x-ms-client-request-id": "3f50017f-37ef-9399-a648-f42b807d8e94",
+        "x-ms-request-id": "ef3e4492-c01a-0019-2b63-b01280000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "982703449",
+    "RandomSeed": "1043666925",
     "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized"
   }
 }

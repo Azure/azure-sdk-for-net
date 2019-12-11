@@ -5376,8 +5376,8 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
@@ -5388,8 +5388,8 @@ namespace Azure.Storage.Files.Shares
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                string leaseId,
                 int? timeout = default,
+                string leaseId = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "Azure.Storage.Files.Shares.FileClient.BreakLease",
@@ -5403,8 +5403,8 @@ namespace Azure.Storage.Files.Shares
                     using (Azure.Core.HttpMessage _message = BreakLeaseAsync_CreateMessage(
                         pipeline,
                         resourceUri,
-                        leaseId,
                         timeout,
+                        leaseId,
                         requestId))
                     {
                         if (async)
@@ -5439,25 +5439,21 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="pipeline">The pipeline used for sending requests.</param>
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
-            /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The File.BreakLeaseAsync Message.</returns>
             internal static Azure.Core.HttpMessage BreakLeaseAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
-                string leaseId,
                 int? timeout = default,
+                string leaseId = default,
                 string requestId = default)
             {
                 // Validation
                 if (resourceUri == null)
                 {
                     throw new System.ArgumentNullException(nameof(resourceUri));
-                }
-                if (leaseId == null)
-                {
-                    throw new System.ArgumentNullException(nameof(leaseId));
                 }
 
                 // Create the request
@@ -5472,8 +5468,8 @@ namespace Azure.Storage.Files.Shares
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-lease-action", "break");
-                _request.Headers.SetValue("x-ms-lease-id", leaseId);
                 _request.Headers.SetValue("x-ms-version", "2019-07-07");
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 return _message;

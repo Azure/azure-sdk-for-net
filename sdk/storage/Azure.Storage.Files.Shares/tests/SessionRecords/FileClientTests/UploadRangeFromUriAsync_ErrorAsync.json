@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-4bd24d35-3d4a-984a-bcec-48705d370cc7?restype=share",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-1212fb95-a6c9-cd6b-3a78-818eebc16d03?restype=share",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-aa6477fbefbd634e87670e6635411c90-0772da6f586f3348-00",
+        "traceparent": "00-d6b88cc40835b841866e335c27b1c138-28cd29b61b5f004c-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "d9c0a9b9-48b9-9dc3-c53f-628fbdfa80e8",
-        "x-ms-date": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "x-ms-client-request-id": "1306f294-6529-b51f-1f0d-c89b285b1f1f",
+        "x-ms-date": "Wed, 11 Dec 2019 20:40:08 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
       },
@@ -19,31 +19,31 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 10 Dec 2019 05:33:02 GMT",
-        "ETag": "\u00220x8D77D326CE50571\u0022",
-        "Last-Modified": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "Date": "Wed, 11 Dec 2019 20:40:08 GMT",
+        "ETag": "\u00220x8D77E7A4FF5DB98\u0022",
+        "Last-Modified": "Wed, 11 Dec 2019 20:40:08 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "d9c0a9b9-48b9-9dc3-c53f-628fbdfa80e8",
-        "x-ms-request-id": "4fd8e0a4-701a-0023-651b-af08f8000000",
+        "x-ms-client-request-id": "1306f294-6529-b51f-1f0d-c89b285b1f1f",
+        "x-ms-request-id": "ef3e4101-c01a-0019-4c63-b01280000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-4bd24d35-3d4a-984a-bcec-48705d370cc7/test-directory-41b3fdaa-2dd9-0fb3-c953-bf09c3009762?restype=directory",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-1212fb95-a6c9-cd6b-3a78-818eebc16d03/test-directory-48a3d9e5-9b6b-8f61-d3ab-d24a08f5158d?restype=directory",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-5ee4cb25b8d565469b59e3ba7dec856f-8fb2fefadfd32e4e-00",
+        "traceparent": "00-4b5505f59984584588ca5d34efd57eec-d4926e2275f06c46-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "039e92c0-2ea6-8c67-f6b1-0f6589b9dac4",
-        "x-ms-date": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "x-ms-client-request-id": "de907f5e-ca09-f89c-9077-407e93d4ad2a",
+        "x-ms-date": "Wed, 11 Dec 2019 20:40:08 GMT",
         "x-ms-file-attributes": "None",
         "x-ms-file-creation-time": "Now",
         "x-ms-file-last-write-time": "Now",
@@ -55,39 +55,39 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 10 Dec 2019 05:33:02 GMT",
-        "ETag": "\u00220x8D77D326CF4D1C8\u0022",
-        "Last-Modified": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "Date": "Wed, 11 Dec 2019 20:40:08 GMT",
+        "ETag": "\u00220x8D77E7A50043FF4\u0022",
+        "Last-Modified": "Wed, 11 Dec 2019 20:40:08 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "039e92c0-2ea6-8c67-f6b1-0f6589b9dac4",
+        "x-ms-client-request-id": "de907f5e-ca09-f89c-9077-407e93d4ad2a",
         "x-ms-file-attributes": "Directory",
-        "x-ms-file-change-time": "2019-12-10T05:33:02.6035144Z",
-        "x-ms-file-creation-time": "2019-12-10T05:33:02.6035144Z",
+        "x-ms-file-change-time": "2019-12-11T20:40:08.9780212Z",
+        "x-ms-file-creation-time": "2019-12-11T20:40:08.9780212Z",
         "x-ms-file-id": "13835128424026341376",
-        "x-ms-file-last-write-time": "2019-12-10T05:33:02.6035144Z",
+        "x-ms-file-last-write-time": "2019-12-11T20:40:08.9780212Z",
         "x-ms-file-parent-id": "0",
         "x-ms-file-permission-key": "7855875120676328179*422928105932735866",
-        "x-ms-request-id": "4fd8e0a6-701a-0023-661b-af08f8000000",
+        "x-ms-request-id": "ef3e4103-c01a-0019-4d63-b01280000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-4bd24d35-3d4a-984a-bcec-48705d370cc7/test-directory-41b3fdaa-2dd9-0fb3-c953-bf09c3009762/destFile",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-1212fb95-a6c9-cd6b-3a78-818eebc16d03/test-directory-48a3d9e5-9b6b-8f61-d3ab-d24a08f5158d/destFile",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "c2e78a8d-0ce2-f44f-2127-155a77f5aed2",
+        "x-ms-client-request-id": "02500f84-8f57-3882-1a04-de95ae629677",
         "x-ms-content-length": "1024",
-        "x-ms-date": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "x-ms-date": "Wed, 11 Dec 2019 20:40:09 GMT",
         "x-ms-file-attributes": "None",
         "x-ms-file-creation-time": "Now",
         "x-ms-file-last-write-time": "Now",
@@ -100,40 +100,40 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 10 Dec 2019 05:33:02 GMT",
-        "ETag": "\u00220x8D77D326D021AD1\u0022",
-        "Last-Modified": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "Date": "Wed, 11 Dec 2019 20:40:08 GMT",
+        "ETag": "\u00220x8D77E7A50113BD1\u0022",
+        "Last-Modified": "Wed, 11 Dec 2019 20:40:09 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "c2e78a8d-0ce2-f44f-2127-155a77f5aed2",
+        "x-ms-client-request-id": "02500f84-8f57-3882-1a04-de95ae629677",
         "x-ms-file-attributes": "Archive",
-        "x-ms-file-change-time": "2019-12-10T05:33:02.6905809Z",
-        "x-ms-file-creation-time": "2019-12-10T05:33:02.6905809Z",
+        "x-ms-file-change-time": "2019-12-11T20:40:09.0631121Z",
+        "x-ms-file-creation-time": "2019-12-11T20:40:09.0631121Z",
         "x-ms-file-id": "11529285414812647424",
-        "x-ms-file-last-write-time": "2019-12-10T05:33:02.6905809Z",
+        "x-ms-file-last-write-time": "2019-12-11T20:40:09.0631121Z",
         "x-ms-file-parent-id": "13835128424026341376",
         "x-ms-file-permission-key": "12501538048846835188*422928105932735866",
-        "x-ms-request-id": "4fd8e0a7-701a-0023-671b-af08f8000000",
+        "x-ms-request-id": "ef3e4104-c01a-0019-4e63-b01280000000",
         "x-ms-request-server-encrypted": "true",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-4bd24d35-3d4a-984a-bcec-48705d370cc7/test-directory-41b3fdaa-2dd9-0fb3-c953-bf09c3009762/destFile?comp=range",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-1212fb95-a6c9-cd6b-3a78-818eebc16d03/test-directory-48a3d9e5-9b6b-8f61-d3ab-d24a08f5158d/destFile?comp=range",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "Content-Length": "0",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "53e4e66e-893d-84f2-dd54-0f397f61d6aa",
-        "x-ms-copy-source": "http://seanstagetest.file.core.windows.net/test-share-4bd24d35-3d4a-984a-bcec-48705d370cc7/test-directory-41b3fdaa-2dd9-0fb3-c953-bf09c3009762/destFile",
-        "x-ms-date": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "x-ms-client-request-id": "52b5c4d7-4fc8-dded-6bb3-6e6058eeec79",
+        "x-ms-copy-source": "http://seanstagetest.file.core.windows.net/test-share-1212fb95-a6c9-cd6b-3a78-818eebc16d03/test-directory-48a3d9e5-9b6b-8f61-d3ab-d24a08f5158d/destFile",
+        "x-ms-date": "Wed, 11 Dec 2019 20:40:09 GMT",
         "x-ms-range": "bytes=256-511",
         "x-ms-return-client-request-id": "true",
         "x-ms-source-range": "bytes=512-767",
@@ -145,34 +145,34 @@
       "ResponseHeaders": {
         "Content-Length": "229",
         "Content-Type": "application/xml",
-        "Date": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "Date": "Wed, 11 Dec 2019 20:40:08 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "53e4e66e-893d-84f2-dd54-0f397f61d6aa",
+        "x-ms-client-request-id": "52b5c4d7-4fc8-dded-6bb3-6e6058eeec79",
         "x-ms-error-code": "CannotVerifyCopySource",
-        "x-ms-request-id": "4fd8e0a8-701a-0023-681b-af08f8000000",
+        "x-ms-request-id": "ef3e4105-c01a-0019-4f63-b01280000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003ECannotVerifyCopySource\u003C/Code\u003E\u003CMessage\u003EThe specified resource does not exist.\n",
-        "RequestId:4fd8e0a8-701a-0023-681b-af08f8000000\n",
-        "Time:2019-12-10T05:33:02.8913349Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:ef3e4105-c01a-0019-4f63-b01280000000\n",
+        "Time:2019-12-11T20:40:09.1807072Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     },
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-4bd24d35-3d4a-984a-bcec-48705d370cc7?restype=share",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-1212fb95-a6c9-cd6b-3a78-818eebc16d03?restype=share",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-460b7e9f53ba2d42a9c7d56b8837e874-32118f2f36ca5648-00",
+        "traceparent": "00-ac12df0a22de2c44923a43c9d547b204-705d8f2c4623af42-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191209.1\u002Bb71b1fa965b15eccfc57e2c7781b8bf85cd4c766",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191211.1\u002B899431c003876eb9b26cefd8e8a37e7f27f82ced",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
-        "x-ms-client-request-id": "91ecd0d4-5a11-db95-484f-7f1b992993e3",
-        "x-ms-date": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "x-ms-client-request-id": "e9be3a90-44ac-d5ae-0c34-3934b56567c8",
+        "x-ms-date": "Wed, 11 Dec 2019 20:40:09 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2019-07-07"
@@ -181,20 +181,20 @@
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Tue, 10 Dec 2019 05:33:02 GMT",
+        "Date": "Wed, 11 Dec 2019 20:40:09 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "91ecd0d4-5a11-db95-484f-7f1b992993e3",
-        "x-ms-request-id": "4fd8e0ab-701a-0023-6a1b-af08f8000000",
+        "x-ms-client-request-id": "e9be3a90-44ac-d5ae-0c34-3934b56567c8",
+        "x-ms-request-id": "ef3e4107-c01a-0019-5163-b01280000000",
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "RandomSeed": "262875745",
+    "RandomSeed": "1793880938",
     "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized"
   }
 }

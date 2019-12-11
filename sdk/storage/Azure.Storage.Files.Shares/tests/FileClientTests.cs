@@ -852,6 +852,120 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task StartCopyAsync_IgnoreReadOnlyAndSetArchive()
+        {
+            // Arrange
+            await using DisposingFile testSource = await GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await GetTestFileAsync();
+            ShareFileClient dest = testSource.File;
+
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await source.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(0, Constants.KB),
+                    content: stream);
+            }
+
+            // Act
+            Response<ShareFileCopyInfo> response = await dest.StartCopyAsync(
+                sourceUri: source.Uri,
+                ignoreReadOnly: true,
+                setArchiveAttribute: true);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
+        public async Task StartCopyAsync_FilePermission()
+        {
+            // Arrange
+            await using DisposingFile testSource = await GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await GetTestFileAsync();
+            ShareFileClient dest = testSource.File;
+
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await source.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(0, Constants.KB),
+                    content: stream);
+            }
+
+            FileSmbProperties smbProperties = new FileSmbProperties
+            {
+                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
+            };
+            string filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+
+
+
+            // Act
+            await dest.StartCopyAsync(
+                sourceUri: source.Uri,
+                smbProperties: smbProperties,
+                filePermission: filePermission,
+                filePermissionCopyMode: PermissionCopyModeType.Override);
+
+            Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
+            Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+        }
+
+        [Test]
+        public async Task StartCopyAsync_CopySmbPropertiesFilePermissionKey()
+        {
+            // Arrange
+            await using DisposingFile testSource = await GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await GetTestFileAsync();
+            ShareFileClient dest = testSource.File;
+
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await source.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(0, Constants.KB),
+                    content: stream);
+            }
+
+            string permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)";
+            Response<PermissionInfo> createPermissionResponse = await testSource.Share.CreatePermissionAsync(permission);
+
+            FileSmbProperties smbProperties = new FileSmbProperties
+            {
+                FilePermissionKey = createPermissionResponse.Value.FilePermissionKey,
+                FileAttributes = ShareExtensions.ToFileAttributes("Archive|ReadOnly"),
+                FileCreatedOn = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero),
+                FileLastWrittenOn = new DateTimeOffset(2019, 8, 26, 5, 15, 25, 60, TimeSpan.Zero)
+            };
+
+            // Act
+            await dest.StartCopyAsync(
+                sourceUri: source.Uri,
+                smbProperties: smbProperties,
+                filePermissionCopyMode: PermissionCopyModeType.Override);
+
+            Response<ShareFileProperties> propertiesResponse = await dest.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(smbProperties.FileAttributes, propertiesResponse.Value.SmbProperties.FileAttributes);
+            Assert.AreEqual(smbProperties.FileCreatedOn, propertiesResponse.Value.SmbProperties.FileCreatedOn);
+            Assert.AreEqual(smbProperties.FileLastWrittenOn, propertiesResponse.Value.SmbProperties.FileLastWrittenOn);
+        }
+
+        [Test]
         public async Task StartCopyAsync_Lease()
         {
             // Arrange
