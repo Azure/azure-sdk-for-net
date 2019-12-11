@@ -12,6 +12,7 @@ jobs:
     parameters:
       ServiceDirectory: storage
       BuildInParallel: false
+      TimeoutInMinutes: 300
       PreSteps:
         - pwsh: |
             $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
