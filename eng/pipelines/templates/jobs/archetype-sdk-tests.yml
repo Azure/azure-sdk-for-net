@@ -3,6 +3,7 @@ parameters:
   EnvVars: {}
   MaxParallel: 0
   BuildInParallel: true
+  TimeoutInMinutes: 175
 
 jobs:
   - job: "Test"
@@ -11,7 +12,7 @@ jobs:
 
     # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 35m, on average due to having two target platforms)
     # https://github.com/Azure/azure-sdk-for-net/issues/5982
-    timeoutInMinutes: 175
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
