@@ -63,8 +63,8 @@
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp3.1;netcoreapp2.1</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp3.1;netcoreapp2.1;net461</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
