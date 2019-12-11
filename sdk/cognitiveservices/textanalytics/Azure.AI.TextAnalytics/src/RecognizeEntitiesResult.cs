@@ -19,6 +19,7 @@ namespace Azure.AI.TextAnalytics
         internal RecognizeEntitiesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
+            NamedEntities = EmptyArray<NamedEntity>.Instance;
         }
 
         /// <summary>

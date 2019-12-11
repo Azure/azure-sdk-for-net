@@ -20,6 +20,7 @@ namespace Azure.AI.TextAnalytics
         internal AnalyzeSentimentResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
+            SentenceSentiments = EmptyArray<TextSentiment>.Instance;
         }
 
         // TODO: set DocumentSentiment.Length

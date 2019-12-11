@@ -19,6 +19,7 @@ namespace Azure.AI.TextAnalytics
         internal ExtractKeyPhrasesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
+            KeyPhrases = EmptyArray<string>.Instance;
         }
 
         /// <summary>

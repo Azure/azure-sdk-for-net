@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         internal DetectLanguageResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
-            DetectedLanguages = new ReadOnlyCollection<DetectedLanguage>(new List<DetectedLanguage>());
+            DetectedLanguages = EmptyArray<DetectedLanguage>.Instance;
         }
 
         /// <summary>

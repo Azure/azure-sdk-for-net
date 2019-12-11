@@ -19,6 +19,7 @@ namespace Azure.AI.TextAnalytics
         internal ExtractLinkedEntitiesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
+            LinkedEntities = EmptyArray<LinkedEntity>.Instance;
         }
 
         /// <summary>
