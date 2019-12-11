@@ -167,7 +167,7 @@ namespace Azure.Messaging.EventHubs
         {
             if (ReferenceEquals(this, other))
             {
-               return true;
+                return true;
             }
 
             return (Offset == other.Offset)

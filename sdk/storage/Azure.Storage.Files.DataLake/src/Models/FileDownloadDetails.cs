@@ -7,18 +7,18 @@ using System.Collections.Generic;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Properties returned when downloading a File
+    /// Properties returned when downloading a File.
     /// </summary>
     public class FileDownloadDetails
     {
         /// <summary>
-        /// Returns the date and time the path was last modified. Any operation that modifies the file,
+        /// Returns the <see cref="DateTimeOffset"/> the file was last modified. Any operation that modifies the file,
         /// including an update of the file's metadata or properties, changes the last-modified time of the file.
         /// </summary>
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Path metadata.
+        /// The file's metadata.
         /// </summary>
         public IDictionary<string, string> Metadata { get; internal set; }
 
@@ -29,13 +29,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public string ContentRange { get; internal set; }
 
         /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally.
-        /// If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// The ETag contains a value that you can use to perform operations conditionally on the file.
+        /// If the request service version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
         public ETag ETag { get; internal set; }
 
         /// <summary>
-        /// This header returns the value that was specified for the Content-Encoding request header
+        /// This header returns the value that was specified for the Content-Encoding request header.
         /// </summary>
         public string ContentEncoding { get; internal set; }
 

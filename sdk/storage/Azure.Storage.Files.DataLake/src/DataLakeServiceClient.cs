@@ -422,7 +422,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobContainerItem}"/>
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{FileSystemItem}"/>
         /// describing the file systems in the storage account.
         /// </returns>
         /// <remarks>
@@ -437,7 +437,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="GetFileSystemsAsync"/> operation returns an async
-        /// sequence of blob file system in the storage account.  Enumerating the
+        /// sequence of file systems in the storage account.  Enumerating the
         /// files systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
@@ -483,13 +483,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -548,13 +548,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -604,7 +604,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete File System
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
-        /// specified blob file system for deletion. The file system and any blobs
+        /// specified file system for deletion. The file system and any paths
         /// contained within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -656,7 +656,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
-        /// specified file system for deletion. The file system and any blobs
+        /// specified file system for deletion. The file system and any paths
         /// contained within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.

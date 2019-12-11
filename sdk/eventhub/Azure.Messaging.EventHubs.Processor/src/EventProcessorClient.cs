@@ -15,6 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 
@@ -306,7 +307,7 @@ namespace Azure.Messaging.EventHubs
         ///   A partition distribution dictionary, mapping an owner's identifier to the amount of partitions it owns and its list of partitions.
         /// </summary>
         ///
-        private Dictionary<string, List<PartitionOwnership>> ActiveOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>>();
+        private readonly Dictionary<string, List<PartitionOwnership>> ActiveOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
@@ -618,39 +619,37 @@ namespace Azure.Messaging.EventHubs
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                    if (ActiveLoadBalancingTask != null)
+                    // Cancel the current running task.
+
+                    RunningTaskTokenSource.Cancel();
+                    RunningTaskTokenSource.Dispose();
+                    RunningTaskTokenSource = null;
+
+                    // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
+                    // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
+
+                    Exception loadBalancingException = default;
+
+                    try
                     {
-                        // Cancel the current running task.
+                        await ActiveLoadBalancingTask.ConfigureAwait(false);
+                    }
+                    catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
+                    {
+                        // Nothing to do here.  These exceptions are expected.
+                    }
+                    catch (Exception ex)
+                    {
+                        loadBalancingException = ex;
+                    }
 
-                        RunningTaskTokenSource.Cancel();
-                        RunningTaskTokenSource.Dispose();
-                        RunningTaskTokenSource = null;
+                    // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
+                    // still running and clear our dictionaries.  ActivePartitionProcessors dictionary is already cleared by the
+                    // StopPartitionProcessingIfRunningAsync method.
 
-                        // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
-                        // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
-
-                        Exception loadBalancingException = default;
-
-                        try
-                        {
-                            await ActiveLoadBalancingTask.ConfigureAwait(false);
-                        }
-                        catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
-                        {
-                            // Nothing to do here.  These exceptions are expected.
-                        }
-                        catch (Exception ex)
-                        {
-                            loadBalancingException = ex;
-                        }
-
-                        // Now that the task has finished, clean up what is left.  Stop and remove every partition processing task that is
-                        // still running and clear our dictionaries.  ActivePartitionProcessors dictionary is already cleared by the
-                        // StopPartitionProcessingIfRunningAsync method.
-
-                        await Task.WhenAll(ActivePartitionProcessors.Keys
-                            .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None)))
-                            .ConfigureAwait(false);
+                    await Task.WhenAll(ActivePartitionProcessors.Keys
+                        .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None)))
+                        .ConfigureAwait(false);
 
                         // Relinquish ownership of all owned partitions.
 
@@ -658,16 +657,15 @@ namespace Azure.Messaging.EventHubs
 
                         InstanceOwnership.Clear();
 
-                        // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
-                        // would have a race condition where the user could update the processing handlers while some pumps are still running.
+                    // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
+                    // would have a race condition where the user could update the processing handlers while some pumps are still running.
 
-                        ActiveLoadBalancingTask.Dispose();
-                        ActiveLoadBalancingTask = null;
+                    ActiveLoadBalancingTask.Dispose();
+                    ActiveLoadBalancingTask = null;
 
-                        if (loadBalancingException != default)
-                        {
-                            throw loadBalancingException;
-                        }
+                    if (loadBalancingException != default)
+                    {
+                        throw loadBalancingException;
                     }
                 }
             }
@@ -802,6 +800,8 @@ namespace Azure.Messaging.EventHubs
                                                           EventPosition startingPosition,
                                                           CancellationToken cancellationToken) => Task.Run(async () =>
         {
+            var emptyPartitionContext = new EmptyPartitionContext(partitionId);
+
             await using var connection = ConnectionFactory();
             await using var consumer = CreateConsumer(ConsumerGroup, connection, ProcessingConsumerOptions);
             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken))
@@ -831,7 +831,8 @@ namespace Azure.Messaging.EventHubs
                         updateCheckpoint = EmptyEventUpdateCheckpoint;
                     }
 
-                    var eventArgs = new ProcessEventArgs(partitionEvent.Partition, partitionEvent.Data, updateCheckpoint, RunningTaskTokenSource.Token);
+                    var eventArgs = new ProcessEventArgs(partitionEvent.Partition ?? emptyPartitionContext, partitionEvent.Data, updateCheckpoint, RunningTaskTokenSource.Token);
+
                     await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                 }
                 catch (Exception eventProcessingException)
@@ -926,7 +927,7 @@ namespace Azure.Messaging.EventHubs
                 await Task.WhenAll(InstanceOwnership
                     .Select(async kvp =>
                     {
-                        if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out var activeTokenSource) || activeTokenSource.Item1.IsCompleted)
+                        if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out var activeTaskAndTokenSource) || activeTaskAndTokenSource.Item1.IsCompleted)
                         {
                             await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Shutdown, cancellationToken).ConfigureAwait(false);
                             await StartPartitionProcessingAsync(kvp.Key, cancellationToken).ConfigureAwait(false);
@@ -1226,9 +1227,9 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            if (ActivePartitionProcessors.TryRemove(partitionId, out var activeTokenSource))
+            if (ActivePartitionProcessors.TryRemove(partitionId, out var activeTaskAndTokenSource))
             {
-                var (processingTask, tokenSource) = activeTokenSource;
+                var (processingTask, tokenSource) = activeTaskAndTokenSource;
 
                 try
                 {
@@ -1414,6 +1415,38 @@ namespace Azure.Messaging.EventHubs
             {
                 throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
             }
+        }
+
+        /// <summary>
+        ///   Represents a basic partition context for event processing when the
+        ///   full context was not available.
+        /// </summary>
+        ///
+        /// <seealso cref="Azure.Messaging.EventHubs.PartitionContext" />
+        ///
+        private class EmptyPartitionContext : PartitionContext
+        {
+            /// <summary>
+            ///   Initializes a new instance of the <see cref="EmptyPartitionContext" /> class.
+            /// </summary>
+            ///
+            /// <param name="partitionId">The identifier of the partition that the context represents.</param>
+            ///
+            public EmptyPartitionContext(string partitionId) : base(partitionId)
+            {
+            }
+
+            /// <summary>
+            ///   A set of information about the last enqueued event of a partition, not available for the
+            ///   empty context.
+            /// </summary>
+            ///
+            /// <returns>The set of properties for the last event that was enqueued to the partition.</returns>
+            ///
+            /// <exception cref="InvalidOperationException">The method call is not available on the <see cref="EmptyPartitionContext"/>.</exception>
+            ///
+            public override LastEnqueuedEventProperties ReadLastEnqueuedEventProperties() =>
+                throw new InvalidOperationException(Resources.CannotReadLastEnqueuedEventPropertiesWithoutEvent);
         }
     }
 }

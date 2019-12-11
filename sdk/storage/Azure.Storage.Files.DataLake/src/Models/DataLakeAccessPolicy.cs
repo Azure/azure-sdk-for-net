@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
@@ -9,17 +11,17 @@ namespace Azure.Storage.Files.DataLake.Models
     public class DataLakeAccessPolicy
     {
         /// <summary>
-        /// the date-time the policy is active.
+        /// The <see cref="DateTimeOffset"/> the policy becomes active.
         /// </summary>
-        public System.DateTimeOffset StartsOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
-        /// the date-time the policy expires.
+        /// The <see cref="DateTimeOffset"/> the policy expires.
         /// </summary>
-        public System.DateTimeOffset ExpiresOn { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
-        /// the permissions for the acl policy.
+        /// The file permissions for the policy.
         /// </summary>
         public string Permissions { get; set; }
     }
