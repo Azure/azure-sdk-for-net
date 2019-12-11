@@ -7,7 +7,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-755d183a6fc19740b38943d435bfdcfd-b94c4617d6713b4f-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "f3525dc2-55ed-cd98-7877-80538e01b39a",
@@ -19,7 +19,7 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Date": "Fri, 06 Dec 2019 00:28:34 GMT",
-        "ETag": "\u00220x8D779E33A8F24D8\u0022",
+        "ETag": "\"0x8D779E33A8F24D8\"",
         "Last-Modified": "Fri, 06 Dec 2019 00:28:34 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -39,7 +39,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-1eb751b2aebf8c4a87b8b4accc06117f-78520c419581c449-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "4cb47bec-141c-1e38-536d-b8125414ec60",
@@ -51,7 +51,7 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Date": "Fri, 06 Dec 2019 00:28:34 GMT",
-        "ETag": "\u00220x8D779E33A8F24D8\u0022",
+        "ETag": "\"0x8D779E33A8F24D8\"",
         "Last-Modified": "Fri, 06 Dec 2019 00:28:34 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -79,7 +79,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-2aa439dac840814c842a60151302204d-14e365d2fb006c40-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1266acf3-664c-107e-d24d-5d6a510f0dcd",
@@ -106,6 +106,6 @@
   ],
   "Variables": {
     "RandomSeed": "973155015",
-    "Storage_TestConfigPremiumBlob": "PremiumBlobTenant\ne88xscnapdz5ptf01d\nU2FuaXRpemVk\nhttp://e88xscnapdz5ptf01d.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.table.preprod.core.windows.net\n\n\n\n\nhttp://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.table.preprod.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://e88xscnapdz5ptf01d.blob.preprod.core.windows.net/;QueueEndpoint=http://e88xscnapdz5ptf01d.queue.preprod.core.windows.net/;FileEndpoint=http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/;BlobSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net/;AccountName=e88xscnapdz5ptf01d;AccountKey=Sanitized"
+    "Storage_TestConfigPremiumBlob": "PremiumBlobTenant\ne88xscnapdz5ptf01d\nU2FuaXRpemVk\nhttp://e88xscnapdz5ptf01d.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d.table.preprod.core.windows.net\n\n\n\n\nhttp://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net\nhttp://e88xscnapdz5ptf01d-secondary.table.preprod.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://e88xscnapdz5ptf01d.blob.preprod.core.windows.net/;QueueEndpoint=http://e88xscnapdz5ptf01d.queue.preprod.core.windows.net/;FileEndpoint=http://e88xscnapdz5ptf01d.file.preprod.core.windows.net/;BlobSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.blob.preprod.core.windows.net/;QueueSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.queue.preprod.core.windows.net/;FileSecondaryEndpoint=http://e88xscnapdz5ptf01d-secondary.file.preprod.core.windows.net/;AccountName=e88xscnapdz5ptf01d;AccountKey=Sanitized\n"
   }
 }

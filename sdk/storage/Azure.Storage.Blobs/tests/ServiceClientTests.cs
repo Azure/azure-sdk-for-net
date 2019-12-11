@@ -100,6 +100,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = encryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobServiceClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("Customer provided key and encryption scope cannot both be set"));
+        }
+
+        [Test]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange

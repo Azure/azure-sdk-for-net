@@ -29,7 +29,19 @@ namespace Azure.Storage
                 ToHttps(blob.Uri),
                 blob.Pipeline,
                 blob.ClientDiagnostics,
-                customerProvidedKey);
+                customerProvidedKey,
+                null);
+
+        //TODO remove ToHttps() after service fixes HTTPS bug.
+        public static AppendBlobClient WithEncryptionScope(
+            this AppendBlobClient blob,
+            EncryptionScope encryptionScope) =>
+            new AppendBlobClient(
+                ToHttps(blob.Uri),
+                blob.Pipeline,
+                blob.ClientDiagnostics,
+                null,
+                encryptionScope);
 
         public static BlockBlobClient WithCustomerProvidedKey(
             this BlockBlobClient blob,
@@ -38,7 +50,19 @@ namespace Azure.Storage
                 ToHttps(blob.Uri),
                 blob.Pipeline,
                 blob.ClientDiagnostics,
-                customerProvidedKey);
+                customerProvidedKey,
+                null);
+
+        //TODO remove ToHttps() after service fixes HTTPS bug.
+        public static BlockBlobClient WithEncryptionScope(
+            this BlockBlobClient blob,
+            EncryptionScope encryptionScope) =>
+            new BlockBlobClient(
+                ToHttps(blob.Uri),
+                blob.Pipeline,
+                blob.ClientDiagnostics,
+                null,
+                encryptionScope);
 
         public static PageBlobClient WithCustomerProvidedKey(
             this PageBlobClient blob,
@@ -47,7 +71,19 @@ namespace Azure.Storage
                 ToHttps(blob.Uri),
                 blob.Pipeline,
                 blob.ClientDiagnostics,
-                customerProvidedKey);
+                customerProvidedKey,
+                null);
+
+        //TODO remove ToHttps() after service fixes HTTPS bug.
+        public static PageBlobClient WithEncryptionScope(
+            this PageBlobClient blob,
+            EncryptionScope encryptionScope) =>
+            new PageBlobClient(
+                ToHttps(blob.Uri),
+                blob.Pipeline,
+                blob.ClientDiagnostics,
+                null,
+                encryptionScope);
 
         /// <summary>
         /// Convert a base RequestConditions to BlobRequestConditions.

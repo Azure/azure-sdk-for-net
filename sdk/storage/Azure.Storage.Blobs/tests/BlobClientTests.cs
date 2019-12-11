@@ -98,6 +98,27 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
+        [Test]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = encryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("Customer provided key and encryption scope cannot both be set"));
+        }
+
         #region Upload
 
         [Test]

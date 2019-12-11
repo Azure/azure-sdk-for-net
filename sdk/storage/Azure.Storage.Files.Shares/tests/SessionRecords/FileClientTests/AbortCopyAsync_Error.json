@@ -7,7 +7,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-f2eeb11e09d38849a4b9087360161eb1-60c6bf6bf0a6ce4d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "40b473ad-0a93-cbc9-23ed-98f6e901ebe1",
@@ -20,7 +20,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 06 Dec 2019 00:25:40 GMT",
-        "ETag": "\u00220x8D779E2D38D74CA\u0022",
+        "ETag": "\"0x8D779E2D38D74CA\"",
         "Last-Modified": "Fri, 06 Dec 2019 00:25:41 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -39,7 +39,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-0cd68a2266a3ba4b9376f7bdc2eaabcf-fd4b9d3c06743c4d-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1b399b23-f4a1-68b4-5048-c5ea3dd4a500",
@@ -56,7 +56,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 06 Dec 2019 00:25:40 GMT",
-        "ETag": "\u00220x8D779E2D39AB9B4\u0022",
+        "ETag": "\"0x8D779E2D39AB9B4\"",
         "Last-Modified": "Fri, 06 Dec 2019 00:25:41 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -64,10 +64,10 @@
         ],
         "x-ms-client-request-id": "1b399b23-f4a1-68b4-5048-c5ea3dd4a500",
         "x-ms-file-attributes": "Directory",
-        "x-ms-file-change-time": "2019-12-06T00:25:41.5916980Z",
-        "x-ms-file-creation-time": "2019-12-06T00:25:41.5916980Z",
+        "x-ms-file-change-time": "2019-12-06T00:25:41.591698Z",
+        "x-ms-file-creation-time": "2019-12-06T00:25:41.591698Z",
         "x-ms-file-id": "13835128424026341376",
-        "x-ms-file-last-write-time": "2019-12-06T00:25:41.5916980Z",
+        "x-ms-file-last-write-time": "2019-12-06T00:25:41.591698Z",
         "x-ms-file-parent-id": "0",
         "x-ms-file-permission-key": "7855875120676328179*422928105932735866",
         "x-ms-request-id": "a2d0f5f6-501a-0034-23cb-aba1f3000000",
@@ -83,7 +83,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-aec71b7c58954543b54e7736ed00d104-be4e82984245b144-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "c3fd56dc-a000-f36d-e832-ba64dadf7ae7",
@@ -102,7 +102,7 @@
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Fri, 06 Dec 2019 00:25:40 GMT",
-        "ETag": "\u00220x8D779E2D3A78AF3\u0022",
+        "ETag": "\"0x8D779E2D3A78AF3\"",
         "Last-Modified": "Fri, 06 Dec 2019 00:25:41 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -123,13 +123,13 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-482dd6c7-a204-b708-1d7d-fba22fe3e69e/test-directory-f7e36aab-4456-6b22-7ba9-cdf425223198/test-file-f964ffbc-2f0c-06b2-603c-19d4ed68a816?comp=copy\u0026copyid=id",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-482dd6c7-a204-b708-1d7d-fba22fe3e69e/test-directory-f7e36aab-4456-6b22-7ba9-cdf425223198/test-file-f964ffbc-2f0c-06b2-603c-19d4ed68a816?comp=copy&copyid=id",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
         "traceparent": "00-5c996019b25cb34fbb64adc4666d232a-60f6543ceac3c242-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "97f70fd2-e56b-6e16-e6dd-a1b65b92c25c",
@@ -154,9 +154,9 @@
         "x-ms-version": "2019-07-07"
       },
       "ResponseBody": [
-        "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EInvalidQueryParameterValue\u003C/Code\u003E\u003CMessage\u003EValue for one of the query parameters specified in the request URI is invalid.\n",
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>InvalidQueryParameterValue</Code><Message>Value for one of the query parameters specified in the request URI is invalid.\n",
         "RequestId:a2d0f5fc-501a-0034-29cb-aba1f3000000\n",
-        "Time:2019-12-06T00:25:41.7917343Z\u003C/Message\u003E\u003CQueryParameterName\u003Ecopyid\u003C/QueryParameterName\u003E\u003CQueryParameterValue\u003Eid\u003C/QueryParameterValue\u003E\u003CReason\u003Ecopyid needs to be valid Guid.\u003C/Reason\u003E\u003C/Error\u003E"
+        "Time:2019-12-06T00:25:41.7917343Z</Message><QueryParameterName>copyid</QueryParameterName><QueryParameterValue>id</QueryParameterValue><Reason>copyid needs to be valid Guid.</Reason></Error>"
       ]
     },
     {
@@ -166,7 +166,7 @@
         "Authorization": "Sanitized",
         "traceparent": "00-9506fdf054ed2645b973bc39080664f7-a678a2e7d697ed42-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1\u002B4f14c4315f17fbbc59c93c6819467b6f15d7008f",
+          "azsdk-net-Storage.Files.Shares/12.0.0-dev.20191205.1+4f14c4315f17fbbc59c93c6819467b6f15d7008f",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "cb917a0d-e2e7-b97c-976d-032679604a75",
@@ -193,6 +193,6 @@
   ],
   "Variables": {
     "RandomSeed": "1534336315",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanstagetest\nU2FuaXRpemVk\nhttp://seanstagetest.blob.core.windows.net\nhttp://seanstagetest.file.core.windows.net\nhttp://seanstagetest.queue.core.windows.net\nhttp://seanstagetest.table.core.windows.net\n\n\n\n\nhttp://seanstagetest-secondary.blob.core.windows.net\nhttp://seanstagetest-secondary.file.core.windows.net\nhttp://seanstagetest-secondary.queue.core.windows.net\nhttp://seanstagetest-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seanstagetest.blob.core.windows.net/;QueueEndpoint=http://seanstagetest.queue.core.windows.net/;FileEndpoint=http://seanstagetest.file.core.windows.net/;BlobSecondaryEndpoint=http://seanstagetest-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seanstagetest-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seanstagetest-secondary.file.core.windows.net/;AccountName=seanstagetest;AccountKey=Sanitized\nseanscope1"
   }
 }

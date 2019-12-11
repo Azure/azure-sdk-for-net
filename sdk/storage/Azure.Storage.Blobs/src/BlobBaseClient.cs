@@ -66,6 +66,16 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
 
         /// <summary>
+        /// The <see cref="EncryptionScope"/> to be used when sending requests.
+        /// </summary>
+        internal readonly EncryptionScope _encryptionScope;
+
+        /// <summary>
+        /// The <see cref="EncryptionScope"/> to be used when sending requests.
+        /// </summary>
+        internal virtual EncryptionScope EncryptionScope => _encryptionScope;
+
+        /// <summary>
         /// The Storage account name corresponding to the blob client.
         /// </summary>
         private string _accountName;
@@ -183,7 +193,9 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = options.Build(conn.Credentials);
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _encryptionScope = options.EncryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
 
         /// <summary>
@@ -278,6 +290,8 @@ namespace Azure.Storage.Blobs.Specialized
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _encryptionScope = options.EncryptionScope;
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
@@ -296,13 +310,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal BlobBaseClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            EncryptionScope encryptionScope)
         {
             _uri = blobUri;
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            _encryptionScope = encryptionScope;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
         #endregion ctors
 
@@ -331,7 +353,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         /// <summary>
@@ -1186,7 +1208,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Debug.Assert(initialTransferLength <= Constants.Blob.Block.MaxDownloadBytes);
 
-            var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, initialTransferLength);
 
             if (async)
@@ -2440,6 +2462,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                            encryptionScope: EncryptionScope?.EncryptionScopeKey,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
@@ -2592,6 +2615,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
@@ -2822,6 +2846,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
                 client.ClientDiagnostics,
-                client.CustomerProvidedKey);
+                client.CustomerProvidedKey,
+                client.EncryptionScope);
     }
 }

@@ -153,6 +153,26 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
+        [Test]
+        public async Task CreateAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
+        }
+
         /// <summary>
         /// Data for CreateAsync, GetPageRangesAsync, GetPageRangesDiffAsync, ResizeAsync, and
         /// UpdateSequenceNumber AccessConditions tests.
@@ -340,6 +360,33 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [Test]
+        public async Task UploadPagesAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            var data = GetRandomBuffer(Constants.KB);
+            await blob.CreateAsync(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+
+            // Act
+            Response<PageInfo> response = await blob.UploadPagesAsync(
+                content: stream,
+                offset: 0);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [Test]
@@ -551,6 +598,30 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
+        }
+
+        [Test]
+        public async Task ClearPagesAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            await blob.CreateAsync(4 * Constants.KB);
+            var data = GetRandomBuffer(4 * Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 0);
+            }
+
+            // Act
+            Response<PageInfo> response = await blob.ClearPagesAsync(
+                range: new HttpRange(Constants.KB, Constants.KB));
         }
 
         [Test]
@@ -972,7 +1043,28 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
+        }
 
+        [Test]
+        public async Task ResizeAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            await blob.CreateAsync(Constants.KB);
+            var newSize = 8 * Constants.KB;
+
+            // Act
+            Response<PageBlobInfo> response = await blob.ResizeAsync(size: newSize);
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
         }
 
         [Test]
@@ -1505,10 +1597,47 @@ namespace Azure.Storage.Blobs.Test
             var range = new HttpRange(0, Constants.KB);
 
             // Act
-            await destBlob.UploadPagesFromUriAsync(
+            Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
                 sourceUri: sourceBlob.Uri,
                 sourceRange: range,
                 range: range);
+
+            // Assert
+            Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [Test]
+        public async Task UploadPagesFromUriAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using var stream = new MemoryStream(data);
+            PageBlobClient sourceBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await sourceBlob.CreateAsync(Constants.KB);
+            await sourceBlob.UploadPagesAsync(stream, 0);
+
+            PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            destBlob = InstrumentClient(destBlob.WithEncryptionScope(encryptionScope));
+            await destBlob.CreateAsync(Constants.KB);
+            var range = new HttpRange(0, Constants.KB);
+
+            // Act
+            Response<PageInfo> response = await destBlob.UploadPagesFromUriAsync(
+                sourceUri: sourceBlob.Uri,
+                sourceRange: range,
+                range: range);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [Test]

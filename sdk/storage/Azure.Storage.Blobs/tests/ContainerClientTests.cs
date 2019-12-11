@@ -274,6 +274,27 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = encryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobContainerClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("Customer provided key and encryption scope cannot both be set"));
+        }
+
+        [Test]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -386,6 +407,25 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
             AssertMetadataEquality(metadata, response.Value.Metadata);
+
+            // Cleanup
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        public async Task CreateAsync_EncryptionScopeOptions()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            ContainerEncryptionScopeOptions encryptionScopeOptions = new ContainerEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigDefault.EncryptionScope,
+                DencyEncryptionScopeOverride = true
+            };
+
+            // Act
+            await container.CreateAsync(encryptionScopeOptions: encryptionScopeOptions);
 
             // Cleanup
             await container.DeleteAsync();
@@ -1441,6 +1481,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task ListBlobsFlatSegmentAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+
+            await blob.CreateAsync();
+
+            // Act
+            IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, blobs.First().Properties.EncryptionScope);
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
@@ -1633,6 +1695,27 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             AssertMetadataEquality(metadata, item.Blob.Metadata);
+        }
+
+        [Test]
+        public async Task ListBlobsHierarchySegmentAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            await blob.CreateAsync();
+
+            // Act
+            BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync().FirstAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, item.Blob.Properties.EncryptionScope);
         }
 
         [Test]

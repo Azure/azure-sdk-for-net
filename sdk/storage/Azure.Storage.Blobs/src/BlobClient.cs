@@ -163,8 +163,14 @@ namespace Azure.Storage.Blobs
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal BlobClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            EncryptionScope encryptionScope)
+            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
         #endregion ctors
@@ -976,7 +982,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default)
         {
 
-            var client = new BlockBlobClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            var client = new BlockBlobClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
             singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
             Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
 
