@@ -28,7 +28,6 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly TokenCredential _credential;
-        //private readonly string _unavailbleErrorMessage;
         private const string UnavailableErrorMessage = "Environment variables not set";
 
         /// <summary>
@@ -71,38 +70,6 @@ namespace Azure.Identity
                     _credential = new UsernamePasswordCredential(username, password, clientId, tenantId, _pipeline);
                 }
             }
-
-            //if (_credential is null)
-            //{
-            //    StringBuilder builder = new StringBuilder("Environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Currently set variables [ ");
-
-            //    if (tenantId != null)
-            //    {
-            //        builder.Append(" AZURE_TENANT_ID");
-            //    }
-
-            //    if (clientId != null)
-            //    {
-            //        builder.Append(" AZURE_CLIENT_ID");
-            //    }
-
-            //    if (clientSecret != null)
-            //    {
-            //        builder.Append(" AZURE_CLIENT_SECRET");
-            //    }
-
-            //    if (username != null)
-            //    {
-            //        builder.Append(" AZURE_USERNAME");
-            //    }
-
-            //    if (password != null)
-            //    {
-            //        builder.Append(" AZURE_PASSWORD");
-            //    }
-
-            //    _unavailbleErrorMessage = builder.Append(" ]").ToString();
-            //}
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
