@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -20,7 +21,7 @@ namespace Azure.AI.TextAnalytics
         internal AnalyzeSentimentResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
-            SentenceSentiments = EmptyArray<TextSentiment>.Instance;
+            SentenceSentiments = Array.Empty<TextSentiment>();
         }
 
         // TODO: set DocumentSentiment.Length

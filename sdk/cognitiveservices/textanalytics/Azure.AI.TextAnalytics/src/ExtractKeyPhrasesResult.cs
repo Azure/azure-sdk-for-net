@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -19,7 +20,7 @@ namespace Azure.AI.TextAnalytics
         internal ExtractKeyPhrasesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
-            KeyPhrases = EmptyArray<string>.Instance;
+            KeyPhrases = Array.Empty<string>();
         }
 
         /// <summary>

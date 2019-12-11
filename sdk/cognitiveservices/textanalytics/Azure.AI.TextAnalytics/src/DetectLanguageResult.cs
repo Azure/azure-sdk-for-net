@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Azure.AI.TextAnalytics
         internal DetectLanguageResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
-            DetectedLanguages = EmptyArray<DetectedLanguage>.Instance;
+            DetectedLanguages = Array.Empty<DetectedLanguage>();
         }
 
         /// <summary>

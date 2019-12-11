@@ -24,61 +24,61 @@ namespace Azure.AI.TextAnalytics
         private const string ModelVersion = "model-version";
 
         #region Detect Language
-        private static async Task<Response<DetectLanguageResultCollection>> CreateDetectLanguageResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        private static async Task<Response<DetectLanguageResultCollection>> CreateDetectLanguageResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             DetectLanguageResultCollection result = await TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<DetectLanguageResultCollection> CreateDetectLanguageResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+        private static Response<DetectLanguageResultCollection> CreateDetectLanguageResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeDetectLanguageResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
 
         #region Recognize Entities
-        private static async Task<Response<RecognizeEntitiesResultCollection>> CreateRecognizeEntitiesResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        private static async Task<Response<RecognizeEntitiesResultCollection>> CreateRecognizeEntitiesResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             RecognizeEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<RecognizeEntitiesResultCollection> CreateRecognizeEntitiesResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+        private static Response<RecognizeEntitiesResultCollection> CreateRecognizeEntitiesResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizeEntitiesResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
 
         #region Analyze Sentiment
-        private static async Task<Response<AnalyzeSentimentResultCollection>> CreateAnalyzeSentimentResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        private static async Task<Response<AnalyzeSentimentResultCollection>> CreateAnalyzeSentimentResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             AnalyzeSentimentResultCollection result = await TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<AnalyzeSentimentResultCollection> CreateAnalyzeSentimentResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+        private static Response<AnalyzeSentimentResultCollection> CreateAnalyzeSentimentResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeAnalyzeSentimentResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion  Analyze Sentiment
 
         #region Extract KeyPhrases
-        private static async Task<Response<ExtractKeyPhrasesResultCollection>> CreateKeyPhraseResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        private static async Task<Response<ExtractKeyPhrasesResultCollection>> CreateKeyPhraseResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             ExtractKeyPhrasesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<ExtractKeyPhrasesResultCollection> CreateKeyPhraseResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+        private static Response<ExtractKeyPhrasesResultCollection> CreateKeyPhraseResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeKeyPhraseResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion Extract KeyPhrases
 
         #region Entity Linking
-        private static async Task<Response<ExtractLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, Dictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        private static async Task<Response<ExtractLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             ExtractLinkedEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<ExtractLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response, Dictionary<string, int> idToIndexMap) =>
+        private static Response<ExtractLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
