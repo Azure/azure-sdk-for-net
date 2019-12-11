@@ -16,30 +16,35 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// Connector read setting.
+    /// Sftp write settings.
     /// </summary>
-    public partial class StoreReadSettings
+    public partial class SftpWriteSettings : StoreWriteSettings
     {
         /// <summary>
-        /// Initializes a new instance of the StoreReadSettings class.
+        /// Initializes a new instance of the SftpWriteSettings class.
         /// </summary>
-        public StoreReadSettings()
+        public SftpWriteSettings()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StoreReadSettings class.
+        /// Initializes a new instance of the SftpWriteSettings class.
         /// </summary>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        public StoreReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object))
+        /// <param name="copyBehavior">The type of copy behavior for copy
+        /// sink.</param>
+        /// <param name="operationTimeout">Specifies the timeout for writing
+        /// each chunk to SFTP server. Default value: 01:00:00 (one hour).
+        /// Type: string (or Expression with resultType string).</param>
+        public SftpWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object copyBehavior = default(object), object operationTimeout = default(object))
+            : base(additionalProperties, maxConcurrentConnections, copyBehavior)
         {
-            AdditionalProperties = additionalProperties;
-            MaxConcurrentConnections = maxConcurrentConnections;
+            OperationTimeout = operationTimeout;
             CustomInit();
         }
 
@@ -49,18 +54,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
+        /// Gets or sets specifies the timeout for writing each chunk to SFTP
+        /// server. Default value: 01:00:00 (one hour). Type: string (or
+        /// Expression with resultType string).
         /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum concurrent connection count for the source
-        /// data store. Type: integer (or Expression with resultType integer).
-        /// </summary>
-        [JsonProperty(PropertyName = "maxConcurrentConnections")]
-        public object MaxConcurrentConnections { get; set; }
+        [JsonProperty(PropertyName = "operationTimeout")]
+        public object OperationTimeout { get; set; }
 
     }
 }
