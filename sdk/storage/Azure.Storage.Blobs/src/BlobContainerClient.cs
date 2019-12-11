@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -449,6 +450,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerInfo> Create(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PublicAccessType publicAccessType,
@@ -549,6 +551,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PublicAccessType publicAccessType,
@@ -649,6 +652,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerInfo> CreateIfNotExists(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PublicAccessType publicAccessType,
@@ -749,6 +753,7 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PublicAccessType publicAccessType,

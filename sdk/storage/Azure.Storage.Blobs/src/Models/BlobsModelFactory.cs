@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Azure.Storage.Blobs.Models
@@ -12,6 +13,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobAppendInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobAppendInfo BlobAppendInfo(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
@@ -36,6 +38,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobContentInfo BlobContentInfo(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
@@ -54,6 +57,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobItemProperties instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
             string copyProgress,
@@ -124,6 +128,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobProperties BlobProperties(
             DateTimeOffset lastModified,
             LeaseState leaseState,
@@ -196,6 +201,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlockInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlockInfo BlockInfo(
             byte[] contentHash,
             byte[] contentCrc64,
@@ -210,6 +216,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new PageInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PageInfo PageInfo(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
