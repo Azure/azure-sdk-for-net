@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Azure.Storage.Files.Shares.Models
@@ -12,6 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageClosedHandlesSegment instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageClosedHandlesSegment StorageClosedHandlesSegment(
             string marker,
             int numberOfHandlesClosed)
@@ -23,11 +25,12 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new ShareProperties instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareProperties ShareProperties(
-            DateTimeOffset? lastModified = default,
-            ETag? eTag = default,
-            int? quotaInGB = default,
-            IDictionary<string, string> metadata = null)
+            DateTimeOffset? lastModified,
+            ETag? eTag,
+            int? quotaInGB,
+            IDictionary<string, string> metadata)
             => ShareProperties(
                 lastModified: lastModified,
                 eTag: eTag,

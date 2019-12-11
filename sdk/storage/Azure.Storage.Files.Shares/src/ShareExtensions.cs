@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Text;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -22,10 +23,20 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal static Response<FileLease> ToLease(this Response<BrokenLease> response)
+            => Response.FromValue(
+                new FileLease
+                {
+                    ETag = response.Value.ETag,
+                    LastModified = response.Value.LastModified,
+                    LeaseId = response.Value.LeaseId
+                }, response.GetRawResponse());
+
         internal static string ToFileDateTimeString(this DateTimeOffset? dateTimeOffset)
             => dateTimeOffset.HasValue ? ToFileDateTimeString(dateTimeOffset.Value) : null;
 
         private static string ToFileDateTimeString(this DateTimeOffset dateTimeOffset)
             => dateTimeOffset.UtcDateTime.ToString(Constants.File.FileTimeFormat, CultureInfo.InvariantCulture);
+
     }
 }
