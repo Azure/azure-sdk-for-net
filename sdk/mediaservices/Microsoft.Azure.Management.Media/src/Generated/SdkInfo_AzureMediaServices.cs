@@ -36,5 +36,16 @@ namespace Microsoft.Azure.Management.Media
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --opt-in-extensible-enums --tag=package-2019-05-preview --csharp-sdks-folder=E:\\GitHub\\BrianBlum\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "a8353533efc393b1b72519ae10beb3c6a42a9a79";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+
