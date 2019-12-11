@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
@@ -17,17 +16,13 @@ namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
-        // Copied from https://github.com/dotnet/corefx/blob/v2.1-preview1/src/CoreFx.Private.TestUtilities/src/System/PlatformDetection.cs#L25
-        private static bool IsNetCore => RuntimeInformation.FrameworkDescription.StartsWith(".NET Core", StringComparison.OrdinalIgnoreCase);
-
         static StorageTestBase()
         {
             // https://github.com/Azure/azure-sdk-for-net/issues/9087
             // .NET framework defaults to 2, which causes issues for the parallel upload/download tests.
-            if (!IsNetCore)
-            {
-                ServicePointManager.DefaultConnectionLimit = 100;
-            }
+#if !NETCOREAPP
+            ServicePointManager.DefaultConnectionLimit = 100;
+#endif
         }
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
