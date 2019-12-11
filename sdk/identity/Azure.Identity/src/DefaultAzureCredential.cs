@@ -113,8 +113,6 @@ namespace Azure.Identity
                 else
                 {
                     exceptions.Add(exToken.Exception);
-
-                    //throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage} {_sources[i].GetType().Name} failed with unhandled exception. {exToken.Exception.Message}", new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions));
                     throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage}", new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions));
                 }
             }
