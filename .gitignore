@@ -152,3 +152,4 @@ node_modules/
 
 # MSBuild binary log files
 msbuild.binlog
+/sdk/identity/Azure.Identity/ConsoleApp1
