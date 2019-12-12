@@ -31,11 +31,11 @@ steps:
   - ${{ each artifact in parameters.Artifacts }}:
     - pwsh: |
         $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1 -ArtifactName '${{artifact.name}}' -ServiceDirectory '${{parameters.ServiceDirectory}}' `
-        -ArtifactsSafeName '${{artifact.safeName}}' -ArtifactsDirectoryName '${{artifact.directoryName}}' `
-        -LibType '${{parameters.LibType}}' -RepoRoot $(Build.SourcesDirectory) -BinDirectory $(Build.BinariesDirectory)
+        -ArtifactsDirectoryName '${{artifact.directoryName}}' `
+        -LibType '${{parameters.LibType}}' -RepoRoot $(Build.SourcesDirectory) -BinDirectory $(Build.BinariesDirectory) -verbose
       displayName: Build DocFx Documenttion Site for ${{artifact.name}}
     - task: PublishPipelineArtifact@0
       condition: succeeded()
       inputs:
         artifactName: Docs.${{artifact.name}}
-        targetPath: $(Build.BinariesDirectory)/$(artifactsafename)/docfx-output/docfx_project/_site
+        targetPath: $(Build.BinariesDirectory)/${{artifact.directoryName}}/docfx-output/docfx_project/_site

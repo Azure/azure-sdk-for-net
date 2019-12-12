@@ -4,20 +4,15 @@
 Param (
     $ArtifactName,
     $ServiceDirectory,
-    $ArtifactsSafeName,
     $ArtifactsDirectoryName,
     $LibType,
     $RepoRoot,
     $BinDirectory
 )
 
-# Include if runing Build-Docs locally
-# Get-DocTools -DownloadDirectory $BinDirectory -RepoRoot $RepoRoot
-
 Write-Verbose "Create variables for identifying package location and package safe names"
 $PackageLocation = "$($ServiceDirectory)/$($ArtifactName)"
 Write-Verbose "Package Location $($PackageLocation)"
-$SafeName = $ArtifactsSafeName
 
 if ($ServiceDirectory -eq '*') {
     $PackageLocation = "core/$($ArtifactName)"
@@ -25,30 +20,29 @@ if ($ServiceDirectory -eq '*') {
 
 if ($ServiceDirectory -eq 'cognitiveservices') {
     $PackageLocation = "cognitiveservices/$($ArtifactsDirectoryName)"
-    $SafeName = $ArtifactsDirectoryName
 }
 
 if ($LibType -eq 'Management') {
-    $PackageLocation = "$($ServiceDirectory)/$($ArtifactName)"
-    $SafeName = $($ArtifactName)
-    $SafeName = $SafeName.Substring($SafeName.LastIndexOf('.Management') + 1)
+    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
 }
 
 Write-Verbose "Set variable for publish pipeline step"
-echo "##vso[task.setvariable variable=artifactsafename]$($SafeName)"
+#echo "##vso[task.setvariable variable=artifactsafename]$($SafeName)"
 
 Write-Verbose "Create Directories Required for Doc Generation"
-mkdir "$($BinDirectory)/$($SafeName)/dll-docs/my-api"
-mkdir "$($BinDirectory)/$($SafeName)/dll-docs/dependencies/my-api"
-mkdir "$($BinDirectory)/$($SafeName)/dll-xml-output"
-mkdir "$($BinDirectory)/$($SafeName)/dll-yaml-output"
-mkdir "$($BinDirectory)/$($SafeName)/docfx-output"
+mkdir "$($BinDirectory)/$($ArtifactName)/dll-docs/my-api"
+mkdir "$($BinDirectory)/$($ArtifactName)/dll-docs/dependencies/my-api"
+mkdir "$($BinDirectory)/$($ArtifactName)/dll-xml-output"
+mkdir "$($BinDirectory)/$($ArtifactName)/dll-yaml-output"
+mkdir "$($BinDirectory)/$($ArtifactName)/docfx-output"
 
-$ApiDir = "$($BinDirectory)/$($SafeName)/dll-docs/my-api"
-$ApiDependenciesDir = "$($BinDirectory)/$($SafeName)/dll-docs/dependencies/my-api"
-$XmlOutDir = "$($BinDirectory)/$($SafeName)/dll-xml-output"
-$YamlOutDir = "$($BinDirectory)/$($SafeName)/dll-yaml-output"
-$DocOutDir = "$($BinDirectory)/$($SafeName)/docfx-output/docfx_project"
+Write-Verbose "Name Reccuring paths with variable names"
+$FrameworkDir = "$($BinDirectory)/$($ArtifactName)/dll-docs"
+$ApiDir = "$($FrameworkDir)/dll-docs/my-api"
+$ApiDependenciesDir = "$($FrameworkDir)/dependencies/my-api"
+$XmlOutDir = "$($BinDirectory)/$($ArtifactName)/dll-xml-output"
+$YamlOutDir = "$($BinDirectory)/$($ArtifactName)/dll-yaml-output"
+$DocOutDir = "$($BinDirectory)/$($ArtifactName)/docfx-output/docfx_project"
 
 if ($LibType -eq '') { 
     Write-Verbose "Build Packages for Doc Generation - Client"
@@ -70,13 +64,13 @@ Write-Verbose "Remove all unneeded artifacts from build output directory"
 Remove-Item –Path "$($ApiDir)/*" -Include * -Exclude "$($ArtifactName).dll", "$($ArtifactName).xml"
 
 Write-Verbose "Initialize Frameworks File"
-& "$($BinDirectory)/mdoc/mdoc.exe" fx-bootstrap "$($BinDirectory)/$($SafeName)/dll-docs"
+& "$($BinDirectory)/mdoc/mdoc.exe" fx-bootstrap $FrameworkDir
 
 Write-Verbose "Include XML Files"
-& "$($BinDirectory)/PopImport/popimport.exe" -f "$($BinDirectory)/$($SafeName)/dll-docs"
+& "$($BinDirectory)/PopImport/popimport.exe" -f $FrameworkDir
 
 Write-Verbose "Produce ECMAXML"
-& "$($BinDirectory)/mdoc/mdoc.exe" update -fx "$($BinDirectory)/$($SafeName)/dll-docs" -o $XmlOutDir --debug -lang docid -lang vb.net -lang fsharp --delete
+& "$($BinDirectory)/mdoc/mdoc.exe" update -fx $FrameworkDir -o $XmlOutDir --debug -lang docid -lang vb.net -lang fsharp --delete
 
 Write-Verbose "Generate YAML"
 & "$($BinDirectory)/ECMA2Yml/ECMA2Yaml.exe" -s $XmlOutDir -o $YamlOutDir
