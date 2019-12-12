@@ -485,6 +485,31 @@ namespace DeploymentManager.Tests
                 }
             });
 
+            healthChecks.Add(new RestHealthCheck()
+            {
+                Name = "webBackEndHealthCheck",
+                Request = new RestRequest()
+                {
+                    Method = RestRequestMethod.GET,
+                    Uri = "https://clientvalidations.deploymentmanager.net/healthstatus",
+                    Authentication = new RolloutIdentityAuthentication()
+                },
+                Response = new RestResponse()
+                {
+                    SuccessStatusCodes = new List<string> { "200", "204" },
+                    Regex = new RestResponseRegex()
+                    {
+                        MatchQuantifier = RestMatchQuantifier.All,
+                        Matches = new List<string>
+                        {
+                            "Contoso-Service-Backend",
+                            "(?i)\"health_status\":((.|\n)*)\"(green|yellow)\"",
+                            "(?mi)^(\"application_host\": 94781055)$"
+                        }
+                    }
+                }
+            });
+
             var stepProperties = new HealthCheckStepProperties()
             {
                 Attributes = new RestHealthCheckStepAttributes()
