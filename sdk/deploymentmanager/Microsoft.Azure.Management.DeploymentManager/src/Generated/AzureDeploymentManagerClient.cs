@@ -399,6 +399,8 @@ namespace Microsoft.Azure.Management.DeploymentManager
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<StepProperties>("stepType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<HealthCheckStepAttributes>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<HealthCheckStepAttributes>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RestRequestAuthentication>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RestRequestAuthentication>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

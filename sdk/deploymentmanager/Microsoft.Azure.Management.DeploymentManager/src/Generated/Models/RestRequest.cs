@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// </summary>
         public RestRequest()
         {
-            Authentication = new RestRequestAuthentication();
             CustomInit();
         }
 
@@ -84,10 +83,6 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
             if (Authentication == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Authentication");
-            }
-            if (Authentication != null)
-            {
-                Authentication.Validate();
             }
         }
     }

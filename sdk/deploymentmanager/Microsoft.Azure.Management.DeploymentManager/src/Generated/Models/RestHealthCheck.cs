@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// </summary>
         public RestHealthCheck()
         {
-            Request = new RestRequest();
             CustomInit();
         }
 

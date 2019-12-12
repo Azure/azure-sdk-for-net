@@ -462,7 +462,7 @@ namespace DeploymentManager.Tests
                 {
                     Method = RestRequestMethod.GET,
                     Uri = "https://clientvalidations.deploymentmanager.net/healthstatus",
-                    Authentication = new RestRequestAuthentication()
+                    Authentication = new ApiKeyAuthentication()
                     {
                         Name = "code",
                         InProperty = RestAuthLocation.Header,
@@ -548,14 +548,14 @@ namespace DeploymentManager.Tests
                 ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Uri, 
                 ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Uri);
             Assert.Equal(
-                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication.Name, 
-                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication.Name);
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication).Name, 
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication).Name);
             Assert.Equal(
-                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication.InProperty, 
-                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication.InProperty);
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication).InProperty, 
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication).InProperty);
             Assert.Equal(
-                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication.Value, 
-                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication.Value);
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication).Value, 
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication).Value);
             Assert.Equal(
                 ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Response.SuccessStatusCodes.Count, 
                 ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Response.SuccessStatusCodes.Count);

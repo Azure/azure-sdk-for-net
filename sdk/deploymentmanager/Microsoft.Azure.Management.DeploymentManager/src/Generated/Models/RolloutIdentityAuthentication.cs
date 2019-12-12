@@ -10,18 +10,21 @@
 
 namespace Microsoft.Azure.Management.DeploymentManager.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The authentication information required in the REST health check
-    /// request to the health provider.
+    /// RolloutIdentity uses the user-assigned managed identity authentication
+    /// context specified in the Identity property during rollout creation.
     /// </summary>
-    public partial class RestRequestAuthentication
+    [Newtonsoft.Json.JsonObject("RolloutIdentity")]
+    public partial class RolloutIdentityAuthentication : RestRequestAuthentication
     {
         /// <summary>
-        /// Initializes a new instance of the RestRequestAuthentication class.
+        /// Initializes a new instance of the RolloutIdentityAuthentication
+        /// class.
         /// </summary>
-        public RestRequestAuthentication()
+        public RolloutIdentityAuthentication()
         {
             CustomInit();
         }
