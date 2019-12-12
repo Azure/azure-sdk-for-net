@@ -442,7 +442,7 @@ namespace Azure.Messaging.EventHubs
         ///   Sends a set of events to the associated Event Hub using a batched approach.
         /// </summary>
         ///
-        /// <param name="eventBatch">The set of event data to send.</param>
+        /// <param name="eventBatch">The set of event data to send. A batch may be created using <see cref="CreateBatchAsync(CancellationToken)" />.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
@@ -451,6 +451,7 @@ namespace Azure.Messaging.EventHubs
         /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
         /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
+        /// <seealso cref="CreateBatchAsync(CancellationToken)" />
         ///
         public virtual async Task SendAsync(EventDataBatch eventBatch,
                                             CancellationToken cancellationToken = default)
