@@ -63,7 +63,7 @@ jobs:
           ${{ insert }}: ${{ parameters.EnvVars }}
 
       - task: PublishTestResults@2
-        condition: succeededOrFailed()
+        condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/$(TestTargetFramework)*.trx"
