@@ -66,7 +66,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            BlobClientOptions blobClientOptions = new BlobClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey
             };
@@ -76,6 +76,27 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertExpectedException(
                 () => new AppendBlobClient(httpUri, blobClientOptions),
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_EncryptionScope()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            BlobClientOptions blobClientOptions = new BlobClientOptions
+            {
+                CustomerProvidedKey = customerProvidedKey,
+                EncryptionScope = encryptionScope
+            };
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new AppendBlobClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
+                new ArgumentException("Customer provided key and encryption scope cannot both be set"));
         }
 
         [Test]
@@ -159,6 +180,26 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [Test]
+        public async Task CreateAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+
+            // Act
+            Response<BlobContentInfo> response = await blob.CreateAsync();
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         //TODO
@@ -355,6 +396,31 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+        }
+
+        [Test]
+        public async Task AppendBlockAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            EncryptionScope encryptionScope = new EncryptionScope
+            {
+                EncryptionScopeKey = TestConfigDefault.EncryptionScope
+            };
+            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            var data = GetRandomBuffer(Constants.KB);
+            await blob.CreateAsync();
+
+            // Act
+            using var stream = new MemoryStream(data);
+            Response<BlobAppendInfo> response = await blob.AppendBlockAsync(
+                content: stream);
+
+            // Assert
+            Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
         [Test]
@@ -596,6 +662,39 @@ namespace Azure.Storage.Blobs.Test
                     new HttpRange(0, Constants.KB));
 
                 Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
+            }
+        }
+
+        [Test]
+        public async Task AppendBlockFromUriAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await test.Container.SetAccessPolicyAsync(PublicAccessType.BlobContainer);
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                AppendBlobClient sourceBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                await sourceBlob.CreateAsync();
+                await sourceBlob.AppendBlockAsync(stream);
+
+                AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+                EncryptionScope encryptionScope = new EncryptionScope
+                {
+                    EncryptionScopeKey = TestConfigDefault.EncryptionScope
+                };
+                destBlob = InstrumentClient(destBlob.WithEncryptionScope(encryptionScope));
+                await destBlob.CreateAsync();
+
+                // Act
+                Response<BlobAppendInfo> response = await destBlob.AppendBlockFromUriAsync(
+                    sourceBlob.Uri,
+                    new HttpRange(0, Constants.KB));
+
+                Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
             }
         }
 

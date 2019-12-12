@@ -181,8 +181,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal AppendBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        /// <param name="encryptionScope">Encryption scope.</param>
+        internal AppendBlobClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            ClientDiagnostics clientDiagnostics,
+            CustomerProvidedKey? customerProvidedKey,
+            EncryptionScope encryptionScope)
+            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
         #endregion ctors
@@ -203,7 +209,7 @@ namespace Azure.Storage.Blobs.Specialized
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new AppendBlobClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            return new AppendBlobClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         #region Create
@@ -497,6 +503,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
@@ -708,6 +715,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
                         appendPosition: conditions?.IfAppendPositionEqual,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -954,6 +962,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
                         leaseId: conditions?.LeaseId,
                         maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                         appendPosition: conditions?.IfAppendPositionEqual,
@@ -1009,6 +1018,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
                 client.ClientDiagnostics,
-                client.CustomerProvidedKey);
+                client.CustomerProvidedKey,
+                client.EncryptionScope);
     }
 }

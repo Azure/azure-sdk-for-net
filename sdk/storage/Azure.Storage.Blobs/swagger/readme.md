@@ -707,6 +707,8 @@ directive:
     $.put.responses["202"].description = "The operation completed successfully.";
     $.put.responses["202"].headers["x-ms-copy-status"].enum = ["pending", "success", "aborted", "failed"];
     $.put.responses["202"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    delete $.put.responses["202"].headers["Content-MD5"];
+    delete $.put.responses["202"].headers["x-ms-content-crc64"];
 ```
 
 ### /{containerName}/{blob}?comp=copy&copyid={CopyId}
