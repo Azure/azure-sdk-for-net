@@ -160,7 +160,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// ${operation.description || regionName}`);
     w.line(`/// </summary>`);
-    w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
     for (const arg of operation.request.arguments) {
         const desc = arg.description || arg.model.description;
         if (desc) {
@@ -170,13 +169,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
-    w.line(`/// <param name="${clientDiagnostics}">The ClientDiagnostics instance used for operation reporting.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);
     w.scope(() => {
-        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
@@ -206,7 +203,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`using (Azure.Core.HttpMessage ${messageName} = ${methodName}_CreateMessage(`);
             w.scope(() => {
                 const separateParams = IndentWriter.createFenceposter();
-                for (const arg of operation.request.arguments) {
+                for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
                     if (separateParams()) { w.line(`,`); }
                     w.write(`${naming.parameter(arg.clientName)}`);
                 }
@@ -265,8 +262,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// Create the ${regionName} request.`);
     w.line(`/// </summary>`);
-    w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
-    for (const arg of operation.request.arguments) {
+    for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
         const desc = arg.description || arg.model.description;
         if (desc) {
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
@@ -276,7 +272,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.write(`internal static Azure.Core.HttpMessage ${methodName}_CreateMessage(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
-        for (const arg of operation.request.arguments) {
+        for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
             if (separateParams()) { w.line(`,`); }
             w.write(`${types.getDeclarationType(arg.model, arg.required, false, true)} ${naming.parameter(arg.clientName)}`);
             if (!arg.required) { w.write(` = default`); }
@@ -332,7 +328,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
 
         if (operation.request.arguments.length > 0) {
             w.line(`// Validation`);
-            for (const arg of operation.request.arguments) {
+            for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
                 generateValidation(w, operation, arg);
             }
             w.line();
@@ -346,7 +342,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.line(`// Set the endpoint`);
         const httpMethod = naming.pascalCase(operation.method);
         w.line(`${requestName}.Method = Azure.Core.RequestMethod.${httpMethod};`);
-        const uri = naming.parameter(operation.request.all[1].clientName);
+        const uri = naming.parameter(operation.request.all[2].clientName);
         w.line(`${requestName}.Uri.Reset(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
@@ -361,7 +357,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 });
             }
         }
-        if (operation.request.paths.length > 2) { // We're always ignoring url + pipeline
+        if (operation.request.paths.length > 3) { // We're always ignoring url + pipeline + client diagnostics
             w.line(`// TODO: Ignoring request path vars: ${operation.request.paths.map(p => p.name).join(', ')}`)
         }
         w.line();
