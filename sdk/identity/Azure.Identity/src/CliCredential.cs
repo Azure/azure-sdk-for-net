@@ -21,6 +21,11 @@ namespace Azure.Identity
         private readonly CredentialPipeline _pipeline;
 
         /// <summary>
+        /// Get the result that was genereted by run Azure CLI command.
+        /// </summary>
+        internal string AzureCLIResult { get; set; }
+
+        /// <summary>
         /// Create an instance of CliCredential class.
         /// </summary>
         public CliCredential()
@@ -81,7 +86,6 @@ namespace Azure.Identity
             {
                 string command = ScopeUtilities.ScopesToResource(requestContext.Scopes);
                 string extendCommand = "az account get-access-token --resource " + command;
-                string azureCLIResult = string.Empty;
 
                 using (PowerShell powerShell = PowerShell.Create())
                 {
@@ -89,13 +93,13 @@ namespace Azure.Identity
 
                     foreach (PSObject pSObject in powerShell.EndInvoke(pSObjects))
                     {
-                        azureCLIResult += pSObject.BaseObject.ToString();
+                        AzureCLIResult += pSObject.BaseObject.ToString();
                     }
                 }
 
-                Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(azureCLIResult);
-                result.TryGetValue("accessToken", out string accessToken);
-                result.TryGetValue("expiresOn", out string expiresOnValue);
+                Dictionary<string, string> resultDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(AzureCLIResult);
+                resultDictionary.TryGetValue("accessToken", out string accessToken);
+                resultDictionary.TryGetValue("expiresOn", out string expiresOnValue);
                 DateTimeOffset dateTimeOffset = DateTimeOffset.Parse(expiresOnValue, null, System.Globalization.DateTimeStyles.AssumeUniversal);
 
                 AccessToken token = new AccessToken(accessToken, dateTimeOffset);
