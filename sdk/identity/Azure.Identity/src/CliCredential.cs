@@ -19,8 +19,6 @@ namespace Azure.Identity
     public class CliCredential : TokenCredential,IExtendedTokenCredential
     {
         private readonly CredentialPipeline _pipeline;
-        private readonly TokenCredential _credential;
-        //private readonly string _unavailbleErrorMessage;
 
         /// <summary>
         /// Get the result that was genereted by run Azure CLI command.
@@ -46,13 +44,6 @@ namespace Azure.Identity
         internal CliCredential(CredentialPipeline pipeline)
         {
             _pipeline = pipeline;
-        }
-
-        internal CliCredential(CredentialPipeline pipeline, TokenCredential credential)
-        {
-            _pipeline = pipeline;
-
-            _credential = credential;
         }
 
         /// <summary>
