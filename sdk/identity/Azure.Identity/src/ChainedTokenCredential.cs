@@ -70,7 +70,7 @@ namespace Azure.Identity
                 {
                     exceptions.Add(e);
 
-                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
                 }
             }
 
@@ -101,7 +101,7 @@ namespace Azure.Identity
                 {
                     exceptions.Add(e);
 
-                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage + e.Message, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
+                    throw AuthenticationFailedException.CreateAggregateException(AggregateCredentialFailedErrorMessage, new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions);
                 }
             }
 
