@@ -16,6 +16,15 @@ namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
+        static StorageTestBase()
+        {
+            // https://github.com/Azure/azure-sdk-for-net/issues/9087
+            // .NET framework defaults to 2, which causes issues for the parallel upload/download tests.
+#if !NETCOREAPP
+            ServicePointManager.DefaultConnectionLimit = 100;
+#endif
+        }
+
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
