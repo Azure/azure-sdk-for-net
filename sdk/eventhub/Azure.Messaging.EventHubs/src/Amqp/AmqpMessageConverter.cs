@@ -669,7 +669,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     break;
 
                 default:
-                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
+                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, amqpPropertyValue.GetType().FullName));
                     EventHubsEventSource.Log.UnexpectedException(exception.Message);
                     throw exception;
             }
