@@ -140,6 +140,10 @@ namespace Azure.Storage.Sas
             {
                 sb.Append(Constants.Sas.AccountServices.Queue);
             }
+            if ((services & AccountSasServices.Tables) == AccountSasServices.Tables)
+            {
+                sb.Append(Constants.Sas.AccountServices.Table);
+            }
             return sb.ToString();
         }
 
@@ -158,22 +162,15 @@ namespace Azure.Storage.Sas
             AccountSasServices svcs = default;
             foreach (var ch in s)
             {
-                switch (ch)
+                svcs |= ch switch
                 {
-                    case Constants.Sas.AccountServices.Blob:
-                        svcs |= AccountSasServices.Blobs;
-                        break;
-                    case Constants.Sas.AccountServices.Queue:
-                        svcs |= AccountSasServices.Queues;
-                        break;
-                    case Constants.Sas.AccountServices.File:
-                        svcs |= AccountSasServices.Files;
-                        break;
-                    case Constants.Sas.AccountServices.Table:
-                        break; //no-op; we don't support table but we don't want to fail on default connection string from portal
-                    default:
-                        throw Errors.InvalidService(ch);
+                    Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
+                    Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
+                    Constants.Sas.AccountServices.File => AccountSasServices.Files,
+                    Constants.Sas.AccountServices.Table => AccountSasServices.Tables,
+                    _ => throw Errors.InvalidService(ch),
                 };
+                ;
             }
             return svcs;
         }

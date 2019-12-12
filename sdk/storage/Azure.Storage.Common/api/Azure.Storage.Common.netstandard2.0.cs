@@ -75,6 +75,7 @@ namespace Azure.Storage.Sas
         Blobs = 1,
         Queues = 2,
         Files = 4,
+        Tables = 8,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SasIPRange : System.IEquatable<Azure.Storage.Sas.SasIPRange>

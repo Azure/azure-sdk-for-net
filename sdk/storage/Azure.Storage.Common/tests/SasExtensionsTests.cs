@@ -10,13 +10,14 @@ namespace Azure.Storage.Tests
     public class SasExtensionsTests
     {
         [Test]
-        public void TableSasPermission_Does_Not_Throw()
+        public void AccountSasPermission_Round_Trip()
         {
             AccountSasServices services = SasExtensions.ParseAccountServices("bfqt");
             Assert.IsTrue(services.HasFlag(AccountSasServices.Blobs));
             Assert.IsTrue(services.HasFlag(AccountSasServices.Files));
             Assert.IsTrue(services.HasFlag(AccountSasServices.Queues));
-            Assert.AreEqual(services.ToPermissionsString(), "bfq"); // tables is not a supported permission, but we shouldn't throw
+            Assert.IsTrue(services.HasFlag(AccountSasServices.Tables));
+            Assert.AreEqual(services.ToPermissionsString(), "bfqt"); // tables is not a supported permission, but we shouldn't throw
         }
     }
 }

@@ -51,18 +51,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task Ctor_ConnectionString_Sas()
-        {
-            await Perform_Ctor_ConnectionString_Sas();
-        }
-
-        [Test]
-        public async Task Ctor_ConnectionString_Sas_Include_Table()
-        {
-            await Perform_Ctor_ConnectionString_Sas(includeTable: true);
-        }
-
-        private async Task Perform_Ctor_ConnectionString_Sas(bool includeTable = false)
+        [TestCase(true)] // https://github.com/Azure/azure-sdk-for-net/issues/9110
+        [TestCase(false)]
+        public async Task Perform_Ctor_ConnectionString_Sas(bool includeTable)
         {
             // Arrange
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
