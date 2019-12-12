@@ -199,9 +199,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             return new StorageConnectionString(
                     credentials,
-                    (default, default),
-                    (default, default),
-                    fileUri);
+                    fileStorageUri: fileUri);
         }
 
         public static void AssertValidStorageFileInfo(ShareFileInfo storageFileInfo)

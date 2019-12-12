@@ -544,6 +544,7 @@ namespace Azure.Storage
                 public const char Blob = 'b';
                 public const char Queue = 'q';
                 public const char File = 'f';
+                public const char Table = 't';
             }
 
             internal static class AccountResources

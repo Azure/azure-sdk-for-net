@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = "containername";
 
@@ -53,6 +53,17 @@ namespace Azure.Storage.Blobs.Test
         [Test]
         public async Task Ctor_ConnectionString_Sas()
         {
+            await Perform_Ctor_ConnectionString_Sas();
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_Sas_Include_Table()
+        {
+            await Perform_Ctor_ConnectionString_Sas(includeTable: true);
+        }
+
+        private async Task Perform_Ctor_ConnectionString_Sas(bool includeTable = false)
+        {
             // Arrange
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
                 AccountSasServices.All,
@@ -61,7 +72,8 @@ namespace Azure.Storage.Blobs.Test
 
             StorageConnectionString conn1 = GetConnectionString(
                 credentials: sasCred,
-                includeEndpoint: true);
+                includeEndpoint: true,
+                includeTable: includeTable);
 
             BlobContainerClient containerClient1 = GetBlobContainerClient(conn1.ToString(exportSecrets: true));
 
@@ -222,8 +234,6 @@ namespace Azure.Storage.Blobs.Test
                     connectionString,
                     GetNewContainerName(),
                     GetOptions()));
-
-
 
         [Test]
         public void Ctor_Uri()

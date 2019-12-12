@@ -158,12 +158,21 @@ namespace Azure.Storage.Sas
             AccountSasServices svcs = default;
             foreach (var ch in s)
             {
-                svcs |= ch switch
+                switch (ch)
                 {
-                    Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
-                    Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
-                    Constants.Sas.AccountServices.File => AccountSasServices.Files,
-                    _ => throw Errors.InvalidService(ch),
+                    case Constants.Sas.AccountServices.Blob:
+                        svcs |= AccountSasServices.Blobs;
+                        break;
+                    case Constants.Sas.AccountServices.Queue:
+                        svcs |= AccountSasServices.Queues;
+                        break;
+                    case Constants.Sas.AccountServices.File:
+                        svcs |= AccountSasServices.Files;
+                        break;
+                    case Constants.Sas.AccountServices.Table:
+                        break; //no-op; we don't support table but we don't want to fail on default connection string from portal
+                    default:
+                        throw Errors.InvalidService(ch);
                 };
             }
             return svcs;
