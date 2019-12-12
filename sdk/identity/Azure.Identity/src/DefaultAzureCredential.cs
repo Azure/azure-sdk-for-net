@@ -153,6 +153,11 @@ namespace Azure.Identity
                 chain[i++] = factory.CreateInteractiveBrowserCredential(options.InteractiveBrowserTenantId);
             }
 
+            if (!options.ExcludeCliCredential)
+            {
+                chain[i++] = factory.CreateCliCredential();
+            }
+
             if (i == 0)
             {
                 throw new ArgumentException("At least one credential type must be included in the authentication flow.", nameof(options));
