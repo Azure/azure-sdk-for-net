@@ -421,7 +421,7 @@ namespace Azure.Storage.Blobs.Test
             ContainerEncryptionScopeOptions encryptionScopeOptions = new ContainerEncryptionScopeOptions
             {
                 DefaultEncryptionScope = TestConfigDefault.EncryptionScope,
-                DencyEncryptionScopeOverride = true
+                DenyEncryptionScopeOverride = true
             };
 
             // Act

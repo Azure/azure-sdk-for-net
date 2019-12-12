@@ -16,6 +16,6 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// If true, prevents any request from specifying a different encryption scope than the scope set on the container.
         /// </summary>
-        public bool DencyEncryptionScopeOverride { get; set; }
+        public bool DenyEncryptionScopeOverride { get; set; }
     }
 }

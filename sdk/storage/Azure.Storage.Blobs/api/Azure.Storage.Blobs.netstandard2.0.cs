@@ -748,7 +748,7 @@ namespace Azure.Storage.Blobs.Models
     {
         public ContainerEncryptionScopeOptions() { }
         public string DefaultEncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public bool DencyEncryptionScopeOverride { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public bool DenyEncryptionScopeOverride { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
     public partial class CopyFromUriOperation : Azure.Operation<long>
     {

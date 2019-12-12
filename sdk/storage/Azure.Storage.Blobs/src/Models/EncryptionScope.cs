@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
     public class EncryptionScope
     {
         /// <summary>
-        /// The name of a previously-createdencryption scope created in the control plane, to be used for server-side encryption.
+        /// The name of a previously-created encryption scope created in the control plane, to be used for server-side encryption.
         /// </summary>
         public string EncryptionScopeKey { get; set; }
     }

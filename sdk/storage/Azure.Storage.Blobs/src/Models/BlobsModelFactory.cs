@@ -8,6 +8,9 @@ using System.Text;
 
 namespace Azure.Storage.Blobs.Models
 {
+    /// <summary>
+    /// This class holds BlobModelFactory overloads we need for backwards compatibility.
+    /// </summary>
     public partial class BlobsModelFactory
     {
         /// <summary>

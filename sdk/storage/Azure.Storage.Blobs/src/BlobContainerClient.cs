@@ -903,7 +903,7 @@ namespace Azure.Storage.Blobs
                         metadata: metadata,
                         access: publicAccessType,
                         defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
-                        denyEncryptionScopeOverride: encryptionScopeOptions?.DencyEncryptionScopeOverride,
+                        denyEncryptionScopeOverride: encryptionScopeOptions?.DenyEncryptionScopeOverride,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)
