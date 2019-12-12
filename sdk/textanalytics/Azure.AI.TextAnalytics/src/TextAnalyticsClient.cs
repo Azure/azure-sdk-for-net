@@ -97,8 +97,6 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<DetectLanguageResult>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            // TODO: set countryHint from options.
-
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
@@ -281,8 +279,6 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResult>> RecognizeEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            // TODO: set language from options
-
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
@@ -1221,7 +1217,7 @@ namespace Azure.AI.TextAnalytics
         {
             Request request = _pipeline.CreateRequest();
 
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, _options.DefaultLanguage);
 
             request.Method = RequestMethod.Post;
             BuildUriForRoute(route, request.Uri, options);
@@ -1238,7 +1234,7 @@ namespace Azure.AI.TextAnalytics
         {
             Request request = _pipeline.CreateRequest();
 
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs);
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, _options.DefaultCountryHint);
 
             request.Method = RequestMethod.Post;
             BuildUriForRoute(LanguagesRoute, request.Uri, options);
