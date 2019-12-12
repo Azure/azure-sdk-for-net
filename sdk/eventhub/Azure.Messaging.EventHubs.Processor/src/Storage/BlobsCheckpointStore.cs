@@ -91,43 +91,48 @@ namespace Azure.Messaging.EventHubs.Processor
         {
             Logger.ListOwnershipAsyncStart(fullyQualifiedNamespace, eventHubName, consumerGroup);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
-
-            Func<CancellationToken, Task<IEnumerable<PartitionOwnership>>> listOwnershipAsync = async listOwnershipToken =>
-            {
-                var ownershipList = new List<PartitionOwnership>();
-
-                await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: listOwnershipToken).ConfigureAwait(false))
-                {
-                    // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
-                    // to throw an exception.
-
-                    blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
-
-                    ownershipList.Add(new PartitionOwnership(
-                        fullyQualifiedNamespace,
-                        eventHubName,
-                        consumerGroup,
-                        ownerIdentifier,
-                        blob.Name.Substring(prefix.Length),
-                        blob.Properties.LastModified,
-                        blob.Properties.ETag.ToString()
-                    ));
-                }
-
-                Logger.ListOwnershipAsyncComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, ownershipList.Count);
-                return ownershipList;
-            };
+            List<PartitionOwnership> result = null;
 
             try
             {
-                return await ApplyRetryPolicy(listOwnershipAsync, cancellationToken);
+                var prefix = string.Format(OwnershipPrefix, fullyQualifiedNamespace.ToLower(), eventHubName.ToLower(), consumerGroup.ToLower());
+
+                Func<CancellationToken, Task<List<PartitionOwnership>>> listOwnershipAsync = async listOwnershipToken =>
+                {
+                    var ownershipList = new List<PartitionOwnership>();
+
+                    await foreach (BlobItem blob in ContainerClient.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: prefix, cancellationToken: listOwnershipToken).ConfigureAwait(false))
+                    {
+                        // In case this key does not exist, ownerIdentifier is set to null.  This will force the PartitionOwnership constructor
+                        // to throw an exception.
+
+                        blob.Metadata.TryGetValue(BlobMetadataKey.OwnerIdentifier, out var ownerIdentifier);
+
+                        ownershipList.Add(new PartitionOwnership(
+                            fullyQualifiedNamespace,
+                            eventHubName,
+                            consumerGroup,
+                            ownerIdentifier,
+                            blob.Name.Substring(prefix.Length),
+                            blob.Properties.LastModified,
+                            blob.Properties.ETag.ToString()
+                        ));
+                    }
+
+                    return ownershipList;
+                };
+
+                result = await ApplyRetryPolicy(listOwnershipAsync, cancellationToken);
+                return result;
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 Logger.ListOwnershipAsyncError(fullyQualifiedNamespace, eventHubName, consumerGroup, ex.ToString());
                 throw new RequestFailedException(Resources.BlobsResourceDoesNotExist);
+            }
+            finally
+            {
+                Logger.ListOwnershipAsyncComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, result?.Count ?? 0);
             }
         }
 

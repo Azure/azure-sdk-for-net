@@ -52,6 +52,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.That(() => new BlobsCheckpointStore(Mock.Of<BlobContainerClient>(), null), Throws.ArgumentNullException);
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ListOwnershipAsync and ensures the appropriate events are emitted on success.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public async Task ListOwnershipLogsStartAndComplete()
         {
@@ -73,6 +78,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.ListOwnershipAsyncComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, blobList.Count));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ListOwnershipAsync and ensures the appropriate events are emitted on failure.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public void ListOwnershipLogsErrorOnException()
         {
@@ -88,6 +98,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.ListOwnershipAsyncError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, It.Is<string>(e => e.Contains("RequestFailedException"))));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public async Task ClaimOwnershipForNewPartitionLogsOwnershipClaimed()
         {
@@ -105,6 +120,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, OwnershipIdentifier));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public async Task ClaimOwnershipForExistingPartitionLogsOwnershipClaimed()
         {
@@ -123,6 +143,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.OwnershipClaimed(PartitionId, OwnershipIdentifier));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public async Task ClaimOwnershipForExistingPartitionWithWongEtagLogsOwnershipNotClaimable()
         {
@@ -141,6 +166,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.OwnershipNotClaimable(PartitionId, OwnershipIdentifier, It.Is<string>(e => e.Contains(BlobErrorCode.ConditionNotMet.ToString()))));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on failur.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public void ClaimOwnershipForMissingPartitionThrowsAndLogsOwnershipNotClaimable()
         {
@@ -155,6 +185,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await target.ClaimOwnershipAsync(partitionOwnerships, new CancellationToken()));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted on success.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public async Task ListCheckpointsLogsStartAndComplete()
         {
@@ -176,6 +211,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.ListCheckpointsAsyncComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, blobList.Count));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted on failure.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public void ListCheckointsForMissingPartitionThrowsAndLogsOwnershipNotClaimable()
         {
@@ -189,6 +229,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.ThrowsAsync<RequestFailedException>(async () => await target.ListCheckpointsAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, new CancellationToken()));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate events are emitted on success.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public async Task UpdateCheckpointLogsCheckpointUpdated()
         {
@@ -210,6 +255,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.CheckpointUpdated(PartitionId));
         }
 
+        /// <summary>
+        ///    Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate events are emitted on failures.
+        ///    constructor.
+        /// </summary>
+        ///
         [Test]
         public void UpdateCheckpointForMissingCheckpointThrowsAndLogsCheckpointUpdateError()
         {

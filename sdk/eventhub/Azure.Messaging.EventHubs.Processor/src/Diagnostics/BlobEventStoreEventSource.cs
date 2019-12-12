@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.Tracing;
+
 namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 {
-    using System;
-    using System.Diagnostics.Tracing;
+
 
     /// <summary>
     /// EventSource for Azure-Messaging-EventHubs-Processor-BlobEventStore traces.
@@ -21,7 +22,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 
         internal BlobEventStoreEventSource() { }
 
-        [Event(1, Level = EventLevel.Informational, Message = "BlobsCheckpointStore created. accountName:{0} containerName:{1}")]
+        [Event(1, Level = EventLevel.Informational, Message = "BlobsCheckpointStore created. AccountName:{0}; ContainerName:{1}")]
         public virtual void BlobsCheckpointStoreCreated(string accoountName, string name)
         {
             if (IsEnabled())
@@ -30,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(2, Level = EventLevel.Informational, Message = "ListOwnershipAsync started. fullyQualifiedNamespace:{0} eventHubName:{1} consumerGroup:{2}")]
+        [Event(2, Level = EventLevel.Informational, Message = "ListOwnershipAsync started. FullyQualifiedNamespace:{0} EventHubName:{1} ConsumerGroup:{2}")]
         public virtual void ListOwnershipAsyncStart(string fullyQualifiedNamespace, string eventHubName, string consumerGroup)
         {
             if (IsEnabled())
@@ -39,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(3, Level = EventLevel.Informational, Message = "ListOwnershipAsync completed. fullyQualifiedNamespace:{0} eventHubName:{1} consumerGroup:{2} ownershipCount:{3}")]
+        [Event(3, Level = EventLevel.Informational, Message = "ListOwnershipAsync completed. FullyQualifiedNamespace:{0} EventHubName:{1} ConsumerGroup:{2} OwnershipCount:{3}")]
         public virtual void ListOwnershipAsyncComplete(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, int ownershipCount)
         {
             if (IsEnabled())
@@ -48,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(4, Level = EventLevel.Error, Message = "ListOwnershipAsync error. fullyQualifiedNamespace:{0} eventHubName:{1} consumerGroup:{2}eErrorMessage:{3}")]
+        [Event(4, Level = EventLevel.Error, Message = "ListOwnershipAsync error. FullyQualifiedNamespace:{0} EventHubName:{1} ConsumerGroup:{2} ErrorMessage:{3}")]
         public virtual void ListOwnershipAsyncError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string errorMessage)
         {
             if (IsEnabled())
@@ -57,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(5, Level = EventLevel.Informational, Message = "ClaimOwnershipAsync ownership is not claimable. partitionId:{0} ownerIdentifier:{1} {2}")]
+        [Event(5, Level = EventLevel.Informational, Message = "ClaimOwnershipAsync ownership is not claimable. PartitionId:{0} OwnerIdentifier:{1} {2}")]
         public virtual void OwnershipNotClaimable(string partitionId, string ownerIdentifier, string errorMessage = null)
         {
             if (IsEnabled())
@@ -66,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(6, Level = EventLevel.Informational, Message = "ClaimOwnershipAsync Ownership claimaed. partitionId:{0} ownerIdentifier:{1}")]
+        [Event(6, Level = EventLevel.Informational, Message = "ClaimOwnershipAsync Ownership claimaed. PartitionId:{0} OwnerIdentifier:{1}")]
         public virtual void OwnershipClaimed(string partitionId, string ownerIdentifier)
         {
             if (IsEnabled())
@@ -75,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(7, Level = EventLevel.Informational, Message = "ListCheckpointsAsync Started. fullyQualifiedNamespace:{0} eventHubName:{1} consumerGroup:{2}")]
+        [Event(7, Level = EventLevel.Informational, Message = "ListCheckpointsAsync Started. FullyQualifiedNamespace:{0} EventHubName:{1} ConsumerGroup:{2}")]
         public virtual void ListCheckpointsAsyncStart(string fullyQualifiedNamespace, string eventHubName, string consumerGroup)
         {
             if (IsEnabled())
@@ -84,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(8, Level = EventLevel.Informational, Message = "ListCheckpointsAsync Completed. fullyQualifiedNamespace:{0} eventHubName:{1} consumerGroup:{2} checkpointCount:{3}")]
+        [Event(8, Level = EventLevel.Informational, Message = "ListCheckpointsAsync Completed. FullyQualifiedNamespace:{0} EventHubName:{1} ConsumerGroup:{2} CheckpointCount:{3}")]
         public virtual void ListCheckpointsAsyncComplete(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, int checkPointCount)
         {
             if (IsEnabled())
@@ -93,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(9, Level = EventLevel.Informational, Message = "UpdateCheckpointAsync updated checkpoint. partitionId:{0}")]
+        [Event(9, Level = EventLevel.Informational, Message = "UpdateCheckpointAsync updated checkpoint. PartitionId:{0}")]
         public virtual void CheckpointUpdated(string partitionId)
         {
             if (IsEnabled())
@@ -102,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             }
         }
 
-        [Event(10, Level = EventLevel.Error, Message = "UpdateCheckpointAsync checkpoint could not be updated. partitionId:{0} errorMessage:{1}")]
+        [Event(10, Level = EventLevel.Error, Message = "UpdateCheckpointAsync checkpoint could not be updated. PartitionId:{0} ErrorMessage:{1}")]
         public virtual void CheckpointUpdateError(string partitionId, string errorMessage = null)
         {
             if (IsEnabled())
