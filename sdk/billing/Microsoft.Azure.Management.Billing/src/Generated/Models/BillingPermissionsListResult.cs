@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the BillingPermissionsListResult
         /// class.
         /// </summary>
-        /// <param name="value">The list OF billingPermissions a caller has on
+        /// <param name="value">The list of billingPermissions a caller has on
         /// a billing account.</param>
         public BillingPermissionsListResult(IList<BillingPermissionsProperties> value = default(IList<BillingPermissionsProperties>))
         {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list OF billingPermissions a caller has on a billing
+        /// Gets the list of billingPermissions a caller has on a billing
         /// account.
         /// </summary>
         [JsonProperty(PropertyName = "value")]

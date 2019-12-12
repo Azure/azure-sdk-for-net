@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ComponentModel;
-using System.Globalization;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {

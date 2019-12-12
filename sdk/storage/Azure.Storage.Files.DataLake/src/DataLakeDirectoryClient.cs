@@ -238,7 +238,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -315,7 +315,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -478,8 +478,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for the
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -539,8 +539,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for
+        /// the newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1255,7 +1255,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the updated
+        /// A <see cref="Response{PathInfo}"/> describing the updated
         /// path.
         /// </returns>
         /// <remarks>
@@ -1333,8 +1333,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{FileClient}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeFileClient}"/> for the
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1419,8 +1419,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{FileClient}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeFileClient}"/> for the
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1611,8 +1611,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for the
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1698,8 +1698,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for the
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

@@ -127,7 +127,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="clientOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
@@ -170,7 +170,7 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and SAS token are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///

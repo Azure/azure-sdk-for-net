@@ -18,7 +18,7 @@ being used.
 Install the Azure Storage File Shares client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files.Shares --version 12.0.0-preview.5
+dotnet add package Azure.Storage.Files.Shares
 ```
 
 ### Prerequisites
@@ -220,7 +220,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.Shares/
-[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
+[docs]: https://docs.microsoft.com/en-us/dotnet/api/azure.storage.files.shares
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-rest-api
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/files/storage-files-introduction
 [nuget]: https://www.nuget.org/

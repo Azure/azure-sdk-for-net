@@ -4,6 +4,7 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -24,7 +25,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
             Debug.WriteLine($"Recognizing entities for input: \"{input}\"");
-            var entities = client.RecognizeEntities(input).Value;
+            RecognizeEntitiesResult result = client.RecognizeEntities(input);
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
             Debug.WriteLine($"Recognized {entities.Count()} entities:");
             foreach (NamedEntity entity in entities)

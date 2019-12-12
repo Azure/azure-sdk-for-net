@@ -575,8 +575,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockSecondBatch = new EventDataBatch(new MockTransportBatch(), new SendEventOptions { PartitionId = "2" });
             var producer = new EventHubProducerClient(new MockConnection(() => transportProducer));
 
-            try { await producer.SendAsync(mockFirstBatch); } catch {}
-            try { await producer.SendAsync(mockSecondBatch); } catch {}
+            try
+            { await producer.SendAsync(mockFirstBatch); }
+            catch { }
+            try
+            { await producer.SendAsync(mockSecondBatch); }
+            catch { }
 
             await producer.CloseAsync();
 
@@ -594,14 +598,16 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var mockTransportProducer = new Mock<TransportProducer>();
             var mockConnection = new MockConnection(() => mockTransportProducer.Object);
-            var mockBatch = new EventDataBatch(new MockTransportBatch(), new SendEventOptions { PartitionId = "1" });;
+            var mockBatch = new EventDataBatch(new MockTransportBatch(), new SendEventOptions { PartitionId = "1" });
             var producer = new EventHubProducerClient(mockConnection);
 
             mockTransportProducer
                 .Setup(producer => producer.CloseAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromException(new InvalidCastException()));
 
-            try { await producer.SendAsync(mockBatch); } catch {}
+            try
+            { await producer.SendAsync(mockBatch); }
+            catch { }
 
             Assert.That(async () => await producer.CloseAsync(), Throws.InstanceOf<InvalidCastException>());
         }
@@ -678,6 +684,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 SendCalledWith = (events, sendOptions);
                 return Task.CompletedTask;
             }
+
             public override Task SendAsync(EventDataBatch batch,
                                            CancellationToken cancellationToken)
             {

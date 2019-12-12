@@ -35,17 +35,20 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="tier">The cluster tier. Possible values include:
         /// 'Standard', 'Premium'</param>
         /// <param name="clusterDefinition">The cluster definition.</param>
+        /// <param name="kafkaRestProperties">The cluster kafka rest proxy
+        /// configuration.</param>
         /// <param name="securityProfile">The security profile.</param>
         /// <param name="computeProfile">The compute profile.</param>
         /// <param name="storageProfile">The storage profile.</param>
         /// <param name="diskEncryptionProperties">The disk encryption
         /// properties.</param>
-        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
+        public ClusterCreateProperties(string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), ClusterDefinition clusterDefinition = default(ClusterDefinition), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), StorageProfile storageProfile = default(StorageProfile), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
             Tier = tier;
             ClusterDefinition = clusterDefinition;
+            KafkaRestProperties = kafkaRestProperties;
             SecurityProfile = securityProfile;
             ComputeProfile = computeProfile;
             StorageProfile = storageProfile;
@@ -83,6 +86,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "clusterDefinition")]
         public ClusterDefinition ClusterDefinition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cluster kafka rest proxy configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "kafkaRestProperties")]
+        public KafkaRestProperties KafkaRestProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the security profile.

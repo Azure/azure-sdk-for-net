@@ -59,16 +59,26 @@ namespace Azure.Core.Tests
 
         public void Dispose()
         {
-            List<IDisposable> subscriptions;
-            lock (_subscriptions)
+            if (_subscriptions != null)
             {
-                subscriptions = _subscriptions;
-                _subscriptions = null;
-            }
+                List<IDisposable> subscriptions = null;
 
-            foreach (IDisposable subscription in subscriptions)
-            {
-                subscription.Dispose();
+                lock (_subscriptions)
+                {
+                    if (_subscriptions != null)
+                    {
+                        subscriptions = _subscriptions;
+                        _subscriptions = null;
+                    }
+                }
+
+                if (subscriptions != null)
+                {
+                    foreach (IDisposable subscription in subscriptions)
+                    {
+                        subscription.Dispose();
+                    }
+                }
             }
         }
 

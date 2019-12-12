@@ -13,7 +13,6 @@ namespace Azure.Security.KeyVault.Certificates
     {
         private const string KeyIdPropertyName = "kid";
         private const string SecretIdPropertyName = "sid";
-        private const string ContentTypePropertyName = "contentType";
         private const string CERPropertyName = "cer";
 
         private string _keyId;
@@ -53,11 +52,6 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// Gets the content type of the key vault Secret corresponding to the certificate.
-        /// </summary>
-        public CertificateContentType ContentType { get; internal set; }
-
-        /// <summary>
         /// Gets additional properties of the <see cref="KeyVaultCertificate"/>.
         /// </summary>
         public CertificateProperties Properties { get; }
@@ -77,10 +71,6 @@ namespace Azure.Security.KeyVault.Certificates
 
                 case SecretIdPropertyName:
                     _secretId = prop.Value.GetString();
-                    break;
-
-                case ContentTypePropertyName:
-                    ContentType = prop.Value.GetString();
                     break;
 
                 case CERPropertyName:

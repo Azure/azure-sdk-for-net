@@ -1,5 +1,11 @@
 # Release History
+
 ## Unreleased
+
+### Fixes and improvements
+- Fix `UsernamePasswordCredential` constructor parameter mishandling
+
+## 1.1.0
 
 ### Fixes and improvements
 - Update `SharedTokenCacheCredential` to filter accounts by tenant id

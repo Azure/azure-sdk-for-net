@@ -39,6 +39,10 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// reference ID of the individual definition that should be
         /// remediated. Required when the policy assignment being remediated
         /// assigns a policy set definition.</param>
+        /// <param name="resourceDiscoveryMode">The way resources to remediate
+        /// are discovered. Defaults to ExistingNonCompliant if not specified.
+        /// Possible values include: 'ExistingNonCompliant',
+        /// 'ReEvaluateCompliance'</param>
         /// <param name="provisioningState">The status of the
         /// remediation.</param>
         /// <param name="createdOn">The time at which the remediation was
@@ -52,10 +56,11 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="id">The ID of the remediation.</param>
         /// <param name="type">The type of the remediation.</param>
         /// <param name="name">The name of the remediation.</param>
-        public Remediation(string policyAssignmentId = default(string), string policyDefinitionReferenceId = default(string), string provisioningState = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? lastUpdatedOn = default(System.DateTime?), RemediationFilters filters = default(RemediationFilters), RemediationDeploymentSummary deploymentStatus = default(RemediationDeploymentSummary), string id = default(string), string type = default(string), string name = default(string))
+        public Remediation(string policyAssignmentId = default(string), string policyDefinitionReferenceId = default(string), string resourceDiscoveryMode = default(string), string provisioningState = default(string), System.DateTime? createdOn = default(System.DateTime?), System.DateTime? lastUpdatedOn = default(System.DateTime?), RemediationFilters filters = default(RemediationFilters), RemediationDeploymentSummary deploymentStatus = default(RemediationDeploymentSummary), string id = default(string), string type = default(string), string name = default(string))
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
+            ResourceDiscoveryMode = resourceDiscoveryMode;
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -88,6 +93,14 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string PolicyDefinitionReferenceId { get; set; }
 
         /// <summary>
+        /// Gets or sets the way resources to remediate are discovered.
+        /// Defaults to ExistingNonCompliant if not specified. Possible values
+        /// include: 'ExistingNonCompliant', 'ReEvaluateCompliance'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceDiscoveryMode")]
+        public string ResourceDiscoveryMode { get; set; }
+
+        /// <summary>
         /// Gets the status of the remediation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
@@ -113,11 +126,11 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public RemediationFilters Filters { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment status summary for all deployments
-        /// created by the remediation.
+        /// Gets the deployment status summary for all deployments created by
+        /// the remediation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deploymentStatus")]
-        public RemediationDeploymentSummary DeploymentStatus { get; set; }
+        public RemediationDeploymentSummary DeploymentStatus { get; private set; }
 
         /// <summary>
         /// Gets the ID of the remediation.

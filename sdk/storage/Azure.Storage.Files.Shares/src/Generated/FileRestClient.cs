@@ -7104,10 +7104,9 @@ namespace Azure.Storage.Files.Shares.Models
         public string Permissions { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of ShareAccessPolicy instances.
-        /// You can use ShareModelFactory.ShareAccessPolicy instead.
+        /// Creates a new ShareAccessPolicy instance
         /// </summary>
-        internal ShareAccessPolicy() { }
+        public ShareAccessPolicy() { }
 
         /// <summary>
         /// Serialize a ShareAccessPolicy instance as XML.
@@ -7200,10 +7199,9 @@ namespace Azure.Storage.Files.Shares.Models
         public int MaxAgeInSeconds { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of ShareCorsRule instances.
-        /// You can use ShareModelFactory.ShareCorsRule instead.
+        /// Creates a new ShareCorsRule instance
         /// </summary>
-        internal ShareCorsRule() { }
+        public ShareCorsRule() { }
 
         /// <summary>
         /// Serialize a ShareCorsRule instance as XML.
@@ -8440,10 +8438,9 @@ namespace Azure.Storage.Files.Shares.Models
         public int? Days { get; set; }
 
         /// <summary>
-        /// Prevent direct instantiation of ShareRetentionPolicy instances.
-        /// You can use ShareModelFactory.ShareRetentionPolicy instead.
+        /// Creates a new ShareRetentionPolicy instance
         /// </summary>
-        internal ShareRetentionPolicy() { }
+        public ShareRetentionPolicy() { }
 
         /// <summary>
         /// Serialize a ShareRetentionPolicy instance as XML.

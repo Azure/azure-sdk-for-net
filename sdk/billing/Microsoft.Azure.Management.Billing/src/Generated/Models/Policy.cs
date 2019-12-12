@@ -35,18 +35,20 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="marketplacePurchasesAllowed">The
-        /// marketplacePurchasesAllowed flag.</param>
-        /// <param name="reservationPurchasesAllowed">The
-        /// reservationPurchasesAllowed flag.</param>
-        /// <param name="subscriptionOwnerCanViewCharges">The
-        /// subscriptionOwnerCanViewCharges flag.</param>
-        public Policy(string id = default(string), string name = default(string), string type = default(string), bool? marketplacePurchasesAllowed = default(bool?), bool? reservationPurchasesAllowed = default(bool?), bool? subscriptionOwnerCanViewCharges = default(bool?))
+        /// <param name="marketplacePurchases">The marketplace purchases are
+        /// free, allowed or not allowed. Possible values include:
+        /// 'AllAllowed', 'OnlyFreeAllowed', 'NotAllowed'</param>
+        /// <param name="reservationPurchases">The reservation purchases
+        /// allowed or not. Possible values include: 'Allowed',
+        /// 'NotAllowed'</param>
+        /// <param name="viewCharges">Who can view charges. Possible values
+        /// include: 'Allowed', 'NotAllowed'</param>
+        public Policy(string id = default(string), string name = default(string), string type = default(string), string marketplacePurchases = default(string), string reservationPurchases = default(string), string viewCharges = default(string))
             : base(id, name, type)
         {
-            MarketplacePurchasesAllowed = marketplacePurchasesAllowed;
-            ReservationPurchasesAllowed = reservationPurchasesAllowed;
-            SubscriptionOwnerCanViewCharges = subscriptionOwnerCanViewCharges;
+            MarketplacePurchases = marketplacePurchases;
+            ReservationPurchases = reservationPurchases;
+            ViewCharges = viewCharges;
             CustomInit();
         }
 
@@ -56,22 +58,26 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the marketplacePurchasesAllowed flag.
+        /// Gets or sets the marketplace purchases are free, allowed or not
+        /// allowed. Possible values include: 'AllAllowed', 'OnlyFreeAllowed',
+        /// 'NotAllowed'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.marketplacePurchasesAllowed")]
-        public bool? MarketplacePurchasesAllowed { get; set; }
+        [JsonProperty(PropertyName = "properties.marketplacePurchases")]
+        public string MarketplacePurchases { get; set; }
 
         /// <summary>
-        /// Gets or sets the reservationPurchasesAllowed flag.
+        /// Gets or sets the reservation purchases allowed or not. Possible
+        /// values include: 'Allowed', 'NotAllowed'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.reservationPurchasesAllowed")]
-        public bool? ReservationPurchasesAllowed { get; set; }
+        [JsonProperty(PropertyName = "properties.reservationPurchases")]
+        public string ReservationPurchases { get; set; }
 
         /// <summary>
-        /// Gets or sets the subscriptionOwnerCanViewCharges flag.
+        /// Gets or sets who can view charges. Possible values include:
+        /// 'Allowed', 'NotAllowed'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subscriptionOwnerCanViewCharges")]
-        public bool? SubscriptionOwnerCanViewCharges { get; set; }
+        [JsonProperty(PropertyName = "properties.viewCharges")]
+        public string ViewCharges { get; set; }
 
     }
 }

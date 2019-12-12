@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of listing billing subscriptions summary.
+    /// Result of listing billing subscriptions.
     /// </summary>
     public partial class BillingSubscriptionsListResult
     {
@@ -33,11 +33,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the BillingSubscriptionsListResult
         /// class.
         /// </summary>
-        /// <param name="value">The list of billing subscriptions
-        /// summary.</param>
+        /// <param name="value">The list of billing subscriptions.</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
-        public BillingSubscriptionsListResult(IList<BillingSubscriptionSummary> value = default(IList<BillingSubscriptionSummary>), string nextLink = default(string))
+        public BillingSubscriptionsListResult(IList<BillingSubscription> value = default(IList<BillingSubscription>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -50,10 +49,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the list of billing subscriptions summary.
+        /// Gets the list of billing subscriptions.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<BillingSubscriptionSummary> Value { get; private set; }
+        public IList<BillingSubscription> Value { get; private set; }
 
         /// <summary>
         /// Gets the link (url) to the next page of results.

@@ -66,8 +66,7 @@ namespace Azure.Storage.Files.DataLake
         private int _port;
 
         /// <summary>
-        /// Gets or sets the Azure Storage account name.  This is only
-        /// populated for IP-style <see cref="System.Uri"/>s.
+        /// Gets or sets the Azure Storage account name.
         /// </summary>
         public string AccountName
         {
@@ -117,12 +116,12 @@ namespace Azure.Storage.Files.DataLake
         /// Gets or sets the Shared Access Signature query parameters, or null
         /// if not present in the <see cref="System.Uri"/>.
         /// </summary>
-        public SasQueryParameters Sas
+        public DataLakeSasQueryParameters Sas
         {
             get => _sas;
             set { ResetUri(); _sas = value; }
         }
-        private SasQueryParameters _sas;
+        private DataLakeSasQueryParameters _sas;
 
         /// <summary>
         /// Get the last directory or file name from the <see cref="DirectoryOrFilePath"/>, or null if
@@ -222,7 +221,7 @@ namespace Azure.Storage.Files.DataLake
 
             if (paramsMap.ContainsKey(Constants.Sas.Parameters.Version))
             {
-                Sas = new SasQueryParameters(paramsMap);
+                Sas = new DataLakeSasQueryParameters(paramsMap);
             }
 
             Query = paramsMap.ToString();

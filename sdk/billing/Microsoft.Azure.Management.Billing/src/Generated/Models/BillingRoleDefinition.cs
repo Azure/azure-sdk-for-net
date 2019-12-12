@@ -38,14 +38,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="description">The role description</param>
-        /// <param name="value">The list OF billingPermissions a caller has on
-        /// a billing account.</param>
+        /// <param name="permissions">The billingPermissions the role
+        /// has</param>
         /// <param name="roleName">The name of the role</param>
-        public BillingRoleDefinition(string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<BillingPermissionsProperties> value = default(IList<BillingPermissionsProperties>), string roleName = default(string))
+        public BillingRoleDefinition(string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<BillingPermissionsProperties> permissions = default(IList<BillingPermissionsProperties>), string roleName = default(string))
             : base(id, name, type)
         {
             Description = description;
-            Value = value;
+            Permissions = permissions;
             RoleName = roleName;
             CustomInit();
         }
@@ -62,11 +62,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Description { get; private set; }
 
         /// <summary>
-        /// Gets the list OF billingPermissions a caller has on a billing
-        /// account.
+        /// Gets or sets the billingPermissions the role has
         /// </summary>
-        [JsonProperty(PropertyName = "properties.permissions.value")]
-        public IList<BillingPermissionsProperties> Value { get; private set; }
+        [JsonProperty(PropertyName = "properties.permissions")]
+        public IList<BillingPermissionsProperties> Permissions { get; set; }
 
         /// <summary>
         /// Gets the name of the role

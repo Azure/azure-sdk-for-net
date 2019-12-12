@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -294,8 +295,7 @@ namespace Azure.Storage.Files.DataLake
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
             _clientDiagnostics = new ClientDiagnostics(options);
-            _blockBlobClient = new BlockBlobClient(_blobUri, _pipeline, _clientDiagnostics, null);
-
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
         }
 
         /// <summary>
@@ -316,12 +316,31 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
         {
+            var uriBuilder = new DataLakeUriBuilder(pathUri);
             _uri = pathUri;
-            _blobUri = new DataLakeUriBuilder(pathUri).ToBlobUri();
-            _dfsUri = new DataLakeUriBuilder(pathUri).ToDfsUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
             _clientDiagnostics = new ClientDiagnostics(options ?? new DataLakeClientOptions());
-            _blockBlobClient = new BlockBlobClient(_blobUri, pipeline, _clientDiagnostics, null);
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of BlockBlobClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class BlockBlobClientInternals : BlockBlobClient
+        {
+            public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)
+            {
+                return BlockBlobClient.CreateClient(
+                    uri,
+                    new BlobClientOptions()
+                    {
+                        Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
+                    },
+                    pipeline);
+            }
         }
         #endregion
 
@@ -406,7 +425,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -489,7 +508,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -575,7 +594,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -855,7 +874,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -914,7 +933,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -976,7 +995,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

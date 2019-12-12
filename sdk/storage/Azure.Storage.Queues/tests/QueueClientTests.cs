@@ -11,6 +11,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
 using Azure.Core;
+using Azure.Storage.Sas;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -31,7 +32,7 @@ namespace Azure.Storage.Queues.Test
             var queueEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var queueSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, (default, default), (queueEndpoint, queueSecondaryEndpoint), (default, default));
 
             var queueName = GetNewQueueName();
 
@@ -46,6 +47,59 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(queueName, builder2.QueueName);
 
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_Sas()
+        {
+            // Arrange
+            SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
+                AccountSasServices.All,
+                AccountSasResourceTypes.All,
+                AccountSasPermissions.All);
+
+            StorageConnectionString conn1 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: true);
+
+            QueueClient queueClient1 = GetClient(conn1.ToString(exportSecrets: true));
+
+            // Also test with a connection string not containing the blob endpoint.
+            // This should still work provided account name and Sas credential are present.
+            StorageConnectionString conn2 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: false);
+
+            QueueClient queueClient2 = GetClient(conn2.ToString(exportSecrets: true));
+
+            QueueClient GetClient(string connectionString) =>
+                InstrumentClient(
+                    new QueueClient(
+                        connectionString,
+                        GetNewQueueName(),
+                        GetOptions()));
+
+            try
+            {
+                // Act
+                await queueClient1.CreateAsync();
+                await queueClient2.CreateAsync();
+
+                var data = GetRandomBuffer(Constants.KB);
+
+                Response<QueueProperties> prop1 = await queueClient1.GetPropertiesAsync();
+                Response<QueueProperties> prop2 = await queueClient2.GetPropertiesAsync();
+
+                // Assert
+                Assert.IsNotNull(prop1.Value.Metadata);
+                Assert.IsNotNull(prop2.Value.Metadata);
+            }
+            finally
+            {
+                // Clean up
+                await queueClient1.DeleteAsync();
+                await queueClient2.DeleteAsync();
+            }
         }
 
         [Test]

@@ -615,7 +615,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (++receivedEvents >= expectedEvents)
                     {
-                       break;
+                        break;
                     }
                 }
             }, Throws.Nothing, "The iterator should not have been canceled.");
@@ -1427,7 +1427,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (++receivedEvents >= expectedEvents)
                     {
-                       break;
+                        break;
                     }
                 }
             }, Throws.Nothing, "The iterator should not have been canceled.");
@@ -1616,7 +1616,7 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 if (partitionEvent.Data != null)
                 {
-                    if (partitionEvent.Context.PartitionId == partitions[0])
+                    if (partitionEvent.Partition.PartitionId == partitions[0])
                     {
                         receivedEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()));
                     }
@@ -1672,7 +1672,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (partitionEvent.Data != null)
                     {
-                        if (partitionEvent.Context.PartitionId == partitions[0])
+                        if (partitionEvent.Partition.PartitionId == partitions[0])
                         {
                             firstSubscriberEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()));
                         }
@@ -1696,7 +1696,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 {
                     if (partitionEvent.Data != null)
                     {
-                        if (partitionEvent.Context.PartitionId == partitions[0])
+                        if (partitionEvent.Partition.PartitionId == partitions[0])
                         {
                             secondSubscriberEvents.Add(Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()));
                         }
@@ -1795,7 +1795,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Select(index => new EventData(Encoding.UTF8.GetBytes($"Event: { index }")))
                 .ToList();
 
-            var mockConnection = new MockConnection(() =>  new PublishingTransportConsumerMock(events));
+            var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
             var receivedEvents = new Dictionary<string, int>();
             var partitions = await mockConnection.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>());
@@ -1806,13 +1806,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await foreach (PartitionEvent partitionEvent in consumer.ReadEventsAsync(cancellation.Token))
             {
-                if (!receivedEvents.ContainsKey(partitionEvent.Context.PartitionId))
+                if (!receivedEvents.ContainsKey(partitionEvent.Partition.PartitionId))
                 {
-                    receivedEvents[partitionEvent.Context.PartitionId] = 1;
+                    receivedEvents[partitionEvent.Partition.PartitionId] = 1;
                 }
                 else
                 {
-                    ++receivedEvents[partitionEvent.Context.PartitionId];
+                    ++receivedEvents[partitionEvent.Partition.PartitionId];
                 }
 
                 if (++actualCount >= expectedCount)

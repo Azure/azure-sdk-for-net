@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// summaries do not have an entity ID.</param>
         /// <param name="odatacontext">OData context string; used by OData
         /// clients to resolve type information based on metadata.</param>
-        /// <param name="results">Non-compliance summary for all policy
+        /// <param name="results">Compliance summary for all policy
         /// assignments.</param>
         /// <param name="policyAssignments">Policy assignments summary.</param>
         public Summary(string odataid = default(string), string odatacontext = default(string), SummaryResults results = default(SummaryResults), IList<PolicyAssignmentSummary> policyAssignments = default(IList<PolicyAssignmentSummary>))
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string Odatacontext { get; set; }
 
         /// <summary>
-        /// Gets or sets non-compliance summary for all policy assignments.
+        /// Gets or sets compliance summary for all policy assignments.
         /// </summary>
         [JsonProperty(PropertyName = "results")]
         public SummaryResults Results { get; set; }
