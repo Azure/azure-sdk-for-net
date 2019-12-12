@@ -3,15 +3,11 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
-    <Version>1.0.0-preview.5</Version>
+    <Version>1.0.0-preview.6</Version>
     <PackageTags>Microsoft Azure Application Configuration;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      - Added support for AAD. ConfigurationClient can be created using endpoint and any available type of TokenCredential.
-      - Pair of methods SetReadOnly/ClearReadOnly in ConfigurationClient are replaced with single method SetReadOnly with boolean parameter.
-      - Added new overload for the method ConfigurationClient.GetRevisions that accepts key and optional label.
-      - Added new overload for the method ConfigurationClient.GetConfigurationSetting that accepts ConfigurationSetting and its datetime stamp.
-      - SettingSelector.AsOf is renamed into SettingSelector.AcceptDateTime.
+      - Bugfixes
       See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Data.AppConfiguration_1.0.0-preview.5/sdk/appconfiguration/Azure.Data.AppConfiguration/CHANGELOG.md
       ]]>
     </PackageReleaseNotes>

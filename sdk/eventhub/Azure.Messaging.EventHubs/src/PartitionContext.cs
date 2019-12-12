@@ -34,6 +34,8 @@ namespace Azure.Messaging.EventHubs
         ///   created with <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.
         /// </summary>
         ///
+        /// <returns>The set of properties for the last event that was enqueued to the partition.</returns>
+        ///
         /// <remarks>
         ///   When information about the partition's last enqueued event is being tracked, each event received from the Event Hubs
         ///   service will carry metadata about the partition that it otherwise would not. This results in a small amount of

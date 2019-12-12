@@ -2,27 +2,19 @@
 // Copyright(c) Microsoft Corporation.
 // Licensed under the MIT License.
 // ------------------------------------
-using Azure;
 using Azure.Messaging.EventHubs;
-using Microsoft.Azure.Amqp.Framing;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Net.Http;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmokeTest
 {
     class EventHubsTest
     {
-        private static EventHubClient client;
-        private static EventHubProducer sender;
-        private static EventHubConsumer receiver;
+        private static EventHubProducerClient sender;
+        private static EventHubConsumerClient receiver;
 
         /// <summary>
         /// Test the Event Hubs SDK by sending and receiving events
@@ -37,22 +29,31 @@ namespace SmokeTest
             Console.WriteLine("2.- Recieve those events\n");
 
             var connectionString = Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING");
-            client = new EventHubClient(connectionString);
 
-            await CreateSenderAndReceiver();
+            await CreateSenderAndReceiver(connectionString);
             await SendAndReceiveEvents();
         }
 
-        private static async Task CreateSenderAndReceiver()
+        private static async Task<string> GetPartitionId(string connectionString)
+        {
+            var client = new EventHubProducerClient(connectionString);
+            var result = (await client.GetPartitionIdsAsync()).First();
+            await client.DisposeAsync();
+            return result;
+        }
+
+        private static async Task CreateSenderAndReceiver(string connectionString)
         {
             Console.Write("Creating the Sender and Receivers... ");
-            var partition = (await client.GetPartitionIdsAsync()).First();
-            var producerOptions = new EventHubProducerOptions
+
+            var partitionId = await GetPartitionId(connectionString);
+
+            var producerOptions = new EventHubProducerClientOptions
             {
-                PartitionId = partition
+                PartitionId = partitionId,
             };
-            sender = client.CreateProducer(producerOptions);
-            receiver = client.CreateConsumer(EventHubConsumer.DefaultConsumerGroupName, partition, EventPosition.Latest);
+            sender = new EventHubProducerClient(connectionString, producerOptions);
+            receiver = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, partitionId, EventPosition.Latest, connectionString);
             Console.WriteLine("\tdone");
         }
 
@@ -73,7 +74,7 @@ namespace SmokeTest
             Console.Write("Ready to send a batch of " + eventBatch.Count().ToString() + " events... ");
             await sender.SendAsync(eventBatch);
             Console.Write("Sent\n");
-           
+
             Console.Write("Receiving events... ");
             while ((receivedEvents.Count < eventBatch.Length) && (++index < 3))
             {

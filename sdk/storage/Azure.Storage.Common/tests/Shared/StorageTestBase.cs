@@ -16,6 +16,15 @@ namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
+        static StorageTestBase()
+        {
+            // https://github.com/Azure/azure-sdk-for-net/issues/9087
+            // .NET framework defaults to 2, which causes issues for the parallel upload/download tests.
+#if !NETCOREAPP
+            ServicePointManager.DefaultConnectionLimit = 100;
+#endif
+        }
+
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -192,6 +201,23 @@ namespace Azure.Storage.Test.Shared
                 secret,
                 Recording.InstrumentClientOptions(
                     new TokenCredentialOptions() { AuthorityHost = authorityHost }));
+
+        internal SharedAccessSignatureCredentials GetAccountSasCredentials(
+            AccountSasServices services = AccountSasServices.All,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.All,
+            AccountSasPermissions permissions = AccountSasPermissions.All)
+        {
+            var sasBuilder = new AccountSasBuilder
+            {
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = services,
+                ResourceTypes = resourceTypes,
+                Protocol = SasProtocol.Https,
+            };
+            sasBuilder.SetPermissions(permissions);
+            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            return new SharedAccessSignatureCredentials(sasBuilder.ToSasQueryParameters(cred).ToString());
+        }
 
         public virtual void AssertMetadataEquality(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {

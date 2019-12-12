@@ -135,6 +135,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that a signature can be rotated without refreshing its validity.
+        /// </summary>
+        ///
+        [Test]
+        public void ShouldUpdateSharedAccessKey()
+        {
+            var value = "TOkEn!";
+            var tokenExpiration = DateTimeOffset.UtcNow.Add(TimeSpan.FromSeconds(GetSignatureRefreshBuffer().TotalSeconds / 2));
+            var signature = new SharedAccessSignature("hub-name", "keyName", "key", value, tokenExpiration);
+            var credential = new SharedAccessSignatureCredential(signature);
+
+            credential.UpdateSharedAccessKey("new-key-name", "new-key");
+
+            var newSignature = GetSharedAccessSignature(credential);
+
+            Assert.That(newSignature.SharedAccessKeyName, Is.EqualTo("new-key-name"));
+            Assert.That(newSignature.SharedAccessKey, Is.EqualTo("new-key"));
+            Assert.That(newSignature.SignatureExpiration, Is.EqualTo(signature.SignatureExpiration));
+        }
+
+        /// <summary>
         ///   Retrieves the shared access signature from the credential using its private accessor.
         /// </summary>
         ///

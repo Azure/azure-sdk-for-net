@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -27,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <value><c>true</c> if the arguments contain an event to be processed; otherwise, <c>false</c>.</value>
         ///
-        public bool HasEvent => ((Data == null) || (Partition == null));
+        public bool HasEvent => ((Data != null) && (Partition != null));
 
         /// <summary>
         ///   The context of the Event Hub partition this instance is associated with.

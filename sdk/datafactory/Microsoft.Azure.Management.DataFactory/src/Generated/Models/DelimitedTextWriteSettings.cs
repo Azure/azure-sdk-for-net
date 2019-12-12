@@ -32,7 +32,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DelimitedTextWriteSettings class.
         /// </summary>
-        /// <param name="type">The write setting type.</param>
         /// <param name="fileExtension">The file extension used to create the
         /// files. Type: string (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
@@ -40,8 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="quoteAllText">Indicates whether string values should
         /// always be enclosed with quotes. Type: boolean (or Expression with
         /// resultType boolean).</param>
-        public DelimitedTextWriteSettings(string type, object fileExtension, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object quoteAllText = default(object))
-            : base(type, additionalProperties)
+        public DelimitedTextWriteSettings(object fileExtension, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object quoteAllText = default(object))
+            : base(additionalProperties)
         {
             QuoteAllText = quoteAllText;
             FileExtension = fileExtension;
@@ -74,9 +73,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (FileExtension == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FileExtension");

@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         private static readonly TimeSpan SignatureExtensionDuration = TimeSpan.FromMinutes(30);
 
         /// <summary>Provides a target for synchronization to guard against concurrent token expirations.</summary>
-        private readonly object ExtensionSyncRoot = new object();
+        private readonly object SignatureSyncRoot = new object();
 
         /// <summary>
         ///   The shared access signature that forms the basis of this security token.
@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Authorization
         {
             if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
             {
-                lock (ExtensionSyncRoot)
+                lock (SignatureSyncRoot)
                 {
                     if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
                     {
@@ -84,5 +84,25 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
                                                              CancellationToken cancellationToken) => new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
+
+        /// <summary>
+        ///   It creates a new shared signature using the key name and the key value passed as
+        ///   input allowing credentials rotation. A call will not extend the signature duration.
+        /// </summary>
+        ///
+        /// <param name="keyName">The name of the shared access key that the signature should be based on.</param>
+        /// <param name="keyValue">The value of the shared access key for the signature.</param>
+        ///
+        internal void UpdateSharedAccessKey(string keyName, string keyValue)
+        {
+            lock (SignatureSyncRoot)
+            {
+                SharedAccessSignature = new SharedAccessSignature(SharedAccessSignature.Resource,
+                                                                  keyName,
+                                                                  keyValue,
+                                                                  SharedAccessSignature.Value,
+                                                                  SharedAccessSignature.SignatureExpiration);
+            }
+        }
     }
 }

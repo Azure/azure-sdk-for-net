@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Test
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
             var shareName = GetNewShareName();
             var directoryPath = GetNewDirectoryName();
@@ -534,10 +534,10 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directory = test.Directory;
 
             // Act
-            int handlesClosed = await directory.ForceCloseAllHandlesAsync();
+            CloseHandlesResult response = await directory.ForceCloseAllHandlesAsync();
 
             // Assert
-            Assert.AreEqual(0, handlesClosed);
+            Assert.AreEqual(0, response.ClosedHandlesCount);
         }
 
         [Test]
@@ -548,10 +548,10 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directory = test.Directory;
 
             // Act
-            int handlesClosed = await directory.ForceCloseAllHandlesAsync(recursive: true);
+            CloseHandlesResult response = await directory.ForceCloseAllHandlesAsync(recursive: true);
 
             // Assert
-            Assert.AreEqual(0, handlesClosed);
+            Assert.AreEqual(0, response.ClosedHandlesCount);
         }
 
         [Test]

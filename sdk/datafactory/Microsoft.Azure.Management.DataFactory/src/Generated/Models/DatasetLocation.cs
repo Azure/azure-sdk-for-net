@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,17 +31,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the DatasetLocation class.
         /// </summary>
-        /// <param name="type">Type of dataset storage location.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="folderPath">Specify the folder path of dataset. Type:
         /// string (or Expression with resultType string)</param>
         /// <param name="fileName">Specify the file name of dataset. Type:
         /// string (or Expression with resultType string).</param>
-        public DatasetLocation(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object))
+        public DatasetLocation(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object))
         {
             AdditionalProperties = additionalProperties;
-            Type = type;
             FolderPath = folderPath;
             FileName = fileName;
             CustomInit();
@@ -61,12 +58,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets type of dataset storage location.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
         /// Gets or sets specify the folder path of dataset. Type: string (or
         /// Expression with resultType string)
         /// </summary>
@@ -80,18 +71,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "fileName")]
         public object FileName { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-        }
     }
 }

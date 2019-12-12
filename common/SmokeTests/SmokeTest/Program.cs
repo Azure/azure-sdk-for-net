@@ -3,9 +3,7 @@
 // Licensed under the MIT License.
 // ------------------------------------
 // ------------------------------------
-using Azure.Messaging.EventHubs;
 using System;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 
 namespace SmokeTest

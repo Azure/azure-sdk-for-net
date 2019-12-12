@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
     ///   Provides a well-known means of executing a sample.
     /// </summary>
     ///
-    public interface IEventHubsSample: ISample
+    public interface IEventHubsSample : ISample
     {
         /// <summary>
         ///   Allows for executing the sample.
