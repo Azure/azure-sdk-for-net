@@ -38,4 +38,4 @@ steps:
       condition: succeeded()
       inputs:
         artifactName: Docs.${{artifact.name}}
-        targetPath: $(Build.BinariesDirectory)/${{artifact.directoryName}}/docfx-output/docfx_project/_site
+        targetPath: $(publishtargetpath)
