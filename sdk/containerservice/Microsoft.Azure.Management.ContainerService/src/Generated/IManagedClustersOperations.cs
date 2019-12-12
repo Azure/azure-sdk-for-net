@@ -370,6 +370,31 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </exception>
         Task<AzureOperationResponse> ResetAADProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, ManagedClusterAADProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Rotate certificates of a managed cluster.
+        /// </summary>
+        /// <remarks>
+        /// Rotate certificates of a managed cluster.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RotateClusterCertificatesWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates or updates a managed cluster.
         /// </summary>
         /// <remarks>
@@ -517,6 +542,31 @@ namespace Microsoft.Azure.Management.ContainerService
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginResetAADProfileWithHttpMessagesAsync(string resourceGroupName, string resourceName, ManagedClusterAADProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Rotate certificates of a managed cluster.
+        /// </summary>
+        /// <remarks>
+        /// Rotate certificates of a managed cluster.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the managed cluster resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginRotateClusterCertificatesWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of managed clusters in the specified subscription.
         /// </summary>
