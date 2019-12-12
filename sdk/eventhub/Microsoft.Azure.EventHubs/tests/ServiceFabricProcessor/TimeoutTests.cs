@@ -40,7 +40,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             state.VerifyNormalStartup(10);
 
             Thread.Sleep((int)state.Options.ReceiveTimeout.TotalMilliseconds * 10); // sleep to allow some timeouts
-            
+
             state.DoNormalShutdown(10);
             state.WaitRun();
 
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
             state.StartRun(sfp);
 
             state.VerifyNormalStartup(10);
-            
+
             state.CountNBatches(1, 10);
 
             state.DoNormalShutdown(10);
