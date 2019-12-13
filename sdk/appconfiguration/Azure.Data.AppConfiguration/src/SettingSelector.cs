@@ -11,7 +11,7 @@ namespace Azure.Data.AppConfiguration
     /// <para><see cref="SettingSelector"/> is a set of options that allows selecting
     /// a filtered set of <see cref="ConfigurationSetting"/> entities from the
     /// configuration store, and optionally allows indicating which fields of
-    /// each setting to retreive.</para>
+    /// each setting to retrieve.</para>
     /// <para>Literals or filters may be specified for keys and labels.</para>
     /// <para>For more information, <see href="https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#filtering"/>.</para>
     /// </summary>
@@ -24,16 +24,16 @@ namespace Azure.Data.AppConfiguration
         public static readonly string Any = "*";
 
         /// <summary>
-        /// Keys or key filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Key filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
-        public IList<string> Keys { get; }
+        public string KeyFilter { get; set; }
 
         /// <summary>
-        /// Labels or label filters that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
+        /// Label filter that will be used to select a set of <see cref="ConfigurationSetting"/> entities.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
-        public IList<string> Labels { get; }
+        public string LabelFilter { get; set; }
 
         /// <summary>
         /// The fields of the <see cref="ConfigurationSetting"/> to retrieve for each setting in the retrieved group.
@@ -48,28 +48,9 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the
-        /// configuration store by setting both Key and Label filters to Any.
+        /// Creates a default <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the configuration store.
         /// </summary>
-        public SettingSelector() : this(Any, Any) { }
-
-        /// <summary>
-        /// Creates a <see cref="SettingSelector"/> that will retrieve <see cref="ConfigurationSetting"/> entities that match
-        /// the passed-in keys and labels.
-        /// </summary>
-        /// <param name="key">A key or key filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        /// <param name="label">A label or label filter indicating which <see cref="ConfigurationSetting"/> entities to select.</param>
-        public SettingSelector(string key, string label = default)
-        {
-            Keys = new List<string>
-            {
-                key ?? Any
-            };
-
-            Labels = new List<string>();
-            if (label != null)
-                Labels.Add(label);
-        }
+        public SettingSelector() { }
 
         #region nobody wants to see these
         /// <summary>

@@ -133,29 +133,14 @@ namespace Azure.Data.AppConfiguration
 
         internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
         {
-            if (selector.Keys.Count > 0)
+            if (!string.IsNullOrEmpty(selector.KeyFilter))
             {
-                var keysCopy = new List<string>();
-                foreach (var key in selector.Keys)
-                {
-                    if (key.IndexOfAny(s_reservedCharacters) != -1)
-                    {
-                        keysCopy.Add(EscapeReservedCharacters(key));
-                    }
-                    else
-                    {
-                        keysCopy.Add(key);
-                    }
-                }
-                var keys = string.Join(",", keysCopy);
-                builder.AppendQuery(KeyQueryFilter, Uri.EscapeDataString(keys));
+                builder.AppendQuery(KeyQueryFilter, selector.KeyFilter);
             }
 
-            if (selector.Labels.Count > 0)
+            if (!string.IsNullOrEmpty(selector.LabelFilter))
             {
-                var labelsCopy = selector.Labels.Select(label => string.IsNullOrEmpty(label) ? Uri.EscapeDataString("\0") : Uri.EscapeDataString(EscapeReservedCharacters(label)));
-                var labels = string.Join(",", labelsCopy);
-                builder.AppendQuery(LabelQueryFilter, labels);
+                builder.AppendQuery(LabelQueryFilter, selector.LabelFilter);
             }
 
             if (selector.Fields != SettingFields.All)

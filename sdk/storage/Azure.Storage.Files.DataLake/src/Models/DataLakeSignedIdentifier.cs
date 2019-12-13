@@ -4,17 +4,17 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// signed identifier.
+    /// A Signed identifier for a shared access policy.
     /// </summary>
     public class DataLakeSignedIdentifier
     {
         /// <summary>
-        /// a unique id.
+        /// A unique id for the <see cref="DataLakeSignedIdentifier"/>.
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// An Access policy.
+        /// An <see cref="DataLakeAccessPolicy"/>.
         /// </summary>
         public DataLakeAccessPolicy AccessPolicy { get; set; }
     }

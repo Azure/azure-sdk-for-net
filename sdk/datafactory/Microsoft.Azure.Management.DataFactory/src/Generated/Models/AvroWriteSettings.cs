@@ -31,15 +31,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the AvroWriteSettings class.
         /// </summary>
-        /// <param name="type">The write setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="recordName">Top level record name in write result,
         /// which is required in AVRO spec.</param>
         /// <param name="recordNamespace">Record namespace in the write
         /// result.</param>
-        public AvroWriteSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string recordName = default(string), string recordNamespace = default(string))
-            : base(type, additionalProperties)
+        public AvroWriteSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string recordName = default(string), string recordNamespace = default(string))
+            : base(additionalProperties)
         {
             RecordName = recordName;
             RecordNamespace = recordNamespace;
@@ -64,15 +63,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "recordNamespace")]
         public string RecordNamespace { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

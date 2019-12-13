@@ -16,7 +16,7 @@
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <!-- <ProjectReference Include="..\src\Microsoft.Azure.Management.DataBoxEdge.csproj" /> -->
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.DataBoxEdge.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
