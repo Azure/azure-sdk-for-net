@@ -1279,7 +1279,7 @@ namespace Azure.Messaging.EventHubs
         private async Task RenewOwnershipAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.RenewOwnership();
+            Logger.RenewOwnership(Identifier);
 
             IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
