@@ -195,7 +195,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>
     {
-        internal CertificateOperation() { }
+        public CertificateOperation(Azure.Security.KeyVault.Certificates.CertificateClient client, string name) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
@@ -317,12 +317,12 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class ImportCertificateOptions
     {
-        public ImportCertificateOptions(string name, byte[] value, Azure.Security.KeyVault.Certificates.CertificatePolicy policy) { }
+        public ImportCertificateOptions(string name, byte[] value) { }
         public byte[] Certificate { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public bool? Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string Password { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.CertificatePolicy Policy { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class IssuerProperties
@@ -356,7 +356,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class MergeCertificateOptions
     {
-        public MergeCertificateOptions(string name, System.Collections.Generic.IEnumerable<byte[]> x509certificates) { }
+        public MergeCertificateOptions(string name, System.Collections.Generic.IEnumerable<byte[]> x509Certificates) { }
         public bool? Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
