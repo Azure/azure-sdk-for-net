@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="licenseType">The license type, which is for bring your
         /// own license scenario.</param>
         /// <param name="billingProfile">Specifies the billing related details
-        /// of a low priority VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version:
         /// 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string LicenseType { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the billing related details of a low
-        /// priority VMSS. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2019-03-01.
+        /// Gets or sets specifies the billing related details of a Azure Spot
+        /// VMSS. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2019-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "billingProfile")]
         public BillingProfile BillingProfile { get; set; }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
     using System.Linq;
 
     /// <summary>
-    /// An Azure storage blob folder dataset.
+    /// An Azure storage blob folder data set.
     /// </summary>
     [Newtonsoft.Json.JsonObject("BlobFolder")]
     [Rest.Serialization.JsonTransformation]

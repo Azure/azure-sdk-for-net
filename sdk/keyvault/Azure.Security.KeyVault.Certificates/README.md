@@ -24,7 +24,18 @@ If you use the Azure CLI, replace `<your-resource-group-name>` and `<your-key-va
 az keyvault create --resource-group <your-resource-group-name> --name <your-key-vault-name>
 ```
 
- #### Create/Get credentials
+### Authenticate the client
+In order to interact with the Key Vault service, you'll need to create an instance of the [CertificateClient][certificate_client_class] class. You would need a **vault url**, which you may see as "DNS Name" in the portal,
+ and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
+
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
+
+```PowerShell
+Install-Package Azure.Identity
+```
+
+#### Create/Get credentials
 Use the [Azure CLI][azure_cli] snippet below to create/get client secret credentials.
 
  * Create a service principal and configure its access to Azure resources:
@@ -67,12 +78,6 @@ Once you've populated the **AZURE_CLIENT_ID**, **AZURE_CLIENT_SECRET** and **AZU
 // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
 // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
 var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-
-// Create a certificate using the certificate client.
-CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
-
-// Retrieve a certificate using the certificate client.
-KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
 ```
 
 ## Key concepts
@@ -88,42 +93,44 @@ illustrated in the examples below.
 ## Examples
 The Azure.Security.KeyVault.Certificates package supports synchronous and asynchronous APIs.
 
-The following section provides several code snippets using the [above created](#create-certificateclient) `client`, covering some of the most
-common Azure Key Vault certificates service related tasks:
+The following section provides several code snippets using the [above created](#create-certificateclient) `client`, covering some of the most common Azure Key Vault certificate service related tasks:
 
-### Sync Examples
-This section contains code snippets covering common tasks:
-* [Create a Certificate](#create-a-certificate)
-* [Retrieve a Certificate](#retrieve-a-certificate)
-* [Update an existing Certificate](#update-an-existing-certificate)
-* [Delete a Certificate](#delete-a-certificate)
-* [List Certificates](#list-certificates)
+### Sync examples
+* [Create a certificate](#create-a-certificate)
+* [Retrieve a certificate](#retrieve-a-certificate)
+* [Update an existing certificate](#update-an-existing-certificate)
+* [List certificates](#list-certificates)
+* [Delete a certificate](#delete-a-certificate)
 
-### Async Examples
+### Async examples
 * [Create a certificate asynchronously](#create-a-certificate-asynchronously)
 * [List certificates asynchronously](#list-certificates-asynchronously)
+* [Delete a certificate asynchronously](#delete-a-certificate-asynchronously)
 
-### Create a Certificate
-`StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with
+### Create a certificate
+`StartCreateCertificate` creates a Certificate to be stored in the Azure Key Vault. If a certificate with 
 the same name already exists, then a new version of the certificate is created.
-When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is specified the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self signed certificate with the default policy.
+When creating the certificate the user can specify the policy which controls the certificate lifetime. If no policy is specified the default policy will be used. The `StartCreateCertificate` operation returns a `CertificateOperation`. The following example creates a self-signed certificate with the default policy.
 
 ```C# Snippet:CreateCertificate
 // Create a certificate. This starts a long running operation to create and sign the certificate.
 CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
 
 // You can await the completion of the create certificate operation.
+// You should run UpdateStatus in another thread or do other work like pumping messages between calls.
 while (!operation.HasCompleted)
 {
-    operation.UpdateStatus();
+    Thread.Sleep(2000);
 
-    Thread.Sleep(TimeSpan.FromSeconds(1));
+    operation.UpdateStatus();
 }
+
+KeyVaultCertificateWithPolicy certificate = operation.Value;
 ```
 
-> NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterministic amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self signed certificates or issuers with well known response times.
+> NOTE: Depending on the certificate issuer and validation methods, certificate creation and signing can take an indeterminate amount of time. Users should only wait on certificate operations when the operation can be reasonably completed in the scope of the application, such as with self-signed certificates or issuers with well known response times.
 
-### Retrieve a Certificate
+### Retrieve a certificate
 `GetCertificateWithPolicy` retrieves the latest version of a certificate stored in the Key Vault along with its `CertificatePolicy`.
 
 ```C# Snippet:RetrieveCertificate
@@ -140,30 +147,13 @@ KeyVaultCertificate certificate = client.GetCertificateVersion(certificateWithPo
 `UpdateCertificate` updates a certificate stored in the Key Vault.
 
 ```C# Snippet:UpdateCertificate
-CertificateProperties certificateProperties = new CertificateProperties(certificate.Id)
-{
-    Tags =
-    {
-        ["key1"] = "value1"
-    }
-};
+CertificateProperties certificateProperties = new CertificateProperties(certificate.Id);
+certificateProperties.Tags["key1"] = "value1";
 
 KeyVaultCertificate updated = client.UpdateCertificateProperties(certificateProperties);
 ```
 
-### Delete a Certificate
-`DeleteCertificate` deletes all versions of a certificate stored in the Key Vault. When [soft-delete][soft_delete]
-is not enabled for the Key Vault, this operation permanently deletes the certificate. If soft delete is enabled the certificate is marked for deletion and can be optionally purged or recovered up until its scheduled purge date.
-
-```C# Snippet:DeleteCertificate
-DeletedCertificate deleteCert = client.DeleteCertificate("MyCertificate");
-
-Console.WriteLine(deleteCert.ScheduledPurgeDate);
-
-client.PurgeDeletedCertificate(deleteCert.Name);
-```
-
-### List Certificates
+### List certificates
 `GetCertificates` enumerates the certificates in the vault, returning select properties of the
 certificate. Sensitive fields of the certificate will not be returned. This operation
 requires the certificates/list permission.
@@ -177,20 +167,41 @@ foreach (CertificateProperties certificateProperties in allCertificates)
 }
 ```
 
+### Delete a certificate
+`DeleteCertificate` deletes all versions of a certificate stored in the Key Vault. When [soft-delete][soft_delete] 
+is not enabled for the Key Vault, this operation permanently deletes the certificate. If soft delete is enabled the certificate is marked for deletion and can be optionally purged or recovered up until its scheduled purge date.
+
+```C# Snippet:DeleteAndPurgeCertificate
+DeleteCertificateOperation operation = client.StartDeleteCertificate("MyCertificate");
+
+// You only need to wait for completion if you want to purge or recover the certificate.
+// You should call `UpdateStatus` in another thread or after doing additional work like pumping messages.
+while (!operation.HasCompleted)
+{
+    Thread.Sleep(2000);
+
+    operation.UpdateStatus();
+}
+
+DeletedCertificate secret = operation.Value;
+client.PurgeDeletedCertificate(secret.Name);
+```
+
 ### Create a certificate asynchronously
 The asynchronous APIs are identical to their synchronous counterparts, but return with the typical "Async" suffix for asynchronous methods and return a `Task`.
+
+This example creates a certificate in the Key Vault with the specified optional arguments.
 
 ```C# Snippet:CreateCertificateAsync
 // Create a certificate. This starts a long running operation to create and sign the certificate.
 CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
 
-// You can  the completion of the create certificate operation.
+// You can await the completion of the create certificate operation.
 KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
 ```
 
 ### List certificates asynchronously
-Listing certificates does not rely on awaiting the `GetPropertiesOfSecretsAsync` method, but returns an `AsyncPageable<SecretProperties>` that
-you can use with the `await foreach` statement:
+Listing certificate does not rely on awaiting the `GetPropertiesOfCertificatesAsync` method, but returns an `AsyncPageable<CertificateProperties>` that you can use with the `await foreach` statement:
 
 ```C# Snippet:ListCertificatesAsync
 AsyncPageable<CertificateProperties> allCertificates = client.GetPropertiesOfCertificatesAsync();
@@ -199,6 +210,20 @@ await foreach (CertificateProperties certificateProperties in allCertificates)
 {
     Console.WriteLine(certificateProperties.Name);
 }
+```
+
+### Delete a certificate asynchronously
+When deleting a certificate asynchronously before you purge it, you can await the `WaitForCompletionAsync` method on the operation.
+By default, this loops indefinitely but you can cancel it by passing a `CancellationToken`.
+
+```C# Snippet:DeleteAndPurgeCertificateAsync
+DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync("MyCertificate");
+
+// You only need to wait for completion if you want to purge or recover the certificate.
+await operation.WaitForCompletionAsync();
+
+DeletedCertificate secret = operation.Value;
+await client.PurgeDeletedCertificateAsync(secret.Name);
 ```
 
 ## Troubleshooting
@@ -248,13 +273,13 @@ Headers:
 
 ## Next steps
 Key Vault Certificates client library samples are available to you in this GitHub repository. These samples provide example code for additional scenarios commonly encountered while working with Key Vault:
-* [HelloWorld.cs][hello_world_sync] and [HelloWorldAsync.cs][hello_world_async] - for working with Azure Key Vault certificates, including:
+* [Sample1_HelloWorld.md][hello_world_sample] - for working with Azure Key Vault certificates, including:
   * Create a certificate
   * Get an existing certificate
   * Update an existing certificate
   * Delete a certificate
 
-* [GetCertificates.cs][get_cetificates_sync] and [GetCertificatesAsync.cs][get_cetificates_async] - Example code for working with Key Vault certificates, including:
+* [Sample2_GetCertificates.md][get_cetificates_sample] - Example code for working with Key Vault certificates, including:
   * Create certificates
   * List all certificates in the Key Vault
   * List versions of a specified certificate
@@ -288,10 +313,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [keyvault_rest]: https://docs.microsoft.com/en-us/rest/api/keyvault/
 [secrets_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
-[hello_world_async]: samples/Sample1_HelloWorldAsync.cs
-[hello_world_sync]: samples/Sample1_HelloWorld.cs
-[get_cetificates_async]: samples/Sample2_GetCertificatesAsync.cs
-[get_cetificates_sync]: samples/Sample2_GetCertificates.cs
+[hello_world_sample]: samples/Sample1_HelloWorld.md
+[get_cetificates_sample]: samples/Sample2_GetCertificates.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Certificates%2FREADME.png)

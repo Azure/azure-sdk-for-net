@@ -6,7 +6,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 ## Creating a KeyClient
 
 To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -32,9 +32,9 @@ KeyVaultKey storedKey = client.CreateRsaKey(rsaKey);
 
 ## Backing up a key
 
-Backups are good to have if in case keys get accidentally deleted by you.
+You might make backups in case keys get accidentally deleted.
 For long term storage, it is ideal to write the backup to a file, disk, database, etc.
-For the purposes of this sample, we are storing the bake up in a temporary memory area.
+For the purposes of this sample, we are storing the back up in a temporary memory area.
 
 ```C# Snippet:KeysSample2BackupKey
 byte[] backupKey = client.BackupKey(rsaKeyName);
@@ -54,3 +54,5 @@ To see the full example source, see:
 
 * [Synchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestore.cs)
 * [Asynchronous Sample2_BackupAndRestore.cs](../tests/samples/Sample2_BackupAndRestoreAsync.cs)
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

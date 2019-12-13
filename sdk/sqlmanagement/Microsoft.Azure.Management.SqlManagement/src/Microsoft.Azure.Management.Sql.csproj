@@ -11,8 +11,8 @@
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-New features:
 - Added support for failover databases readable secondary.
+- Operations Get, Create, Update and Delete from ManagedInstanceAdministratorsOperations have a different signature. Parameter "administratorName" is omitted.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

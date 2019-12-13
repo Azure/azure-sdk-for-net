@@ -6,8 +6,8 @@ using Azure.Storage.Blobs;
 namespace Azure.Storage.Files.DataLake
 {
     /// <summary>
-    /// Add easy to discover methods to <see cref="BlobContainerClient"/> and
-    /// <see cref="BlobClient"/> for easily creating <see cref="DataLakeLeaseClient"/>
+    /// Add easy to discover methods to <see cref="DataLakeFileSystemClient"/> and
+    /// <see cref="DataLakePathClient"/> for easily creating <see cref="DataLakeLeaseClient"/>
     /// instances.
     /// </summary>
     public static partial class DataLakeLeaseClientExtensions

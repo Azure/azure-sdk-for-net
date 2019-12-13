@@ -33,7 +33,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzureBlobStorageReadSettings
         /// class.
         /// </summary>
-        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
@@ -46,6 +45,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="wildcardFileName">Azure blob wildcardFileName. Type:
         /// string (or Expression with resultType string).</param>
+        /// <param name="prefix">The prefix filter for the Azure Blob name.
+        /// Type: string (or Expression with resultType string).</param>
         /// <param name="enablePartitionDiscovery">Indicates whether to enable
         /// partition discovery.</param>
         /// <param name="modifiedDatetimeStart">The start of file's modified
@@ -54,12 +55,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="modifiedDatetimeEnd">The end of file's modified
         /// datetime. Type: string (or Expression with resultType
         /// string).</param>
-        public AzureBlobStorageReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
-            : base(type, additionalProperties, maxConcurrentConnections)
+        public AzureBlobStorageReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), object prefix = default(object), bool? enablePartitionDiscovery = default(bool?), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object))
+            : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
             WildcardFileName = wildcardFileName;
+            Prefix = prefix;
             EnablePartitionDiscovery = enablePartitionDiscovery;
             ModifiedDatetimeStart = modifiedDatetimeStart;
             ModifiedDatetimeEnd = modifiedDatetimeEnd;
@@ -94,6 +96,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public object WildcardFileName { get; set; }
 
         /// <summary>
+        /// Gets or sets the prefix filter for the Azure Blob name. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "prefix")]
+        public object Prefix { get; set; }
+
+        /// <summary>
         /// Gets or sets indicates whether to enable partition discovery.
         /// </summary>
         [JsonProperty(PropertyName = "enablePartitionDiscovery")]
@@ -113,15 +122,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "modifiedDatetimeEnd")]
         public object ModifiedDatetimeEnd { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

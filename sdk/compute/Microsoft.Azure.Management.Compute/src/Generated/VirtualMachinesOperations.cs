@@ -786,7 +786,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// Sets the state of the virtual machine to generalized.
+        /// Sets the OS state of the virtual machine to generalized. It is recommended
+        /// to sysprep the virtual machine before performing this operation
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

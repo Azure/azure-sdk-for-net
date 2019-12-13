@@ -16,7 +16,7 @@ while making it faster to get up and running with batch, streaming, and interact
 Install the Azure Storage Files Data Lake client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.6
+dotnet add package Azure.Storage.Files.DataLake --version 12.0.0-preview.7
 ```
 
 ### Prerequisites
@@ -144,7 +144,7 @@ Response<FileDownloadInfo> fileContents = file.Read();
 
 ### Listing/Traversing through a DataLake Filesystem
 ```C# Snippet:SampleSnippetDataLakeFileClient_List
-foreach (PathItem pathItem in filesystem.ListPaths())
+foreach (PathItem pathItem in filesystem.GetPaths())
 {
     names.Add(pathItem.Name);
 }
@@ -157,7 +157,8 @@ DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"
 fileClient.Create();
 
 // Set the Permissions of the file
-fileClient.SetPermissions(permissions: "rwxrwxrwx");
+PathPermissions pathPermissions = PathPermissions.ParseSymbolicPermissions("rwxrwxrwx");
+fileClient.SetPermissions(permissions: pathPermissions);
 ```
 
 ### Set Access Controls (ACLs) on a DataLake File
@@ -167,7 +168,9 @@ DataLakeFileClient fileClient = filesystem.GetFileClient(Randomize("sample-file"
 fileClient.Create();
 
 // Set Access Control List
-fileClient.SetAccessControl("user::rwx,group::r--,mask::rwx,other::---");
+IList<PathAccessControlItem> accessControlList
+    = PathAccessControlExtensions.ParseAccessControlList("user::rwx,group::r--,mask::rwx,other::---");
+fileClient.SetAccessControlList(accessControlList);
 ```
 
 ### Get Access Controls (ACLs) on a DataLake File
@@ -230,7 +233,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.DataLake/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Files.DataLake/
-[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
+[docs]: https://docs.microsoft.com/en-us/dotnet/api/azure.storage.files.datalake
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/filesystem
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/blobs/?toc=%2fazure%2fstorage%2fblobs%2ftoc.json
 [nuget]: https://www.nuget.org/

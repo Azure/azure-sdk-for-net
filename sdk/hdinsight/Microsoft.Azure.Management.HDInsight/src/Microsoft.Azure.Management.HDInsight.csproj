@@ -7,14 +7,12 @@
 		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
 		<Description>Azure HDInsight Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-		<Version>5.1.0</Version>
+		<Version>5.2.0</Version>
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-This release adds a few new features:
-1) Added a new API, LocationsOperationsExtensions.GetCapabilities, to get capabilities for a specific location/region.
-2) Add a new API, LocationsOperationsExtensions.ListBillingSpecs, to list billing specs for a specific location/region.
-3) Added support for creating clusters with Autoscale (load-based and schedule-based) applied to the workernode role. For more details, please see the definition of Microsoft.Azure.Management.HDInsight.Models.Role.AutoscaleConfiguration.
+This release adds a new feature:
+Added support for creating kafka cluster with kafka rest proxy
       ]]>
 		</PackageReleaseNotes>
     

@@ -22,11 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
         {
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
-            GetSecretsSync(keyVaultUrl);
-        }
 
-        private void GetSecretsSync(string keyVaultUrl)
-        {
             #region Snippet:SecretsSample3SecretClient
             var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
@@ -95,6 +91,7 @@ namespace Azure.Security.KeyVault.Secrets.Samples
             DeleteSecretOperation bankSecretOperation = client.StartDeleteSecret(bankSecretName);
             DeleteSecretOperation storageSecretOperation = client.StartDeleteSecret(storageSecretName);
 
+            // You only need to wait for completion if you want to purge or recover the secret.
             while (!bankSecretOperation.HasCompleted || !storageSecretOperation.HasCompleted)
             {
                 Thread.Sleep(2000);

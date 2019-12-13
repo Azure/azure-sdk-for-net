@@ -51,12 +51,6 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
 
         /// <summary>
-        /// The <see cref="HttpPipeline"/> transport pipeline used to prepare
-        /// requests for batching without actually sending them.
-        /// </summary>
-        internal virtual HttpPipeline BatchOperationPipeline { get; set; }
-
-        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -156,6 +150,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -173,6 +168,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The shared key credential used to sign requests.
@@ -193,6 +189,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="credential">
         /// The token credential used to sign requests.
@@ -205,6 +202,7 @@ namespace Azure.Storage.Blobs
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
             : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions())
         {
+            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -213,6 +211,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="authentication">
         /// An optional authentication policy used to sign requests.
@@ -223,7 +222,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
-            : this(serviceUri, authentication, options.Build(authentication), new ClientDiagnostics(options), options?.CustomerProvidedKey)
+            : this(serviceUri, authentication, new ClientDiagnostics(options), options?.CustomerProvidedKey, options.Build(authentication))
         {
 
         }
@@ -234,20 +233,50 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="serviceUri">
         /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
         /// <param name="authentication"></param>
+        /// <param name="clientDiagnostics"></param>
+        /// <param name="customerProvidedKey">Customer provided key.</param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey, HttpPipeline pipeline)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
+            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the block blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <returns>
+        /// New instanc of the <see cref="BlobServiceClient"/> class.
+        /// </returns>
+        protected static BlobServiceClient CreateClient(Uri serviceUri, BlobClientOptions options, HttpPipelinePolicy authentication, HttpPipeline pipeline)
+        {
+            return new BlobServiceClient(serviceUri, authentication, new ClientDiagnostics(options), null, pipeline);
         }
         #endregion ctors
 
@@ -265,6 +294,43 @@ namespace Azure.Storage.Blobs
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
             new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+
+        #region protected static accessors for Azure.Storage.Blobs.Batch
+        /// <summary>
+        /// Get a <see cref="BlobServiceClient"/>'s <see cref="HttpPipeline"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        protected static HttpPipeline GetHttpPipeline(BlobServiceClient client) =>
+            client.Pipeline;
+
+        /// <summary>
+        /// Get a <see cref="BlobServiceClient"/>'s authentication
+        /// <see cref="HttpPipelinePolicy"/> for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's authentication policy.</returns>
+        protected static HttpPipelinePolicy GetAuthenticationPolicy(BlobServiceClient client) =>
+            client.AuthenticationPolicy;
+
+        /// <summary>
+        /// Get a <see cref="BlobServiceClient"/>'s <see cref="BlobClientOptions"/>
+        /// for creating child clients.
+        /// </summary>
+        /// <param name="client">The BlobServiceClient.</param>
+        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+        protected static BlobClientOptions GetClientOptions(BlobServiceClient client) =>
+            // TODO: Replace this with the client's version once that's relevant
+            new BlobClientOptions(BlobClientOptions.LatestVersion)
+            {
+                // We only use this for communicating diagnostics, at the moment
+                Diagnostics =
+                {
+                    IsDistributedTracingEnabled = client.ClientDiagnostics.IsActivityEnabled
+                }
+            };
+        #endregion protected static accessors for Azure.Storage.Blobs.Batch
 
         #region GetBlobContainers
         /// <summary>

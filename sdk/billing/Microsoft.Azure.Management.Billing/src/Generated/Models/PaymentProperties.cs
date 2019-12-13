@@ -32,11 +32,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="paymentType">The type of payment.</param>
         /// <param name="amount">The paid amount.</param>
         /// <param name="date">The date of the payment.</param>
-        public PaymentProperties(string paymentType = default(string), Amount amount = default(Amount), System.DateTime? date = default(System.DateTime?))
+        /// <param name="paymentMethodFamily">The payment method family.
+        /// Possible values include: 'Credits', 'CheckWire', 'CreditCard',
+        /// 'None'</param>
+        /// <param name="paymentMethodType">The type of payment method.</param>
+        public PaymentProperties(string paymentType = default(string), Amount amount = default(Amount), System.DateTime? date = default(System.DateTime?), string paymentMethodFamily = default(string), string paymentMethodType = default(string))
         {
             PaymentType = paymentType;
             Amount = amount;
             Date = date;
+            PaymentMethodFamily = paymentMethodFamily;
+            PaymentMethodType = paymentMethodType;
             CustomInit();
         }
 
@@ -62,6 +68,19 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "date")]
         public System.DateTime? Date { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the payment method family. Possible values include:
+        /// 'Credits', 'CheckWire', 'CreditCard', 'None'
+        /// </summary>
+        [JsonProperty(PropertyName = "paymentMethodFamily")]
+        public string PaymentMethodFamily { get; set; }
+
+        /// <summary>
+        /// Gets the type of payment method.
+        /// </summary>
+        [JsonProperty(PropertyName = "paymentMethodType")]
+        public string PaymentMethodType { get; private set; }
 
     }
 }

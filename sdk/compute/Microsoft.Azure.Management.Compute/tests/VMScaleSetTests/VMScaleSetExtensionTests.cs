@@ -192,7 +192,7 @@ namespace Compute.Tests
             Assert.True(!string.IsNullOrEmpty(vmssExtensionOut.ProvisioningState));
 
             Assert.True(vmssExtension.Publisher == vmssExtensionOut.Publisher);
-            Assert.True(vmssExtension.Type == vmssExtensionOut.Type);
+            Assert.True(vmssExtension.Type1 == vmssExtensionOut.Type1);
             Assert.True(vmssExtension.AutoUpgradeMinorVersion == vmssExtensionOut.AutoUpgradeMinorVersion);
             Assert.True(vmssExtension.TypeHandlerVersion == vmssExtensionOut.TypeHandlerVersion);
             Assert.True(vmssExtension.Settings.ToString() == vmssExtensionOut.Settings.ToString());

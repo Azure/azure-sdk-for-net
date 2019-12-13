@@ -6,7 +6,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 ## Creating a KeyClient
 
 To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -79,6 +79,7 @@ If the Key Vault is soft delete-enabled and you want to permanently delete the k
 the deleted key needs to be purged. Before it can be purged, you need to wait until the key is fully deleted.
 
 ```C# Snippet:KeysSample1PurgeKey
+// You only need to wait for completion if you want to purge or recover the key.
 while (!operation.HasCompleted)
 {
     Thread.Sleep(2000);
@@ -95,6 +96,7 @@ When writing asynchronous code, you can instead await `WaitForCompletionAsync` t
 You can optionally pass in a `CancellationToken` to cancel waiting after a certain period or time or any other trigger you require.
 
 ```C# Snippet:KeysSample1PurgeKeyAsync
+// You only need to wait for completion if you want to purge or recover the key.
 await operation.WaitForCompletionAsync();
 
 await client.PurgeDeletedKeyAsync(rsaKeyName);
@@ -104,3 +106,5 @@ await client.PurgeDeletedKeyAsync(rsaKeyName);
 
 * [Synchronous Sample1_HelloWorld.cs](../tests/samples/Sample1_HelloWorld.cs)
 * [Asynchronous Sample1_HelloWorldAsync.cs](../tests/samples/Sample1_HelloWorldAsync.cs)
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

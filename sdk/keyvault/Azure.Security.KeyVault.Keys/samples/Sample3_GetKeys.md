@@ -6,7 +6,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 ## Creating a KeyClient
 
 To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -90,6 +90,7 @@ You need to delete them from the Key Vault.
 DeleteKeyOperation rsaKeyOperation = client.StartDeleteKey(rsaKeyName);
 DeleteKeyOperation ecKeyOperation = client.StartDeleteKey(ecKeyName);
 
+// You only need to wait for completion if you want to purge or recover the key.
 while (!rsaKeyOperation.HasCompleted || !ecKeyOperation.HasCompleted)
 {
     Thread.Sleep(2000);
@@ -117,3 +118,5 @@ To see the full example source, see:
 
 * [Synchronous Sample3_GetKeys.cs](../tests/samples/Sample3_GetKeys.cs)
 * [ASynchronous Sample3_GetKeysAsync.cs](../tests/samples/Sample3_GetKeysAsync.cs)
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

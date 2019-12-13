@@ -658,6 +658,7 @@ namespace Storage.Tests
                     Assert.Null(properties1.DeleteRetentionPolicy.Days);
                     Assert.Null(properties1.DefaultServiceVersion);
                     Assert.Equal(0, properties1.Cors.CorsRulesProperty.Count);
+                    Assert.Equal(parameters.Sku.Name, properties1.Sku.Name);
                     //Assert.Null(properties1.AutomaticSnapshotPolicyEnabled);
                     BlobServiceProperties properties2 = properties1;
                     properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();

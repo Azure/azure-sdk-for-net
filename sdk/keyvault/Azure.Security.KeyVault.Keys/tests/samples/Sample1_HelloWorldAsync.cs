@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Keys.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to set, get, update and delete a key using the asynchronous methods of the KeyClient.
+    /// Sample demonstrates how to set, get, update, and delete a key using the asynchronous methods of the KeyClient.
     /// </summary>
     [LiveOnly]
     public partial class HelloWorld
@@ -64,6 +64,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeleteKeyOperation operation = await client.StartDeleteKeyAsync(rsaKeyName);
 
             #region Snippet:KeysSample1PurgeKeyAsync
+            // You only need to wait for completion if you want to purge or recover the key.
             await operation.WaitForCompletionAsync();
 
             await client.PurgeDeletedKeyAsync(rsaKeyName);

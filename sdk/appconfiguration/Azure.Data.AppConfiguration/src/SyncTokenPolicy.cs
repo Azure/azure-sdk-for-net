@@ -21,6 +21,7 @@ namespace Azure.Data.AppConfiguration
 
         public override void OnSendingRequest(HttpMessage message)
         {
+            message.Request.Headers.Remove(SyncTokenHeader);
             foreach (SyncToken token in _syncTokens.Values)
             {
                 message.Request.Headers.Add(SyncTokenHeader, token.ToString());

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
     /// <summary>
-    /// Sample demonstrates how to list certificates and versions of a given certificates,
+    /// Sample demonstrates how to list certificates, versions of a given certificates,
     /// and list deleted certificates in a soft delete-enabled key vault
     /// using the synchronous methods of the CertificateClient.
     /// </summary>
@@ -36,9 +36,9 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             string certName2 = $"defaultCert-{Guid.NewGuid()}";
 
-            CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName1, CertificatePolicy.Default);
+            CertificateOperation certOp2 = await client.StartCreateCertificateAsync(certName2, CertificatePolicy.Default);
 
-            // Next let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
+            // Next, let's wait on the certificate operation to complete. Note that certificate creation can last an indeterministic
             // amount of time, so applications should only wait on the operation to complete in the case the issuance time is well
             // known and within the scope of the application lifetime. In this case we are creating a self-signed certificate which
             // should be issued in a relatively short amount of time.
@@ -64,12 +64,13 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             // The certificates are no longer needed.
             // You need to delete them from the Key Vault.
-            await client.DeleteCertificateAsync(certName1);
-            await client.DeleteCertificateAsync(certName2);
+            DeleteCertificateOperation operation1 = await client.StartDeleteCertificateAsync(certName1);
+            DeleteCertificateOperation operation2 = await client.StartDeleteCertificateAsync(certName2);
 
-            // To ensure certificates are deleted on server side.
-            Assert.IsTrue(await WaitForDeletedCertificateAsync(client, certName1));
-            Assert.IsTrue(await WaitForDeletedCertificateAsync(client, certName2));
+            // You only need to wait for completion if you want to purge or recover the certificate.
+            await Task.WhenAll(
+                operation1.WaitForCompletionAsync().AsTask(),
+                operation2.WaitForCompletionAsync().AsTask());
 
             // You can list all the deleted and non-purged certificates, assuming Key Vault is soft-delete enabled.
             await foreach (DeletedCertificate deletedCert in client.GetDeletedCertificatesAsync())
@@ -78,26 +79,9 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             }
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            await client.PurgeDeletedCertificateAsync(certName1);
-            await client.PurgeDeletedCertificateAsync(certName2);
-        }
-
-        private async Task<bool> WaitForDeletedCertificateAsync(CertificateClient client, string certName)
-        {
-            int maxIterations = 20;
-            for (int i = 0; i < maxIterations; i++)
-            {
-                try
-                {
-                    await client.GetDeletedCertificateAsync(certName);
-                    return true;
-                }
-                catch
-                {
-                    await Task.Delay(5000);
-                }
-            }
-            return false;
+            await Task.WhenAll(
+                client.PurgeDeletedCertificateAsync(certName1),
+                client.PurgeDeletedCertificateAsync(certName2));
         }
     }
 }

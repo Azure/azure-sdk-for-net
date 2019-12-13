@@ -1,12 +1,12 @@
-# Listing certificates, certificate versions and deleted certificates
+# Listing certificates, certificate versions, and deleted certificates
 
-This sample demonstrates how to list certificates and versions of given certificates, and list deleted certificates in a soft delete-enabled key vault.
+This sample demonstrates how to list certificates, versions of given certificates, and list deleted certificates in a soft delete-enabled key vault.
 To get started, you'll need a URI to an Azure Key Vault. See the [README](../README.md) for links and instructions.
 
 ## Creating a CertificateClient
 
 To create a new `CertificateClient` to create, get, update, or delete certificates, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -23,7 +23,7 @@ string certName1 = $"defaultCert-{Guid.NewGuid()}";
 CertificateOperation certOp1 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
 
 string certName2 = $"defaultCert-{Guid.NewGuid()}";
-CertificateOperation certOp2 = client.StartCreateCertificate(certName1, CertificatePolicy.Default);
+CertificateOperation certOp2 = client.StartCreateCertificate(certName2, CertificatePolicy.Default);
 
 while (!certOp1.HasCompleted)
 {
@@ -83,8 +83,18 @@ The certificates are no longer needed.
 You need to delete them from the Key Vault.
 
 ```C# Snippet:CertificatesSample2DeleteCertificates
-client.DeleteCertificate(certName1);
-client.DeleteCertificate(certName2);
+DeleteCertificateOperation operation1 = client.StartDeleteCertificate(certName1);
+DeleteCertificateOperation operation2 = client.StartDeleteCertificate(certName2);
+
+// To ensure certificates are deleted on server side.
+// You only need to wait for completion if you want to purge or recover the certificate.
+while (!operation1.HasCompleted || !operation2.HasCompleted)
+{
+    Thread.Sleep(2000);
+
+    operation1.UpdateStatus();
+    operation2.UpdateStatus();
+}
 ```
 
 ## Listing deleted certificates
@@ -104,3 +114,5 @@ To see the full example source, see:
 
 * [Synchronous Sample2_GetCertificates.cs](../tests/samples/Sample2_GetCertificates.cs)
 * [Asynchronous Sample2_GetCertificatesAsync.cs](../tests/samples/Sample2_GetCertificatesAsync.cs)
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

@@ -6,7 +6,7 @@ To get started, you'll need a URI to an Azure Key Vault. See the [README](../REA
 ## Creating a KeyClient
 
 To create a new `KeyClient` to create, get, update, or delete keys, you need the endpoint to a Key Vault and credentials.
-You can use the `DefaultAzureCredential` to try a number of common authentication methods optimized for both running as a service and development.
+You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
 In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
@@ -16,7 +16,7 @@ var keyClient = new KeyClient(new Uri(keyVaultUrl), new DefaultAzureCredential()
 
 ## Creating keys
 
-First we'll create both an RSA key and an EC key which will be used to sign and verify.
+First, we'll create both an RSA key and an EC key which will be used to sign and verify.
 
 ```C# Snippet:KeysSample5CreateKey
 string rsaKeyName = $"CloudRsaKey-{Guid.NewGuid()}";
@@ -40,7 +40,7 @@ Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcK
 
 ## Creating CryptographyClients
 
-Then we create the `CryptographyClient` which can perform cryptographic operations with the key we just created. Again we are using the default Azure credential as above.
+Then, we create the `CryptographyClient` which can perform cryptographic operations with the key we just created using the same credential created above.
 
 ```C# Snippet:KeysSample5CryptographyClient
 var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
@@ -50,7 +50,7 @@ var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCrede
 
 ## Signing keys with the Sign and Verify methods
 
-Next we'll sign some arbitrary data and verify the signatures using the `CryptographyClient` with both the EC and RSA keys we created.
+Next, we'll sign some arbitrary data and verify the signatures using the `CryptographyClient` with both the EC and RSA keys we created.
 The `Sign` and `Verify` methods expect a precalculated digest, and the digest needs to be calculated using the hash algorithm which matches the signature algorithm being used.
 SHA256 is the hash algorithm used for both RS256 and ES256K which are the algorithms we'll be using in this sample.
 
@@ -72,7 +72,7 @@ Debug.WriteLine($"Signed digest using the algorithm {ecSignResult.Algorithm}, wi
 
 ## Verifying signatures
 
-Verify the signatures.
+Verify the digest by comparing the signature you created previously.
 
 ```C# Snippet:KeysSample5VerifySign
 VerifyResult rsaVerifyResult = rsaCryptoClient.Verify(SignatureAlgorithm.RS256, digest, rsaSignResult.Signature);
@@ -96,7 +96,7 @@ Debug.WriteLine($"Signed data using the algorithm {ecSignDataResult.Algorithm}, 
 
 ## Verifying signatures with VerifyData methods
 
-Verify the signatures.
+You can provide the same data for which you generated a signature above to `VerifyData` to generate and compare the digest. To be valid, the generated digest must match the given signature.
 
 ```C# Snippet:KeysSample5VerifyKeyWithData
 VerifyResult rsaVerifyDataResult = rsaCryptoClient.VerifyData(SignatureAlgorithm.RS256, data, rsaSignDataResult.Signature);
@@ -113,5 +113,4 @@ To see the full example source, see:
 * [Synchronous Sample5_SignVerify.cs](../tests/samples/Sample5_SignVerify.cs)
 * [Asynchronous Sample5_SignVerifyAsync.cs](../tests/samples/Sample5_SignVerifyAsync.cs)
 
-
-
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

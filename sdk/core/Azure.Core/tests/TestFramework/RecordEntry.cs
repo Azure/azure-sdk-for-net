@@ -11,17 +11,13 @@ namespace Azure.Core.Testing
 {
     public class RecordEntry
     {
+        public RecordEntryMessage Request { get; } = new RecordEntryMessage();
+
+        public RecordEntryMessage Response { get; } = new RecordEntryMessage();
+
         public string RequestUri { get; set; }
 
         public RequestMethod RequestMethod { get; set; }
-
-        public byte[] RequestBody { get; set; }
-
-        public SortedDictionary<string, string[]> RequestHeaders { get; set; } = new SortedDictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
-
-        public SortedDictionary<string, string[]> ResponseHeaders { get; set; } = new SortedDictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
-
-        public byte[] ResponseBody { get; set; }
 
         public int StatusCode { get; set; }
 
@@ -39,14 +35,14 @@ namespace Azure.Core.Testing
                 record.RequestUri = property.GetString();
             }
 
-            if (element.TryGetProperty(nameof(RequestHeaders), out property))
+            if (element.TryGetProperty("RequestHeaders", out property))
             {
-                DeserializeHeaders(record.RequestHeaders, property);
+                DeserializeHeaders(record.Request.Headers, property);
             }
 
-            if (element.TryGetProperty(nameof(RequestBody), out property))
+            if (element.TryGetProperty("RequestBody", out property))
             {
-                record.RequestBody = DeserializeBody(record.RequestHeaders, property);
+                record.Request.Body = DeserializeBody(record.Request.Headers, property);
             }
 
             if (element.TryGetProperty(nameof(StatusCode), out property) &&
@@ -55,14 +51,14 @@ namespace Azure.Core.Testing
                 record.StatusCode = statusCode;
             }
 
-            if (element.TryGetProperty(nameof(ResponseHeaders), out property))
+            if (element.TryGetProperty("ResponseHeaders", out property))
             {
-                DeserializeHeaders(record.ResponseHeaders, property);
+                DeserializeHeaders(record.Response.Headers, property);
             }
 
-            if (element.TryGetProperty(nameof(ResponseBody), out property))
+            if (element.TryGetProperty("ResponseBody", out property))
             {
-                record.ResponseBody = DeserializeBody(record.ResponseHeaders, property);
+                record.Response.Body = DeserializeBody(record.Response.Headers, property);
             }
 
             return record;
@@ -137,19 +133,19 @@ namespace Azure.Core.Testing
 
             jsonWriter.WriteString(nameof(RequestUri), RequestUri);
             jsonWriter.WriteString(nameof(RequestMethod), RequestMethod.Method);
-            jsonWriter.WriteStartObject(nameof(RequestHeaders));
-            SerializeHeaders(jsonWriter, RequestHeaders);
+            jsonWriter.WriteStartObject("RequestHeaders");
+            SerializeHeaders(jsonWriter, Request.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, nameof(RequestBody), RequestBody, RequestHeaders);
+            SerializeBody(jsonWriter, "RequestBody", Request.Body, Request.Headers);
 
             jsonWriter.WriteNumber(nameof(StatusCode), StatusCode);
 
-            jsonWriter.WriteStartObject(nameof(ResponseHeaders));
-            SerializeHeaders(jsonWriter, ResponseHeaders);
+            jsonWriter.WriteStartObject("ResponseHeaders");
+            SerializeHeaders(jsonWriter, Response.Headers);
             jsonWriter.WriteEndObject();
 
-            SerializeBody(jsonWriter, nameof(ResponseBody), ResponseBody, ResponseHeaders);
+            SerializeBody(jsonWriter, "ResponseBody", Response.Body, Response.Headers);
             jsonWriter.WriteEndObject();
         }
 
@@ -250,7 +246,7 @@ namespace Azure.Core.Testing
             }
         }
 
-        private static bool TryGetContentType(IDictionary<string, string[]> requestHeaders, out string contentType)
+        public static bool TryGetContentType(IDictionary<string, string[]> requestHeaders, out string contentType)
         {
             contentType = null;
             if (requestHeaders.TryGetValue("Content-Type", out var contentTypes) &&
@@ -262,71 +258,11 @@ namespace Azure.Core.Testing
             return false;
         }
 
-        private static bool IsTextContentType(IDictionary<string, string[]> requestHeaders, out Encoding encoding)
+        public static bool IsTextContentType(IDictionary<string, string[]> requestHeaders, out Encoding encoding)
         {
             encoding = null;
             return TryGetContentType(requestHeaders, out string contentType) &&
                    TestFrameworkContentTypeUtilities.TryGetTextEncoding(contentType, out encoding);
-        }
-
-        public void Sanitize(RecordedTestSanitizer sanitizer)
-        {
-            RequestUri = sanitizer.SanitizeUri(RequestUri);
-            if (RequestBody != null)
-            {
-                int contentLength = RequestBody.Length;
-                TryGetContentType(RequestHeaders, out string contentType);
-                if (IsTextContentType(RequestHeaders, out Encoding encoding))
-                {
-                    RequestBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(contentType, encoding.GetString(RequestBody)));
-                }
-                else
-                {
-                    RequestBody = sanitizer.SanitizeBody(contentType, RequestBody);
-                }
-                UpdateSanitizedContentLength(RequestHeaders, contentLength, RequestBody?.Length ?? 0);
-            }
-
-            sanitizer.SanitizeHeaders(RequestHeaders);
-
-            if (ResponseBody != null)
-            {
-                int contentLength = ResponseBody.Length;
-                TryGetContentType(ResponseHeaders, out string contentType);
-                if (IsTextContentType(ResponseHeaders, out Encoding encoding))
-                {
-                    ResponseBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(contentType, encoding.GetString(ResponseBody)));
-                }
-                else
-                {
-                    ResponseBody = sanitizer.SanitizeBody(contentType, ResponseBody);
-                }
-                UpdateSanitizedContentLength(ResponseHeaders, contentLength, ResponseBody?.Length ?? 0);
-            }
-
-            sanitizer.SanitizeHeaders(ResponseHeaders);
-        }
-
-        /// <summary>
-        /// Optionally update the Content-Length header if we've sanitized it
-        /// and the new value is a different length from the original
-        /// Content-Length header.  We don't add a Content-Length header if it
-        /// wasn't already present.
-        /// </summary>
-        /// <param name="headers">The Request or Response headers</param>
-        /// <param name="originalLength">THe original Content-Length</param>
-        /// <param name="sanitizedLength">The sanitized Content-Length</param>
-        private static void UpdateSanitizedContentLength(IDictionary<string, string[]> headers, int originalLength, int sanitizedLength)
-        {
-            // Note: If the RequestBody/ResponseBody was set to null by our
-            // sanitizer, we'll pass 0 as the sanitizedLength and use that as
-            // our new Content-Length.  That's fine for all current scenarios
-            // (i.e., we never do that), but it's possible we may want to
-            // remove the Content-Length header in the future.
-            if (originalLength != sanitizedLength && headers.ContainsKey("Content-Length"))
-            {
-                headers["Content-Length"] = new string[] { sanitizedLength.ToString() };
-            }
         }
     }
 }

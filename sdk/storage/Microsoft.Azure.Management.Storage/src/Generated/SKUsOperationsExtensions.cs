@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Sku> List(this ISkusOperations operations)
+            public static IEnumerable<SkuInformation> List(this ISkusOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Sku>> ListAsync(this ISkusOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<SkuInformation>> ListAsync(this ISkusOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

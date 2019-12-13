@@ -1,3 +1,14 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-app-configuration
+name: Azure.Data.AppConfiguration samples for .NET
+description: Samples for the Azure.Data.AppConfiguration client library
+---
+
 # Azure App Configuration client SDK samples
 
 This directory contains samples for the Azure App Configuration client SDK.  Each sample illustrates one or more capabilities of the library.
@@ -66,8 +77,8 @@ In this sample, we give a simple example illustrating how the [Moq](moq) library
 
 [azure_sub]: https://azure.microsoft.com/free/
 [configuration_store]: https://docs.microsoft.com/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store
-[root_readme]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md
+[root_readme]: ../README.md
 [conditional_request_mdn]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests
 [conditional_request_guideline]: https://azure.github.io/azure-sdk/general_design.html#conditional-requests
 [moq]: https://github.com/Moq/moq4/
-[mock_tests]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/tests/ConfigurationMockTests.cs
+[mock_tests]: ../tests/ConfigurationMockTests.cs

@@ -23,6 +23,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
         [Test]
         public async Task SignVerifyAsync()
         {
+#if NET461
+            Assert.Ignore("Using CryptographyClient with EC keys is not supported on .NET Framework 4.6.1.");
+#endif
+
             // Environment variable with the Key Vault endpoint.
             string keyVaultUrl = Environment.GetEnvironmentVariable("AZURE_KEYVAULT_URL");
 
@@ -50,8 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             KeyVaultKey cloudEcKey = await keyClient.CreateEcKeyAsync(ecKey);
             Debug.WriteLine($"Key is returned with name {cloudEcKey.Name} and type {cloudEcKey.KeyType}");
 
-            // Let's create the CryptographyClient which can perform cryptographic operations with the keys we just created.
-            // Again we are using the default Azure credential as above.
+            // Let's create the CryptographyClient which can perform cryptographic operations with the keys we just created using the same credential created above..
             var rsaCryptoClient = new CryptographyClient(cloudRsaKey.Id, new DefaultAzureCredential());
 
             var ecCryptoClient = new CryptographyClient(cloudEcKey.Id, new DefaultAzureCredential());
@@ -111,13 +114,13 @@ namespace Azure.Security.KeyVault.Keys.Samples
             DeleteKeyOperation rsaKeyOperation = await keyClient.StartDeleteKeyAsync(rsaKeyName);
             DeleteKeyOperation ecKeyOperation = await keyClient.StartDeleteKeyAsync(ecKeyName);
 
-            // To ensure the key is deleted on server before we try to purge it.
-            Task.WaitAll(
+            // You only need to wait for completion if you want to purge or recover the key.
+            await Task.WhenAll(
                 rsaKeyOperation.WaitForCompletionAsync().AsTask(),
                 ecKeyOperation.WaitForCompletionAsync().AsTask());
 
             // If the keyvault is soft-delete enabled, then for permanent deletion, deleted keys needs to be purged.
-            Task.WaitAll(
+            await Task.WhenAll(
                 keyClient.PurgeDeletedKeyAsync(rsaKeyName),
                 keyClient.PurgeDeletedKeyAsync(ecKeyName));
         }

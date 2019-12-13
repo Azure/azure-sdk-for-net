@@ -171,6 +171,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential)
             : this(serviceUri, credential.AsPolicy(), null)
         {
+            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -191,6 +192,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeServiceClient(Uri serviceUri, TokenCredential credential, DataLakeClientOptions options)
             : this(serviceUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(serviceUri);
         }
 
         /// <summary>
@@ -239,37 +241,34 @@ namespace Azure.Storage.Files.DataLake
             options ??= new DataLakeClientOptions();
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
-            _blobUri = GetBlobUri(serviceUri);
+            _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
             _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
-            _blobServiceClient = new BlobServiceClient(
-                serviceUri: _blobUri,
-                authentication: authentication,
-                pipeline: _pipeline,
-                clientDiagnostics: _clientDiagnostics,
-                customerProvidedKey: null);
+            _blobServiceClient = BlobServiceClientInternals.Create(
+                _blobUri,
+                _pipeline,
+                authentication,
+                _clientDiagnostics);
         }
-        #endregion ctors
 
         /// <summary>
-        /// Gets the blob Uri.
+        /// Helper to access protected static members of BlobServiceClient
+        /// that should not be exposed directly to customers.
         /// </summary>
-        private static Uri GetBlobUri(Uri uri)
+        private class BlobServiceClientInternals : BlobServiceClient
         {
-            Uri blobUri;
-            if (uri.Host.Contains(Constants.DataLake.DfsUriSuffix))
+            public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, ClientDiagnostics diagnostics)
             {
-                UriBuilder uriBuilder = new UriBuilder(uri);
-                uriBuilder.Host = uriBuilder.Host.Replace(
-                    Constants.DataLake.DfsUriSuffix,
-                    Constants.DataLake.BlobUriSuffix);
-                blobUri = uriBuilder.Uri;
+                return BlobServiceClient.CreateClient(
+                    uri,
+                    new BlobClientOptions()
+                    {
+                        Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
+                    },
+                    authentication,
+                    pipeline);
             }
-            else
-            {
-                blobUri = uri;
-            }
-            return blobUri;
         }
+        #endregion ctors
 
         /// <summary>
         /// Create a new <see cref="DataLakeFileSystemClient"/> object by appending
@@ -312,20 +311,35 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.UserDelegationKey> response = _blobServiceClient.GetUserDelegationKey(
-                startsOn,
-                expiresOn,
-                cancellationToken);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
-            return Response.FromValue(
-                new UserDelegationKey(response.Value),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.UserDelegationKey> response = _blobServiceClient.GetUserDelegationKey(
+                    startsOn,
+                    expiresOn,
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new UserDelegationKey(response.Value),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -353,21 +367,36 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default)
         {
-            Response<Blobs.Models.UserDelegationKey> response = await _blobServiceClient.GetUserDelegationKeyAsync(
-                startsOn,
-                expiresOn,
-                cancellationToken)
-                .ConfigureAwait(false);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(GetUserDelegationKey)}");
 
-            return Response.FromValue(
-                new UserDelegationKey(response.Value),
-                response.GetRawResponse());
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.UserDelegationKey> response = await _blobServiceClient.GetUserDelegationKeyAsync(
+                    startsOn,
+                    expiresOn,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new UserDelegationKey(response.Value),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         #endregion Get User Delegation Key
@@ -393,7 +422,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{BlobContainerItem}"/>
+        /// An <see cref="IEnumerable{T}"/> of <see cref="Response{FileSystemItem}"/>
         /// describing the file systems in the storage account.
         /// </returns>
         /// <remarks>
@@ -408,7 +437,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="GetFileSystemsAsync"/> operation returns an async
-        /// sequence of blob file system in the storage account.  Enumerating the
+        /// sequence of file systems in the storage account.  Enumerating the
         /// files systems may make multiple requests to the service while fetching
         /// all the values.  File systems are ordered lexicographically by name.
         ///
@@ -454,13 +483,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -479,16 +508,31 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<DataLakeFileSystemClient> CreateFileSystem(
             string fileSystemName,
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
-            Response<FileSystemInfo> response = fileSystem.Create(publicAccessType, metadata, cancellationToken);
-            return Response.FromValue(fileSystem, response.GetRawResponse());
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+                Response<FileSystemInfo> response = fileSystem.Create(publicAccessType, metadata, cancellationToken);
+                return Response.FromValue(fileSystem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
 
         /// <summary>
@@ -504,13 +548,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -529,23 +573,38 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeFileSystemClient>> CreateFileSystemAsync(
             string fileSystemName,
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             CancellationToken cancellationToken = default)
         {
-            DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
-            Response<FileSystemInfo> response = await fileSystem.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(fileSystem, response.GetRawResponse());
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(CreateFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                DataLakeFileSystemClient fileSystem = GetFileSystemClient(fileSystemName);
+                Response<FileSystemInfo> response = await fileSystem.CreateAsync(publicAccessType, metadata, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(fileSystem, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
         }
         #endregion Create File System
 
         #region Delete File System
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
-        /// specified blob file system for deletion. The file system and any blobs
+        /// specified file system for deletion. The file system and any paths
         /// contained within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -568,19 +627,36 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response DeleteFileSystem(
             string fileSystemName,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            GetFileSystemClient(fileSystemName)
-                .Delete(
-                    conditions,
-                    cancellationToken);
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                return GetFileSystemClient(fileSystemName)
+                    .Delete(
+                        conditions,
+                        cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
 
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
-        /// specified file system for deletion. The file system and any blobs
+        /// specified file system for deletion. The file system and any paths
         /// contained within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -603,16 +679,33 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileSystemAsync(
             string fileSystemName,
             DataLakeRequestConditions conditions = default,
-            CancellationToken cancellationToken = default) =>
-            await GetFileSystemClient(fileSystemName)
-                .DeleteAsync(
-                    conditions,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeServiceClient)}.{nameof(DeleteFileSystem)}");
+
+            try
+            {
+                scope.Start();
+
+                return await GetFileSystemClient(fileSystemName)
+                    .DeleteAsync(
+                        conditions,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Delete File System
     }
 }

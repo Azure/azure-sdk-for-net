@@ -29,19 +29,13 @@ namespace Azure.Messaging.EventHubs
         ///   The capability for tracking the last event enqueued in a partition, to associate with a link.
         /// </summary>
         ///
-        public static AmqpSymbol TrackLastEnqueuedEventInformation { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
+        public static AmqpSymbol TrackLastEnqueuedEventProperties { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
 
         /// <summary>
         ///   The timeout to associate with a link.
         /// </summary>
         ///
         public static AmqpSymbol Timeout { get; } = AmqpConstants.Vendor + ":timeout";
-
-        /// <summary>
-        ///   The identifier of the consumer to associate with a link.
-        /// </summary>
-        ///
-        public static AmqpSymbol ConsumerIdentifier { get; } = AmqpConstants.Vendor + ":receiver-name";
 
         /// <summary>
         ///   The date and time, in UTC, that a message was enqueued.
@@ -90,7 +84,7 @@ namespace Azure.Messaging.EventHubs
         ///   received from the service.
         /// </summary>
         ///
-        public static AmqpSymbol LastPartitionInformationRetrievalTimeUtc { get; } = "runtime_info_retrieval_time_utc";
+        public static AmqpSymbol LastPartitionPropertiesRetrievalTimeUtc { get; } = "runtime_info_retrieval_time_utc";
 
         /// <summary>
         ///   The set of descriptors for well-known <see cref="DescribedType" />

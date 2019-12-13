@@ -77,12 +77,12 @@ namespace Azure.Core.Testing
         {
             var response = new MockResponse(recordEntry.StatusCode);
             // TODO: Use non-seekable stream
-            if (recordEntry.ResponseBody != null)
+            if (recordEntry.Response.Body != null)
             {
-                response.ContentStream = new MemoryStream(recordEntry.ResponseBody);
+                response.ContentStream = new MemoryStream(recordEntry.Response.Body);
             }
 
-            foreach (KeyValuePair<string, string[]> responseHeader in recordEntry.ResponseHeaders)
+            foreach (KeyValuePair<string, string[]> responseHeader in recordEntry.Response.Headers)
             {
                 foreach (string value in responseHeader.Value)
                 {

@@ -30,12 +30,6 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Create a new certificate client using the default credential from Azure.Identity using environment variables previously set,
             // including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
             var client = new CertificateClient(vaultUri: new Uri(keyVaultUrl), credential: new DefaultAzureCredential());
-
-            // Create a certificate using the certificate client.
-            CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
-
-            // Retrieve a certificate using the certificate client.
-            KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
             #endregion
 
             this.client = client;
@@ -49,23 +43,26 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateOperation operation = client.StartCreateCertificate("MyCertificate", CertificatePolicy.Default);
 
             // You can await the completion of the create certificate operation.
+            // You should run UpdateStatus in another thread or do other work like pumping messages between calls.
             while (!operation.HasCompleted)
             {
-                operation.UpdateStatus();
+                Thread.Sleep(2000);
 
-                Thread.Sleep(TimeSpan.FromSeconds(1));
+                operation.UpdateStatus();
             }
+
+            KeyVaultCertificateWithPolicy certificate = operation.Value;
             #endregion
         }
 
-        [Test]
+        [Ignore("The certificate was already created in the synchronous method.")]
         public async Task CreateCertificateAsync()
         {
             #region Snippet:CreateCertificateAsync
             // Create a certificate. This starts a long running operation to create and sign the certificate.
             CertificateOperation operation = await client.StartCreateCertificateAsync("MyCertificate", CertificatePolicy.Default);
 
-            // You can  the completion of the create certificate operation.
+            // You can await the completion of the create certificate operation.
             KeyVaultCertificateWithPolicy certificate = await operation.WaitForCompletionAsync();
             #endregion
         }
@@ -88,13 +85,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             KeyVaultCertificateWithPolicy certificate = client.GetCertificate("MyCertificate");
 
             #region Snippet:UpdateCertificate
-            CertificateProperties certificateProperties = new CertificateProperties(certificate.Id)
-            {
-                Tags =
-                {
-                    ["key1"] = "value1"
-                }
-            };
+            CertificateProperties certificateProperties = new CertificateProperties(certificate.Id);
+            certificateProperties.Tags["key1"] = "value1";
 
             KeyVaultCertificate updated = client.UpdateCertificateProperties(certificateProperties);
             #endregion
@@ -142,14 +134,36 @@ namespace Azure.Security.KeyVault.Certificates.Samples
         }
 
         [OneTimeTearDown]
-        public void DeleteCertificate()
+        public async Task DeleteAndPurgeCertificateAsync()
         {
-            #region Snippet:DeleteCertificate
-            DeletedCertificate deleteCert = client.DeleteCertificate("MyCertificate");
+            #region Snippet:DeleteAndPurgeCertificateAsync
+            DeleteCertificateOperation operation = await client.StartDeleteCertificateAsync("MyCertificate");
 
-            Console.WriteLine(deleteCert.ScheduledPurgeDate);
+            // You only need to wait for completion if you want to purge or recover the certificate.
+            await operation.WaitForCompletionAsync();
 
-            client.PurgeDeletedCertificate(deleteCert.Name);
+            DeletedCertificate secret = operation.Value;
+            await client.PurgeDeletedCertificateAsync(secret.Name);
+            #endregion
+        }
+
+        [Ignore("The certificate is deleted and purged on tear down of this text fixture.")]
+        public void DeleteAndPurgeCertificate()
+        {
+            #region Snippet:DeleteAndPurgeCertificate
+            DeleteCertificateOperation operation = client.StartDeleteCertificate("MyCertificate");
+
+            // You only need to wait for completion if you want to purge or recover the certificate.
+            // You should call `UpdateStatus` in another thread or after doing additional work like pumping messages.
+            while (!operation.HasCompleted)
+            {
+                Thread.Sleep(2000);
+
+                operation.UpdateStatus();
+            }
+
+            DeletedCertificate secret = operation.Value;
+            client.PurgeDeletedCertificate(secret.Name);
             #endregion
         }
     }

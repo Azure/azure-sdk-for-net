@@ -33,9 +33,6 @@ namespace Azure.Security.KeyVault.Certificates
         private const string KeyUsagePropertyName = "key_usage";
         private const string EkusPropertyName = "ekus";
         private const string ValidityMonthsPropertyName = "validity_months";
-        private const string IssuerNamePropertyName = "name";
-        private const string CertificateTypePropertyName = "cty";
-        private const string CertificateTransparencyPropertyName = "cert_transparency";
         private const string EnabledPropertyName = "enabled";
         private const string CreatedPropertyName = "created";
         private const string UpdatedPropertyName = "updated";
@@ -57,41 +54,67 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_keyUsagePropertyNameBytes = JsonEncodedText.Encode(KeyUsagePropertyName);
         private static readonly JsonEncodedText s_ekusPropertyNameBytes = JsonEncodedText.Encode(EkusPropertyName);
         private static readonly JsonEncodedText s_validityMonthsPropertyNameBytes = JsonEncodedText.Encode(ValidityMonthsPropertyName);
-        private static readonly JsonEncodedText s_issuerNamePropertyNameBytes = JsonEncodedText.Encode(IssuerNamePropertyName);
-        private static readonly JsonEncodedText s_certificateTypePropertyNameBytes = JsonEncodedText.Encode(CertificateTypePropertyName);
-        private static readonly JsonEncodedText s_certificateTransparencyPropertyNameNameBytes = JsonEncodedText.Encode(CertificateTransparencyPropertyName);
         private static readonly JsonEncodedText s_enabledPropertyNameBytes = JsonEncodedText.Encode(EnabledPropertyName);
+
+        private IssuerParameters _issuer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
         /// </summary>
-        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
         /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
         /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="subject"/> or <paramref name="issuerName"/> is null.</exception>
-        public CertificatePolicy(string subject, string issuerName)
+        public CertificatePolicy(string issuerName, string subject)
         {
-            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
 
-            Subject = Subject;
+            IssuerName = issuerName;
+            Subject = subject;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
+        /// </summary>
+        /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate.</param>
+        /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty or <paramref name="subjectAlternativeNames"/> contains empty collection properties.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
+        public CertificatePolicy(string issuerName, SubjectAlternativeNames subjectAlternativeNames)
+        {
+            Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (subjectAlternativeNames.IsEmpty)
+            {
+                throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));
+            }
+
+            SubjectAlternativeNames = subjectAlternativeNames;
             IssuerName = issuerName;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificatePolicy"/> class.
         /// </summary>
-        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate</param>
         /// <param name="issuerName">The name of an issuer for the certificate, including values from <see cref="WellKnownIssuerNames"/>.</param>
-        /// <exception cref="ArgumentException"><paramref name="issuerName"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="subjectAlternativeNames"/> or <paramref name="issuerName"/> is null.</exception>
-        public CertificatePolicy(SubjectAlternativeNames subjectAlternativeNames, string issuerName)
+        /// <param name="subject">The subject name of the certificate, such as "CN=contoso.com".</param>
+        /// <param name="subjectAlternativeNames">The subject alternative names (SANs) of the certificate.</param>
+        /// <exception cref="ArgumentException"><paramref name="subject"/> or <paramref name="issuerName"/> is empty, or <paramref name="subjectAlternativeNames"/> contains empty collection properties.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="subject"/>, <paramref name="issuerName"/>, or <paramref name="subjectAlternativeNames"/> is null.</exception>
+        public CertificatePolicy(string issuerName, string subject, SubjectAlternativeNames subjectAlternativeNames)
         {
-            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
             Argument.AssertNotNullOrEmpty(issuerName, nameof(issuerName));
+            Argument.AssertNotNullOrEmpty(subject, nameof(subject));
+            Argument.AssertNotNull(subjectAlternativeNames, nameof(subjectAlternativeNames));
+            if (subjectAlternativeNames.IsEmpty)
+            {
+                throw new ArgumentException("Value cannot contain empty collection properties.", nameof(subjectAlternativeNames));
+            }
 
-            SubjectAlternativeNames = subjectAlternativeNames;
+            Subject = subject;
             IssuerName = issuerName;
+            SubjectAlternativeNames = subjectAlternativeNames;
         }
 
         internal CertificatePolicy()
@@ -102,65 +125,77 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets a new <see cref="CertificatePolicy"/> suitable for self-signed certificate requests.
         /// You should change the <see cref="Subject"/> before passing this policy to create a certificate.
         /// </summary>
-        public static CertificatePolicy Default => new CertificatePolicy(DefaultSubject, DefaultIssuerName);
+        public static CertificatePolicy Default => new CertificatePolicy(DefaultIssuerName, DefaultSubject);
 
         /// <summary>
-        /// The type of backing key to be generated when issuing new certificates
+        /// Gets or sets the type of backing key to be generated when issuing new certificates.
         /// </summary>
         public CertificateKeyType? KeyType { get; set; }
 
         /// <summary>
-        /// Specifies whether the certificate key should be reused when rotating the certificate
+        /// Gets or sets a value indicating whether the certificate key should be reused when rotating the certificate.
         /// </summary>
         public bool? ReuseKey { get; set; }
 
         /// <summary>
-        /// Specifies whether the certificate key is exportable from the vault or secure certificate store
+        /// Gets or sets a value indicating whether the certificate key is exportable from the vault or secure certificate store.
         /// </summary>
         public bool? Exportable { get; set; }
 
         /// <summary>
-        /// The curve which back the EC key
+        /// Gets or sets the curve which back an Elliptic Curve (EC) key.
         /// </summary>
         public CertificateKeyCurveName? KeyCurveName { get; set; }
 
         /// <summary>
-        /// The size of the RSA key, the value must be a valid RSA key length such as 2048 or 4092
+        /// Gets or sets the size of the RSA key. The value must be a valid RSA key length such as 2048 or 4092.
         /// </summary>
         public int? KeySize { get; set; }
 
         /// <summary>
-        /// The subject name of a certificate
+        /// Gets the subject name of a certificate.
         /// </summary>
         public string Subject { get; internal set; }
 
         /// <summary>
-        /// The subject alternative names (SANs) of a certificate
+        /// Gets the subject alternative names (SANs) of a certificate.
         /// </summary>
         public SubjectAlternativeNames SubjectAlternativeNames { get; internal set; }
 
         /// <summary>
-        /// The name of an issuer for a certificate
+        /// Gets the name of an issuer for a certificate.
         /// </summary>
-        public string IssuerName { get; internal set; }
+        public string IssuerName
+        {
+            get => _issuer.IssuerName;
+            internal set => _issuer.IssuerName = value;
+        }
 
         /// <summary>
-        /// Content type of the certificate when downloaded from getSecret.
+        /// Gets or sets the <see cref="CertificateContentType"/> of the certificate when downloaded from GetSecret.
         /// </summary>
         public CertificateContentType? ContentType { get; set; }
 
         /// <summary>
-        /// The certificate type of a certificate
+        /// Gets or sets the certificate type of a certificate.
         /// </summary>
-        public string CertificateType { get; set; }
+        public string CertificateType
+        {
+            get => _issuer.CertificateType;
+            set => _issuer.CertificateType = value;
+        }
 
         /// <summary>
-        /// Specifies whether a certificate should be published to the certificate transparency list when created
+        /// Gets or sets a value indicating whether a certificate should be published to the certificate transparency list when created.
         /// </summary>
-        public bool? CertificateTransparency { get; set; }
+        public bool? CertificateTransparency
+        {
+            get => _issuer.CertificateTransparency;
+            set => _issuer.CertificateTransparency = value;
+        }
 
         /// <summary>
-        /// The validity period for a certificate in months
+        /// Gets or sets the validity period for a certificate in months.
         /// </summary>
         public int? ValidityInMonths { get; set; }
 
@@ -170,27 +205,27 @@ namespace Azure.Security.KeyVault.Certificates
         public bool? Enabled { get; set; }
 
         /// <summary>
-        /// The last updated time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was updated.
         /// </summary>
         public DateTimeOffset? UpdatedOn { get; internal set; }
 
         /// <summary>
-        /// The creation time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the certificate was created.
         /// </summary>
         public DateTimeOffset? CreatedOn { get; internal set; }
 
         /// <summary>
-        /// The allowed usages for the key of the certificate
+        /// Gets the allowed usages for the key of the certificate.
         /// </summary>
         public IList<CertificateKeyUsage> KeyUsage { get; } = new List<CertificateKeyUsage>();
 
         /// <summary>
-        /// The allowed enhanced key usages (EKUs) of the certificate
+        /// Gets the allowed enhanced key usages (EKUs) of the certificate.
         /// </summary>
         public IList<string> EnhancedKeyUsage { get; } = new List<string>();
 
         /// <summary>
-        /// Actions to be executed at specified points in the certificates lifetime
+        /// Gets the actions to be executed at specified times in the certificates lifetime.
         /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
@@ -213,7 +248,7 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case IssuerPropertyName:
-                        ReadIssuerProperties(prop.Value);
+                        _issuer.ReadProperties(prop.Value);
                         break;
 
                     case AttributesPropertyName:
@@ -254,7 +289,7 @@ namespace Azure.Security.KeyVault.Certificates
             }
 
             // X509 Props
-            if (Subject != null || SubjectAlternativeNames != null || !KeyUsage.IsNullOrEmpty() || !EnhancedKeyUsage.IsNullOrEmpty() || ValidityInMonths.HasValue)
+            if (Subject != null || (SubjectAlternativeNames != null && !SubjectAlternativeNames.IsEmpty) || !KeyUsage.IsNullOrEmpty() || !EnhancedKeyUsage.IsNullOrEmpty() || ValidityInMonths.HasValue)
             {
                 json.WriteStartObject(s_x509PropsPropertyNameBytes);
 
@@ -268,7 +303,7 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 json.WriteStartObject(s_issuerPropertyNameBytes);
 
-                WriteIssuerProperties(json);
+                _issuer.WriteProperties(json);
 
                 json.WriteEndObject();
             }
@@ -418,7 +453,7 @@ namespace Azure.Security.KeyVault.Certificates
                 json.WriteString(s_subjectPropertyNameBytes, Subject);
             }
 
-            if (SubjectAlternativeNames != null)
+            if (SubjectAlternativeNames != null && !SubjectAlternativeNames.IsEmpty)
             {
                 json.WriteStartObject(s_sansPropertyNameBytes);
 
@@ -450,45 +485,6 @@ namespace Azure.Security.KeyVault.Certificates
             if (ValidityInMonths.HasValue)
             {
                 json.WriteNumber(s_validityMonthsPropertyNameBytes, ValidityInMonths.Value);
-            }
-        }
-
-        private void ReadIssuerProperties(JsonElement json)
-        {
-            foreach (JsonProperty prop in json.EnumerateObject())
-            {
-                switch (prop.Name)
-                {
-                    case IssuerNamePropertyName:
-                        IssuerName = prop.Value.GetString();
-                        break;
-
-                    case CertificateTypePropertyName:
-                        CertificateType = prop.Value.GetString();
-                        break;
-
-                    case CertificateTransparencyPropertyName:
-                        CertificateTransparency = prop.Value.GetBoolean();
-                        break;
-                }
-            }
-        }
-
-        private void WriteIssuerProperties(Utf8JsonWriter json)
-        {
-            if (IssuerName != null)
-            {
-                json.WriteString(s_issuerNamePropertyNameBytes, IssuerName);
-            }
-
-            if (CertificateType != null)
-            {
-                json.WriteString(s_certificateTypePropertyNameBytes, CertificateType);
-            }
-
-            if (CertificateTransparency.HasValue)
-            {
-                json.WriteBoolean(s_certificateTransparencyPropertyNameNameBytes, CertificateTransparency.Value);
             }
         }
 

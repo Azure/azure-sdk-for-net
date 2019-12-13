@@ -76,7 +76,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Common/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Common/
-[docs]: https://azure.github.io/azure-sdk-for-net/storage.html
+[docs]: https://docs.microsoft.com/en-us/dotnet/api/azure.storage
 [rest_docs]: https://docs.microsoft.com/en-us/rest/api/storageservices/
 [product_docs]: https://docs.microsoft.com/en-us/azure/storage/
 [nuget]: https://www.nuget.org/

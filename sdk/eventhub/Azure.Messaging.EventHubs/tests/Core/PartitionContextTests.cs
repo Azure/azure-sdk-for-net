@@ -27,23 +27,10 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        public void ConstructorValidatesTheEventHubName(string value)
-        {
-            Assert.That(() => new PartitionContext(value, "test"), Throws.InstanceOf<ArgumentException>(), "The constructor with consumer should validate.");
-            Assert.That(() => new PartitionContext(value, "test", Mock.Of<TransportConsumer>()), Throws.InstanceOf<ArgumentException>(), "The constructor with no consumer should validate.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the constructor.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(null)]
-        [TestCase("")]
         public void ConstructorValidatesThePartition(string value)
         {
-            Assert.That(() => new PartitionContext("hub-name", value), Throws.InstanceOf<ArgumentException>(), "The constructor with consumer should validate.");
-            Assert.That(() => new PartitionContext("hub-name", value, Mock.Of<TransportConsumer>()), Throws.InstanceOf<ArgumentException>(), "The constructor with no consumer should validate.");
+            Assert.That(() => new PartitionContext(value), Throws.InstanceOf<ArgumentException>(), "The constructor with consumer should validate.");
+            Assert.That(() => new PartitionContext(value, Mock.Of<TransportConsumer>()), Throws.InstanceOf<ArgumentException>(), "The constructor with no consumer should validate.");
         }
 
         /// <summary>
@@ -53,16 +40,16 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorValidatesTheConsumer()
         {
-            Assert.That(() => new PartitionContext("hub-name", "partition", null), Throws.ArgumentNullException);
+            Assert.That(() => new PartitionContext("partition", null), Throws.ArgumentNullException);
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventInformation" />
+        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventProperties" />
         ///   method.
         /// </summary>
         ///
         [Test]
-        public void ReadLastEnqueuedEventInformationDelegatesToTheConsumer()
+        public void ReadLastEnqueuedEventPropertiesDelegatesToTheConsumer()
         {
             var lastEvent = new EventData
             (
@@ -70,35 +57,31 @@ namespace Azure.Messaging.EventHubs.Tests
                 lastPartitionSequenceNumber: 1234,
                 lastPartitionOffset: 42,
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
-                lastPartitionInformationRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
+                lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
             );
 
-            var eventHubName = "hub-name";
             var partitionId = "id-value";
             var mockConsumer = new LastEventConsumerMock(lastEvent);
-            var context = new PartitionContext(eventHubName, partitionId, mockConsumer);
-            var information = context.ReadLastEnqueuedEventInformation();
+            var context = new PartitionContext(partitionId, mockConsumer);
+            var information = context.ReadLastEnqueuedEventProperties();
 
-            Assert.That(information.EventHubName, Is.EqualTo(eventHubName), "The event hub name should match.");
-            Assert.That(information.PartitionId, Is.EqualTo(partitionId), "The partition identifier should match.");
-            Assert.That(information.LastEnqueuedSequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
-            Assert.That(information.LastEnqueuedOffset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
-            Assert.That(information.LastEnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
-            Assert.That(information.InformationReceived, Is.EqualTo(lastEvent.LastPartitionInformationRetrievalTime), "The retrieval time should match.");
+            Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
+            Assert.That(information.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+            Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
+            Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventInformation" />
+        ///   Verifies functionality of the <see cref="PartitionContext.ReadLastEnqueuedEventProperties" />
         ///   method.
         /// </summary>
         ///
         [Test]
         public async Task TheConsumerIsNotKeptAlive()
         {
-            var eventHubName = "hub-name";
             var partitionId = "id-value";
             var mockConsumer = new LastEventConsumerMock(new EventData(Array.Empty<byte>()));
-            var context = new PartitionContext(eventHubName, partitionId, mockConsumer);
+            var context = new PartitionContext(partitionId, mockConsumer);
 
             // Attempt to clear out the consumer and force GC.
 
@@ -119,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 try
                 {
-                    Assert.That(() => context.ReadLastEnqueuedEventInformation(), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(() => context.ReadLastEnqueuedEventProperties(), Throws.TypeOf<EventHubsClientClosedException>());
                 }
                 catch (AssertionException)
                 {

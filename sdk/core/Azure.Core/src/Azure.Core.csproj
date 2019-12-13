@@ -6,8 +6,9 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-- Updating versioning and packaging for general availability.
-- Make types and namespace names consistent.
+- Fix issues with log redaction where first query character was replaced with '?' character.
+- Exclude EventCounter events from AzureEventSourceListener.
+- Add `AZURE_TRACING_DISABLED` environment variable support.
       ]]>
     </PackageReleaseNotes>
     <Nullable>enable</Nullable>

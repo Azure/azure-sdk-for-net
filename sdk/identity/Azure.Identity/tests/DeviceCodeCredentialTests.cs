@@ -166,7 +166,7 @@ namespace Azure.Identity.Tests
                 return DiscoveryInstanceResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/v2.0/.well-known/openid-configuration"))
             {
                 return OpenIdConfigurationResponse;
             }

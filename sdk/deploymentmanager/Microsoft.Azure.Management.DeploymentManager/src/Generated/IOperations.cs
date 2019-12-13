@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.DeploymentManager
     public partial interface IOperations
     {
         /// <summary>
-        /// Gets an operation resource.
+        /// Lists the supported operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,6 +41,6 @@ namespace Microsoft.Azure.Management.DeploymentManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IList<Operation>>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OperationsList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

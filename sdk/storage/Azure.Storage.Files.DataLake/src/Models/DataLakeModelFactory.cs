@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         #region FileDownloadDetails
         /// <summary>
-        /// Creates a new FileDownloadDetails instance for mocking.
+        /// Creates a new <see cref="FileDownloadDetails"/> instance for mocking.
         /// </summary>
         public static FileDownloadDetails FileDownloadDetails(
             DateTimeOffset lastModified,
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileDownloadInfo
         /// <summary>
-        /// Creates a new FileDownloadInfo instance for mocking.
+        /// Creates a new <see cref="FileDownloadInfo"/> instance for mocking.
         /// </summary>
         public static FileDownloadInfo FileDownloadInfo(
             long contentLength,
@@ -84,7 +84,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemInfo
         /// <summary>
-        /// Creates a new FileSystemInfo instance for mocking.
+        /// Creates a new <see cref="FileSystemInfo"/> instance for mocking.
         /// </summary>
         public static FileSystemInfo FileSystemInfo(
             ETag etag,
@@ -98,7 +98,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemItem
         /// <summary>
-        /// Creates a new FileSystemItem instance for mocking.
+        /// Creates a new <see cref="FileSystemItem"/> instance for mocking.
         /// </summary>
         public static FileSystemItem FileSystemItem(
             string name,
@@ -112,7 +112,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemProperties
         /// <summary>
-        /// Creates a new FileSystemProperties instance for mocking.
+        /// Creates a new <see cref="FileSystemProperties"/> instance for mocking.
         /// </summary>
         public static FileSystemProperties FileSystemProperties(
             DateTimeOffset lastModified,
@@ -138,7 +138,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region Lease
         /// <summary>
-        /// Creates a new Lease instance for mocking.
+        /// Creates a new <see cref="DataLakeLease"/> instance for mocking.
         /// </summary>
         public static DataLakeLease Lease(
             ETag eTag,
@@ -156,25 +156,25 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathAccessControl
         /// <summary>
-        /// Creates a new PathAccessControl instance for mocking.
+        /// Creates a new <see cref="PathAccessControl"/> instance for mocking.
         /// </summary>
         public static PathAccessControl PathAccessControl(
             string owner,
             string group,
-            string permissions,
-            string acl)
+            PathPermissions permissions,
+            IList<PathAccessControlItem> acl)
             => new PathAccessControl()
             {
                 Owner = owner,
                 Group = group,
                 Permissions = permissions,
-                Acl = acl
+                AccessControlList = acl
             };
         #endregion PathAccessControl
 
         #region PathContentInfo
         /// <summary>
-        /// Creates a new PathContentInfo instance for mocking.
+        /// Creates a new <see cref="PathContentInfo"/> instance for mocking.
         /// </summary>
         public static PathContentInfo PathContentInfo(
             string contentHash,
@@ -208,7 +208,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathCreateInfo
         /// <summary>
-        /// Creates a new PathCreateInfo instance for mocking.
+        /// Creates a new <see cref="PathCreateInfo"/> instance for mocking.
         /// </summary>
         public static PathCreateInfo PathCreateInfo(
             PathInfo pathInfo,
@@ -222,7 +222,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathInfo
         /// <summary>
-        /// Creates a new PathInfo instance for mocking.
+        /// Creates a new <see cref="PathInfo"/> instance for mocking.
         /// </summary>
         public static PathInfo PathInfo(
             ETag eTag,
@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathItem
         /// <summary>
-        /// Creates a new PathItem instance for mocking.
+        /// Creates a new <see cref="PathItem"/> instance for mocking.
         /// </summary>
         public static PathItem PathItem(
             string name,
@@ -262,7 +262,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathProperties
         /// <summary>
-        /// Creates a new PathProperties instance for mocking.
+        /// Creates a new <see cref="PathProperties"/> instance for mocking.
         /// </summary>
         public static PathProperties PathProperties(
             DateTimeOffset lastModified,
@@ -326,7 +326,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region UserDelegationKey
         /// <summary>
-        /// Creates a new UserDelegationKey instance for mocking.
+        /// Creates a new <see cref="UserDelegationKey"/> instance for mocking.
         /// </summary>
         public static UserDelegationKey UserDelegationKey(
             string signedObjectId,
