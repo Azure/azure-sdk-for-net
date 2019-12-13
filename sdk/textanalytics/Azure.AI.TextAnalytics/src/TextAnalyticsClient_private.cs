@@ -71,19 +71,32 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract KeyPhrases
 
-        #region Entity Linking
-        private static async Task<Response<ExtractLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        #region Linked Entities
+        private static async Task<Response<RecognizeLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
-            ExtractLinkedEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
+            RecognizeLinkedEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<ExtractLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response, IDictionary<string, int> idToIndexMap) =>
+        private static Response<RecognizeLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
 
-        private void BuildUriForRoute(string route, RequestUriBuilder builder, TextAnalysisOptions options)
+
+        #region Recognize Entities
+        private static async Task<Response<RecognizePiiEntitiesResultCollection>> CreateRecognizePiiEntitiesResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        {
+            RecognizePiiEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeRecognizePiiEntitiesResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
+            return Response.FromValue(result, response);
+        }
+
+        private static Response<RecognizePiiEntitiesResultCollection> CreateRecognizePiiEntitiesResponse(Response response, IDictionary<string, int> idToIndexMap) =>
+            Response.FromValue(TextAnalyticsServiceSerializer.DeserializeRecognizePiiEntitiesResponse(response.ContentStream, idToIndexMap), response);
+
+        #endregion
+
+        private void BuildUriForRoute(string route, RequestUriBuilder builder, TextAnalyticsOptions options)
         {
             builder.Reset(_baseUri);
             builder.AppendPath(TextAnalyticsRoute, escape: false);

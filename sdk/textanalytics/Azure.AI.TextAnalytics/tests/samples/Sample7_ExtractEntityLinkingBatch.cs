@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            ExtractLinkedEntitiesResultCollection results = client.ExtractEntityLinking(inputs, new TextAnalysisOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = client.ExtractEntityLinking(inputs, new TextAnalyticsOptions { IncludeStatistics = true });
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{results.ModelVersion}\"");

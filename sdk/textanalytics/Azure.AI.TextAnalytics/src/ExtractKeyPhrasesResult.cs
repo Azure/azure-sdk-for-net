@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class ExtractKeyPhrasesResult : TextAnalysisResult
+    public class ExtractKeyPhrasesResult : TextAnalyticsResult
     {
         internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, IList<string> keyPhrases)
             : base(id, statistics)

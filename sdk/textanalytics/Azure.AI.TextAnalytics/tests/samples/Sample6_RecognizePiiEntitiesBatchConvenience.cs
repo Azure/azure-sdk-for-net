@@ -24,12 +24,11 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<string>
             {
-                "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs.",
+                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
                 "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
-                "Is 998.214.865-68 your Brazilian CPF number?",
             };
 
-            RecognizeEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
 
             Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
             int i = 0;
