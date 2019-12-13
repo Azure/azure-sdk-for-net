@@ -17,13 +17,29 @@ namespace Microsoft.Azure.Management.Network
     using System.Threading;
     using System.Threading.Tasks;
 
-
     public static partial class ConnectionMonitorsOperationsExtensions
     {
-        public static async Task<ConnectionMonitorResult> CreateOrUpdateV1(this IConnectionMonitorsOperations operations,
-            CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Create or update a connection monitor.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing Network Watcher.
+        /// </param>
+        /// <param name='networkWatcherName'>
+        /// The name of the Network Watcher resource.
+        /// </param>
+        /// <param name='connectionMonitorName'>
+        /// The name of the connection monitor.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters that define the operation to create a connection monitor.
+        /// </param>
+        public static async Task<ConnectionMonitorResult> CreateOrUpdateV1(this IConnectionMonitorsOperations operations, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters)
         {
-            AzureOperationResponse<ConnectionMonitorResult> _respons = await operations.BeginCreateOrUpdateWithHttpMessagesV1Async(null, null, null, null, null, default(CancellationToken)).ConfigureAwait(false);
+            AzureOperationResponse<ConnectionMonitorResult> _respons = await ((ConnectionMonitorsOperations)operations).BeginCreateOrUpdateWithHttpMessagesV1Async(resourceGroupName, networkWatcherName, connectionMonitorName, parameters, null, default(CancellationToken)).ConfigureAwait(false);
 
             return _respons.Body;
         }
@@ -93,7 +109,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2019-11-01";
+            string apiVersion = "2019-06-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
