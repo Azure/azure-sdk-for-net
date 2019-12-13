@@ -804,7 +804,7 @@ namespace Azure.Messaging.EventHubs
 
             await using var connection = ConnectionFactory();
             await using var consumer = CreateConsumer(ConsumerGroup, connection, ProcessingConsumerOptions);
-            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken))
+            await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken).ConfigureAwait(false))
             {
                 using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                 diagnosticScope.AddAttribute("kind", "server");
@@ -1074,8 +1074,8 @@ namespace Azure.Messaging.EventHubs
             // avoid overlooking this kind of situation, we may want to claim an ownership when we have exactly the minimum amount of ownership,
             // but we are making sure there are no better candidates among the other event processors.
 
-            if (ownedPartitionsCount < minimumOwnedPartitionsCount ||
-                (ownedPartitionsCount == minimumOwnedPartitionsCount && !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
+            if (ownedPartitionsCount < minimumOwnedPartitionsCount
+                || (ownedPartitionsCount == minimumOwnedPartitionsCount && !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
