@@ -17,7 +17,7 @@ namespace Azure.Storage.Tests
             Assert.IsTrue(services.HasFlag(AccountSasServices.Files));
             Assert.IsTrue(services.HasFlag(AccountSasServices.Queues));
             Assert.IsTrue(services.HasFlag(AccountSasServices.Tables));
-            Assert.AreEqual(services.ToPermissionsString(), "bfqt"); // tables is not a supported permission, but we shouldn't throw
+            Assert.AreEqual(services.ToPermissionsString(), "bfqt");
         }
     }
 }
