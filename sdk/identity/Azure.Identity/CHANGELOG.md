@@ -1,5 +1,4 @@
-Release Histroy
-================
+# Release Histroy
 
 ## 1.2.0-preview.1 (Unreleased)
 

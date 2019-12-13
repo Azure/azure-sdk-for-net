@@ -1,5 +1,4 @@
-Release History
-================
+# Release History
 
 ## 1.0.0-preview.6
 
@@ -12,7 +11,7 @@ Release History
 - Pair of methods `SetReadOnly`/`ClearReadOnly` in `ConfigurationClient` are replaced with single method `SetReadOnly` with boolean parameter.
 - `SettingSelector.AsOf` property is renamed into `SettingSelector.AcceptDateTime`.
 
-## Major changes
+### Major changes
 
 - Added support for AAD. `ConfigurationClient` can be created using endpoint and any type of `TokenCredential`.
 - Added new overload for the method `ConfigurationClient.GetRevisions` that accepts key and optional label.

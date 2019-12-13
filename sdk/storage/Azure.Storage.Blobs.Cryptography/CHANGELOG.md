@@ -1,5 +1,4 @@
-Release History
-================
+# Release History
 
 ## 12.0.0-preview.5
 

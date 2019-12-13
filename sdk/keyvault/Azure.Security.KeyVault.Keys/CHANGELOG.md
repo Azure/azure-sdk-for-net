@@ -1,7 +1,6 @@
-Release History
-================
+# Release History
 
-## 4.1.0-preview.1
+## 4.1.0-preview.1 (Unreleased)
 
 ## 4.0.0 (2019-11)
 

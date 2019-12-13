@@ -1,5 +1,4 @@
-Release History
-================
+# Release History
 
 ## 12.1.0
 - Added check to enforce TokenCredential is used only over HTTPS

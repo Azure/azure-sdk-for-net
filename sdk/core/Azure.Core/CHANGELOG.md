@@ -1,7 +1,6 @@
-Release History
-================
+# Release History
 
-## 1.1.0-preview.1
+## 1.1.0-preview.1 (Unreleased)
 
 - Block bearer token authentication for non TLS protected endpoints.
 
