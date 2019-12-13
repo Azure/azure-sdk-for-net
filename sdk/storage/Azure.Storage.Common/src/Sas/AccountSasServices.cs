@@ -32,6 +32,12 @@ namespace Azure.Storage.Sas
         Files = 4,
 
         /// <summary>
+        /// Indicates whether Azure Table Storage resources are
+        /// accessible from the shared access signature.
+        /// </summary>
+        Tables = 8,
+
+        /// <summary>
         /// Indicates all services are accessible from the shared
         /// access signature.
         /// </summary>

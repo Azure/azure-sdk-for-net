@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -32,16 +31,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the StoreReadSettings class.
         /// </summary>
-        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
         /// connection count for the source data store. Type: integer (or
         /// Expression with resultType integer).</param>
-        public StoreReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object))
+        public StoreReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object))
         {
             AdditionalProperties = additionalProperties;
-            Type = type;
             MaxConcurrentConnections = maxConcurrentConnections;
             CustomInit();
         }
@@ -59,30 +56,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the read setting type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
         /// Gets or sets the maximum concurrent connection count for the source
         /// data store. Type: integer (or Expression with resultType integer).
         /// </summary>
         [JsonProperty(PropertyName = "maxConcurrentConnections")]
         public object MaxConcurrentConnections { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-        }
     }
 }

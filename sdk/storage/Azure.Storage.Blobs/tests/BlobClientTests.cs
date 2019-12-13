@@ -33,7 +33,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -585,6 +585,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -608,6 +609,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -816,8 +818,8 @@ namespace Azure.Storage.Blobs.Test
             using var stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
-            // Create a CancellationToken that times out after .1s
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.1));
+            // Create a CancellationToken that times out after .01s
+            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
             CancellationToken token = source.Token;
 
             // Verifying downloading will cancel
