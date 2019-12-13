@@ -17,6 +17,7 @@ using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs
@@ -28,6 +29,12 @@ namespace Azure.Messaging.EventHubs
     ///
     public class EventProcessorClient
     {
+        /// <summary>
+        ///   The instance of <see cref="EventProcessorEventSource" />.
+        /// </summary>
+        ///
+        internal EventProcessorEventSource Logger { get; set; } = EventProcessorEventSource.Log;
+
         /// <summary>The delegate to invoke when attempting to update a checkpoint using an empty event.</summary>
         private static readonly Func<CancellationToken, Task> EmptyEventUpdateCheckpoint = cancellationToken => throw new InvalidOperationException(Resources.CannotCreateCheckpointForEmptyEvent);
 
@@ -571,6 +578,7 @@ namespace Azure.Messaging.EventHubs
 
                             // Start the main running task.  It is responsible for managing the active partition processing tasks and
                             // for partition load balancing among multiple event processor instances.
+                            Logger.EventProcessorStart(Identifier);
 
                             ActiveLoadBalancingTask = RunAsync(RunningTaskTokenSource.Token);
                         }
@@ -606,6 +614,7 @@ namespace Azure.Messaging.EventHubs
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
+            Logger.EventProcessorStop(Identifier);
 
             try
             {
@@ -630,10 +639,12 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
                     {
+                        Logger.EventProcessorStopError(Identifier, ex.Message);
                         // Nothing to do here.  These exceptions are expected.
                     }
                     catch (Exception ex)
                     {
+                        Logger.EventProcessorStopError(Identifier, ex.Message);
                         loadBalancingException = ex;
                     }
 
@@ -657,6 +668,8 @@ namespace Azure.Messaging.EventHubs
                     {
                         throw loadBalancingException;
                     }
+
+                    Logger.EventProcessorStopCompleted(Identifier);
                 }
             }
             finally
@@ -833,6 +846,7 @@ namespace Azure.Messaging.EventHubs
         ///
         private async Task RunAsync(CancellationToken cancellationToken)
         {
+            Logger.StartLoadBalacing();
             // We'll use this connection to retrieve an updated list of partition ids from the service.
 
             await using var consumer = CreateConsumer(ConsumerGroup, ConnectionFactory(), ProcessingConsumerOptions);
@@ -878,6 +892,7 @@ namespace Azure.Messaging.EventHubs
                     completeOwnershipList = (await StorageManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken)
                         .ConfigureAwait(false))
                         .ToList();
+                    Logger.CompleteOwnershipRecordsCount(completeOwnershipList.Count());
                 }
                 catch (Exception ex)
                 {
@@ -885,7 +900,7 @@ namespace Azure.Messaging.EventHubs
 
                     // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
                     // without an updated ownership list.
-
+                    Logger.ListOwnershipAsyncError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message);
                     var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListOwnership, ex, cancellationToken);
                     _ = OnProcessErrorAsync(errorEventArgs);
                 }
@@ -899,6 +914,7 @@ namespace Azure.Messaging.EventHubs
                     .Where(ownership =>
                         utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration
                         && !string.IsNullOrEmpty(ownership.OwnerIdentifier));
+                Logger.ActiveOwnershipRecordsCount(activeOwnership.Count());
 
                 // Active ownership list may be null if complete ownership list retrieval has failed.  There's no point in continuing the current
                 // cycle if that is the case.
@@ -918,6 +934,7 @@ namespace Azure.Messaging.EventHubs
                     {
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
+                        Logger.GetPartitionIdsAsyncError(FullyQualifiedNamespace, EventHubName, ConsumerGroup, ex.Message);
                         var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationGetPartitionIds, ex, cancellationToken);
                         _ = OnProcessErrorAsync(errorEventArgs);
                     }
@@ -998,6 +1015,7 @@ namespace Azure.Messaging.EventHubs
             // if it owns no partitions.
 
             var minimumOwnedPartitionsCount = partitionIds.Length / partitionDistribution.Keys.Count;
+            Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount);
             var ownedPartitionsCount = partitionDistribution[Identifier];
 
             // There are two possible situations in which we may need to claim a partition ownership.
@@ -1020,6 +1038,7 @@ namespace Azure.Messaging.EventHubs
                 var unclaimedPartitions = partitionIds
                     .Except(activeOwnership.Select(ownership => ownership.PartitionId))
                     .ToArray();
+                Logger.UnclaimedPartitions(unclaimedPartitions);
 
                 if (unclaimedPartitions.Length > 0)
                 {
@@ -1031,6 +1050,7 @@ namespace Azure.Messaging.EventHubs
 
                 // Only try to steal partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
                 // maximum owned partition count should be targeted.
+                Logger.ShouldOwnMorePartitions(Identifier);
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
 
@@ -1056,6 +1076,7 @@ namespace Azure.Messaging.EventHubs
 
                 if (stealablePartitions.Length > 0)
                 {
+                    Logger.StealPartitions();
                     var index = RandomNumberGenerator.Value.Next(stealablePartitions.Length);
                     var returnTask = ClaimOwnershipAsync(stealablePartitions[index], completeOwnershipEnumerable, cancellationToken);
 
@@ -1080,6 +1101,7 @@ namespace Azure.Messaging.EventHubs
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.StartPartitionProcessing(partitionId);
 
             var initializingEventArgs = new PartitionInitializingEventArgs(partitionId, EventPosition.Earliest, cancellationToken);
             await OnPartitionInitializingAsync(initializingEventArgs).ConfigureAwait(false);
@@ -1099,6 +1121,7 @@ namespace Azure.Messaging.EventHubs
                 // This should happen on the next load balancing loop as long as this instance still owns the
                 // partition.
 
+                Logger.StartPartitionProcessingError(partitionId, ex.Message);
                 var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListCheckpoints, ex, cancellationToken);
                 _ = OnProcessErrorAsync(errorEventArgs);
 
@@ -1138,6 +1161,7 @@ namespace Azure.Messaging.EventHubs
                                                                  CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.StopPartitionProcessing(partitionId, reason);
 
             if (ActivePartitionProcessors.TryRemove(partitionId, out var activeTaskAndTokenSource))
             {
@@ -1147,9 +1171,11 @@ namespace Azure.Messaging.EventHubs
                 {
                     tokenSource.Cancel();
                     await processingTask.ConfigureAwait(false);
+                    Logger.StoppedPartitionProcessing(partitionId, reason);
                 }
                 catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
                 {
+                    Logger.StopPartitionProcessingError(partitionId, reason, ex.Message);
                     // Nothing to do here.  These exceptions are expected.
                 }
                 catch (Exception ex)
@@ -1159,7 +1185,8 @@ namespace Azure.Messaging.EventHubs
                     // TODO: should the handler be notified in the processing task instead?  User will be notified
                     // earlier.
 
-                    var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
+                   Logger.StopPartitionProcessingError(partitionId, reason, ex.Message);
+                   var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
                     _ = OnProcessErrorAsync(errorEventArgs);
                 }
                 finally
@@ -1191,6 +1218,7 @@ namespace Azure.Messaging.EventHubs
                                                                    IEnumerable<PartitionOwnership> completeOwnershipEnumerable,
                                                                    CancellationToken cancellationToken)
         {
+            Logger.ClaimOwnership(partitionId);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
@@ -1221,6 +1249,7 @@ namespace Azure.Messaging.EventHubs
 
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
+                Logger.ClaimOwnershipError(partitionId, ex.Message);
                 var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationClaimOwnership, ex, cancellationToken);
                 _ = OnProcessErrorAsync(errorEventArgs);
 
@@ -1241,6 +1270,7 @@ namespace Azure.Messaging.EventHubs
         private async Task RenewOwnershipAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.RenewOwnership();
 
             IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
@@ -1269,6 +1299,7 @@ namespace Azure.Messaging.EventHubs
                 // If ownership renewal fails just give up and try again in the next cycle.  The processor may
                 // end up losing some of its ownership.
 
+                Logger.RenewOwnershipError(ex.Message);
                 var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationRenewOwnership, ex, cancellationToken);
                 _ = OnProcessErrorAsync(errorEventArgs);
 
