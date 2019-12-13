@@ -11,6 +11,7 @@ namespace DeploymentManager.Tests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using Xunit;
 
@@ -32,6 +33,14 @@ namespace DeploymentManager.Tests
         private const string InvalidParametersArtifactSourceRelativePath = ArtifactRoot + @"\" + InvalidParametersFileName;
         private const string ParametersCopyArtifactSourceRelativePath = ArtifactRoot + @"\" + ParametersCopyFileName;
         private const string TemplateCopyArtifactSourceRelativePath = ArtifactRoot + @"\" + TemplateCopyFileName;
+
+        /// <summary>
+        /// Terminal ARM deployment states
+        /// </summary>
+        private static string[] terminalStates =
+        {
+            "Succeeded", "Failed", "Canceled"
+        };
 
         /// <summary>
         /// Tests the end to end scenarios by creating all dependent resources that are part of the API.
@@ -104,22 +113,48 @@ namespace DeploymentManager.Tests
 
                     // Test Update topology.
                     serviceTopology.ArtifactSourceId = artifactSource.Id;
-                    var updatedStepResource = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
+                    var updatedServiceTopology = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
                         resourceGroupName: clientHelper.ResourceGroupName,
                         serviceTopologyName: serviceTopologyName,
                         serviceTopologyInfo: serviceTopology);
 
-                    this.ValidateTopology(serviceTopology, updatedStepResource);
+                    this.ValidateTopology(serviceTopology, updatedServiceTopology);
+
+                    // Add second topology to test list operation.
+                    var secondTopologyName = serviceTopologyName + "2";
+                    serviceTopology.ArtifactSourceId = artifactSource.Id;
+                    var secondServiceTopology = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: secondTopologyName,
+                        serviceTopologyInfo: serviceTopology);
+
+                    // Test list topology.
+                    var serviceTopologies = deploymentManagerClient.ServiceTopologies.List(
+                        resourceGroupName: clientHelper.ResourceGroupName);
+
+                    Assert.Equal(2, serviceTopologies.Count);
+                    this.ValidateTopology(updatedServiceTopology, serviceTopologies.ToList().First(st => st.Name.Equals(serviceTopology.Name, StringComparison.InvariantCultureIgnoreCase)));
 
                     // Test Delete topology.
                     deploymentManagerClient.ServiceTopologies.Delete(
                         resourceGroupName: clientHelper.ResourceGroupName,
                         serviceTopologyName: serviceTopologyName);
 
+                    deploymentManagerClient.ServiceTopologies.Delete(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: secondTopologyName);
+
                     var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.ServiceTopologies.Get(
                         resourceGroupName: clientHelper.ResourceGroupName,
                         serviceTopologyName: serviceTopologyName));
                     Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+
+                    // Test list artifact sources.
+                    var artifactSources = deploymentManagerClient.ArtifactSources.List(
+                        resourceGroupName: clientHelper.ResourceGroupName);
+
+                    Assert.Equal(2, artifactSources.Count);
+                    this.ValidateArtifactSource(artifactSource, artifactSources.ToList().First(@as => @as.Name.Equals(artifactSource.Name, StringComparison.InvariantCultureIgnoreCase)));
 
                     // Cleanup artifact source
                     this.CleanupArtifactSources(artifactSourceName, location, deploymentManagerClient, clientHelper);
@@ -188,11 +223,32 @@ namespace DeploymentManager.Tests
 
             this.ValidateService(service, updatedService);
 
+            // Add second service to test list operation.
+            var secondServiceName = serviceName + "2";
+            var secondService = deploymentManagerClient.Services.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: secondServiceName,
+                serviceInfo: service);
+
+            // Test list services.
+            var services = deploymentManagerClient.Services.List(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name);
+
+            Assert.Equal(2, services.Count);
+            this.ValidateService(updatedService, services.ToList().First(st => st.Name.Equals(service.Name, StringComparison.InvariantCultureIgnoreCase)));
+
             // Test Delete service.
             deploymentManagerClient.Services.Delete(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
                 serviceName: serviceName);
+
+            deploymentManagerClient.Services.Delete(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: secondServiceName);
 
             var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.Services.Get(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -280,14 +336,23 @@ namespace DeploymentManager.Tests
             serviceUnit.DeploymentMode = DeploymentMode.Complete;
             serviceUnit.Artifacts.ParametersArtifactSourceRelativePath = ParametersCopyFileName;
             serviceUnit.Artifacts.TemplateArtifactSourceRelativePath = TemplateCopyFileName;
-            var updatedService = deploymentManagerClient.ServiceUnits.CreateOrUpdate(
+            var updatedServiceUnit = deploymentManagerClient.ServiceUnits.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
                 serviceName: serviceName,
                 serviceUnitName: serviceUnitName,
                 serviceUnitInfo: serviceUnit);
 
-            this.ValidateServiceUnit(serviceUnit, updatedService);
+            this.ValidateServiceUnit(serviceUnit, updatedServiceUnit);
+
+            // Test list service units
+            var serviceUnits = deploymentManagerClient.ServiceUnits.List(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: serviceName);
+
+            Assert.Equal(2, serviceUnits.Count);
+            this.ValidateServiceUnit(updatedServiceUnit, serviceUnits.ToList().First(st => st.Name.Equals(updatedServiceUnit.Name, StringComparison.InvariantCultureIgnoreCase)));
 
             // Test Delete service unit.
             deploymentManagerClient.ServiceUnits.Delete(
@@ -366,6 +431,8 @@ namespace DeploymentManager.Tests
                 stepInfo: getStepResource);
 
             this.ValidateStep(getStepResource, updatedStepResource);
+            
+            this.HealthCheckStepTests(location, clientHelper, deploymentManagerClient);
 
             // Test Delete step.
             deploymentManagerClient.Steps.Delete(
@@ -377,6 +444,156 @@ namespace DeploymentManager.Tests
                 stepName: stepName));
             Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
         }
+
+        private void HealthCheckStepTests(
+            string location,
+            DeploymentManagerClientHelper clientHelper,
+            AzureDeploymentManagerClient deploymentManagerClient)
+        {
+            // Test Create step.
+            var stepName = clientHelper.ResourceGroupName + "HealthCheckStep";
+
+            var healthChecks = new List<RestHealthCheck>();
+
+            healthChecks.Add(new RestHealthCheck()
+            {
+                Name = "webAppHealthCheck",
+                Request = new RestRequest()
+                {
+                    Method = RestRequestMethod.GET,
+                    Uri = "https://clientvalidations.deploymentmanager.net/healthstatus",
+                    Authentication = new ApiKeyAuthentication()
+                    {
+                        Name = "code",
+                        InProperty = RestAuthLocation.Header,
+                        Value = "AuthValue"
+                    }
+                },
+                Response = new RestResponse()
+                {
+                    SuccessStatusCodes = new List<string> { "200", "204" },
+                    Regex = new RestResponseRegex()
+                    {
+                        MatchQuantifier = RestMatchQuantifier.All,
+                        Matches = new List<string>
+                        {
+                            "Contoso-Service-EndToEnd",
+                            "(?i)\"health_status\":((.|\n)*)\"(green|yellow)\"",
+                            "(?mi)^(\"application_host\": 94781052)$"
+                        }
+                    }
+                }
+            });
+
+            healthChecks.Add(new RestHealthCheck()
+            {
+                Name = "webBackEndHealthCheck",
+                Request = new RestRequest()
+                {
+                    Method = RestRequestMethod.GET,
+                    Uri = "https://clientvalidations.deploymentmanager.net/healthstatus",
+                    Authentication = new RolloutIdentityAuthentication()
+                },
+                Response = new RestResponse()
+                {
+                    SuccessStatusCodes = new List<string> { "200", "204" },
+                    Regex = new RestResponseRegex()
+                    {
+                        MatchQuantifier = RestMatchQuantifier.All,
+                        Matches = new List<string>
+                        {
+                            "Contoso-Service-Backend",
+                            "(?i)\"health_status\":((.|\n)*)\"(green|yellow)\"",
+                            "(?mi)^(\"application_host\": 94781055)$"
+                        }
+                    }
+                }
+            });
+
+            var stepProperties = new HealthCheckStepProperties()
+            {
+                Attributes = new RestHealthCheckStepAttributes()
+                {
+                    WaitDuration = "PT10M",
+                    MaxElasticDuration = "PT15M",
+                    HealthyStateDuration = "PT30M",
+                    HealthChecks = healthChecks
+                }
+            };
+
+            var inputStep = new StepResource(
+                location: location,
+                properties: stepProperties,
+                name: stepName);
+
+            var stepResponse = deploymentManagerClient.Steps.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName,
+                stepInfo: inputStep);
+
+            this.ValidateHealthCheckStep(inputStep, stepResponse);
+
+            // Test list steps.
+            var steps = deploymentManagerClient.Steps.List(
+                resourceGroupName: clientHelper.ResourceGroupName);
+            Assert.Equal(2, steps.Count);
+            this.ValidateHealthCheckStep(inputStep, steps.ToList().First(s => s.Name.Equals(inputStep.Name, StringComparison.InvariantCultureIgnoreCase)));
+
+            deploymentManagerClient.Steps.Delete(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName);
+
+            var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.Steps.Get(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName));
+            Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+        }
+
+        private void ValidateHealthCheckStep(StepResource inputStep, StepResource stepResponse)
+        {
+            Assert.NotNull(stepResponse);
+            Assert.Equal(inputStep.Location, stepResponse.Location);
+            Assert.Equal(inputStep.Name, stepResponse.Name);
+
+            var stepProperties = stepResponse.Properties as HealthCheckStepProperties;
+            Assert.NotNull(stepProperties);
+            Assert.Equal(((HealthCheckStepProperties)inputStep.Properties).Attributes.WaitDuration, stepProperties.Attributes.WaitDuration);
+            Assert.Equal(((HealthCheckStepProperties)inputStep.Properties).Attributes.MaxElasticDuration, stepProperties.Attributes.MaxElasticDuration);
+            Assert.Equal(((HealthCheckStepProperties)inputStep.Properties).Attributes.HealthyStateDuration, stepProperties.Attributes.HealthyStateDuration);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks.Count, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks.Count);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Name, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Name);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Method, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Method);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Uri, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Uri);
+            Assert.Equal(
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication).Name, 
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication).Name);
+            Assert.Equal(
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication).InProperty, 
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication).InProperty);
+            Assert.Equal(
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Request.Authentication).Value, 
+                ((ApiKeyAuthentication)((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Request.Authentication).Value);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Response.SuccessStatusCodes.Count, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Response.SuccessStatusCodes.Count);
+            Assert.Equal(
+                ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Response.Regex.MatchQuantifier, 
+                ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Response.Regex.MatchQuantifier);
+
+            foreach (var regex in ((RestHealthCheckStepAttributes)((HealthCheckStepProperties)inputStep.Properties).Attributes).HealthChecks[0].Response.Regex.Matches)
+            {
+                Assert.True(
+                    ((RestHealthCheckStepAttributes)stepProperties.Attributes).HealthChecks[0].Response.Regex.Matches.Contains(regex));
+            }
+         }
 
         private void ValidateStep(StepResource inputStep, StepResource stepResponse)
         {
@@ -413,14 +630,14 @@ namespace DeploymentManager.Tests
                 }
             };
 
-            var stepGroup = new Step(
+            var stepGroup = new StepGroup(
                 name: "First_Region",
                 deploymentTargetId: serviceUnitId)
             {
                 PreDeploymentSteps = new List<PrePostStep> () { new PrePostStep(stepId) }
             };
 
-            var stepGroupForFailureRollout = new Step(
+            var stepGroupForFailureRollout = new StepGroup(
                 name: "FirstRegion",
                 deploymentTargetId: failureServiceUnitId);
 
@@ -430,7 +647,7 @@ namespace DeploymentManager.Tests
                 identity: identity,
                 targetServiceTopologyId: serviceTopologyId,
                 artifactSourceId: artifactSourceId,
-                stepGroups: new List<Step>() { stepGroup });
+                stepGroups: new List<StepGroup>() { stepGroup });
 
             var createRolloutResponse = deploymentManagerClient.Rollouts.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -446,7 +663,7 @@ namespace DeploymentManager.Tests
                 identity: identity,
                 targetServiceTopologyId: serviceTopologyId,
                 artifactSourceId: artifactSourceId,
-                stepGroups: new List<Step>() { stepGroupForFailureRollout });
+                stepGroups: new List<StepGroup>() { stepGroupForFailureRollout });
 
             var failureRolloutResponse = deploymentManagerClient.Rollouts.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -477,6 +694,12 @@ namespace DeploymentManager.Tests
                 rolloutName,
                 deploymentManagerClient,
                 clientHelper);
+
+            var rollouts = deploymentManagerClient.Rollouts.List(
+                resourceGroupName: clientHelper.ResourceGroupName);
+
+            Assert.Equal(2, rollouts.Count);
+            Assert.NotEmpty(rollouts.Where(r => r.Name.Equals(failureRolloutName, StringComparison.InvariantCultureIgnoreCase)));
 
             // Test delete rollout.
             deploymentManagerClient.Rollouts.Delete(
@@ -520,9 +743,15 @@ namespace DeploymentManager.Tests
                 rollout = deploymentManagerClient.Rollouts.Get(
                    resourceGroupName: clientHelper.ResourceGroupName,
                    rolloutName: rolloutName);
-            } while (rollout.Status == "Running");
+            } while (!this.IsRolloutInTerminalState(rollout.Status));
 
             return rollout;
+        }
+
+        private bool IsRolloutInTerminalState(string status)
+        {
+            return EndToEndFunctionalTests.terminalStates.Any(
+                s => s.Equals(status, StringComparison.OrdinalIgnoreCase));
         }
 
         private void ValidateRollout(RolloutRequest rolloutRequest, RolloutRequest rolloutResponse)
