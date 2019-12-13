@@ -1041,7 +1041,7 @@ namespace Azure.Messaging.EventHubs
         ///   Finds and tries to claim an ownership if this processor instance is eligible to increase its ownership list.
         /// </summary>
         ///
-        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service.</param>
+        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the storage service.</param>
         /// <param name="unclaimedPartitions">The set of partitionIds that are currently unclaimed.</param>
         /// <param name="partitionCount">The count of partitions.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
