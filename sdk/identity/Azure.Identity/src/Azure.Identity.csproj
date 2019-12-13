@@ -18,9 +18,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" />
-    <PackageReference Include="Microsoft.WSMan.Management" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />

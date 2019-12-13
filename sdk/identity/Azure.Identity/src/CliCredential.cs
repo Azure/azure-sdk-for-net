@@ -6,18 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Management.Automation;
+using System.Globalization;
+using System.Diagnostics;
 using Newtonsoft.Json;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token. More information on how
-    /// to gengerate an access token can be found here:
-    /// https://docs.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-get-access-token
+    /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token.
     /// </summary>
     public class CliCredential : TokenCredential,IExtendedTokenCredential
     {
+        private const string AzureCLINotInstalled = "Azure CLI not installed";
+        private const string AzureCLIError = "'az' is not recognized as an internal or external command, operable program or batch file.";
+
         private readonly CredentialPipeline _pipeline;
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure CLI service, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains a access token from Azure CLI credential, using this access token to authenticate. This method called by Azure SDK clients.
         /// </summary>
         /// <param name="requestContext"></param>
         /// <param name="cancellationToken"></param>
@@ -81,22 +83,34 @@ namespace Azure.Identity
             {
                 string command = ScopeUtilities.ScopesToResource(requestContext.Scopes);
                 string extendCommand = "az account get-access-token --resource " + command;
-                string cliResult = string.Empty;
 
-                using (PowerShell powerShell = PowerShell.Create())
+                ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd", "/c" + extendCommand)
                 {
-                    IAsyncResult pSObjects = powerShell.AddScript(extendCommand).BeginInvoke();
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
 
-                    foreach (PSObject pSObject in powerShell.EndInvoke(pSObjects))
-                    {
-                        cliResult += pSObject.BaseObject.ToString();
-                    }
+                Process proc = new Process
+                {
+                    StartInfo = procStartInfo
+                };
+
+                proc.Start();
+
+                string error = proc.StandardError.ReadToEnd();
+                if (string.Equals(error, AzureCLIError, StringComparison.Ordinal))
+                {
+                    throw new Exception(AzureCLINotInstalled);
                 }
+
+                string cliResult = proc.StandardOutput.ReadToEnd();
 
                 Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(cliResult);
                 result.TryGetValue("accessToken", out string accessToken);
                 result.TryGetValue("expiresOn", out string expiresOnValue);
-                DateTimeOffset dateTimeOffset = DateTimeOffset.Parse(expiresOnValue, null, System.Globalization.DateTimeStyles.AssumeUniversal);
+                DateTimeOffset dateTimeOffset = DateTimeOffset.Parse(expiresOnValue, null, DateTimeStyles.AssumeUniversal);
 
                 AccessToken token = new AccessToken(accessToken, dateTimeOffset);
 
