@@ -86,6 +86,7 @@ namespace Azure.Identity
 
                 ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd", "/c" + extendCommand)
                 {
+                    UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     CreateNoWindow = true
