@@ -651,11 +651,11 @@ namespace Azure.Messaging.EventHubs
                         .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.Shutdown, CancellationToken.None)))
                         .ConfigureAwait(false);
 
-                        // Relinquish ownership of all owned partitions.
+                    // Relinquish ownership of all owned partitions.
 
-                        await RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
+                    await RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
 
-                        InstanceOwnership.Clear();
+                    InstanceOwnership.Clear();
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                     // would have a race condition where the user could update the processing handlers while some pumps are still running.
@@ -1041,7 +1041,7 @@ namespace Azure.Messaging.EventHubs
         ///   Finds and tries to claim an ownership if this processor instance is eligible to increase its ownership list.
         /// </summary>
         ///
-        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service provided by the user.</param>
+        /// <param name="completeOwnershipEnumerable">A complete enumerable of ownership obtained from the stored service.</param>
         /// <param name="unclaimedPartitions">The set of partitionIds that are currently unclaimed.</param>
         /// <param name="partitionCount">The count of partitions.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -1075,8 +1075,7 @@ namespace Azure.Messaging.EventHubs
             // but we are making sure there are no better candidates among the other event processors.
 
             if (ownedPartitionsCount < minimumOwnedPartitionsCount ||
-                (ownedPartitionsCount == minimumOwnedPartitionsCount &&
-                    !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
+                (ownedPartitionsCount == minimumOwnedPartitionsCount && !ActiveOwnershipWithDistribution.Values.Any(partitions => partitions.Count < minimumOwnedPartitionsCount)))
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
@@ -1102,20 +1101,22 @@ namespace Azure.Messaging.EventHubs
 
                 foreach (var key in ActiveOwnershipWithDistribution.Keys)
                 {
-                    if (ActiveOwnershipWithDistribution[key].Count < maximumOwnedPartitionsCount || key == Identifier)
+                    var ownedPartitions = ActiveOwnershipWithDistribution[key];
+
+                    if (ownedPartitions.Count < maximumOwnedPartitionsCount || key == Identifier)
                     {
                         // Skip if the common case is true.
 
                         continue;
                     }
-                    if (ActiveOwnershipWithDistribution[key].Count == maximumOwnedPartitionsCount)
+                    if (ownedPartitions.Count == maximumOwnedPartitionsCount)
                     {
-                        ActiveOwnershipWithDistribution[key]
+                        ownedPartitions
                             .ForEach(ownership => partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
                     }
                     else
                     {
-                        ActiveOwnershipWithDistribution[key]
+                        ownedPartitions
                             .ForEach(ownership => partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Add(ownership.PartitionId));
                     }
                 }
@@ -1140,6 +1141,7 @@ namespace Azure.Messaging.EventHubs
                 else if (ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
                     // If any stealable partitions were found, randomly pick one of them to claim.
+
                     var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
 
                     var returnTask = ClaimOwnershipAsync(
