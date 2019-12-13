@@ -52,14 +52,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk; only settable for UltraSSD disks. MBps means millions of
         /// bytes per second - MB here uses the ISO notation, of powers of
         /// 10.</param>
+        /// <param name="encryption">Encryption property can be used to encrypt
+        /// data at rest with customer managed keys or platform managed
+        /// keys.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), Encryption encryption = default(Encryption), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
             EncryptionSettingsCollection = encryptionSettingsCollection;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            Encryption = encryption;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -112,6 +116,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? DiskMBpsReadWrite { get; set; }
 
         /// <summary>
+        /// Gets or sets encryption property can be used to encrypt data at
+        /// rest with customer managed keys or platform managed keys.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public Encryption Encryption { get; set; }
+
+        /// <summary>
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
@@ -133,6 +144,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (EncryptionSettingsCollection != null)
             {
                 EncryptionSettingsCollection.Validate();
+            }
+            if (Encryption != null)
+            {
+                Encryption.Validate();
             }
         }
     }
