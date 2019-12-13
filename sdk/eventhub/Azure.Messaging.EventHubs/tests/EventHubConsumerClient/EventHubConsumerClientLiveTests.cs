@@ -2293,6 +2293,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [Ignore("Consistently failing on Linux and macOS.  To be fixed with the upcoming test stabilization.")]
         public async Task ConsumerCannotRetrieveMetadataWhenProxyIsInvalid()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))

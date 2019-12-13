@@ -189,25 +189,7 @@ For detailed information about these and other exceptions that may occur, please
 
 ## Next steps
 
-Beyond the scenarios discussed, the Azure Event Hubs Event Prcessor library offers support for additional scenarios to help take advantage of the full feature set of the `EventProcessorClient`.  In order to help explore some of these scenarios, the library offers a [project of samples](./samples) to serve as an illustration for common scenarios.
-
-The samples are accompanied by a console application which you can use to execute and debug them interactively.  The simplest way to begin is to launch the project for debugging in Visual Studio or your preferred IDE and provide the Event Hubs connection information in response to the prompts.  
-
-Each of the samples is self-contained and focused on illustrating one specific scenario.  Each is numbered, with the lower numbers concentrating on basic scenarios and building to more complex scenarios as they increase; though each sample is independent, it will assume an understanding of the content discussed in earlier samples.
-
-The available samples are:
-
-- [Hello world](./samples/Sample01_HelloWorld.cs)  
-  An introduction to the Event Processor client, illustrating how to create the client and perform basic operations.
-
-- [Create an Event Processor client with custom options](./samples/Sample02_ProcessorWithCustomOptions.cs)  
-  An introduction to the Event Processor client, exploring additional options for creating the processor.
-
-- [Perform basic event processing](./samples/Sample03_BasicEventProcessing.cs)  
-  An introduction to the Event Processor client, illustrating how to perform basic event processing.
-
-- [Create checkpoints while processing](./samples/Sample04_BasicCheckpointing.cs)  
-  An introduction to the Event Processor client, illustrating how to create simple checkpoints.
+Beyond the scenarios discussed, the Azure Event Hubs Processor library offers support for additional scenarios to help take advantage of the full feature set of the `EventProcessorClient`.  In order to help explore some of these scenarios, the Event Hubs Processor client library offers a project of samples to serve as an illustration for common scenarios.  Please see the samples [README](./samples/README.md) for details.
 
 ## Contributing  
 

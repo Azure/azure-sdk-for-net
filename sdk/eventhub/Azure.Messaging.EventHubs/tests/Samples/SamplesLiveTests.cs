@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 using NUnit.Framework;
 

@@ -54,7 +54,8 @@ namespace Azure.Storage.Test.Shared
                     MaxRetries = Storage.Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
+                },
+                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
@@ -431,7 +432,8 @@ namespace Azure.Storage.Test.Shared
 
         internal StorageConnectionString GetConnectionString(
             SharedAccessSignatureCredentials credentials = default,
-            bool includeEndpoint = true)
+            bool includeEndpoint = true,
+            bool includeTable = false)
         {
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
@@ -447,11 +449,20 @@ namespace Azure.Storage.Test.Shared
                 default,
                 default);
 
+            (Uri, Uri) tableUri = default;
+            if (includeTable)
+            {
+                tableUri = StorageConnectionString.ConstructTableEndpoint(
+                    Constants.Https,
+                    TestConfigDefault.AccountName,
+                    default,
+                    default);
+            }
+
             return new StorageConnectionString(
                     credentials,
-                    blobUri,
-                    (default, default),
-                    (default, default));
+                    blobStorageUri: blobUri,
+                    tableStorageUri: tableUri);
         }
 
         public async Task EnableSoftDelete()

@@ -999,11 +999,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString
-                            // TODO: fix test. OwnerIdentifier is not accessible anymore.
-                            // onInitialize: eventArgs =>
-                            //     ownedPartitionsCount.AddOrUpdate(eventArgs.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
-                            // onStop: eventArgs =>
-                            //     ownedPartitionsCount.AddOrUpdate(eventArgs.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
+                        // TODO: fix test. OwnerIdentifier is not accessible anymore.
+                        // onInitialize: eventArgs =>
+                        //     ownedPartitionsCount.AddOrUpdate(eventArgs.Context.OwnerIdentifier, 1, (ownerId, value) => value + 1),
+                        // onStop: eventArgs =>
+                        //     ownedPartitionsCount.AddOrUpdate(eventArgs.Context.OwnerIdentifier, 0, (ownerId, value) => value - 1)
                         );
 
                     eventProcessorManager.AddEventProcessors(1);

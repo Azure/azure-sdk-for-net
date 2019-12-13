@@ -20,7 +20,10 @@ namespace Azure.Storage.Tests
         {
             var message = new HttpMessage(
                 CreateMockRequest(MockPrimaryUri),
-                new StorageResponseClassifier(MockSecondaryUri));
+                new StorageResponseClassifier()
+                {
+                    SecondaryStorageUri = MockSecondaryUri
+                });
 
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 
@@ -36,7 +39,10 @@ namespace Azure.Storage.Tests
         {
             var message = new HttpMessage(
                 CreateMockRequest(MockPrimaryUri),
-                new StorageResponseClassifier(MockSecondaryUri));
+                new StorageResponseClassifier()
+                {
+                    SecondaryStorageUri = MockSecondaryUri
+                });
 
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
@@ -53,7 +59,10 @@ namespace Azure.Storage.Tests
         {
             var message = new HttpMessage(
                 CreateMockRequest(MockSecondaryUri),
-                new StorageResponseClassifier(MockSecondaryUri));
+                new StorageResponseClassifier()
+                {
+                    SecondaryStorageUri = MockSecondaryUri
+                });
 
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockPrimaryUri.Host);
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
@@ -70,11 +79,13 @@ namespace Azure.Storage.Tests
         {
             var message = new HttpMessage(
                 CreateMockRequest(MockSecondaryUri),
-                new StorageResponseClassifier(MockSecondaryUri))
-
-            {
-                Response = new MockResponse(Constants.HttpStatusCode.NotFound)
-            };
+                new StorageResponseClassifier()
+                {
+                    SecondaryStorageUri = MockSecondaryUri
+                })
+                {
+                    Response = new MockResponse(Constants.HttpStatusCode.NotFound)
+                };
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 
@@ -90,7 +101,10 @@ namespace Azure.Storage.Tests
         {
             var message = new HttpMessage(
                 CreateMockRequest(MockPrimaryUri),
-                new StorageResponseClassifier(MockSecondaryUri));
+                new StorageResponseClassifier()
+                {
+                    SecondaryStorageUri = MockSecondaryUri
+                });
 
             message.SetProperty(Constants.GeoRedundantRead.AlternateHostKey, MockSecondaryUri.Host);
             message.SetProperty(Constants.GeoRedundantRead.ResourceNotReplicated, true);
@@ -108,7 +122,10 @@ namespace Azure.Storage.Tests
             request.Method = RequestMethod.Put;
             var message = new HttpMessage(
                 request,
-                new StorageResponseClassifier(MockSecondaryUri));
+                new StorageResponseClassifier()
+                {
+                    SecondaryStorageUri = MockSecondaryUri
+                });
 
             var policy = new GeoRedundantReadPolicy(MockSecondaryUri);
 

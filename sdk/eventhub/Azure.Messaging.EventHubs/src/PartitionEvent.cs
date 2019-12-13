@@ -28,6 +28,12 @@ namespace Azure.Messaging.EventHubs
         ///   time period, <c>null</c>.
         /// </value>
         ///
+        /// <remarks>
+        ///   Ownership of this data, including the memory that holds its <see cref="EventData.Body" />,
+        ///   is assumed to transfer to consumers of the <see cref="PartitionEvent" />.  It may be considered
+        ///   immutable and is safe to access so long as the reference is held.
+        /// </remarks>
+        ///
         public EventData Data { get; }
 
         /// <summary>

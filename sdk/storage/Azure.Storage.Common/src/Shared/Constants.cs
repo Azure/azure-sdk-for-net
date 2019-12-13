@@ -134,6 +134,13 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
         }
 
+        internal static class ErrorCodes
+        {
+            public const string InternalError = "InternalError";
+            public const string OperationTimedOut = "OperationTimedOut";
+            public const string ServerBusy = "ServerBusy";
+        }
+
         /// <summary>
         /// Blob constant values
         /// </summary>
@@ -544,6 +551,7 @@ namespace Azure.Storage
                 public const char Blob = 'b';
                 public const char Queue = 'q';
                 public const char File = 'f';
+                public const char Table = 't';
             }
 
             internal static class AccountResources

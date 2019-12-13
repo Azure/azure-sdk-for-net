@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
 #pragma warning disable CA1819 // Properties should not return arrays
         /// <summary>
-        /// An MD5 hash of the blob content. This hash is used to verify the
+        /// An MD5 hash of the path content. This hash is used to verify the
         /// integrity of the path during transport.  When this header is
         /// specified, the storage service checks the hash that has arrived
         /// with the one that was sent. If the two hashes do not match, the

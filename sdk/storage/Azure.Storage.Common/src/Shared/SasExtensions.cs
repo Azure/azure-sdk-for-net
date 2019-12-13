@@ -140,6 +140,10 @@ namespace Azure.Storage.Sas
             {
                 sb.Append(Constants.Sas.AccountServices.Queue);
             }
+            if ((services & AccountSasServices.Tables) == AccountSasServices.Tables)
+            {
+                sb.Append(Constants.Sas.AccountServices.Table);
+            }
             return sb.ToString();
         }
 
@@ -163,8 +167,10 @@ namespace Azure.Storage.Sas
                     Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
                     Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
                     Constants.Sas.AccountServices.File => AccountSasServices.Files,
+                    Constants.Sas.AccountServices.Table => AccountSasServices.Tables,
                     _ => throw Errors.InvalidService(ch),
                 };
+                ;
             }
             return svcs;
         }
