@@ -1199,8 +1199,8 @@ namespace Azure.Messaging.EventHubs
                     // TODO: should the handler be notified in the processing task instead?  User will be notified
                     // earlier.
 
-                   Logger.StopPartitionProcessingError(partitionId, reason, ex.Message);
-                   var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
+                    Logger.StopPartitionProcessingError(partitionId, reason, ex.Message);
+                    var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
                     _ = OnProcessErrorAsync(errorEventArgs);
                 }
                 finally
