@@ -157,7 +157,7 @@ namespace Azure.Storage.Test.Shared
             new HttpClientTransport(
                 new HttpClient()
                 {
-                    Timeout = TimeSpan.FromSeconds(1000)
+                    Timeout = TestConstants.HttpTimeoutDuration
                 });
 
         public byte[] GetRandomBuffer(long size)

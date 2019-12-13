@@ -8,7 +8,9 @@ namespace Azure.Storage
 {
     internal class StorageResponseClassifier : ResponseClassifier
     {
-        // The secondary URI to be used for retries on failed read requests
+        /// <summary>
+        /// The secondary URI to be used for retries on failed read requests
+        /// </summary>
         public Uri SecondaryStorageUri { get; set; }
 
         /// <summary>
@@ -20,12 +22,11 @@ namespace Azure.Storage
         {
             // If secondary storage Uri was specified, we want to retry if the current attempt was against the secondary Uri, and we
             // get a response of NotFound. This is because the resource may not have been propagated to secondary Uri yet.
-            if (SecondaryStorageUri != null)
+            if (SecondaryStorageUri != null &&
+                message.Request.Uri.Host == SecondaryStorageUri.Host &&
+                message.Response.Status == Constants.HttpStatusCode.NotFound)
             {
-                if (message.Request.Uri.Host == SecondaryStorageUri.Host && message.Response.Status == Constants.HttpStatusCode.NotFound)
-                {
-                    return true;
-                }
+                return true;
             }
 
             // Retry select Storage service error codes
