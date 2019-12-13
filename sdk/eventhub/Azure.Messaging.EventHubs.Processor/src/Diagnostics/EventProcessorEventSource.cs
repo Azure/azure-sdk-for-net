@@ -366,7 +366,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   Indicates that process of updating the checkpoint using the given information for the associated partition and consumer group in the chosen storage service has started.
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the Event Hub partition.</param>s
+        /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         ///
         [Event(23, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has started. (partitionId '{0}')")]
         public void UpdateCheckpointStart(string partitionId)
@@ -381,9 +381,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   Indicates that process of updating the checkpoint using the given information for the associated partition and consumer group in the chosen storage service has completed.
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the Event Hub partition.</param>s
+        /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         ///
-        [Event(24, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has comspleted. (partitionId '{0}')")]
+        [Event(24, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has completed. (partitionId '{0}')")]
         public void UpdateCheckpointCompleted(string partitionId)
         {
             if (IsEnabled())
