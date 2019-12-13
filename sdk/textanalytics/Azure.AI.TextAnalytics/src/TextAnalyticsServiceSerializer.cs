@@ -18,28 +18,7 @@ namespace Azure.AI.TextAnalytics
 
         #region Serialize Inputs
 
-        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<string> inputs, string countryHint)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            var json = new Utf8JsonWriter(writer);
-            json.WriteStartObject();
-            json.WriteStartArray("documents");
-            int id = 1;
-            foreach (var input in inputs)
-            {
-                json.WriteStartObject();
-                json.WriteString("countryHint", countryHint);
-                json.WriteNumber("id", id++);
-                json.WriteString("text", input);
-                json.WriteEndObject();
-            }
-            json.WriteEndArray();
-            json.WriteEndObject();
-            json.Flush();
-            return writer.WrittenMemory;
-        }
-
-        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLanguageInput> inputs)
+        public static ReadOnlyMemory<byte> SerializeDetectLanguageInputs(IEnumerable<DetectLanguageInput> inputs, string defaultCountryHint)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -48,7 +27,7 @@ namespace Azure.AI.TextAnalytics
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
-                json.WriteString("countryHint", input.CountryHint);
+                json.WriteString("countryHint", input.CountryHint ?? defaultCountryHint);
                 json.WriteString("id", input.Id);
                 json.WriteString("text", input.Text);
                 json.WriteEndObject();
@@ -59,28 +38,7 @@ namespace Azure.AI.TextAnalytics
             return writer.WrittenMemory;
         }
 
-        public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<string> inputs, string language)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            var json = new Utf8JsonWriter(writer);
-            json.WriteStartObject();
-            json.WriteStartArray("documents");
-            int id = 1;
-            foreach (var input in inputs)
-            {
-                json.WriteStartObject();
-                json.WriteString("language", language);
-                json.WriteNumber("id", id++);
-                json.WriteString("text", input);
-                json.WriteEndObject();
-            }
-            json.WriteEndArray();
-            json.WriteEndObject();
-            json.Flush();
-            return writer.WrittenMemory;
-        }
-
-        public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<TextDocumentInput> inputs)
+        public static ReadOnlyMemory<byte> SerializeDocumentInputs(IEnumerable<TextDocumentInput> inputs, string defaultLanguage)
         {
             var writer = new ArrayBufferWriter<byte>();
             var json = new Utf8JsonWriter(writer);
@@ -89,7 +47,7 @@ namespace Azure.AI.TextAnalytics
             foreach (var input in inputs)
             {
                 json.WriteStartObject();
-                json.WriteString("language", input.Language);
+                json.WriteString("language", input.Language ?? defaultLanguage);
                 json.WriteString("id", input.Id);
                 json.WriteString("text", input.Text);
                 json.WriteEndObject();
@@ -130,9 +88,9 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        private static IEnumerable<TextAnalysisResult> ReadDocumentErrors(JsonElement documentElement)
+        private static IEnumerable<TextAnalyticsResult> ReadDocumentErrors(JsonElement documentElement)
         {
-            List<TextAnalysisResult> errors = new List<TextAnalysisResult>();
+            List<TextAnalyticsResult> errors = new List<TextAnalyticsResult>();
 
             if (documentElement.TryGetProperty("errors", out JsonElement errorsValue))
             {
@@ -151,7 +109,7 @@ namespace Azure.AI.TextAnalytics
                         }
                     }
 
-                    errors.Add(new TextAnalysisResult(id, message));
+                    errors.Add(new TextAnalyticsResult(id, message));
                 }
             }
 
@@ -168,7 +126,7 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        private static TextBatchStatistics ReadDocumentBatchStatistics(JsonElement documentElement)
+        private static TextDocumentBatchStatistics ReadDocumentBatchStatistics(JsonElement documentElement)
         {
             if (documentElement.TryGetProperty("statistics", out JsonElement statisticsElement))
             {
@@ -186,7 +144,7 @@ namespace Azure.AI.TextAnalytics
                 if (statisticsElement.TryGetProperty("transactionsCount", out JsonElement transactionCountValue))
                     transactionCount = transactionCountValue.GetInt64();
 
-                return new TextBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
+                return new TextDocumentBatchStatistics(documentCount, validDocumentCount, invalidDocumentCount, transactionCount);
             }
 
             return default;
@@ -228,7 +186,7 @@ namespace Azure.AI.TextAnalytics
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
-            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
             return new DetectLanguageResultCollection(collection, statistics, modelVersion);
@@ -303,13 +261,13 @@ namespace Azure.AI.TextAnalytics
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
-            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
             return new RecognizeEntitiesResultCollection(collection, statistics, modelVersion);
         }
 
-        private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalysisResult
+        private static List<T> SortHeterogeneousCollection<T>(List<T> collection, IDictionary<string, int> idToIndexMap) where T : TextAnalyticsResult
         {
             return collection.OrderBy(result => idToIndexMap[result.Id]).ToList();
         }
@@ -392,7 +350,7 @@ namespace Azure.AI.TextAnalytics
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
-            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
             return new AnalyzeSentimentResultCollection(collection, statistics, modelVersion);
@@ -488,7 +446,7 @@ namespace Azure.AI.TextAnalytics
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
-            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
             return new ExtractKeyPhrasesResultCollection(collection, statistics, modelVersion);
@@ -513,25 +471,25 @@ namespace Azure.AI.TextAnalytics
 
         #endregion Extract Key Phrases
 
-        #region Entity Linking
+        #region Linked Entities
 
-        public static async Task<ExtractLinkedEntitiesResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        public static async Task<RecognizeLinkedEntitiesResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadLinkedEntityResultCollection(root, idToIndexMap);
         }
 
-        public static ExtractLinkedEntitiesResultCollection DeserializeLinkedEntityResponse(Stream content, IDictionary<string, int> idToIndexMap)
+        public static RecognizeLinkedEntitiesResultCollection DeserializeLinkedEntityResponse(Stream content, IDictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadLinkedEntityResultCollection(root, idToIndexMap);
         }
 
-        private static ExtractLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
+        private static RecognizeLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
-            var collection = new List<ExtractLinkedEntitiesResult>();
+            var collection = new List<RecognizeLinkedEntitiesResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -542,18 +500,18 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new ExtractLinkedEntitiesResult(error.Id, error.ErrorMessage));
+                collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.ErrorMessage));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
 
-            TextBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
-            return new ExtractLinkedEntitiesResultCollection(collection, statistics, modelVersion);
+            return new RecognizeLinkedEntitiesResultCollection(collection, statistics, modelVersion);
         }
 
-        private static ExtractLinkedEntitiesResult ReadLinkedEntityResult(JsonElement documentElement)
+        private static RecognizeLinkedEntitiesResult ReadLinkedEntityResult(JsonElement documentElement)
         {
             List<LinkedEntity> entities = new List<LinkedEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
@@ -564,7 +522,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            return new ExtractLinkedEntitiesResult(
+            return new RecognizeLinkedEntitiesResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
                 entities);
@@ -629,5 +587,65 @@ namespace Azure.AI.TextAnalytics
         }
 
         #endregion  Entity Linking
+
+        #region Recognize Pii Entities
+
+        public static async Task<RecognizePiiEntitiesResultCollection> DeserializeRecognizePiiEntitiesResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        {
+            using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
+            JsonElement root = json.RootElement;
+            return ReadRecognizePiiEntitiesResultCollection(root, idToIndexMap);
+        }
+
+        public static RecognizePiiEntitiesResultCollection DeserializeRecognizePiiEntitiesResponse(Stream content, IDictionary<string, int> idToIndexMap)
+        {
+            using JsonDocument json = JsonDocument.Parse(content, default);
+            JsonElement root = json.RootElement;
+            return ReadRecognizePiiEntitiesResultCollection(root, idToIndexMap);
+        }
+
+        private static RecognizePiiEntitiesResultCollection ReadRecognizePiiEntitiesResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
+        {
+            var collection = new List<RecognizePiiEntitiesResult>();
+            if (root.TryGetProperty("documents", out JsonElement documentsValue))
+            {
+                foreach (JsonElement documentElement in documentsValue.EnumerateArray())
+                {
+                    collection.Add(ReadRecognizePiiEntityResult(documentElement));
+                }
+            }
+
+            foreach (var error in ReadDocumentErrors(root))
+            {
+                collection.Add(new RecognizePiiEntitiesResult(error.Id, error.ErrorMessage));
+            }
+
+            collection = SortHeterogeneousCollection(collection, idToIndexMap);
+
+            TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
+            string modelVersion = ReadModelVersion(root);
+
+            return new RecognizePiiEntitiesResultCollection(collection, statistics, modelVersion);
+        }
+
+        private static RecognizePiiEntitiesResult ReadRecognizePiiEntityResult(JsonElement documentElement)
+        {
+            List<NamedEntity> entities = new List<NamedEntity>();
+            if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
+            {
+                foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
+                {
+                    entities.Add(ReadNamedEntity(entityElement));
+                }
+            }
+
+            return new RecognizePiiEntitiesResult(
+                ReadDocumentId(documentElement),
+                ReadDocumentStatistics(documentElement),
+                entities);
+        }
+
+        #endregion Recognize Entities
+
     }
 }

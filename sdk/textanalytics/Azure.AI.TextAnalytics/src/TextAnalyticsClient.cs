@@ -97,8 +97,6 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<DetectLanguageResult>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            // TODO: set countryHint from options.
-
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
@@ -108,7 +106,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 DetectLanguageInput[] inputs = new DetectLanguageInput[] { ConvertToDetectLanguageInput(inputText, countryHint) };
-                using Request request = CreateDetectLanguageRequest(inputs, new TextAnalysisOptions());
+                using Request request = CreateDetectLanguageRequest(inputs, new TextAnalyticsOptions());
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -150,7 +148,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 List<DetectLanguageInput> inputs = ConvertToDetectLanguageInputs(new string[] { inputText }, countryHint);
-                using Request request = CreateDetectLanguageRequest(inputs, new TextAnalysisOptions());
+                using Request request = CreateDetectLanguageRequest(inputs, new TextAnalyticsOptions());
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -185,7 +183,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(inputs, countryHint);
-            return await DetectLanguagesAsync(detectLanguageInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
+            return await DetectLanguagesAsync(detectLanguageInputs, new TextAnalyticsOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,7 +196,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(inputs, countryHint);
-            return DetectLanguages(detectLanguageInputs, new TextAnalysisOptions(), cancellationToken);
+            return DetectLanguages(detectLanguageInputs, new TextAnalyticsOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +205,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -241,7 +239,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -281,8 +279,6 @@ namespace Azure.AI.TextAnalytics
         /// <returns></returns>
         public virtual async Task<Response<RecognizeEntitiesResult>> RecognizeEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            // TODO: set language from options
-
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
@@ -292,7 +288,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), EntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), EntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -334,7 +330,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), EntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), EntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -369,7 +365,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return await RecognizeEntitiesAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
+            return await RecognizeEntitiesAsync(documentInputs, new TextAnalyticsOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -382,7 +378,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return RecognizeEntities(documentInputs, new TextAnalysisOptions(), cancellationToken);
+            return RecognizeEntities(documentInputs, new TextAnalyticsOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -391,7 +387,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -425,7 +421,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -474,7 +470,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), SentimentRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), SentimentRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -516,7 +512,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), SentimentRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), SentimentRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -551,7 +547,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return await AnalyzeSentimentAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
+            return await AnalyzeSentimentAsync(documentInputs, new TextAnalyticsOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -564,7 +560,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return AnalyzeSentiment(documentInputs, new TextAnalysisOptions(), cancellationToken);
+            return AnalyzeSentiment(documentInputs, new TextAnalyticsOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -573,7 +569,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -607,7 +603,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -656,7 +652,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), KeyPhrasesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), KeyPhrasesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
@@ -698,7 +694,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), KeyPhrasesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), KeyPhrasesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
@@ -733,7 +729,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return await ExtractKeyPhrasesAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
+            return await ExtractKeyPhrasesAsync(documentInputs, new TextAnalyticsOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -746,7 +742,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return ExtractKeyPhrases(documentInputs, new TextAnalysisOptions(), cancellationToken);
+            return ExtractKeyPhrases(documentInputs, new TextAnalyticsOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -755,7 +751,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -789,7 +785,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -827,7 +823,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<RecognizeEntitiesResult>> RecognizePiiEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizePiiEntitiesResult>> RecognizePiiEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -838,14 +834,14 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), PiiEntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), PiiEntitiesRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizePiiEntitiesResultCollection results = await CreateRecognizePiiEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -869,7 +865,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<RecognizeEntitiesResult> RecognizePiiEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizePiiEntitiesResult> RecognizePiiEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -880,14 +876,14 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), PiiEntitiesRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), PiiEntitiesRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response, map);
+                        RecognizePiiEntitiesResultCollection results = CreateRecognizePiiEntitiesResponse(response, map);
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -911,11 +907,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return await RecognizeEntitiesAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
+            return await RecognizePiiEntitiesAsync(documentInputs, new TextAnalyticsOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -924,11 +920,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<RecognizeEntitiesResultCollection> RecognizePiiEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return RecognizeEntities(documentInputs, new TextAnalysisOptions(), cancellationToken);
+            return RecognizePiiEntities(documentInputs, new TextAnalyticsOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -937,7 +933,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -953,7 +949,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        return await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        return await CreateRecognizePiiEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
                         throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
@@ -971,7 +967,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<RecognizeEntitiesResultCollection> RecognizePiiEntities(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -987,7 +983,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        return CreateRecognizeEntitiesResponse(response, map);
+                        return CreateRecognizePiiEntitiesResponse(response, map);
                     default:
                         throw response.CreateRequestFailedException();
                 }
@@ -1009,7 +1005,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<ExtractLinkedEntitiesResult>> ExtractEntityLinkingAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeLinkedEntitiesResult>> RecognizeLinkedEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -1020,14 +1016,14 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), EntityLinkingRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), EntityLinkingRoute);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        ExtractLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        RecognizeLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1051,7 +1047,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<ExtractLinkedEntitiesResult> ExtractEntityLinking(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeLinkedEntitiesResult> RecognizeLinkedEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
@@ -1062,14 +1058,14 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 TextDocumentInput[] inputs = new TextDocumentInput[] { ConvertToDocumentInput(inputText, language) };
-                using Request request = CreateDocumentInputRequest(inputs, new TextAnalysisOptions(), EntityLinkingRoute);
+                using Request request = CreateDocumentInputRequest(inputs, new TextAnalyticsOptions(), EntityLinkingRoute);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        ExtractLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
+                        RecognizeLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1093,11 +1089,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<ExtractLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return await ExtractEntityLinkingAsync(documentInputs, new TextAnalysisOptions(), cancellationToken).ConfigureAwait(false);
+            return await ExtractEntityLinkingAsync(documentInputs, new TextAnalyticsOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1106,11 +1102,11 @@ namespace Azure.AI.TextAnalytics
         /// <param name="language"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<ExtractLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return ExtractEntityLinking(documentInputs, new TextAnalysisOptions(), cancellationToken);
+            return ExtractEntityLinking(documentInputs, new TextAnalyticsOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -1119,7 +1115,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<Response<ExtractLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> ExtractEntityLinkingAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1153,7 +1149,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual Response<ExtractLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeLinkedEntitiesResultCollection> ExtractEntityLinking(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
@@ -1217,11 +1213,11 @@ namespace Azure.AI.TextAnalytics
         private List<DetectLanguageInput> ConvertToDetectLanguageInputs(IEnumerable<string> inputs, string countryHint)
             => inputs.Select((input, i) => ConvertToDetectLanguageInput(input, countryHint, i)).ToList();
 
-        private Request CreateDocumentInputRequest(IEnumerable<TextDocumentInput> inputs, TextAnalysisOptions options, string route)
+        private Request CreateDocumentInputRequest(IEnumerable<TextDocumentInput> inputs, TextAnalyticsOptions options, string route)
         {
             Request request = _pipeline.CreateRequest();
 
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs);
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDocumentInputs(inputs, _options.DefaultLanguage);
 
             request.Method = RequestMethod.Post;
             BuildUriForRoute(route, request.Uri, options);
@@ -1234,11 +1230,11 @@ namespace Azure.AI.TextAnalytics
             return request;
         }
 
-        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, TextAnalysisOptions options)
+        private Request CreateDetectLanguageRequest(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsOptions options)
         {
             Request request = _pipeline.CreateRequest();
 
-            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs);
+            ReadOnlyMemory<byte> content = TextAnalyticsServiceSerializer.SerializeDetectLanguageInputs(inputs, _options.DefaultCountryHint);
 
             request.Method = RequestMethod.Post;
             BuildUriForRoute(LanguagesRoute, request.Uri, options);

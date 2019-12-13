@@ -9,7 +9,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class AnalyzeSentimentResult : TextAnalysisResult
+    public class AnalyzeSentimentResult : TextAnalyticsResult
     {
         internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, TextSentiment documentSentiment, IList<TextSentiment> sentenceSentiments)
             : base(id, statistics)

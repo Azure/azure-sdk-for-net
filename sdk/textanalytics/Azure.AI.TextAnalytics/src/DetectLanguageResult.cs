@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class DetectLanguageResult : TextAnalysisResult
+    public class DetectLanguageResult : TextAnalyticsResult
     {
         internal DetectLanguageResult(string id, TextDocumentStatistics statistics, IList<DetectedLanguage> detectedLanguages)
             : base(id, statistics)

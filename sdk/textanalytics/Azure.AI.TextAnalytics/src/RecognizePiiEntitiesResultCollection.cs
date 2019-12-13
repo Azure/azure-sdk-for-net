@@ -8,14 +8,14 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class ExtractLinkedEntitiesResultCollection : ReadOnlyCollection<ExtractLinkedEntitiesResult>
+    public class RecognizePiiEntitiesResultCollection : ReadOnlyCollection<RecognizePiiEntitiesResult>
     {
         /// <summary>
         /// </summary>
         /// <param name="list"></param>
         /// <param name="statistics"></param>
         /// <param name="modelVersion"></param>
-        internal ExtractLinkedEntitiesResultCollection(IList<ExtractLinkedEntitiesResult> list, TextBatchStatistics statistics, string modelVersion) : base(list)
+        internal RecognizePiiEntitiesResultCollection(IList<RecognizePiiEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public TextBatchStatistics Statistics { get; }
+        public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
         /// </summary>
