@@ -22,9 +22,9 @@ namespace Microsoft.Azure.Management.Batch
     public static partial class BatchAccountOperationsExtensions
     {
             /// <summary>
-            /// Creates a new Batch account with the specified parameters. Existing
-            /// accounts cannot be updated with this API and should instead be updated with
-            /// the Update Batch Account API.
+            /// Create a new Batch account with the specified parameters. Existing accounts
+            /// cannot be updated with this API and should instead be updated with the
+            /// Update Batch Account API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -49,9 +49,9 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Creates a new Batch account with the specified parameters. Existing
-            /// accounts cannot be updated with this API and should instead be updated with
-            /// the Update Batch Account API.
+            /// Create a new Batch account with the specified parameters. Existing accounts
+            /// cannot be updated with this API and should instead be updated with the
+            /// Update Batch Account API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -413,9 +413,9 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Creates a new Batch account with the specified parameters. Existing
-            /// accounts cannot be updated with this API and should instead be updated with
-            /// the Update Batch Account API.
+            /// Create a new Batch account with the specified parameters. Existing accounts
+            /// cannot be updated with this API and should instead be updated with the
+            /// Update Batch Account API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -440,9 +440,9 @@ namespace Microsoft.Azure.Management.Batch
             }
 
             /// <summary>
-            /// Creates a new Batch account with the specified parameters. Existing
-            /// accounts cannot be updated with this API and should instead be updated with
-            /// the Update Batch Account API.
+            /// Create a new Batch account with the specified parameters. Existing accounts
+            /// cannot be updated with this API and should instead be updated with the
+            /// Update Batch Account API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

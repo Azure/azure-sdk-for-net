@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Batch
     public partial interface IBatchAccountOperations
     {
         /// <summary>
-        /// Creates a new Batch account with the specified parameters. Existing
+        /// Create a new Batch account with the specified parameters. Existing
         /// accounts cannot be updated with this API and should instead be
         /// updated with the Update Batch Account API.
         /// </summary>
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Batch
         /// </exception>
         Task<AzureOperationResponse<BatchAccountKeys>> GetKeysWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Batch account with the specified parameters. Existing
+        /// Create a new Batch account with the specified parameters. Existing
         /// accounts cannot be updated with this API and should instead be
         /// updated with the Update Batch Account API.
         /// </summary>

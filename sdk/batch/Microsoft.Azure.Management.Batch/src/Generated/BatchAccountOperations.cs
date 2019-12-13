@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.Batch
         public BatchManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates a new Batch account with the specified parameters. Existing
-        /// accounts cannot be updated with this API and should instead be updated with
-        /// the Update Batch Account API.
+        /// Create a new Batch account with the specified parameters. Existing accounts
+        /// cannot be updated with this API and should instead be updated with the
+        /// Update Batch Account API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
@@ -1540,9 +1540,9 @@ namespace Microsoft.Azure.Management.Batch
         }
 
         /// <summary>
-        /// Creates a new Batch account with the specified parameters. Existing
-        /// accounts cannot be updated with this API and should instead be updated with
-        /// the Update Batch Account API.
+        /// Create a new Batch account with the specified parameters. Existing accounts
+        /// cannot be updated with this API and should instead be updated with the
+        /// Update Batch Account API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group that contains the Batch account.
