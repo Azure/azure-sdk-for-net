@@ -116,12 +116,6 @@ namespace Azure.Identity
 
                 return new ValueTask<ExtendedAccessToken>(new ExtendedAccessToken(scope.Succeeded(token)));
             }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
             catch (Exception e)
             {
                 throw scope.Failed(e);
