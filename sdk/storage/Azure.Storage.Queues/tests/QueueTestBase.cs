@@ -193,9 +193,7 @@ namespace Azure.Storage.Queues.Tests
 
             return new StorageConnectionString(
                     credentials,
-                    (default, default),
-                    queueUri,
-                    (default, default));
+                    queueStorageUri: queueUri);
         }
 
         public class DisposingQueue : IAsyncDisposable
