@@ -203,9 +203,7 @@ namespace Azure.Core.Testing
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    ConnectionString s = ConnectionString.Parse(environmentVariableValue);
-                    _sanitizer.SanitizeConnectionString(s);
-                    _session.Variables[variableName] = s.ToString();
+                    _session.Variables[variableName] = _sanitizer.SanitizeConnectionString(environmentVariableValue);
                     return environmentVariableValue;
                 case RecordedTestMode.Live:
                     return environmentVariableValue;
