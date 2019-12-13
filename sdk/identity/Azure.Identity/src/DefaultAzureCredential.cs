@@ -131,7 +131,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            IExtendedTokenCredential[] chain = new IExtendedTokenCredential[4];
+            IExtendedTokenCredential[] chain = new IExtendedTokenCredential[5];
 
             if (!options.ExcludeEnvironmentCredential)
             {
