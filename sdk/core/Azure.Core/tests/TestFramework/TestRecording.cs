@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -70,7 +71,10 @@ namespace Azure.Core.Testing
                     switch (Mode)
                     {
                         case RecordedTestMode.Live:
-                            _random = new Random();
+                            var csp = new RNGCryptoServiceProvider();
+                            var bytes = new byte[4];
+                            csp.GetBytes(bytes);
+                            _random = new Random(BitConverter.ToInt32(bytes, 0));
                             break;
                         case RecordedTestMode.Record:
                             // Try get the seed from existing session
