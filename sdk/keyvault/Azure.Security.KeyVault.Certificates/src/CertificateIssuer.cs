@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -44,8 +45,12 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="CertificateIssuer"/> class with the given <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name of the issuer, including values from <see cref="WellKnownIssuerNames"/>.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         public CertificateIssuer(string name)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             Properties = new IssuerProperties(name);
         }
 

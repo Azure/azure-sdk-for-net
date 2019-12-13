@@ -275,6 +275,34 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
+        public async Task VerifyGetCertificateCompletedSubsequently()
+        {
+            string certName = Recording.GenerateId();
+
+            await Client.StartCreateCertificateAsync(certName, DefaultPolicy);
+
+            RegisterForCleanup(certName);
+
+            // Pretend a separate process was started subsequently and we need to get the operation again.
+            CertificateOperation operation = new CertificateOperation(Client, certName);
+
+            // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
+            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+
+            await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+
+            KeyVaultCertificateWithPolicy certificateWithPolicy = operation.Value;
+
+            Assert.NotNull(certificateWithPolicy);
+            Assert.AreEqual(certName, certificateWithPolicy.Name);
+            Assert.NotNull(certificateWithPolicy.Properties.Version);
+        }
+
+        [Test]
         public async Task VerifyUpdateCertificate()
         {
             string certName = Recording.GenerateId();

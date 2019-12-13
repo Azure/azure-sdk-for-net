@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
@@ -9,6 +10,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     public class CertificateIssuerTests
     {
+        [Test]
+        public void ConstructorArgumentValidation()
+        {
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => new CertificateIssuer((string)null));
+            Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificateIssuer(string.Empty));
+            Assert.AreEqual("name", ex.ParamName);
+        }
+
         [Test]
         public void UninitializedAdministrators()
         {
