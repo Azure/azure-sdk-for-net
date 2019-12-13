@@ -17,20 +17,20 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties that define an Azure Deployment Manager step.
+    /// The properties that define a Step group in a rollout.
     /// </summary>
-    public partial class Step
+    public partial class StepGroup
     {
         /// <summary>
-        /// Initializes a new instance of the Step class.
+        /// Initializes a new instance of the StepGroup class.
         /// </summary>
-        public Step()
+        public StepGroup()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Step class.
+        /// Initializes a new instance of the StepGroup class.
         /// </summary>
         /// <param name="name">The name of the step group.</param>
         /// <param name="deploymentTargetId">The resource Id of service unit to
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// deploying the target.</param>
         /// <param name="postDeploymentSteps">The list of steps to be run after
         /// deploying the target.</param>
-        public Step(string name, string deploymentTargetId, IList<string> dependsOnStepGroups = default(IList<string>), IList<PrePostStep> preDeploymentSteps = default(IList<PrePostStep>), IList<PrePostStep> postDeploymentSteps = default(IList<PrePostStep>))
+        public StepGroup(string name, string deploymentTargetId, IList<string> dependsOnStepGroups = default(IList<string>), IList<PrePostStep> preDeploymentSteps = default(IList<PrePostStep>), IList<PrePostStep> postDeploymentSteps = default(IList<PrePostStep>))
         {
             Name = name;
             DependsOnStepGroups = dependsOnStepGroups;

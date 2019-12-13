@@ -15,24 +15,24 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the properties of a Wait step.
+    /// Defines the properties of a health check step.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Wait")]
-    public partial class WaitStepProperties : StepProperties
+    [Newtonsoft.Json.JsonObject("HealthCheck")]
+    public partial class HealthCheckStepProperties : StepProperties
     {
         /// <summary>
-        /// Initializes a new instance of the WaitStepProperties class.
+        /// Initializes a new instance of the HealthCheckStepProperties class.
         /// </summary>
-        public WaitStepProperties()
+        public HealthCheckStepProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WaitStepProperties class.
+        /// Initializes a new instance of the HealthCheckStepProperties class.
         /// </summary>
-        /// <param name="attributes">The Wait attributes</param>
-        public WaitStepProperties(WaitStepAttributes attributes)
+        /// <param name="attributes">The health check step attributes</param>
+        public HealthCheckStepProperties(HealthCheckStepAttributes attributes)
         {
             Attributes = attributes;
             CustomInit();
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Wait attributes
+        /// Gets or sets the health check step attributes
         /// </summary>
         [JsonProperty(PropertyName = "attributes")]
-        public WaitStepAttributes Attributes { get; set; }
+        public HealthCheckStepAttributes Attributes { get; set; }
 
         /// <summary>
         /// Validate the object.
