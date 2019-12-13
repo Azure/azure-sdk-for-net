@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 }),
             };
             var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
-                new TextBatchStatistics(2, 2, 0, 2),
+                new TextDocumentBatchStatistics(2, 2, 0, 2),
                 "modelVersion");
 
             var mockResponse = new MockResponse(200);
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextDocumentInput("2", "TextDocument2"),
             };
 
-            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalysisOptions());
+            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsOptions());
             var resultCollection = response.Value;
 
             Assert.AreEqual("1", resultCollection[0].Id);
@@ -91,7 +91,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 new RecognizeEntitiesResult("5", "Document is invalid."),
             };
             var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
-                new TextBatchStatistics(2, 2, 2, 2),
+                new TextDocumentBatchStatistics(2, 2, 2, 2),
                 "modelVersion");
 
             var mockResponse = new MockResponse(200);
@@ -108,7 +108,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextDocumentInput("3", "TextDocument4"),
             };
 
-            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalysisOptions());
+            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsOptions());
             var resultCollection = response.Value;
 
             Assert.AreEqual("4", resultCollection[0].Id);

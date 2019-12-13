@@ -24,21 +24,17 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs.")
+                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
                 {
                      Language = "en",
                 },
                 new TextDocumentInput("2","Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
                 {
                      Language = "en",
-                },
-                new TextDocumentInput("3", "Is 998.214.865-68 your Brazilian CPF number?")
-                {
-                     Language = "en",
                 }
             };
 
-            RecognizeEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalysisOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsOptions { IncludeStatistics = true });
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");

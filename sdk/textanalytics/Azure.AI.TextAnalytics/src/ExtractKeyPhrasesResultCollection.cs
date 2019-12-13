@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="list"></param>
         /// <param name="statistics"></param>
         /// <param name="modelVersion"></param>
-        internal ExtractKeyPhrasesResultCollection(IList<ExtractKeyPhrasesResult> list, TextBatchStatistics statistics, string modelVersion) : base(list)
+        internal ExtractKeyPhrasesResultCollection(IList<ExtractKeyPhrasesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public TextBatchStatistics Statistics { get; }
+        public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
         /// </summary>

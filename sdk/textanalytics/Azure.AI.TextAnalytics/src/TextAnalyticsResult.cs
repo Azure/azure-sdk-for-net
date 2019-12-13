@@ -5,15 +5,15 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class TextAnalysisResult
+    public class TextAnalyticsResult
     {
-        internal TextAnalysisResult(string id, TextDocumentStatistics statistics)
+        internal TextAnalyticsResult(string id, TextDocumentStatistics statistics)
         {
             Id = id;
             Statistics = statistics;
         }
 
-        internal TextAnalysisResult(string id, string errorMessage)
+        internal TextAnalyticsResult(string id, string errorMessage)
         {
             Id = id;
             ErrorMessage = errorMessage;

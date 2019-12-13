@@ -9,15 +9,15 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class RecognizeEntitiesResult : TextAnalyticsResult
+    public class RecognizePiiEntitiesResult : TextAnalyticsResult
     {
-        internal RecognizeEntitiesResult(string id, TextDocumentStatistics statistics, IList<NamedEntity> entities)
+        internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, IList<NamedEntity> entities)
             : base(id, statistics)
         {
             NamedEntities = new ReadOnlyCollection<NamedEntity>(entities);
         }
 
-        internal RecognizeEntitiesResult(string id, string errorMessage)
+        internal RecognizePiiEntitiesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
             NamedEntities = Array.Empty<NamedEntity>();

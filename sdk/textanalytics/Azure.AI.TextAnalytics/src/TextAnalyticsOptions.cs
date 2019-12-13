@@ -5,11 +5,11 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    public class TextAnalysisOptions
+    public class TextAnalyticsOptions
     {
         /// <summary>
         /// </summary>
-        public TextAnalysisOptions()
+        public TextAnalyticsOptions()
         {
         }
 

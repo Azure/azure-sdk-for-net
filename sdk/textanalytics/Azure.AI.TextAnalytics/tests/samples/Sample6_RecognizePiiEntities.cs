@@ -22,10 +22,10 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            string input = "A developer with SSN 859-98-0987 whose phone number is 206-867-5309 is building tools with our APIs.";
+            string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
             Debug.WriteLine($"Recognizing PII entities for input: \"{input}\"");
-            RecognizeEntitiesResult result = client.RecognizePiiEntities(input);
+            RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
             IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
             Debug.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
