@@ -738,6 +738,7 @@ namespace Azure.Messaging.EventHubs
                                             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.UpdateCheckpointStart(context.PartitionId);
 
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
@@ -771,6 +772,10 @@ namespace Azure.Messaging.EventHubs
 
                 scope.Failed(e);
                 throw;
+            }
+            finally
+            {
+                Logger.UpdateCheckpointCompleted(context.PartitionId);
             }
         }
 
