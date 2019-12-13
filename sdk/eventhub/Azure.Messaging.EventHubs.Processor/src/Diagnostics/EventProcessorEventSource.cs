@@ -43,9 +43,9 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that the load balancing has started.
+        ///   Indicates that the process of load balancing has started.
         /// </summary>
-        [Event(2, Level = EventLevel.Informational, Message = "Starting load balancer.")]
+        [Event(2, Level = EventLevel.Informational, Message = "The process of balancing load between event processors has started")]
         public void StartLoadBalacing()
         {
             if (IsEnabled())
@@ -348,7 +348,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that processing of events has stop.
+        ///   Indicates that processing of events has stopped.
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
