@@ -15,7 +15,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token.
     /// </summary>
-    public class CliCredential : TokenCredential,IExtendedTokenCredential
+    public class CliCredential : TokenCredential, IExtendedTokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzureCLIError = "'az' is not recognized as an internal or external command, operable program or batch file.";
@@ -86,18 +86,13 @@ namespace Azure.Identity
 
                 ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd", "/c" + extendCommand)
                 {
-                    UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     CreateNoWindow = true
                 };
 
-                Process proc = new Process
-                {
-                    StartInfo = procStartInfo
-                };
-
-                proc.Start();
+                Process proc = new Process();
+                proc.StartInfo = procStartInfo;
 
                 string error = proc.StandardError.ReadToEnd();
                 if (string.Equals(error, AzureCLIError, StringComparison.Ordinal))
