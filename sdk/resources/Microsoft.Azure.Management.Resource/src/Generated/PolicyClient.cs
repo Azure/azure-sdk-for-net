@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             PolicyDefinitions = new PolicyDefinitionsOperations(this);
             PolicySetDefinitions = new PolicySetDefinitionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01";
+            ApiVersion = "2019-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

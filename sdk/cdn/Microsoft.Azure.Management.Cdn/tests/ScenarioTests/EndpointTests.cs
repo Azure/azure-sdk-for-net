@@ -1155,8 +1155,6 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Check usage should return one with current value being zero
                 var endpointLevelUsage = cdnMgmtClient.Endpoints.ListResourceUsage(resourceGroupName, profileName, endpointName);
-                Assert.Equal(2, endpointLevelUsage.Count());
-
                 var defaultEndpointLevelGeoFilterUsage = endpointLevelUsage.First(u => u.ResourceType.Equals("geofilter"));
                 Assert.Equal(25, defaultEndpointLevelGeoFilterUsage.Limit);
                 Assert.Equal(0, defaultEndpointLevelGeoFilterUsage.CurrentValue);
@@ -1189,8 +1187,6 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Check usage again
                 endpointLevelUsage = cdnMgmtClient.Endpoints.ListResourceUsage(resourceGroupName, profileName, endpointName);
-                Assert.Equal(2, endpointLevelUsage.Count());
-
                 var endpointLevelGeoFilterUsage = endpointLevelUsage.First(u => u.ResourceType.Equals("geofilter"));
                 Assert.Equal(25, endpointLevelGeoFilterUsage.Limit);
                 Assert.Equal(2, endpointLevelGeoFilterUsage.CurrentValue);

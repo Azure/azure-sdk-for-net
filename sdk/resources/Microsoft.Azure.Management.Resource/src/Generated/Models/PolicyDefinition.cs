@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,8 +36,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the PolicyDefinition class.
         /// </summary>
         /// <param name="policyType">The type of policy definition. Possible
-        /// values are NotSpecified, BuiltIn, and Custom. Possible values
-        /// include: 'NotSpecified', 'BuiltIn', 'Custom'</param>
+        /// values are NotSpecified, BuiltIn, Custom, and Static. Possible
+        /// values include: 'NotSpecified', 'BuiltIn', 'Custom',
+        /// 'Static'</param>
         /// <param name="mode">The policy definition mode. Some examples are
         /// All, Indexed, Microsoft.KeyVault.Data.</param>
         /// <param name="displayName">The display name of the policy
@@ -43,14 +46,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="description">The policy definition
         /// description.</param>
         /// <param name="policyRule">The policy rule.</param>
-        /// <param name="metadata">The policy definition metadata.</param>
-        /// <param name="parameters">Required if a parameter is used in policy
-        /// rule.</param>
+        /// <param name="metadata">The policy definition metadata.  Metadata is
+        /// an open ended object and is typically a collection of key value
+        /// pairs.</param>
+        /// <param name="parameters">The parameter definitions for parameters
+        /// used in the policy rule. The keys are the parameter names.</param>
         /// <param name="id">The ID of the policy definition.</param>
         /// <param name="name">The name of the policy definition.</param>
         /// <param name="type">The type of the resource
         /// (Microsoft.Authorization/policyDefinitions).</param>
-        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), object parameters = default(object), string id = default(string), string name = default(string), string type = default(string))
+        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), IDictionary<string, ParameterDefinitionsValue> parameters = default(IDictionary<string, ParameterDefinitionsValue>), string id = default(string), string name = default(string), string type = default(string))
         {
             PolicyType = policyType;
             Mode = mode;
@@ -72,8 +77,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 
         /// <summary>
         /// Gets or sets the type of policy definition. Possible values are
-        /// NotSpecified, BuiltIn, and Custom. Possible values include:
-        /// 'NotSpecified', 'BuiltIn', 'Custom'
+        /// NotSpecified, BuiltIn, Custom, and Static. Possible values include:
+        /// 'NotSpecified', 'BuiltIn', 'Custom', 'Static'
         /// </summary>
         [JsonProperty(PropertyName = "properties.policyType")]
         public string PolicyType { get; set; }
@@ -104,16 +109,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public object PolicyRule { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy definition metadata.
+        /// Gets or sets the policy definition metadata.  Metadata is an open
+        /// ended object and is typically a collection of key value pairs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metadata")]
         public object Metadata { get; set; }
 
         /// <summary>
-        /// Gets or sets required if a parameter is used in policy rule.
+        /// Gets or sets the parameter definitions for parameters used in the
+        /// policy rule. The keys are the parameter names.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public object Parameters { get; set; }
+        public IDictionary<string, ParameterDefinitionsValue> Parameters { get; set; }
 
         /// <summary>
         /// Gets the ID of the policy definition.
