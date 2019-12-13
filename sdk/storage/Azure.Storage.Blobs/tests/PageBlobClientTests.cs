@@ -897,6 +897,53 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task GetPageRangesDiffAsync_PreviousSnapshotUrl()
+        {
+            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Upload some Pages
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 0);
+            }
+
+            // Create prevSnapshot
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+            var prevSnapshot = response.Value.Snapshot;
+
+            UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+            uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+            // Upload additional Pages
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+            }
+
+            // create snapshot
+            response = await blob.CreateSnapshotAsync();
+            string snapshot = response.Value.Snapshot;
+
+            // Act
+            Response<PageRangesInfo> result = await blob.GetPageRangesDiffAsync(
+                range: new HttpRange(0, 4 * Constants.KB),
+                snapshot,
+                previousSnapshotUrl: uriBuilder.Uri);
+
+            // Assert
+            Assert.AreEqual(1, result.Value.PageRanges.Count());
+            HttpRange range = result.Value.PageRanges.First();
+
+            Assert.AreEqual(2 * Constants.KB, range.Offset);
+            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
+        }
+
+        [Test]
         public async Task GetPageRangesDiffAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
