@@ -145,6 +145,7 @@ if ($env:SYSTEM_TEAMPROJECTID) {
     }
 
     # Set the resource group name variable.
+    Write-Host "Setting variable 'AZURE_RESOURCEGROUP_NAME': $resourceGroupName"
     Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$resourceGroupName"
 }
 
@@ -226,6 +227,7 @@ foreach ($templateFile in $templateFiles) {
             if ($env:SYSTEM_TEAMPROJECTID) {
                 # Running in Azure Pipelines. Unfortunately, there's no good way to know which outputs are truly secrets
                 # because we have to set all output variables to "String" instead of "SecureString" or we will never get back a value.
+                Write-Host "Setting variable '$key': ***"
                 Write-Host "##vso[task.setvariable variable=$key;issecret=true;]$($variable.Value)"
             } else {
                 Write-Host ($shellExportFormat -f $key, $variable.Value)

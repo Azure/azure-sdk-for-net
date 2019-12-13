@@ -11,23 +11,32 @@
 [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'Medium')]
 param (
     # Limit $BaseName to enough characters to be under limit plus prefixes, and https://docs.microsoft.com/azure/architecture/best-practices/resource-naming.
-    [Parameter(Mandatory = $true, Position = 0)]
+    [Parameter(ParameterSetName = 'Default', Mandatory = $true, Position = 0)]
+    [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true, Position = 0)]
     [ValidatePattern('^[-a-zA-Z0-9\.\(\)_]{0,80}(?<=[a-zA-Z0-9\(\)])$')]
     [string] $BaseName,
 
     # TODO: When https://github.com/Azure/azure-sdk-for-net/issues/9061 is resolved, default this to previously saved data.
-    [Parameter(Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Default', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
     [string] $ServiceDirectory,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'ResourceGroup', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
+    [string] $ResourceGroupName,
+
+    [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationId,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Default+Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [string] $ProvisionerApplicationSecret,
 
     [Parameter()]
@@ -69,12 +78,14 @@ if ($ProvisionerApplicationId) {
     }
 }
 
-# Format the resource group name based on resource group naming recommendations and limitations.
-$resourceGroupName = "rg-{0}-$baseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+if (!$ResourceGroupName) {
+    # Format the resource group name based on resource group naming recommendations and limitations.
+    $ResourceGroupName = "rg-{0}-$baseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+}
 
-Log "Deleting resource group '${resourceGroupName}'"
-if (Remove-AzResourceGroup -Name "${resourceGroupName}" -Force:$Force) {
-    Write-Verbose "Successfully deleted resource group '${resourceGroupName}'"
+Log "Deleting resource group '${ResourceGroupName}'"
+if (Remove-AzResourceGroup -Name "${ResourceGroupName}" -Force:$Force) {
+    Write-Verbose "Successfully deleted resource group '${ResourceGroupName}'"
 }
 
 $exitActions.Invoke()
@@ -93,6 +104,9 @@ A name to use in the resource group and passed to the ARM template as 'baseName'
 
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories specified - in which to discover ARM templates named 'test-resources.json'.
+
+.PARAMETER ResourceGroupName
+The name of the resource group to delete.
 
 .PARAMETER TenantId
 The tenant ID of a service principal when a provisioner is specified.
