@@ -36,7 +36,6 @@ namespace Azure.Storage
                     case "InternalError":
                     case "OperationTimedOut":
                     case "ServerBusy":
-                    case "CannotVerifyCopySource":
                         return true;
                 }
             }
