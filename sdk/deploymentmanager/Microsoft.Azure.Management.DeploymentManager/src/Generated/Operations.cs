@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.DeploymentManager
         public AzureDeploymentManagerClient Client { get; private set; }
 
         /// <summary>
-        /// Gets an operation resource.
+        /// Lists the supported operations.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -74,12 +74,8 @@ namespace Microsoft.Azure.Management.DeploymentManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IList<Operation>>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationsList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -92,12 +88,11 @@ namespace Microsoft.Azure.Management.DeploymentManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.DeploymentManager/operations").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.DeploymentManager/operations").ToString();
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -196,7 +191,7 @@ namespace Microsoft.Azure.Management.DeploymentManager
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IList<Operation>>();
+            var _result = new AzureOperationResponse<OperationsList>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -209,7 +204,7 @@ namespace Microsoft.Azure.Management.DeploymentManager
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IList<Operation>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationsList>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
