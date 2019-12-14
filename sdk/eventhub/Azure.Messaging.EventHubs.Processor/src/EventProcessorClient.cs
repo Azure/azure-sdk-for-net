@@ -791,7 +791,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the partition that will be processed.</param>
         ///
-        protected virtual Task OnPartitionInitializingAsync(PartitionInitializingEventArgs eventArgs)
+        private Task OnPartitionInitializingAsync(PartitionInitializingEventArgs eventArgs)
         {
             if (_partitionInitializingAsync != null)
             {
@@ -807,7 +807,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the partition that was being processed.</param>
         ///
-        protected virtual Task OnPartitionClosingAsync(PartitionClosingEventArgs eventArgs)
+        private Task OnPartitionClosingAsync(PartitionClosingEventArgs eventArgs)
         {
             if (_partitionClosingAsync != null)
             {
@@ -823,7 +823,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the event to be processed.</param>
         ///
-        protected virtual Task OnProcessEventAsync(ProcessEventArgs eventArgs) => _processEventAsync(eventArgs);
+        private Task OnProcessEventAsync(ProcessEventArgs eventArgs) => _processEventAsync(eventArgs);
 
         /// <summary>
         ///   Called when a 'process error' event is triggered.
@@ -831,7 +831,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
         ///
-        protected virtual Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
+        private Task OnProcessErrorAsync(ProcessErrorEventArgs eventArgs) => _processErrorAsync(eventArgs);
 
         /// <summary>
         ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce
