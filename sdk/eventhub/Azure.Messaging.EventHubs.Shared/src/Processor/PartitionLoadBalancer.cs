@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -29,9 +30,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
         /// </summary>
         ///
-
-        /// <summary>Responsible for processing unhandled exceptions thrown while this processor is running.</summary>
-        private readonly Func<ProcessErrorEventArgs, Task> _processErrorAsync;
 
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
 
@@ -85,8 +83,7 @@ namespace Azure.Messaging.EventHubs.Processor
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
-                                      TimeSpan ownershipExpiration,
-                                      Func<ProcessErrorEventArgs, Task> processErrorAsync)
+                                      TimeSpan ownershipExpiration)
         {
             Argument.AssertNotNull(storageManager, nameof(storageManager));
             Argument.AssertNotNullOrEmpty(identifier, nameof(identifier));
@@ -100,7 +97,6 @@ namespace Azure.Messaging.EventHubs.Processor
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             OwnershipExpiration = ownershipExpiration;
-            _processErrorAsync = processErrorAsync;
 
         }
 
@@ -144,8 +140,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
                 // without an updated ownership list.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListOwnership, ex, cancellationToken);
-                _ = _processErrorAsync(errorEventArgs);
+                throw new EventHubsException(true, EventHubName, Resources.OperationListOwnership, ex);
             }
 
             // There's no point in continuing the current cycle if we failed to fetch the completeOwnershipList.
@@ -362,10 +357,7 @@ namespace Azure.Messaging.EventHubs.Processor
                 // If ownership renewal fails just give up and try again in the next cycle.  The processor may
                 // end up losing some of its ownership.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationRenewOwnership, ex, cancellationToken);
-                _ = _processErrorAsync(errorEventArgs);
-
-                return;
+                throw new EventHubsException(true, EventHubName, Resources.OperationRenewOwnership, ex);
             }
         }
 
@@ -413,10 +405,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationClaimOwnership, ex, cancellationToken);
-                _ = _processErrorAsync(errorEventArgs);
-
-                return default;
+                throw new EventHubsException(true, EventHubName, Resources.OperationClaimOwnership, ex);
             }
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.

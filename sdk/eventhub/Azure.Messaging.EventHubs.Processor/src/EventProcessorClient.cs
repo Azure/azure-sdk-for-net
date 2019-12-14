@@ -522,7 +522,9 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = storageManager;
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
-            LoadBalancer = new PartitionLoadBalancer(storageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, OwnershipExpiration, OnProcessErrorAsync);
+
+            // TODO: pass in as argument
+            LoadBalancer = new PartitionLoadBalancer(storageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, OwnershipExpiration);
         }
 
         /// <summary>
@@ -929,9 +931,24 @@ namespace Azure.Messaging.EventHubs
 
                 if (partitionIds != default)
                 {
-                    var claimedOwnership = await LoadBalancer.RunAsync(partitionIds, cancellationToken);
+                    PartitionOwnership claimedOwnership = default;
 
-                    if (claimedOwnership != null)
+                    try
+                    {
+                        claimedOwnership = await LoadBalancer.RunAsync(partitionIds, cancellationToken);
+                    }
+                    catch (EventHubsException ex)
+                    {
+                        var errorEventArgs = new ProcessErrorEventArgs(null, ex.Message, ex, cancellationToken);
+                        _ = OnProcessErrorAsync(errorEventArgs);
+                    }
+                    catch (Exception ex)
+                    {
+                        var errorEventArgs = new ProcessErrorEventArgs(null, string.Empty /*which resource to use here?*/, ex, cancellationToken);
+                        _ = OnProcessErrorAsync(errorEventArgs);
+                    }
+
+                    if (claimedOwnership != default)
                     {
                         await StartPartitionProcessingAsync(claimedOwnership.PartitionId, cancellationToken).ConfigureAwait(false);
                     }
