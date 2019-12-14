@@ -4,6 +4,11 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// A collection of statistics describing the batch of documents submitted
+    /// to the service for analysis in a given request.  This information is
+    /// provided on the result collection returned by an operation when the
+    /// caller passes in a <see cref="TextAnalyticsRequestOptions"/> with
+    /// IncludeStatistics set to true.
     /// </summary>
     public class TextDocumentBatchStatistics
     {
@@ -16,24 +21,27 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets number of documents submitted in the request.
+        /// Gets the number of documents submitted in the request batch.
         /// </summary>
         public int DocumentCount { get; }
 
         /// <summary>
-        /// Gets number of valid documents. This excludes empty,
-        /// over-size limit or non-supported languages documents.
+        /// Gets the number of valid documents submitted in the request batch.
+        /// This number excludes empty documents, documents whose size exceeds
+        /// the service's size limit, and documents in unsupported languages.
         /// </summary>
         public int ValidDocumentCount { get; }
 
         /// <summary>
-        /// Gets number of invalid documents. This includes empty,
-        /// over-size limit or non-supported languages documents.
+        /// Gets the number of invalid documents submitted in the request batch.
+        /// This number includes empty documents, documents whose size exceeds
+        /// the service's size limit, and documents in unsupported languages.
         /// </summary>
         public int InvalidDocumentCount { get; }
 
         /// <summary>
-        /// Gets number of transactions for the request.
+        /// Gets the number of transactions required to complete the operation
+        /// on all documents submitted in the request batch.
         /// </summary>
         public long TransactionCount { get; }
     }

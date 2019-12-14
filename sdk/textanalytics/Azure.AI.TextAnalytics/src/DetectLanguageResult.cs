@@ -9,6 +9,8 @@ using System.Linq;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// The result of the detect language operation on a single document,
+    /// containing a prediction of what language the document is written in.
     /// </summary>
     public class DetectLanguageResult : TextAnalyticsResult
     {
@@ -25,10 +27,13 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Gets a collection of languages detected in the document.  This value
+        /// contains a single language.
         /// </summary>
         public IReadOnlyCollection<DetectedLanguage> DetectedLanguages { get; }
 
         /// <summary>
+        /// The primary language detected in the document.
         /// </summary>
         public DetectedLanguage PrimaryLanguage => DetectedLanguages.OrderBy(l => l.Score).FirstOrDefault();
     }

@@ -4,6 +4,10 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// A word or phrase identified from the input text as important, as well
+    /// as a categorization of the inferred entity into a category in a taxonomy
+    /// defined by the text analytics service and described at
+    /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
     /// </summary>
     public readonly struct NamedEntity
     {
@@ -18,41 +22,41 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Entity text as appears in the request.
+        /// Gets the entity text as it appears in the input document.
         /// </summary>
         public string Text { get; }
 
         /// <summary>
-        /// Gets entity type from Named Entity Recognition model.
-        /// Entity type, such as Person/Location/Org/SSN etc.
+        /// Gets the entity type inferred by the text analytics service's
+        /// named entity recognition model.  The list of available types is
+        /// described at
+        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
         /// </summary>
         public string Type { get; }
 
         /// <summary>
-        /// Gets entity sub type from Named Entity Recognition model.
-        /// Entity sub type, such as Age/Year/TimeRange etc.
+        /// Gets the sub type of the entity inferred by the text analytics service's
+        /// named entity recognition model. The list of available types is
+        /// described at
+        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
         /// </summary>
         public string SubType { get; }
 
         /// <summary>
-        /// Gets start position (in Unicode characters) for the entity
-        /// match text.
-        /// Start position (in Unicode characters) for the entity text.
+        /// Gets the start position for the matching text in the input document.
+        /// The offset unit is unicode character count.
         /// </summary>
         public int Offset { get; }
 
         /// <summary>
-        /// Gets length (in Unicode characters) for the entity match
-        /// text.
-        /// Length (in Unicode characters) for the entity text.
+        /// Gets the length of the matching text in the input document.
+        /// The length unit is unicode character count.
         /// </summary>
         public int Length { get; }
 
         /// <summary>
-        /// Gets (optional) If an entity type is recognized, a decimal
-        /// number denoting the confidence level of the entity type will be
-        /// returned.
-        /// Confidence score between 0 and 1 of the extracted entity.
+        /// Gets a score between 0 and 1, indicating the confidence that the
+        /// text substring matches this inferred entity.
         /// </summary>
         public double Score { get; }
     }
