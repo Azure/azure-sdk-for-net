@@ -104,6 +104,7 @@ namespace Azure.Security.KeyVault.Certificates
     public partial class CertificateIssuer
     {
         public CertificateIssuer(string name) { }
+        public CertificateIssuer(string name, string provider) { }
         public string AccountId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.AdministratorContact> AdministratorContacts { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
@@ -112,8 +113,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name { get { throw null; } }
         public string OrganizationId { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string Password { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Security.KeyVault.Certificates.IssuerProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public string Provider { get { throw null; } set { } }
+        public string Provider { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -317,7 +317,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class ImportCertificateOptions
     {
-        public ImportCertificateOptions(string name, byte[] value) { }
+        public ImportCertificateOptions(string name, byte[] certificate) { }
         public byte[] Certificate { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public bool? Enabled { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
@@ -349,8 +349,8 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class LifetimeAction
     {
-        public LifetimeAction() { }
-        public Azure.Security.KeyVault.Certificates.CertificatePolicyAction Action { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public LifetimeAction(Azure.Security.KeyVault.Certificates.CertificatePolicyAction action) { }
+        public Azure.Security.KeyVault.Certificates.CertificatePolicyAction Action { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public int? DaysBeforeExpiry { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public int? LifetimePercentage { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
