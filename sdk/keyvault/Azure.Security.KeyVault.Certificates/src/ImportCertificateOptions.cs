@@ -27,16 +27,16 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="ImportCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
-        /// <param name="value">The PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
+        /// <param name="certificate">The PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="value"/> is null.</exception>
-        public ImportCertificateOptions(string name, byte[] value)
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="certificate"/> is null.</exception>
+        public ImportCertificateOptions(string name, byte[] certificate)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(certificate, nameof(certificate));
 
             Name = name;
-            Certificate = value;
+            Certificate = certificate;
         }
 
         /// <summary>

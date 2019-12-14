@@ -173,9 +173,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             string issuerName = Recording.GenerateId();
             string certName = Recording.GenerateId();
 
-            CertificateIssuer certIssuer = new CertificateIssuer(issuerName)
+            CertificateIssuer certIssuer = new CertificateIssuer(issuerName, "DigiCert")
             {
-                Provider = "DigiCert",
                 AccountId = "test",
                 Password = "test",
                 OrganizationId = "test",

@@ -18,14 +18,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             ex = Assert.Throws<ArgumentException>(() => new CertificateIssuer(string.Empty));
             Assert.AreEqual("name", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentNullException>(() => new CertificateIssuer("test", null));
+            Assert.AreEqual("provider", ex.ParamName);
+
+            ex = Assert.Throws<ArgumentException>(() => new CertificateIssuer("test", string.Empty));
+            Assert.AreEqual("provider", ex.ParamName);
         }
 
         [Test]
         public void UninitializedAdministrators()
         {
-            CertificateIssuer issuer = new CertificateIssuer("test")
+            CertificateIssuer issuer = new CertificateIssuer("test", "provider")
             {
-                Provider = "provider",
                 AccountId = "accountId",
             };
 
@@ -45,9 +50,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public void InitializedAdministrators()
         {
-            CertificateIssuer issuer = new CertificateIssuer("test")
+            CertificateIssuer issuer = new CertificateIssuer("test", "provider")
             {
-                Provider = "provider",
                 AccountId = "accountId",
                 AdministratorContacts =
                 {

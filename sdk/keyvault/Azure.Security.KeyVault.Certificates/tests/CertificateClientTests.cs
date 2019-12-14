@@ -32,11 +32,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.CreateIssuerAsync(issuer));
             Assert.AreEqual("issuer", ex.ParamName);
             StringAssert.StartsWith("issuer.Provider cannot be null or an empty string.", ex.Message);
-
-            issuer.Provider = string.Empty;
-            ex = Assert.ThrowsAsync<ArgumentException>(() => Client.CreateIssuerAsync(issuer));
-            Assert.AreEqual("issuer", ex.ParamName);
-            StringAssert.StartsWith("issuer.Provider cannot be null or an empty string.", ex.Message);
         }
 
         [Test]
