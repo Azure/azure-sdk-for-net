@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.KeyVault
             Vaults = new VaultsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-02-14";
+            ApiVersion = "2019-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
