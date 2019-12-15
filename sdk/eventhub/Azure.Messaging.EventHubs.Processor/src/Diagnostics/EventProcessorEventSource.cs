@@ -25,7 +25,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         public static EventProcessorEventSource Log { get; } = new EventProcessorEventSource();
 
-        internal EventProcessorEventSource() { }
+        /// <summary>
+        ///   Prevents an instance of the <see cref="EventProcessorEventSource"/> class from being created
+        ///   outside the scope of the <see cref="Log" /> instance.
+        /// </summary>
+        ///
+        private EventProcessorEventSource() { }
 
         /// <summary>
         ///   Signals the <see cref="EventProcessorClient" /> to begin processing events.
@@ -38,19 +43,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(1, identifier);
-            }
-        }
-
-        /// <summary>
-        ///   Indicates that the process of load balancing has started.
-        /// </summary>
-        [Event(2, Level = EventLevel.Informational, Message = "The process of balancing load between event processors has started")]
-        public void StartLoadBalacing()
-        {
-            if (IsEnabled())
-            {
-                WriteEvent(2);
+                WriteEvent(1, identifier ?? string.Empty);
             }
         }
 
@@ -60,12 +53,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="count">Total number of ownership records returned by storage manager.</param>
         ///
-        [Event(3, Level = EventLevel.Informational, Message = "Storage manager returned '{0}' ownership records.")]
+        [Event(2, Level = EventLevel.Informational, Message = "Storage manager returned '{0}' ownership records.")]
         public virtual void CompleteOwnershipRecordsCount(int count)
         {
             if (IsEnabled())
             {
-                WriteEvent(3, count);
+                WriteEvent(2, count);
             }
         }
 
@@ -78,12 +71,15 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events will be read only in the context of this group.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(4, Level = EventLevel.Error, Message = "An exception occurred while retrieving ownership records. (FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; ErrorMessage: '{3}')")]
-        public virtual void ListOwnershipAsyncError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string errorMessage)
+        [Event(3, Level = EventLevel.Error, Message = "An exception occurred while retrieving ownership records. (FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; ErrorMessage: '{3}')")]
+        public virtual void ListOwnershipAsyncError(string fullyQualifiedNamespace,
+                                                    string eventHubName,
+                                                    string consumerGroup,
+                                                    string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(4, fullyQualifiedNamespace, eventHubName, consumerGroup, errorMessage ?? string.Empty);
+                WriteEvent(3, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -93,12 +89,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="count">Total number of active ownership records.</param>
         ///
-        [Event(5, Level = EventLevel.Informational, Message = "Number of active ownership records '{0}'.")]
+        [Event(4, Level = EventLevel.Informational, Message = "Number of active ownership records '{0}'.")]
         public virtual void ActiveOwnershipRecordsCount(int count)
         {
             if (IsEnabled())
             {
-                WriteEvent(5, count);
+                WriteEvent(4, count);
             }
         }
 
@@ -111,12 +107,15 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group this event processor is associated with.  Events will be read only in the context of this group.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(6, Level = EventLevel.Error, Message = "An exception occurred while retrieving a list of partition ids. (FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; ErrorMessage: '{3}')")]
-        public virtual void GetPartitionIdsAsyncError(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string errorMessage)
+        [Event(5, Level = EventLevel.Error, Message = "An exception occurred while retrieving a list of partition ids. (FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; ErrorMessage: '{3}')")]
+        public virtual void GetPartitionIdsAsyncError(string fullyQualifiedNamespace,
+                                                      string eventHubName,
+                                                      string consumerGroup,
+                                                      string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(6, fullyQualifiedNamespace, eventHubName, consumerGroup, errorMessage ?? string.Empty);
+                WriteEvent(5, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -126,12 +125,28 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="count"> Minimum partitions per event processor.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "Expected minimum partitions per event processor '{0}'.")]
-        public void MinimumPartitionsPerEventProcessor(int count)
+        [Event(6, Level = EventLevel.Informational, Message = "Expected minimum partitions per event processor '{0}'.")]
+        public virtual void MinimumPartitionsPerEventProcessor(int count)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, count);
+                WriteEvent(6, count);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates the current ownership count.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        /// <param name="count"> Current ownership count.</param>
+        ///
+        [Event(7, Level = EventLevel.Informational, Message = "Current ownership count is {0}. (Identifier: '{1}')")]
+        public virtual void CurrentOwnershipCount(int count, string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(7, count, identifier ?? string.Empty);
             }
         }
 
@@ -146,7 +161,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(8, unclaimedPartitions.ToString());
+                WriteEvent(8, string.Join(", ", unclaimedPartitions));
             }
         }
 
@@ -154,14 +169,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   Indicates that an attempt to claim ownership for a specific partition has started.
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose ownership claim attempt is starting.</param>
         ///
         [Event(9, Level = EventLevel.Informational, Message = "Attempting to claim ownership of partition '{0}'.")]
-        public virtual void ClaimOwnership(string partitionId)
+        public virtual void ClaimOwnershipStart(string partitionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(9, partitionId);
+                WriteEvent(9, partitionId ?? string.Empty);
             }
         }
 
@@ -173,11 +188,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(10, Level = EventLevel.Error, Message = "Failed to claim ownership of partition '{0}'. (ErrorMessage: '{1}')")]
-        public virtual void ClaimOwnershipError(string partitionId, string errorMessage)
+        public virtual void ClaimOwnershipError(string partitionId,
+                                                string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(10, partitionId, errorMessage ?? string.Empty);
+                WriteEvent(10, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -187,24 +203,27 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
-        [Event(11, Level = EventLevel.Informational, Message = "Load is unbalanced and this event processor should own more partitions. (Identifier: '{0}')")]
-        public void ShouldOwnMorePartitions(string identifier)
+        [Event(11, Level = EventLevel.Informational, Message = "Load is unbalanced and this event processor should steal a partition. (Identifier: '{0}')")]
+        public virtual void ShouldStealPartition(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(11, identifier);
+                WriteEvent(11, identifier ?? string.Empty);
             }
         }
 
         /// <summary>
         ///   Indicates that stealable partitions were found, so randomly picking one of them to claim.
         /// </summary>
-        [Event(12, Level = EventLevel.Informational, Message = "No unclaimed partitions, stealing from another event processor.")]
-        public void StealPartitions()
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        ///
+        [Event(12, Level = EventLevel.Informational, Message = "No unclaimed partitions, stealing from another event processor. (Identifier: '{0}')")]
+        public virtual void StealPartition(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(12);
+                WriteEvent(12, identifier ?? string.Empty);
             }
         }
 
@@ -215,11 +234,11 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
         [Event(13, Level = EventLevel.Informational, Message = "Attempting to renew ownership. (Identifier: '{0}')")]
-        public virtual void RenewOwnership(string identifier)
+        public virtual void RenewOwnershipStart(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(13, identifier);
+                WriteEvent(13, identifier ?? string.Empty);
             }
         }
 
@@ -227,14 +246,30 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   Indicates that an exception was encountered while renewing ownership.
         /// </summary>
         ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(14, Level = EventLevel.Error, Message = "Failed to renew ownership. (ErrorMessage: '{0}')")]
-        public virtual void RenewOwnershipError(string errorMessage)
+        [Event(14, Level = EventLevel.Error, Message = "Failed to renew ownership. (Identifier: '{0}'; ErrorMessage: '{0}')")]
+        public virtual void RenewOwnershipError(string identifier, string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(14, errorMessage ?? string.Empty);
+                WriteEvent(14, identifier ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an attempt to renew ownership has completed, so they don't expire.
+        /// </summary>
+        ///
+        /// <param name="identifier">A unique name used to identify the event processor.</param>
+        ///
+        [Event(15, Level = EventLevel.Informational, Message = "Attempt to renew ownership has completed. (Identifier: '{0}')")]
+        public virtual void RenewOwnershipComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(15, identifier ?? string.Empty);
             }
         }
 
@@ -244,12 +279,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
         ///
-        [Event(15, Level = EventLevel.Informational, Message = "Creating and start running a new partition processing task for partition id '{0}'")]
+        [Event(16, Level = EventLevel.Informational, Message = "Creating and start running a new partition processing task for partition id '{0}'.")]
         public virtual void StartPartitionProcessing(string partitionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(15, partitionId);
+                WriteEvent(16, partitionId ?? string.Empty);
             }
         }
 
@@ -260,12 +295,28 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(16, Level = EventLevel.Error, Message = "Failed to Create and start running a new partition processing task for partition '{0}'. (ErrorMessage: '{1}')")]
-        public virtual void StartPartitionProcessingError(string partitionId, string errorMessage)
+        [Event(17, Level = EventLevel.Error, Message = "Failed to Create and start running a new partition processing task for partition '{0}'. (ErrorMessage: '{1}')")]
+        public virtual void StartPartitionProcessingError(string partitionId,
+                                                          string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(16, partitionId, errorMessage ?? string.Empty);
+                WriteEvent(17, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Partition processing task has completed.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
+        ///
+        [Event(18, Level = EventLevel.Informational, Message = "Partition processing task for partition id '{0}' has completed.")]
+        public virtual void PartitionProcessingComplete(string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(18, partitionId ?? string.Empty);
             }
         }
 
@@ -276,12 +327,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is being stopped.</param>
         /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
         ///
-        [Event(17, Level = EventLevel.Verbose, Message = "Stopping partition processing task for partition id '{0}' with reason '{1}'")]
-        public void StopPartitionProcessing(string partitionId, ProcessingStoppedReason reason)
+        [Event(19, Level = EventLevel.Verbose, Message = "Stopping partition processing task for partition id '{0}' with reason '{1}'.")]
+        public virtual void StopPartitionProcessingStart(string partitionId,
+                                                         ProcessingStoppedReason reason)
         {
             if (IsEnabled())
             {
-                WriteEvent(17, partitionId, reason);
+                WriteEvent(19, partitionId ?? string.Empty, reason);
             }
         }
 
@@ -290,14 +342,15 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
-        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
-        [Event(18, Level = EventLevel.Error, Message = "An exception occurred while stopping a partition processing task for partition id '{0}' with reason '{1}'. (Error Message: '{2}')")]
-        public void StopPartitionProcessingError(string partitionId, ProcessingStoppedReason reason, string errorMessage)
+        ///
+        [Event(20, Level = EventLevel.Error, Message = "An exception occurred while stopping a partition processing task for partition id '{0}' with reason '{1}'. (Error Message: '{2}')")]
+        public virtual void PartitionProcessingError(string partitionId,
+                                                     string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(18, partitionId, reason, errorMessage ?? string.Empty);
+                WriteEvent(20, partitionId ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -305,15 +358,16 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///   Indicates that the partition processing task has been stopped.
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the Event Hub partition whose processing is being stopped.</param>
-        /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing has stopped.</param>
+        /// <param name="reason">The reason why the processing for the specified partition has stopped.</param>
         ///
-        [Event(19, Level = EventLevel.Verbose, Message = "Stopped partition processing task for partition id '{0}' with reason '{1}'")]
-        public void StoppedPartitionProcessing(string partitionId, ProcessingStoppedReason reason)
+        [Event(21, Level = EventLevel.Verbose, Message = "Stopped partition processing task for partition id '{0}' with reason '{1}'.")]
+        public virtual void StopPartitionProcessingComplete(string partitionId,
+                                                            ProcessingStoppedReason reason)
         {
             if (IsEnabled())
             {
-                WriteEvent(19, partitionId, reason);
+                WriteEvent(21, partitionId ?? string.Empty, reason);
             }
         }
 
@@ -323,12 +377,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
-        [Event(20, Level = EventLevel.Verbose, Message = "Stop processing events. (Identifier '{0}')")]
-        public void EventProcessorStop(string identifier)
+        [Event(22, Level = EventLevel.Verbose, Message = "Stop processing events. (Identifier '{0}')")]
+        public virtual void EventProcessorStopStart(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(20, identifier);
+                WriteEvent(22, identifier ?? string.Empty);
             }
         }
 
@@ -338,12 +392,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
-        [Event(21, Level = EventLevel.Error, Message = "An exception occurred while stop processing events with identifier '{0}'. (Error Message: '{1}'")]
-        public void EventProcessorStopError(string identifier, string errorMessage)
+        ///
+        [Event(23, Level = EventLevel.Error, Message = "An exception occurred while balancing the load between processors. (Identifier '{0}'; Error Message: '{1}'")]
+        public virtual void LoadBalancingTaskError(string identifier,
+                                                   string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(21, identifier, errorMessage ?? string.Empty);
+                WriteEvent(23, identifier ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -353,42 +409,42 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
-        [Event(22, Level = EventLevel.Verbose, Message = "Stopped processing events. (Identifier '{0}')")]
-        public void EventProcessorStopCompleted(string identifier)
+        [Event(24, Level = EventLevel.Verbose, Message = "Stopped processing events. (Identifier '{0}')")]
+        public virtual void EventProcessorStopComplete(string identifier)
         {
             if (IsEnabled())
             {
-                WriteEvent(22, identifier);
+                WriteEvent(24, identifier ?? string.Empty);
             }
         }
 
         /// <summary>
-        ///   Indicates that process of updating the checkpoint using the given information for the associated partition and consumer group in the chosen storage service has started.
+        ///   Indicates that process of updating the checkpoint in the chosen storage service has started.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         ///
-        [Event(23, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has started. (partitionId '{0}')")]
-        public void UpdateCheckpointStart(string partitionId)
+        [Event(25, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has started. (partitionId '{0}')")]
+        public virtual void UpdateCheckpointStart(string partitionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(23, partitionId);
+                WriteEvent(25, partitionId ?? string.Empty);
             }
         }
 
         /// <summary>
-        ///   Indicates that process of updating the checkpoint using the given information for the associated partition and consumer group in the chosen storage service has completed.
+        ///   Indicates that process of updating the checkpoint in the chosen storage service has completed.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         ///
-        [Event(24, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has completed. (partitionId '{0}')")]
-        public void UpdateCheckpointCompleted(string partitionId)
+        [Event(26, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has completed. (partitionId '{0}')")]
+        public virtual void UpdateCheckpointComplete(string partitionId)
         {
             if (IsEnabled())
             {
-                WriteEvent(24, partitionId);
+                WriteEvent(26, partitionId ?? string.Empty);
             }
         }
     }
