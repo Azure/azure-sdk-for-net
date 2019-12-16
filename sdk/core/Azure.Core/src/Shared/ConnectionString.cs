@@ -12,32 +12,32 @@ namespace Azure.Core
     {
         private readonly Dictionary<string, string> _pairs;
         private readonly string _pairSeparator;
-        private readonly string _keyValueSeparator;
+        private readonly string _keywordValueSeparator;
 
-        public static ConnectionString Parse(string connectionString, string segmentSeparator = ";", string keyValueSeparator = "=", bool allowEmptyValues = false)
+        public static ConnectionString Parse(string connectionString, string segmentSeparator = ";", string keywordValueSeparator = "=", bool allowEmptyValues = false)
         {
-            Validate(connectionString, segmentSeparator, keyValueSeparator, allowEmptyValues);
-            return new ConnectionString(ParseSegments(connectionString, segmentSeparator, keyValueSeparator), segmentSeparator, keyValueSeparator);
+            Validate(connectionString, segmentSeparator, keywordValueSeparator, allowEmptyValues);
+            return new ConnectionString(ParseSegments(connectionString, segmentSeparator, keywordValueSeparator), segmentSeparator, keywordValueSeparator);
         }
 
-        private ConnectionString(Dictionary<string, string> pairs, string pairSeparator, string keyValueSeparator)
+        private ConnectionString(Dictionary<string, string> pairs, string pairSeparator, string keywordValueSeparator)
         {
             _pairs = pairs;
             _pairSeparator = pairSeparator;
-            _keyValueSeparator = keyValueSeparator;
+            _keywordValueSeparator = keywordValueSeparator;
         }
 
-        public string GetRequired(string key) =>
-            _pairs.TryGetValue(key, out var value) ? value : throw new InvalidOperationException($"Required key '{key}' is missing in connection string.");
+        public string GetRequired(string keyword) =>
+            _pairs.TryGetValue(keyword, out var value) ? value : throw new InvalidOperationException($"Required keyword '{keyword}' is missing in connection string.");
 
-        public string GetNonRequired(string key) =>
-            _pairs.TryGetValue(key, out var value) ? value : null;
+        public string GetNonRequired(string keyword) =>
+            _pairs.TryGetValue(keyword, out var value) ? value : null;
 
-        public void Replace(string key, string value)
+        public void Replace(string keyword, string value)
         {
-            if (_pairs.ContainsKey(key))
+            if (_pairs.ContainsKey(keyword))
             {
-                _pairs[key] = value;
+                _pairs[keyword] = value;
             }
         }
 
@@ -45,7 +45,7 @@ namespace Azure.Core
         {
             var stringBuilder = new StringBuilder();
             var isFirst = true;
-            foreach (KeyValuePair<string, string> segment in _pairs)
+            foreach (KeyValuePair<string, string> pair in _pairs)
             {
                 if (isFirst)
                 {
@@ -56,42 +56,41 @@ namespace Azure.Core
                     stringBuilder.Append(_pairSeparator);
                 }
 
-                stringBuilder.Append(segment.Key);
-                if (segment.Value != null)
+                stringBuilder.Append(pair.Key);
+                if (pair.Value != null)
                 {
-                    stringBuilder.Append(_keyValueSeparator).Append(segment.Value);
+                    stringBuilder.Append(_keywordValueSeparator).Append(pair.Value);
                 }
             }
 
             return stringBuilder.ToString();
         }
 
-
-        private static Dictionary<string, string> ParseSegments(in string connectionString, in string segmentSeparator, in string keyValueSeparator)
+        private static Dictionary<string, string> ParseSegments(in string connectionString, in string separator, in string keywordValueSeparator)
         {
-            var segments = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var pairs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             var segmentStart = -1;
             var segmentEnd = 0;
 
-            while (TryGetNextSegment(connectionString, segmentSeparator, ref segmentStart, ref segmentEnd))
+            while (TryGetNextSegment(connectionString, separator, ref segmentStart, ref segmentEnd))
             {
-                var kvSeparatorIndex = connectionString.IndexOf(keyValueSeparator, segmentStart, segmentEnd - segmentStart, StringComparison.Ordinal);
-                int keyStart = GetStart(connectionString, segmentStart);
-                int keyLength = GetLength(connectionString, keyStart, kvSeparatorIndex);
+                var kvSeparatorIndex = connectionString.IndexOf(keywordValueSeparator, segmentStart, segmentEnd - segmentStart, StringComparison.Ordinal);
+                int keywordStart = GetStart(connectionString, segmentStart);
+                int keyLength = GetLength(connectionString, keywordStart, kvSeparatorIndex);
 
-                var key = connectionString.Substring(keyStart, keyLength);
-                if (segments.ContainsKey(key))
+                var keyword = connectionString.Substring(keywordStart, keyLength);
+                if (pairs.ContainsKey(keyword))
                 {
-                    throw new InvalidOperationException($"Duplicated key '{key}'");
+                    throw new InvalidOperationException($"Duplicated keyword '{keyword}'");
                 }
 
-                var valueStart = GetStart(connectionString, kvSeparatorIndex + keyValueSeparator.Length);
+                var valueStart = GetStart(connectionString, kvSeparatorIndex + keywordValueSeparator.Length);
                 var valueLength = GetLength(connectionString, valueStart, segmentEnd);
-                segments.Add(key, connectionString.Substring(valueStart, valueLength));
+                pairs.Add(keyword, connectionString.Substring(valueStart, valueLength));
             }
 
-            return segments;
+            return pairs;
 
             static int GetStart(in string str, int start)
             {
@@ -138,7 +137,7 @@ namespace Azure.Core
             return true;
         }
 
-        private static void Validate(string connectionString, string segmentSeparator, string keyValueSeparator, bool allowEmptyValues)
+        private static void Validate(string connectionString, string segmentSeparator, string keywordValueSeparator, bool allowEmptyValues)
         {
             var segmentStart = -1;
             var segmentEnd = 0;
@@ -155,20 +154,20 @@ namespace Azure.Core
                     throw new InvalidOperationException($"Connection string contains two following separators '{segmentSeparator}'.");
                 }
 
-                var kvSeparatorIndex = connectionString.IndexOf(keyValueSeparator, segmentStart, segmentEnd - segmentStart, StringComparison.Ordinal);
+                var kvSeparatorIndex = connectionString.IndexOf(keywordValueSeparator, segmentStart, segmentEnd - segmentStart, StringComparison.Ordinal);
                 if (kvSeparatorIndex == -1)
                 {
-                    throw new InvalidOperationException($"Connection string doesn't have value for key '{connectionString.Substring(segmentStart, segmentEnd - segmentStart)}'.");
+                    throw new InvalidOperationException($"Connection string doesn't have value for keyword '{connectionString.Substring(segmentStart, segmentEnd - segmentStart)}'.");
                 }
 
                 if (segmentStart == kvSeparatorIndex)
                 {
-                    throw new InvalidOperationException($"Connection string has value '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' with no key.");
+                    throw new InvalidOperationException($"Connection string has value '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' with no keyword.");
                 }
 
                 if (!allowEmptyValues && kvSeparatorIndex + 1 == segmentEnd)
                 {
-                    throw new InvalidOperationException($"Connection string has key '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' with empty value.");
+                    throw new InvalidOperationException($"Connection string has keyword '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' with empty value.");
                 }
             }
         }

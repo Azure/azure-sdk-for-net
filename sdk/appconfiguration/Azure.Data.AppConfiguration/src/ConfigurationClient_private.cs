@@ -54,8 +54,14 @@ namespace Azure.Data.AppConfiguration
 
             uri = new Uri(parsed.GetRequired("Endpoint"));
             credential = parsed.GetRequired("Id");
-            // TODO (pri 2): this might throw an obscure exception. Should we throw a consistent exception when the parser fails?
-            secret = Convert.FromBase64String(parsed.GetRequired("Secret"));
+            try
+            {
+                secret = Convert.FromBase64String(parsed.GetRequired("Secret"));
+            }
+            catch (FormatException)
+            {
+                throw new InvalidOperationException("Specified Secret value isn't a valid base64 string");
+            }
         }
 
         private void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
