@@ -50,7 +50,7 @@ namespace Azure.Data.AppConfiguration
         {
             Debug.Assert(connectionString != null); // callers check this
 
-            var parsed = ConnectionString.Parse(connectionString, allowWhitespaces: true);
+            var parsed = ConnectionString.Parse(connectionString);
 
             uri = new Uri(parsed.GetRequired("Endpoint"));
             credential = parsed.GetRequired("Id");

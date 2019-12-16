@@ -11,22 +11,17 @@ namespace Azure.Core.Tests
 {
     public class ConnectionStringTests
     {
-        [TestCase("x")]
         [TestCase("x=y")]
         [TestCase("x=y;")]
-        [TestCase("x=y;z")]
-        [TestCase("x;z")]
-        [TestCase("x;y=z")]
         [TestCase("x=y;z=")]
         [TestCase("x=;y=z")]
         [TestCase("x=y;z=y")]
         [TestCase("x=eXo=")]
         [TestCase("x=y=z")]
         [TestCase(" x = y ; z = w")]
-        [TestCase(" x = y ; z ")]
         public void ValidString(string str)
         {
-            Assert.DoesNotThrow(() => ConnectionString.Parse(str, allowFlags: true, allowEmptyValues: true, allowWhitespaces: true));
+            Assert.DoesNotThrow(() => ConnectionString.Parse(str, allowEmptyValues: true));
         }
 
         [TestCase("x;y=z;w", "=", ";")]
@@ -38,47 +33,27 @@ namespace Azure.Core.Tests
             Assert.AreEqual("w", connectionString.GetRequired("z"));
         }
 
+        [TestCase("x")]
+        [TestCase("x;z")]
         [TestCase("x=y;;")]
         [TestCase(";x=y;")]
         [TestCase(";;x=y")]
+        [TestCase("x=y;z")]
         [TestCase("x=y;=z")]
+        [TestCase("x;y=z")]
         [TestCase("x=y;x=z")]
         [TestCase("=y")]
+        [TestCase(" x = y ; z ")]
         public void InvalidString(string str)
         {
-            Assert.Throws<InvalidOperationException>(() => ConnectionString.Parse(str, allowFlags: true, allowEmptyValues: true, allowWhitespaces: true));
-        }
-
-        [TestCase("x")]
-        [TestCase("x=y;z")]
-        [TestCase("x;z")]
-        [TestCase("x;y=z")]
-        public void InvalidString_NoFlags(string str)
-        {
-            Assert.Throws<InvalidOperationException>(() => ConnectionString.Parse(str, allowFlags: false, allowEmptyValues: true, allowWhitespaces: true));
+            Assert.Throws<InvalidOperationException>(() => ConnectionString.Parse(str, allowEmptyValues: true));
         }
 
         [TestCase("x=y;z=")]
         [TestCase("x=;y=z")]
         public void InvalidString_NoEmptyValues(string str)
         {
-            Assert.Throws<InvalidOperationException>(() => ConnectionString.Parse(str, allowFlags: true, allowEmptyValues: false, allowWhitespaces: true));
-        }
-
-        [TestCase(" x = y ; z = w")]
-        [TestCase(" x = y ; z ")]
-        public void InvalidString_NoSpaces(string str)
-        {
-            Assert.Throws<InvalidOperationException>(() => ConnectionString.Parse(str, allowFlags: true, allowEmptyValues: true, allowWhitespaces: false));
-        }
-
-        [Test]
-        public void HasFlag()
-        {
-            var connectionString = ConnectionString.Parse("x;y=z", allowFlags: true);
-            Assert.IsTrue(connectionString.HasFlag("x"));
-            Assert.Throws<InvalidOperationException>(() => connectionString.HasFlag("y"));
-            Assert.IsFalse(connectionString.HasFlag("z"));
+            Assert.Throws<InvalidOperationException>(() => ConnectionString.Parse(str, allowEmptyValues: false));
         }
 
         [Test]

@@ -10,55 +10,34 @@ namespace Azure.Core
 {
     internal sealed class ConnectionString
     {
-        private readonly Dictionary<string, string> _segments;
-        private readonly string _segmentSeparator;
+        private readonly Dictionary<string, string> _pairs;
+        private readonly string _pairSeparator;
         private readonly string _keyValueSeparator;
 
-        public static ConnectionString Parse(string connectionString, string segmentSeparator = ";", string keyValueSeparator = "=", bool allowFlags = false, bool allowEmptyValues = false, bool allowWhitespaces = false)
+        public static ConnectionString Parse(string connectionString, string segmentSeparator = ";", string keyValueSeparator = "=", bool allowEmptyValues = false)
         {
-            Validate(connectionString, segmentSeparator, keyValueSeparator, allowFlags, allowEmptyValues, allowWhitespaces);
+            Validate(connectionString, segmentSeparator, keyValueSeparator, allowEmptyValues);
             return new ConnectionString(ParseSegments(connectionString, segmentSeparator, keyValueSeparator), segmentSeparator, keyValueSeparator);
         }
 
-        private ConnectionString(Dictionary<string, string> pairs, string segmentSeparator, string keyValueSeparator)
+        private ConnectionString(Dictionary<string, string> pairs, string pairSeparator, string keyValueSeparator)
         {
-            _segments = pairs;
-            _segmentSeparator = segmentSeparator;
+            _pairs = pairs;
+            _pairSeparator = pairSeparator;
             _keyValueSeparator = keyValueSeparator;
         }
 
-        public string GetRequired(string key)
-        {
-            if (_segments.TryGetValue(key, out var value))
-            {
-                return value ?? throw new InvalidOperationException($"Required segment with the key '{key}' is declared as flag.");
-            }
+        public string GetRequired(string key) =>
+            _pairs.TryGetValue(key, out var value) ? value : throw new InvalidOperationException($"Required key '{key}' is missing in connection string.");
 
-            throw new InvalidOperationException($"Required segment with the key '{key}' is missing in connection string.");
-        }
-
-        public bool HasFlag(string key)
-        {
-            if (!_segments.TryGetValue(key, out var value))
-            {
-                return false;
-            }
-
-            if (value != null)
-            {
-                throw new InvalidOperationException($"Required segment with the key '{key}' isn't a flag and has value '{value}'.");
-            }
-
-            return true;
-        }
-
-        public string GetNonRequired(string key) => _segments.TryGetValue(key, out var value) ? value : null;
+        public string GetNonRequired(string key) =>
+            _pairs.TryGetValue(key, out var value) ? value : null;
 
         public void Replace(string key, string value)
         {
-            if (_segments.ContainsKey(key))
+            if (_pairs.ContainsKey(key))
             {
-                _segments[key] = value;
+                _pairs[key] = value;
             }
         }
 
@@ -66,7 +45,7 @@ namespace Azure.Core
         {
             var stringBuilder = new StringBuilder();
             var isFirst = true;
-            foreach (KeyValuePair<string, string> segment in _segments)
+            foreach (KeyValuePair<string, string> segment in _pairs)
             {
                 if (isFirst)
                 {
@@ -74,7 +53,7 @@ namespace Azure.Core
                 }
                 else
                 {
-                    stringBuilder.Append(_segmentSeparator);
+                    stringBuilder.Append(_pairSeparator);
                 }
 
                 stringBuilder.Append(segment.Key);
@@ -98,17 +77,8 @@ namespace Azure.Core
             while (TryGetNextSegment(connectionString, segmentSeparator, ref segmentStart, ref segmentEnd))
             {
                 var kvSeparatorIndex = connectionString.IndexOf(keyValueSeparator, segmentStart, segmentEnd - segmentStart, StringComparison.Ordinal);
-                int keyStart, keyLength;
-                if (kvSeparatorIndex != -1)
-                {
-                    keyStart = GetStart(connectionString, segmentStart);
-                    keyLength = GetLength(connectionString, keyStart, kvSeparatorIndex);
-                }
-                else
-                {
-                    keyStart = GetStart(connectionString, segmentStart);
-                    keyLength = GetLength(connectionString, keyStart, segmentEnd);
-                }
+                int keyStart = GetStart(connectionString, segmentStart);
+                int keyLength = GetLength(connectionString, keyStart, kvSeparatorIndex);
 
                 var key = connectionString.Substring(keyStart, keyLength);
                 if (segments.ContainsKey(key))
@@ -116,16 +86,9 @@ namespace Azure.Core
                     throw new InvalidOperationException($"Duplicated key '{key}'");
                 }
 
-                if (kvSeparatorIndex != -1)
-                {
-                    var valueStart = GetStart(connectionString, kvSeparatorIndex + keyValueSeparator.Length);
-                    var valueLength = GetLength(connectionString, valueStart, segmentEnd);
-                    segments.Add(key, connectionString.Substring(valueStart, valueLength));
-                }
-                else
-                {
-                    segments.Add(key, null);
-                }
+                var valueStart = GetStart(connectionString, kvSeparatorIndex + keyValueSeparator.Length);
+                var valueLength = GetLength(connectionString, valueStart, segmentEnd);
+                segments.Add(key, connectionString.Substring(valueStart, valueLength));
             }
 
             return segments;
@@ -175,7 +138,7 @@ namespace Azure.Core
             return true;
         }
 
-        private static void Validate(string connectionString, string segmentSeparator, string keyValueSeparator, bool allowFlags, bool allowEmptyValues, bool allowWhitespaces)
+        private static void Validate(string connectionString, string segmentSeparator, string keyValueSeparator, bool allowEmptyValues)
         {
             var segmentStart = -1;
             var segmentEnd = 0;
@@ -193,55 +156,20 @@ namespace Azure.Core
                 }
 
                 var kvSeparatorIndex = connectionString.IndexOf(keyValueSeparator, segmentStart, segmentEnd - segmentStart, StringComparison.Ordinal);
-                if (kvSeparatorIndex != -1)
+                if (kvSeparatorIndex == -1)
                 {
-                    ValidateKeyValue(connectionString, segmentStart, segmentEnd, allowEmptyValues, allowWhitespaces, kvSeparatorIndex);
+                    throw new InvalidOperationException($"Connection string doesn't have value for key '{connectionString.Substring(segmentStart, segmentEnd - segmentStart)}'.");
                 }
-                else
+
+                if (segmentStart == kvSeparatorIndex)
                 {
-                    if (allowFlags)
-                    {
-                        ValidateWhitespaces(connectionString, segmentStart, segmentEnd, allowWhitespaces, "key");
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException($"Connection string segment '{connectionString.Substring(segmentStart, segmentEnd - segmentStart)}' should have a value.");
-                    }
+                    throw new InvalidOperationException($"Connection string has value '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' with no key.");
                 }
-            }
-        }
 
-        private static void ValidateKeyValue(string connectionString, int segmentStart, int segmentEnd, bool allowEmptyValues, bool allowWhitespaces, int kvSeparatorIndex)
-        {
-            if (segmentStart == kvSeparatorIndex)
-            {
-                throw new InvalidOperationException($"Segment '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' has no key.");
-            }
-
-            if (!allowEmptyValues && kvSeparatorIndex + 1 == segmentEnd)
-            {
-                throw new InvalidOperationException($"Key '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' has no value.");
-            }
-
-            ValidateWhitespaces(connectionString, segmentStart, kvSeparatorIndex, allowWhitespaces, "key");
-            ValidateWhitespaces(connectionString, kvSeparatorIndex + 1, segmentEnd, allowWhitespaces, "value");
-        }
-
-        private static void ValidateWhitespaces(string connectionString, int start, int end, bool allowWhitespaces, string name)
-        {
-            if (allowWhitespaces)
-            {
-                return;
-            }
-
-            if (char.IsWhiteSpace(connectionString[start]))
-            {
-                throw new InvalidOperationException($"Start of the {name} '{connectionString.Substring(start, end - start)}' shouldn't contain spaces.");
-            }
-
-            if (char.IsWhiteSpace(connectionString[end - 1]))
-            {
-                throw new InvalidOperationException($"End of the {name} '{connectionString.Substring(start, end - start)}' shouldn't contain spaces.");
+                if (!allowEmptyValues && kvSeparatorIndex + 1 == segmentEnd)
+                {
+                    throw new InvalidOperationException($"Connection string has key '{connectionString.Substring(segmentStart, kvSeparatorIndex - segmentStart)}' with empty value.");
+                }
             }
         }
     }
