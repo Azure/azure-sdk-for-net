@@ -63,49 +63,64 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
 
             Task partitionInitializingHandler(PartitionInitializingEventArgs eventArgs)
             {
-               try
-               {
-                  eventArgs.DefaultStartingPosition = EventPosition.Latest;
-                  Console.WriteLine($"Initialized partition: { eventArgs.PartitionId }");
-               }
-               catch (Exception ex)
-               {
-                   // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                   // the exception to the console.
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
 
-                   Console.WriteLine();
-                   Console.WriteLine($"An error was observed while initializing partition: { eventArgs.PartitionId }.  Message: { ex.Message }");
-                   Console.WriteLine();
-               }
+                try
+                {
+                    eventArgs.DefaultStartingPosition = EventPosition.Latest;
+                    Console.WriteLine($"Initialized partition: { eventArgs.PartitionId }");
+                }
+                catch (Exception ex)
+                {
+                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
+                    // the exception to the console.
 
-               return Task.CompletedTask;
+                    Console.WriteLine();
+                    Console.WriteLine($"An error was observed while initializing partition: { eventArgs.PartitionId }.  Message: { ex.Message }");
+                    Console.WriteLine();
+                }
+
+                return Task.CompletedTask;
             }
 
             // For this example, events will just be logged to the console.
 
             Task processEventHandler(ProcessEventArgs eventArgs)
             {
-               try
-               {
-                  Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
-               }
-               catch (Exception ex)
-               {
-                   // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
-                   // the exception to the console.
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
 
-                   Console.WriteLine();
-                   Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
-                   Console.WriteLine();
-               }
+                try
+                {
+                    Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
+                }
+                catch (Exception ex)
+                {
+                    // For real-world scenarios, you should take action appropriate to your application.  For our example, we'll just log
+                    // the exception to the console.
 
-               return Task.CompletedTask;
+                    Console.WriteLine();
+                    Console.WriteLine($"An error was observed while processing events.  Message: { ex.Message }");
+                    Console.WriteLine();
+                }
+
+                return Task.CompletedTask;
             };
 
             // For this example, exceptions will just be logged to the console.
 
             Task processErrorHandler(ProcessErrorEventArgs eventArgs)
             {
+                if (eventArgs.CancellationToken.IsCancellationRequested)
+                {
+                    return Task.CompletedTask;
+                }
+
                 Console.WriteLine("===============================");
                 Console.WriteLine($"The error handler was invoked during the operation: { eventArgs.Operation ?? "Unknown" }, for Exception: { eventArgs.Exception.Message }");
                 Console.WriteLine("===============================");

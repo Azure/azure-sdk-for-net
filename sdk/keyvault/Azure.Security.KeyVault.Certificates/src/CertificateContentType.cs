@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets a value indicating that content is downloaded in PEM format.
         /// </summary>
-        public static CertificateContentType Pem { get; } = new CertificateContentType("application/x-pem");
+        public static CertificateContentType Pem { get; } = new CertificateContentType("application/x-pem-file");
 
         /// <summary>
         /// Determines if two <see cref="CertificateContentType"/> values are the same.

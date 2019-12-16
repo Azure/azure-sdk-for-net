@@ -52,9 +52,9 @@ namespace Azure.Storage.Sas
         /// The permissions associated with the shared access signature. The
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
-        /// stored access policy.  The <see cref="BlobSasPermissions"/>,
-        /// <see cref="BlobContainerSasPermissions"/>, <see cref="SnapshotSasPermissions"/>,
-        /// or <see cref="BlobAccountSasPermissions"/> can be used to create the
+        /// stored access policy.  The <see cref="DataLakeSasPermissions"/>,
+        /// <see cref="DataLakeFileSystemSasPermissions"/>
+        /// or <see cref="DataLakeAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
         public string Permissions { get; private set; }
@@ -71,7 +71,7 @@ namespace Azure.Storage.Sas
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
-        /// correlates to an access policy specified for the container.
+        /// correlates to an access policy specified for the file system.
         /// </summary>
         public string Identifier { get; set; }
 

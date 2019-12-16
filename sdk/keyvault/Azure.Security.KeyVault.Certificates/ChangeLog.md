@@ -1,5 +1,24 @@
 # Release History
 
+## 4.0.0-preview.8
+
+### Breaking changes
+
+- `CertificateClient.CreateIssuer` and `CertificateClient.CreateIssuerAsync` now require a `CertificateIssuer` with both a name and provider.
+- `CertificateContentType.Pem` now correctly returns "x-pem-file".
+- A name is now required when creating a `CertificateIssuer`.
+- `CertificateIssuer.Provider` is now read-only. Use the new overload constructor to set a required provider when creating an issuer.
+- `CertificateIssuer.Properties` was redundant and has been removed.
+- The `value` parameter of the `ImportCertificateOptions` constructor has been renamed to `certificate`.
+- The `policy` parameter was removed from the `ImportCertificateOptions` constructor, and the `Policy` property is now read-write.
+- The `LifetimeAction` constructor now requires a `CertificatePolicyAction` argument.
+- `LifetimeAction.Action` is now read-only. Use the constructor to set the action.
+- The `x509certificates` parameter of the `MergeCertificateOptions` constructor has been renamed to `x509Certificates`.
+
+### Major changes
+
+- A constructor was added to `CertificateOperation`. You can use this to construct a `CertificateOperation` to cancel or delete it without certificates/get permission.
+
 ## 4.0.0-preview.7
 
 ### Breaking changes

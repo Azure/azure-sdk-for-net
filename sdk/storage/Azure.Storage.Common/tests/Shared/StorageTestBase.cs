@@ -5,8 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Sas;
@@ -16,6 +19,15 @@ namespace Azure.Storage.Test.Shared
 {
     public abstract class StorageTestBase : RecordedTestBase
     {
+        static StorageTestBase()
+        {
+            // https://github.com/Azure/azure-sdk-for-net/issues/9087
+            // .NET framework defaults to 2, which causes issues for the parallel upload/download tests.
+#if !NETCOREAPP
+            ServicePointManager.DefaultConnectionLimit = 100;
+#endif
+        }
+
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
@@ -148,6 +160,13 @@ namespace Azure.Storage.Test.Shared
         }
 
         public DateTimeOffset GetUtcNow() => Recording.UtcNow;
+
+        protected HttpPipelineTransport GetTransport() =>
+            new HttpClientTransport(
+                new HttpClient()
+                {
+                    Timeout = TestConstants.HttpTimeoutDuration
+                });
 
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);

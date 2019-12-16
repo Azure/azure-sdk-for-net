@@ -31,7 +31,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the FtpReadSettings class.
         /// </summary>
-        /// <param name="type">The read setting type.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="maxConcurrentConnections">The maximum concurrent
@@ -46,8 +45,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// (or Expression with resultType string).</param>
         /// <param name="useBinaryTransfer">Specify whether to use binary
         /// transfer mode for FTP stores.</param>
-        public FtpReadSettings(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? useBinaryTransfer = default(bool?))
-            : base(type, additionalProperties, maxConcurrentConnections)
+        public FtpReadSettings(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object maxConcurrentConnections = default(object), object recursive = default(object), object wildcardFolderPath = default(object), object wildcardFileName = default(object), bool? useBinaryTransfer = default(bool?))
+            : base(additionalProperties, maxConcurrentConnections)
         {
             Recursive = recursive;
             WildcardFolderPath = wildcardFolderPath;
@@ -90,15 +89,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "useBinaryTransfer")]
         public bool? UseBinaryTransfer { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

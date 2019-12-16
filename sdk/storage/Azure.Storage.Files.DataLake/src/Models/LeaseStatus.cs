@@ -4,19 +4,19 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// LeaseStatus values
+    /// Lease status values.
     /// </summary>
     #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum LeaseStatus
     #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names
     {
         /// <summary>
-        /// locked
+        /// Locked.
         /// </summary>
         Locked,
 
         /// <summary>
-        /// unlocked
+        /// Unlocked.
         /// </summary>
         Unlocked
     }

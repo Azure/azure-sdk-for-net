@@ -261,4 +261,7 @@
   <data name="OperationReadEvents" xml:space="preserve">
     <value>Reading events from the Event Hubs service.</value>
   </data>
+  <data name="CannotReadLastEnqueuedEventPropertiesWithoutEvent" xml:space="preserve">
+    <value>The last enqueued event properties cannot be read when an event is not available.</value>
+  </data>
 </root>

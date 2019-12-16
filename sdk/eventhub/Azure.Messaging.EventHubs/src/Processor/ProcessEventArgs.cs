@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
@@ -27,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <value><c>true</c> if the arguments contain an event to be processed; otherwise, <c>false</c>.</value>
         ///
-        public bool HasEvent => ((Data == null) || (Partition == null));
+        public bool HasEvent => ((Data != null) && (Partition != null));
 
         /// <summary>
         ///   The context of the Event Hub partition this instance is associated with.
@@ -38,6 +37,12 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <summary>
         ///   The received event to be processed.  Expected to be <c>null</c> if the receive call has timed out.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   Ownership of this data, including the memory that holds its <see cref="EventData.Body" />,
+        ///   is assumed to transfer to consumers of the <see cref="ProcessEventArgs" />.  It may be considered
+        ///   immutable and is safe to access so long as the reference is held.
+        /// </remarks>
         ///
         public EventData Data { get; }
 

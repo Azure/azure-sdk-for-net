@@ -27,19 +27,16 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="ImportCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
-        /// <param name="value">The PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
-        /// <param name="policy">The policy which governs the lifecycle of the imported certificate and its properties when it is rotated.</param>
+        /// <param name="certificate">The PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/>, <paramref name="policy"/>, or <paramref name="value"/> is null.</exception>
-        public ImportCertificateOptions(string name, byte[] value, CertificatePolicy policy)
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="certificate"/> is null.</exception>
+        public ImportCertificateOptions(string name, byte[] certificate)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
-            Argument.AssertNotNull(policy, nameof(policy));
+            Argument.AssertNotNull(certificate, nameof(certificate));
 
             Name = name;
-            Certificate = value;
-            Policy = policy;
+            Certificate = certificate;
         }
 
         /// <summary>
@@ -55,7 +52,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Gets the policy which governs the lifecycle of the imported certificate and its properties when it is rotated.
         /// </summary>
-        public CertificatePolicy Policy { get; }
+        public CertificatePolicy Policy { get; set; }
 
         /// <summary>
         /// Gets or sets the password protecting the certificate specified in the Value.
