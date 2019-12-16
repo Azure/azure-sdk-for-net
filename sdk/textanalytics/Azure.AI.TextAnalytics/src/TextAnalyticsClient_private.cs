@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics
 
         #endregion
 
-        private void BuildUriForRoute(string route, RequestUriBuilder builder, TextAnalyticsOptions options)
+        private void BuildUriForRoute(string route, RequestUriBuilder builder, TextAnalyticsRequestOptions options)
         {
             builder.Reset(_baseUri);
             builder.AppendPath(TextAnalyticsRoute, escape: false);
