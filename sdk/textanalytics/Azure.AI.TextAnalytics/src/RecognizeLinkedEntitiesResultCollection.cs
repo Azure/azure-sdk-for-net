@@ -13,11 +13,6 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizeLinkedEntitiesResultCollection : ReadOnlyCollection<RecognizeLinkedEntitiesResult>
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="statistics"></param>
-        /// <param name="modelVersion"></param>
         internal RecognizeLinkedEntitiesResultCollection(IList<RecognizeLinkedEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
