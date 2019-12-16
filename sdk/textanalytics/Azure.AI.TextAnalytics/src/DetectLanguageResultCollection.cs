@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="DetectLanguageResult"/> entities corresponding
+    /// Collection of <see cref="DetectLanguageResult"/> objects corresponding
     /// to a batch of input documents, and annotated with information about the
     /// batch operation.
     /// </summary>

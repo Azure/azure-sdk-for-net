@@ -648,9 +648,9 @@ namespace Azure.AI.TextAnalytics
         #region Analyze Sentiment
 
         /// <summary>
-        /// Runs a predictive model to identify the positive, negative or neutral
-        /// sentiment contained in the input text, as well as a score indicating the model's
-        /// confidence in the predicted sentiment.
+        /// Runs a predictive model to identify the positive, negative, neutral
+        /// or mixed sentiment contained in the input text, as well as a score
+        /// indicating the model's confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
         /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
         /// </summary>

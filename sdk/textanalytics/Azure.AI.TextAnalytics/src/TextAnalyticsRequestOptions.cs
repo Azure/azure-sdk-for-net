@@ -26,7 +26,8 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets or sets a value that, if set, indicates the version of the text
-        /// analytics model that will be used to generate the result.
+        /// analytics model that will be used to generate the result, for example,
+        /// "latest" or "2019-10-01".
         /// </summary>
         public string ModelVersion { get; set; }
     }

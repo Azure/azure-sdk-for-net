@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Details regarding the specific substing in the input document matching
+    /// Details regarding the specific substring in the input document matching
     /// the linked entity, or well-known item, that the text analytics model
     /// identified.
     /// </summary>
