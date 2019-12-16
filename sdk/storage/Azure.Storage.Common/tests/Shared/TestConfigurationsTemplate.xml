@@ -106,7 +106,7 @@
       <TableServiceSecondaryEndpoint>http://[NAMESPACE-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
 
-    <!-- A managed disk storge account -->
+    <!-- A managed disk storage account -->
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>ManagedDiskTenant</TenantName>

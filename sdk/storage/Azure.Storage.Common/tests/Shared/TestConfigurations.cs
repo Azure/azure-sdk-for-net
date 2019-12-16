@@ -111,13 +111,13 @@ namespace Azure.Storage.Test
             GetTenant("TargetOAuthTenant", s_configurations.Value.TargetOAuthTenantName);
 
         /// <summary>
-        /// Gets a tenant to use for any tests that require hierarchical namespace
+        /// Gets a tenant to use for any tests that require hierarchical namespace.
         /// </summary>
         public static TenantConfiguration DefaultTargetHierarchicalNamespaceTenant =>
             GetTenant("TargetHierarchicalNamespaceTenant", s_configurations.Value.TargetHierarchicalNamespaceTenantName);
 
         /// <summary>
-        /// Gets a tenant to use for any tests that require hierarchical namespace
+        /// Gets a tenant to use for any tests that a managed disk account.
         /// </summary>
         public static TenantConfiguration DefaultTargetManagedDiskTenant =>
             GetTenant("TargetManagedDiskTenant", s_configurations.Value.TargetManagedDiskTenantName);
