@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />

@@ -50,41 +50,18 @@ namespace Azure.Data.AppConfiguration
         {
             Debug.Assert(connectionString != null); // callers check this
 
-            uri = default;
-            credential = default;
-            secret = default;
+            var parsed = ConnectionString.Parse(connectionString);
 
-            // Parse connection string
-            string[] args = connectionString.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            if (args.Length < 3)
+            uri = new Uri(parsed.GetRequired("Endpoint"));
+            credential = parsed.GetRequired("Id");
+            try
             {
-                throw new ArgumentException("invalid connection string segment count", nameof(connectionString));
+                secret = Convert.FromBase64String(parsed.GetRequired("Secret"));
             }
-
-            const string endpointString = "Endpoint=";
-            const string idString = "Id=";
-            const string secretString = "Secret=";
-
-            // TODO (pri 2): this allows elements in the connection string to be in varied order. Should we disallow it?
-            // TODO (pri 2): this parser will succeed even if one of the elements is missing (e.g. if cs == "a;b;c". We should fix that.
-            foreach (var arg in args)
+            catch (FormatException)
             {
-                var segment = arg.Trim();
-                if (segment.StartsWith(endpointString, StringComparison.OrdinalIgnoreCase))
-                {
-                    uri = new Uri(segment.Substring(segment.IndexOf('=') + 1));
-                }
-                else if (segment.StartsWith(idString, StringComparison.OrdinalIgnoreCase))
-                {
-                    credential = segment.Substring(segment.IndexOf('=') + 1);
-                }
-                else if (segment.StartsWith(secretString, StringComparison.OrdinalIgnoreCase))
-                {
-                    var secretBase64 = segment.Substring(segment.IndexOf('=') + 1);
-                    // TODO (pri 2): this might throw an obscure exception. Should we throw a consisten exception when the parser fails?
-                    secret = Convert.FromBase64String(secretBase64);
-                }
-            };
+                throw new InvalidOperationException("Specified Secret value isn't a valid base64 string");
+            }
         }
 
         private void BuildUriForKvRoute(RequestUriBuilder builder, ConfigurationSetting keyValue)
