@@ -10,6 +10,8 @@ namespace Azure.AI.TextAnalytics
     public class TextAnalyticsRequestOptions
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TextAnalyticsRequestOptions"/>
+        /// class.
         /// </summary>
         public TextAnalyticsRequestOptions()
         {
