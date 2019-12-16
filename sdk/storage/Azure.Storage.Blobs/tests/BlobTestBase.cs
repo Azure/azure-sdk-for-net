@@ -159,6 +159,9 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_OauthAccount() =>
             GetServiceClientFromOauthConfig(TestConfigOAuth);
 
+        public BlobServiceClient GetServiceClient_ManagedDisk() =>
+            GetServiceClientFromSharedKeyConfig(TestConfigManagedDisk);
+
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,
             BlobSasQueryParameters sasCredentials = default)

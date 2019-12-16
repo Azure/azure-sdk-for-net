@@ -8593,6 +8593,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="prevsnapshot">Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016.</param>
+            /// <param name="prevSnapshotUrl">Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot.</param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
@@ -8612,6 +8613,7 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 int? timeout = default,
                 string prevsnapshot = default,
+                System.Uri prevSnapshotUrl = default,
                 string range = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -8634,6 +8636,7 @@ namespace Azure.Storage.Blobs
                         snapshot,
                         timeout,
                         prevsnapshot,
+                        prevSnapshotUrl,
                         range,
                         leaseId,
                         ifModifiedSince,
@@ -8677,6 +8680,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="prevsnapshot">Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016.</param>
+            /// <param name="prevSnapshotUrl">Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot.</param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
@@ -8691,6 +8695,7 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 int? timeout = default,
                 string prevsnapshot = default,
+                System.Uri prevSnapshotUrl = default,
                 string range = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -8719,6 +8724,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", "2019-07-07");
+                if (prevSnapshotUrl != null) { _request.Headers.SetValue("x-ms-previous-snapshot-url", prevSnapshotUrl.ToString()); }
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
