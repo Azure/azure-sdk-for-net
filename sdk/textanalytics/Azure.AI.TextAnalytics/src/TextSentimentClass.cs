@@ -16,12 +16,12 @@ namespace Azure.AI.TextAnalytics
         Positive,
 
         /// <summary>
-        /// Indicates that the text sentiment is neutral.
+        /// Indicates that the text lacks a sentiment.
         /// </summary>
         Neutral,
 
         /// <summary>
-        /// Indicates that the text sentiment is neutral.
+        /// Indicates that the text sentiment is negative.
         /// </summary>
         Negative,
 

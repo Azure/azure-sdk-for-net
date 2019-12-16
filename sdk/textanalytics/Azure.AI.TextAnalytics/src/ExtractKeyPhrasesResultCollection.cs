@@ -27,8 +27,8 @@ namespace Azure.AI.TextAnalytics
         public TextDocumentBatchStatistics Statistics { get; }
 
         /// <summary>
-        /// Gets the version of the text analytics model used to identify key
-        /// phrases for this batch of input documents.
+        /// Gets the version of the text analytics model used by this operation
+        /// on this batch of input documents.
         /// </summary>
         public string ModelVersion { get; }
     }

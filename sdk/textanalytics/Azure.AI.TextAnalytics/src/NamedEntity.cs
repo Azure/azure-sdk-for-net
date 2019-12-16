@@ -4,9 +4,9 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A word or phrase identified from the input text as important, as well
-    /// as a categorization of the inferred entity into a category in a taxonomy
-    /// defined by the text analytics service and described at
+    /// A word or phrase identified as an entity that can be categorized
+    /// as known type in a given taxonomy.  The set of types recognized by the
+    /// text analytics service and is described at
     /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
     /// </summary>
     public readonly struct NamedEntity
@@ -36,8 +36,9 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Gets the sub type of the entity inferred by the text analytics service's
-        /// named entity recognition model. The list of available types is
-        /// described at
+        /// named entity recognition model.  This property may not have a value if
+        /// a sub type doesn't exist for this entity.  The list of available types and
+        /// subtypes is described at
         /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
         /// </summary>
         public string SubType { get; }

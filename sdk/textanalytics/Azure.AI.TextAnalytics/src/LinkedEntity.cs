@@ -7,12 +7,10 @@ using System.Collections.Generic;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A word or phrase identified from the input text as important, as well
-    /// as a link to an entry in a data source that can be used to disambiguate
-    /// the word or phrase.  The entity name may be different from the exact
-    /// text match in the input document.  <see cref="LinkedEntity"/> has a
-    /// collection of matches identifying the specific substring corresponding
-    /// to the inferred entity.
+    /// A word or phrase identified as a known entity in a data source.
+    /// A link to the entry in the data source is provided as well as the formal
+    /// name of the entity used in the data source.  Note that the formal name
+    /// may be different from the exact text match in the input document.
     /// </summary>
     public readonly struct LinkedEntity
     {
