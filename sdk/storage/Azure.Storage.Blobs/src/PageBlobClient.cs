@@ -1231,6 +1231,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="previousSnapshotUrl">
+        /// This parameter only works with managed disk storage accounts.
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
@@ -1354,6 +1355,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="previousSnapshotUrl">
+        /// This parameter only works with managed disk storage accounts.
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
@@ -1477,6 +1479,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
         /// <param name="previousSnapshotUrl">
+        /// This parameter only works with managed disk storage accounts.
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
