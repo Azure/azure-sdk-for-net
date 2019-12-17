@@ -212,15 +212,5 @@ namespace Azure.Storage.Test
                     .ToDictionary(tenant => tenant.TenantName)
             };
         }
-
-        /// <summary>
-        /// Add a static TestEventListener which will redirect SDK logging
-        /// to Console.Out for easy debugging.
-        ///
-        /// This is only here to run before any of our tests make requests.
-        /// </summary>
-#pragma warning disable IDE0052 // Remove unread private members
-        private static readonly TestEventListener s_logging = new TestEventListener();
-#pragma warning restore IDE0052 // Remove unread private members
     }
 }

@@ -103,7 +103,16 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
-            await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            try
+            {
+                await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            }
+            catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
+            {
+                // don't throw if the Container already exists as this can happen for a number of reasons out of our control
+                // try/catch can be replaced with CreateIfNotExists once that API is created https://github.com/Azure/azure-sdk-for-net/issues/9173
+            }
             return new DisposingFileSystem(fileSystem);
         }
 

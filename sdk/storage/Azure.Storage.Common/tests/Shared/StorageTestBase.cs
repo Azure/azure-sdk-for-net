@@ -28,11 +28,26 @@ namespace Azure.Storage.Test.Shared
 #endif
         }
 
+        /// <summary>
+        /// Add a static TestEventListener which will redirect SDK logging
+        /// to Console.Out for easy debugging.
+        ///
+        /// This is only here to run before any of our tests make requests.
+        /// </summary>
+        private readonly TestEventListener _listener;
+
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
+            _listener = new TestEventListener();
             Sanitizer = new StorageRecordedTestSanitizer();
             Matcher = new StorageRecordMatcher(Sanitizer);
+        }
+
+        [TearDown]
+        public void CleanUp()
+        {
+            _listener.Dispose();
         }
 
         /// <summary>

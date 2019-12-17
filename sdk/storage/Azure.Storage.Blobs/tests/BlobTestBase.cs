@@ -234,7 +234,7 @@ namespace Azure.Storage.Test.Shared
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType);
             return new DisposingContainer(container);
         }
 
