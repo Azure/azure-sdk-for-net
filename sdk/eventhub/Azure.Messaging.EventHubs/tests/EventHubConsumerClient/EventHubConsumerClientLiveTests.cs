@@ -1956,7 +1956,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     var receivedEvents = new List<EventData>();
                     var wereEventsPublished = false;
-                    var maximumConsecutiveEmpties = 5;
+                    var maximumConsecutiveEmpties = 10;
                     var consecutiveEmpties = 0;
 
                     await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionIds[1], EventPosition.Latest, DefaultReadOptions, cancellationSource.Token))
@@ -2030,7 +2030,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Read back the events from two different consumer groups.
 
-                    var maximumConsecutiveEmpties = 5;
+                    var maximumConsecutiveEmpties = 10;
                     var consecutiveEmpties = 0;
                     var consumerReceivedEvents = new List<EventData>();
                     var anotherReceivedEvents = new List<EventData>();
@@ -2116,7 +2116,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Consistently failing on Linux and macOS.  To be fixed with the upcoming test stabilization.")]
         public async Task ConsumerCannotReadWhenProxyIsInvalid()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -2140,7 +2139,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (var invalidProxyConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, options))
                     {
-                        var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromMilliseconds(250) };
+                        var readOptions = new ReadEventOptions { MaximumWaitTime = null };
                         Assert.That(async () => await ReadNothingAsync(invalidProxyConsumer, partition, EventPosition.Latest, readOptions, 25), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     }
                 }

@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 await processor.StartProcessingAsync();
 
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(90));
 
                 // We'll publish a batch of events for our processor to receive. We'll split the events into a couple of batches to
                 // increase the chance they'll be spread around to different partitions and introduce a delay between batches to

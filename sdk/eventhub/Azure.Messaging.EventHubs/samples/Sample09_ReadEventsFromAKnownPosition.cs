@@ -87,7 +87,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // in the event of a service error where the events we've published cannot be read.
 
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(60));
 
                 List<EventData> receivedEvents = new List<EventData>();
                 bool wereEventsPublished = false;

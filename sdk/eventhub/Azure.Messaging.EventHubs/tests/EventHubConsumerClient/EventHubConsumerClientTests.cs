@@ -1779,7 +1779,22 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(receivedEvents.Count, Is.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * thresholdModifier), "There should be empty events present due to the wait time.");
-            Assert.That(receivedEvents.Where(item => item != null), Is.EquivalentTo(events), "The received events should match the published events when empty events are removed.");
+            Assert.That(receivedEvents.Where(item => item != null).Count(), Is.EqualTo(events.Count), "The received event count should match the published events when empty events are removed.");
+
+            // Validate that each message received appeared in the source set once.
+
+            var sourceEventMessages = new HashSet<string>();
+
+            foreach (var message in events.Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            {
+                sourceEventMessages.Add(message);
+            }
+
+            foreach (var receivedMessage in receivedEvents.Where(item => item != null).Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            {
+                Assert.That(sourceEventMessages.Contains(receivedMessage), $"The message: { receivedEvents } was not in the source set or has appeared more than oncesss.");
+                sourceEventMessages.Remove(receivedMessage);
+            }
         }
 
         /// <summary>

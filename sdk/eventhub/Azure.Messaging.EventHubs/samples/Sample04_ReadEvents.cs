@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // safe.
 
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(90));
 
                 int eventsRead = 0;
                 int maximumEvents = 3;

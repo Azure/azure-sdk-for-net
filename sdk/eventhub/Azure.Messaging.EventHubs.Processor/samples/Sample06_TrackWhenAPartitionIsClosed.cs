@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 // error be encountered, we'll also add a timed cancellation.
 
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(60));
 
                 while ((!cancellationSource.IsCancellationRequested) && (eventsProcessed <= expectedEvents.Count))
                 {
