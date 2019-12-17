@@ -23,7 +23,7 @@ namespace Azure.Identity
         private static readonly IPAddress s_imdsHostIp = IPAddress.Parse("169.254.169.254");
         private const int s_imdsPort = 80;
         private const string ImdsApiVersion = "2018-02-01";
-        private const int ImdsAvailableTimeoutMs = 500;
+        private const int ImdsAvailableTimeoutMs = 1000;
 
         // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/en-us/azure/app-service/overview-managed-identity
         private const string AppServiceMsiApiVersion = "2017-09-01";

@@ -26,6 +26,7 @@ namespace Azure.Identity.Tests
             typeof(ManagedIdentityClient).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
         }
 
+        [NonParallelizable]
         [Test]
         public async Task ValidateImdsSystemAssignedIdentity()
         {
@@ -50,6 +51,7 @@ namespace Azure.Identity.Tests
         }
 
 
+        [NonParallelizable]
         [Test]
         public async Task ValidateImdsUserAssignedIdentity()
         {
