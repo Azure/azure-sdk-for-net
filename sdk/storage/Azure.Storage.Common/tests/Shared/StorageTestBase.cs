@@ -34,17 +34,22 @@ namespace Azure.Storage.Test.Shared
         ///
         /// This is only here to run before any of our tests make requests.
         /// </summary>
-        private readonly TestEventListener _listener;
+        private TestEventListener _listener;
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
-            _listener = new TestEventListener();
             Sanitizer = new StorageRecordedTestSanitizer();
             Matcher = new StorageRecordMatcher(Sanitizer);
         }
 
-        [TearDown]
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            _listener = new TestEventListener();
+        }
+
+        [OneTimeTearDown]
         public void CleanUp()
         {
             _listener.Dispose();
