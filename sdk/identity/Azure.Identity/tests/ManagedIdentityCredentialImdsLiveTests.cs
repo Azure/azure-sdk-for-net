@@ -14,7 +14,7 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase
     {
-        public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync)
+        public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
 
             var credoptions = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
-            var cred = InstrumentClient(new ManagedIdentityCredential(options: credoptions));
+            var cred = new ManagedIdentityCredential(options: credoptions);
 
             var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
 
@@ -60,15 +60,15 @@ namespace Azure.Identity.Tests
 
             var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT"));
 
-            var username = Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_CLIENTID");
+            var clientId = Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_CLIENTID");
 
             var credoptions = Recording.InstrumentClientOptions(new TokenCredentialOptions());
 
-            var cred = InstrumentClient(new ManagedIdentityCredential(options: credoptions));
+            var cred = InstrumentClient(new ManagedIdentityCredential(clientId: clientId, options: credoptions));
 
             var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
 
-            var kvclient = InstrumentClient(new SecretClient(vaultUri, cred, kvoptions));
+            var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
             KeyVaultSecret secret = await kvclient.GetSecretAsync("identitytestsecret");
 
