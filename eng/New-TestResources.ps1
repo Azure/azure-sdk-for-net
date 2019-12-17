@@ -56,6 +56,9 @@ param (
     [hashtable] $AdditionalParameters,
 
     [Parameter()]
+    [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
+
+    [Parameter()]
     [switch] $Force
 )
 
@@ -122,7 +125,14 @@ if ($TestApplicationId -and !$TestApplicationOid) {
 }
 
 # Format the resource group name based on resource group naming recommendations and limitations.
-$resourceGroupName = "rg-{0}-$baseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+$resourceGroupName = if ($CI) {
+    $BaseName = 't' + (New-Guid).ToString('n').Substring(0, 16)
+    Write-Verbose "Generated base name '$BaseName' for CI build"
+
+    "rg-{0}-$BaseName" -f ($ServiceDirectory -replace '[\\\/]', '-').Substring(0, [Math]::Min($ServiceDirectory.Length, 90 - $BaseName.Length - 4)).Trim('-')
+} else {
+    "rg-$BaseName"
+}
 
 # Tag the resource group to be deleted after a certain number of hours if specified.
 $tags = @{
@@ -135,7 +145,7 @@ if ($PSBoundParameters.ContainsKey('DeleteAfterHours')) {
     $tags.Add('DeleteAfter', $deleteAfter.ToString('o'))
 }
 
-if ($env:SYSTEM_TEAMPROJECTID) {
+if ($CI) {
     # Add tags for the current CI job.
     $tags += @{
         BuildId = "${env:BUILD_BUILDID}"
@@ -149,8 +159,8 @@ if ($env:SYSTEM_TEAMPROJECTID) {
     Write-Host "##vso[task.setvariable variable=AZURE_RESOURCEGROUP_NAME;]$resourceGroupName"
 }
 
-Log "Creating resource group '${resourceGroupName}' in location '$Location'"
-$resourceGroup = New-AzResourceGroup -Name "${resourceGroupName}" -Location $Location -Tag $tags -Force:$Force
+Log "Creating resource group '$resourceGroupName' in location '$Location'"
+$resourceGroup = New-AzResourceGroup -Name "$resourceGroupName" -Location $Location -Tag $tags -Force:$Force
 if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
     # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
     Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
@@ -209,7 +219,7 @@ foreach ($templateFile in $templateFiles) {
         Write-Verbose "Successfully deployed template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
     }
 
-    if ($deployment.Outputs.Count -and !$env:SYSTEM_TEAMPROJECTID) {
+    if ($deployment.Outputs.Count -and !$CI) {
         # Write an extra new line to isolate the environment variables for easy reading.
         Log "Persist the following environment variables based on your detected shell ($shell):`n"
     }
@@ -224,11 +234,17 @@ foreach ($templateFile in $templateFiles) {
         if ($variable.Type -eq 'String' -or $variable.Type -eq 'SecureString') {
             $deploymentOutputs[$key] = $variable.Value
 
-            if ($env:SYSTEM_TEAMPROJECTID) {
+            if ($CI) {
                 # Running in Azure Pipelines. Unfortunately, there's no good way to know which outputs are truly secrets
                 # because we have to set all output variables to "String" instead of "SecureString" or we will never get back a value.
                 Write-Host "Setting variable '$key': ***"
                 Write-Host "##vso[task.setvariable variable=$key;issecret=true;]$($variable.Value)"
+
+                # TODO: Remove condition after verifying this keeps "secrets" secure (check diagnostics logs).
+                if ($key -ne 'AZURE_CLIENT_SECRET') {
+                    # We want secrets mapped to enviornment variables automatically, but keep issecret=true line above to still mask them in logs.
+                    Write-Host "##vso[task.setvariable variable=$key;]$($variable.Value)"
+                }
             } else {
                 Write-Host ($shellExportFormat -f $key, $variable.Value)
             }
@@ -293,6 +309,9 @@ Optional location where resources should be created. By default this is 'westus2
 
 .PARAMETER AdditionalParameters
 Optional key-value pairs of parameters to pass to the ARM template(s).
+
+.PARAMETER CI
+Indicates the script is run as part of a Continuous Integration / Continuous Deployment (CI/CD) build (only Azure Pipelines is currently supported).
 
 .PARAMETER Force
 Force creation of resources instead of being prompted.

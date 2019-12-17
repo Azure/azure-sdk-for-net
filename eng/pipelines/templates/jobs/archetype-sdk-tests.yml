@@ -54,30 +54,26 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      # TODO: Remove when eng/New-TestResources.ps1 bootstraps the Az module.
+      # TODO: Remove when eng/New-TestResources.ps1 bootstraps the Az module (https://github.com/Azure/azure-sdk-for-net/issues/9130).
       - pwsh: Install-Module -Name Az -Scope CurrentUser -Force
         displayName: "Install Azure PowerShell module"
 
         # Chomp the string literal to more easily read and update the New-TestResources parameters.
+        # TODO: Should use separate provisioner and test runner principals.
       - pwsh: >
-          $baseName = 't' + (New-Guid).ToString('n').Substring(0, 16);
           eng/New-TestResources.ps1
-          -BaseName $baseName
+          -BaseName 'Generated'
           -ServiceDirectory '${{ parameters.ServiceDirectory }}'
-          -TenantId "${env:AZURE_TENANT_ID}"
-          -ProvisionerApplicationId "${env:AZURE_CLIENT_ID}"
-          -ProvisionerApplicationSecret "${env:AZURE_CLIENT_SECRET}"
-          -TestApplicationId "${env:AZURE_CLIENT_ID}"
-          -TestApplicationSecret "${env:AZURE_CLIENT_SECRET}"
+          -TenantId '$(aad-azure-sdk-test-tenant-id)'
+          -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
+          -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
+          -TestApplicationId '$(aad-azure-sdk-test-client-id)'
+          -TestApplicationSecret '$(aad-azure-sdk-test-client-secret)'
           -DeleteAfterHours 24
+          -CI
           -Force
           -Verbose
         displayName: "Create test resources"
-        env:
-          # TODO: Should use separate provisioner and test runner principals.
-          AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
-          AZURE_CLIENT_ID: $(aad-azure-sdk-test-client-id)
-          AZURE_CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
 
       - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:BuildInParallel=${{ parameters.BuildInParallel }}
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
@@ -91,19 +87,14 @@ jobs:
       - pwsh: >
           eng/Remove-TestResources.ps1
           -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
-          -TenantId "${env:AZURE_TENANT_ID}"
-          -ProvisionerApplicationId "${env:AZURE_CLIENT_ID}"
-          -ProvisionerApplicationSecret "${env:AZURE_CLIENT_SECRET}"
+          -TenantId '$(aad-azure-sdk-test-tenant-id)'
+          -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
+          -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
           -Force
           -Verbose
         displayName: "Clean up test resources"
         condition: ne(variables['AZURE_RESOURCEGROUP_NAME'], '')
         continueOnError: true
-        env:
-          # TODO: Should use separate provisioner and test runner principals.
-          AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
-          AZURE_CLIENT_ID: $(aad-azure-sdk-test-client-id)
-          AZURE_CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
 
       - task: PublishTestResults@2
         condition: always()
