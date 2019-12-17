@@ -7,7 +7,8 @@ Param (
     $ArtifactsDirectoryName,
     $LibType,
     $RepoRoot,
-    $BinDirectory
+    $BinDirectory,
+    $DocGenDir
 )
 
 Write-Verbose "Create variables for identifying package location and package safe names"
@@ -38,7 +39,6 @@ $DocOutApiDir = "${DocOutDir}/api"
 $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
-$DocGenDir = "${RepoRoot}/doc/ApiDocGeneration"
 
 Write-Verbose "Create Directories Required for Doc Generation"
 mkdir $ApiDir
@@ -113,4 +113,4 @@ Write-Verbose "Copy over site Logo"
 Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutHtmlDir}" -Recurse -Force
 
 Write-Verbose "Set variable for publish pipeline step"
-echo "##vso[task.setvariable variable=publishtargetpath]${DocOutHtmlDir}"
+echo "##vso[task.setvariable variable=PublishTargetPath]${DocOutHtmlDir}"

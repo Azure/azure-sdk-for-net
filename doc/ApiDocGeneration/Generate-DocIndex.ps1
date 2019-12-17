@@ -2,7 +2,8 @@
 
 [CmdletBinding()]
 Param (
-    $RepoRoot
+    $RepoRoot,
+    $DocGenDir
 )
 
 $ServiceMapping = @{
@@ -63,18 +64,21 @@ $ServiceMapping = @{
     "trafficmanager"="Traffic Manager"; "websites"="Websites";
 }
 
+Write-Verbose "Name Reccuring paths with variable names"
+$DocFxTool = "${RepoRoot}/docfx/docfx.exe"
+$DocOutDir = "${RepoRoot}/docfx_project"
 
 Write-Verbose "Initializing Default DocFx Site..."
-& "$($RepoRoot)/docfx/docfx.exe" init -q -o "$($RepoRoot)/docfx_project"
+& "${DocFxTool}" init -q -o "${DocOutDir}"
 
 Write-Verbose "Copying template and configuration..."
-New-Item -Path "$($RepoRoot)/docfx_project" -Name "templates" -ItemType "directory"
-Copy-Item "$($RepoRoot)/doc/ApiDocGeneration/templates/*" -Destination "$($RepoRoot)/docfx_project/templates" -Force -Recurse
-Copy-Item "$($RepoRoot)/doc/ApiDocGeneration/docfx.json" -Destination "$($RepoRoot)/docfx_project/" -Force
+New-Item -Path "${DocOutDir}" -Name "templates" -ItemType "directory"
+Copy-Item "${DocGenDir}/templates/*" -Destination "${DocOutDir}/templates" -Force -Recurse
+Copy-Item "${DocGenDir}/docfx.json" -Destination "${DocOutDir}/" -Force
 
 Write-Verbose "Creating Index using service directory and package names from repo..."
 $ServiceList = Get-ChildItem "$($RepoRoot)/sdk" -Directory -Exclude eng, mgmtcommon, template | Sort-Object
-$YmlPath = "$($RepoRoot)/docfx_project/api"
+$YmlPath = "${DocOutDir}/api"
 New-Item -Path $YmlPath -Name "toc.yml" -Force
 
 Write-Verbose "Creating Index for client packages..."
@@ -126,15 +130,15 @@ foreach ($Dir in $ServiceList)
 }
 
 Write-Verbose "Creating Site Title and Navigation..."
-New-Item -Path "$($RepoRoot)/docfx_project" -Name "toc.yml" -Force
-Add-Content -Path "$($RepoRoot)/docfx_project/toc.yml" -Value "- name: Azure SDK for NET APIs`r`n  href: api/`r`n  homepage: api/index.md"
+New-Item -Path "${DocOutDir}" -Name "toc.yml" -Force
+Add-Content -Path "${DocOutDir}/toc.yml" -Value "- name: Azure SDK for NET APIs`r`n  href: api/`r`n  homepage: api/index.md"
 
 Write-Verbose "Copying root markdowns"
-Copy-Item "$($RepoRoot)/README.md" -Destination "$($RepoRoot)/docfx_project/api/index.md" -Force
-Copy-Item "$($RepoRoot)/CONTRIBUTING.md" -Destination "$($RepoRoot)/docfx_project/api/CONTRIBUTING.md" -Force
+Copy-Item "$($RepoRoot)/README.md" -Destination "${DocOutDir}/api/index.md" -Force
+Copy-Item "$($RepoRoot)/CONTRIBUTING.md" -Destination "${DocOutDir}/api/CONTRIBUTING.md" -Force
 
 Write-Verbose "Building site..."
-& "$($RepoRoot)/docfx/docfx.exe" build "$($RepoRoot)/docfx_project/docfx.json"
+& "${DocFxTool}" build "${DocOutDir}/docfx.json"
 
-Copy-Item "$($RepoRoot)/doc/ApiDocGeneration/assets/logo.svg" -Destination "$($RepoRoot)/docfx_project/_site/" -Force
-Copy-Item "$($RepoRoot)/doc/ApiDocGeneration/assets/toc.yml" -Destination "$($RepoRoot)/docfx_project/_site/" -Force
+Copy-Item "${DocGenDir}/assets/logo.svg" -Destination "${DocOutDir}/_site/" -Force
+Copy-Item "${DocGenDir}/assets/toc.yml" -Destination "${DocOutDir}/_site/" -Force

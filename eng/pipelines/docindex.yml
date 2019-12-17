@@ -28,7 +28,7 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)
         displayName: Download and Extract DocFX
       - pwsh: |
-          $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-DocIndex.ps1 -RepoRoot $(Build.SourcesDirectory) -verbose
+          $(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-DocIndex.ps1 -RepoRoot $(Build.SourcesDirectory) -DocGenDir "$(Build.SourcesDirectory)/doc/ApiDocGeneration" -verbose
         displayName: 'Generate Doc Index'
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.6'
