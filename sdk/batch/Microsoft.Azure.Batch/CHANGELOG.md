@@ -1,6 +1,8 @@
-# Microsoft.Azure.Batch release notes
+# Release History
 
-## Changes in 12.0.0
+## 12.1.0-preview.1 (Unreleased)
+
+## 12.0.0
 ### Features
 - Added ability to specify a collection of public IPs on `NetworkConfiguration` via the new `PublicIPs` property. This guarantees nodes in the Pool will have an 
   IP from the list user provided IPs.
@@ -15,7 +17,7 @@
 ### REST API version
 This version of the Batch .NET client library targets version 2019-08-01.10.0 of the Azure Batch REST API.
 
-## Changes in 11.0.0
+## 11.0.0
 ### Features
  - Added `maxBackoff` parameter to `RetryPolicyProvider.ExponentialRetryProvider`. This option was already available on the `ExponentialRetry` constructor, 
    but adding it on `RetryPolicyProvider.ExponentialRetryProvider` makes it easier to use.
@@ -32,14 +34,14 @@ This version of the Batch .NET client library targets version 2019-08-01.10.0 of
 ### REST API version
 This version of the Batch .NET client library targets version 2019-06-01.9.0 of the Azure Batch REST API.
 
-## Changes in 10.1.0
+## 10.1.0
 - Added `net461` and `netstandard2.0` target frameworks.
 - Updated `Microsoft.AspNetCore.WebUtilities` to `1.1.2` for the `netstandard1.4` target framework.
 
 ### REST API version
 This version of the Batch .NET client library targets version 2018-12-01.8.0 of the Azure Batch REST API.
 
-## Changes in 10.0.0
+## 10.0.0
 ### Features
 - **[Breaking]** Removed support for the `ChangeOSVersion` API on `CloudServiceConfiguration` pools. 
   - Removed `PoolOperations.ChangeOSVersion` and `PoolOperations.ChangeOSVersionAsync`.
@@ -71,13 +73,13 @@ This version of the Batch .NET client library targets version 2018-12-01.8.0 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2018-12-01.8.0 of the Azure Batch REST API.
 
-## Changes in 9.0.1
+## 9.0.1
 - Updating Newtonsoft.Json to 10.0.3
 
 ### REST API version
 This version of the Batch .NET client library targets version 2018-08-01.7.0 of the Azure Batch REST API.
 
-## Changes in 9.0.0
+## 9.0.0
 ### Features
 - Added the ability to see what version of the Azure Batch Node Agent is running on each of the VMs in a pool, via the new `NodeAgentInformation` property on `ComputeNode`.
 - Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch) for more details.
@@ -93,15 +95,15 @@ This version of the Batch .NET client library targets version 2018-08-01.7.0 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2018-08-01.7.0 of the Azure Batch REST API.
 
-## Changes in 8.1.2
+## 8.1.2
 Rename Nuget package name from Azure.Batch to Microsoft.Azure.Batch
 
-# Prior to version 8.1.2, this package was named "Azure.Batch" on Nuget. The release notes below are for that package.
+## Prior to version 8.1.2, this package was named "Azure.Batch" on Nuget. The release notes below are for that package.
 
-## Changes in 8.1.2
+## 8.1.2
 Add deprecation announcement to nuget package.
 
-## Changes in 8.1.1
+## 8.1.1
 ### Bug fixes
  - Fixed bug where LeavingPool state was not correctly returned via the `ListPoolNodeCounts` method on `PoolOperations`.
  - Clarified various confusing documentation.
@@ -109,7 +111,7 @@ Add deprecation announcement to nuget package.
 ### REST API version
 This version of the Batch .NET client library targets version 2018-02-01.6.1 of the Azure Batch REST API.
 
-## Changes in 8.1.0
+## 8.1.0
 ### Features
  - Added the ability to query pool node counts by state, via the new `ListPoolNodeCounts` method on `PoolOperations`.
  - Added the ability to upload Azure Batch node agent logs from a particular node, via the `UploadComputeNodeBatchServiceLogs` method on `PoolOperations` and `ComputeNode`.
@@ -121,14 +123,14 @@ This version of the Batch .NET client library targets version 2018-02-01.6.1 of 
 ### Import Note
 The package will be renamed to Microsoft.Azure.Batch in a future release.
 
-## Changes in 8.0.1
+## 8.0.1
 ### Bug fixes
 - Fixed a bug where deserializing some enum properties could fail if using Newtonsoft 10.
 
 ### REST API version
 This version of the Batch .NET client library targets version 2017-09-01.6.0 of the Azure Batch REST API.
 
-## Changes in 8.0.0
+## 8.0.0
 ### Features
 - Added the ability to get a discount on Windows VM pricing if you have on-premises licenses for the OS SKUs you are deploying, via `LicenseType` on `VirtualMachineConfiguration`.
 - Added support for attaching empty data drives to `VirtualMachineConfiguration` based pools, via the new `DataDisks` property on `VirtualMachineConfiguration`.
@@ -141,7 +143,7 @@ This version of the Batch .NET client library targets version 2017-09-01.6.0 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2017-09-01.6.0 of the Azure Batch REST API.
 
-## Changes in 7.1.0
+## 7.1.0
 ### Features
 - Added support for detailed aggregate task counts via a new `JobOperations.GetJobTaskCounts` API. Also available on `CloudJob.GetTaskCounts`.
 - Added support for specifying inbound endpoints on pool compute nodes, via a new `CloudPool.PoolEndpointConfiguration` property.  This allows specific ports on the node to be addressed externally.
@@ -149,7 +151,7 @@ This version of the Batch .NET client library targets version 2017-09-01.6.0 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2017-06-01.5.1 of the Azure Batch REST API.
 
-## Changes in 7.0.1
+## 7.0.1
 ### Bug fixes
 - Fixed a bug where requests using HTTP DELETE (for example, `DeletePool` and `DeleteJob`) failed with an authentication error in the netstandard package. This was due to a change made to `HttpClient` in netcore.
   - This bug impacted the 6.1.0 release as well.
@@ -157,7 +159,7 @@ This version of the Batch .NET client library targets version 2017-06-01.5.1 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2017-05-01.5.0 of the Azure Batch REST API.
 
-## Changes in 7.0.0
+## 7.0.0
 ### License
 Moved source code and NuGet package from Apache 2.0 license to MIT license. This is more consistent with the other Azure SDKs as well as other open source projects from Microsoft such as .NET.
 
@@ -194,14 +196,14 @@ This version of the Batch .NET client library targets version 2017-05-01.5.0 of 
 ### Packaging
 - The package now includes a `netstandard1.4` assembly instead of the previous `netstandard1.5`.
 
-## Changes in 6.1.0
+## 6.1.0
 ### REST API version
 This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
 
 ### Packaging
 - The client library is now supported on .NET Core. The package now includes a `netstandard1.5` assembly in addition to the `net45` assembly.
 
-## Changes in 6.0.0
+## 6.0.0
 ### REST API version
 This version of the Batch .NET client library targets version 2017-01-01.4.0 of the Azure Batch REST API.
 
@@ -224,35 +226,35 @@ This version of the Batch .NET client library targets version 2017-01-01.4.0 of 
 ### Documentation
 - Improved and clarified documentation.
 
-## Changes in 5.1.2
+## 5.1.2
 ### Bug fixes
 - Fixed a bug where performing `JobOperations.GetNodeFile` and `PoolOperations.GetNodeFile` could throw an `OutOfMemoryException` if the file that was being examined was large.
 
 ### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-## Changes in 5.1.1
+## 5.1.1
 ### Bug fixes
 - Fixed a bug where certificates with a signing algorithm other than SHA1 were incorrectly imported, causing the Batch service to reject them.
 
 ### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-## Changes in 5.1.0
+## 5.1.0
 ### Features
 - Added support for a new operation `JobOperations.ReactivateTask` (or `CloudTask.Reactivate`) which allows users to reactivate a previously failed task.
 
 ### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-## Changes in 5.0.2
+## 5.0.2
 ### Bug fixes
 - Fixed bug where `CommitChanges` would incorrectly include elements in the request which did not actually change.
 
 ### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-## Changes in 5.0.1
+## 5.0.1
 ### Bug fixes
 - Fixed bug where `CloudJob.Commit` and `CloudJob.CommitChanges` would hit an exception when attempting to commit a job which had previously been gotten using an `ODataDetail` select clause.
 
@@ -263,7 +265,7 @@ This version of the Batch .NET client library targets version 2016-07-01.3.1 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-## Changes in 5.0.0
+## 5.0.0
 ### Features
 - Added `CommitChanges` method on `CloudJob`, `CloudJobSchedule` and `CloudPool`, which use the HTTP PATCH verb to perform partial updates, which can be safer if multiple clients are making concurrent changes).
 - Added support for joining a `CloudPool` to a virtual network on using the `NetworkConfiguration` property.
@@ -293,7 +295,7 @@ This version of the Batch .NET client library targets version 2016-07-01.3.1 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
 
-## Changes in 4.0.1
+## 4.0.1
 ### Bug fixes
 -  Fixed a bug where specifying a `DetailLevel` on a list operation would fail if the Batch service returned a list spanning multiple pages.
 -  Fixed a bug where `TaskDependencies` and `ApplicationPackageSummary` could throw a `NullReferenceException` if the Batch service returned a collection that was null.
@@ -303,7 +305,7 @@ This version of the Batch .NET client library targets version 2016-07-01.3.1 of 
 ### REST API version
 This version of the Batch .NET client library targets version 2016-02-01.3.0 of the Azure Batch REST API.
 
-## Changes in 4.0.0
+## 4.0.0
 ### Package dependencies
 -  Removed Hyak.Common dependency.
 -  Removed Microsoft.Azure.Common dependency.

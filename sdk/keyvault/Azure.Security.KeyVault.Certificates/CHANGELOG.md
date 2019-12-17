@@ -1,5 +1,3 @@
-# Release History
-
 ## 4.0.0-preview.8
 
 ### Breaking changes
