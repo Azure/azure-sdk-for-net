@@ -8,7 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Diagnostics;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text;
+using System.IO;
 
 namespace Azure.Identity
 {
@@ -51,7 +53,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return GetTokenImplAsync(requestContext).GetAwaiter().GetResult().GetTokenOrThrow();
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
         }
 
         /// <summary>
@@ -62,20 +64,20 @@ namespace Azure.Identity
         /// <returns></returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return (await GetTokenImplAsync(requestContext).ConfigureAwait(false)).GetTokenOrThrow();
+            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
         }
 
         async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return await GetTokenImplAsync(requestContext).ConfigureAwait(false);
+            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
 
         ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            return GetTokenImplAsync(requestContext).GetAwaiter().GetResult();
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
-        private ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext)
+        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.CLICredential.GetToken", requestContext);
 
@@ -83,6 +85,8 @@ namespace Azure.Identity
             {
                 string command = ScopeUtilities.ScopesToResource(requestContext.Scopes);
                 string extendCommand = "az account get-access-token --resource " + command;
+
+                Process proc = new Process();
 
                 ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd", "/c" + extendCommand)
                 {
@@ -92,7 +96,6 @@ namespace Azure.Identity
                     CreateNoWindow = true
                 };
 
-                Process proc = new Process();
                 proc.StartInfo = procStartInfo;
 
                 string error = proc.StandardError.ReadToEnd();
@@ -102,15 +105,17 @@ namespace Azure.Identity
                 }
 
                 string cliResult = proc.StandardOutput.ReadToEnd();
+                byte[] byteArrary = Encoding.ASCII.GetBytes(cliResult);
+                MemoryStream stream = new MemoryStream(byteArrary);
 
-                Dictionary<string, string> result = JsonConvert.DeserializeObject<Dictionary<string, string>>(cliResult);
+                Dictionary<string, string> result = await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(stream, null, cancellationToken);
                 result.TryGetValue("accessToken", out string accessToken);
                 result.TryGetValue("expiresOn", out string expiresOnValue);
-                DateTimeOffset dateTimeOffset = DateTimeOffset.Parse(expiresOnValue, null, DateTimeStyles.AssumeUniversal);
+                DateTimeOffset expiresOn = DateTimeOffset.Parse(expiresOnValue, null, DateTimeStyles.AdjustToUniversal);
 
-                AccessToken token = new AccessToken(accessToken, dateTimeOffset);
+                AccessToken token = new AccessToken(accessToken, expiresOn);
 
-                return new ValueTask<ExtendedAccessToken>(new ExtendedAccessToken(scope.Succeeded(token)));
+                return new ExtendedAccessToken(scope.Succeeded(token));
             }
             catch (Exception e)
             {
