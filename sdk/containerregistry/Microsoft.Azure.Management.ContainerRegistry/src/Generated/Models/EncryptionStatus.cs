@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for TriggerStatus.
+    /// Defines values for EncryptionStatus.
     /// </summary>
-    public static class TriggerStatus
+    public static class EncryptionStatus
     {
-        public const string Disabled = "Disabled";
-        public const string Enabled = "Enabled";
+        public const string Enabled = "enabled";
+        public const string Disabled = "disabled";
     }
 }

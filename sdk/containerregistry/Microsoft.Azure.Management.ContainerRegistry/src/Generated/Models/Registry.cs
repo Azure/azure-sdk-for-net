@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="identity">The identity of the container
+        /// registry.</param>
         /// <param name="loginServer">The URL that can be used to log into the
         /// container registry.</param>
         /// <param name="creationDate">The creation date of the container
@@ -59,10 +61,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// registry.</param>
         /// <param name="policies">The policies for a container
         /// registry.</param>
-        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies))
+        /// <param name="encryption">The encryption settings of container
+        /// registry.</param>
+        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies), EncryptionProperty encryption = default(EncryptionProperty))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
+            Identity = identity;
             LoginServer = loginServer;
             CreationDate = creationDate;
             ProvisioningState = provisioningState;
@@ -71,6 +76,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             StorageAccount = storageAccount;
             NetworkRuleSet = networkRuleSet;
             Policies = policies;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -84,6 +90,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityProperties Identity { get; set; }
 
         /// <summary>
         /// Gets the URL that can be used to log into the container registry.
@@ -137,6 +149,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.policies")]
         public Policies Policies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption settings of container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionProperty Encryption { get; set; }
 
         /// <summary>
         /// Validate the object.
