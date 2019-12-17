@@ -12,8 +12,11 @@ jobs:
   parameters:
     ServiceDirectory: keyvault
     EnvVars:
-      # Work around secret variables not setting environment variables automatically.
-      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
-
       # Runs samples with live tests.
       AZURE_KEYVAULT_TEST_MODE: Live
+
+      # Work around secret variables not setting environment variables automatically.
+      AZURE_TENANT_ID: $(AZURE_TENANT_ID)
+      AZURE_CLIENT_ID: $(AZURE_CLIENT_ID)
+      AZURE_CLIENT_SECRET: $(AZURE_CLIENT_SECRET)
+      AZURE_KEYVAULT_URL: $(AZURE_KEYVAULT_URL)

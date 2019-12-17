@@ -239,12 +239,6 @@ foreach ($templateFile in $templateFiles) {
                 # because we have to set all output variables to "String" instead of "SecureString" or we will never get back a value.
                 Write-Host "Setting variable '$key': ***"
                 Write-Host "##vso[task.setvariable variable=$key;issecret=true;]$($variable.Value)"
-
-                # TODO: Remove condition after verifying this keeps "secrets" secure (check diagnostics logs).
-                if ($key -ne 'AZURE_CLIENT_SECRET') {
-                    # We want secrets mapped to enviornment variables automatically, but keep issecret=true line above to still mask them in logs.
-                    Write-Host "##vso[task.setvariable variable=$key;]$($variable.Value)"
-                }
             } else {
                 Write-Host ($shellExportFormat -f $key, $variable.Value)
             }
