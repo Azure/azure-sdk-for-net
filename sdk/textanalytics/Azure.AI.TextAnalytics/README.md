@@ -71,8 +71,14 @@ An operation result, such as `AnalyzeSentimentResult`, is the result of a Text A
  <!-- TODO: Add async snippets too. -->
 
 ### Detect Language
+Run a Text Analytics predictive model to determine the language that the passed-in input text or batch of input text documents are written in.
+
+```C# Snippet:DetectLanguage
+```
 
 ### Analyze Sentiment
+
+
 
 ### Extract Key Phrases
 
