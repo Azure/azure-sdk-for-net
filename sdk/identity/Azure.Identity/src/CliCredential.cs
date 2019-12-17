@@ -98,13 +98,13 @@ namespace Azure.Identity
 
                 proc.StartInfo = procStartInfo;
 
-                string error = proc.StandardError.ReadToEnd();
+                string error = await proc.StandardError.ReadToEndAsync().ConfigureAwait(false);
                 if (string.Equals(error, AzureCLIError, StringComparison.Ordinal))
                 {
                     throw new Exception(AzureCLINotInstalled);
                 }
 
-                string cliResult = proc.StandardOutput.ReadToEnd();
+                string cliResult = await proc.StandardOutput.ReadToEndAsync().ConfigureAwait(false);
                 byte[] byteArrary = Encoding.ASCII.GetBytes(cliResult);
                 MemoryStream stream = new MemoryStream(byteArrary);
 
@@ -116,6 +116,12 @@ namespace Azure.Identity
                 AccessToken token = new AccessToken(accessToken, expiresOn);
 
                 return new ExtendedAccessToken(scope.Succeeded(token));
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
             }
             catch (Exception e)
             {
