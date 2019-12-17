@@ -233,6 +233,11 @@ namespace Azure.Storage.Test.Shared
                 publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
             }
 
+            if (await service.GetBlobContainersAsync(prefix: containerName).GetAsyncEnumerator().MoveNextAsync())
+            {
+                throw new InvalidOperationException($"Container already exists: {containerName}");
+            }
+
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
             return new DisposingContainer(container);
