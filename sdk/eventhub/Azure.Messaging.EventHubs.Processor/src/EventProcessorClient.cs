@@ -255,6 +255,10 @@ namespace Azure.Messaging.EventHubs
         ///
         private PartitionManager StorageManager { get; }
 
+        /// <summary>
+        ///   Responsibility for load balancing of partition ownership.
+        /// </summary>
+        ///
         private PartitionLoadBalancer LoadBalancer { get; }
 
         /// <summary>

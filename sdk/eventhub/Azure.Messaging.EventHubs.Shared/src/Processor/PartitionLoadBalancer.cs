@@ -30,7 +30,6 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
         /// </summary>
         ///
-
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
 
         /// <summary>
@@ -44,27 +43,27 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        private readonly string FullyQualifiedNamespace;
+        internal readonly string FullyQualifiedNamespace;
 
         /// <summary>
         ///   The name of the Event Hub that the processor is connected to, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        private readonly string EventHubName;
+        internal readonly string EventHubName;
 
         /// <summary>
         ///   The name of the consumer group this event processor is associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
-        private readonly string ConsumerGroup;
+        internal readonly string ConsumerGroup;
 
         /// <summary>
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        private readonly string Identifier;
+        internal readonly string Identifier;
 
         /// <summary>
         ///   The minimum amount of time for an ownership to be considered expired without further updates.
@@ -97,7 +96,6 @@ namespace Azure.Messaging.EventHubs.Processor
             EventHubName = eventHubName;
             ConsumerGroup = consumerGroup;
             OwnershipExpiration = ownershipExpiration;
-
         }
 
         /// <summary>
@@ -116,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partitionIds"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        internal virtual async ValueTask<PartitionOwnership> RunAsync(string[] partitionIds, CancellationToken cancellationToken)
+        public virtual async ValueTask<PartitionOwnership> RunAsync(string[] partitionIds, CancellationToken cancellationToken)
         {
             // Renew this instance's ownership so they don't expire.
 
@@ -191,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Processor
             return claimedOwnership;
         }
 
-        internal virtual async Task StopAsync(CancellationToken cancellationToken)
+        public virtual async Task StopAsync(CancellationToken cancellationToken)
         {
             await RelinquishOwnershipAsync(cancellationToken);
 
