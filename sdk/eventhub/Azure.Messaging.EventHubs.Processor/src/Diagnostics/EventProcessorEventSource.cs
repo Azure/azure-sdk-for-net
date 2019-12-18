@@ -125,7 +125,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="count"> Minimum partitions per event processor.</param>
         ///
-        [Event(6, Level = EventLevel.Informational, Message = "Expected minimum partitions per event processor '{0}'.")]
+        [Event(6, Level = EventLevel.Verbose, Message = "Expected minimum partitions per event processor '{0}'.")]
         public virtual void MinimumPartitionsPerEventProcessor(int count)
         {
             if (IsEnabled())
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="unclaimedPartitions">List of unclaimed partitions.</param>
         ///
-        [Event(8, Level = EventLevel.Informational, Message = "Unclaimed partitions: '{0}'.")]
+        [Event(8, Level = EventLevel.Verbose, Message = "Unclaimed partitions: '{0}'.")]
         public virtual void UnclaimedPartitions(string[] unclaimedPartitions)
         {
             if (IsEnabled())
@@ -233,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
-        [Event(13, Level = EventLevel.Informational, Message = "Attempting to renew ownership. (Identifier: '{0}')")]
+        [Event(13, Level = EventLevel.Verbose, Message = "Attempting to renew ownership. (Identifier: '{0}')")]
         public virtual void RenewOwnershipStart(string identifier)
         {
             if (IsEnabled())
@@ -264,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
-        [Event(15, Level = EventLevel.Informational, Message = "Attempt to renew ownership has completed. (Identifier: '{0}')")]
+        [Event(15, Level = EventLevel.Verbose, Message = "Attempt to renew ownership has completed. (Identifier: '{0}')")]
         public virtual void RenewOwnershipComplete(string identifier)
         {
             if (IsEnabled())
@@ -311,7 +311,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
         ///
-        [Event(18, Level = EventLevel.Informational, Message = "Partition processing task for partition id '{0}' has completed.")]
+        [Event(18, Level = EventLevel.Verbose, Message = "Partition processing task for partition id '{0}' has completed.")]
         public virtual void PartitionProcessingComplete(string partitionId)
         {
             if (IsEnabled())
@@ -377,7 +377,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
-        [Event(22, Level = EventLevel.Verbose, Message = "Stop processing events. (Identifier '{0}')")]
+        [Event(22, Level = EventLevel.Informational, Message = "Stop processing events. (Identifier '{0}')")]
         public virtual void EventProcessorStopStart(string identifier)
         {
             if (IsEnabled())
@@ -424,7 +424,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         ///
-        [Event(25, Level = EventLevel.Verbose, Message = "Process of updating checkpoint has started. (partitionId '{0}')")]
+        [Event(25, Level = EventLevel.Informational, Message = "Process of updating checkpoint has started. (partitionId '{0}')")]
         public virtual void UpdateCheckpointStart(string partitionId)
         {
             if (IsEnabled())
