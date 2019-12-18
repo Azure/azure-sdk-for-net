@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace Azure.Identity
 {
@@ -20,7 +22,7 @@ namespace Azure.Identity
     public class CliCredential : TokenCredential, IExtendedTokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
-        private const string AzureCLIError = "'az' is not recognized as an internal or external command, operable program or batch file.";
+        private const string WinAzureCLIError = "'az' is not recognized as an internal or external command, operable program or batch file.";
 
         private readonly CredentialPipeline _pipeline;
 
@@ -83,13 +85,28 @@ namespace Azure.Identity
 
             try
             {
+                string fileName = string.Empty;
+                string argument = string.Empty;
                 string command = ScopeUtilities.ScopesToResource(requestContext.Scopes);
                 string extendCommand = "az account get-access-token --resource " + command;
 
                 Process proc = new Process();
 
-                ProcessStartInfo procStartInfo = new ProcessStartInfo("cmd", "/c" + extendCommand)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
+                    fileName = "cmd";
+                    argument = $"/c \"{extendCommand}\"";
+                }
+                else
+                {
+                    fileName = "/bin/sh";
+                    argument = $"-c \"{extendCommand}\"";
+                }
+
+                ProcessStartInfo procStartInfo = new ProcessStartInfo()
+                {
+                    FileName = fileName,
+                    Arguments = argument,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -97,14 +114,24 @@ namespace Azure.Identity
                 };
 
                 proc.StartInfo = procStartInfo;
+                proc.Start();
 
-                string error = await proc.StandardError.ReadToEndAsync().ConfigureAwait(false);
-                if (string.Equals(error, AzureCLIError, StringComparison.Ordinal))
+                string cliResult = proc.StandardOutput.ReadToEnd();
+
+                if (string.IsNullOrEmpty(cliResult))
                 {
-                    throw new Exception(AzureCLINotInstalled);
+                    string errorMessage = proc.StandardError.ReadToEnd();
+
+                    bool winError = errorMessage.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
+                    string pattter = "az:(.*)not found";
+                    bool otherError = Regex.IsMatch(errorMessage, pattter);
+
+                    if (winError || otherError)
+                    {
+                        throw new Exception(AzureCLINotInstalled);
+                    }
                 }
 
-                string cliResult = await proc.StandardOutput.ReadToEndAsync().ConfigureAwait(false);
                 byte[] byteArrary = Encoding.ASCII.GetBytes(cliResult);
                 MemoryStream stream = new MemoryStream(byteArrary);
 
