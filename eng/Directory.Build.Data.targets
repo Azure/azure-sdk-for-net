@@ -11,19 +11,15 @@
   </Target>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
-  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsDataPlaneProject)' == 'true' and '$(IsTestProject)' != 'true' and
-   '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(CommitSHA)' != ''">
+  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsDataPlaneProject)' == 'true' and '$(IsTestProject)' != 'true' and
+   '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(SourceRevisionId)' != ''">
+    <Error Condition="'$(IsClientLibrary)' == 'true' and '$(PackageReleaseNotes)' != ''" Text="Do NOT set PackageReleaseNotes property in the project. Release notes are added automatically from package changelog" />
     <PropertyGroup>
-      <CurrentCsprojPath>$(MSBuildProjectDirectory)</CurrentCsprojPath>
-      <DirectoryPartofPath>$(CurrentCsprojPath.Substring($(CurrentCsprojPath.LastIndexOf("\sdk\"))))</DirectoryPartofPath>
-      <DirectoryPartofPath>$(DirectoryPartofPath.Remove($(DirectoryPartofPath.LastIndexOf("\src"))))</DirectoryPartofPath>
-      <PackageProjectUrl Condition="Exists('$(RepoRoot)/$(DirectoryPartofPath)/README.md')">$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/README.md</PackageProjectUrl>
-      <PackageReleaseNotes Condition="'$(PackageReleaseNotes)' == '' and Exists('$(RepoRoot)/$(DirectoryPartofPath)/CHANGELOG.md')">$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/CHANGELOG.md</PackageReleaseNotes>
+      <PackageRootPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))</PackageRootPath>
+      <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
+      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md')">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
     </PropertyGroup>
-    <ItemGroup >
-      <None Condition="Exists('$(RepoRoot)/$(DirectoryPartofPath)/CHANGELOG.md')" Include="$(RepoRoot)/$(DirectoryPartofPath)/CHANGELOG.md" Pack="true" PackagePath="CHANGELOG.md"/>
-      <None Condition="Exists('$(RepoRoot)/$(DirectoryPartofPath)/README.md')" Include="$(RepoRoot)/$(DirectoryPartofPath)/README.md" Pack="true" PackagePath="README.md"/>
-    </ItemGroup>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
@@ -48,6 +44,8 @@
   <!-- Add Package Icon to DataPlane Packages -->
   <ItemGroup>
     <None Include="$(RepoEngPath)/images/pkgicon.png" Pack="true" PackagePath=""/>
+    <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
+    <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
