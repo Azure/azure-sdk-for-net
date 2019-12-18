@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
 using Moq;
@@ -461,6 +462,50 @@ namespace Azure.Messaging.EventHubs.Tests
             processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
             Assert.That(async () => await processor.StartProcessingAsync(), Throws.InstanceOf<InvalidOperationException>().And.Message.Contains(nameof(EventProcessorClient.ProcessErrorAsync)));
+        }
+
+        /// <summary>
+        ///   Verify logs for the <see cref="EventProcessorClient" />.
+        /// </summary>
+        ///
+        [Test]
+        public async Task VerifiesEventProcessorLogs()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            string[] partitionIds = {"0"};
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(partitionIds));
+
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default);
+
+            var mockLog = new Mock<EventProcessorEventSource>();
+            mockProcessor.CallBase = true;
+            mockProcessor.Object.Logger = mockLog.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(), Throws.Nothing);
+
+            await mockProcessor.Object.StopProcessingAsync();
+
+            mockLog.Verify(m => m.EventProcessorStart(mockProcessor.Object.Identifier));
+            mockLog.Verify(m => m.EventProcessorStopStart(mockProcessor.Object.Identifier));
+            mockLog.Verify(m => m.RenewOwnershipStart(mockProcessor.Object.Identifier));
+            mockLog.Verify(m => m.RenewOwnershipComplete(mockProcessor.Object.Identifier));
+            mockLog.Verify(m => m.ClaimOwnershipStart(partitionIds[0]));
+            mockLog.Verify(m => m.UpdateCheckpointStart(partitionIds[0]));
+            mockLog.Verify(m => m.UpdateCheckpointComplete(partitionIds[0]));
+            mockLog.Verify(m => m.EventProcessorStopComplete(mockProcessor.Object.Identifier));
         }
 
         /// <summary>
