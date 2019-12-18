@@ -118,11 +118,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                         _ownership[key] = ownership;
                         claimedOwnership.Add(ownership);
 
-                        Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
+                        Log($"Ownership with partition id = '{ownership.PartitionId}' claimed by OwnershipIdentifier = '{ownership.OwnerIdentifier}'.");
                     }
                     else
                     {
-                        Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
+                        Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable by OwnershipIdentifier = '{ownership.OwnerIdentifier}'.");
                     }
                 }
             }
