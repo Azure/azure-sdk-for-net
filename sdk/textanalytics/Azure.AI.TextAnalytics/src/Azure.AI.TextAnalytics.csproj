@@ -5,11 +5,6 @@
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
     <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      Initial Preview Release.
-      ]]>
-    </PackageReleaseNotes>
     <GenerateAPIListing>false</GenerateAPIListing>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
