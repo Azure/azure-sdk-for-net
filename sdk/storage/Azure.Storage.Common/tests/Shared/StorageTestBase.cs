@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -34,7 +35,7 @@ namespace Azure.Storage.Test.Shared
         ///
         /// This is only here to run before any of our tests make requests.
         /// </summary>
-        private TestEventListener _listener;
+        private static TestEventListener _listener;
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
@@ -46,13 +47,16 @@ namespace Azure.Storage.Test.Shared
         [OneTimeSetUp]
         public void SetUp()
         {
-            _listener = new TestEventListener();
+            if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
+            {
+                _listener = new TestEventListener();
+            }
         }
 
         [OneTimeTearDown]
         public void CleanUp()
         {
-            _listener.Dispose();
+            _listener?.Dispose();
         }
 
         /// <summary>

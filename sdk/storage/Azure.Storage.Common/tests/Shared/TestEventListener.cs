@@ -9,6 +9,7 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using Azure.Core.Diagnostics;
+using NUnit.Framework;
 
 namespace Azure.Storage.Test
 {
@@ -31,11 +32,6 @@ namespace Azure.Storage.Test
         /// <param name="args">Event arguments.</param>
         public static void LogEvent(EventWrittenEventArgs args)
         {
-            if (!Debugger.IsAttached)
-            {
-                return;
-            }
-
             var category = args.EventName;
             IDictionary<string, string> payload = GetPayload(args);
 
@@ -79,6 +75,10 @@ namespace Azure.Storage.Test
 
             // Dump the message and category
             Trace.WriteLine(message, category);
+
+            // Output to console to aid in debugging any failures
+            // TODO move to file that is uploaded as an artifact
+            TestContext.Progress.WriteLine(message);
         }
 
         /// <summary>
