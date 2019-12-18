@@ -297,7 +297,7 @@ namespace Compute.Tests
                         {
                             Enabled = true,
                             GracePeriod = "PT2M",
-                            MaxInstanceRepairsPercent = 50
+                            //MaxInstanceRepairsPercent = 50
                         };
                         UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
@@ -314,7 +314,7 @@ namespace Compute.Tests
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
                         Assert.Equal("PT2M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
-                        Assert.Equal(50, getResponse.AutomaticRepairsPolicy.MaxInstanceRepairsPercent);
+                        //Assert.Equal(50, getResponse.AutomaticRepairsPolicy.MaxInstanceRepairsPercent);
 
                         // Disable Automatic Repairs
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
