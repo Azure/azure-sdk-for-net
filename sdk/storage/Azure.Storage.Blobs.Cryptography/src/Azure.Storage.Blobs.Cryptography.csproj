@@ -7,9 +7,6 @@
     <Version>12.0.0-preview.5</Version>
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Blobs Cryptography;Encrypted blob;client-side encryption;client side ecnryption;Microsoft;Azure;Blobs;Blob;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
-    <PackageReleaseNotes>
-      For release notes and more information please visit https://aka.ms/azure-sdk-preview3-net
-    </PackageReleaseNotes>
     <Description>
       This client library supports client-side encryption for the Microsoft Azure Storage Blob service.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.Cryptography/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.Cryptography/CHANGELOG.md

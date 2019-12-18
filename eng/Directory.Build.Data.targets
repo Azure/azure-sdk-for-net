@@ -10,15 +10,19 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
 
-  <!-- Set PackageProjectUrl to the package README for Client Libraries -->
-  <Target Name="SetPackageProjectUrl" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and
+  <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
+  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="ValidateTargetFrameworks" Condition="'$(IsDataPlaneProject)' == 'true' and '$(IsTestProject)' != 'true' and
    '$(IsSamplesProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(CommitSHA)' != ''">
     <PropertyGroup>
       <CurrentCsprojPath>$(MSBuildProjectDirectory)</CurrentCsprojPath>
       <DirectoryPartofPath>$(CurrentCsprojPath.Substring($(CurrentCsprojPath.LastIndexOf("\sdk\"))))</DirectoryPartofPath>
       <DirectoryPartofPath>$(DirectoryPartofPath.Remove($(DirectoryPartofPath.LastIndexOf("\src"))))</DirectoryPartofPath>
-      <PackageProjectUrl>$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/README.md</PackageProjectUrl>
+      <PackageProjectUrl Condition="Exists('$(RepoRoot)/$(DirectoryPartofPath)/README.md')">$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/README.md</PackageProjectUrl>
+      <PackageReleaseNotes Condition="'$(PackageReleaseNotes)' == '' and Exists('$(RepoRoot)/$(DirectoryPartofPath)/CHANGELOG.md')">$(RepositoryUrl)/blob/$(CommitSHA)$(DirectoryPartofPath)/CHANGELOG.md</PackageReleaseNotes>
     </PropertyGroup>
+    <ItemGroup Condition="Exists('$(RepoRoot)/$(DirectoryPartofPath)/CHANGELOG.md')">
+      <None Include="$(RepoRoot)/$(DirectoryPartofPath)/CHANGELOG.md" Pack="true" PackagePath="CHANGELOG.md"/>
+    </ItemGroup>
   </Target>
 
   <!-- This allows us to build .NET Framework targets on non-windows
