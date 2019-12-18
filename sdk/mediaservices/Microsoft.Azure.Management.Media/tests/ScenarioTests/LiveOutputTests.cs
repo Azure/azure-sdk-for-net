@@ -13,7 +13,7 @@ namespace Media.Tests.ScenarioTests
 {
     public class LiveOutputTests : MediaScenarioTestBase
     {
-        [Fact(Skip = "Need to rerun for 2019-05-01-preview")]
+        [Fact]
         public void LiveOutputComboTest()
         {
             using (MockContext context = this.StartMockContextAndInitializeClients(this.GetType()))
