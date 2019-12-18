@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity.Tests.Mock;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
 
@@ -37,9 +38,7 @@ namespace Azure.Identity.Tests
 
             var vaultUri = new Uri(Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_SYSTEMASSIGNEDVAULT"));
 
-            var credoptions = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-
-            var cred = new ManagedIdentityCredential(options: credoptions);
+            var cred = CreateManagedIdentityCredential();
 
             var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
 
@@ -64,9 +63,7 @@ namespace Azure.Identity.Tests
 
             var clientId = Recording.GetVariableFromEnvironment("IDENTITYTEST_IMDSTEST_CLIENTID");
 
-            var credoptions = Recording.InstrumentClientOptions(new TokenCredentialOptions());
-
-            var cred = InstrumentClient(new ManagedIdentityCredential(clientId: clientId, options: credoptions));
+            var cred = CreateManagedIdentityCredential(clientId);
 
             var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
 
@@ -75,6 +72,20 @@ namespace Azure.Identity.Tests
             KeyVaultSecret secret = await kvclient.GetSecretAsync("identitytestsecret");
 
             Assert.IsNotNull(secret);
+        }
+
+        private ManagedIdentityCredential CreateManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
+        {
+            options = Recording.InstrumentClientOptions(options ?? new TokenCredentialOptions());
+
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            // if we're in playback mode we need to mock the ImdsAvailable call since we won't be able to open a connection
+            var client = (Mode == RecordedTestMode.Playback) ? new MockManagedIdentityClient(pipeline) { ImdsAvailableFunc = _ => true } :  new ManagedIdentityClient(pipeline);
+
+            var cred = InstrumentClient(new ManagedIdentityCredential(clientId, pipeline, client));
+
+            return cred;
         }
     }
 }
