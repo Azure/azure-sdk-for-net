@@ -1,7 +1,7 @@
 # Migration Guide (EventHubs v4 to v5)
 
 This document is intended for users that are familiar with v4 of the .NET SDK for Event Hubs library ([`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) & [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/)) and wish 
-to migrate their application to v5 of the same library.
+to migrate their application to the newer Azure.Messaging.EventHubs and Azure.Messaging.EventHubs.Processor libraries.
 
 For users new to the .NET SDK for Event Hubs, please see the [readme file for the Azure.Messaging.EventHubs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md).
 
