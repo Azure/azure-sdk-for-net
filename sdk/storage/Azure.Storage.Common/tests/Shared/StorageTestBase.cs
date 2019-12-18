@@ -35,7 +35,7 @@ namespace Azure.Storage.Test.Shared
         ///
         /// This is only here to run before any of our tests make requests.
         /// </summary>
-        private static TestEventListener _listener;
+        private static TestEventListener s_listener;
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
@@ -49,14 +49,14 @@ namespace Azure.Storage.Test.Shared
         {
             if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
             {
-                _listener = new TestEventListener();
+                s_listener = new TestEventListener();
             }
         }
 
         [OneTimeTearDown]
         public void CleanUp()
         {
-            _listener?.Dispose();
+            s_listener?.Dispose();
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Azure.Storage.Test.Shared
                 response = await getResponse();
                 if (!hasResponse(response))
                 {
-                    await this.Delay(delayDuration);
+                    await Delay(delayDuration);
                 }
                 else
                 {
@@ -398,6 +398,23 @@ namespace Azure.Storage.Test.Shared
             Assert.AreEqual(constants.Sas.ContentEncoding, sasQueryParameters.ContentEncoding);
             Assert.AreEqual(constants.Sas.ContentLanguage, sasQueryParameters.ContentLanguage);
             Assert.AreEqual(constants.Sas.ContentType, sasQueryParameters.ContentType);
+        }
+
+        protected async Task<T> RetryAsync<T>(
+            Func<Task<T>> operation,
+            Func<RequestFailedException, bool> shouldRetry)
+        {
+            for (int attempt = 0;;)
+            {
+                try
+                {
+                    return await operation();
+                }
+                catch (RequestFailedException ex)
+                    when (attempt++ < Constants.MaxReliabilityRetries && shouldRetry(ex))
+                {
+                }
+            }
         }
     }
 }

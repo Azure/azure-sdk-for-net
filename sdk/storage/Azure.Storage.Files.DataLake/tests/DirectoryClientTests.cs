@@ -317,7 +317,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
@@ -331,13 +331,25 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
+        // It is possible for the service to have responded that the container was already created after
+        // creating the new FileSystem only to have the directory creation fail. This appears to be due to
+        // a propagation delay from the blob endpoint to the dfs endpoint, since the directory creation happens against
+        // the dfs endpoint.
+        // This method will create the directory and retry if a 404 is returned that indicates the filesystem doesn't exist.
+        private async Task<DataLakeDirectoryClient> CreateDirectoryEnsureFileSystemPropagated(DisposingFileSystem fileSystem, string directoryName)
+        {
+            return await RetryAsync(
+                async () => await fileSystem.FileSystem.CreateDirectoryAsync(directoryName),
+                ex => ex.Status == 404);
+        }
+
         [Test]
         public async Task RenameAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient sourceDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
             string destDirectoryName = GetNewDirectoryName();
 
             // Act
@@ -372,8 +384,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-                DataLakeDirectoryClient destDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient sourceDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
+                DataLakeDirectoryClient destDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.Match = await SetupPathMatchCondition(destDirectory, parameters.Match);
                 parameters.LeaseId = await SetupPathLeaseCondition(destDirectory, parameters.LeaseId, garbageLeaseId);
@@ -401,8 +413,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-                DataLakeDirectoryClient destDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient sourceDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
+                DataLakeDirectoryClient destDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.NoneMatch = await SetupPathMatchCondition(destDirectory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
@@ -427,8 +439,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-                DataLakeDirectoryClient destDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient sourceDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
+                DataLakeDirectoryClient destDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.Match = await SetupPathMatchCondition(sourceDirectory, parameters.Match);
                 parameters.LeaseId = await SetupPathLeaseCondition(sourceDirectory, parameters.LeaseId, garbageLeaseId);
@@ -456,8 +468,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient sourceDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-                DataLakeDirectoryClient destDirectory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient sourceDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
+                DataLakeDirectoryClient destDirectory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.NoneMatch = await SetupPathMatchCondition(sourceDirectory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(
@@ -477,7 +489,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task GetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Act
             PathAccessControl accessControl = await directory.GetAccessControlAsync();
@@ -499,7 +511,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
             DataLakeDirectoryClient oauthDirectory = oauthService
                 .GetFileSystemClient(fileSystemName)
                 .GetDirectoryClient(directoryName);
@@ -524,7 +536,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             DataLakeDirectoryClient sasDirectory = InstrumentClient(
                 GetServiceClient_DataLakeServiceSas_FileSystem(
@@ -552,7 +564,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 startsOn: null,
@@ -584,7 +596,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             DataLakeDirectoryClient sasDirectory = InstrumentClient(
                 GetServiceClient_DataLakeServiceSas_Path(
@@ -613,7 +625,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 startsOn: null,
@@ -660,7 +672,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.Match = await SetupPathMatchCondition(directory, parameters.Match);
                 parameters.LeaseId = await SetupPathLeaseCondition(directory, parameters.LeaseId, garbageLeaseId);
@@ -683,7 +695,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
@@ -699,7 +711,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Act
             Response<PathInfo> response = await directory.SetAccessControlListAsync(AccessControlList);
@@ -717,7 +729,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.Match = await SetupPathMatchCondition(directory, parameters.Match);
                 parameters.LeaseId = await SetupPathLeaseCondition(directory, parameters.LeaseId, garbageLeaseId);
@@ -744,7 +756,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
@@ -762,7 +774,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetPermissionsAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Act
             Response<PathInfo> response = await directory.SetPermissionsAsync(permissions: PathPermissions);
@@ -780,7 +792,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.Match = await SetupPathMatchCondition(directory, parameters.Match);
                 parameters.LeaseId = await SetupPathLeaseCondition(directory, parameters.LeaseId, garbageLeaseId);
@@ -807,7 +819,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
@@ -844,7 +856,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
             DataLakeDirectoryClient oauthDirectory = oauthService
                 .GetFileSystemClient(fileSystemName)
                 .GetDirectoryClient(directoryName);
@@ -865,7 +877,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             DataLakeDirectoryClient sasDirectory = InstrumentClient(
                 GetServiceClient_DataLakeServiceSas_FileSystem(
@@ -894,7 +906,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 startsOn: null,
@@ -923,7 +935,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             DataLakeDirectoryClient sasDirectory = InstrumentClient(
                 GetServiceClient_DataLakeServiceSas_Path(
@@ -949,7 +961,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(directoryName);
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, directoryName);
 
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
                 startsOn: null,
@@ -977,7 +989,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in Conditions_Data)
             {
                 await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 // Arrange
                 parameters.Match = await SetupPathMatchCondition(directory, parameters.Match);
@@ -1001,7 +1013,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 // Arrange
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
@@ -1037,7 +1049,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             var constants = new TestConstants(this);
 
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Act
             await directory.SetHttpHeadersAsync(new PathHttpHeaders
@@ -1094,7 +1106,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.Match = await SetupPathMatchCondition(directory, parameters.Match);
                 parameters.LeaseId = await SetupPathLeaseCondition(directory, parameters.LeaseId, garbageLeaseId);
@@ -1130,7 +1142,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
                 DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
@@ -1156,7 +1168,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetMetadataAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             IDictionary<string, string> metadata = BuildMetadata();
@@ -1193,7 +1205,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
                 IDictionary<string, string> metadata = BuildMetadata();
 
                 parameters.Match = await SetupPathMatchCondition(directory, parameters.Match);
@@ -1221,7 +1233,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
                 IDictionary<string, string> metadata = BuildMetadata();
 
                 parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
@@ -1240,7 +1252,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateFileAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             string fileName = GetNewFileName();
@@ -1256,7 +1268,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateFileAsync_HttpHeaders()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             PathHttpHeaders headers = new PathHttpHeaders
@@ -1284,7 +1296,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateFileAsync_Metadata()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             IDictionary<string, string> metadata = BuildMetadata();
@@ -1301,7 +1313,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateFileAsync_PermissionAndUmask()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             string permissions = "0777";
@@ -1336,7 +1348,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task DeleteFileAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             string fileName = GetNewFileName();
@@ -1365,7 +1377,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateSubDirectoryAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             string directoryName = GetNewDirectoryName();
@@ -1395,7 +1407,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateSubDirectoryAsync_HttpHeaders()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             PathHttpHeaders headers = new PathHttpHeaders
@@ -1425,7 +1437,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateSubDirectoryAsync_Metadata()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             IDictionary<string, string> metadata = BuildMetadata();
@@ -1444,7 +1456,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task CreateSubDirectoryAsync_PermissionAndUmask()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             string permissions = "0777";
@@ -1468,7 +1480,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in Conditions_Data)
             {
                 await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 // Arrange
                 // This directory is intentionally created twice
@@ -1497,7 +1509,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 // Arrange
                 // This directory is intentionally created twice
@@ -1518,7 +1530,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task DeleteSubDirectoryAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             // Arrange
             string directoryName = GetNewDirectoryName();
@@ -1536,7 +1548,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in Conditions_Data)
             {
                 await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 // Arrange
                 DataLakeDirectoryClient subDirectory = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
@@ -1559,7 +1571,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
             {
                 await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 // Arrange
                 DataLakeDirectoryClient subDirectory = await directory.CreateSubDirectoryAsync(GetNewDirectoryName());
@@ -1582,7 +1594,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
@@ -1602,7 +1614,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
@@ -1629,7 +1641,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
@@ -1668,7 +1680,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
@@ -1691,7 +1703,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
@@ -1719,7 +1731,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
@@ -1758,7 +1770,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
@@ -1781,7 +1793,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
@@ -1809,7 +1821,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
@@ -1848,7 +1860,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var newLeaseId = Recording.Random.NewGuid().ToString();
@@ -1872,7 +1884,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var newLeaseId = Recording.Random.NewGuid().ToString();
@@ -1903,7 +1915,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var newLeaseId = Recording.Random.NewGuid().ToString();
@@ -1946,7 +1958,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
             var leaseId = Recording.Random.NewGuid().ToString();
             var duration = TimeSpan.FromSeconds(15);
@@ -1969,7 +1981,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
@@ -1997,7 +2009,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await using DisposingFileSystem test = await GetNewFileSystem();
 
                 // Arrange
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+                DataLakeDirectoryClient directory = await CreateDirectoryEnsureFileSystemPropagated(test, GetNewDirectoryName());
 
                 var leaseId = Recording.Random.NewGuid().ToString();
                 var duration = TimeSpan.FromSeconds(15);
