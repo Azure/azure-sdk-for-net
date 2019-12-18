@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovstorage.blob.core.windows.net/test-container-3fe23fb6-16ce-7ce8-c079-a9338a2abb84?sv=2019-02-02\u0026ss=bfq\u0026srt=sco\u0026spr=https\u0026se=2019-12-02T22%3A57%3A55Z\u0026sp=r\u0026sig=Sanitized\u0026restype=container",
+      "RequestUri": "https://storagedotnettesting.blob.core.windows.net/test-container-3fe23fb6-16ce-7ce8-c079-a9338a2abb84?sv=2019-02-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2019-12-13T00%3A23%3A14Z\u0026sp=r\u0026sig=Sanitized\u0026restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "traceparent": "00-d40d23718c781840a15d9653e3ab6d1a-754b5d61ce4bcf4f-00",
+        "traceparent": "00-e7d1aa156cafbc4e8e1f7b2692600975-22ff88f580b71549-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.1.0-dev.20191202.1\u002Bb6509581fa5af80856252dcf37a17912898b8746",
+          "azsdk-net-Storage.Blobs/12.1.0-dev.20191212.1\u002B365544065ca906ef785471b4d22b09dc4a3b54b2",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "d1fbea36-104a-b0cf-2d9e-02cabb02f118",
@@ -18,26 +18,26 @@
       "ResponseHeaders": {
         "Content-Length": "279",
         "Content-Type": "application/xml",
-        "Date": "Mon, 02 Dec 2019 21:57:54 GMT",
+        "Date": "Thu, 12 Dec 2019 23:23:13 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "d1fbea36-104a-b0cf-2d9e-02cabb02f118",
         "x-ms-error-code": "AuthorizationPermissionMismatch",
-        "x-ms-request-id": "dd225893-d01e-0025-475b-a9691c000000",
+        "x-ms-request-id": "908b867a-b01e-0018-5643-b178b1000000",
         "x-ms-version": "2019-02-02"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EAuthorizationPermissionMismatch\u003C/Code\u003E\u003CMessage\u003EThis request is not authorized to perform this operation using this permission.\n",
-        "RequestId:dd225893-d01e-0025-475b-a9691c000000\n",
-        "Time:2019-12-02T21:57:55.1283800Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:908b867a-b01e-0018-5643-b178b1000000\n",
+        "Time:2019-12-12T23:23:14.2511261Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-12-02T13:57:55.1277600-08:00",
+    "DateTimeOffsetNow": "2019-12-12T15:23:14.2519139-08:00",
     "RandomSeed": "1716869207",
-    "Storage_TestConfigDefault": "ProductionTenant\njolovstorage\nU2FuaXRpemVk\nhttps://jolovstorage.blob.core.windows.net\nhttps://jolovstorage.file.core.windows.net\nhttps://jolovstorage.queue.core.windows.net\nhttps://jolovstorage.table.core.windows.net\n\n\n\n\nhttps://jolovstorage-secondary.blob.core.windows.net\nhttps://jolovstorage-secondary.file.core.windows.net\nhttps://jolovstorage-secondary.queue.core.windows.net\nhttps://jolovstorage-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://jolovstorage.blob.core.windows.net/;QueueEndpoint=https://jolovstorage.queue.core.windows.net/;FileEndpoint=https://jolovstorage.file.core.windows.net/;BlobSecondaryEndpoint=https://jolovstorage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://jolovstorage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://jolovstorage-secondary.file.core.windows.net/;AccountName=jolovstorage;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nstoragedotnettesting\nU2FuaXRpemVk\nhttps://storagedotnettesting.blob.core.windows.net\nhttps://storagedotnettesting.file.core.windows.net\nhttps://storagedotnettesting.queue.core.windows.net\nhttps://storagedotnettesting.table.core.windows.net\n\n\n\n\nhttps://storagedotnettesting-secondary.blob.core.windows.net\nhttps://storagedotnettesting-secondary.file.core.windows.net\nhttps://storagedotnettesting-secondary.queue.core.windows.net\nhttps://storagedotnettesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://storagedotnettesting.blob.core.windows.net/;QueueEndpoint=https://storagedotnettesting.queue.core.windows.net/;FileEndpoint=https://storagedotnettesting.file.core.windows.net/;BlobSecondaryEndpoint=https://storagedotnettesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://storagedotnettesting-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://storagedotnettesting-secondary.file.core.windows.net/;AccountName=storagedotnettesting;AccountKey=Sanitized"
   }
 }

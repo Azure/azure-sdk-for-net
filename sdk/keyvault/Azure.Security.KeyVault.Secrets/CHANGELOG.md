@@ -1,5 +1,7 @@
 # Release History
 
+## 4.1.0-preview.1
+
 ## 4.0.0 (2019-11)
 
 ### Breaking changes
@@ -12,14 +14,14 @@
 - `SecretClient.DeleteSecret` has been renamed to `SecretClient.StartDeleteSecret` and now returns a `DeleteSecretOperation` to track this long-running operation.
 - `SecretClient.RecoverDeletedSecret` has been renamed to `SecretClient.StartRecoverDeletedSecret` and now returns a `RecoverDeletedSecretOperation` to track this long-running operation.
 
-### Major changes
+###  Major changes
 
 - Updated to work with the 1.0.0 release versions of Azure.Core and Azure.Identity.
 - `KeyModelFactory` added to create mocks of model types for testing.
 
 ## 4.0.0-preview.5 (2019-10-07)
 
-### Breaking changes
+###  Breaking changes
 
 - `SecretBase` has been renamed to `SecretProperties`.
 - `Secret` and `DeletedSecret` no longer extend `SecretProperties`, but instead contain a `SecretProperties` property named `Properties`.

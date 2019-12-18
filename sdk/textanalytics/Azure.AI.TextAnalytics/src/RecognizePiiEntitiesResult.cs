@@ -8,6 +8,10 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// The result of the recognize PII entities operation on a single
+    /// document, containing a collection of the <see cref="NamedEntity"/>
+    /// objects containing personally identifiable information that were
+    /// found in that document.
     /// </summary>
     public class RecognizePiiEntitiesResult : TextAnalyticsResult
     {
@@ -24,6 +28,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Gets the collection of named entities containing personally
+        /// identifiable information in the input document.
         /// </summary>
         public IReadOnlyCollection<NamedEntity> NamedEntities { get; }
     }

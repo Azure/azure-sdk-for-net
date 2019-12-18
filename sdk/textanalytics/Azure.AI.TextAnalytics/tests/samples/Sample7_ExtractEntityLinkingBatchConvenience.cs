@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Pike place market is my favorite Seattle attraction.",
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.ExtractEntityLinking(inputs);
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
 
             Debug.WriteLine($"Linked entities for each input are:\n");
             int i = 0;

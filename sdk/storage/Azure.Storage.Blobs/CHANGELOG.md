@@ -1,38 +1,37 @@
-Release History
-===============
+# Release History
 
-12.1.0
---------------------------
+## 12.1.0
 - Added check to enforce TokenCredential is used only over HTTPS
 - Support using SAS token from connection string
-- Fixed issue where AccountName on QueueUriBuilder would not be populated
+- Fixed issue where AccountName on BlobUriBuilder would not be populated
   for non-IP style Uris.
 
-12.0.0 (2019-11)
-----------------
+## 12.0.0 (2019-11)
 - Renamed a number of operations and models to better align with other client
   libraries and the .NET Framework Design Guidelines
+- Parallel upload/download performance improvements
 
-12.0.0-preview.4 (2019-10)
---------------------------
-- Support for geo-redundant read from secondary location on failure
+## 12.0.0-preview.4 (2019-10)
+- Added support for Customer Provided Key server side encryption
 - Verification of echoed client request IDs
+- Support for geo-redundant read from secondary location on failure
+- Added CreateIfNotExists and DeleteIfNotExists convenience methods for Blobs
 - Added convenient resource Name properties on all clients
 
-12.0.0-preview.3 (2019-09)
---------------------------
-- Added QueueUriBuilder for addressing Azure Storage resources
-- Bug fixes
+## 12.0.0-preview.3 (2019-09)
+- New Storage features for service version 2019-02-02 (including Customer
+  Provided Key, expanded Set Tier support, the ability to set rehydration
+  priority, etc.)
+- Parallel upload/download
+- Added BlobUriBuilder for addressing Azure Storage resources
 
 For more information, please visit: https://aka.ms/azure-sdk-preview3-net.
 
-12.0.0-preview.2 (2019-08)
---------------------------
+## 12.0.0-preview.2 (2019-08)
 - Distributed Tracing
 - Bug fixes
 
-12.0.0-preview.1 (2019-07)
---------------------------
+## 12.0.0-preview.1 (2019-07)
 This preview is the first release of a ground-up rewrite of our client
 libraries to ensure consistency, idiomatic design, productivity, and an
 excellent developer experience.  It was created following the Azure SDK Design

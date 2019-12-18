@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://jolovstorage.queue.core.windows.net/test-queue-359b5ba3-2225-b7a4-35ff-4335674a13b0?sv=2019-02-02\u0026ss=bfq\u0026srt=sco\u0026spr=https\u0026se=2019-12-02T21%3A35%3A47Z\u0026sp=rwdlacup\u0026sig=Sanitized",
+      "RequestUri": "https://storagedotnettesting.queue.core.windows.net/test-queue-359b5ba3-2225-b7a4-35ff-4335674a13b0?sv=2019-02-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2019-12-13T00%3A16%3A46Z\u0026sp=rwdlacup\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "traceparent": "00-67b070301c4b784d8d5b2e543ac7b45e-b1a31a04aca9d04c-00",
+        "traceparent": "00-6ffa70884eabe142a3c1d2879ed2ea3f-2e038fddaddb4446-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.1.0-dev.20191202.1\u002Bb6509581fa5af80856252dcf37a17912898b8746",
+          "azsdk-net-Storage.Queues/12.1.0-dev.20191212.1\u002B365544065ca906ef785471b4d22b09dc4a3b54b2",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e1b87e30-c273-e55f-85b3-34d26cb81fe5",
@@ -17,23 +17,23 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2019 20:35:46 GMT",
+        "Date": "Thu, 12 Dec 2019 23:16:46 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "47baff0a-e003-000f-2150-a91c59000000",
+        "x-ms-request-id": "3269c36e-5003-004d-2342-b1683a000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jolovstorage.queue.core.windows.net/test-queue-f8a29d0b-bd4c-e7d5-0052-b6ec974f747b?sv=2019-02-02\u0026ss=bfq\u0026srt=sco\u0026spr=https\u0026se=2019-12-02T21%3A35%3A47Z\u0026sp=rwdlacup\u0026sig=Sanitized",
+      "RequestUri": "https://storagedotnettesting.queue.core.windows.net/test-queue-f8a29d0b-bd4c-e7d5-0052-b6ec974f747b?sv=2019-02-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2019-12-13T00%3A16%3A46Z\u0026sp=rwdlacup\u0026sig=Sanitized",
       "RequestMethod": "PUT",
       "RequestHeaders": {
-        "traceparent": "00-983710061bb9124fa86a32804c805701-b28fa95f2031c844-00",
+        "traceparent": "00-9ec7a7db3e8bee4b8d3b1b45b24690f8-88168da6c2ea954b-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.1.0-dev.20191202.1\u002Bb6509581fa5af80856252dcf37a17912898b8746",
+          "azsdk-net-Storage.Queues/12.1.0-dev.20191212.1\u002B365544065ca906ef785471b4d22b09dc4a3b54b2",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "18bc054f-9296-2008-0767-dcdbbf5d788a",
@@ -44,23 +44,23 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2019 20:35:47 GMT",
+        "Date": "Thu, 12 Dec 2019 23:16:46 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "47baff15-e003-000f-2a50-a91c59000000",
+        "x-ms-request-id": "3269c3ba-5003-004d-6942-b1683a000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jolovstorage.queue.core.windows.net/test-queue-359b5ba3-2225-b7a4-35ff-4335674a13b0?sv=2019-02-02\u0026ss=bfq\u0026srt=sco\u0026spr=https\u0026se=2019-12-02T21%3A35%3A47Z\u0026sp=rwdlacup\u0026sig=Sanitized\u0026comp=metadata",
+      "RequestUri": "https://storagedotnettesting.queue.core.windows.net/test-queue-359b5ba3-2225-b7a4-35ff-4335674a13b0?sv=2019-02-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2019-12-13T00%3A16%3A46Z\u0026sp=rwdlacup\u0026sig=Sanitized\u0026comp=metadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-64e8df916f89d5439f6a98414fab2370-7dda8c49aa8f0440-00",
+        "traceparent": "00-8c14bf1109c6b14885ff18630ff19ecf-47998ce38382514e-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.1.0-dev.20191202.1\u002Bb6509581fa5af80856252dcf37a17912898b8746",
+          "azsdk-net-Storage.Queues/12.1.0-dev.20191212.1\u002B365544065ca906ef785471b4d22b09dc4a3b54b2",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "6e8079b6-b347-508a-371d-e1617cab88e0",
@@ -72,24 +72,24 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2019 20:35:47 GMT",
+        "Date": "Thu, 12 Dec 2019 23:16:46 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-approximate-messages-count": "0",
-        "x-ms-request-id": "47baff1a-e003-000f-2e50-a91c59000000",
+        "x-ms-request-id": "3269c3ca-5003-004d-7642-b1683a000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jolovstorage.queue.core.windows.net/test-queue-f8a29d0b-bd4c-e7d5-0052-b6ec974f747b?sv=2019-02-02\u0026ss=bfq\u0026srt=sco\u0026spr=https\u0026se=2019-12-02T21%3A35%3A47Z\u0026sp=rwdlacup\u0026sig=Sanitized\u0026comp=metadata",
+      "RequestUri": "https://storagedotnettesting.queue.core.windows.net/test-queue-f8a29d0b-bd4c-e7d5-0052-b6ec974f747b?sv=2019-02-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2019-12-13T00%3A16%3A46Z\u0026sp=rwdlacup\u0026sig=Sanitized\u0026comp=metadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
-        "traceparent": "00-d13ccbe8b2aeca4d8d14256f75b99dad-eade9480ac157c46-00",
+        "traceparent": "00-fe9acebc52a8ef429c02bab6fd8be684-7c2844604565c840-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.1.0-dev.20191202.1\u002Bb6509581fa5af80856252dcf37a17912898b8746",
+          "azsdk-net-Storage.Queues/12.1.0-dev.20191212.1\u002B365544065ca906ef785471b4d22b09dc4a3b54b2",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "91df1e4b-0faf-f432-9e9e-309931ec052f",
@@ -101,24 +101,24 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2019 20:35:47 GMT",
+        "Date": "Thu, 12 Dec 2019 23:16:46 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-approximate-messages-count": "0",
-        "x-ms-request-id": "47baff1b-e003-000f-2f50-a91c59000000",
+        "x-ms-request-id": "3269c3d4-5003-004d-8042-b1683a000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jolovstorage.queue.core.windows.net/test-queue-359b5ba3-2225-b7a4-35ff-4335674a13b0?sv=2019-02-02\u0026ss=bfq\u0026srt=sco\u0026spr=https\u0026se=2019-12-02T21%3A35%3A47Z\u0026sp=rwdlacup\u0026sig=Sanitized",
+      "RequestUri": "https://storagedotnettesting.queue.core.windows.net/test-queue-359b5ba3-2225-b7a4-35ff-4335674a13b0?sv=2019-02-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2019-12-13T00%3A16%3A46Z\u0026sp=rwdlacup\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "traceparent": "00-f49135150fee72409bb583a6eb82dfa7-da99e95c404f9e43-00",
+        "traceparent": "00-04c19c11f9b1174f82c7f854ccae2601-1c98fd61414c4f46-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.1.0-dev.20191202.1\u002Bb6509581fa5af80856252dcf37a17912898b8746",
+          "azsdk-net-Storage.Queues/12.1.0-dev.20191212.1\u002B365544065ca906ef785471b4d22b09dc4a3b54b2",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "5e1597a4-f6cb-6d31-4ec6-8a50d21ca79a",
@@ -129,23 +129,23 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2019 20:35:47 GMT",
+        "Date": "Thu, 12 Dec 2019 23:16:46 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "47baff24-e003-000f-3850-a91c59000000",
+        "x-ms-request-id": "3269c3e9-5003-004d-1442-b1683a000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://jolovstorage.queue.core.windows.net/test-queue-f8a29d0b-bd4c-e7d5-0052-b6ec974f747b?sv=2019-02-02\u0026ss=bfq\u0026srt=sco\u0026spr=https\u0026se=2019-12-02T21%3A35%3A47Z\u0026sp=rwdlacup\u0026sig=Sanitized",
+      "RequestUri": "https://storagedotnettesting.queue.core.windows.net/test-queue-f8a29d0b-bd4c-e7d5-0052-b6ec974f747b?sv=2019-02-02\u0026ss=bfqt\u0026srt=sco\u0026spr=https\u0026se=2019-12-13T00%3A16%3A46Z\u0026sp=rwdlacup\u0026sig=Sanitized",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
-        "traceparent": "00-98d4a00dcb6fc542aaf48e3183718556-c31c95760b8f9a4f-00",
+        "traceparent": "00-e8cc0e11f84c0b41bf1c3a8b7c08e16a-1ed2ef21c50ea440-00",
         "User-Agent": [
-          "azsdk-net-Storage.Queues/12.1.0-dev.20191202.1\u002Bb6509581fa5af80856252dcf37a17912898b8746",
+          "azsdk-net-Storage.Queues/12.1.0-dev.20191212.1\u002B365544065ca906ef785471b4d22b09dc4a3b54b2",
           "(.NET Core 4.6.28008.01; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "9af423f2-a6d6-ef63-8536-287cebcbe1a6",
@@ -156,20 +156,20 @@
       "StatusCode": 204,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Mon, 02 Dec 2019 20:35:47 GMT",
+        "Date": "Thu, 12 Dec 2019 23:16:46 GMT",
         "Server": [
           "Windows-Azure-Queue/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-request-id": "47baff27-e003-000f-3b50-a91c59000000",
+        "x-ms-request-id": "3269c3fc-5003-004d-2142-b1683a000000",
         "x-ms-version": "2018-11-09"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2019-12-02T12:35:47.1837593-08:00",
+    "DateTimeOffsetNow": "2019-12-12T15:16:46.4819531-08:00",
     "RandomSeed": "342794282",
-    "Storage_TestConfigDefault": "ProductionTenant\njolovstorage\nU2FuaXRpemVk\nhttps://jolovstorage.blob.core.windows.net\nhttps://jolovstorage.file.core.windows.net\nhttps://jolovstorage.queue.core.windows.net\nhttps://jolovstorage.table.core.windows.net\n\n\n\n\nhttps://jolovstorage-secondary.blob.core.windows.net\nhttps://jolovstorage-secondary.file.core.windows.net\nhttps://jolovstorage-secondary.queue.core.windows.net\nhttps://jolovstorage-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://jolovstorage.blob.core.windows.net/;QueueEndpoint=https://jolovstorage.queue.core.windows.net/;FileEndpoint=https://jolovstorage.file.core.windows.net/;BlobSecondaryEndpoint=https://jolovstorage-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://jolovstorage-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://jolovstorage-secondary.file.core.windows.net/;AccountName=jolovstorage;AccountKey=Sanitized"
+    "Storage_TestConfigDefault": "ProductionTenant\nstoragedotnettesting\nU2FuaXRpemVk\nhttps://storagedotnettesting.blob.core.windows.net\nhttps://storagedotnettesting.file.core.windows.net\nhttps://storagedotnettesting.queue.core.windows.net\nhttps://storagedotnettesting.table.core.windows.net\n\n\n\n\nhttps://storagedotnettesting-secondary.blob.core.windows.net\nhttps://storagedotnettesting-secondary.file.core.windows.net\nhttps://storagedotnettesting-secondary.queue.core.windows.net\nhttps://storagedotnettesting-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://storagedotnettesting.blob.core.windows.net/;QueueEndpoint=https://storagedotnettesting.queue.core.windows.net/;FileEndpoint=https://storagedotnettesting.file.core.windows.net/;BlobSecondaryEndpoint=https://storagedotnettesting-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://storagedotnettesting-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://storagedotnettesting-secondary.file.core.windows.net/;AccountName=storagedotnettesting;AccountKey=Sanitized"
   }
 }

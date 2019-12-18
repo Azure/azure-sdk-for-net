@@ -16,6 +16,7 @@
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\LiveOnlyAttribute.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\PlaybackTransport.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\*Record*.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\TestRandom.cs" />
   </ItemGroup>
 
   <Target Name="UpdateSessionRecords">

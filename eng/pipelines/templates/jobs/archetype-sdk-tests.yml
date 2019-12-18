@@ -2,15 +2,15 @@ parameters:
   PreSteps: []
   EnvVars: {}
   MaxParallel: 0
+  BuildInParallel: true
+  TimeoutInMinutes: 60
 
 jobs:
   - job: "Test"
     variables:
       - template: ../variables/globals.yml
 
-    # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 35m, on average due to having two target platforms)
-    # https://github.com/Azure/azure-sdk-for-net/issues/5982
-    timeoutInMinutes: 175
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
@@ -53,7 +53,7 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false
+      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:BuildInParallel=${{ parameters.BuildInParallel }}
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

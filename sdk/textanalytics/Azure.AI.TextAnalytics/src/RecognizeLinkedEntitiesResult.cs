@@ -8,6 +8,9 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// The result of the recognize linked entities operation on a single
+    /// document, containing a collection of the <see cref="LinkedEntity"/>
+    /// objects identified in that document.
     /// </summary>
     public class RecognizeLinkedEntitiesResult : TextAnalyticsResult
     {
@@ -24,6 +27,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
+        /// Gets the collection of linked entities identified in the input document.
         /// </summary>
         public IReadOnlyCollection<LinkedEntity> LinkedEntities { get; }
     }
