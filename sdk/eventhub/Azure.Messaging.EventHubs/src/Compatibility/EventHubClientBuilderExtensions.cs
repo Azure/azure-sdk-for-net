@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core.Extensions;
-using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Microsoft.Extensions.Azure
 {
