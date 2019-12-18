@@ -31,7 +31,7 @@ clients, rather than having a single `EventHubClient`:
 
 The producer and consumer clients operate in the context of a specific event hub and offer operations for all partitions. Unlike the v4, the clients are not bound to a specific partition, but the methods on them have overloads to handle specific partitions if needed.
 
-We've introduced a new library [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) where we have [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src/EventProcessorClient.cs) which is responsible for consuming events for the configured Event Hub and consumer group across all partitions. It also supports checkpointing and load balancing. Currently, only Azure Storage Blobs is supported for checkpointing.
+We've introduced a new library [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) which replaces the older [Microsoft.Azure.EventHubs.Processor](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/). Here we have the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src/EventProcessorClient.cs) which is responsible for consuming events for the configured Event Hub and consumer group across all partitions. It also supports checkpointing and load balancing. Currently, only Azure Storage Blobs is supported for checkpointing.
 
 The [EventHubConsumerClient](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.eventhubs.eventhubconsumerclient?view=azure-dotnet-preview) is for exploring Event Hubs and reading from a single partition, where the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src/EventProcessorClient.cs) is intended to be used for the majority of our real-world production scenarios.
 
@@ -56,8 +56,7 @@ v4 client took overloads with events and v5 require a sequence of `CreateBatch` 
 
 | In v4                                          | Equivalent in v5                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
-| `PartitionReceiver.ReceiveAsync()`                       | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) |
-| `EventHubClient.SetReceiveHandler()`                       | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) |
+| `PartitionReceiver.ReceiveAsync()` or `PartitionReceiver.SetReceiveHandler()`                      | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) |
 
 ## Migration samples
 
