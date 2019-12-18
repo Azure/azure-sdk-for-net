@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 namespace Azure.Messaging.EventHubs.Processor.Diagnostics
@@ -157,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="unclaimedPartitions">List of unclaimed partitions.</param>
         ///
         [Event(8, Level = EventLevel.Verbose, Message = "Unclaimed partitions: '{0}'.")]
-        public virtual void UnclaimedPartitions(string[] unclaimedPartitions)
+        public virtual void UnclaimedPartitions(HashSet<string> unclaimedPartitions)
         {
             if (IsEnabled())
             {
