@@ -3,6 +3,8 @@
 
 using System;
 
+// Alias the ServiceVersion enum used by the service importing this shared
+// source file
 using ServiceVersion =
 #if BlobSDK
     Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
@@ -17,7 +19,7 @@ using ServiceVersion =
     // client library that it doesn't know how to help you with.  Either add
     // the appropriate XyzSDK flag to your .csproj or alias your service
     // version above.
-    ERROR_CLIENT_OPTIONS_UNKNOWN;
+    ERROR_STORAGE_SERVICE_NOT_DEFINED;
 #endif
 
 namespace Azure.Storage
@@ -27,6 +29,16 @@ namespace Azure.Storage
     /// </summary>
     internal static class StorageVersionExtensions
     {
+        /// <summary>
+        /// Gets the latest version of the service supported by this SDK.
+        /// </summary>
+        public const ServiceVersion LatestVersion =
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK
+            ServiceVersion.V2019_02_02;
+#else
+            ERROR_STORAGE_SERVICE_NOT_DEFINED;
+#endif
+
         /// <summary>
         /// Convert a Storage ServiceVersion enum to an x-ms-version string.
         /// </summary>
