@@ -128,12 +128,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             };
 
             PartitionClosingAsync += eventArgs =>
-           {
-               CloseCalls.AddOrUpdate(eventArgs.PartitionId, 1, (partitionId, value) => value + 1);
-               StopReasons[eventArgs.PartitionId] = eventArgs.Reason;
+            {
+                CloseCalls.AddOrUpdate(eventArgs.PartitionId, 1, (partitionId, value) => value + 1);
+                StopReasons[eventArgs.PartitionId] = eventArgs.Reason;
 
-               return Task.CompletedTask;
-           };
+                return Task.CompletedTask;
+            };
         }
 
         /// <summary>
