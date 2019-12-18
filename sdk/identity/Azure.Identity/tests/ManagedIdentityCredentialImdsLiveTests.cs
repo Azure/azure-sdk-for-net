@@ -15,7 +15,7 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase
     {
-        public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new IdentityRecordedTestSanitizer();
         }
@@ -83,7 +83,7 @@ namespace Azure.Identity.Tests
             // if we're in playback mode we need to mock the ImdsAvailable call since we won't be able to open a connection
             var client = (Mode == RecordedTestMode.Playback) ? new MockManagedIdentityClient(pipeline) { ImdsAvailableFunc = _ => true } :  new ManagedIdentityClient(pipeline);
 
-            var cred = InstrumentClient(new ManagedIdentityCredential(clientId, pipeline, client));
+            var cred = new ManagedIdentityCredential(clientId, pipeline, client);
 
             return cred;
         }
