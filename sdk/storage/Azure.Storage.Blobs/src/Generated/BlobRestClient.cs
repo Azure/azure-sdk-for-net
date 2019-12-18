@@ -1380,6 +1380,14 @@ namespace Azure.Storage.Blobs
                         {
                             _value.HasLegalHold = bool.Parse(_header);
                         }
+                        if (response.Headers.TryGetValue("x-ms-default-encryption-scope", out _header))
+                        {
+                            _value.DefaultEncryptionScope = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out _header))
+                        {
+                            _value.DenyEncryptionScopeOverride = bool.Parse(_header);
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -13609,6 +13617,16 @@ namespace Azure.Storage.Blobs.Models
         public bool? HasLegalHold { get; internal set; }
 
         /// <summary>
+        /// DefaultEncryptionScope
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// DenyEncryptionScopeOverride
+        /// </summary>
+        public bool? DenyEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag ETag { get; internal set; }
@@ -13683,6 +13701,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.HasLegalHold = bool.Parse(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("DefaultEncryptionScope", ""));
+            if (_child != null)
+            {
+                _value.DefaultEncryptionScope = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DenyEncryptionScopeOverride", ""));
+            if (_child != null)
+            {
+                _value.DenyEncryptionScopeOverride = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -13715,25 +13743,29 @@ namespace Azure.Storage.Blobs.Models
         public static BlobContainerProperties BlobContainerProperties(
             System.DateTimeOffset lastModified,
             Azure.ETag eTag,
-            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
-            bool? hasImmutabilityPolicy = default,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             bool? hasLegalHold = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
+            string defaultEncryptionScope = default,
+            bool? denyEncryptionScopeOverride = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default,
+            bool? hasImmutabilityPolicy = default)
         {
             return new BlobContainerProperties()
             {
                 LastModified = lastModified,
                 ETag = eTag,
-                LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
                 PublicAccess = publicAccess,
-                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                LeaseStatus = leaseStatus,
                 HasLegalHold = hasLegalHold,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                DenyEncryptionScopeOverride = denyEncryptionScopeOverride,
                 Metadata = metadata,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
             };
         }
     }
@@ -17703,6 +17735,16 @@ namespace Azure.Storage.Blobs.Models
         /// Indicates whether the container has a legal hold.
         /// </summary>
         public bool HasLegalHold { get; internal set; }
+
+        /// <summary>
+        /// The default encryption scope for the container.
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// Indicates whether the container's default encryption scope can be overriden.
+        /// </summary>
+        public bool DenyEncryptionScopeOverride { get; internal set; }
 
         /// <summary>
         /// Creates a new FlattenedContainerItem instance

@@ -652,7 +652,17 @@ namespace Azure.Storage.Blobs.Test
             Response<BlobContainerProperties> response = await test.Container.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(PublicAccessType.BlobContainer, response.Value.PublicAccess);
+            Assert.IsNotNull(response.Value.LastModified);
+            Assert.IsNotNull(response.Value.LeaseStatus);
+            Assert.IsNotNull(response.Value.LeaseState);
+            Assert.IsNotNull(response.Value.LeaseDuration);
+            Assert.IsNotNull(response.Value.PublicAccess);
+            Assert.IsNotNull(response.Value.HasImmutabilityPolicy);
+            Assert.IsNotNull(response.Value.HasLegalHold);
+            Assert.IsNotNull(response.Value.DefaultEncryptionScope);
+            Assert.IsNotNull(response.Value.DenyEncryptionScopeOverride);
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.Metadata);
         }
 
         [Test]

@@ -236,5 +236,32 @@ namespace Azure.Storage.Blobs.Models
                     BlobSequenceNumber = blobSequenceNumber,
                     EncryptionKeySha256 = encryptionKeySha256,
                 };
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerProperties BlobContainerProperties(
+            DateTimeOffset lastModified,
+            ETag eTag,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            PublicAccessType? publicAccess,
+            LeaseStatus? leaseStatus,
+            bool? hasLegalHold,
+            IDictionary<string, string> metadata,
+            bool? hasImmutabilityPolicy)
+                => new BlobContainerProperties()
+                {
+                    LastModified = lastModified,
+                    ETag = eTag,
+                    LeaseState = leaseState,
+                    LeaseDuration = leaseDuration,
+                    PublicAccess = publicAccess,
+                    LeaseStatus = leaseStatus,
+                    HasLegalHold = hasLegalHold,
+                    Metadata = metadata,
+                    HasImmutabilityPolicy = hasImmutabilityPolicy,
+                };
     }
 }

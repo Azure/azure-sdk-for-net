@@ -136,6 +136,17 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(containers.Count() >= 1);
             var accountName = new BlobUriBuilder(service.Uri).AccountName;
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
+
+            Assert.IsNotNull(containers[0].Name);
+            Assert.IsNotNull(containers[0].Properties);
+            Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
+            Assert.IsNotNull(containers[0].Properties.DenyEncryptionScopeOverride);
+            Assert.IsNotNull(containers[0].Properties.ETag);
+            Assert.IsNotNull(containers[0].Properties.HasImmutabilityPolicy);
+            Assert.IsNotNull(containers[0].Properties.HasLegalHold);
+            Assert.IsNotNull(containers[0].Properties.LastModified);
+            Assert.IsNotNull(containers[0].Properties.LeaseState);
+            Assert.IsNotNull(containers[0].Properties.LeaseStatus);
         }
 
         #region Secondary Storage
