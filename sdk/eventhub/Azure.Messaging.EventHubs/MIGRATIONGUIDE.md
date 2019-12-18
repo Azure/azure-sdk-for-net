@@ -40,7 +40,7 @@ The [EventHubConsumerClient](https://docs.microsoft.com/en-us/dotnet/api/azure.m
 | In v4                                          | Equivalent in v5                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
 | `EventHubClient.CreateFromConnectionString()`    | `new EventHubProducerClient()` or `new EventHubConsumerClient()` | [Publish Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_PublishEventsWithCustomMetadata.cs), [Read Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_ReadEvents.cs) |
-| `EventHubClient.CreateWithTokenProvider()` | `new EventHubProducerClient(..., tokenCredential)` or `new EventHubConsumerClient(..., tokenCredential)` | [Authenticate with client secret credential](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_AuthenticateWithClientSecretCredential.cs)
+| `EventHubClient.CreateWithAzureActiveDirectory()` or `EventHubClient.CreateWithManagedIdentity()`  | `new EventHubProducerClient(..., tokenCredential)` or `new EventHubConsumerClient(..., tokenCredential)` | [Authenticate with client secret credential](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_AuthenticateWithClientSecretCredential.cs)
 | `new EventProcessorHost()`                           | `new EventProcessorClient(blobContainerClient, ...)`               | [Basic Event Processing](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_BasicEventProcessing.cs) |
 
 ### Publish events
@@ -57,6 +57,7 @@ v4 client took overloads with events and v5 require a sequence of `CreateBatch` 
 | In v4                                          | Equivalent in v5                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
 | `PartitionReceiver.ReceiveAsync()` or `PartitionReceiver.SetReceiveHandler()`                      | `EventHubConsumerClient.ReadEventsFromPartitionAsync()`                               | [Read events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample09_ReadEventsFromAKnownPosition.cs) |
+| `new EventProcessorHost()`                           | `new EventProcessorClient(blobContainerClient, ...)`               | [Basic Event Processing](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_BasicEventProcessing.cs) |
 
 ## Migration samples
 
@@ -133,11 +134,11 @@ var connectionStringBuilder = new EventHubsConnectionStringBuilder(connectionStr
 var eventHubClient = EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
 try
 {
-    EventDataBatch eventBatch = partitionSender.CreateBatch();
+    EventDataBatch eventBatch = eventHubClient.CreateBatch();
     eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("First")));
     eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Second")));
 
-   await partitionSender.SendAsync(eventBatch);
+   await eventHubClient.SendAsync(eventBatch);
 }
 catch()
 {
@@ -179,12 +180,9 @@ var connectionStringBuilder = new EventHubsConnectionStringBuilder(connectionStr
 var eventHubClient = EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
 try
 {
-    var batchOptions = new BatchOptions(){ PartitionKey = "my-partition-key" };
-    EventDataBatch eventBatch = partitionSender.CreateBatch(batchOptions);
-    eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("First")));
-    eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Second")));
+    EventData eventData = new EventData(Encoding.UTF8.GetBytes("First"));
 
-    await partitionSender.SendAsync(eventBatch);
+    await eventHubClient.SendAsync(eventBatch, "my-partition-key");
 }
 catch()
 {
@@ -230,7 +228,7 @@ var eventHubClient = EventHubClient.CreateFromConnectionString(connectionStringB
 PartitionReceiver partitionReceiver = client.CreateReceiver("my-consumer-group", "my-partition-id", EventPosition.FromStart());
 try
 {
-    // Gets 100 events or until the read timeout elapses.
+    // Gets up to 100 events or until the read timeout elapses.
     IEnumerable<EventData> eventDatas = await partitionReceiver.ReceiveAsync(100);
     // Gets the next 50 events or until the read timeout elapses.
     IEnumerable<EventData> eventDatas = await partitionReceiver.ReceiveAsync(50);
