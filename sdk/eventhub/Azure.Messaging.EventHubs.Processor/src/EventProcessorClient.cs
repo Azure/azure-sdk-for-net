@@ -1212,7 +1212,11 @@ namespace Azure.Messaging.EventHubs
             {
                 if (checkpoint.PartitionId == partitionId)
                 {
-                    startingPosition = EventPosition.FromOffset(checkpoint.Offset);
+                    // When resuming from a checkpoint, the intent to process the next available event in the stream which
+                    // follows the one that was used to create the checkpoint.  Because the offset is inclusive, increment
+                    // the value from the checkpoint in order to force a shift to the next available event in the stream.
+
+                    startingPosition = EventPosition.FromOffset(checkpoint.Offset + 1);
                     break;
                 }
             }
