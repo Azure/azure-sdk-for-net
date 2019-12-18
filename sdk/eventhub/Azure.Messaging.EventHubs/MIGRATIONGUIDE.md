@@ -29,7 +29,7 @@ clients, rather than having a single `EventHubClient`:
 * [EventHubConsumerClient](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.eventhubs.eventhubconsumerclient?view=azure-dotnet-preview) 
   for reading messages.
 
-The producer and consumer operate in the context of a specific event hub and offer operations for all partitions. Unlike the v4, they are not bound to a specific partition.
+The producer and consumer clients operate in the context of a specific event hub and offer operations for all partitions. Unlike the v4, the clients are not bound to a specific partition, but the methods on them have overloads to handle specific partitions if needed.
 
 We've introduced a new library [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) where we have [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/src/EventProcessorClient.cs) which is responsible for consuming events for the configured Event Hub and consumer group across all partitions. It also supports checkpointing and load balancing. Currently, only Azure Storage Blobs is supported for checkpointing.
 
