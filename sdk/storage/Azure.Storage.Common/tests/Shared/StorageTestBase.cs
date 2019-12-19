@@ -301,9 +301,13 @@ namespace Azure.Storage.Test.Shared
         /// get processed.
         /// </param>
         /// <returns>A task that will (optionally) delay.</returns>
-        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null)
+        public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
+            await Delay(Mode, milliseconds, playbackDelayMilliseconds);
+
+
+        public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
         {
-            if (Mode != RecordedTestMode.Playback)
+            if (mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(milliseconds);
             }
@@ -402,8 +406,15 @@ namespace Azure.Storage.Test.Shared
 
         protected async Task<T> RetryAsync<T>(
             Func<Task<T>> operation,
+            Func<RequestFailedException, bool> shouldRetry) =>
+            await RetryAsync(Mode, operation, shouldRetry);
+
+        public static async Task<T> RetryAsync<T>(
+            RecordedTestMode mode,
+            Func<Task<T>> operation,
             Func<RequestFailedException, bool> shouldRetry)
         {
+            int delayDuration = 2000;
             for (int attempt = 0;;)
             {
                 try
@@ -413,6 +424,7 @@ namespace Azure.Storage.Test.Shared
                 catch (RequestFailedException ex)
                     when (attempt++ < Constants.MaxReliabilityRetries && shouldRetry(ex))
                 {
+                    await Delay(mode, delayDuration);
                 }
             }
         }
