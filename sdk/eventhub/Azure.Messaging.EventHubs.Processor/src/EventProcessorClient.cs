@@ -642,7 +642,7 @@ namespace Azure.Messaging.EventHubs
 
                     // Stop the LoadBalancer.
 
-                    await LoadBalancer.StopAsync(cancellationToken);
+                    await LoadBalancer.RelinquishOwnershipAsync(cancellationToken);
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                     // would have a race condition where the user could update the processing handlers while some pumps are still running.
@@ -928,7 +928,7 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
-                        claimedOwnership = await LoadBalancer.RunAsync(partitionIds, cancellationToken);
+                        claimedOwnership = await LoadBalancer.RunLoadbalancingAsync(partitionIds, cancellationToken);
                     }
                     catch (EventHubsException ex)
                     {

@@ -120,7 +120,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partitionIds"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public virtual async ValueTask<PartitionOwnership> RunAsync(string[] partitionIds, CancellationToken cancellationToken)
+        public virtual async ValueTask<PartitionOwnership> RunLoadbalancingAsync(string[] partitionIds, CancellationToken cancellationToken)
         {
             // Renew this instance's ownership so they don't expire.
 
@@ -195,9 +195,9 @@ namespace Azure.Messaging.EventHubs.Processor
             return claimedOwnership;
         }
 
-        public virtual async Task StopAsync(CancellationToken cancellationToken)
+        public virtual async Task RelinquishOwnershipAsync(CancellationToken cancellationToken)
         {
-            await RelinquishOwnershipAsync(cancellationToken);
+            await RelinquishOwnershipAsyncInternal(cancellationToken);
 
             InstanceOwnership.Clear();
         }
@@ -423,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        private Task RelinquishOwnershipAsync(CancellationToken cancellationToken)
+        private Task RelinquishOwnershipAsyncInternal(CancellationToken cancellationToken)
         {
             IEnumerable<PartitionOwnership> ownershipToRelinquish = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership

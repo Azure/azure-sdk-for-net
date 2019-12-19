@@ -733,7 +733,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Stopping the processor should stop the PartitionLoadBalancer.
 
-            mockLoadbalancer.Verify(m => m.StopAsync(It.IsAny<CancellationToken>()));
+            mockLoadbalancer.Verify(m => m.RelinquishOwnershipAsync(It.IsAny<CancellationToken>()));
         }
 
         /// <summary>
@@ -759,7 +759,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Starting the processor should call the PartitionLoadBalancer.
 
-            mockLoadbalancer.Verify(m => m.RunAsync(It.Is<string[]>(p => p.Length == NumberOfPartitions), It.IsAny<CancellationToken>()));
+            mockLoadbalancer.Verify(m => m.RunLoadbalancingAsync(It.Is<string[]>(p => p.Length == NumberOfPartitions), It.IsAny<CancellationToken>()));
 
             await processor.StopProcessingAsync();
         }
@@ -780,7 +780,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = new Checkpoint(fqNamespace, eventHub, consumerGroup, partitionId, checkpointOffset, 0);
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
             var completionSource = new TaskCompletionSource<bool>();
 
             mockStorage
@@ -843,7 +843,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var defaultPosition = EventPosition.FromSequenceNumber(88724);
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>(consumerGroup, Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, consumerGroup, fqNamespace, eventHub, Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
             var completionSource = new TaskCompletionSource<bool>();
 
             mockConsumer
