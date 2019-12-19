@@ -5,7 +5,6 @@ using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -22,17 +21,19 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
+            #region Snippet:ExtractKeyPhrases
             string input = "My cat might need to see a veterinarian.";
 
-            Debug.WriteLine($"Extracting key phrases for input: \"{input}\"");
+            // Extract key phrases from the input text.
             ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
             IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
 
-            Debug.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
+            Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
             foreach (string keyPhrase in keyPhrases)
             {
-                Debug.WriteLine(keyPhrase);
+                Console.WriteLine(keyPhrase);
             }
+            #endregion
         }
     }
 }

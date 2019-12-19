@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -14,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractEntityLinkingBatchAdvanced()
+        public void DetectLanguageBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -22,50 +21,45 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            var inputs = new List<TextDocumentInput>
+            var inputs = new List<DetectLanguageInput>
             {
-                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                new DetectLanguageInput("1", "Hello world")
                 {
-                     Language = "en",
+                     CountryHint = "us",
                 },
-                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+                new DetectLanguageInput("2", "Bonjour tout le monde")
                 {
-                     Language = "en",
+                     CountryHint = "fr",
                 },
-                new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
+                new DetectLanguageInput("3", "Hola mundo")
                 {
-                     Language = "en",
+                     CountryHint = "es",
+                },
+                new DetectLanguageInput("4", ":) :( :D")
+                {
+                     CountryHint = "us",
                 }
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            DetectLanguageResultCollection results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{results.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
             foreach (var result in results)
             {
                 var document = inputs[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
 
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Extracted the following {result.LinkedEntities.Count()} linked entities:");
-
-                    foreach (var linkedEntity in result.LinkedEntities)
-                    {
-                        Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
-                        foreach (LinkedEntityMatch match in linkedEntity.Matches)
-                        {
-                            Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
-                        }
-                    }
+                    Debug.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence {result.PrimaryLanguage.Score:0.00}.");
 
                     Debug.WriteLine($"    Document statistics:");
                     Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");

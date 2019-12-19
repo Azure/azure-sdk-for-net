@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class Snippets
     {
         [Test]
-        public void CreateClient()
+        public void CreateTextAnalyticsClient()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -24,7 +24,39 @@ namespace Azure.AI.TextAnalytics.Samples
             //@@ string endpoint = "<endpoint>";
             //@@ string subscriptionKey = "<subscriptionKey>";
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
-            #endregion Snippet:CreateTextAnalyticsClient
+            #endregion
+        }
+
+        [Test]
+        public void CreateTextAnalyticsClientTokenCredential()
+        {
+            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
+
+            #region Snippet:CreateTextAnalyticsClientTokenCredential
+            //@@ string endpoint = "<endpoint>";
+            var client = new TextAnalyticsClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
+        }
+
+        [Test]
+        public void BadRequestSnippet()
+        {
+            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
+            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+
+            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            string input = "Este documento está en español.";
+
+            #region Snippet:BadRequest
+            try
+            {
+                DetectLanguageResult result = client.DetectLanguage(input);
+            }
+            catch (RequestFailedException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            #endregion
         }
     }
 }

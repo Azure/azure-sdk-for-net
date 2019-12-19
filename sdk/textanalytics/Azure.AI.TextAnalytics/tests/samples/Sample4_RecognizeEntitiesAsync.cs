@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -14,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void RecognizeEntities()
+        public async Task RecognizeEntitiesAsync()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -22,17 +23,19 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
+            #region Snippet:RecognizeEntitiesAsync
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            Debug.WriteLine($"Recognizing entities for input: \"{input}\"");
-            RecognizeEntitiesResult result = client.RecognizeEntities(input);
+            // Recognize categorized entities in the input text
+            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
             IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
-            Debug.WriteLine($"Recognized {entities.Count()} entities:");
+            Console.WriteLine($"Recognized {entities.Count()} entities:");
             foreach (NamedEntity entity in entities)
             {
-                Debug.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
             }
+            #endregion
         }
     }
 }

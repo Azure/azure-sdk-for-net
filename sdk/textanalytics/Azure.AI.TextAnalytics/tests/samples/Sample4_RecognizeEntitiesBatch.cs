@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -13,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void AnalyzeSentimentBatchAdvanced()
+        public void RecognizeEntitiesBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -23,55 +24,43 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "That was the best day of my life!")
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2", "This food is very bad. Everyone who ate with us got sick.")
+                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("3", "I'm not sure how I feel about this product.")
-                {
-                     Language = "en",
-                },
-                new TextDocumentInput("4", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
+                new TextDocumentInput("3", "A key technology in Text Analytics is Named Entity Recognition (NER).")
                 {
                      Language = "en",
                 }
             };
 
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
             foreach (var result in results)
             {
                 var document = inputs[i++];
 
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
-                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
-                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
-                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
+                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} entities:");
 
-                    Debug.WriteLine($"    Sentence sentiment results:");
-
-                    foreach (var sentenceSentiment in result.SentenceSentiments)
+                    foreach (var entity in result.NamedEntities)
                     {
-                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
-
-                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
-                        Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
-                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
-                        Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
+                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

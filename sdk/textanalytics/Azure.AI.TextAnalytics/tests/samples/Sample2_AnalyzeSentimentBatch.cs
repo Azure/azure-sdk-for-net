@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -14,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractKeyPhrasesBatchAdvanced()
+        public void AnalyzeSentimentBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -22,34 +21,35 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-
             var inputs = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                new TextDocumentInput("1", "That was the best day of my life!")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+                new TextDocumentInput("2", "This food is very bad. Everyone who ate with us got sick.")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("3", "My cat might need to see a veterinarian.")
+                new TextDocumentInput("3", "I'm not sure how I feel about this product.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("4", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
                 {
                      Language = "en",
                 }
             };
 
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
             foreach (var result in results)
             {
                 var document = inputs[i++];
-
-                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
                 if (result.ErrorMessage != default)
                 {
@@ -57,11 +57,21 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Debug.WriteLine($"    Extracted the following {result.KeyPhrases.Count()} key phrases:");
+                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
+                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
+                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
+                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
 
-                    foreach (var keyPhrase in result.KeyPhrases)
+                    Debug.WriteLine($"    Sentence sentiment results:");
+
+                    foreach (var sentenceSentiment in result.SentenceSentiments)
                     {
-                        Debug.WriteLine($"        {keyPhrase}");
+                        Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
+
+                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
+                        Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
+                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
+                        Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

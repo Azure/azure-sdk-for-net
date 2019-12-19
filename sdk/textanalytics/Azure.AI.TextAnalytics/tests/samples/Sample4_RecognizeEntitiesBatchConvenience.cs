@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void RecognizePiiEntitiesBatch()
+        public void RecognizeEntitiesBatchConvenience()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -24,18 +24,19 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<string>
             {
-                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
-                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "Text Analytics is one of the Azure Cognitive Services.",
+                "A key technology in Text Analytics is Named Entity Recognition (NER).",
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
 
-            Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
+            Debug.WriteLine($"Recognized entities for each input are:");
             int i = 0;
             foreach (var result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies were" : "y was")} found:");
+                Debug.WriteLine($"the following {result.NamedEntities.Count()} entities were found: ");
 
                 foreach (var entity in result.NamedEntities)
                 {
