@@ -1253,7 +1253,7 @@ namespace Azure.Messaging.EventHubs
             var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, tokenSource.Token);
 
             ActivePartitionProcessors[partitionId] = (processingTask, tokenSource);
-            Logger.PartitionProcessingComplete(Identifier);
+            Logger.StartPartitionProcessingComplete(Identifier);
         }
 
         /// <summary>
