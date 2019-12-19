@@ -143,7 +143,8 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="count"> Current ownership count.</param>
         ///
         [Event(7, Level = EventLevel.Informational, Message = "Current ownership count is {0}. (Identifier: '{1}')")]
-        public virtual void CurrentOwnershipCount(int count, string identifier)
+        public virtual void CurrentOwnershipCount(int count,
+                                                  string identifier)
         {
             if (IsEnabled())
             {
@@ -157,7 +158,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="unclaimedPartitions">List of unclaimed partitions.</param>
         ///
-        [Event(8, Level = EventLevel.Verbose, Message = "Unclaimed partitions: '{0}'.")]
+        [Event(8, Level = EventLevel.Informational, Message = "Unclaimed partitions: '{0}'.")]
         public virtual void UnclaimedPartitions(HashSet<string> unclaimedPartitions)
         {
             if (IsEnabled())
@@ -280,7 +281,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
         ///
-        [Event(16, Level = EventLevel.Informational, Message = "Creating and start running a new partition processing task for partition id '{0}'.")]
+        [Event(16, Level = EventLevel.Informational, Message = "Creating and starting running a new partition processing task for partition id '{0}'.")]
         public virtual void StartPartitionProcessing(string partitionId)
         {
             if (IsEnabled())
@@ -296,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(17, Level = EventLevel.Error, Message = "Failed to Create and start running a new partition processing task for partition '{0}'. (ErrorMessage: '{1}')")]
+        [Event(17, Level = EventLevel.Error, Message = "Failed to create and start running a new partition processing task for partition '{0}'. (ErrorMessage: '{1}')")]
         public virtual void StartPartitionProcessingError(string partitionId,
                                                           string errorMessage)
         {
@@ -307,13 +308,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Partition processing task has completed.
+        ///   Created and started running a new partition processing task.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is starting.</param>
         ///
-        [Event(18, Level = EventLevel.Verbose, Message = "Partition processing task for partition id '{0}' has completed.")]
-        public virtual void PartitionProcessingComplete(string partitionId)
+        [Event(18, Level = EventLevel.Verbose, Message = "Created and started running a new partition processing task for partition id '{0}'.")]
+        public virtual void StartPartitionProcessingComplete(string partitionId)
         {
             if (IsEnabled())
             {
@@ -328,7 +329,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is being stopped.</param>
         /// <param name="reason">The reason why the processing for the specified partition is being stopped.</param>
         ///
-        [Event(19, Level = EventLevel.Verbose, Message = "Stopping partition processing task for partition id '{0}' with reason '{1}'.")]
+        [Event(19, Level = EventLevel.Informational, Message = "Stopping partition processing task for partition id '{0}' with reason '{1}'.")]
         public virtual void StopPartitionProcessingStart(string partitionId,
                                                          ProcessingStoppedReason reason)
         {

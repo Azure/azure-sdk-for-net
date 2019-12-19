@@ -505,10 +505,6 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLog.Verify(m => m.RenewOwnershipComplete(mockProcessor.Object.Identifier));
             mockLog.Verify(m => m.MinimumPartitionsPerEventProcessor(1));
             mockLog.Verify(m => m.ClaimOwnershipStart(partitionIds[0]));
-            mockLog.Verify(m => m.UpdateCheckpointStart(partitionIds[0]));
-            mockLog.Verify(m => m.UpdateCheckpointComplete(partitionIds[0]));
-            mockLog.Verify(m => m.StartPartitionProcessing(partitionIds[0]));
-            mockLog.Verify(m => m.PartitionProcessingComplete(partitionIds[0]));
             mockLog.Verify(m => m.EventProcessorStopStart(mockProcessor.Object.Identifier));
             mockLog.Verify(m => m.EventProcessorStopComplete(mockProcessor.Object.Identifier));
         }
