@@ -22,7 +22,7 @@ namespace Azure.Storage.Test
     /// </summary>
     internal class TestEventListener : AzureEventSourceListener
     {
-        public static StringBuilder Events { get; private set; } = new StringBuilder();
+        public static StringBuilder Events { get; set; }
 
         public TestEventListener() : base((e, _) => LogEvent(e), EventLevel.Verbose)
         {

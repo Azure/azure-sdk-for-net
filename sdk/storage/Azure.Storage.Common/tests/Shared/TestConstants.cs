@@ -18,7 +18,7 @@ namespace Azure.Storage.Test
         public const long TB = GB * 1024L;
         public const string Https = "https";
         public const int HttpPort = 443;
-        public const int RetryDelay = 2000;
+        public const int RetryDelay = 10000;
 
         public string CacheControl { get; private set; }
         public string ContentDisposition { get; private set; }

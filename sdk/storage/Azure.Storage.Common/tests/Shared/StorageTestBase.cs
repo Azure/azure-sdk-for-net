@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -61,18 +62,28 @@ namespace Azure.Storage.Test.Shared
         }
 
         /// <summary>
-        /// Output the Events to the console in the case of failure.
+        /// Sets up the Event listener buffer for the test about to run.
+        /// </summary>
+        [SetUp]
+        public void SetupEventsForTest()
+        {
+            if (s_listener != null)
+            {
+                TestEventListener.Events = new StringBuilder();
+            }
+        }
+
+        /// <summary>
+        /// Output the Events to the console in the case of test failure.
         /// This will include the HTTP requests and responses.
         /// </summary>
         [TearDown]
-        public void OutputEventsToConsole()
+        public void OutputEventsForTest()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            if (s_listener != null &&
+                TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 TestContext.Progress.WriteLine(TestEventListener.Events.ToString());
-                // Clear out the event buffer as it should only contain events
-                // for a single test.
-                TestEventListener.Events.Clear();
             }
         }
 
@@ -402,9 +413,8 @@ namespace Azure.Storage.Test.Shared
 
         protected async Task<T> EnsurePropagatedAsync<T>(
             Func<Task<T>> getResponse,
-            Func<T,bool> hasResponse)
+            Func<T, bool> hasResponse)
         {
-            int delayDuration = 10000;
             bool responseReceived = false;
             T response = default;
             // end time of 16 minutes from now to allow for propagation to secondary host
@@ -414,7 +424,7 @@ namespace Azure.Storage.Test.Shared
                 response = await getResponse();
                 if (!hasResponse(response))
                 {
-                    await Delay(delayDuration);
+                    await Delay(TestConstants.RetryDelay);
                 }
                 else
                 {
@@ -443,7 +453,7 @@ namespace Azure.Storage.Test.Shared
             Func<Task<T>> operation,
             Func<RequestFailedException, bool> shouldRetry)
         {
-            for (int attempt = 0;;)
+            for (int attempt = 0; ;)
             {
                 try
                 {
