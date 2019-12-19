@@ -3,6 +3,8 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {

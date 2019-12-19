@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Errors
 {

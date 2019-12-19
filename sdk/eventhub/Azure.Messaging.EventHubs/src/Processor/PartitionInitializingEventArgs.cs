@@ -3,6 +3,7 @@
 
 using System.Threading;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Processor
 {

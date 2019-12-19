@@ -13,10 +13,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
-using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Storage.Blobs;
@@ -1477,7 +1477,7 @@ namespace Azure.Messaging.EventHubs
         ///   full context was not available.
         /// </summary>
         ///
-        /// <seealso cref="Azure.Messaging.EventHubs.PartitionContext" />
+        /// <seealso cref="Azure.Messaging.EventHubs.Consumer.PartitionContext" />
         ///
         private class EmptyPartitionContext : PartitionContext
         {
