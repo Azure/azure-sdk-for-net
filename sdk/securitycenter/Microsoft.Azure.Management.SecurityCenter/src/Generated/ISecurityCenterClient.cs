@@ -216,5 +216,20 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         ISubAssessmentsOperations SubAssessments { get; }
 
+        /// <summary>
+        /// Gets the IAutomationsOperations.
+        /// </summary>
+        IAutomationsOperations Automations { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataSubscriptionOperations.
+        /// </summary>
+        IAssessmentsMetadataSubscriptionOperations AssessmentsMetadataSubscription { get; }
+
     }
 }
