@@ -80,7 +80,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.List(null, "wfName", "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.List("rgName", null, "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.List("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggerHistories.List("rgName", "wfName", "triggerName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggerHistories.List("rgName", "wfName", "triggerName"));
         }
 
         [Fact]
@@ -122,7 +122,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.ListNext(null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggerHistories.ListNext("http://management.azure.com/historyLink"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggerHistories.ListNext("http://management.azure.com/historyLink"));
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Get("rgName", null, "triggerName", "historyName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Get("rgName", "wfName", null, "historyName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Get("rgName", "wfName", "triggerName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggerHistories.Get("rgName", "wfName", "triggerName", "historyName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggerHistories.Get("rgName", "wfName", "triggerName", "historyName"));
         }
 
         [Fact]
@@ -212,7 +212,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", null, "triggerName", "historyName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", null, "historyName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", "triggerName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", "triggerName", "historyName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggerHistories.Resubmit("rgName", "wfName", "triggerName", "historyName"));
         }
 
         [Fact]

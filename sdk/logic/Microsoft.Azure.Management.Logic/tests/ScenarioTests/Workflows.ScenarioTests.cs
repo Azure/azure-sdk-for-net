@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -20,7 +20,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Create_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -39,7 +39,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Get_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -60,7 +60,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_List_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -100,7 +100,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Update_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -128,7 +128,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_UpdateWithIntegrationAccount_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -168,7 +168,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Delete_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -179,7 +179,7 @@ namespace Test.Azure.Management.Logic
                     workflow);
 
                 client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
-                Assert.Throws<CloudException>(() => client.Workflows.Get(Constants.DefaultResourceGroup, workflowName));
+                Assert.Throws<ErrorResponseException>(() => client.Workflows.Get(Constants.DefaultResourceGroup, workflowName));
 
                 client.Workflows.Delete(Constants.DefaultResourceGroup, workflowName);
             }
@@ -188,7 +188,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Disable_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -210,7 +210,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Enable_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -232,7 +232,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_Validate_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -250,7 +250,7 @@ namespace Test.Azure.Management.Logic
         public void Workflows_Validate_Exception()
         {
 
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -258,7 +258,7 @@ namespace Test.Azure.Management.Logic
                 var workflow = this.CreateWorkflow(workflowName);
                 workflow.Definition = "Invalid Definition";
 
-                Assert.Throws<CloudException>(() => client.Workflows.ValidateByLocation(Constants.DefaultResourceGroup,
+                Assert.Throws<ErrorResponseException>(() => client.Workflows.ValidateByLocation(Constants.DefaultResourceGroup,
                     Constants.DefaultLocation,
                     workflowName,
                     workflow));
@@ -268,7 +268,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_RegenerateAccessKey_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -290,7 +290,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_ListSwagger_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -309,7 +309,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void Workflows_GenerateUpgradedDefinition_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -355,4 +355,3 @@ namespace Test.Azure.Management.Logic
         }");
     }
 }
-
