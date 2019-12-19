@@ -15,6 +15,7 @@ using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.Test.Shared
 {
@@ -45,7 +46,7 @@ namespace Azure.Storage.Test.Shared
         }
 
         [OneTimeSetUp]
-        public void SetUp()
+        public void StartLoggingEvents()
         {
             if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
             {
@@ -54,9 +55,25 @@ namespace Azure.Storage.Test.Shared
         }
 
         [OneTimeTearDown]
-        public void CleanUp()
+        public void StopLoggingEvents()
         {
             s_listener?.Dispose();
+        }
+
+        /// <summary>
+        /// Output the Events to the console in the case of failure.
+        /// This will include the HTTP requests and responses.
+        /// </summary>
+        [TearDown]
+        public void OutputEventsToConsole()
+        {
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                TestContext.Progress.WriteLine(TestEventListener.Events.ToString());
+                // Clear out the event buffer as it should only contain events
+                // for a single test.
+                TestEventListener.Events.Clear();
+            }
         }
 
         /// <summary>
@@ -304,7 +321,19 @@ namespace Azure.Storage.Test.Shared
         public async Task Delay(int milliseconds = 1000, int? playbackDelayMilliseconds = null) =>
             await Delay(Mode, milliseconds, playbackDelayMilliseconds);
 
-
+        /// <summary>
+        /// A number of our tests have built in delays while we wait an expected
+        /// amount of time for a service operation to complete and this method
+        /// allows us to wait (unless we're playing back recordings, which can
+        /// complete immediately).
+        /// </summary>
+        /// <param name="milliseconds">The number of milliseconds to wait.</param>
+        /// <param name="playbackDelayMilliseconds">
+        /// An optional number of milliseconds to wait if we're playing back a
+        /// recorded test.  This is useful for allowing client side events to
+        /// get processed.
+        /// </param>
+        /// <returns>A task that will (optionally) delay.</returns>
         public static async Task Delay(RecordedTestMode mode, int milliseconds = 1000, int? playbackDelayMilliseconds = null)
         {
             if (mode != RecordedTestMode.Playback)
@@ -414,7 +443,6 @@ namespace Azure.Storage.Test.Shared
             Func<Task<T>> operation,
             Func<RequestFailedException, bool> shouldRetry)
         {
-            int delayDuration = 2000;
             for (int attempt = 0;;)
             {
                 try
@@ -424,9 +452,10 @@ namespace Azure.Storage.Test.Shared
                 catch (RequestFailedException ex)
                     when (attempt++ < Constants.MaxReliabilityRetries && shouldRetry(ex))
                 {
-                    await Delay(mode, delayDuration);
+                    await Delay(mode, TestConstants.RetryDelay);
                 }
             }
+
         }
     }
 }

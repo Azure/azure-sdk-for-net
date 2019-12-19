@@ -22,6 +22,8 @@ namespace Azure.Storage.Test
     /// </summary>
     internal class TestEventListener : AzureEventSourceListener
     {
+        public static StringBuilder Events { get; private set; } = new StringBuilder();
+
         public TestEventListener() : base((e, _) => LogEvent(e), EventLevel.Verbose)
         {
         }
@@ -76,9 +78,7 @@ namespace Azure.Storage.Test
             // Dump the message and category
             Trace.WriteLine(message, category);
 
-            // Output to console to aid in debugging any failures
-            // TODO move to file that is uploaded as an artifact
-            TestContext.Progress.WriteLine(message);
+            Events.Append(message);
         }
 
         /// <summary>

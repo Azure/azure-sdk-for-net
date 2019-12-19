@@ -331,24 +331,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-
-        /// <summary>
-        // It is possible for the service to have responded that the container was already created after
-        // creating the new FileSystem only to have the directory creation fail. This appears to be due to
-        // a propagation delay from the blob endpoint to the dfs endpoint, since the directory creation happens against
-        // the dfs endpoint.
-        // This method will create the directory and retry if a 404 is returned that indicates the filesystem doesn't exist.
-        /// </summary>
-        /// <param name="fileSystem">FileSystem where we will create the directory</param>
-        /// <param name="directoryName">name to use for the directory</param>
-        /// <returns></returns>
-        private async Task<DataLakeDirectoryClient> CreateDirectory(DataLakeFileSystemClient fileSystem, string directoryName)
-        {
-            return await RetryAsync(
-                async () => await fileSystem.CreateDirectoryAsync(directoryName),
-                ex => ex.Status == 404 && ex.ErrorCode == "FilesystemNotFound");
-        }
-
         [Test]
         public async Task RenameAsync()
         {
@@ -2045,6 +2027,23 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(directory.GetDataLakeLeaseClient()).BreakAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        /// <summary>
+        // It is possible for the service to have responded that the container was already created after
+        // creating the new FileSystem only to have the directory creation fail. This appears to be due to
+        // a propagation delay from the blob endpoint to the dfs endpoint, since the directory creation happens against
+        // the dfs endpoint.
+        // This method will create the directory and retry if a 404 is returned that indicates the filesystem doesn't exist.
+        /// </summary>
+        /// <param name="fileSystem">FileSystem where we will create the directory</param>
+        /// <param name="directoryName">name to use for the directory</param>
+        /// <returns>DataLakeDirectoryClient</returns>
+        private async Task<DataLakeDirectoryClient> CreateDirectory(DataLakeFileSystemClient fileSystem, string directoryName)
+        {
+            return await RetryAsync(
+                async () => await fileSystem.CreateDirectoryAsync(directoryName),
+                ex => ex.Status == 404 && ex.ErrorCode == "FilesystemNotFound");
         }
     }
 }
