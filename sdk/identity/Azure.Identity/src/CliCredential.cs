@@ -22,7 +22,7 @@ namespace Azure.Identity
     public class CliCredential : TokenCredential, IExtendedTokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
-        private const string WinAzureCLIError = "'az' is not recognized as an internal or external command, operable program or batch file.";
+        private const string WinAzureCLIError = "'az' is not recognized";
 
         private readonly CredentialPipeline _pipeline;
 
