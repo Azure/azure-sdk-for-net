@@ -90,8 +90,6 @@ namespace Azure.Identity
                 string command = ScopeUtilities.ScopesToResource(requestContext.Scopes);
                 string extendCommand = "az account get-access-token --resource " + command;
 
-                Process proc = new Process();
-
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     fileName = "cmd";
@@ -103,6 +101,7 @@ namespace Azure.Identity
                     argument = $"-c \"{extendCommand}\"";
                 }
 
+                Process proc = new Process();
                 ProcessStartInfo procStartInfo = new ProcessStartInfo()
                 {
                     FileName = fileName,
