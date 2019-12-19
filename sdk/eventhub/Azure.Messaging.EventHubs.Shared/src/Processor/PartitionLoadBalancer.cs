@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
-        ///   Performs load balancing between multiple <see cref="EventProcessorClient" /> instances, claiming others' partitions to enforce
+        ///   Performs load balancing between multiple EventProcessorClient instances, claiming others' partitions to enforce
         ///   a more equal distribution when necessary.  It also manages its own partition processing tasks and ownership.
         /// </summary>
         ///

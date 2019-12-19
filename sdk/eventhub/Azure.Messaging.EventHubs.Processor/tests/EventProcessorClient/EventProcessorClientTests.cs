@@ -742,7 +742,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task StartProcessingAsyncStopsLoadbalancer()
+        public async Task StartProcessingAsyncStartsLoadbalancer()
         {
             const int NumberOfPartitions = 3;
             var mockLoadbalancer = new Mock<PartitionLoadBalancer>();
