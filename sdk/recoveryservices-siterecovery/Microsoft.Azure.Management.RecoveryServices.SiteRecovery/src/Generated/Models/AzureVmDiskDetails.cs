@@ -31,6 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="vhdType">VHD type.</param>
         /// <param name="vhdId">The VHD id.</param>
+        /// <param name="diskId">The disk resource id.</param>
         /// <param name="vhdName">VHD name.</param>
         /// <param name="maxSizeMB">Max side in MB.</param>
         /// <param name="targetDiskLocation">Blob uri of the Azure
@@ -38,15 +39,19 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="targetDiskName">The target Azure disk name.</param>
         /// <param name="lunId">Ordinal\LunId of the disk for the Azure
         /// VM.</param>
-        public AzureVmDiskDetails(string vhdType = default(string), string vhdId = default(string), string vhdName = default(string), string maxSizeMB = default(string), string targetDiskLocation = default(string), string targetDiskName = default(string), string lunId = default(string))
+        /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
+        /// ID.</param>
+        public AzureVmDiskDetails(string vhdType = default(string), string vhdId = default(string), string diskId = default(string), string vhdName = default(string), string maxSizeMB = default(string), string targetDiskLocation = default(string), string targetDiskName = default(string), string lunId = default(string), string diskEncryptionSetId = default(string))
         {
             VhdType = vhdType;
             VhdId = vhdId;
+            DiskId = diskId;
             VhdName = vhdName;
             MaxSizeMB = maxSizeMB;
             TargetDiskLocation = targetDiskLocation;
             TargetDiskName = targetDiskName;
             LunId = lunId;
+            DiskEncryptionSetId = diskEncryptionSetId;
             CustomInit();
         }
 
@@ -66,6 +71,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vhdId")]
         public string VhdId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the disk resource id.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskId")]
+        public string DiskId { get; set; }
 
         /// <summary>
         /// Gets or sets VHD name.
@@ -96,6 +107,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "lunId")]
         public string LunId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DiskEncryptionSet ARM ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionSetId")]
+        public string DiskEncryptionSetId { get; set; }
 
     }
 }
