@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Tests;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -330,9 +331,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
             public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
-
-            internal override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
-            internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
             public ShortWaitTimeMock(PartitionManager partitionManager,
                                      string consumerGroup,

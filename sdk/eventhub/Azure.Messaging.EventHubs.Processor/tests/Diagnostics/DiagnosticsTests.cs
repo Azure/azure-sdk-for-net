@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var data = new MockEventData(new byte[0], sequenceNumber: 0, offset: 0);
 
             var storageManager = new Mock<PartitionManager>();
-            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
+            var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null, null);
 
             storageManager
                 .Setup(manager => manager.UpdateCheckpointAsync(It.IsAny<Checkpoint>(), It.IsAny<CancellationToken>()))

@@ -238,18 +238,6 @@ namespace Azure.Messaging.EventHubs
         public string Identifier { get; }
 
         /// <summary>
-        ///   The minimum amount of time to be elapsed between two load balancing verifications.
-        /// </summary>
-        ///
-        internal virtual TimeSpan LoadBalanceUpdate => TimeSpan.FromSeconds(10);
-
-        /// <summary>
-        ///   The minimum amount of time for an ownership to be considered expired without further updates.
-        /// </summary>
-        ///
-        internal virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
-
-        /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
@@ -470,6 +458,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = CreateStorageManager(checkpointStore);
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
+            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, TimeSpan.FromSeconds(30));
         }
 
         /// <summary>
@@ -490,6 +479,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="connectionFactory">A factory used to provide new <see cref="EventHubConnection" /> instances.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
+        /// <param name="loadBalancer">The <see cref="PartitionLoadBalancer" /> used to manage partition load balance operations.</param>
         ///
         /// <remarks>
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
@@ -500,7 +490,8 @@ namespace Azure.Messaging.EventHubs
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
                                       Func<EventHubConnection> connectionFactory,
-                                      EventProcessorClientOptions clientOptions)
+                                      EventProcessorClientOptions clientOptions,
+                                      PartitionLoadBalancer loadBalancer = default)
         {
             Argument.AssertNotNull(storageManager, nameof(storageManager));
             Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -526,9 +517,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = storageManager;
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
-
-            // TODO: pass in as argument
-            LoadBalancer = new PartitionLoadBalancer(storageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, OwnershipExpiration);
+            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(storageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, TimeSpan.FromSeconds(30));
         }
 
         /// <summary>
@@ -961,7 +950,7 @@ namespace Azure.Messaging.EventHubs
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
                 // but it may be overridden by a derived class.
 
-                var remainingTimeUntilNextCycle = LoadBalanceUpdate.CalculateRemaining(cycleDuration.Elapsed);
+                var remainingTimeUntilNextCycle = LoadBalancer.LoadBalanceUpdate.CalculateRemaining(cycleDuration.Elapsed);
 
                 // If a stop request has been issued, Task.Delay will throw a TaskCanceledException.  This is expected and it
                 // will be caught by the StopAsync method.

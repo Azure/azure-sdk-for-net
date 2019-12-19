@@ -43,27 +43,33 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        internal readonly string FullyQualifiedNamespace;
+        public readonly string FullyQualifiedNamespace;
 
         /// <summary>
         ///   The name of the Event Hub that the processor is connected to, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        internal readonly string EventHubName;
+        public readonly string EventHubName;
 
         /// <summary>
         ///   The name of the consumer group this event processor is associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
-        internal readonly string ConsumerGroup;
+        public readonly string ConsumerGroup;
 
         /// <summary>
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
-        internal readonly string Identifier;
+        public readonly string Identifier;
+
+        /// <summary>
+        ///   The minimum amount of time to be elapsed between two load balancing verifications.
+        /// </summary>
+        ///
+        public virtual TimeSpan LoadBalanceUpdate => TimeSpan.FromSeconds(10);
 
         /// <summary>
         ///   The minimum amount of time for an ownership to be considered expired without further updates.
