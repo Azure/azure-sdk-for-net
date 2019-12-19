@@ -7,7 +7,8 @@
     <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      A small number of parameters were renamed or made required to better align with other languages and to reflect requirements of the Azure Key Vault service.
+      - Renamed several parameters to better align with other SDK libraries in other languages.
+      - Made several parameters required to reflect requirements of the Azure Key Vault service.
 
       See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.8/sdk/keyvault/Azure.Security.KeyVault.Certificates/CHANGELOG.md for more detailed changes.
       ]]>
