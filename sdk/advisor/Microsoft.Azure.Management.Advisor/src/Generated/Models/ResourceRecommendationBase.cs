@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// <param name="type">The type of the resource.</param>
         /// <param name="category">The category of the recommendation. Possible
         /// values include: 'HighAvailability', 'Security', 'Performance',
-        /// 'Cost'</param>
+        /// 'Cost', 'OperationalExcellence'</param>
         /// <param name="impact">The business impact of the recommendation.
         /// Possible values include: 'High', 'Medium', 'Low'</param>
         /// <param name="impactedField">The resource type identified by
@@ -83,7 +83,8 @@ namespace Microsoft.Azure.Management.Advisor.Models
 
         /// <summary>
         /// Gets or sets the category of the recommendation. Possible values
-        /// include: 'HighAvailability', 'Security', 'Performance', 'Cost'
+        /// include: 'HighAvailability', 'Security', 'Performance', 'Cost',
+        /// 'OperationalExcellence'
         /// </summary>
         [JsonProperty(PropertyName = "properties.category")]
         public string Category { get; set; }
