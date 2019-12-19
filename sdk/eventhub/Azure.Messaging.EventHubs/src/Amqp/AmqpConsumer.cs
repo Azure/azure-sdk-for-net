@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -260,7 +259,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         return Enumerable.Empty<EventData>();
                     }
-                    catch (EventHubsTimeoutException)
+                    catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {
                         // Because the timeout specified with the request is intended to be the maximum
                         // amount of time to wait for events, a timeout isn't considered an error condition,

@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Consumer
 {
@@ -42,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   against periodically making requests for partition properties using an Event Hub client.
         /// </remarks>
         ///
-        /// <exception cref="EventHubsClientClosedException">Occurs when the Event Hubs client needed to read this information is no longer available.</exception>
+        /// <exception cref="EventHubsException">Occurs when the Event Hubs client needed to read this information is no longer available.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ReadEventOptions.TrackLastEnqueuedEventProperties" /> set.</exception>
         ///
         public virtual LastEnqueuedEventProperties ReadLastEnqueuedEventProperties()

@@ -16,7 +16,6 @@ using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Storage.Blobs;
@@ -554,7 +553,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
-        /// <exception cref="EventHubsClientClosedException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
+        /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual async Task StartProcessingAsync(CancellationToken cancellationToken = default)
@@ -613,7 +612,7 @@ namespace Azure.Messaging.EventHubs
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="EventProcessorClient" /> once it starts running.</param>
         ///
-        /// <exception cref="EventHubsClientClosedException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
+        /// <exception cref="EventHubsException">Occurs when this <see cref="EventProcessorClient" /> instance is already closed.</exception>
         /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessEventAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
         ///
         public virtual void StartProcessing(CancellationToken cancellationToken = default) => StartProcessingAsync(cancellationToken).GetAwaiter().GetResult();

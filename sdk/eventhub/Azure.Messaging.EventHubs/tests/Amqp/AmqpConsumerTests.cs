@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Moq;
 using NUnit.Framework;
 
@@ -263,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var consumer = new AmqpConsumer(eventHub, consumerGroup, partition, eventPosition, true, null, null, mockScope.Object, Mock.Of<AmqpMessageConverter>(), retryPolicy);
             await consumer.CloseAsync(cancellationSource.Token);
 
-            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await consumer.ReceiveAsync(100, null, cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
     }
 }

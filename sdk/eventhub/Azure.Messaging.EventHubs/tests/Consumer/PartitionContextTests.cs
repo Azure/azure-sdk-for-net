@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Moq;
 using NUnit.Framework;
 
@@ -104,7 +103,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 try
                 {
-                    Assert.That(() => context.ReadLastEnqueuedEventProperties(), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(() => context.ReadLastEnqueuedEventProperties(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                 }
                 catch (AssertionException)
                 {

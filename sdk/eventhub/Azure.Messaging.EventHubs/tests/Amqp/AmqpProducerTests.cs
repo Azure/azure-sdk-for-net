@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Moq;
@@ -287,7 +286,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
             await producer.CloseAsync(CancellationToken.None);
 
-            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
@@ -450,7 +449,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using TransportEventBatch batch = await producer.Object.CreateBatchAsync(options, default);
 
             await producer.Object.CloseAsync(CancellationToken.None);
-            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, new SendEventOptions()), CancellationToken.None), Throws.InstanceOf<EventHubsClientClosedException>());
+            Assert.That(async () => await producer.Object.SendAsync(new EventDataBatch(batch, new SendEventOptions()), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
         }
 
         /// <summary>
