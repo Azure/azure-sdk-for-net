@@ -7,16 +7,16 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Sample Blueprint from Unittest\",\r\n    \"targetScope\": \"subscription\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "87e5af59-bd08-45ea-ab39-3996a7984da8"
+          "e27c4d0c-79bf-4350-ab5f-1cb33106a381"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.14.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -33,7 +33,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d61eb5b0-aa03-4fc5-9bda-ed45cb133cbb"
+          "5c520b27-e508-40e7-bcd4-00fe14faa7e6"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -42,10 +42,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "71b25811-951a-4f91-8717-e3fc592faba1"
+          "00017a1a-4037-4f85-9660-777dc312c370"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190117T220713Z:71b25811-951a-4f91-8717-e3fc592faba1"
+          "WESTUS:20191212T202911Z:00017a1a-4037-4f85-9660-777dc312c370"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,10 +54,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 17 Jan 2019 22:07:12 GMT"
+          "Thu, 12 Dec 2019 20:29:10 GMT"
         ],
         "Content-Length": [
-          "1547"
+          "1555"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -66,7 +66,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n      \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n      \"lastModified\": \"2019-12-12T12:29:11.3966655-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
       "StatusCode": 201
     },
     {
@@ -76,16 +76,16 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Sample Blueprint from Unittest\",\r\n    \"targetScope\": \"subscription\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "23909ed4-09bb-49d7-b7f8-385350127bce"
+          "f4f35fd7-afd1-4857-a59c-bdab1a6e9536"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.14.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -102,7 +102,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "46216bc2-9f54-470c-b1d2-785c9e142e63"
+          "8fe5bfa3-f800-42fa-8f92-4289919baa20"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -111,10 +111,10 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "e7ef14ce-6c37-4bac-ac8c-f6146853f09c"
+          "f44f53ff-c4a0-4e07-9233-799c1b847dff"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190117T220713Z:e7ef14ce-6c37-4bac-ac8c-f6146853f09c"
+          "WESTUS:20191212T202911Z:f44f53ff-c4a0-4e07-9233-799c1b847dff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,10 +123,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 17 Jan 2019 22:07:12 GMT"
+          "Thu, 12 Dec 2019 20:29:11 GMT"
         ],
         "Content-Length": [
-          "1705"
+          "1713"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n      \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n      \"lastModified\": \"2019-12-12T12:29:11.6660105-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
       "StatusCode": 201
     },
     {
@@ -145,16 +145,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "57d9a633-f638-457b-8a88-ccf0dd64aeff"
+          "df675bca-19eb-4073-8d87-4e59992e408b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.14.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -165,7 +165,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "12ccd383-b1eb-4230-9ba1-dfb1960e4405"
+          "72e10cff-5e34-43fc-bf46-f46066917a24"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -174,10 +174,10 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "7b85466c-668a-4f24-ac05-cd69ebf124f4"
+          "a0f15405-4d00-4fd0-9268-1a74299fde04"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190117T220713Z:7b85466c-668a-4f24-ac05-cd69ebf124f4"
+          "WESTUS:20191212T202911Z:a0f15405-4d00-4fd0-9268-1a74299fde04"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -186,10 +186,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 17 Jan 2019 22:07:12 GMT"
+          "Thu, 12 Dec 2019 20:29:11 GMT"
         ],
         "Content-Length": [
-          "1547"
+          "1555"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -198,7 +198,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n      \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n      \"lastModified\": \"2019-12-12T12:29:11.3966655-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -208,16 +208,16 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Sample Blueprint from Unittest\",\r\n    \"targetScope\": \"subscription\",\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        }\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1150982e-ec11-48d8-9515-7e593bb54a27"
+          "4a8c463c-6a92-4d39-9962-1c97fdf9e0bf"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.14.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -234,7 +234,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "dba00069-83de-4b29-956d-08202956d8f9"
+          "53797961-d47d-448c-a758-8a17a5712b92"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -243,10 +243,10 @@
           "1197"
         ],
         "x-ms-correlation-request-id": [
-          "283387c4-bce0-4cce-97e3-e3e098227090"
+          "5b610406-8789-4f75-9bd7-6c45e972da80"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190117T220713Z:283387c4-bce0-4cce-97e3-e3e098227090"
+          "WESTUS:20191212T202911Z:5b610406-8789-4f75-9bd7-6c45e972da80"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -255,10 +255,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 17 Jan 2019 22:07:13 GMT"
+          "Thu, 12 Dec 2019 20:29:11 GMT"
         ],
         "Content-Length": [
-          "1707"
+          "1715"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -267,7 +267,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n      \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK2\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK2\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n      \"lastModified\": \"2019-12-12T12:29:11.7754229-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK2\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK2\"\r\n}",
       "StatusCode": 201
     },
     {
@@ -277,16 +277,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6b6ab84e-6df9-43b0-8849-3cfbca7dcd38"
+          "12c33e97-049f-415e-b9ed-f394d8c6c7f0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.14.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -297,7 +297,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cfd7d351-81e6-47c2-82c2-00427beeff58"
+          "77bc1a45-cc5d-4fa3-9959-0c850ec052c2"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -306,10 +306,10 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "ee3b7b5a-dc83-42c9-976a-560f98ad88d0"
+          "b803173a-2d03-448d-b045-f71de34471de"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190117T220713Z:ee3b7b5a-dc83-42c9-976a-560f98ad88d0"
+          "WESTUS:20191212T202911Z:b803173a-2d03-448d-b045-f71de34471de"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -318,10 +318,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 17 Jan 2019 22:07:13 GMT"
+          "Thu, 12 Dec 2019 20:29:11 GMT"
         ],
         "Content-Length": [
-          "3872"
+          "3888"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -330,7 +330,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"parameters\": {\r\n          \"vNetName\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default vNet for this subscription.\",\r\n              \"description\": \"default vNet created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"defaultPublicVNet\"\r\n          },\r\n          \"defaultLocation\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default Location\",\r\n              \"description\": \"default location of resource created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"East US\"\r\n          },\r\n          \"defaultCostCenter\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default CostCenter\",\r\n              \"description\": \"default CostCenter for this subscription.\"\r\n            },\r\n            \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n          },\r\n          \"defaultKeyVaultStore\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"resource id for keyVault.\"\r\n            }\r\n          }\r\n        },\r\n        \"resourceGroups\": {\r\n          \"vNicResourceGroup\": {\r\n            \"metadata\": {\r\n              \"displayName\": \"virtual-network-rg\",\r\n              \"description\": \"All virutal network should save under this resource group.\"\r\n            },\r\n            \"dependsOn\": []\r\n          }\r\n        },\r\n        \"targetScope\": \"subscription\",\r\n        \"status\": {\r\n          \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n          \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n        },\r\n        \"displayName\": \"Sample Blueprint from Unittest\"\r\n      },\r\n      \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n      \"type\": \"Microsoft.Blueprint/blueprints\",\r\n      \"name\": \"subBPfromDotnetSDK\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"parameters\": {\r\n          \"vNetName\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default vNet for this subscription.\",\r\n              \"description\": \"default vNet created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"defaultPublicVNet\"\r\n          },\r\n          \"defaultLocation\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default Location\",\r\n              \"description\": \"default location of resource created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"East US\"\r\n          },\r\n          \"defaultCostCenter\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default CostCenter\",\r\n              \"description\": \"default CostCenter for this subscription.\"\r\n            },\r\n            \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n          },\r\n          \"defaultKeyVaultStore\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"resource id for keyVault.\"\r\n            }\r\n          }\r\n        },\r\n        \"resourceGroups\": {\r\n          \"vNicResourceGroup\": {\r\n            \"metadata\": {\r\n              \"displayName\": \"virtual-network-rg\",\r\n              \"description\": \"All virutal network should save under this resource group.\"\r\n            },\r\n            \"dependsOn\": []\r\n          }\r\n        },\r\n        \"targetScope\": \"subscription\",\r\n        \"status\": {\r\n          \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n          \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n        },\r\n        \"displayName\": \"Sample Blueprint from Unittest\"\r\n      },\r\n      \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK2\",\r\n      \"type\": \"Microsoft.Blueprint/blueprints\",\r\n      \"name\": \"subBPfromDotnetSDK2\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"parameters\": {\r\n          \"vNetName\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default vNet for this subscription.\",\r\n              \"description\": \"default vNet created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"defaultPublicVNet\"\r\n          },\r\n          \"defaultLocation\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default Location\",\r\n              \"description\": \"default location of resource created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"East US\"\r\n          },\r\n          \"defaultCostCenter\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default CostCenter\",\r\n              \"description\": \"default CostCenter for this subscription.\"\r\n            },\r\n            \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n          },\r\n          \"defaultKeyVaultStore\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"resource id for keyVault.\"\r\n            }\r\n          }\r\n        },\r\n        \"resourceGroups\": {\r\n          \"vNicResourceGroup\": {\r\n            \"metadata\": {\r\n              \"displayName\": \"virtual-network-rg\",\r\n              \"description\": \"All virutal network should save under this resource group.\"\r\n            },\r\n            \"dependsOn\": []\r\n          }\r\n        },\r\n        \"targetScope\": \"subscription\",\r\n        \"status\": {\r\n          \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n          \"lastModified\": \"2019-12-12T12:29:11.6660105-08:00\"\r\n        },\r\n        \"displayName\": \"Sample Blueprint from Unittest\"\r\n      },\r\n      \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n      \"type\": \"Microsoft.Blueprint/blueprints\",\r\n      \"name\": \"subBPfromDotnetSDK\"\r\n    },\r\n    {\r\n      \"properties\": {\r\n        \"parameters\": {\r\n          \"vNetName\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default vNet for this subscription.\",\r\n              \"description\": \"default vNet created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"defaultPublicVNet\"\r\n          },\r\n          \"defaultLocation\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default Location\",\r\n              \"description\": \"default location of resource created by this blueprint.\"\r\n            },\r\n            \"defaultValue\": \"East US\"\r\n          },\r\n          \"defaultCostCenter\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"default CostCenter\",\r\n              \"description\": \"default CostCenter for this subscription.\"\r\n            },\r\n            \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n          },\r\n          \"defaultKeyVaultStore\": {\r\n            \"type\": \"string\",\r\n            \"metadata\": {\r\n              \"displayName\": \"resource id for keyVault.\"\r\n            }\r\n          }\r\n        },\r\n        \"resourceGroups\": {\r\n          \"vNicResourceGroup\": {\r\n            \"metadata\": {\r\n              \"displayName\": \"virtual-network-rg\",\r\n              \"description\": \"All virutal network should save under this resource group.\"\r\n            },\r\n            \"dependsOn\": []\r\n          }\r\n        },\r\n        \"targetScope\": \"subscription\",\r\n        \"status\": {\r\n          \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n          \"lastModified\": \"2019-12-12T12:29:11.7754229-08:00\"\r\n        },\r\n        \"displayName\": \"Sample Blueprint from Unittest\"\r\n      },\r\n      \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK2\",\r\n      \"type\": \"Microsoft.Blueprint/blueprints\",\r\n      \"name\": \"subBPfromDotnetSDK2\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -340,16 +340,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "377daef7-eee4-4b90-8d08-2f9dc30266fb"
+          "29d5549e-b90b-4d0a-ba56-8c8771efa3f2"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.14.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -360,7 +360,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "0d8349f3-501b-47d6-8782-39916a191cef"
+          "703c3ba6-3769-4380-bbda-696883c8519c"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -369,10 +369,10 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "46344e0b-d02c-47b7-9311-ae53ddec01b0"
+          "def96608-c3a4-42ed-9d9b-b7a48d365d76"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190117T220714Z:46344e0b-d02c-47b7-9311-ae53ddec01b0"
+          "WESTUS:20191212T202912Z:def96608-c3a4-42ed-9d9b-b7a48d365d76"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -381,10 +381,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 17 Jan 2019 22:07:13 GMT"
+          "Thu, 12 Dec 2019 20:29:11 GMT"
         ],
         "Content-Length": [
-          "1705"
+          "1713"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -393,7 +393,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n      \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n      \"lastModified\": \"2019-12-12T12:29:11.6660105-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -403,16 +403,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e3ad5417-4e74-4437-86af-dcb3157e16b7"
+          "54332940-f140-4dd6-9736-b7d43a079173"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27019.06",
+          "FxVersion/4.6.28008.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.10.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Blueprint.BlueprintManagementClient/0.14.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -423,7 +423,7 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "18a0bd65-7b9a-42a3-946d-ed5cb4616ba7"
+          "b4f7b19b-8a92-4765-b47b-34441ec41d8a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -432,10 +432,10 @@
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "6dae0fb7-a84d-49f3-9ef3-06d0f80adce1"
+          "39b8c542-dcf9-46c6-ab81-4ef5c53acb2b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190117T220714Z:6dae0fb7-a84d-49f3-9ef3-06d0f80adce1"
+          "WESTUS:20191212T202912Z:39b8c542-dcf9-46c6-ab81-4ef5c53acb2b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -444,10 +444,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 17 Jan 2019 22:07:13 GMT"
+          "Thu, 12 Dec 2019 20:29:12 GMT"
         ],
         "Content-Length": [
-          "1707"
+          "1715"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -456,12 +456,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-01-17T14:07:13-08:00\",\r\n      \"lastModified\": \"2019-01-17T14:07:13-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK2\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK2\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"parameters\": {\r\n      \"vNetName\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default vNet for this subscription.\",\r\n          \"description\": \"default vNet created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"defaultPublicVNet\"\r\n      },\r\n      \"defaultLocation\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default Location\",\r\n          \"description\": \"default location of resource created by this blueprint.\"\r\n        },\r\n        \"defaultValue\": \"East US\"\r\n      },\r\n      \"defaultCostCenter\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"default CostCenter\",\r\n          \"description\": \"default CostCenter for this subscription.\"\r\n        },\r\n        \"defaultValue\": \"Contoso/IT/PROD/123456\"\r\n      },\r\n      \"defaultKeyVaultStore\": {\r\n        \"type\": \"string\",\r\n        \"metadata\": {\r\n          \"displayName\": \"resource id for keyVault.\"\r\n        }\r\n      }\r\n    },\r\n    \"resourceGroups\": {\r\n      \"vNicResourceGroup\": {\r\n        \"metadata\": {\r\n          \"displayName\": \"virtual-network-rg\",\r\n          \"description\": \"All virutal network should save under this resource group.\"\r\n        },\r\n        \"dependsOn\": []\r\n      }\r\n    },\r\n    \"targetScope\": \"subscription\",\r\n    \"status\": {\r\n      \"timeCreated\": \"2019-12-12T12:29:11-08:00\",\r\n      \"lastModified\": \"2019-12-12T12:29:11.7754229-08:00\"\r\n    },\r\n    \"displayName\": \"Sample Blueprint from Unittest\"\r\n  },\r\n  \"id\": \"/subscriptions/7e2bacd2-6c4b-444c-9331-2e76799cbfc9/providers/Microsoft.Blueprint/blueprints/subBPfromDotnetSDK2\",\r\n  \"type\": \"Microsoft.Blueprint/blueprints\",\r\n  \"name\": \"subBPfromDotnetSDK2\"\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "4ce8c9fe-cadc-47d6-9c76-335812fd59df"
+    "SubscriptionId": "a1bfa635-f2bf-42f1-86b5-848c674fc321"
   }
 }
