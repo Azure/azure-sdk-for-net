@@ -1303,8 +1303,10 @@ namespace Azure.Storage.Blobs
                                 LeaseDuration = response.Value.LeaseDuration,
                                 PublicAccess = response.Value.BlobPublicAccess,
                                 HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
-                                HasLegalHold = response.Value.HasLegalHold
-                            },
+                                HasLegalHold = response.Value.HasLegalHold,
+                                DefaultEncryptionScope = response.Value.DefaultEncryptionScope,
+                                DenyEncryptionScopeOverride = response.Value.DenyEncryptionScopeOverride
+                        },
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
