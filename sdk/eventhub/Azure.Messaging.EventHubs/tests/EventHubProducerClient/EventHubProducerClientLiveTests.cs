@@ -856,7 +856,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         {
                             var receivedEvents = new List<EventData>();
                             var consecutiveEmpties = 0;
-                            var maximumConsecutiveEmpties = 5;
+                            var maximumConsecutiveEmpties = 10;
 
                             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions, cancellationSource.Token))
                             {
@@ -923,7 +923,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         var receivedEvents = new List<EventData>();
                         var consecutiveEmpties = 0;
-                        var maximumConsecutiveEmpties = 5;
+                        var maximumConsecutiveEmpties = 10;
 
                         await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions, cancellationSource.Token))
                         {
@@ -993,7 +993,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         var receivedEvents = new List<EventData>();
                         var consecutiveEmpties = 0;
-                        var maximumConsecutiveEmpties = 5;
+                        var maximumConsecutiveEmpties = 10;
 
                         await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, DefaultReadOptions, cancellationSource.Token))
                         {

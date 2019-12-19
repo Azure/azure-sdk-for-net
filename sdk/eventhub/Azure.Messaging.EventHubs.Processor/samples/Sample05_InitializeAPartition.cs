@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 // cancellation.
 
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(12));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
                 while (!cancellationSource.IsCancellationRequested)
                 {

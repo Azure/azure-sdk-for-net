@@ -69,6 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(information.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
             Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
             Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
+            Assert.That(mockConsumer.IsClosed, Is.False, "The consumer should not have been closed or disposed of.");
         }
 
         /// <summary>

@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // safe.
 
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(60));
 
                 await foreach (PartitionEvent partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
                 {
