@@ -58,9 +58,13 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Name == null)
+            if (string.IsNullOrEmpty(Name))
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            } 
+            else if (!AppSku.allSkus.Any(Name.ToUpper().Contains))
+            {
+                throw new ValidationException(ValidationRules.Enum, "Name");
             }
         }
     }

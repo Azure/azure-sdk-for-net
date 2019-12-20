@@ -143,6 +143,23 @@ namespace IotCentral.Tests.ScenarioTests
         }
 
         [Fact]
+        public void TestAppSkuInfo_InvalidSku()
+        {
+            var exceptionThrown = false;
+            try
+            {
+                AppSkuInfo appSku = new AppSkuInfo("M1");
+                appSku.Validate();
+            }
+            catch (Exception ex)
+            {
+                exceptionThrown = true;
+                Assert.Equal(typeof(ValidationException), ex.GetType());
+            }
+            Assert.True(exceptionThrown);
+        }
+
+        [Fact]
         public void TestOperationInputs()
         {
             var exceptionThrown = false;
