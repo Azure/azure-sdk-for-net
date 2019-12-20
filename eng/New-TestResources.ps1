@@ -235,10 +235,11 @@ foreach ($templateFile in $templateFiles) {
             $deploymentOutputs[$key] = $variable.Value
 
             if ($CI) {
-                # Running in Azure Pipelines. Unfortunately, there's no good way to know which outputs are truly secrets
-                # because we have to set all output variables to "String" instead of "SecureString" or we will never get back a value.
+                # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
+                # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
                 Write-Host "Setting variable '$key': ***"
-                Write-Host "##vso[task.setvariable variable=$key;issecret=true;]$($variable.Value)"
+                Write-Host "##vso[task.setvariable variable=_$key;issecret=true;]$($variable.Value)"
+                Write-Host "##vso[task.setvariable variable=$key;]$($variable.Value)"
             } else {
                 Write-Host ($shellExportFormat -f $key, $variable.Value)
             }
