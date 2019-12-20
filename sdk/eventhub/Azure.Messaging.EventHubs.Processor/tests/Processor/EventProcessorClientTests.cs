@@ -678,6 +678,86 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task IsRunningReturnsTrueWhileStopProcessingAsyncIsNotCalled()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Array.Empty<string>()));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(mockProcessor.Object.IsRunning, Is.False);
+
+            await mockProcessor.Object.StartProcessingAsync();
+
+            Assert.That(mockProcessor.Object.IsRunning, Is.True);
+
+            await mockProcessor.Object.StopProcessingAsync();
+
+            Assert.That(mockProcessor.Object.IsRunning, Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task IsRunningReturnsFalseWhenLoadBalancingTaskFails()
+        {
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var completionSource = new TaskCompletionSource<bool>();
+
+            // This should be called right before the first load balancing cycle.
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Callback(() => completionSource.SetResult(true))
+                .Throws(new Exception());
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            await mockProcessor.Object.StartProcessingAsync();
+            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), completionSource.Task);
+
+            // Capture the value of IsRunning before stopping the processor.  We are doing this to make sure
+            // we stop the processor properly even in case of failure.
+
+            var isRunning = mockProcessor.Object.IsRunning;
+
+            // Stop the processor and ensure that it does not block on the handler.
+
+            Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(), Throws.Exception, "An exception should have been thrown when creating the consumer.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            Assert.That(isRunning, Is.False, "IsRunning should return false when the load balancing task fails.");
+        }
+
+        /// <summary>
         ///   Verify logs for the <see cref="EventProcessorClient" />.
         /// </summary>
         ///
