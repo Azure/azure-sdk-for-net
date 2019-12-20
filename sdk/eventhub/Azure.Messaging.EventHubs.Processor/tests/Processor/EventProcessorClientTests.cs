@@ -1331,7 +1331,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockConsumer
                 .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
                     partitionId,
-                    EventPosition.FromOffset(checkpointOffset + 1),
+                    EventPosition.FromOffset(checkpointOffset, false),
                     It.IsAny<ReadEventOptions>(),
                     It.IsAny<CancellationToken>()))
                 .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockPartitionEventEnumerable(20, token))

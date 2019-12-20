@@ -80,16 +80,12 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// </summary>
         ///
         /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
+        /// <param name="isInclusive">If true, the event with the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
         ///
         /// <returns>The position of the specified event.</returns>
         ///
-        /// <remarks>
-        ///   The offset is the relative position for event in the context of the stream.  The offset
-        ///   should not be considered a stable value, as the same offset may refer to a different event
-        ///   as events reach the age limit for retention and are no longer visible within the stream.
-        /// </remarks>
-        ///
-        public static EventPosition FromOffset(long offset) => FromOffset(offset.ToString(), true);
+        public static EventPosition FromOffset(long offset,
+                                               bool isInclusive = true) => FromOffset(offset.ToString(), isInclusive);
 
         /// <summary>
         ///   Corresponds to the event in the partition having a specified sequence number associated with it.
@@ -101,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>The position of the specified event.</returns>
         ///
         public static EventPosition FromSequenceNumber(long sequenceNumber,
-                                                       bool isInclusive = false)
+                                                       bool isInclusive = true)
         {
             return new EventPosition
             {
@@ -124,33 +120,6 @@ namespace Azure.Messaging.EventHubs.Consumer
             return new EventPosition
             {
                 EnqueuedTime = enqueuedTime
-            };
-        }
-
-        /// <summary>
-        ///   Corresponds to the event in the partition at the provided offset.
-        /// </summary>
-        ///
-        /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
-        /// <param name="isInclusive">If true, the event at the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
-        ///
-        /// <returns>The position of the specified event.</returns>
-        ///
-        /// <remarks>
-        ///   The offset is the relative position for event in the context of the stream.  The offset
-        ///   should not be considered a stable value, as the same offset may refer to a different event
-        ///   as events reach the age limit for retention and are no longer visible within the stream.
-        /// </remarks>
-        ///
-        private static EventPosition FromOffset(string offset,
-                                                bool isInclusive = false)
-        {
-            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
-
-            return new EventPosition
-            {
-                Offset = offset,
-                IsInclusive = isInclusive
             };
         }
 
@@ -218,6 +187,27 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///   Corresponds to the event in the partition at the provided offset.
+        /// </summary>
+        ///
+        /// <param name="offset">The offset of an event with respect to its relative position in the partition.</param>
+        /// <param name="isInclusive">If true, the event at the <paramref name="offset"/> is included; otherwise the next event in sequence will be received.</param>
+        ///
+        /// <returns>The position of the specified event.</returns>
+        ///
+        private static EventPosition FromOffset(string offset,
+                                                bool isInclusive)
+        {
+            Argument.AssertNotNullOrWhiteSpace(nameof(offset), offset);
+
+            return new EventPosition
+            {
+                Offset = offset,
+                IsInclusive = isInclusive
+            };
+        }
 
         /// <summary>
         ///   Determines whether the specified <see cref="EventPosition" /> instances are equal to each other.

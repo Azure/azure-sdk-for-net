@@ -1432,6 +1432,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     // No action needed.
                 }
 
+                await Task.Delay(250);
+
                 Assert.That(mockScope.IsDisposed, Is.True, "The scope should have been disposed.");
                 Assert.That(mockScope.CallbackInvoked, Is.True, "The authorization timer callback should have been invoked.");
             }
@@ -1740,8 +1742,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             public bool CallbackInvoked = false;
 
-            private AmqpConnection _mockConnection;
-            private AmqpSession _mockSession;
+            private readonly AmqpConnection _mockConnection;
 
             public DisposeOnAuthorizationTimerCallbackMockScope(Uri serviceEndpoint,
                                                                 string eventHubName,
@@ -1750,7 +1751,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                 IWebProxy proxy) : base(serviceEndpoint, eventHubName, credential, transport, proxy)
             {
                 _mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
-                _mockSession = new AmqpSession(_mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
             }
 
             protected override Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
