@@ -5,11 +5,6 @@
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
     <Version>1.2.0-preview.1</Version>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      GA release of Azure.Identity package.
-      ]]>
-    </PackageReleaseNotes>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>

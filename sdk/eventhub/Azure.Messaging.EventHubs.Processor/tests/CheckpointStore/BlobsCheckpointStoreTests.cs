@@ -31,8 +31,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private readonly string OwnershipIdentifier = Guid.NewGuid().ToString();
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="BlobsCheckpointStore" />
-        ///    constructor.
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore" />
+        ///   constructor.
         /// </summary>
         ///
         [Test]
@@ -42,8 +42,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies functionality of the <see cref="BlobsCheckpointStore" />
-        ///    constructor.
+        ///   Verifies functionality of the <see cref="BlobsCheckpointStore" />
+        ///   constructor.
         /// </summary>
         ///
         [Test]
@@ -53,8 +53,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ListOwnershipAsync and ensures the appropriate events are emitted on success.
-        ///    constructor.
+        ///   Verifies basic functionality of ListOwnershipAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///
         [Test]
@@ -79,8 +78,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ListOwnershipAsync and ensures the appropriate events are emitted on failure.
-        ///    constructor.
+        ///   Verifies basic functionality of ListOwnershipAsync and ensures the appropriate events are emitted on failure.
         /// </summary>
         ///
         [Test]
@@ -99,8 +97,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
-        ///    constructor.
+        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///
         [Test]
@@ -121,8 +118,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
-        ///    constructor.
+        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///
         [Test]
@@ -144,12 +140,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
-        ///    constructor.
+        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///
         [Test]
-        public async Task ClaimOwnershipForExistingPartitionWithWongEtagLogsOwnershipNotClaimable()
+        public async Task ClaimOwnershipForExistingPartitionWithWrongEtagLogsOwnershipNotClaimable()
         {
             var blobInfo = BlobsModelFactory.BlobInfo(new ETag($@"""{WrongEtag}"""), DateTime.UtcNow);
             var partitionOwnerships = new List<PartitionOwnership>{
@@ -167,8 +162,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on failur.
-        ///    constructor.
+        ///   Verifies basic functionality of ClaimOwnershipAsync and ensures the appropriate events are emitted on failure.
         /// </summary>
         ///
         [Test]
@@ -186,8 +180,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted on success.
-        ///    constructor.
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///
         [Test]
@@ -212,8 +205,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted on failure.
-        ///    constructor.
+        ///   Verifies basic functionality of ListCheckpointsAsync and ensures the appropriate events are emitted on failure.
         /// </summary>
         ///
         [Test]
@@ -230,8 +222,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate events are emitted on success.
-        ///    constructor.
+        ///   Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate events are emitted on success.
         /// </summary>
         ///
         [Test]
@@ -256,8 +247,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///    Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate events are emitted on failures.
-        ///    constructor.
+        ///   Verifies basic functionality of UpdateCheckpointAsync and ensures the appropriate events are emitted on failure.
         /// </summary>
         ///
         [Test]
@@ -275,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockLog.Verify(m => m.CheckpointUpdateError(PartitionId, It.Is<string>(s => s.Contains(BlobErrorCode.ContainerNotFound.ToString()))));
         }
 
-        public class MockBlobContainerClient : BlobContainerClient
+        private class MockBlobContainerClient : BlobContainerClient
         {
             public override Uri Uri { get; }
             public override string AccountName { get; }
@@ -314,7 +304,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             }
         }
 
-        public class MockBlobClient : BlobClient
+        private class MockBlobClient : BlobClient
         {
             public override string Name { get; }
             internal BlobInfo BlobInfo;
@@ -358,7 +348,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             }
         }
 
-        internal class MockAsyncPageable<T> : AsyncPageable<T>
+        private class MockAsyncPageable<T> : AsyncPageable<T>
         {
             private readonly IEnumerable<T> Items;
 
@@ -378,9 +368,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             }
         }
 
-
-
-        internal class MockPage<T> : Page<T>
+        private class MockPage<T> : Page<T>
         {
             private readonly IReadOnlyList<T> InnerValues;
             public override IReadOnlyList<T> Values => InnerValues;

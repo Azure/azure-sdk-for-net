@@ -7,8 +7,6 @@
     <Version>12.1.0</Version>
     <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Blobs Batching;Batch blob;Batch operation;BlobBatchClient;BlobBatch;Microsoft;Azure;Blobs;Blob;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
-    <PackageReleaseNotes>
-    </PackageReleaseNotes>
     <Description>
       This client library allows you to batch multiple Azure Blob Storage operations in a single request.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.Batch/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.Batch/CHANGELOG.md
