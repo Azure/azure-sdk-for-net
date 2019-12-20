@@ -5,15 +5,6 @@
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
     <Version>4.0.0-preview.8</Version>
     <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
-    <!--<PackageReleaseNotes>
-      <![CDATA[
-      - Renamed several parameters to better align with other SDK libraries in other languages.
-      - Made several parameters required to reflect requirements of the Azure Key Vault service.
-
-      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.8/sdk/keyvault/Azure.Security.KeyVault.Certificates/CHANGELOG.md for more detailed changes.
-      ]]>
-    </PackageReleaseNotes>-->
-
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
