@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
@@ -1267,7 +1266,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
                         };
 
-                        Assert.That(async () => await readAfterClose(), Throws.InstanceOf<EventHubsClientClosedException>());
+                        Assert.That(async () => await readAfterClose(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                     }
                 }
             }
@@ -1314,7 +1313,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await using (var consumer = new EventHubConsumerClient("nonExistentConsumerGroup", connection))
                     {
-                        Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
+                        Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ResourceNotFound));
                     }
                 }
             }
@@ -1349,7 +1348,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         if (!firstIteration)
                         {
                             await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                            Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected));
 
                             break;
                         }
@@ -1391,7 +1390,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             var lowerExclusiveReadOptions = DefaultReadOptions.Clone();
                             lowerExclusiveReadOptions.OwnerLevel = 20;
 
-                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected));
                             break;
                         }
 
@@ -1535,7 +1534,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         if (!firstIteration)
                         {
-                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected));
                             break;
                         }
 
@@ -1586,7 +1585,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     {
                         if (!firstIteration)
                         {
-                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            Assert.That(async () => await ReadNothingAsync(consumer, partition, EventPosition.Latest, lowerExclusiveReadOptions), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected));
                             break;
                         }
 
@@ -1759,7 +1758,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             {
                                 // Since there is an exclusive consumer reading, the non-exclusive consumer should be rejected.
 
-                                Assert.That(async () => await ReadNothingAsync(defaultGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                                Assert.That(async () => await ReadNothingAsync(defaultGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected));
 
                                 // Create the higher level exclusive consumer; this should force the lower exclusive consumer to disconnect.
 
@@ -1783,7 +1782,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                         // Exceptions for invalid resources should continue to be thrown.
 
                                         await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("XYZ", connectionString);
-                                        Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
+                                        Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partitionIds[0], EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ResourceNotFound));
 
                                         await using var invalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
                                         Assert.That(async () => await ReadNothingAsync(invalidPartitionConsumer, "ABC", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
@@ -1803,7 +1802,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             firstIteration = false;
                         }
                     }
-                    catch (ConsumerDisconnectedException)
+                    catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
                     {
                         // This is an possible outcome depending on whether the inner dispose
                         // completes before the outer iteration ticks.  Since there is an element of
@@ -1853,13 +1852,13 @@ namespace Azure.Messaging.EventHubs.Tests
                     await foreach (var exclusiveItem in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, exclusiveReadOptions, cancellationSource.Token))
                     {
                         await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("fake", connectionString);
-                        Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
+                        Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ResourceNotFound));
 
                         await using var otherInvalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
                         Assert.That(async () => await ReadNothingAsync(otherInvalidPartitionConsumer, "ABC", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
 
                         await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString);
-                        Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                        Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected));
 
                         break;
                     }
@@ -1892,7 +1891,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     // Begin with attempting to read from an invalid partition.
 
                     await using var invalidConsumerGroupConsumer = new EventHubConsumerClient("notreal", connection);
-                    Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
+                    Assert.That(async () => await ReadNothingAsync(invalidConsumerGroupConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ResourceNotFound));
 
                     // It should be possible to create new valid consumers.
 
@@ -1908,13 +1907,13 @@ namespace Azure.Messaging.EventHubs.Tests
                         if (!firstIteration)
                         {
                             await using var otherInvalidConsumerGroupConsumer = new EventHubConsumerClient("XYZ", connection);
-                            Assert.That(async () => await ReadNothingAsync(otherInvalidConsumerGroupConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsResourceNotFoundException>());
+                            Assert.That(async () => await ReadNothingAsync(otherInvalidConsumerGroupConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ResourceNotFound));
 
                             await using var invalidPartitionConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
                             Assert.That(async () => await ReadNothingAsync(invalidPartitionConsumer, "ABC", EventPosition.Latest), Throws.InstanceOf<ArgumentOutOfRangeException>());
 
                             await using var nonExclusiveConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connection);
-                            Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<ConsumerDisconnectedException>());
+                            Assert.That(async () => await ReadNothingAsync(nonExclusiveConsumer, partition, EventPosition.Latest), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ConsumerDisconnected));
 
                             break;
                         }
@@ -2258,9 +2257,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     await consumer.CloseAsync();
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
-                    Assert.That(async () => await consumer.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsClientClosedException>());
-                    Assert.That(async () => await consumer.GetEventHubPropertiesAsync(), Throws.TypeOf<EventHubsClientClosedException>());
-                    Assert.That(async () => await consumer.GetPartitionPropertiesAsync(partition), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(async () => await consumer.GetPartitionIdsAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(async () => await consumer.GetEventHubPropertiesAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(async () => await consumer.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                 }
             }
         }

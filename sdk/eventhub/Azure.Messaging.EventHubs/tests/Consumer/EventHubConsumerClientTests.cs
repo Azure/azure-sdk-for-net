@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Moq;
 using NUnit.Framework;
 
@@ -35,8 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static IEnumerable<object[]> NonFatalNotRetriableExceptionTestCases()
         {
-            yield return new object[] { new ConsumerDisconnectedException("Test", "Test") };
-            yield return new object[] { new EventHubsResourceNotFoundException("Test", "Test") };
+            yield return new object[] { new EventHubsException(false, "Test", "Test") };
             yield return new object[] { new InvalidOperationException() };
             yield return new object[] { new NotSupportedException() };
             yield return new object[] { new NullReferenceException() };
@@ -51,8 +49,6 @@ namespace Azure.Messaging.EventHubs.Tests
         public static IEnumerable<object[]> NonFatalRetriableExceptionTestCases()
         {
             yield return new object[] { new EventHubsException(true, "Test") };
-            yield return new object[] { new EventHubsCommunicationException("Test", "Test") };
-            yield return new object[] { new ServiceBusyException("Test", "Test") };
             yield return new object[] { new TimeoutException() };
         }
 
@@ -494,7 +490,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     ++receivedEvents;
                 }
-            }, Throws.InstanceOf<EventHubsClientClosedException>(), "The iterator should have indicated the consumer was closed.");
+            }, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed), "The iterator should have indicated the consumer was closed.");
 
             Assert.That(cancellation.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
             Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");
@@ -1306,7 +1302,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     ++receivedEvents;
                 }
-            }, Throws.InstanceOf<EventHubsClientClosedException>(), "The iterator should have indicated the consumer was closed.");
+            }, Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed), "The iterator should have indicated the consumer was closed.");
 
             Assert.That(cancellation.IsCancellationRequested, Is.False, "The cancellation should not have been requested.");
             Assert.That(receivedEvents, Is.EqualTo(0), "There should have been no events received.");

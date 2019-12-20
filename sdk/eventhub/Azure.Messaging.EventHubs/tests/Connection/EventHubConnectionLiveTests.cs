@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -274,9 +273,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
-                    Assert.That(async () => await connection.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsClientClosedException>());
-                    Assert.That(async () => await connection.GetPropertiesAsync(), Throws.TypeOf<EventHubsClientClosedException>());
-                    Assert.That(async () => await connection.GetPartitionPropertiesAsync(partition), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(async () => await connection.GetPartitionIdsAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(async () => await connection.GetPropertiesAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(async () => await connection.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                 }
             }
         }

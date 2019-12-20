@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
 
 namespace Azure.Messaging.EventHubs.Consumer
 {
@@ -865,9 +864,9 @@ namespace Azure.Messaging.EventHubs.Consumer
                         activeException = new TaskCanceledException(ex.Message, ex);
                         break;
                     }
-                    catch (Exception ex) when
-                        (ex is ConsumerDisconnectedException
-                        || ex is EventHubsClientClosedException)
+                    catch (EventHubsException ex) when
+                        (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected
+                        || ex.Reason == EventHubsException.FailureReason.ClientClosed)
                     {
                         // If the consumer was disconnected or closed, it is known to be unrecoverable; do not offer the chance to retry.
 

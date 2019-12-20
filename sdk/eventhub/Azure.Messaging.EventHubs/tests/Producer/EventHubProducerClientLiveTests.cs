@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
 
@@ -313,8 +312,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     var singleEvent = new EventData(new byte[1500000]);
                     EventData[] eventBatch = new[] { new EventData(new byte[1500000]) };
 
-                    Assert.That(async () => await producer.SendAsync(singleEvent), Throws.TypeOf<MessageSizeExceededException>());
-                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.TypeOf<MessageSizeExceededException>());
+                    Assert.That(async () => await producer.SendAsync(singleEvent), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.MessageSizeExceeded));
+                    Assert.That(async () => await producer.SendAsync(eventBatch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.MessageSizeExceeded));
                 }
             }
         }
@@ -524,7 +523,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         new EventData(new byte[1500000 / 3])
                     };
 
-                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<MessageSizeExceededException>());
+                    Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.MessageSizeExceeded));
                 }
             }
         }
@@ -627,7 +626,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await producer.SendAsync(events), Throws.Nothing);
 
                     await producer.CloseAsync();
-                    Assert.That(async () => await producer.SendAsync(events), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(async () => await producer.SendAsync(events), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                 }
             }
         }
@@ -1163,9 +1162,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     await producer.CloseAsync();
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
-                    Assert.That(async () => await producer.GetPartitionIdsAsync(), Throws.TypeOf<EventHubsClientClosedException>());
-                    Assert.That(async () => await producer.GetEventHubPropertiesAsync(), Throws.TypeOf<EventHubsClientClosedException>());
-                    Assert.That(async () => await producer.GetPartitionPropertiesAsync(partition), Throws.TypeOf<EventHubsClientClosedException>());
+                    Assert.That(async () => await producer.GetPartitionIdsAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(async () => await producer.GetEventHubPropertiesAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+                    Assert.That(async () => await producer.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
                 }
             }
         }
