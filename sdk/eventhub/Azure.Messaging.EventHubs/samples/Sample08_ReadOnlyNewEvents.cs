@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples
@@ -77,7 +79,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // in the event of a service error where the events we've published cannot be read.
 
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(90));
 
                 // The reading of all events will default to the earliest events available in each partition; in order to begin reading at the
                 // latest event, we'll need to specify that reading should not start at earliest.

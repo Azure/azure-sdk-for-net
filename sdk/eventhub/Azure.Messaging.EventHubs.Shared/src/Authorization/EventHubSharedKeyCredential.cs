@@ -5,8 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 
-namespace Azure.Messaging.EventHubs.Authorization
+namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   Provides a credential based on a shared access signature for a given
