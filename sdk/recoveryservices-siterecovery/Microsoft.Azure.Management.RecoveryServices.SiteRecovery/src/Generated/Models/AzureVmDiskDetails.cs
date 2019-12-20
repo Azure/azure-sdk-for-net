@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="vhdType">VHD type.</param>
         /// <param name="vhdId">The VHD id.</param>
-        /// <param name="diskId">The disk id.</param>
+        /// <param name="diskId">The disk resource id.</param>
         /// <param name="vhdName">VHD name.</param>
         /// <param name="maxSizeMB">Max side in MB.</param>
         /// <param name="targetDiskLocation">Blob uri of the Azure
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string VhdId { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk id.
+        /// Gets or sets the disk resource id.
         /// </summary>
         [JsonProperty(PropertyName = "diskId")]
         public string DiskId { get; set; }
