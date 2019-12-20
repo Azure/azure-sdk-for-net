@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
@@ -35,12 +37,12 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private const string DiagnosticSourceName = "Azure.Messaging.EventHubs";
 
         /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient" />
-        ///   class.
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
-        public async Task CheckpointManagerCreatesScope()
+        public async Task UpdateCheckpointAsyncCreatesScope()
         {
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
 
@@ -53,13 +55,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var storageManager = new Mock<PartitionManager>();
             var eventProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "cg", endpoint.Host, eventHubName, fakeFactory, null);
 
-            storageManager
-                .Setup(manager => manager.UpdateCheckpointAsync(It.IsAny<Checkpoint>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
+            // UpdateCheckpointAsync does not invoke the handlers, but we are setting them here in case
+            // this fact changes in the future.
 
-            eventProcessor
-                .Setup(processor => processor.CreateStorageManager(It.IsAny<BlobContainerClient>()))
-                .Returns(storageManager.Object);
+            eventProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            eventProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
             await eventProcessor.Object.UpdateCheckpointAsync(data, context, default);
 
@@ -68,90 +68,93 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///   Verifies diagnostics functionality of the <see cref="PartitionPump" />
-        ///   class.
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.RunPartitionProcessingAsync" />
+        ///   method.
         /// </summary>
         ///
         [Test]
-        [Ignore("Needs to be updated because Partition Pump class does not exist anymore.")]
-        public async Task PartitionPumpCreatesScopeForEventProcessing()
+        [Ignore("Diagnostic scope is not completing properly. Maybe the listener is being disposed of first.")]
+        public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
         {
-            // ================================================================
-            //  FIGURE OUT A WAY TO IMPLEMENT THIS MOCKING THE CONSUMER CLIENT
-            //
-            //  Likely needs an internal extension point within the processor
-            // ================================================================
+            var mockStorage = new MockCheckPointStorage();
+            var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
 
+            using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
+            var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var processEventCalls = 0;
 
-            //using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
-            //var processorCalledSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
-            //var consumerMock = new Mock<TransportConsumer>();
-            //bool returnedItems = false;
-            //consumerMock.Setup(c => c.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-            //    .Returns(() =>
-            //    {
-            //        if (returnedItems)
-            //        {
-            //            throw new InvalidOperationException("Something bad happened");
-            //        }
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partitionId, position, options, token) =>
+                {
+                    async IAsyncEnumerable<PartitionEvent> mockPartitionEventEnumerable()
+                    {
+                        var context = new MockPartitionContext(partitionId);
 
-            //        returnedItems = true;
-            //        return Task.FromResult(
-            //            (IEnumerable<EventData>)new[]
-            //            {
-            //                new EventData(Array.Empty<byte>())
-            //                {
-            //                    Properties =
-            //                    {
-            //                        { "Diagnostic-Id", "id" }
-            //                    }
-            //                },
-            //                new EventData(Array.Empty<byte>())
-            //                {
-            //                    Properties =
-            //                    {
-            //                        { "Diagnostic-Id", "id2" }
-            //                    }
-            //                }
-            //            });
-            //    });
+                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id" } } });
+                        yield return new PartitionEvent(context, new EventData(Array.Empty<byte>()) { Properties = { { "Diagnostic-Id", "id2" } } });
 
-            //var connectionMock = new Mock<EventHubConnection>("namespace", "eventHubName", Mock.Of<TokenCredential>(), new EventHubConnectionOptions());
-            //connectionMock.Setup(c => c.CreateTransportConsumer("cg", "pid", It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<long?>(), It.IsAny<uint?>())).Returns(consumerMock.Object);
+                        while (!completionSource.Task.IsCompleted && !token.IsCancellationRequested)
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            yield return new PartitionEvent();
+                        }
 
-            //Func<ProcessEventArgs, ValueTask> processEventAsync = eventArgs =>
-            //{
-            //    processorCalledSource.SetResult(null);
-            //    return new ValueTask();
-            //};
+                        yield break;
+                    };
 
-            // TODO: partition pump type does not exist anymore. Figure out how to call RunPartitionProcessingAsync.
+                    return mockPartitionEventEnumerable();
+                });
 
-            await Task.CompletedTask;
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
 
-            /*
-
-            var manager = new PartitionPump(connectionMock.Object, "cg", new PartitionContext("eventHubName", "pid"), EventPosition.Earliest, processEventAsync, new EventProcessorClientOptions());
-
-            await manager.StartAsync();
-            await processorCalledSource.Task;
-
-            // TODO: figure out why an exception is being thrown. The problem has always existed, but now the Pump won't swallow exceptions
-            // and throws them back to the caller.
-
-            try
+            mockProcessor.Object.ProcessEventAsync += eventArgs =>
             {
-                await manager.StopAsync();
-            }
-            catch (InvalidOperationException) { }
+                if (++processEventCalls == 2)
+                {
+                    completionSource.SetResult(null);
+                }
 
-            */
+                return Task.CompletedTask;
+            };
 
-            //ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-            //Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            //Assert.That(scope.Links, Has.One.EqualTo("id"));
-            //Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            //Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
+            // RunPartitionProcessingAsync does not invoke the error handler, but we are setting it here in case
+            // this fact changes in the future.
+
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            // Start processing and wait for the consumer to be invoked.  Set a cancellation for backup to ensure
+            // that the test completes deterministically.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            using var partitionProcessingTask = Task.Run(() => mockProcessor.Object.RunPartitionProcessingAsync("pid", default, cancellationSource.Token));
+            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), completionSource.Task);
+            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), partitionProcessingTask);
+
+            // Validate that cancellation did not take place.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            // Validate diagnostics functionality.
+
+            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
+
+            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+            Assert.That(scope.Links, Has.One.EqualTo("id"));
+            Assert.That(scope.Links, Has.One.EqualTo("id2"));
+            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
         }
 
         private class MockConnection : EventHubConnection

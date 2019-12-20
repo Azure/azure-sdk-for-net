@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
 
         /// <summary>
         ///   Prevents an instance of the <see cref="EventProcessorEventSource"/> class from being created
-        ///   outside the scope of this library.
+        ///   outside the scope of this library.  Exposed for testing purposes only.
         /// </summary>
         ///
         internal EventProcessorEventSource() { }

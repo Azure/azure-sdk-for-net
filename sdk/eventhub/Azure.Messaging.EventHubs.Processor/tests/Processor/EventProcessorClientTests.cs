@@ -467,6 +467,297 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartAsyncStartsTheEventProcessorWhenProcessingHandlerPropertiesAreSet()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Array.Empty<string>()));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(), Throws.Nothing);
+
+            await mockProcessor.Object.StopProcessingAsync();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public void CannotAddNullHandler()
+        {
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
+
+            Assert.That(() => processor.PartitionInitializingAsync += null, Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => processor.PartitionClosingAsync += null, Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => processor.ProcessEventAsync += null, Throws.InstanceOf<ArgumentNullException>());
+            Assert.That(() => processor.ProcessErrorAsync += null, Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public void CannotAddTwoHandlersToTheSameEvent()
+        {
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
+
+            processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
+            processor.PartitionClosingAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(() => processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+            Assert.That(() => processor.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+            Assert.That(() => processor.ProcessEventAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+            Assert.That(() => processor.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<NotSupportedException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public void CannotRemoveHandlerThatHasNotBeenAdded()
+        {
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
+
+            // First scenario: no handler has been set.
+
+            Assert.That(() => processor.PartitionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.PartitionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.ProcessEventAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+
+            // Second scenario: there is a handler set, but it's not the one we are trying to remove.
+
+            processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask;
+            processor.PartitionClosingAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(() => processor.PartitionInitializingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.PartitionClosingAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.ProcessEventAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => processor.ProcessErrorAsync -= eventArgs => Task.CompletedTask, Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public void CanRemoveHandlerThatHasBeenAdded()
+        {
+            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
+
+            Func<PartitionInitializingEventArgs, Task> initHandler = eventArgs => Task.CompletedTask;
+            Func<PartitionClosingEventArgs, Task> closeHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+
+            processor.PartitionInitializingAsync += initHandler;
+            processor.PartitionClosingAsync += closeHandler;
+            processor.ProcessEventAsync += eventHandler;
+            processor.ProcessErrorAsync += errorHandler;
+
+            Assert.That(() => processor.PartitionInitializingAsync -= initHandler, Throws.Nothing);
+            Assert.That(() => processor.PartitionClosingAsync -= closeHandler, Throws.Nothing);
+            Assert.That(() => processor.ProcessEventAsync -= eventHandler, Throws.Nothing);
+            Assert.That(() => processor.ProcessErrorAsync -= errorHandler, Throws.Nothing);
+
+            // Assert that handlers can be added again.
+
+            Assert.That(() => processor.PartitionInitializingAsync += initHandler, Throws.Nothing);
+            Assert.That(() => processor.PartitionClosingAsync += closeHandler, Throws.Nothing);
+            Assert.That(() => processor.ProcessEventAsync += eventHandler, Throws.Nothing);
+            Assert.That(() => processor.ProcessErrorAsync += errorHandler, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CannotAddHandlerWhileProcessorIsRunning()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Array.Empty<string>()));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            await mockProcessor.Object.StartProcessingAsync();
+
+            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => mockProcessor.Object.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
+
+            await mockProcessor.Object.StopProcessingAsync();
+
+            // Once stopped, the processor should allow handlers to be added again.
+
+            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
+            Assert.That(() => mockProcessor.Object.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CannotRemoveHandlerWhileProcessorIsRunning()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Array.Empty<string>()));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            Func<PartitionInitializingEventArgs, Task> initHandler = eventArgs => Task.CompletedTask;
+            Func<PartitionClosingEventArgs, Task> closeHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
+            Func<ProcessErrorEventArgs, Task> errorHandler = eventArgs => Task.CompletedTask;
+
+            mockProcessor.Object.PartitionInitializingAsync += initHandler;
+            mockProcessor.Object.PartitionClosingAsync += closeHandler;
+            mockProcessor.Object.ProcessEventAsync += eventHandler;
+            mockProcessor.Object.ProcessErrorAsync += errorHandler;
+
+            await mockProcessor.Object.StartProcessingAsync();
+
+            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync -= initHandler, Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => mockProcessor.Object.PartitionClosingAsync -= closeHandler, Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => mockProcessor.Object.ProcessEventAsync -= eventHandler, Throws.InstanceOf<InvalidOperationException>());
+            Assert.That(() => mockProcessor.Object.ProcessErrorAsync -= errorHandler, Throws.InstanceOf<InvalidOperationException>());
+
+            await mockProcessor.Object.StopProcessingAsync();
+
+            // Once stopped, the processor should allow handlers to be removed again.
+
+            Assert.That(() => mockProcessor.Object.PartitionInitializingAsync -= initHandler, Throws.Nothing);
+            Assert.That(() => mockProcessor.Object.PartitionClosingAsync -= closeHandler, Throws.Nothing);
+            Assert.That(() => mockProcessor.Object.ProcessEventAsync -= eventHandler, Throws.Nothing);
+            Assert.That(() => mockProcessor.Object.ProcessErrorAsync -= errorHandler, Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task IsRunningReturnsTrueWhileStopProcessingAsyncIsNotCalled()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Array.Empty<string>()));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(mockProcessor.Object.IsRunning, Is.False);
+
+            await mockProcessor.Object.StartProcessingAsync();
+
+            Assert.That(mockProcessor.Object.IsRunning, Is.True);
+
+            await mockProcessor.Object.StopProcessingAsync();
+
+            Assert.That(mockProcessor.Object.IsRunning, Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
+        /// </summary>
+        ///
+        [Test]
+        public async Task IsRunningReturnsFalseWhenLoadBalancingTaskFails()
+        {
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var completionSource = new TaskCompletionSource<bool>();
+
+            // This should be called right before the first load balancing cycle.
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Callback(() => completionSource.SetResult(true))
+                .Throws(new Exception());
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            // To ensure that the test does not hang for the duration, set a timeout to force completion
+            // after a shorter period of time.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(15));
+
+            await mockProcessor.Object.StartProcessingAsync();
+            await Task.WhenAny(Task.Delay(-1, cancellationSource.Token), completionSource.Task);
+
+            // Capture the value of IsRunning before stopping the processor.  We are doing this to make sure
+            // we stop the processor properly even in case of failure.
+
+            var isRunning = mockProcessor.Object.IsRunning;
+
+            // Stop the processor and ensure that it does not block on the handler.
+
+            Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(), Throws.Exception, "An exception should have been thrown when creating the consumer.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            Assert.That(isRunning, Is.False, "IsRunning should return false when the load balancing task fails.");
+        }
+
+        /// <summary>
         ///   Verify logs for the <see cref="EventProcessorClient" />.
         /// </summary>
         ///
@@ -507,37 +798,6 @@ namespace Azure.Messaging.EventHubs.Tests
             mockLog.Verify(m => m.ClaimOwnershipStart(partitionIds[0]));
             mockLog.Verify(m => m.EventProcessorStopStart(mockProcessor.Object.Identifier));
             mockLog.Verify(m => m.EventProcessorStopComplete(mockProcessor.Object.Identifier));
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task StartAsyncStartsTheEventProcessorWhenProcessingHandlerPropertiesAreSet()
-        {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-
-            mockConsumer
-                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Array.Empty<string>()));
-
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default);
-
-            mockProcessor
-                .Setup(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<EventHubConnection>(),
-                    It.IsAny<EventHubConsumerClientOptions>()))
-                .Returns(mockConsumer.Object);
-
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(), Throws.Nothing);
-
-            await mockProcessor.Object.StopProcessingAsync();
         }
 
         /// <summary>
@@ -707,51 +967,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(emptyEventArgs.Partition, Is.Not.Null, "The event arguments should have a partition context.");
             Assert.That(emptyEventArgs.Partition.PartitionId, Is.EqualTo(partitionId), "The partition identifier should match.");
             Assert.That(() => emptyEventArgs.Partition.ReadLastEnqueuedEventProperties(), Throws.InstanceOf<InvalidOperationException>(), "The last event properties should not be available.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        [Ignore("Update to match new event behavior.")]
-        public async Task HandlerPropertiesCannotBeSetWhenEventProcessorIsRunning()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-
-            processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            await processor.StartProcessingAsync();
-
-            Assert.That(() => processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessEventAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-            Assert.That(() => processor.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
-
-            await processor.StopProcessingAsync();
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessorClient" /> properties.
-        /// </summary>
-        ///
-        [Test]
-        [Ignore("Update to match new event behavior.")]
-        public async Task HandlerPropertiesCanBeSetAfterEventProcessorHasStopped()
-        {
-            var processor = new EventProcessorClient(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", () => new MockConnection(), default);
-
-            processor.ProcessEventAsync += eventArgs => Task.CompletedTask;
-            processor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
-
-            await processor.StartProcessingAsync();
-            await processor.StopProcessingAsync();
-
-            Assert.That(() => processor.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
-            Assert.That(() => processor.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
-            Assert.That(() => processor.ProcessEventAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
-            Assert.That(() => processor.ProcessErrorAsync += eventArgs => Task.CompletedTask, Throws.Nothing);
         }
 
         /// <summary>

@@ -855,7 +855,7 @@ namespace Azure.Messaging.EventHubs
                         updateCheckpoint = EmptyEventUpdateCheckpoint;
                     }
 
-                    var eventArgs = new ProcessEventArgs(partitionEvent.Partition ?? emptyPartitionContext, partitionEvent.Data, updateCheckpoint, RunningTaskTokenSource.Token);
+                    var eventArgs = new ProcessEventArgs(partitionEvent.Partition ?? emptyPartitionContext, partitionEvent.Data, updateCheckpoint, cancellationToken);
 
                     await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                 }
@@ -953,7 +953,7 @@ namespace Azure.Messaging.EventHubs
                     {
                         if (!ActivePartitionProcessors.TryGetValue(kvp.Key, out var activeTaskAndTokenSource) || activeTaskAndTokenSource.Item1.IsCompleted)
                         {
-                            await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.Shutdown, cancellationToken).ConfigureAwait(false);
+                            await StopPartitionProcessingIfRunningAsync(kvp.Key, ProcessingStoppedReason.OwnershipLost, cancellationToken).ConfigureAwait(false);
                             await StartPartitionProcessingAsync(kvp.Key, cancellationToken).ConfigureAwait(false);
                         }
                     }))
@@ -1288,12 +1288,13 @@ namespace Azure.Messaging.EventHubs
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                    // TODO: should the handler be notified in the processing task instead?  User will be notified
-                    // earlier.
-
                     Logger.PartitionProcessingError(partitionId, ex.Message);
                     var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
                     _ = OnProcessErrorAsync(errorEventArgs);
+
+                    // Force an OwnershipLost reason so users know they cannot checkpoint.
+
+                    reason = ProcessingStoppedReason.OwnershipLost;
                 }
                 finally
                 {
@@ -1304,8 +1305,6 @@ namespace Azure.Messaging.EventHubs
             }
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-            // TODO: if reason = Shutdown or OwnershipLost and we got an exception when closing, what should the final reason be?
 
             var closingEventArgs = new PartitionClosingEventArgs(partitionId, reason, cancellationToken);
             _ = OnPartitionClosingAsync(closingEventArgs);
