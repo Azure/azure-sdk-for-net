@@ -6,9 +6,6 @@
     <AssemblyTitle>Azure Client SDK integration Microsoft.Extensions</AssemblyTitle>
     <Version>1.1.0-preview.1</Version>
     <PackageTags>Microsoft Azure Client Pipeline AspNetCore Extensions</PackageTags>
-    <PackageReleaseNotes>
-      - Updated Azure.Identity dependency version
-    </PackageReleaseNotes>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>

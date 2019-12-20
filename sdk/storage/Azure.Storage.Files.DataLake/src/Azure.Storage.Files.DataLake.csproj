@@ -7,9 +7,6 @@
     <Version>12.0.0-preview.7</Version>
     <DefineConstants>DataLakeSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Files;Microsoft;Azure;File;Files;Data Lake;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
-    <PackageReleaseNotes>
-      For release notes and more information please visit https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.DataLake/README.md
-    </PackageReleaseNotes>
     <Description>
       This client library enables working with the Microsoft Azure Storage File service for storing binary and text data.
       For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.DataLake/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.DataLake/CHANGELOG.md
