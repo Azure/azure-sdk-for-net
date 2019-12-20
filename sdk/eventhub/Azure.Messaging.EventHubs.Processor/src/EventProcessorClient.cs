@@ -425,7 +425,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = CreateStorageManager(checkpointStore);
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
-            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, consumerGroup, FullyQualifiedNamespace, eventHubName, OwnershipExpiration);
+            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, OwnershipExpiration);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = CreateStorageManager(checkpointStore);
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
-            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, OwnershipExpiration);
+            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, OwnershipExpiration);
         }
 
         /// <summary>
@@ -531,7 +531,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = storageManager;
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
-            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(storageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, OwnershipExpiration);
+            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(StorageManager, Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, OwnershipExpiration);
         }
 
         /// <summary>
