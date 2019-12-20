@@ -857,6 +857,7 @@ namespace Azure.Messaging.EventHubs
                     }
 
                     var eventArgs = new ProcessEventArgs(partitionEvent.Partition ?? emptyPartitionContext, partitionEvent.Data, updateCheckpoint, cancellationToken);
+
                     await OnProcessEventAsync(eventArgs).ConfigureAwait(false);
                 }
                 catch (Exception eventProcessingException)
