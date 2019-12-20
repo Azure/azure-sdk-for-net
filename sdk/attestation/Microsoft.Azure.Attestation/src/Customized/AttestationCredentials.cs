@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Attestation
         /// <summary>
         /// Bearer token
         /// </summary>
-        public string token { get; set; }
+        public string Token { get; set; }
 
         /// <summary>
         /// Constructor.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Attestation
                 throw new ArgumentException($"{nameof(token)} must not be null or empty");
             }
 
-            this.token = token;
+            this.Token = token;
         }
 
         /// <summary>
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Attestation
         {
             if (request == null)
             {
-                throw new ArgumentNullException("request");
+                throw new ArgumentNullException(nameof(request));
             }
 
-            request.Headers.Add("Authorization", "Bearer " + token);
+            request.Headers.Add("Authorization", $"Bearer {Token}");
             return Task.FromResult(true);
         }
     }
