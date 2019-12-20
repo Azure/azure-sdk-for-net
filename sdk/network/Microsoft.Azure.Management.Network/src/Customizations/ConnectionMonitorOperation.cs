@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='connectionMonitorName'>
         /// The name of the connection monitor.
         /// </param>
-        public static async Task<ConnectionMonitorResult> GetV1(this IConnectionMonitorsOperations operations, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
+        public static ConnectionMonitorResult GetV1(this IConnectionMonitorsOperations operations, string resourceGroupName, string networkWatcherName, string connectionMonitorName)
         {
-            AzureOperationResponse<ConnectionMonitorResult> _response = await ((ConnectionMonitorsOperations)operations).GetWithHttpMessagesV1Async(resourceGroupName, networkWatcherName, connectionMonitorName, null, default(CancellationToken)).ConfigureAwait(false);
+            AzureOperationResponse<ConnectionMonitorResult> _response = ((ConnectionMonitorsOperations)operations).GetWithHttpMessagesV1Async(resourceGroupName, networkWatcherName, connectionMonitorName, null, default(CancellationToken)).GetAwaiter().GetResult();
 
             return _response.Body;
         }
