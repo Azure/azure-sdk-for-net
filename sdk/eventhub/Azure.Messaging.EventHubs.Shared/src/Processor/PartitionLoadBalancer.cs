@@ -9,9 +9,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Diagnostics;
 
 namespace Azure.Messaging.EventHubs.Processor
 {
+    /// <summary>
+    ///   Handles all load balancing concerns for an EventProcessorClient including claiming, stealing, and relinquishing ownership.
+    /// </summary>
+    ///
     internal class PartitionLoadBalancer
     {
         /// <summary>The random number generator to use for a specific thread.</summary>
@@ -27,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly PartitionManager StorageManager;
 
         /// <summary>
-        ///   The set of partition ownership this event processor owns.  Partition ids are used as keys.
+        ///   The set of partition ownership the associated event processor owns.  Partition ids are used as keys.
         /// </summary>
         ///
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
@@ -53,14 +58,14 @@ namespace Azure.Messaging.EventHubs.Processor
         public readonly string EventHubName;
 
         /// <summary>
-        ///   The name of the consumer group this event processor is associated with.  Events will be
+        ///   The name of the consumer group this load balancer is associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
         public readonly string ConsumerGroup;
 
         /// <summary>
-        ///   A unique name used to identify this event processor.
+        ///   A unique name used to identify this load balancer.
         /// </summary>
         ///
         public readonly string Identifier;
@@ -69,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
-        public virtual TimeSpan LoadBalanceUpdate => TimeSpan.FromSeconds(10);
+        public virtual TimeSpan LoadBalanceInterval => TimeSpan.FromSeconds(10);
 
         /// <summary>
         ///   The minimum amount of time for an ownership to be considered expired without further updates.
@@ -77,7 +82,17 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         private TimeSpan OwnershipExpiration;
 
+        /// <summary>
+        ///   The partitionIds currently owned by the associated event processor.
+        /// </summary>
+        ///
         public IEnumerable<string> OwnedPartitionIds => InstanceOwnership.Keys;
+
+        /// <summary>
+        ///   The instance of <see cref="PartitionLoadBalancerEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal PartitionLoadBalancerEventSource Logger { get; set; } = PartitionLoadBalancerEventSource.Log;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionLoadBalancer"/> class.
@@ -120,7 +135,8 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="partitionIds"></param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public virtual async ValueTask<PartitionOwnership> RunLoadbalancingAsync(string[] partitionIds, CancellationToken cancellationToken)
+        public virtual async ValueTask<PartitionOwnership> RunLoadBalancingAsync(string[] partitionIds,
+                                                                                 CancellationToken cancellationToken)
         {
             // Renew this instance's ownership so they don't expire.
 
@@ -195,6 +211,12 @@ namespace Azure.Messaging.EventHubs.Processor
             return claimedOwnership;
         }
 
+        /// <summary>
+        ///   Relinquishes this instance's ownership so they can be claimed by other processors and clears the OwnedPartitionIds.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
         public virtual async Task RelinquishOwnershipAsync(CancellationToken cancellationToken)
         {
             await RelinquishOwnershipAsyncInternal(cancellationToken);
@@ -226,7 +248,9 @@ namespace Azure.Messaging.EventHubs.Processor
             // if it owns no partitions.
 
             var minimumOwnedPartitionsCount = partitionCount / ActiveOwnershipWithDistribution.Keys.Count;
+            Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount);
             var ownedPartitionsCount = ActiveOwnershipWithDistribution[Identifier].Count;
+            Logger.CurrentOwnershipCount(ownedPartitionsCount, Identifier);
 
             // There are two possible situations in which we may need to claim a partition ownership.
             //
@@ -244,6 +268,8 @@ namespace Azure.Messaging.EventHubs.Processor
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
+                Logger.UnclaimedPartitions(unclaimedPartitions);
+
                 if (unclaimedPartitions.Count > 0)
                 {
                     var index = RandomNumberGenerator.Value.Next(unclaimedPartitions.Count);
@@ -254,6 +280,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 // Only try to steal partitions if there are no unclaimed partitions left.  At first, only processors that have exceeded the
                 // maximum owned partition count should be targeted.
+
+                Logger.ShouldStealPartition(Identifier);
 
                 var maximumOwnedPartitionsCount = minimumOwnedPartitionsCount + 1;
 
@@ -294,6 +322,8 @@ namespace Azure.Messaging.EventHubs.Processor
                 {
                     // If any stealable partitions were found, randomly pick one of them to claim.
 
+                    Logger.StealPartition(Identifier);
+
                     var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
 
                     var returnTask = ClaimOwnershipAsync(
@@ -306,6 +336,8 @@ namespace Azure.Messaging.EventHubs.Processor
                 else if (ownedPartitionsCount < minimumOwnedPartitionsCount)
                 {
                     // If any stealable partitions were found, randomly pick one of them to claim.
+
+                    Logger.StealPartition(Identifier);
 
                     var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
 
@@ -323,7 +355,6 @@ namespace Azure.Messaging.EventHubs.Processor
             return new ValueTask<PartitionOwnership>(default(PartitionOwnership));
         }
 
-
         /// <summary>
         ///   Renews this instance's ownership so they don't expire.
         /// </summary>
@@ -333,6 +364,8 @@ namespace Azure.Messaging.EventHubs.Processor
         private async Task RenewOwnershipAsync(CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            Logger.RenewOwnershipStart(Identifier);
 
             IEnumerable<PartitionOwnership> ownershipToRenew = InstanceOwnership.Values
                 .Select(ownership => new PartitionOwnership
@@ -360,8 +393,12 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 // If ownership renewal fails just give up and try again in the next cycle.  The processor may
                 // end up losing some of its ownership.
-
+                Logger.RenewOwnershipError(Identifier, ex.Message);
                 throw new EventHubsException(true, EventHubName, Resources.OperationRenewOwnership, ex);
+            }
+            finally
+            {
+                Logger.RenewOwnershipComplete(Identifier);
             }
         }
 
@@ -380,6 +417,8 @@ namespace Azure.Messaging.EventHubs.Processor
                                                                    CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            Logger.ClaimOwnershipStart(partitionId);
 
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
             // the sequence number as well.
@@ -408,6 +447,8 @@ namespace Azure.Messaging.EventHubs.Processor
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
+
+                Logger.ClaimOwnershipError(partitionId, ex.Message);
 
                 throw new EventHubsException(true, EventHubName, Resources.OperationClaimOwnership, ex);
             }

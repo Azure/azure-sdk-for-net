@@ -18,6 +18,7 @@ using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs
@@ -238,13 +239,26 @@ namespace Azure.Messaging.EventHubs
         public string Identifier { get; }
 
         /// <summary>
+        ///   The minimum amount of time for an ownership to be considered expired without further updates.
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
+        /// </summary>
+        ///
+        internal virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
+
+        /// <summary>
+        ///   Interacts with the storage system with responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
         private PartitionManager StorageManager { get; }
 
         /// <summary>
-        ///   Responsibility for load balancing of partition ownership.
+        ///   The instance of <see cref="EventProcessorEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal EventProcessorEventSource Logger { get; set; } = EventProcessorEventSource.Log;
+
+        /// <summary>
+        ///   Responsible for ownership claim for load balancing.
         /// </summary>
         ///
         private PartitionLoadBalancer LoadBalancer { get; }
@@ -458,7 +472,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = CreateStorageManager(checkpointStore);
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
-            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, TimeSpan.FromSeconds(30));
+            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, OwnershipExpiration);
         }
 
         /// <summary>
@@ -517,7 +531,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = storageManager;
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
-            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(storageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, TimeSpan.FromSeconds(30));
+            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(storageManager, Identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, OwnershipExpiration);
         }
 
         /// <summary>
@@ -567,6 +581,7 @@ namespace Azure.Messaging.EventHubs
                             // Start the main running task.  It is responsible for managing the active partition processing tasks and
                             // for partition load balancing among multiple event processor instances.
 
+                            Logger.EventProcessorStart(Identifier);
                             ActiveLoadBalancingTask = RunAsync(RunningTaskTokenSource.Token);
                         }
                     }
@@ -600,6 +615,7 @@ namespace Azure.Messaging.EventHubs
         public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.EventProcessorStopStart(Identifier);
             await RunningTaskSemaphore.WaitAsync().ConfigureAwait(false);
 
             try
@@ -629,6 +645,7 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (Exception ex)
                     {
+                        Logger.LoadBalancingTaskError(Identifier, ex.Message);
                         loadBalancingException = ex;
                     }
 
@@ -659,6 +676,7 @@ namespace Azure.Messaging.EventHubs
             finally
             {
                 RunningTaskSemaphore.Release();
+                Logger.EventProcessorStopComplete(Identifier);
             }
         }
 
@@ -713,6 +731,7 @@ namespace Azure.Messaging.EventHubs
                                             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.UpdateCheckpointStart(context.PartitionId);
 
             Argument.AssertNotNull(eventData, nameof(eventData));
             Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
@@ -746,6 +765,10 @@ namespace Azure.Messaging.EventHubs
 
                 scope.Failed(e);
                 throw;
+            }
+            finally
+            {
+                Logger.UpdateCheckpointComplete(context.PartitionId);
             }
         }
 
@@ -928,7 +951,7 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
-                        claimedOwnership = await LoadBalancer.RunLoadbalancingAsync(partitionIds, cancellationToken);
+                        claimedOwnership = await LoadBalancer.RunLoadBalancingAsync(partitionIds, cancellationToken);
                     }
                     catch (EventHubsException ex)
                     {
@@ -950,7 +973,7 @@ namespace Azure.Messaging.EventHubs
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
                 // but it may be overridden by a derived class.
 
-                var remainingTimeUntilNextCycle = LoadBalancer.LoadBalanceUpdate.CalculateRemaining(cycleDuration.Elapsed);
+                var remainingTimeUntilNextCycle = LoadBalancer.LoadBalanceInterval.CalculateRemaining(cycleDuration.Elapsed);
 
                 // If a stop request has been issued, Task.Delay will throw a TaskCanceledException.  This is expected and it
                 // will be caught by the StopAsync method.
@@ -975,6 +998,7 @@ namespace Azure.Messaging.EventHubs
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.StartPartitionProcessing(partitionId);
 
             var initializingEventArgs = new PartitionInitializingEventArgs(partitionId, EventPosition.Earliest, cancellationToken);
             await OnPartitionInitializingAsync(initializingEventArgs).ConfigureAwait(false);
@@ -994,6 +1018,7 @@ namespace Azure.Messaging.EventHubs
                 // This should happen on the next load balancing loop as long as this instance still owns the
                 // partition.
 
+                Logger.StartPartitionProcessingError(partitionId, ex.Message);
                 var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListCheckpoints, ex, cancellationToken);
                 _ = OnProcessErrorAsync(errorEventArgs);
 
@@ -1021,6 +1046,7 @@ namespace Azure.Messaging.EventHubs
             var processingTask = RunPartitionProcessingAsync(partitionId, startingPosition, tokenSource.Token);
 
             ActivePartitionProcessors[partitionId] = (processingTask, tokenSource);
+            Logger.StartPartitionProcessingComplete(Identifier);
         }
 
         /// <summary>
@@ -1037,6 +1063,7 @@ namespace Azure.Messaging.EventHubs
                                                                  CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            Logger.StopPartitionProcessingStart(partitionId, reason);
 
             if (ActivePartitionProcessors.TryRemove(partitionId, out var activeTaskAndTokenSource))
             {
@@ -1058,6 +1085,7 @@ namespace Azure.Messaging.EventHubs
                     // TODO: should the handler be notified in the processing task instead?  User will be notified
                     // earlier.
 
+                    Logger.PartitionProcessingError(partitionId, ex.Message);
                     var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationReadEvents, ex, cancellationToken);
                     _ = OnProcessErrorAsync(errorEventArgs);
                 }
@@ -1065,6 +1093,7 @@ namespace Azure.Messaging.EventHubs
                 {
                     processingTask.Dispose();
                     tokenSource.Dispose();
+                    Logger.StopPartitionProcessingComplete(partitionId, reason);
                 }
             }
 

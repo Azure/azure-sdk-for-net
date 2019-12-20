@@ -14,6 +14,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Metadata;
 using Azure.Messaging.EventHubs.Processor;
+using Azure.Messaging.EventHubs.Processor.Diagnostics;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
 using Moq;
@@ -466,6 +467,45 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verify logs for the <see cref="EventProcessorClient" />.
+        /// </summary>
+        ///
+        [Test]
+        public async Task VerifiesEventProcessorLogs()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            string[] partitionIds = {"0"};
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(partitionIds));
+
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, default);
+
+            var mockLog = new Mock<EventProcessorEventSource>();
+            mockProcessor.CallBase = true;
+            mockProcessor.Object.Logger = mockLog.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(), Throws.Nothing);
+
+            await mockProcessor.Object.StopProcessingAsync();
+
+            mockLog.Verify(m => m.EventProcessorStart(mockProcessor.Object.Identifier));
+            mockLog.Verify(m => m.EventProcessorStopStart(mockProcessor.Object.Identifier));
+            mockLog.Verify(m => m.EventProcessorStopComplete(mockProcessor.Object.Identifier));
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient.StartAsync" />
         ///   method.
         /// </summary>
@@ -719,7 +759,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingAsyncStopsLoadbalancer()
         {
             var mockLoadbalancer = new Mock<PartitionLoadBalancer>();
-            mockLoadbalancer.SetupGet(m => m.LoadBalanceUpdate).Returns(TimeSpan.FromSeconds(1));
+            mockLoadbalancer.SetupGet(m => m.LoadBalanceInterval).Returns(TimeSpan.FromSeconds(1));
             Func<EventHubConnection> connectionFactory = () => new MockConnection();
             var connection = connectionFactory();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
@@ -746,7 +786,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             const int NumberOfPartitions = 3;
             var mockLoadbalancer = new Mock<PartitionLoadBalancer>();
-            mockLoadbalancer.SetupGet(m => m.LoadBalanceUpdate).Returns(TimeSpan.FromSeconds(1));
+            mockLoadbalancer.SetupGet(m => m.LoadBalanceInterval).Returns(TimeSpan.FromSeconds(1));
             Func<EventHubConnection> connectionFactory = () => new MockConnection();
             var connection = connectionFactory();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
@@ -759,7 +799,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Starting the processor should call the PartitionLoadBalancer.
 
-            mockLoadbalancer.Verify(m => m.RunLoadbalancingAsync(It.Is<string[]>(p => p.Length == NumberOfPartitions), It.IsAny<CancellationToken>()));
+            mockLoadbalancer.Verify(m => m.RunLoadBalancingAsync(It.Is<string[]>(p => p.Length == NumberOfPartitions), It.IsAny<CancellationToken>()));
 
             await processor.StopProcessingAsync();
         }

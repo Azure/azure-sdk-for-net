@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
+using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Tests;
-using System.Collections.Generic;
+using Moq;
+using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -22,7 +24,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private const string FullyQualifiedNamespace = "fqns";
         private const string EventHubName = "name";
         private const string ConsumerGroup = "consumerGroup";
-        private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
 
         /// <summary>
         ///   Verifies that partitions owned by an <see cref="PartitionLoadBalancer" /> are immediately available to be claimed by another loadbalancer
@@ -30,8 +31,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task StoppedClientRelinquishesPartitionOwnershipOtherClientsConsiderThemClaimableImmediately()
+        public async Task RelinquishOwnershipAsyncRelinquishesPartitionOwnershipOtherClientsConsiderThemClaimableImmediately()
         {
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
@@ -49,7 +51,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                await loadbalancer1.RunAsync(partitionIds, tokenSource.Token);
+                await loadbalancer1.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
             }
 
             completeOwnership = await partitionManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
@@ -60,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Stopping the loadbalancer should relinquish all partition ownership.
 
-            await loadbalancer1.StopAsync(tokenSource.Token);
+            await loadbalancer1.RelinquishOwnershipAsync(tokenSource.Token);
 
             completeOwnership = await partitionManager.ListOwnershipAsync(loadbalancer1.FullyQualifiedNamespace, loadbalancer1.EventHubName, loadbalancer1.ConsumerGroup);
 
@@ -73,7 +75,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                await loadbalancer2.RunAsync(partitionIds, tokenSource.Token);
+                await loadbalancer2.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
             }
 
             completeOwnership = await partitionManager.ListOwnershipAsync(loadbalancer1.FullyQualifiedNamespace, loadbalancer1.EventHubName, loadbalancer1.ConsumerGroup);
@@ -82,17 +84,17 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(loadbalancer2.Identifier)), Is.EqualTo(NumberOfPartitions));
 
-            await loadbalancer2.StopAsync(tokenSource.Token);
+            await loadbalancer2.RelinquishOwnershipAsync(tokenSource.Token);
         }
-
 
         /// <summary>
         ///   Verifies that claimable partitions are claimed by an <see cref="PartitionLoadBalancer" /> after RunAsync is called.
         /// </summary>
         ///
         [Test]
-        public async Task FindAndClaimOwnershipAsyncClaimsAllClaimablePartitions()
+        public async Task RunLoadBalancingAsyncClaimsAllClaimablePartitions()
         {
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
@@ -108,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                await loadbalancer.RunAsync(partitionIds, tokenSource.Token);
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
             }
 
             completeOwnership = await partitionManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
@@ -117,7 +119,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions));
 
-            await loadbalancer.StopAsync(tokenSource.Token);
+            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
         /// <summary>
@@ -126,8 +128,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task FindAndClaimOwnershipAsyncClaimsPartitionsWhenOwnedEqualsMinimumOwnedPartitionsCount()
+        public async Task RunLoadBalancingAsyncClaimsPartitionsWhenOwnedEqualsMinimumOwnedPartitionsCount()
         {
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int MinimumpartitionCount = 4;
             const int NumberOfPartitions = 13;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
@@ -172,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Start the loadbalancer to claim owership from of a Partition even though ownedPartitionCount == MinimumOwnedPartitionsCount.
 
-            await loadbalancer.RunAsync(partitionIds, tokenSource.Token);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
 
             // Get owned partitions.
 
@@ -184,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.That(ownedByloadbalancer1.Count(), Is.GreaterThan(MinimumpartitionCount));
             Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.True);
 
-            await loadbalancer.StopAsync(tokenSource.Token);
+            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
         /// <summary>
@@ -193,8 +196,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task FindAndClaimOwnershipAsyncStealsPartitionsWhenThisLoadbalancerOwnsMinPartitionsAndOtherLoadbalancerOwnsGreatherThanMaxPartitions()
+        public async Task RunLoadBalancingAsyncStealsPartitionsWhenThisLoadbalancerOwnsMinPartitionsAndOtherLoadbalancerOwnsGreatherThanMaxPartitions()
         {
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int MinimumpartitionCount = 4;
             const int MaximumpartitionCount = 5;
             const int NumberOfPartitions = 14;
@@ -242,7 +246,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Start the loadbalancer to steal owership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a loadbalancer owns > MaximumPartitionCount.
 
-            await loadbalancer.RunAsync(partitionIds, tokenSource.Token);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
 
             // Get owned partitions.
 
@@ -258,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             Assert.That(ownedByloadbalancer3.Count(), Is.EqualTo(MaximumpartitionCount));
 
-            await loadbalancer.StopAsync(tokenSource.Token);
+            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
         /// <summary>
@@ -267,8 +271,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task FindAndClaimOwnershipAsyncStealsPartitionsWhenThisLoadbalancerOwnsLessThanMinPartitionsAndOtherLoadbalancerOwnsMaxPartitions()
+        public async Task RunLoadBalancingAsyncStealsPartitionsWhenThisLoadbalancerOwnsLessThanMinPartitionsAndOtherLoadbalancerOwnsMaxPartitions()
         {
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int MinimumpartitionCount = 4;
             const int MaximumpartitionCount = 5;
             const int NumberOfPartitions = 12;
@@ -316,7 +321,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Start the loadbalancer to steal owership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a loadbalancer owns > MaximumPartitionCount.
 
-            await loadbalancer.RunAsync(partitionIds, tokenSource.Token);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
 
             // Get owned partitions.
 
@@ -332,9 +337,62 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             Assert.That(ownedByloadbalancer3.Count(), Is.LessThan(MaximumpartitionCount));
 
-            await loadbalancer.StopAsync(tokenSource.Token);
+            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
+        /// <summary>
+        ///   Verify logs for the <see cref="PartitionLoadBalancer" />.
+        /// </summary>
+        ///
+        [Test]
+        public async Task VerifiesEventProcessorLogs()
+        {
+            using CancellationTokenSource tokenSource = new CancellationTokenSource();
+            const int NumberOfPartitions = 4;
+            const int MinimumpartitionCount = NumberOfPartitions / 2;
+            var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
+            var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
+            var loadbalancer = new PartitionLoadBalancer(
+                partitionManager, Guid.NewGuid().ToString(), ConsumerGroup, FullyQualifiedNamespace, EventHubName, TimeSpan.FromMinutes(1));
+
+            // Create more partitions owned by a different loadbalancer.
+
+            var loadbalancer2Id = Guid.NewGuid().ToString();
+            var completeOwnership = CreatePartitionOwnership(partitionIds.Skip(1), loadbalancer2Id);
+
+            // Seed the partitionManager with the owned partitions.
+
+            await partitionManager.ClaimOwnershipAsync(completeOwnership);
+
+            var mockLog = new Mock<PartitionLoadBalancerEventSource>();
+            loadbalancer.Logger = mockLog.Object;
+
+            for (int i = 0; i < NumberOfPartitions; i++)
+            {
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+            }
+
+            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
+
+            mockLog.Verify(m => m.RenewOwnershipStart(loadbalancer.Identifier));
+            mockLog.Verify(m => m.RenewOwnershipComplete(loadbalancer.Identifier));
+            mockLog.Verify(m => m.ClaimOwnershipStart(It.Is<string>(p => partitionIds.Contains(p))));
+            mockLog.Verify(m => m.MinimumPartitionsPerEventProcessor(MinimumpartitionCount));
+            mockLog.Verify(m => m.CurrentOwnershipCount(MinimumpartitionCount, loadbalancer.Identifier));
+            mockLog.Verify(m => m.StealPartition(loadbalancer.Identifier));
+            mockLog.Verify(m => m.ShouldStealPartition(loadbalancer.Identifier));
+            mockLog.Verify(m => m.UnclaimedPartitions(It.Is<HashSet<string>>(p => p.Overlaps(partitionIds))));
+        }
+
+        /// <summary>
+        ///   Creates a collection of <see cref="PartitionOwnership" /> based on the specified arguments.
+        /// </summary>
+        ///
+        /// <param name="partitionIds">A collection of partition identifiers that the collection will be associated with.</param>
+        /// <param name="identifier">The owner identifier of the EventProcessorClient owning the collection.</param>
+        ///
+        /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
+        ///
         private IEnumerable<PartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,
                                                                           string identifier)
         {
