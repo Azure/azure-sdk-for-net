@@ -240,7 +240,6 @@ namespace Azure.Messaging.EventHubs
 
         /// <summary>
         ///   The minimum amount of time for an ownership to be considered expired without further updates.
-        ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
         internal virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
