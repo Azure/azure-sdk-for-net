@@ -425,6 +425,7 @@ namespace Azure.Messaging.EventHubs
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             StorageManager = CreateStorageManager(checkpointStore);
             Identifier = string.IsNullOrEmpty(clientOptions.Identifier) ? Guid.NewGuid().ToString() : clientOptions.Identifier;
+            LoadBalancer = new PartitionLoadBalancer(StorageManager, Identifier, consumerGroup, FullyQualifiedNamespace, eventHubName, OwnershipExpiration);
         }
 
         /// <summary>
