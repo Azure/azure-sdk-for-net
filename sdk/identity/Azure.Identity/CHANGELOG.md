@@ -1,4 +1,4 @@
-# Release Histroy
+# Release History
 
 ## 1.2.0-preview.1 (Unreleased)
 

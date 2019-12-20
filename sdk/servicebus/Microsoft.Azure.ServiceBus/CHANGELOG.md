@@ -1,5 +1,4 @@
-Release History
-================
+# Release History
 
 ## 4.1.1
 ### Bug fixes

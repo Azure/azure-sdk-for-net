@@ -40,6 +40,7 @@ jobs:
         parameters:
           ServiceDirectory: ${{parameters.ServiceDirectory}}
           Artifacts: ${{parameters.Artifacts}}
+          DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
   - job: "Analyze"
     condition: ne(variables['Skip.Analyze'], true)
     variables:

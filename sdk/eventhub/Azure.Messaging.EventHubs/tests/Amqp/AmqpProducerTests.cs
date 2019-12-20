@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Moq;
 using Moq.Protected;

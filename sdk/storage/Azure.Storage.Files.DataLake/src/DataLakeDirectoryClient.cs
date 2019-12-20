@@ -173,7 +173,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipeline pipeline) : base(directoryUri, pipeline)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+            : base(directoryUri, pipeline, version, clientDiagnostics)
         {
         }
         #endregion ctors
@@ -187,7 +195,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline);
+            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> object by appending
@@ -198,7 +206,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
+            => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
 
         #region Create
         /// <summary>
@@ -504,7 +512,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -566,7 +574,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)

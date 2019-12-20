@@ -10,6 +10,7 @@ omitted_paths:
   - common/SmokeTests/*
   - sdk/*/samples/*
   - sdk/*/swagger/*
+  - doc/ApiDocGeneration/*
 language: net
 root_check_enabled: True
 required_readme_sections:

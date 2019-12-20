@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Errors;
@@ -543,7 +544,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     endpoint.AbsoluteUri,
                     authClaims,
                     AuthorizationRefreshTimeout,
-                    () => refreshTimer
+                    () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null)
                 );
 
                 refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
@@ -754,6 +755,11 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 try
                 {
+                    if (refreshTimer == null)
+                    {
+                        return;
+                    }
+
                     var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, tokenProvider, endpoint, audience, resource, requiredClaims, refreshTimeout).ConfigureAwait(false);
 
                     // Reset the timer for the next refresh.
@@ -762,6 +768,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                     {
                         refreshTimer.Change(CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
                     }
+                }
+                catch (ObjectDisposedException)
+                {
+                    // This can occur if the connection is closed or the scope disposed after the factory
+                    // is called but before the timer is updated.  The callback may also fire while the timer is
+                    // in the act of disposing.  Do not consider it an error.
                 }
                 catch (Exception ex)
                 {
