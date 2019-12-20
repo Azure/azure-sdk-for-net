@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples
@@ -94,7 +96,7 @@ namespace Azure.Messaging.EventHubs.Samples
                 // safe.
 
                 using CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(60));
 
                 await foreach (PartitionEvent partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
                 {

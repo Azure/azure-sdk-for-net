@@ -10,6 +10,9 @@
 
 namespace Microsoft.Azure.Management.Blueprint.Models
 {
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,9 +35,12 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// definition.</param>
         /// <param name="lastModified">Last modified time of this blueprint
         /// definition.</param>
-        public AssignmentStatus(System.DateTime? timeCreated = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+        /// <param name="managedResources">List of resources that were created
+        /// by the blueprint assignment.</param>
+        public AssignmentStatus(System.DateTime? timeCreated = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), IList<string> managedResources = default(IList<string>))
             : base(timeCreated, lastModified)
         {
+            ManagedResources = managedResources;
             CustomInit();
         }
 
@@ -42,6 +48,13 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets list of resources that were created by the blueprint
+        /// assignment.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedResources")]
+        public IList<string> ManagedResources { get; private set; }
 
     }
 }

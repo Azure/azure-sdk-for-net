@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
-using Azure.Messaging.EventHubs.Errors;
 using Moq;
 using NUnit.Framework;
 

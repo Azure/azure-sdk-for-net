@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs.Processor.Samples
@@ -134,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 await processor.StartProcessingAsync();
 
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(90));
 
                 // We'll publish a batch of events for our processor to receive. We'll split the events into a couple of batches to
                 // increase the chance they'll be spread around to different partitions and introduce a delay between batches to

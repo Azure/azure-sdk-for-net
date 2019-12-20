@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;

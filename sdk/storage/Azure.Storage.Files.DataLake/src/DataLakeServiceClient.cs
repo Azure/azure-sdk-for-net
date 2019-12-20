@@ -54,6 +54,16 @@ namespace Azure.Storage.Files.DataLake
         protected virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly DataLakeClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -242,11 +252,13 @@ namespace Azure.Storage.Files.DataLake
             _pipeline = options.Build(authentication);
             _uri = serviceUri;
             _blobUri = new DataLakeUriBuilder(serviceUri).ToBlobUri();
+            _version = options.Version;
             _clientDiagnostics = clientDiagnostics ?? new ClientDiagnostics(options);
             _blobServiceClient = BlobServiceClientInternals.Create(
                 _blobUri,
                 _pipeline,
                 authentication,
+                Version.AsBlobsVersion(),
                 _clientDiagnostics);
         }
 
@@ -256,11 +268,11 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         private class BlobServiceClientInternals : BlobServiceClient
         {
-            public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, ClientDiagnostics diagnostics)
+            public static BlobServiceClient Create(Uri uri, HttpPipeline pipeline, HttpPipelinePolicy authentication, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
             {
                 return BlobServiceClient.CreateClient(
                     uri,
-                    new BlobClientOptions()
+                    new BlobClientOptions(version)
                     {
                         Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
                     },
@@ -283,7 +295,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="DataLakeFileSystemClient"/> for the desired share.
         /// </returns>
         public virtual DataLakeFileSystemClient GetFileSystemClient(string fileSystemName)
-            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, ClientDiagnostics);
+            => new DataLakeFileSystemClient(Uri.AppendToPath(fileSystemName), Pipeline, Version, ClientDiagnostics);
 
         #region Get User Delegation Key
         /// <summary>
