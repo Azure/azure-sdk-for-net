@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -740,6 +741,35 @@ namespace Azure.Storage.Blobs.Test
                 {
                     File.Delete(path);
                 }
+            }
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            Progress progress = new Progress();
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.GB));
+
+            // Act
+            await blob.UploadAsync(content: stream, progressHandler: progress);
+
+            // Assert
+            for ( int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+        }
+
+        private class Progress : IProgress<long>
+        {
+            public List<long> List = new List<long>();
+            public void Report(long value)
+            {
+                List.Add(value);
             }
         }
         #endregion Upload
