@@ -10,36 +10,13 @@ To get started with a library, see the README.md file located in the library's p
 
 For tutorials, samples, quick starts, and other documentation, go to [Azure for .NET Developers](https://docs.microsoft.com/en-us/dotnet/azure/).
 
-## Packages available
+## Azure SDK Standard
 
-### Client: November 2019 Releases
-New wave of packages that we are announcing as **GA** and several that are currently releasing in **preview**. These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet/guidelines/) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](/sdk/core/Azure.Core/README.md).
+Historically, the Azure SDK has been just a collection of independent packages. In recent months, we embarked on an effort to transition the SDK from a collection of packages to a well-rounded, consistent, and dependable product. You can read about this effort in a blog post [Previewing Azure SDKs following new Azure SDK API Standards](https://azure.microsoft.com/en-in/blog/previewing-azure-sdks-following-new-azure-sdk-api-standards/). 
 
-These preview libraries can be easily identified by their folder, package, and namespaces names starting with 'Azure', e.g. Azure.Storage.Blobs.
+This repo contains all Azure SDK libraries for .NET. Some of these libraries have been transitioned to the Azure SDK Standard, i.e. they follow the [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html), and some are awaiting be to transitioned. We will refer to the already transitioned packages as _Azure SDK Standard Libraries_, or _Azure Standard Libraries_, for short. You can see a list of such libraries in the [packages guide](https://github.com/Azure/azure-sdk-for-net/blob/master/PACKAGES.md).   
 
-The libraries released in the November 2019 GA release:
-* [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md)
-* [Azure.Security.KeyVault.Keys](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md)
-* [Azure.Security.KeyVault.Secrets](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md)
-* [Azure.Storage.Blobs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/README.md)
-* [Azure.Storage.Blobs.Batch](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs.Batch/README.md)
-* [Azure.Storage.Queues](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/README.md)
-
-The libraries released in the November 2019 preview:
-* [Azure.ApplicationModel.Configuration](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/appconfiguration/Azure.Data.AppConfiguration/README.md)
-* [Azure.Security.KeyVault.Certificates](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md)
-* [Azure.Messaging.EventHubs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md)
-* [Azure.Storage.Files.Shares](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files.Shares/README.md)
-
-> NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries.
-
-### Client: Previous Versions
-
-Last stable versions of packages that are production-ready. These libraries provide similar functionalities to the preview packages, as they allow you to use and consume existing resources and interact with them, for example: upload a storage blob. Stable library directories typically contain 'Microsoft.Azure' in their names, e.g. 'Microsoft.Azure.KeyVault'. They might not implement the [guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) or have the same feature set as the Novemeber releases. They do however offer wider coverage of services.
-
-### Management
-
-Libraries which enable you to provision specific server resources. They are directly mirroring Azure service's REST endpoints. Management library directories typically contain the word 'Management' in their names, e.g. 'Microsoft.Azure.Management.Storage'.
+Azure Standard Libraries offer many qualities described in detail in [Using Azure Standard Libraries](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/AzureStandardLibraries.md). To ensure that Azure Standard Libraries adhere to the design guidelines and maintain their qualities over time, we follow a methodical design and development process described in the [contributing guide](CONTRIBUTING.md).
 
 ## Need help?
 
