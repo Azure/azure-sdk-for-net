@@ -5,8 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 
-namespace Azure.Messaging.EventHubs.Authorization
+namespace Azure.Messaging.EventHubs
 {
     /// <summary>
     ///   Provides a credential based on a shared access signature for a given
@@ -22,14 +23,20 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///   reported by the Azure portal.
         /// </summary>
         ///
-        private string SharedAccessKeyName { get; }
+        private string SharedAccessKeyName { get; set; }
 
         /// <summary>
         ///   The value of the shared access key to be used for authorization, as
         ///   reported by the Azure portal.
         /// </summary>
         ///
-        private string SharedAccessKey { get; }
+        private string SharedAccessKey { get; set; }
+
+        /// <summary>
+        ///   A reference to a corresponding SharedAccessSignatureCredential.
+        /// </summary>
+        ///
+        private SharedAccessSignatureCredential SharedAccessSignatureCredential { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubSharedKeyCredential"/> class.
@@ -73,17 +80,40 @@ namespace Azure.Messaging.EventHubs.Authorization
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) => throw new InvalidOperationException(Resources.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
+        ///   Allows the rotation of Shared Access Signatures.
+        /// </summary>
+        ///
+        /// <param name="keyName">The name of the shared access key that the signature should be based on.</param>
+        /// <param name="keyValue">The value of the shared access key for the signature.</param>
+        ///
+        public void UpdateSharedAccessKey(string keyName,
+                                          string keyValue)
+        {
+            Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
+            Argument.AssertNotNullOrEmpty(keyValue, nameof(keyValue));
+
+            SharedAccessKeyName = keyName;
+            SharedAccessKey = keyValue;
+
+            SharedAccessSignatureCredential?.UpdateSharedAccessKey(keyName, keyValue);
+        }
+
+        /// <summary>
         ///   Coverts to shared access signature credential.
+        ///   It retains a reference to the generated SharedAccessSignatureCredential.
         /// </summary>
         ///
         /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
         ///
-        /// <returns>A <see cref="SharedAccessSignatureCredential" /> based on the requested shared access key.</returns>
+        /// <returns>A new <see cref="SharedAccessSignatureCredential" /> based on the requested shared access key.</returns>
         ///
-        internal SharedAccessSignatureCredential ConvertToSharedAccessSignatureCredential(string eventHubResource,
-                                                                                          TimeSpan? signatureValidityDuration = default) =>
-            new SharedAccessSignatureCredential(new SharedAccessSignature(eventHubResource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration));
+        internal SharedAccessSignatureCredential AsSharedAccessSignatureCredential(string eventHubResource,
+                                                                                   TimeSpan? signatureValidityDuration = default)
+        {
+            SharedAccessSignatureCredential = new SharedAccessSignatureCredential(new SharedAccessSignature(eventHubResource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration));
 
+            return SharedAccessSignatureCredential;
+        }
     }
 }

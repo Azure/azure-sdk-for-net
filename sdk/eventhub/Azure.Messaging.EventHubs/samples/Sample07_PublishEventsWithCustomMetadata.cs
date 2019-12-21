@@ -4,6 +4,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples
@@ -18,13 +19,13 @@ namespace Azure.Messaging.EventHubs.Samples
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample07_PublishEventsWithCustomMetadata);
+        public string Name => nameof(Sample07_PublishEventsWithCustomMetadata);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An example of publishing events, extending the event data with custom metadata.";
+        public string Description => "An example of publishing events, extending the event data with custom metadata.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.

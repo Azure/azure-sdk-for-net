@@ -1,5 +1,10 @@
 # Release History
 
+## 1.2.0-preview.1 (Unreleased)
+
+### Fixes and improvements
+- Fix `UsernamePasswordCredential` constructor parameter mishandling
+
 ## 1.1.0
 
 ### Fixes and improvements

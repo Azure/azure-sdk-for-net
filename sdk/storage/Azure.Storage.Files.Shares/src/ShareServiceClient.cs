@@ -42,6 +42,16 @@ namespace Azure.Storage.Files.Shares
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly ShareClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual ShareClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -120,6 +130,7 @@ namespace Azure.Storage.Files.Shares
             var conn = StorageConnectionString.Parse(connectionString);
             _uri = conn.FileEndpoint;
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -180,25 +191,8 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = serviceUri;
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="serviceUri">
-        /// A <see cref="Uri"/> referencing the file service.
-        /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal ShareServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
-        {
-            _uri = serviceUri;
-            _pipeline = pipeline;
-            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -214,7 +208,8 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// A <see cref="ShareClient"/> for the desired share.
         /// </returns>
-        public virtual ShareClient GetShareClient(string shareName) => new ShareClient(Uri.AppendToPath(shareName), Pipeline, ClientDiagnostics);
+        public virtual ShareClient GetShareClient(string shareName) =>
+            new ShareClient(Uri.AppendToPath(shareName), Pipeline, Version, ClientDiagnostics);
 
         #region GetShares
         /// <summary>
@@ -362,6 +357,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,
@@ -482,6 +478,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.File.Service.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -604,6 +601,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         properties: properties,
                         async: async,
                         operationName: Constants.File.Service.SetPropertiesOperationName,

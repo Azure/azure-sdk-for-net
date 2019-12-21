@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="value">The list of invoices.</param>
         /// <param name="nextLink">The link (url) to the next page of
         /// results.</param>
-        public InvoiceListResult(IList<InvoiceSummary> value = default(IList<InvoiceSummary>), string nextLink = default(string))
+        public InvoiceListResult(IList<Invoice> value = default(IList<Invoice>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Gets the list of invoices.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<InvoiceSummary> Value { get; private set; }
+        public IList<Invoice> Value { get; private set; }
 
         /// <summary>
         /// Gets the link (url) to the next page of results.

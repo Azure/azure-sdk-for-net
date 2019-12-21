@@ -1,3 +1,14 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-app-configuration
+name: Azure.Data.AppConfiguration samples for .NET
+description: Samples for the Azure.Data.AppConfiguration client library
+---
+
 # Azure App Configuration client SDK samples
 
 This directory contains samples for the Azure App Configuration client SDK.  Each sample illustrates one or more capabilities of the library.

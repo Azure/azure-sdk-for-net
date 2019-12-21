@@ -16,7 +16,7 @@ using Microsoft.Rest;
 using Microsoft.Rest.Azure;
 using Polly;
 
-namespace Azure.Messaging.EventHubs.Tests.Infrastructure
+namespace Azure.Messaging.EventHubs.Tests
 {
     /// <summary>
     ///  Provides common operations for managing resources used for Live tests.

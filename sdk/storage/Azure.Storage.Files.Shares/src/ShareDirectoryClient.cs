@@ -40,6 +40,16 @@ namespace Azure.Storage.Files.Shares
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly ShareClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual ShareClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -182,6 +192,7 @@ namespace Azure.Storage.Files.Shares
                 };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -248,6 +259,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = directoryUri;
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -263,11 +275,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal ShareDirectoryClient(Uri directoryUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal ShareDirectoryClient(Uri directoryUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             _uri = directoryUri;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -291,7 +310,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareDirectoryClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareDirectoryClient(p.ToUri(), Pipeline, ClientDiagnostics);
+            return new ShareDirectoryClient(p.ToUri(), Pipeline, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -303,7 +322,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
         public virtual ShareFileClient GetFileClient(string fileName)
-            => new ShareFileClient(Uri.AppendToPath(fileName), Pipeline, ClientDiagnostics);
+            => new ShareFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Creates a new <see cref="ShareDirectoryClient"/> object by appending
@@ -314,7 +333,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetSubdirectoryClient(string subdirectoryName)
-            => new ShareDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, ClientDiagnostics);
+            => new ShareDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -468,6 +487,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
                         filePermission: filePermission,
@@ -573,6 +593,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.File.Directory.DeleteOperationName,
                         cancellationToken: cancellationToken)
@@ -685,6 +706,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.File.Directory.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -832,6 +854,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
                         filePermission: filePermission,
                         fileCreationTime: smbProps.FileCreationTimeToString() ?? Constants.File.Preserve,
@@ -855,7 +878,6 @@ namespace Azure.Storage.Files.Shares
                 }
             }
         }
-
         #endregion SetHttpHeaders
 
         #region SetMetadata
@@ -956,6 +978,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
                         operationName: Constants.File.Directory.SetMetadataOperationName,
@@ -1096,6 +1119,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,
@@ -1232,6 +1256,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         maxresults: maxResults,
                         recursive: recursive,
@@ -1274,25 +1299,33 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> describing the status of the
+        /// A <see cref="Response{CloseHandlesResult}"/> describing the status of the
         /// <see cref="ForceCloseHandle"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response ForceCloseHandle(
+        public virtual Response<CloseHandlesResult> ForceCloseHandle(
             string handleId,
-            CancellationToken cancellationToken = default) =>
-            ForceCloseHandlesInternal(
+            CancellationToken cancellationToken = default)
+        {
+            Response<StorageClosedHandlesSegment> response = ForceCloseHandlesInternal(
                 handleId,
                 null,
                 null,
                 false, // async
                 cancellationToken,
                 Constants.File.Directory.ForceCloseHandleOperationName)
-                .EnsureCompleted()
-            .GetRawResponse();
+                .EnsureCompleted();
+
+            return Response.FromValue(
+                new CloseHandlesResult()
+                {
+                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
+                },
+                response.GetRawResponse());
+        }
 
         /// <summary>
         /// The <see cref="ForceCloseHandle"/> operation closes a handle opened on a directory
@@ -1314,25 +1347,33 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> describing the status of the
-        /// <see cref="ForceCloseHandle"/> operation.
+        /// A <see cref="Response{CloseHandlesResult}"/> describing the status of the
+        /// <see cref="ForceCloseHandleAsync"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> ForceCloseHandleAsync(
+        public virtual async Task<Response<CloseHandlesResult>> ForceCloseHandleAsync(
             string handleId,
-            CancellationToken cancellationToken = default) =>
-            (await ForceCloseHandlesInternal(
+            CancellationToken cancellationToken = default)
+        {
+            Response<StorageClosedHandlesSegment> response = await ForceCloseHandlesInternal(
                 handleId,
                 null,
                 null,
                 true, // async
                 cancellationToken,
                 Constants.File.Directory.ForceCloseHandleOperationName)
-                .ConfigureAwait(false))
-            .GetRawResponse();
+                .ConfigureAwait(false);
+
+            return Response.FromValue(
+                new CloseHandlesResult()
+                {
+                    ClosedHandlesCount = response.Value.NumberOfHandlesClosed
+                },
+                response.GetRawResponse());
+        }
 
         /// <summary>
         /// The <see cref="ForceCloseAllHandles"/> operation closes all handles opened on a directory
@@ -1355,13 +1396,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// The number of handles closed.
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
+        /// <see cref="ForceCloseAllHandles"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual int ForceCloseAllHandles(
+        public virtual CloseHandlesResult ForceCloseAllHandles(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             ForceCloseAllHandlesInternal(
@@ -1391,13 +1433,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// The number of handles closed.
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
+        /// <see cref="ForceCloseAllHandlesAsync"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<int> ForceCloseAllHandlesAsync(
+        public virtual async Task<CloseHandlesResult> ForceCloseAllHandlesAsync(
             bool? recursive = default,
             CancellationToken cancellationToken = default) =>
             await ForceCloseAllHandlesInternal(
@@ -1430,13 +1473,14 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// The number of handles closed.
+        /// A <see cref="CloseHandlesResult"/> describing the status of the
+        /// <see cref="ForceCloseAllHandlesInternal"/> operation.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<int> ForceCloseAllHandlesInternal(
+        private async Task<CloseHandlesResult> ForceCloseAllHandlesInternal(
             bool? recursive,
             bool async,
             CancellationToken cancellationToken)
@@ -1458,7 +1502,10 @@ namespace Azure.Storage.Files.Shares
 
             } while (!string.IsNullOrEmpty(marker));
 
-            return handlesClosed;
+            return new CloseHandlesResult()
+            {
+                ClosedHandlesCount = handlesClosed
+            };
         }
 
         /// <summary>
@@ -1533,6 +1580,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         marker: marker,
                         handleId: handleId,
+                        version: Version.ToVersionString(),
                         recursive: recursive,
                         async: async,
                         operationName: operationName,

@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="Certificates.CertificateIssuer"/> for mocking purposes.
         /// </summary>
-        /// <param name="properties">Sets the <see cref="Certificates.CertificateIssuer.Properties"/> property.</param>
+        /// <param name="properties">Sets the <see cref="Certificates.CertificateIssuer.Id"/>, <see cref="Certificates.CertificateIssuer.Name"/>, and <see cref="Certificates.CertificateIssuer.Provider"/> properties.</param>
         /// <param name="createdOn">Sets the <see cref="Certificates.CertificateIssuer.CreatedOn"/> property.</param>
         /// <param name="updatedOn">Sets the <see cref="Certificates.CertificateIssuer.UpdatedOn"/> property.</param>
         /// <returns>A new instance of the <see cref="Certificates.CertificateIssuer"/> for mocking purposes.</returns>

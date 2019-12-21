@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Certificates
 {
@@ -21,11 +22,28 @@ namespace Azure.Security.KeyVault.Certificates
         private const string StatusDetailsPropertyName = "status_details";
         private const string TargetPropertyName = "target";
         private const string ErrorPropertyName = "error";
+        private const string Collection = "certificates/";
 
         private IssuerParameters _issuer;
 
         internal CertificateOperationProperties()
         {
+        }
+
+        internal CertificateOperationProperties(Uri vaultUri, string name)
+        {
+            VaultUri = vaultUri;
+            Name = name;
+
+            RequestUriBuilder builder = new RequestUriBuilder
+            {
+                Scheme = vaultUri.Scheme,
+                Host = vaultUri.Host,
+                Port = vaultUri.Port,
+                Path = Collection + name,
+            };
+
+            Id = builder.ToUri();
         }
 
         /// <summary>
@@ -160,8 +178,8 @@ namespace Azure.Security.KeyVault.Certificates
             if (idToParse.Segments.Length != 3 && idToParse.Segments.Length != 4)
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. Bad number of segments: {1}", idToParse, idToParse.Segments.Length));
 
-            if (!string.Equals(idToParse.Segments[1], "certificates" + "/", StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be 'certificates/', found '{1}'", idToParse, idToParse.Segments[1]));
+            if (!string.Equals(idToParse.Segments[1], Collection, StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}', found '{2}'", idToParse, Collection, idToParse.Segments[1]));
 
             VaultUri = new Uri($"{idToParse.Scheme}://{idToParse.Authority}");
             Name = idToParse.Segments[2].Trim('/');

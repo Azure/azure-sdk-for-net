@@ -29,24 +29,32 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <summary>
         /// Initializes a new instance of the ShareSynchronization class.
         /// </summary>
-        /// <param name="company">Company name</param>
+        /// <param name="consumerEmail">Email of the user who created the
+        /// synchronization</param>
+        /// <param name="consumerName">Name of the user who created the
+        /// synchronization</param>
+        /// <param name="consumerTenantName">Tenant name of the consumer who
+        /// created the synchronization</param>
         /// <param name="durationMs">synchronization duration</param>
         /// <param name="endTime">End time of synchronization</param>
         /// <param name="message">message of synchronization</param>
-        /// <param name="recipient">Recipient id</param>
         /// <param name="startTime">start time of synchronization</param>
         /// <param name="status">Raw Status</param>
         /// <param name="synchronizationId">Synchronization id</param>
-        public ShareSynchronization(string company = default(string), int? durationMs = default(int?), System.DateTime? endTime = default(System.DateTime?), string message = default(string), string recipient = default(string), System.DateTime? startTime = default(System.DateTime?), string status = default(string), string synchronizationId = default(string))
+        /// <param name="synchronizationMode">Synchronization mode. Possible
+        /// values include: 'Incremental', 'FullSync'</param>
+        public ShareSynchronization(string consumerEmail = default(string), string consumerName = default(string), string consumerTenantName = default(string), int? durationMs = default(int?), System.DateTime? endTime = default(System.DateTime?), string message = default(string), System.DateTime? startTime = default(System.DateTime?), string status = default(string), string synchronizationId = default(string), string synchronizationMode = default(string))
         {
-            Company = company;
+            ConsumerEmail = consumerEmail;
+            ConsumerName = consumerName;
+            ConsumerTenantName = consumerTenantName;
             DurationMs = durationMs;
             EndTime = endTime;
             Message = message;
-            Recipient = recipient;
             StartTime = startTime;
             Status = status;
             SynchronizationId = synchronizationId;
+            SynchronizationMode = synchronizationMode;
             CustomInit();
         }
 
@@ -56,10 +64,23 @@ namespace Microsoft.Azure.Management.DataShare.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets company name
+        /// Gets or sets email of the user who created the synchronization
         /// </summary>
-        [JsonProperty(PropertyName = "company")]
-        public string Company { get; set; }
+        [JsonProperty(PropertyName = "consumerEmail")]
+        public string ConsumerEmail { get; set; }
+
+        /// <summary>
+        /// Gets or sets name of the user who created the synchronization
+        /// </summary>
+        [JsonProperty(PropertyName = "consumerName")]
+        public string ConsumerName { get; set; }
+
+        /// <summary>
+        /// Gets or sets tenant name of the consumer who created the
+        /// synchronization
+        /// </summary>
+        [JsonProperty(PropertyName = "consumerTenantName")]
+        public string ConsumerTenantName { get; set; }
 
         /// <summary>
         /// Gets or sets synchronization duration
@@ -80,12 +101,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets recipient id
-        /// </summary>
-        [JsonProperty(PropertyName = "recipient")]
-        public string Recipient { get; set; }
-
-        /// <summary>
         /// Gets or sets start time of synchronization
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
@@ -102,6 +117,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "synchronizationId")]
         public string SynchronizationId { get; set; }
+
+        /// <summary>
+        /// Gets synchronization mode. Possible values include: 'Incremental',
+        /// 'FullSync'
+        /// </summary>
+        [JsonProperty(PropertyName = "synchronizationMode")]
+        public string SynchronizationMode { get; private set; }
 
     }
 }

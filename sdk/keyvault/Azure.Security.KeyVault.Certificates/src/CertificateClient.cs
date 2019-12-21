@@ -930,7 +930,16 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Response<CertificateIssuer> CreateIssuer(CertificateIssuer issuer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(issuer, nameof(issuer));
-            Argument.AssertNotNullOrEmpty(issuer.Name, nameof(issuer.Name));
+
+            if (string.IsNullOrEmpty(issuer.Name))
+            {
+                throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
+            }
+
+            if (string.IsNullOrEmpty(issuer.Provider))
+            {
+                throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Provider)} cannot be null or an empty string.", nameof(issuer));
+            }
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CreateIssuer");
             scope.AddAttribute("issuer", issuer.Name);
@@ -958,7 +967,16 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual async Task<Response<CertificateIssuer>> CreateIssuerAsync(CertificateIssuer issuer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(issuer, nameof(issuer));
-            Argument.AssertNotNullOrEmpty(issuer.Name, nameof(issuer.Name));
+
+            if (string.IsNullOrEmpty(issuer.Name))
+            {
+                throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
+            }
+
+            if (string.IsNullOrEmpty(issuer.Provider))
+            {
+                throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Provider)} cannot be null or an empty string.", nameof(issuer));
+            }
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.CreateIssuer");
             scope.AddAttribute("issuer", issuer.Name);
@@ -1040,7 +1058,11 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual Response<CertificateIssuer> UpdateIssuer(CertificateIssuer issuer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(issuer, nameof(issuer));
-            Argument.AssertNotNullOrEmpty(issuer.Name, nameof(issuer.Name));
+
+            if (string.IsNullOrEmpty(issuer.Name))
+            {
+                throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
+            }
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateIssuer");
             scope.AddAttribute("issuer", issuer.Name);
@@ -1068,7 +1090,11 @@ namespace Azure.Security.KeyVault.Certificates
         public virtual async Task<Response<CertificateIssuer>> UpdateIssuerAsync(CertificateIssuer issuer, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(issuer, nameof(issuer));
-            Argument.AssertNotNullOrEmpty(issuer.Name, nameof(issuer.Name));
+
+            if (string.IsNullOrEmpty(issuer.Name))
+            {
+                throw new ArgumentException($"{nameof(issuer)}.{nameof(issuer.Name)} cannot be null or an empty string.", nameof(issuer));
+            }
 
             using DiagnosticScope scope = _pipeline.CreateScope("Azure.Security.KeyVault.Certificates.CertificateClient.UpdateIssuer");
             scope.AddAttribute("issuer", issuer.Name);

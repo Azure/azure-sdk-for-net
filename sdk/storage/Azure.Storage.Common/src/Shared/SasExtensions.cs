@@ -22,6 +22,9 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A string representing which resource types are allowed.
         /// </returns>
+        /// <remarks>
+        /// The order here matches the order used by the portal when generating SAS signatures.
+        /// </remarks>
         internal static string ToPermissionsString(this AccountSasResourceTypes resourceTypes)
         {
             var sb = new StringBuilder();
@@ -50,6 +53,9 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// An <see cref="AccountSasResourceTypes"/> instance.
         /// </returns>
+        /// <remarks>
+        /// The order here matches the order used by the portal when generating SAS signatures.
+        /// </remarks>
         internal static AccountSasResourceTypes ParseResourceTypes(string s)
         {
             AccountSasResourceTypes types = default;
@@ -116,6 +122,9 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// A string representing which services are allowed.
         /// </returns>
+        /// <remarks>
+        /// The order here matches the order used by the portal when generating SAS signatures.
+        /// </remarks>
         internal static string ToPermissionsString(this AccountSasServices services)
         {
             var sb = new StringBuilder();
@@ -123,13 +132,17 @@ namespace Azure.Storage.Sas
             {
                 sb.Append(Constants.Sas.AccountServices.Blob);
             }
+            if ((services & AccountSasServices.Files) == AccountSasServices.Files)
+            {
+                sb.Append(Constants.Sas.AccountServices.File);
+            }
             if ((services & AccountSasServices.Queues) == AccountSasServices.Queues)
             {
                 sb.Append(Constants.Sas.AccountServices.Queue);
             }
-            if ((services & AccountSasServices.Files) == AccountSasServices.Files)
+            if ((services & AccountSasServices.Tables) == AccountSasServices.Tables)
             {
-                sb.Append(Constants.Sas.AccountServices.File);
+                sb.Append(Constants.Sas.AccountServices.Table);
             }
             return sb.ToString();
         }
@@ -154,8 +167,10 @@ namespace Azure.Storage.Sas
                     Constants.Sas.AccountServices.Blob => AccountSasServices.Blobs,
                     Constants.Sas.AccountServices.Queue => AccountSasServices.Queues,
                     Constants.Sas.AccountServices.File => AccountSasServices.Files,
+                    Constants.Sas.AccountServices.Table => AccountSasServices.Tables,
                     _ => throw Errors.InvalidService(ch),
                 };
+                ;
             }
             return svcs;
         }

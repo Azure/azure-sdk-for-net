@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using NUnit.Framework;
 
@@ -30,7 +32,7 @@ namespace Azure.Storage.Files.Shares.Test
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
 
             var shareName = GetNewShareName();
 
@@ -41,6 +43,79 @@ namespace Azure.Storage.Files.Shares.Test
             Assert.AreEqual(shareName, builder.ShareName);
             Assert.AreEqual("", builder.DirectoryOrFilePath);
             //Assert.AreEqual("accountName", builder.AccountName);
+        }
+
+        [Test]
+        public async Task Ctor_ConnectionString_Sas()
+        {
+            // Arrange
+            var sasBuilder = new AccountSasBuilder
+            {
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                Services = AccountSasServices.All,
+                ResourceTypes = AccountSasResourceTypes.All,
+                Protocol = SasProtocol.Https,
+            };
+
+            sasBuilder.SetPermissions(AccountSasPermissions.All);
+            var cred = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            string sasToken = sasBuilder.ToSasQueryParameters(cred).ToString();
+            var sasCred = new SharedAccessSignatureCredentials(sasToken);
+
+            StorageConnectionString conn1 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: true);
+
+            ShareClient shareClient1 = GetShareClient(conn1.ToString(exportSecrets: true));
+
+            // Also test with a connection string not containing the blob endpoint.
+            // This should still work provided account name and Sas credential are present.
+            StorageConnectionString conn2 = GetConnectionString(
+                credentials: sasCred,
+                includeEndpoint: false);
+
+            ShareClient shareClient2 = GetShareClient(conn2.ToString(exportSecrets: true));
+
+            ShareClient GetShareClient(string connectionString) =>
+                InstrumentClient(
+                    new ShareClient(
+                        connectionString,
+                        GetNewShareName(),
+                        GetOptions()));
+
+            async Task<ShareFileClient> GetFileClient(ShareClient share)
+            {
+                await share.CreateAsync();
+                string dirName = GetNewDirectoryName();
+                await share.CreateDirectoryAsync(dirName);
+                return InstrumentClient(share.GetDirectoryClient(dirName).GetFileClient(GetNewFileName()));
+            }
+
+            try
+            {
+                // Act
+                ShareFileClient file1 = await GetFileClient(shareClient1);
+                ShareFileClient file2 = await GetFileClient(shareClient2);
+
+                var data = GetRandomBuffer(Constants.KB);
+                var stream1 = new MemoryStream(data);
+                var stream2 = new MemoryStream(data);
+
+                await file1.CreateAsync(stream1.Length);
+                await file2.CreateAsync(stream2.Length);
+                Response<ShareFileUploadInfo> info1 = await file1.UploadAsync(stream1);
+                Response<ShareFileUploadInfo> info2 = await file2.UploadAsync(stream2);
+
+                // Assert
+                Assert.IsNotNull(info1.Value.ETag);
+                Assert.IsNotNull(info2.Value.ETag);
+            }
+            finally
+            {
+                // Clean up
+                await shareClient1.DeleteAsync();
+                await shareClient2.DeleteAsync();
+            }
         }
 
         [Test]

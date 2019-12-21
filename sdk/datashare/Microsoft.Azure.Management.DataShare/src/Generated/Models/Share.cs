@@ -37,24 +37,27 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="type">Type of the azure resource</param>
         /// <param name="createdAt">Time at which the share was
         /// created.</param>
-        /// <param name="createdBy">Name of the user who created the
-        /// share.</param>
         /// <param name="description">Share description.</param>
         /// <param name="provisioningState">Gets or sets the provisioning
         /// state. Possible values include: 'Succeeded', 'Creating',
         /// 'Deleting', 'Moving', 'Failed'</param>
         /// <param name="shareKind">Share kind. Possible values include:
-        /// 'CopyBased'</param>
+        /// 'CopyBased', 'InPlace'</param>
         /// <param name="terms">Share terms.</param>
-        public Share(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string createdBy = default(string), string description = default(string), string provisioningState = default(string), string shareKind = default(string), string terms = default(string))
+        /// <param name="userEmail">Email of the user who created the
+        /// resource</param>
+        /// <param name="userName">Name of the user who created the
+        /// resource</param>
+        public Share(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string description = default(string), string provisioningState = default(string), string shareKind = default(string), string terms = default(string), string userEmail = default(string), string userName = default(string))
             : base(id, name, type)
         {
             CreatedAt = createdAt;
-            CreatedBy = createdBy;
             Description = description;
             ProvisioningState = provisioningState;
             ShareKind = shareKind;
             Terms = terms;
+            UserEmail = userEmail;
+            UserName = userName;
             CustomInit();
         }
 
@@ -70,12 +73,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public System.DateTime? CreatedAt { get; private set; }
 
         /// <summary>
-        /// Gets name of the user who created the share.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createdBy")]
-        public string CreatedBy { get; private set; }
-
-        /// <summary>
         /// Gets or sets share description.
         /// </summary>
         [JsonProperty(PropertyName = "properties.description")]
@@ -89,7 +86,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets share kind. Possible values include: 'CopyBased'
+        /// Gets or sets share kind. Possible values include: 'CopyBased',
+        /// 'InPlace'
         /// </summary>
         [JsonProperty(PropertyName = "properties.shareKind")]
         public string ShareKind { get; set; }
@@ -99,6 +97,18 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.terms")]
         public string Terms { get; set; }
+
+        /// <summary>
+        /// Gets email of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userEmail")]
+        public string UserEmail { get; private set; }
+
+        /// <summary>
+        /// Gets name of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userName")]
+        public string UserName { get; private set; }
 
     }
 }

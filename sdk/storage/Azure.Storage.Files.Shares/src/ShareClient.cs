@@ -44,6 +44,16 @@ namespace Azure.Storage.Files.Shares
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly ShareClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual ShareClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -143,6 +153,7 @@ namespace Azure.Storage.Files.Shares
             var builder = new ShareUriBuilder(conn.FileEndpoint) { ShareName = shareName };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -206,6 +217,7 @@ namespace Azure.Storage.Files.Shares
             options ??= new ShareClientOptions();
             _uri = shareUri;
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -220,12 +232,18 @@ namespace Azure.Storage.Files.Shares
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal ShareClient(Uri shareUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal ShareClient(Uri shareUri, HttpPipeline pipeline, ShareClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             _uri = shareUri;
             _pipeline = pipeline;
-
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -249,7 +267,7 @@ namespace Azure.Storage.Files.Shares
         public virtual ShareClient WithSnapshot(string snapshot)
         {
             var p = new ShareUriBuilder(Uri) { Snapshot = snapshot };
-            return new ShareClient(p.ToUri(), Pipeline, ClientDiagnostics);
+            return new ShareClient(p.ToUri(), Pipeline, Version, ClientDiagnostics);
         }
 
         /// <summary>
@@ -261,7 +279,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="ShareDirectoryClient"/> instance.</returns>
         public virtual ShareDirectoryClient GetDirectoryClient(string directoryName)
-            => new ShareDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, ClientDiagnostics);
+            => new ShareDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Create a <see cref="ShareDirectoryClient"/> object for the root of the
@@ -405,6 +423,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         quotaInGB: quotaInGB,
                         async: async,
@@ -523,6 +542,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
                         operationName: Constants.File.Share.CreateSnapshotOperationName,
@@ -644,6 +664,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         deleteSnapshots: includeSnapshots ? DeleteSnapshotsOptionType.Include : (DeleteSnapshotsOptionType?)null,
                         async: async,
                         operationName: Constants.File.Share.DeleteOperationName,
@@ -754,6 +775,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.File.Share.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -866,6 +888,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         quotaInGB: quotaInGB,
                         async: async,
                         operationName: Constants.File.Share.SetQuotaOperationName,
@@ -986,6 +1009,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
                         operationName: Constants.File.Share.SetMetadataOperationName,
@@ -1095,6 +1119,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.File.Share.GetAccessPolicyOperationName,
                         cancellationToken: cancellationToken)
@@ -1220,6 +1245,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         permissions: permissions,
                         async: async,
                         operationName: Constants.File.Share.SetAccessPolicyOperationName,
@@ -1323,6 +1349,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.File.Share.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
@@ -1405,6 +1432,7 @@ namespace Azure.Storage.Files.Shares
                             Pipeline,
                             Uri,
                             filePermissionKey: filePermissionKey,
+                            version: Version.ToVersionString(),
                             async: async,
                             operationName: Constants.File.Share.GetPermissionOperationName,
                             cancellationToken: cancellationToken)
@@ -1525,6 +1553,7 @@ namespace Azure.Storage.Files.Shares
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         sharePermissionJson: json,
                         async: async,
                         operationName: Constants.File.Share.CreatePermissionOperationName,

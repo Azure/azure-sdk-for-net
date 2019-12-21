@@ -66,6 +66,80 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
+        /// credentials, and specifies whether to use HTTP or HTTPS to connect to the storage services.
+        /// </summary>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
+        /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
+        /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
+        internal static StorageConnectionString CreateStorageConnectionString(object storageCredentials, bool useHttps) =>
+           CreateStorageConnectionString(storageCredentials, null /* endpointSuffix */, useHttps);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
+        /// credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
+        /// </summary>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
+        /// <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
+        /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
+        /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
+        internal static StorageConnectionString CreateStorageConnectionString(object storageCredentials, string endpointSuffix, bool useHttps) =>
+            CreateStorageConnectionString(storageCredentials, storageCredentials is StorageSharedKeyCredential sharedKeyCredentials ? sharedKeyCredentials.AccountName : default, endpointSuffix, useHttps);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageConnectionString"/> class using the specified
+        /// credentials and endpoint suffix, and specifies whether to use HTTP or HTTPS to connect to the storage services.
+        /// </summary>
+        /// <param name="storageCredentials">A StorageCredentials object.</param>
+        /// <param name="accountName">The name of the account.</param>
+        /// <param name="endpointSuffix">The DNS endpoint suffix for all storage services, e.g. "core.windows.net".</param>
+        /// <param name="useHttps"><c>true</c> to use HTTPS to connect to storage service endpoints; otherwise, <c>false</c>.</param>
+        /// <param name="setEndpoint">Whether or not to set the endpoint properties on the ConnectionString.</param>
+        /// <remarks>Using HTTPS to connect to the storage services is recommended.</remarks>
+        internal static StorageConnectionString CreateStorageConnectionString(
+            object storageCredentials,
+            string accountName,
+            string endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix,
+            bool useHttps = true)
+        {
+            var conn = new StorageConnectionString(storageCredentials);
+            if (storageCredentials == null)
+            {
+                throw Errors.ArgumentNull(nameof(storageCredentials));
+            }
+
+            if (storageCredentials is StorageSharedKeyCredential sharedKeyCredentials && !string.IsNullOrEmpty(sharedKeyCredentials.AccountName))
+            {
+                if (string.IsNullOrEmpty(accountName))
+                {
+                    accountName = sharedKeyCredentials.AccountName;
+                }
+                else if (string.Compare(sharedKeyCredentials.AccountName, accountName, StringComparison.Ordinal) != 0)
+                {
+                    throw Errors.AccountMismatch(sharedKeyCredentials.AccountName, accountName);
+                }
+
+            }
+
+            if (accountName == default)
+            {
+                throw Errors.ArgumentNull(nameof(accountName));
+            }
+
+            conn._accountName = accountName;
+            var sasToken = (storageCredentials is SharedAccessSignatureCredentials sasCredentials) ? sasCredentials.SasToken : default;
+
+            var scheme = useHttps ? Constants.Https : Constants.Http;
+            conn.BlobStorageUri = StorageConnectionString.ConstructBlobEndpoint(scheme, accountName, endpointSuffix, sasToken);
+            conn.QueueStorageUri = StorageConnectionString.ConstructQueueEndpoint(scheme, accountName, endpointSuffix, sasToken);
+            conn.FileStorageUri = StorageConnectionString.ConstructFileEndpoint(scheme, accountName, endpointSuffix, sasToken);
+            conn.Credentials = storageCredentials;
+            conn.EndpointSuffix = endpointSuffix;
+            conn.DefaultEndpoints = true;
+            return conn;
+        }
+
+        /// <summary>
         /// Returns a connection string for the storage account, optionally with sensitive data.
         /// </summary>
         /// <param name="exportSecrets"><c>True</c> to include sensitive data in the string; otherwise, <c>false</c>.</param>
@@ -78,7 +152,9 @@ namespace Azure.Storage
 
                 if (conn.DefaultEndpoints)
                 {
-                    conn.Settings.Add(Constants.ConnectionStrings.DefaultEndpointsProtocolSetting, conn.BlobEndpoint.Scheme);
+                    conn.Settings.Add(
+                        Constants.ConnectionStrings.DefaultEndpointsProtocolSetting,
+                        conn.BlobEndpoint.Scheme);
 
                     if (conn.EndpointSuffix != null)
                     {
@@ -97,11 +173,6 @@ namespace Azure.Storage
                         conn.Settings.Add(Constants.ConnectionStrings.QueueEndpointSetting, conn.QueueEndpoint.ToString());
                     }
 
-                    if (conn.TableEndpoint != null)
-                    {
-                        conn.Settings.Add(Constants.ConnectionStrings.TableEndpointSetting, conn.TableEndpoint.ToString());
-                    }
-
                     if (conn.FileEndpoint != null)
                     {
                         conn.Settings.Add(Constants.ConnectionStrings.FileEndpointSetting, conn.FileEndpoint.ToString());
@@ -117,12 +188,6 @@ namespace Azure.Storage
                     {
                         conn.Settings.Add(Constants.ConnectionStrings.QueueSecondaryEndpointSetting,
                             conn.QueueStorageUri.SecondaryUri.ToString());
-                    }
-
-                    if (conn.TableStorageUri.SecondaryUri != null)
-                    {
-                        conn.Settings.Add(Constants.ConnectionStrings.TableSecondaryEndpointSetting,
-                            conn.TableStorageUri.SecondaryUri.ToString());
                     }
 
                     if (conn.FileStorageUri.SecondaryUri != null)
