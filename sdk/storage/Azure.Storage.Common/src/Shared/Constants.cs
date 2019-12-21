@@ -277,6 +277,8 @@ namespace Azure.Storage
                     "Azure.Storage.Blobs.Specialized.PageBlobClient.GetPageRanges";
                 public const string GetPageRangesDiffOperationName =
                     "Azure.Storage.Blobs.Specialized.PageBlobClient.GetPageRangesDiff";
+                public const string GetManagedDiskPageRangesDiffOperationName =
+                    "Azure.Storage.Blobs.Specialized.PageBlobClient.GetManagedDiskPageRangesDiff";
                 public const string ResizeOperationName =
                     "Azure.Storage.Blobs.Specialized.PageBlobClient.Resize";
                 public const string UpdateSequenceNumberOperationName =

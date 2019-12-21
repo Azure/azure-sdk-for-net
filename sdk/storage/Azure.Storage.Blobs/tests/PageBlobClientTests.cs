@@ -897,53 +897,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task GetPageRangesDiffAsync_PreviousSnapshotUrl()
-        {
-            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
-            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
-
-            // Arrange
-            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
-
-            // Upload some Pages
-            var data = GetRandomBuffer(Constants.KB);
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 0);
-            }
-
-            // Create prevSnapshot
-            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
-            var prevSnapshot = response.Value.Snapshot;
-
-            UriBuilder uriBuilder = new UriBuilder(blob.Uri);
-            uriBuilder.Query = "snapshot=" + prevSnapshot;
-
-            // Upload additional Pages
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
-            }
-
-            // create snapshot
-            response = await blob.CreateSnapshotAsync();
-            string snapshot = response.Value.Snapshot;
-
-            // Act
-            Response<PageRangesInfo> result = await blob.GetPageRangesDiffAsync(
-                range: new HttpRange(0, 4 * Constants.KB),
-                snapshot,
-                previousSnapshotUrl: uriBuilder.Uri);
-
-            // Assert
-            Assert.AreEqual(1, result.Value.PageRanges.Count());
-            HttpRange range = result.Value.PageRanges.First();
-
-            Assert.AreEqual(2 * Constants.KB, range.Offset);
-            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
-        }
-
-        [Test]
         public async Task GetPageRangesDiffAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1050,6 +1003,174 @@ namespace Azure.Storage.Blobs.Test
                         var _ = (await blob.GetPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
                             previousSnapshot: prevSnapshot,
+                            conditions: accessConditions)).Value;
+                    });
+            }
+        }
+
+        [Test]
+        public async Task GetManagedDiskPageRangesDiffAsync()
+        {
+            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Upload some Pages
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 0);
+            }
+
+            // Create prevSnapshot
+            Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+            var prevSnapshot = response.Value.Snapshot;
+
+            UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+            uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+            // Upload additional Pages
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+            }
+
+            // create snapshot
+            response = await blob.CreateSnapshotAsync();
+            string snapshot = response.Value.Snapshot;
+
+            // Act
+            Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
+                range: new HttpRange(0, 4 * Constants.KB),
+                snapshot,
+                previousSnapshotUrl: uriBuilder.Uri);
+
+            // Assert
+            Assert.AreEqual(1, result.Value.PageRanges.Count());
+            HttpRange range = result.Value.PageRanges.First();
+
+            Assert.AreEqual(2 * Constants.KB, range.Offset);
+            Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
+        }
+
+        [Test]
+        public async Task GetManagedDiskPageRangesDiffAsync_Error()
+        {
+            BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+            await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+            // Arrange
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetManagedDiskPageRangesDiffAsync(range: new HttpRange(5 * Constants.KB, 4 * Constants.KB)),
+                e =>
+                {
+                    Assert.AreEqual("InvalidRange", e.ErrorCode);
+                    Assert.AreEqual("The range specified is invalid for the current size of the resource.",
+                        e.Message.Split('\n')[0]);
+                });
+        }
+
+        [Test]
+        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in Reduced_AccessConditions_Data)
+            {
+                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+                // Upload some Pages
+                var data = GetRandomBuffer(Constants.KB);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 0);
+                }
+
+                // Create prevSnapshot
+                Response<BlobSnapshotInfo> snapshotCreateResult = await blob.CreateSnapshotAsync();
+                var prevSnapshot = snapshotCreateResult.Value.Snapshot;
+
+                UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+                uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+                // Upload additional Pages
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+                }
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                Response<PageRangesInfo> response = await blob.GetManagedDiskPageRangesDiffAsync(
+                    range: new HttpRange(0, Constants.KB),
+                    previousSnapshotUrl: uriBuilder.Uri,
+                    conditions: accessConditions);
+
+                // Assert
+                Assert.IsNotNull(response.Value.PageRanges);
+            }
+        }
+
+        [Test]
+        public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetReduced_AccessConditionsFail_Data(garbageLeaseId))
+            {
+                BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
+                await using DisposingContainer test = await GetTestContainerAsync(manageDiskService);
+
+                // Arrange
+                PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
+
+                // Upload some Pages
+                var data = GetRandomBuffer(Constants.KB);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 0);
+                }
+
+                // Create prevSnapshot
+                Response<BlobSnapshotInfo> response = await blob.CreateSnapshotAsync();
+                var prevSnapshot = response.Value.Snapshot;
+
+                UriBuilder uriBuilder = new UriBuilder(blob.Uri);
+                uriBuilder.Query = "snapshot=" + prevSnapshot;
+
+                // Upload additional Pages
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadPagesAsync(stream, 2 * Constants.KB);
+                }
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+
+                PageBlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        var _ = (await blob.GetManagedDiskPageRangesDiffAsync(
+                            range: new HttpRange(0, Constants.KB),
+                            previousSnapshotUrl: uriBuilder.Uri,
                             conditions: accessConditions)).Value;
                     });
             }
