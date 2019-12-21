@@ -90,9 +90,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01.
         /// Possible values include: 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
-        /// Azure Spot virtual machine. Only supported value is 'Deallocate'.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. Possible
-        /// values include: 'Deallocate', 'Delete'</param>
+        /// Azure Spot virtual machine and Azure Spot scale set.
+        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, the only
+        /// supported value is 'Deallocate' and the minimum api-version is
+        /// 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
+        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
+        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
+        /// 'Delete'</param>
         /// <param name="billingProfile">Specifies the billing related details
         /// of a Azure Spot virtual machine. &lt;br&gt;&lt;br&gt;Minimum
         /// api-version: 2019-03-01.</param>
@@ -259,9 +263,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the eviction policy for the Azure Spot
-        /// virtual machine. Only supported value is 'Deallocate'.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01. Possible values include: 'Deallocate', 'Delete'
+        /// virtual machine and Azure Spot scale set.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot virtual
+        /// machines, the only supported value is 'Deallocate' and the minimum
+        /// api-version is 2019-03-01. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For
+        /// Azure Spot scale sets, both 'Deallocate' and 'Delete' are supported
+        /// and the minimum api-version is 2017-10-30-preview. Possible values
+        /// include: 'Deallocate', 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "properties.evictionPolicy")]
         public string EvictionPolicy { get; set; }
