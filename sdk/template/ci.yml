@@ -9,7 +9,9 @@ resources:
       endpoint: azure
     - repository: azure-sdk-build-tools
       type: git
-      name: internal/azure-sdk-build-tools
+      name: playground/azure-sdk-build-tools.chononiw
+      ref: AddWindowsPDBPublishStep
+
 
 trigger:
   branches:
