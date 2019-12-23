@@ -59,7 +59,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// failover VM is to be created.</param>
         /// <param name="diskType">The DiskType. Possible values include:
         /// 'Standard_LRS', 'Premium_LRS', 'StandardSSD_LRS'</param>
-        public InMageAzureV2EnableProtectionInput(string masterTargetId = default(string), string processServerId = default(string), string storageAccountId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<InMageAzureV2DiskInputDetails> disksToInclude = default(IList<InMageAzureV2DiskInputDetails>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRdpOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string diskType = default(string))
+        /// <param name="diskEncryptionSetId">The DiskEncryptionSet ARM
+        /// ID.</param>
+        public InMageAzureV2EnableProtectionInput(string masterTargetId = default(string), string processServerId = default(string), string storageAccountId = default(string), string runAsAccountId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), IList<InMageAzureV2DiskInputDetails> disksToInclude = default(IList<InMageAzureV2DiskInputDetails>), string targetAzureNetworkId = default(string), string targetAzureSubnetId = default(string), string enableRdpOnTargetOption = default(string), string targetAzureVmName = default(string), string logStorageAccountId = default(string), string targetAzureV1ResourceGroupId = default(string), string targetAzureV2ResourceGroupId = default(string), string diskType = default(string), string diskEncryptionSetId = default(string))
         {
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;
@@ -76,6 +78,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             TargetAzureV1ResourceGroupId = targetAzureV1ResourceGroupId;
             TargetAzureV2ResourceGroupId = targetAzureV2ResourceGroupId;
             DiskType = diskType;
+            DiskEncryptionSetId = diskEncryptionSetId;
             CustomInit();
         }
 
@@ -179,6 +182,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskType")]
         public string DiskType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DiskEncryptionSet ARM ID.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskEncryptionSetId")]
+        public string DiskEncryptionSetId { get; set; }
 
     }
 }
