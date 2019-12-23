@@ -195,3 +195,12 @@ directive:
 
     return $;
 ```
+
+### Treat the API version as a parameter instead of a constant
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ApiVersionParameter
+  transform: >
+    delete $.enum
+```

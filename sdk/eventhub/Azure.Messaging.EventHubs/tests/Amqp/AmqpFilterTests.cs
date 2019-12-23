@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.Amqp.Encoding;
 using NUnit.Framework;
 

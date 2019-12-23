@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Core
 {
