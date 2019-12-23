@@ -20,31 +20,36 @@ namespace Azure.Storage.Test
     /// Simply create an instance of the TestEventListener before you start
     /// running your tests.
     /// </summary>
-    internal class TestEventListener : AzureEventSourceListener
+    internal class TestEventListener : IDisposable
     {
-        private static StringBuilder s_eventBuffer;
+        private StringBuilder _eventBuffer;
 
-        public TestEventListener() : base((e, _) => LogEvent(e), EventLevel.Verbose)
+        private readonly AzureEventSourceListener _eventSourceListener;
+
+        public TestEventListener()
         {
+            _eventSourceListener = new AzureEventSourceListener(
+                (e, _) => LogEvent(e),
+                EventLevel.Verbose);
         }
 
         /// <summary>
         /// Sets up the Event listener buffer for the test about to run.
         /// </summary>
-        public static void SetupEventsForTest()
+        public void SetupEventsForTest()
         {
-            s_eventBuffer = new StringBuilder();
+            _eventBuffer = new StringBuilder();
         }
 
         /// <summary>
         /// Output the Events to the console in the case of test failure.
         /// This will include the HTTP requests and responses.
         /// </summary>
-        public static void OutputEventsForTest()
+        public void OutputEventsForTest()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                TestContext.Progress.WriteLine(s_eventBuffer.ToString());
+                TestContext.Progress.WriteLine(_eventBuffer.ToString());
             }
         }
 
@@ -52,7 +57,7 @@ namespace Azure.Storage.Test
         /// Trace any SDK events.
         /// </summary>
         /// <param name="args">Event arguments.</param>
-        public static void LogEvent(EventWrittenEventArgs args)
+        public void LogEvent(EventWrittenEventArgs args)
         {
             var category = args.EventName;
             IDictionary<string, string> payload = GetPayload(args);
@@ -99,8 +104,11 @@ namespace Azure.Storage.Test
             Trace.WriteLine(message, category);
 
             // Add the message to event buffer
-            s_eventBuffer.Append(message);
-            s_eventBuffer.AppendLine();
+            Assert.IsNotNull(
+                _eventBuffer,
+                "SetupEventsForTest needs to be called before each test when using TestEventListener.");
+            _eventBuffer.Append(message);
+            _eventBuffer.AppendLine();
         }
 
         /// <summary>
@@ -136,5 +144,10 @@ namespace Azure.Storage.Test
             }
             return payload;
         }
+
+        /// <summary>
+        /// Cleans up the <see cref="AzureEventSourceListener"/> instance.
+        /// </summary>
+        public void Dispose() => _eventSourceListener.Dispose();
     }
 }
