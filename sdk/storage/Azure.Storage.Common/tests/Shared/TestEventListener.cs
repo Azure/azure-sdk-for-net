@@ -49,7 +49,7 @@ namespace Azure.Storage.Test
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
-                TestContext.Progress.WriteLine(_eventBuffer.ToString());
+                TestContext.Error.WriteLine(_eventBuffer.ToString());
             }
         }
 
