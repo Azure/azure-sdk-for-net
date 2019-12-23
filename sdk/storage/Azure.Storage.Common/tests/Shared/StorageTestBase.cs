@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -28,11 +29,67 @@ namespace Azure.Storage.Test.Shared
 #endif
         }
 
+        /// <summary>
+        /// Add a static TestEventListener which will redirect SDK logging
+        /// to Console.Out for easy debugging.
+        /// </summary>
+        private static TestEventListener s_listener;
+
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             Sanitizer = new StorageRecordedTestSanitizer();
             Matcher = new StorageRecordMatcher(Sanitizer);
+        }
+
+        /// <summary>
+        /// Start logging events to the console if debugging or in Live mode.
+        /// This will run once before any tests.
+        /// </summary>
+        [OneTimeSetUp]
+        public void StartLoggingEvents()
+        {
+            if (Debugger.IsAttached || Mode == RecordedTestMode.Live)
+            {
+                s_listener = new TestEventListener();
+            }
+        }
+
+        /// <summary>
+        /// Stop logging events and do necessary cleanup.
+        /// This will run once after all tests have finished.
+        /// </summary>
+        [OneTimeTearDown]
+        public void StopLoggingEvents()
+        {
+            s_listener?.Dispose();
+        }
+
+        /// <summary>
+        /// Sets up the Event listener buffer for the test about to run.
+        /// This will run prior to the start of each test.
+        /// </summary>
+        [SetUp]
+        public void SetupEventsForTest()
+        {
+            if (s_listener != null)
+            {
+                TestEventListener.SetupEventsForTest();
+            }
+        }
+
+        /// <summary>
+        /// Output the Events to the console in the case of test failure.
+        /// This will include the HTTP requests and responses.
+        /// This will run after each test finishes.
+        /// </summary>
+        [TearDown]
+        public void OutputEventsForTest()
+        {
+            if (s_listener != null)
+            {
+                TestEventListener.OutputEventsForTest();
+            }
         }
 
         /// <summary>
