@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
@@ -511,7 +512,7 @@ namespace Azure.Storage.Blobs.Test
             long blobSize = 4 * Constants.MB;
             PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, blobSize);
             var data = GetRandomBuffer(blobSize);
-            Progress progress = new Progress();
+            TestProgress progress = new TestProgress();
 
             using (var stream = new MemoryStream(data))
             {

@@ -523,14 +523,5 @@ namespace Azure.Storage.Test.Shared
                 }
             }
         }
-
-        internal class Progress : IProgress<long>
-        {
-            public List<long> List = new List<long>();
-            public void Report(long value)
-            {
-                List.Add(value);
-            }
-        }
     }
 }

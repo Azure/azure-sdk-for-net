@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
@@ -313,7 +314,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             data = GetRandomBuffer(100 * Constants.MB);
-            Progress progress = new Progress();
+            TestProgress progress = new TestProgress();
             using (var stream = new MemoryStream(data))
             {
                 // Act
@@ -1352,7 +1353,7 @@ namespace Azure.Storage.Blobs.Test
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
             long blobSize = 256 * Constants.MB;
             var data = GetRandomBuffer(blobSize);
-            Progress progress = new Progress();
+            TestProgress progress = new TestProgress();
 
             // Act
             using (var stream = new MemoryStream(data))

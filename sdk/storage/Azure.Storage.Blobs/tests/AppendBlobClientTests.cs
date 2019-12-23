@@ -557,7 +557,7 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateAsync();
             const int blobSize = 4 * Constants.MB;
             var data = GetRandomBuffer(blobSize);
-            Progress progress = new Progress();
+            TestProgress progress = new TestProgress();
 
             // Act
             using (var stream = new MemoryStream(data))
