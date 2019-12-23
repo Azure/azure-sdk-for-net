@@ -14,8 +14,6 @@ namespace IotCentral.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json.Linq;
     using Xunit;
-    using Microsoft.Rest;
-    using Newtonsoft.Json;
 
     public class IotCentralLifeCycleTests : IotCentralTestBase
     {
@@ -123,75 +121,6 @@ namespace IotCentral.Tests.ScenarioTests
                 Assert.True(app.Tags.Count().Equals(2));
                 Assert.Equal("value2", app.Tags["key2"]);
             }
-        }
-
-        [Fact]
-        public void TestAppSkuInfo()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                AppSkuInfo appSku = new AppSkuInfo();
-                appSku.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
-        }
-
-        [Fact]
-        public void TestAppSkuInfo_InvalidSku()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                AppSkuInfo appSku = new AppSkuInfo("M1");
-                appSku.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
-        }
-
-        [Fact]
-        public void TestOperationInputs()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                OperationInputs operationInput = new OperationInputs();
-                operationInput.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
-        }
-
-        [Fact]
-        public void TestOperationInputsInvalidInput()
-        {
-            var exceptionThrown = false;
-            try
-            {
-                var name = "OperationInputs";
-                OperationInputs operationInput = new OperationInputs(name);
-                operationInput.Validate();
-            }
-            catch (Exception ex)
-            {
-                exceptionThrown = true;
-                Assert.Equal(typeof(ValidationException), ex.GetType());
-            }
-            Assert.True(exceptionThrown);
         }
 
         private void CheckAppNameAndSubdomainTaken(string resourceName, string subdomain)
