@@ -53,7 +53,7 @@ namespace Azure.Identity
         /// <param name="requestContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
         }
@@ -64,7 +64,7 @@ namespace Azure.Identity
         /// <param name="requestContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
         }
@@ -102,6 +102,7 @@ namespace Azure.Identity
                 }
 
                 Process proc = new Process();
+
                 ProcessStartInfo procStartInfo = new ProcessStartInfo()
                 {
                     FileName = fileName,
@@ -113,22 +114,33 @@ namespace Azure.Identity
                 };
 
                 proc.StartInfo = procStartInfo;
+
+                StringBuilder stdOutput = new StringBuilder();
+                proc.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
+
+                StringBuilder stdError = new StringBuilder();
+                proc.ErrorDataReceived += new DataReceivedEventHandler((sender, e) => stdError.AppendLine(e.Data));
+
                 proc.Start();
+                proc.BeginOutputReadLine();
+                proc.BeginErrorReadLine();
+                proc.WaitForExit();
 
-                string cliResult = proc.StandardOutput.ReadToEnd();
+                string cliResult = stdOutput.ToString().Trim();
+                string errorMessage = stdError.ToString().Trim();
 
-                if (string.IsNullOrEmpty(cliResult))
+                if (proc.ExitCode != 0)
                 {
-                    string errorMessage = proc.StandardError.ReadToEnd();
-
-                    bool winError = errorMessage.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
+                    bool winErrorFlag = errorMessage.StartsWith(WinAzureCLIError, StringComparison.CurrentCultureIgnoreCase);
                     string pattter = "az:(.*)not found";
-                    bool otherError = Regex.IsMatch(errorMessage, pattter);
+                    bool otherErrorFlag = Regex.IsMatch(errorMessage, pattter);
 
-                    if (winError || otherError)
+                    if (winErrorFlag || otherErrorFlag)
                     {
-                        throw new Exception(AzureCLINotInstalled);
+                        throw new CredentialUnavailableException(AzureCLINotInstalled);
                     }
+
+                    throw new CredentialUnavailableException(errorMessage);
                 }
 
                 byte[] byteArrary = Encoding.ASCII.GetBytes(cliResult);
