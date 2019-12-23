@@ -11,13 +11,6 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 
 ## Getting started
 
-### Install the package
-Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
-
-```PowerShell
-Install-Package Azure.AI.TextAnalytics
-```
-
 ### Prerequisites
 * An [Azure subscription][azure_sub].
 * An existing [Cognitive Services][cognitive_resource] or Text Analytics resource. If you need to create the resource, you can use the [Azure Portal][azure_portal] or [Azure CLI][azure_cli].
@@ -28,18 +21,15 @@ If you use the Azure CLI, replace `<your-resource-group-name>` and `<your-resour
 az cognitiveservices account create --kind TextAnalytics --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
+### Install the package
+Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
+
+```PowerShell
+Install-Package Azure.AI.TextAnalytics
+```
+
 ### Authenticate the client
 In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either a **subscription key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
-
-
-#### Create TextAnalyticsClient with Subscription Key
-Once you have the values for endpoint and subscription key, you can create the [TextAnalyticsClient][textanalytics_client_class]:
-
-```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string subscriptionKey = "<subscriptionKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
-```
 
 #### Get Subscription Key
 
@@ -51,9 +41,20 @@ az cognitiveservices account keys list --resource-group <your-resource-group-nam
 
 Alternatively, you can get the endpoint and subscription key from the resource information in the [Azure Portal][azure_portal].
 
+#### Create TextAnalyticsClient with Subscription Key
+Once you have the values for endpoint and subscription key, you can create the [TextAnalyticsClient][textanalytics_client_class]:
+
+```C# Snippet:CreateTextAnalyticsClient
+string endpoint = "<endpoint>";
+string subscriptionKey = "<subscriptionKey>";
+var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+```
+
 #### Create TextAnalyticsClient with Azure Active Directory Credential
 
-Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
+
+To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
 ```PowerShell
@@ -81,10 +82,10 @@ A **text input**, sometimes called a **document**, is a single unit of input to 
 An operation result, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single text input.  An operation's result type also may optionally include information about the input document and how it was processed.
 
 ### Operation Result Collection
- An operation result collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index the input and result collections.  An operation result collection may optionally include information about the input batch and how it was processed.
+ An operation result collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections.  An operation result collection may optionally include information about the input batch and how it was processed.
 
  ### Operation Overloads
- For each supported operation, `TextAnalyticsClient` provides method overloads to take a single text input, a batch of text inputs as strings, or a batch of `TextDocumentInput` objects.  The overload taking the `TextDocumentInput` batch allows callers to give each document a unique ID, or indicate that the documents in the batch are written in different languages.
+ For each supported operation, `TextAnalyticsClient` provides method overloads to take a single text input, a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects.  The overload taking the `TextDocumentInput` or `DetectLanguageInput` batch allows callers to give each document a unique ID, or indicate that the documents in the batch are written in different languages.
 
  ## Examples
  The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient), and covers the main functions of Text Analytics.
@@ -348,6 +349,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_auth]: https://docs.microsoft.com/en-us/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 
 [detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
