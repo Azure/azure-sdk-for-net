@@ -758,19 +758,14 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadAsync(content: stream, progressHandler: progress);
 
             // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
             for ( int i = 1; i < progress.List.Count; i++)
             {
                 Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
             }
-        }
 
-        private class Progress : IProgress<long>
-        {
-            public List<long> List = new List<long>();
-            public void Report(long value)
-            {
-                List.Add(value);
-            }
+            Assert.AreEqual(Constants.GB, progress.List[progress.List.Count - 1]);
         }
         #endregion Upload
 

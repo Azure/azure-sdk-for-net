@@ -296,6 +296,44 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [LiveOnly]
+        [Test]
+        public async Task StageBlockAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Create BlockBlob
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            data = GetRandomBuffer(100 * Constants.MB);
+            Progress progress = new Progress();
+            using (var stream = new MemoryStream(data))
+            {
+                // Act
+                Response<BlockInfo> response = await blob.StageBlockAsync(
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    content: stream,
+                    progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            for (int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+
+            Assert.AreEqual(100 * Constants.MB, progress.List[progress.List.Count - 1]);
+        }
+
         [Test]
         public async Task StageBlockFromUriAsync_Min()
         {
@@ -1301,6 +1339,38 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            long blobSize = 256 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            Progress progress = new Progress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(
+                    content: stream,
+                    progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            for (int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

@@ -501,6 +501,38 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [LiveOnly]
+        [Test]
+        public async Task UploadPagesAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            long blobSize = 4 * Constants.MB;
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, blobSize);
+            var data = GetRandomBuffer(blobSize);
+            Progress progress = new Progress();
+
+            using (var stream = new MemoryStream(data))
+            {
+                // Act
+                await blob.UploadPagesAsync(
+                    content: stream,
+                    offset: 0,
+                    progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            for (int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
+        }
+
         [Test]
         public async Task ClearPagesAsync()
         {
