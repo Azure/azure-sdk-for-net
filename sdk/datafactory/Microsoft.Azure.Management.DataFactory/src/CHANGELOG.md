@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.7.0
+###  Feature Additions
+- Added compute support in execute data flow activity
+
 ## Version 4.6.0
 ###  Feature Additions
 - Added SAP HANA partition support in Copy Activity
