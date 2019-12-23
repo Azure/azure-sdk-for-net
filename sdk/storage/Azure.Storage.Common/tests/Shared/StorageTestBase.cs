@@ -71,13 +71,8 @@ namespace Azure.Storage.Test.Shared
         /// This will run prior to the start of each test.
         /// </summary>
         [SetUp]
-        public void SetupEventsForTest()
-        {
-            if (s_listener != null)
-            {
-                TestEventListener.SetupEventsForTest();
-            }
-        }
+        public void SetupEventsForTest() =>
+            s_listener?.SetupEventsForTest();
 
         /// <summary>
         /// Output the Events to the console in the case of test failure.
@@ -85,13 +80,8 @@ namespace Azure.Storage.Test.Shared
         /// This will run after each test finishes.
         /// </summary>
         [TearDown]
-        public void OutputEventsForTest()
-        {
-            if (s_listener != null)
-            {
-                TestEventListener.OutputEventsForTest();
-            }
-        }
+        public void OutputEventsForTest() =>
+            s_listener?.OutputEventsForTest();
 
         /// <summary>
         /// Gets the tenant to use by default for our tests.
