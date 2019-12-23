@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +8,8 @@ using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using Azure.Core.Diagnostics;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.Test
 {
@@ -21,8 +22,30 @@ namespace Azure.Storage.Test
     /// </summary>
     internal class TestEventListener : AzureEventSourceListener
     {
+        private static StringBuilder s_eventBuffer;
+
         public TestEventListener() : base((e, _) => LogEvent(e), EventLevel.Verbose)
         {
+        }
+
+        /// <summary>
+        /// Sets up the Event listener buffer for the test about to run.
+        /// </summary>
+        public static void SetupEventsForTest()
+        {
+            s_eventBuffer = new StringBuilder();
+        }
+
+        /// <summary>
+        /// Output the Events to the console in the case of test failure.
+        /// This will include the HTTP requests and responses.
+        /// </summary>
+        public static void OutputEventsForTest()
+        {
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                TestContext.Progress.WriteLine(s_eventBuffer.ToString());
+            }
         }
 
         /// <summary>
@@ -31,11 +54,6 @@ namespace Azure.Storage.Test
         /// <param name="args">Event arguments.</param>
         public static void LogEvent(EventWrittenEventArgs args)
         {
-            if (!Debugger.IsAttached)
-            {
-                return;
-            }
-
             var category = args.EventName;
             IDictionary<string, string> payload = GetPayload(args);
 
@@ -79,6 +97,10 @@ namespace Azure.Storage.Test
 
             // Dump the message and category
             Trace.WriteLine(message, category);
+
+            // Add the message to event buffer
+            s_eventBuffer.Append(message);
+            s_eventBuffer.AppendLine();
         }
 
         /// <summary>
