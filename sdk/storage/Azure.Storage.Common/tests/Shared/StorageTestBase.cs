@@ -63,6 +63,7 @@ namespace Azure.Storage.Test.Shared
         public void StopLoggingEvents()
         {
             s_listener?.Dispose();
+            s_listener = null;
         }
 
         /// <summary>
