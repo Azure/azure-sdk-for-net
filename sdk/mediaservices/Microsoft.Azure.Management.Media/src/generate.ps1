@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "mediaservices/resource-manager" -AutoRestVersion "latest" -AutoRestCodeGenerationFlags --opt-in-extensible-enums
+Start-AutoRestCodeGeneration -ResourceProvider "mediaservices/resource-manager" -AutoRestVersion "latest" -AutoRestCodeGenerationFlags --opt-in-extensible-enums -ConfigFileTag "package-2019-05-preview"

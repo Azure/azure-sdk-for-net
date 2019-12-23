@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="description">The Live Event description.</param>
         /// <param name="preview">The Live Event preview.</param>
         /// <param name="encoding">The Live Event encoding.</param>
+        /// <param name="transcriptions">The Live Event transcription.</param>
         /// <param name="provisioningState">The provisioning state of the Live
         /// Event.</param>
         /// <param name="resourceState">The resource state of the Live Event.
@@ -61,13 +62,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// created.</param>
         /// <param name="lastModified">The exact time the Live Event was last
         /// modified.</param>
-        public LiveEvent(LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? vanityUrl = default(bool?), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
+        public LiveEvent(LiveEventInput input, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string description = default(string), LiveEventPreview preview = default(LiveEventPreview), LiveEventEncoding encoding = default(LiveEventEncoding), IList<LiveEventTranscription> transcriptions = default(IList<LiveEventTranscription>), string provisioningState = default(string), LiveEventResourceState? resourceState = default(LiveEventResourceState?), CrossSiteAccessPolicies crossSiteAccessPolicies = default(CrossSiteAccessPolicies), bool? vanityUrl = default(bool?), IList<StreamOptionsFlag?> streamOptions = default(IList<StreamOptionsFlag?>), System.DateTime? created = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
             : base(id, name, type, tags, location)
         {
             Description = description;
             Input = input;
             Preview = preview;
             Encoding = encoding;
+            Transcriptions = transcriptions;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             CrossSiteAccessPolicies = crossSiteAccessPolicies;
@@ -106,6 +108,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.encoding")]
         public LiveEventEncoding Encoding { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Live Event transcription.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.transcriptions")]
+        public IList<LiveEventTranscription> Transcriptions { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the Live Event.
@@ -168,6 +176,16 @@ namespace Microsoft.Azure.Management.Media.Models
             if (Input != null)
             {
                 Input.Validate();
+            }
+            if (Transcriptions != null)
+            {
+                foreach (var element in Transcriptions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.Media.Models
         public static readonly EncoderNamedPreset H264MultipleBitrate720p = "H264MultipleBitrate720p";
 
         /// <summary>
-        /// Produces a set of 5 GOP-aligned MP4 files, ranging from 1600kbps to
-        /// 400 kbps, and stereo AAC audio. Resolution starts at 480p and goes
-        /// down to 360p.
+        /// Produces a set of 5 GOP-aligned MP4 files, ranging from 1600 kbps
+        /// to 400 kbps, and stereo AAC audio. Resolution starts at 480p and
+        /// goes down to 360p.
         /// </summary>
         public static readonly EncoderNamedPreset H264MultipleBitrateSD = "H264MultipleBitrateSD";
 

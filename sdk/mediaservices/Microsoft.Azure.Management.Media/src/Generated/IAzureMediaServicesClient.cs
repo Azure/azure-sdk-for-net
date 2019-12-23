@@ -45,11 +45,6 @@ namespace Microsoft.Azure.Management.Media
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The Version of the API to be used with the client request.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
