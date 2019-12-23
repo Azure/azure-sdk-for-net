@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.Shares
             return new CloseHandlesResult
             {
                 ClosedHandlesCount = storageClosedHandlesSegment.Value.NumberOfHandlesClosed,
-                FailedHandlesCount = storageClosedHandlesSegment.Value.NumberOfHandlesFailedToClosed
+                FailedHandlesCount = storageClosedHandlesSegment.Value.NumberOfHandlesFailedToClose
             };
         }
     }

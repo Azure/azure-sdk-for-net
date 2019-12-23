@@ -179,16 +179,20 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal AppendBlobClient(
             Uri blobUri,
             HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
             EncryptionScope encryptionScope)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey, encryptionScope)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
         #endregion ctors
@@ -209,7 +213,8 @@ namespace Azure.Storage.Blobs.Specialized
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new AppendBlobClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+
+            return new AppendBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         #region Create
@@ -492,6 +497,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         contentLength: default,
+                        version: Version.ToVersionString(),
                         blobContentType: httpHeaders?.ContentType,
                         blobContentEncoding: httpHeaders?.ContentEncoding,
                         blobContentLanguage: httpHeaders?.ContentLanguage,
@@ -709,6 +715,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Uri,
                         body: content,
                         contentLength: content.Length,
+                        version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         leaseId: conditions?.LeaseId,
                         maxSize: conditions?.IfMaxSizeLessThanOrEqual,
@@ -959,6 +966,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         contentLength: default,
+                        version: Version.ToVersionString(),
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
@@ -1017,6 +1025,7 @@ namespace Azure.Storage.Blobs.Specialized
             new AppendBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
+                client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
                 client.EncryptionScope);

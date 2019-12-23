@@ -42,11 +42,12 @@ namespace Azure.Storage.Files.Shares
     }
     public partial class ShareClientOptions : Azure.Core.ClientOptions
     {
-        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2019_02_02) { }
+        public ShareClientOptions(Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion version = Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion.V2019_07_07) { }
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public enum ServiceVersion
         {
             V2019_02_02 = 1,
+            V2019_07_07 = 2,
         }
     }
     public partial class ShareDirectoryClient
@@ -616,7 +617,7 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareStatistics ShareStatistics(int shareUsageBytes) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClosed) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClose) { throw null; }
     }
     public partial class ShareProperties
     {
@@ -685,7 +686,7 @@ namespace Azure.Storage.Files.Shares.Models
         internal StorageClosedHandlesSegment() { }
         public string Marker { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public int NumberOfHandlesClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
-        public int NumberOfHandlesFailedToClosed { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public int NumberOfHandlesFailedToClose { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
     }
 }
 namespace Azure.Storage.Files.Shares.Specialized

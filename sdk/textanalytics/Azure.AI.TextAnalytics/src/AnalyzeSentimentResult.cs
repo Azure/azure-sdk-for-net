@@ -8,6 +8,9 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// The result of the analyze sentiment operation on a single document,
+    /// containing the predicted sentiment for each sentence as well as for
+    /// the full document.
     /// </summary>
     public class AnalyzeSentimentResult : TextAnalyticsResult
     {
@@ -26,10 +29,13 @@ namespace Azure.AI.TextAnalytics
 
         // TODO: set DocumentSentiment.Length
         /// <summary>
+        /// Gets the predicted sentiment for the full document.
         /// </summary>
         public TextSentiment DocumentSentiment { get; }
 
         /// <summary>
+        /// Gets the predicted sentiment for each sentence in the corresponding
+        /// document.
         /// </summary>
         public IReadOnlyCollection<TextSentiment> SentenceSentiments { get; }
     }

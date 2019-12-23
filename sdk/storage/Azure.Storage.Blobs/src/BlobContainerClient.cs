@@ -61,6 +61,16 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly BlobClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -180,6 +190,7 @@ namespace Azure.Storage.Blobs
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
@@ -273,6 +284,7 @@ namespace Azure.Storage.Blobs
             _uri = blobContainerUri;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
@@ -292,18 +304,23 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics"></param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobContainerClient(
             Uri containerUri,
             HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
             EncryptionScope encryptionScope)
         {
             _uri = containerUri;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
             _encryptionScope = encryptionScope;
@@ -333,7 +350,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlobContainerClient(containerUri, pipeline, new ClientDiagnostics(options), null, null);
+            return new BlobContainerClient(containerUri, pipeline, options.Version, new ClientDiagnostics(options), null, null);
         }
         #endregion ctor
 
@@ -346,7 +363,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName) =>
-            new BlobClient(Uri.AppendToPath(blobName), _pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            new BlobClient(Uri.AppendToPath(blobName), _pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -900,10 +917,11 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        metadata: metadata,
                         access: publicAccessType,
                         defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
                         denyEncryptionScopeOverride: encryptionScopeOptions?.DenyEncryptionScopeOverride,
+                        version: Version.ToVersionString(),
+                        metadata: metadata,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)
@@ -1150,6 +1168,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -1285,6 +1304,7 @@ namespace Azure.Storage.Blobs
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             async: async,
                             operationName: Constants.Blob.Container.GetPropertiesOperationName,
@@ -1449,6 +1469,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
@@ -1579,6 +1600,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: Constants.Blob.Container.GetAccessPolicyOperationName,
@@ -1774,6 +1796,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         permissions: permissions,
                         leaseId: conditions?.LeaseId,
                         access: accessType,
@@ -1947,6 +1970,7 @@ namespace Azure.Storage.Blobs
                           ClientDiagnostics,
                           Pipeline,
                           Uri,
+                          version: Version.ToVersionString(),
                           marker: marker,
                           prefix: prefix,
                           maxresults: pageSizeHint,
@@ -2187,6 +2211,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,

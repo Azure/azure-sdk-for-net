@@ -4,7 +4,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Metadata;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples

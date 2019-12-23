@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextDocumentInput("2", "TextDocument2"),
             };
 
-            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsOptions());
+            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
             Assert.AreEqual("1", resultCollection[0].Id);
@@ -108,7 +108,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 new TextDocumentInput("3", "TextDocument4"),
             };
 
-            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsOptions());
+            var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsRequestOptions());
             var resultCollection = response.Value;
 
             Assert.AreEqual("4", resultCollection[0].Id);

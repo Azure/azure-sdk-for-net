@@ -44,6 +44,16 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly BlobClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -191,6 +201,7 @@ namespace Azure.Storage.Blobs.Specialized
                 };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
@@ -288,6 +299,7 @@ namespace Azure.Storage.Blobs.Specialized
             options ??= new BlobClientOptions();
             _uri = blobUri;
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
@@ -308,18 +320,23 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
         /// <param name="encryptionScope">Encryption scope.</param>
         internal BlobBaseClient(
             Uri blobUri,
             HttpPipeline pipeline,
+            BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
             EncryptionScope encryptionScope)
         {
             _uri = blobUri;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
             _encryptionScope = encryptionScope;
@@ -353,7 +370,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
         }
 
         /// <summary>
@@ -751,6 +768,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ClientDiagnostics,
                     Pipeline,
                     Uri,
+                    version: Version.ToVersionString(),
                     range: pageRange.ToString(),
                     leaseId: conditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
@@ -1208,7 +1226,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Debug.Assert(initialTransferLength <= Constants.Blob.Block.MaxDownloadBytes);
 
-            var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, initialTransferLength);
 
             if (async)
@@ -1469,6 +1488,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         copySource: source,
+                        version: Version.ToVersionString(),
                         rehydratePriority: rehydratePriority,
                         tier: accessTier,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -1621,6 +1641,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         copyId: copyId,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.AbortCopyFromUri",
@@ -1913,6 +1934,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
@@ -2022,6 +2044,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Undelete")
@@ -2152,6 +2175,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
@@ -2300,6 +2324,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             blobCacheControl: httpHeaders?.CacheControl,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentHash: httpHeaders?.ContentHash,
@@ -2457,6 +2482,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -2611,6 +2637,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
@@ -2802,6 +2829,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         tier: accessTier,
+                        version: Version.ToVersionString(),
                         rehydratePriority: rehydratePriority,
                         leaseId: conditions?.LeaseId,
                         async: async,
@@ -2845,6 +2873,7 @@ namespace Azure.Storage.Blobs.Specialized
             new BlobBaseClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
+                client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey,
                 client.EncryptionScope);

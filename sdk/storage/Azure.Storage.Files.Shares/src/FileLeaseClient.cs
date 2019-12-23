@@ -44,6 +44,11 @@ namespace Azure.Storage.Files.Shares.Specialized
         private HttpPipeline Pipeline => FileClient?.Pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual ShareClientOptions.ServiceVersion Version => FileClient.Version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -178,6 +183,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        Version.ToVersionString(),
                         duration: Constants.File.Lease.InfiniteLeaseDuration,
                         proposedLeaseId: LeaseId,
                         async: async,
@@ -300,6 +306,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         Pipeline,
                         Uri,
                         leaseId: LeaseId,
+                        Version.ToVersionString(),
                         async: async,
                         operationName: Constants.File.Lease.ReleaseOperationName,
                         cancellationToken: cancellationToken)
@@ -426,6 +433,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         Pipeline,
                         Uri,
                         leaseId: LeaseId,
+                        Version.ToVersionString(),
                         proposedLeaseId: proposedId,
                         async: async,
                         operationName: Constants.File.Lease.ChangeOperationName,
@@ -552,6 +560,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        Version.ToVersionString(),
                         leaseId: LeaseId,
                         async: async,
                         operationName: Constants.File.Lease.BreakOperationName,

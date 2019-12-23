@@ -28,6 +28,7 @@ namespace Azure.Storage
             new AppendBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
+                blob.Version,
                 blob.ClientDiagnostics,
                 customerProvidedKey,
                 null);
@@ -39,6 +40,7 @@ namespace Azure.Storage
             new AppendBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
+                blob.Version,
                 blob.ClientDiagnostics,
                 null,
                 encryptionScope);
@@ -49,6 +51,7 @@ namespace Azure.Storage
             new BlockBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
+                blob.Version,
                 blob.ClientDiagnostics,
                 customerProvidedKey,
                 null);
@@ -60,6 +63,7 @@ namespace Azure.Storage
             new BlockBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
+                blob.Version,
                 blob.ClientDiagnostics,
                 null,
                 encryptionScope);
@@ -70,6 +74,7 @@ namespace Azure.Storage
             new PageBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
+                blob.Version,
                 blob.ClientDiagnostics,
                 customerProvidedKey,
                 null);
@@ -81,6 +86,7 @@ namespace Azure.Storage
             new PageBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
+                blob.Version,
                 blob.ClientDiagnostics,
                 null,
                 encryptionScope);

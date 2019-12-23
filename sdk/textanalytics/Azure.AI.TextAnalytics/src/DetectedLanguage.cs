@@ -4,6 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
+    /// A prediction of the language in which an input document is written.
     /// </summary>
     public readonly struct DetectedLanguage
     {
@@ -15,20 +16,20 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets long name of a detected language (e.g. English,
-        /// French).
+        /// Gets the spelled-out name of the detected language (for example,
+        /// "English" or "French").
         /// </summary>
         public string Name { get; }
 
         /// <summary>
         /// Gets a two letter representation of the detected language
-        /// according to the ISO 639-1 standard (e.g. en, fr).
+        /// according to the ISO 639-1 standard (for example, "en" or "fr").
         /// </summary>
         public string Iso6391Name { get; }
 
         /// <summary>
         /// Gets a confidence score between 0 and 1. Scores close to 1
-        /// indicate 100% certainty that the identified language is true.
+        /// indicate high certainty that the identified language is correct.
         /// </summary>
         public double Score { get; }
     }
