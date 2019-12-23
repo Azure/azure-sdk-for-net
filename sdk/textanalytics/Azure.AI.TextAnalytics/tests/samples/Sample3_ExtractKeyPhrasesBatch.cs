@@ -14,13 +14,14 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void RecognizeEntitiesBatchAdvanced()
+        public void ExtractKeyPhrasesBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+
 
             var inputs = new List<TextDocumentInput>
             {
@@ -32,16 +33,16 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("3", "A key technology in Text Analytics is Named Entity Recognition (NER).")
+                new TextDocumentInput("3", "My cat might need to see a veterinarian.")
                 {
                      Language = "en",
                 }
             };
 
-            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
             foreach (var result in results)
@@ -52,15 +53,15 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} entities:");
+                    Debug.WriteLine($"    Extracted the following {result.KeyPhrases.Count()} key phrases:");
 
-                    foreach (var entity in result.NamedEntities)
+                    foreach (var keyPhrase in result.KeyPhrases)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                        Debug.WriteLine($"        {keyPhrase}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

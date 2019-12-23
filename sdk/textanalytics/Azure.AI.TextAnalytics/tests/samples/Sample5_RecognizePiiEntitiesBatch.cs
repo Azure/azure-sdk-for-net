@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -13,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void DetectLanguageBatchAdvanced()
+        public void RecognizePiiEntitiesBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -21,45 +22,42 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            var inputs = new List<DetectLanguageInput>
+            var inputs = new List<TextDocumentInput>
             {
-                new DetectLanguageInput("1", "Hello world")
+                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
                 {
-                     CountryHint = "us",
+                     Language = "en",
                 },
-                new DetectLanguageInput("2", "Bonjour tout le monde")
+                new TextDocumentInput("2","Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
                 {
-                     CountryHint = "fr",
-                },
-                new DetectLanguageInput("3", "Hola mundo")
-                {
-                     CountryHint = "es",
-                },
-                new DetectLanguageInput("4", ":) :( :D")
-                {
-                     CountryHint = "us",
+                     Language = "en",
                 }
             };
 
-            DetectLanguageResultCollection results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
             foreach (var result in results)
             {
                 var document = inputs[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"    Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence {result.PrimaryLanguage.Score:0.00}.");
+                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies" : "y ")}:");
+
+                    foreach (var entity in result.NamedEntities)
+                    {
+                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    }
 
                     Debug.WriteLine($"    Document statistics:");
                     Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");

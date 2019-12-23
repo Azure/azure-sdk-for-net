@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void RecognizePiiEntitiesBatchAdvanced()
+        public void ExtractEntityLinkingBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -24,20 +24,24 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2","Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
                 {
                      Language = "en",
                 }
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
+            Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
             foreach (var result in results)
@@ -52,11 +56,15 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies" : "y ")}:");
+                    Debug.WriteLine($"    Extracted the following {result.LinkedEntities.Count()} linked entities:");
 
-                    foreach (var entity in result.NamedEntities)
+                    foreach (var linkedEntity in result.LinkedEntities)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                        Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
+                        foreach (LinkedEntityMatch match in linkedEntity.Matches)
+                        {
+                            Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
+                        }
                     }
 
                     Debug.WriteLine($"    Document statistics:");

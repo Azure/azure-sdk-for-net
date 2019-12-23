@@ -4,7 +4,6 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System;
-using System.Diagnostics;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -20,16 +19,18 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
+            #region Snippet:AnalyzeSentiment
             string input = "That was the best day of my life!";
 
-            Debug.WriteLine($"Analyzing sentiment for input: \"{input}\"");
-            AnalyzeSentimentResult result = client.AnalyzeSentiment(input).Value;
+            // Analyze the sentiment of the input text.
+            AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
             TextSentiment sentiment = result.DocumentSentiment;
 
-            Debug.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
-            Debug.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-            Debug.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
-            Debug.WriteLine($"    Negative score: {sentiment.NeutralScore:0.00}.");
+            Console.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
+            Console.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
+            Console.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
+            Console.WriteLine($"    Negative score: {sentiment.NeutralScore:0.00}.");
+            #endregion
         }
     }
 }

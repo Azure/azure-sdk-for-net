@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
 {
@@ -14,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public void ExtractKeyPhrasesBatch()
+        public void DetectLanguageBatchConvenience()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
@@ -24,24 +23,23 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var inputs = new List<string>
             {
-                "Microsoft was founded by Bill Gates and Paul Allen.",
-                "Text Analytics is one of the Azure Cognitive Services.",
-                "My cat might need to see a veterinarian.",
+                "Hello world",
+                "Bonjour tout le monde",
+                "Hola mundo",
+                ":) :( :D",
             };
 
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs);
-
-            Debug.WriteLine($"Extracted key phrases for each input are:");
-            int i = 0;
-            foreach (var result in results)
+            Debug.WriteLine($"Detecting language for inputs:");
+            foreach (var input in inputs)
             {
-                Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");
+                Debug.WriteLine($"    {input}");
+            }
+            DetectLanguageResultCollection results = client.DetectLanguages(inputs);
 
-                foreach (var keyPhrase in result.KeyPhrases)
-                {
-                    Debug.WriteLine($"    {keyPhrase}");
-                }
+            Debug.WriteLine($"Detected languages are:");
+            foreach (DetectLanguageResult result in results)
+            {
+                Debug.WriteLine($"    {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score:0.00}.");
             }
         }
     }
