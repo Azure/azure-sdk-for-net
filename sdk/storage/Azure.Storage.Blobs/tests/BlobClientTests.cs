@@ -752,6 +752,11 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
             Progress progress = new Progress();
+            StorageTransferOptions options = new StorageTransferOptions
+            {
+                MaximumTransferLength = Constants.MB,
+                MaximumConcurrency = 16
+            };
             using var stream = new MemoryStream(GetRandomBuffer(Constants.GB));
 
             // Act
