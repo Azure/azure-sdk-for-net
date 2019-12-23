@@ -77,7 +77,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse<VirtualMachineCaptureResult>> CaptureWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to create or update a virtual machine.
+        /// The operation to create or update a virtual machine. Please note
+        /// some properties can be set only during virtual machine creation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -588,7 +589,8 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse<VirtualMachineCaptureResult>> BeginCaptureWithHttpMessagesAsync(string resourceGroupName, string vmName, VirtualMachineCaptureParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to create or update a virtual machine.
+        /// The operation to create or update a virtual machine. Please note
+        /// some properties can be set only during virtual machine creation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

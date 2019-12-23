@@ -270,7 +270,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to create or update a virtual machine.
+        /// The operation to create or update a virtual machine. Please note some
+        /// properties can be set only during virtual machine creation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1938,7 +1939,8 @@ namespace Microsoft.Azure.Management.Compute
         }
 
         /// <summary>
-        /// The operation to create or update a virtual machine.
+        /// The operation to create or update a virtual machine. Please note some
+        /// properties can be set only during virtual machine creation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

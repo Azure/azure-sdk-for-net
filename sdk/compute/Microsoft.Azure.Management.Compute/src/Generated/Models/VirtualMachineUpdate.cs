@@ -51,8 +51,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// virtual machine disks.</param>
         /// <param name="additionalCapabilities">Specifies additional
         /// capabilities enabled or disabled on the virtual machine.</param>
-        /// <param name="osProfile">Specifies the operating system settings for
-        /// the virtual machine.</param>
+        /// <param name="osProfile">Specifies the operating system settings
+        /// used while creating the virtual machine. Some of the settings
+        /// cannot be changed once VM is provisioned.</param>
         /// <param name="networkProfile">Specifies the network interfaces of
         /// the virtual machine.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
@@ -189,8 +190,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the operating system settings for the
-        /// virtual machine.
+        /// Gets or sets specifies the operating system settings used while
+        /// creating the virtual machine. Some of the settings cannot be
+        /// changed once VM is provisioned.
         /// </summary>
         [JsonProperty(PropertyName = "properties.osProfile")]
         public OSProfile OsProfile { get; set; }

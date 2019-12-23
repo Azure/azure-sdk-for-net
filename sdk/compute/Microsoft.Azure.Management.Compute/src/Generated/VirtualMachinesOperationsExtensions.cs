@@ -108,7 +108,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -128,7 +129,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -951,7 +953,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -971,7 +974,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
