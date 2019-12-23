@@ -3380,7 +3380,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         if (response.Headers.TryGetValue("x-ms-number-of-handles-failed", out _header))
                         {
-                            _value.NumberOfHandlesFailedToClosed = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.NumberOfHandlesFailedToClose = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -4909,7 +4909,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="duration">Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change.</param>
-            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
@@ -4975,7 +4975,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
             /// <param name="duration">Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change.</param>
-            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The File.AcquireLeaseAsync Message.</returns>
             internal static Azure.Core.HttpMessage AcquireLeaseAsync_CreateMessage(
@@ -5217,7 +5217,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
@@ -5283,7 +5283,7 @@ namespace Azure.Storage.Files.Shares
             /// <param name="resourceUri">The URL of the service account, share, directory or file that is the target of the desired operation.</param>
             /// <param name="leaseId">Specifies the current lease ID on the resource.</param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN">Setting Timeouts for File Service Operations.</a></param>
-            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
+            /// <param name="proposedLeaseId">Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The File.ChangeLeaseAsync Message.</returns>
             internal static Azure.Core.HttpMessage ChangeLeaseAsync_CreateMessage(
@@ -6718,7 +6718,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         if (response.Headers.TryGetValue("x-ms-number-of-handles-failed", out _header))
                         {
-                            _value.NumberOfHandlesFailedToClosed = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                            _value.NumberOfHandlesFailedToClose = int.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
 
                         // Create the response
@@ -6756,12 +6756,12 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// Uniquely identifies a blobs's lease
+        /// Uniquely identifies a file's lease
         /// </summary>
         public string LeaseId { get; internal set; }
 
@@ -7068,7 +7068,7 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
 
@@ -7122,7 +7122,7 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Returns the date and time the blob was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
+        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
         /// </summary>
         public System.DateTimeOffset LastModified { get; internal set; }
 
@@ -10183,9 +10183,9 @@ namespace Azure.Storage.Files.Shares.Models
         public int NumberOfHandlesClosed { get; internal set; }
 
         /// <summary>
-        /// Contains count of number of handles that failed to closed.
+        /// Contains count of number of handles that failed to close.
         /// </summary>
-        public int NumberOfHandlesFailedToClosed { get; internal set; }
+        public int NumberOfHandlesFailedToClose { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of StorageClosedHandlesSegment instances.
@@ -10205,13 +10205,13 @@ namespace Azure.Storage.Files.Shares.Models
         public static StorageClosedHandlesSegment StorageClosedHandlesSegment(
             string marker,
             int numberOfHandlesClosed,
-            int numberOfHandlesFailedToClosed)
+            int numberOfHandlesFailedToClose)
         {
             return new StorageClosedHandlesSegment()
             {
                 Marker = marker,
                 NumberOfHandlesClosed = numberOfHandlesClosed,
-                NumberOfHandlesFailedToClosed = numberOfHandlesFailedToClosed,
+                NumberOfHandlesFailedToClose = numberOfHandlesFailedToClose,
             };
         }
     }

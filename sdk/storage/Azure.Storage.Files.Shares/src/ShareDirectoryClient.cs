@@ -1470,7 +1470,7 @@ namespace Azure.Storage.Files.Shares
                     .ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
-                handlesFailed += response.Value.NumberOfHandlesFailedToClosed;
+                handlesFailed += response.Value.NumberOfHandlesFailedToClose;
 
             } while (!string.IsNullOrEmpty(marker));
 

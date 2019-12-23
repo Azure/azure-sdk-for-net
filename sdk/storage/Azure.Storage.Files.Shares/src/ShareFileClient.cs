@@ -3885,7 +3885,7 @@ namespace Azure.Storage.Files.Shares
                     await ForceCloseHandlesInternal(Constants.CloseAllHandles, marker, async, cancellationToken).ConfigureAwait(false);
                 marker = response.Value.Marker;
                 handlesClosed += response.Value.NumberOfHandlesClosed;
-                handlesFailed += response.Value.NumberOfHandlesFailedToClosed;
+                handlesFailed += response.Value.NumberOfHandlesFailedToClose;
 
             } while (!string.IsNullOrEmpty(marker));
 
