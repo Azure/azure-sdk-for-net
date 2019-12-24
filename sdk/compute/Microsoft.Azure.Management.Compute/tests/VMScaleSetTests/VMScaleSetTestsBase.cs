@@ -236,7 +236,7 @@ namespace Compute.Tests
             return vmScaleSet;
         }
 
-        protected VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
+        public VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
             string rgName,
             string vmssName,
             StorageAccount storageAccount,
