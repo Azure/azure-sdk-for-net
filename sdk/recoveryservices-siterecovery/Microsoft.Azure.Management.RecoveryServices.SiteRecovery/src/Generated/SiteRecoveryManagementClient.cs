@@ -93,6 +93,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         public virtual IReplicationAlertSettingsOperations ReplicationAlertSettings { get; private set; }
 
         /// <summary>
+        /// Gets the IReplicationEligibilityResultsOperations.
+        /// </summary>
+        public virtual IReplicationEligibilityResultsOperations ReplicationEligibilityResults { get; private set; }
+
+        /// <summary>
         /// Gets the IReplicationEventsOperations.
         /// </summary>
         public virtual IReplicationEventsOperations ReplicationEvents { get; private set; }
@@ -450,6 +455,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         {
             Operations = new Operations(this);
             ReplicationAlertSettings = new ReplicationAlertSettingsOperations(this);
+            ReplicationEligibilityResults = new ReplicationEligibilityResultsOperations(this);
             ReplicationEvents = new ReplicationEventsOperations(this);
             ReplicationFabrics = new ReplicationFabricsOperations(this);
             ReplicationLogicalNetworks = new ReplicationLogicalNetworksOperations(this);

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -41,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointType">The recovery point type. Possible
         /// values include: 'Latest', 'LatestApplicationConsistent',
         /// 'LatestProcessed'</param>
-        public RecoveryPlanHyperVReplicaAzureFailoverInput(string vaultLocation, string primaryKekCertificatePfx = default(string), string secondaryKekCertificatePfx = default(string), string recoveryPointType = default(string))
+        public RecoveryPlanHyperVReplicaAzureFailoverInput(string vaultLocation = default(string), string primaryKekCertificatePfx = default(string), string secondaryKekCertificatePfx = default(string), string recoveryPointType = default(string))
         {
             VaultLocation = vaultLocation;
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
@@ -80,18 +79,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         [JsonProperty(PropertyName = "recoveryPointType")]
         public string RecoveryPointType { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (VaultLocation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VaultLocation");
-            }
-        }
     }
 }
