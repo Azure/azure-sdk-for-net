@@ -5718,6 +5718,10 @@ namespace DataFactory.Tests.JsonSamples
                     integrationRuntime: {
                         referenceName: ""dataflowIR10minTTL"",
                         type: ""IntegrationRuntimeReference""
+                    },
+                    compute: {
+                        computeType: ""MemoryOptimized"",
+                        coreCount: 8                         
                     }
                 }
             }

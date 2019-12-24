@@ -39,10 +39,7 @@ namespace Azure.Core.Testing
             return body;
         }
 
-        public virtual void SanitizeConnectionString(ConnectionString connectionString)
-        {
-        }
-
+        public virtual string SanitizeConnectionString(string connectionString) => connectionString;
         public virtual void SanitizeBody(RecordEntryMessage message)
         {
             if (message.Body != null)

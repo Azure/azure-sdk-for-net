@@ -707,6 +707,8 @@ directive:
     $.put.responses["202"].description = "The operation completed successfully.";
     $.put.responses["202"].headers["x-ms-copy-status"].enum = ["pending", "success", "aborted", "failed"];
     $.put.responses["202"].headers["x-ms-copy-status"]["x-ms-enum"].name = "CopyStatus";
+    delete $.put.responses["202"].headers["Content-MD5"];
+    delete $.put.responses["202"].headers["x-ms-content-crc64"];
 ```
 
 ### /{containerName}/{blob}?comp=copy&copyid={CopyId}
@@ -1394,5 +1396,13 @@ directive:
     $.required = ["StartsOn", "ExpiresOn", "Permissions"];
 ```
 
+### Treat the API version as a parameter instead of a constant
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ApiVersionParameter
+  transform: >
+    delete $.enum
+```
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Blobs%2Fswagger%2Freadme.png)
