@@ -12,10 +12,9 @@ namespace Azure.Storage
         {
             if (progressHandler != null && stream != null)
             {
-                if (progressHandler is AggregatingProgressIncrementer)
+                if (progressHandler is AggregatingProgressIncrementer handler)
                 {
-                    return (progressHandler as AggregatingProgressIncrementer)
-                        .CreateProgressIncrementingStream(stream);
+                    return handler.CreateProgressIncrementingStream(stream);
                 }
                 else
                 {
