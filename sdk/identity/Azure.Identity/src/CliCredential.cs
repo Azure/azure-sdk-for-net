@@ -20,7 +20,6 @@ namespace Azure.Identity
     public class CliCredential : TokenCredential, IExtendedTokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
-        private const string AzNotLogin = "Please run 'az login' to setup account";
         private const string WinAzureCLIError = "'az' is not recognized";
 
         private readonly CredentialPipeline _pipeline;
@@ -94,11 +93,7 @@ namespace Azure.Identity
                     string pattter = "az:(.*)not found";
                     bool otherError = Regex.IsMatch(output, pattter);
 
-                    if (loginError)
-                    {
-                        throw new AuthenticationFailedException(AzNotLogin);
-                    }
-                    else if (winError || otherError)
+                    if (winError || otherError)
                     {
                         throw new AuthenticationFailedException(AzureCLINotInstalled);
                     }
