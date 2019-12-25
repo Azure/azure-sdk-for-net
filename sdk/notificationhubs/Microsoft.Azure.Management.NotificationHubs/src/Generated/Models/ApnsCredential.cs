@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="apnsCertificate">The APNS certificate.</param>
         /// <param name="certificateKey">The certificate key.</param>
         /// <param name="endpoint">The endpoint of this credential.</param>
-        /// <param name="thumbprint">The Apns certificate Thumbprint</param>
+        /// <param name="thumbprint">The APNS certificate Thumbprint</param>
         /// <param name="keyId">A 10-character key identifier (kid) key,
         /// obtained from your developer account</param>
         /// <param name="appName">The name of the application</param>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         public string Endpoint { get; set; }
 
         /// <summary>
-        /// Gets or sets the Apns certificate Thumbprint
+        /// Gets or sets the APNS certificate Thumbprint
         /// </summary>
         [JsonProperty(PropertyName = "properties.thumbprint")]
         public string Thumbprint { get; set; }

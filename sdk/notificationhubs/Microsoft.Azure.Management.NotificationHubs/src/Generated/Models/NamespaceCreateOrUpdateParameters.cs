@@ -48,9 +48,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Namespace.</param>
         /// <param name="region">Specifies the targeted region in which the
         /// namespace should be created. It can be any of the following values:
-        /// Australia EastAustralia SoutheastCentral USEast USEast US 2West
-        /// USNorth Central USSouth Central USEast AsiaSoutheast AsiaBrazil
-        /// SouthJapan EastJapan WestNorth EuropeWest Europe</param>
+        /// Australia East, Australia Southeast, Central US, East US, East US
+        /// 2, West US, North Central US, South Central US, East Asia,
+        /// Southeast Asia, Brazil South, Japan East, Japan West, North Europe,
+        /// West Europe</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics</param>
         /// <param name="status">Status of the namespace. It can be any of
@@ -111,9 +112,9 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Gets or sets specifies the targeted region in which the namespace
         /// should be created. It can be any of the following values: Australia
-        /// EastAustralia SoutheastCentral USEast USEast US 2West USNorth
-        /// Central USSouth Central USEast AsiaSoutheast AsiaBrazil SouthJapan
-        /// EastJapan WestNorth EuropeWest Europe
+        /// East, Australia Southeast, Central US, East US, East US 2, West US,
+        /// North Central US, South Central US, East Asia, Southeast Asia,
+        /// Brazil South, Japan East, Japan West, North Europe, West Europe
         /// </summary>
         [JsonProperty(PropertyName = "properties.region")]
         public string Region { get; set; }
