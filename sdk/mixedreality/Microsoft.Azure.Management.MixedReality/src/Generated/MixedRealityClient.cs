@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Management.MixedReality
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
+        /// Gets the IRemoteRenderingAccountsOperations.
+        /// </summary>
+        public virtual IRemoteRenderingAccountsOperations RemoteRenderingAccounts { get; private set; }
+
+        /// <summary>
         /// Gets the ISpatialAnchorsAccountsOperations.
         /// </summary>
         public virtual ISpatialAnchorsAccountsOperations SpatialAnchorsAccounts { get; private set; }
@@ -328,9 +333,10 @@ namespace Microsoft.Azure.Management.MixedReality
         private void Initialize()
         {
             Operations = new Operations(this);
+            RemoteRenderingAccounts = new RemoteRenderingAccountsOperations(this);
             SpatialAnchorsAccounts = new SpatialAnchorsAccountsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-02-28-preview";
+            ApiVersion = "2019-12-02-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -365,7 +371,7 @@ namespace Microsoft.Azure.Management.MixedReality
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
         /// <summary>
-        /// Check Name Availability for global uniqueness
+        /// Check Name Availability for local uniqueness
         /// </summary>
         /// <param name='location'>
         /// The location in which uniqueness will be verified.
