@@ -13,31 +13,27 @@ namespace Microsoft.Azure.Management.Media.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Specifies the clip time as an absolute time position in the media file.
-    /// The absolute time can point to a different position depending on
-    /// whether the media file starts from a timestamp of zero or not.
-    /// </summary>
-    [Newtonsoft.Json.JsonObject("#Microsoft.Media.AbsoluteClipTime")]
-    public partial class AbsoluteClipTime : ClipTime
+    public partial class ContentKeyPolicyFairPlayOfflineRentalConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the AbsoluteClipTime class.
+        /// Initializes a new instance of the
+        /// ContentKeyPolicyFairPlayOfflineRentalConfiguration class.
         /// </summary>
-        public AbsoluteClipTime()
+        public ContentKeyPolicyFairPlayOfflineRentalConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AbsoluteClipTime class.
+        /// Initializes a new instance of the
+        /// ContentKeyPolicyFairPlayOfflineRentalConfiguration class.
         /// </summary>
-        /// <param name="time">The time position on the timeline of the input
-        /// media. It is usually specified as an ISO8601 period. e.g PT30S for
-        /// 30 seconds.</param>
-        public AbsoluteClipTime(System.TimeSpan time)
+        /// <param name="playbackDurationSeconds">Playback duration</param>
+        /// <param name="storageDurationSeconds">Storage duration</param>
+        public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationSeconds, long storageDurationSeconds)
         {
-            Time = time;
+            PlaybackDurationSeconds = playbackDurationSeconds;
+            StorageDurationSeconds = storageDurationSeconds;
             CustomInit();
         }
 
@@ -47,12 +43,16 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the time position on the timeline of the input media.
-        /// It is usually specified as an ISO8601 period. e.g PT30S for 30
-        /// seconds.
+        /// Gets or sets playback duration
         /// </summary>
-        [JsonProperty(PropertyName = "time")]
-        public System.TimeSpan Time { get; set; }
+        [JsonProperty(PropertyName = "playbackDurationSeconds")]
+        public long PlaybackDurationSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets storage duration
+        /// </summary>
+        [JsonProperty(PropertyName = "storageDurationSeconds")]
+        public long StorageDurationSeconds { get; set; }
 
         /// <summary>
         /// Validate the object.
