@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task CliCredentialWinAzureCLINotInstalledException()
         {
-            string expectedMessage = "Azure CLI not installed";
+            string expectedMessage = $"Azure CLI not installed";
 
             var mockCliCredentialClient = new MockCliCredentialClient(("'az' is not recognized", 1));
 
@@ -50,7 +50,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task CliCredentialLinuxAzureCLINotInstalledException()
         {
-            string expectedExMessage = "Azure CLI not installed";
+            string expectedExMessage = $"Azure CLI not installed";
 
             var mockCliCredentialClient = new MockCliCredentialClient(("az: command not found", 1));
 
@@ -66,7 +66,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task CliCredentialOtherAzureCLINotInstalledException()
         {
-            string expectedExMessage = "Azure CLI not installed";
+            string expectedExMessage = $"Azure CLI not installed";
 
             var mockCliCredentialClient = new MockCliCredentialClient(("az: not found", 1));
 
