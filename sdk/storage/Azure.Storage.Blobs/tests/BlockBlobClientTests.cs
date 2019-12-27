@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
@@ -294,6 +295,44 @@ namespace Azure.Storage.Blobs.Test
                         Assert.AreEqual("Value for one of the query parameters specified in the request URI is invalid.", e.Message.Split('\n')[0]);
                     });
             }
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task StageBlockAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Create BlockBlob
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            data = GetRandomBuffer(100 * Constants.MB);
+            TestProgress progress = new TestProgress();
+            using (var stream = new MemoryStream(data))
+            {
+                // Act
+                Response<BlockInfo> response = await blob.StageBlockAsync(
+                    base64BlockId: ToBase64(GetNewBlockName()),
+                    content: stream,
+                    progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            for (int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+
+            Assert.AreEqual(100 * Constants.MB, progress.List[progress.List.Count - 1]);
         }
 
         [Test]
@@ -1301,6 +1340,38 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            long blobSize = 256 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(
+                    content: stream,
+                    progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            for (int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
         private RequestConditions BuildRequestConditions(AccessConditionParameters parameters)

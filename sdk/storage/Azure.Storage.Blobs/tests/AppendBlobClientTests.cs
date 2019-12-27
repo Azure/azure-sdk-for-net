@@ -545,6 +545,37 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [LiveOnly]
+        [Test]
+        public async Task AppendBlockAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = 4 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.AppendBlockAsync(stream, progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            for (int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
+        }
+
         [Test]
         public async Task AppendBlockFromUriAsync_Min()
         {
