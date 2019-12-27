@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
@@ -32,43 +33,39 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task CliCredentialWinAzureCLINotInstalledException()
+        public async Task CliCredentialAzureCLINotInstalledException()
         {
             string expectedMessage = $"Azure CLI not installed";
 
-            var mockCliCredentialClient = new MockCliCredentialClient(("'az' is not recognized", 1));
+            var mockCliCreClientList = new List<MockCliCredentialClient>();
 
-            CliCredential credential = InstrumentClient(new CliCredential(CredentialPipeline.GetInstance(null), mockCliCredentialClient));
+            // Mock client for Windows Azure CLI not installed error message
+            mockCliCreClientList.Add(new MockCliCredentialClient(("'az' is not recognized", 1)));
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            // Mock client for Linux Azure CLI not installed error message
+            mockCliCreClientList.Add(new MockCliCredentialClient(("az: command not found", 1)));
 
-            Assert.AreEqual(expectedMessage, ex.Message);
+            // Mock client for MacOS Azure CLI not installed error message
+            mockCliCreClientList.Add(new MockCliCredentialClient(("az: not found", 1)));
 
-            await Task.CompletedTask;
-        }
+            foreach (var mockCliCredentialClient in mockCliCreClientList)
+            {
+                CliCredential credential = InstrumentClient(new CliCredential(CredentialPipeline.GetInstance(null), mockCliCredentialClient));
 
-        [Test]
-        public async Task CliCredentialLinuxAzureCLINotInstalledException()
-        {
-            string expectedExMessage = $"Azure CLI not installed";
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            var mockCliCredentialClient = new MockCliCredentialClient(("az: command not found", 1));
-
-            CliCredential credential = InstrumentClient(new CliCredential(CredentialPipeline.GetInstance(null), mockCliCredentialClient));
-
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-
-            Assert.AreEqual(expectedExMessage, ex.Message);
+                Assert.AreEqual(expectedMessage, ex.Message);
+            }
 
             await Task.CompletedTask;
         }
 
         [Test]
-        public async Task CliCredentialOtherAzureCLINotInstalledException()
+        public async Task CliCredentialAzNotLogInException()
         {
-            string expectedExMessage = $"Azure CLI not installed";
+            string expectedExMessage = $"Please run 'az login' to setup account";
 
-            var mockCliCredentialClient = new MockCliCredentialClient(("az: not found", 1));
+            var mockCliCredentialClient = new MockCliCredentialClient(("Please run 'az login'", 1));
 
             CliCredential credential = InstrumentClient(new CliCredential(CredentialPipeline.GetInstance(null), mockCliCredentialClient));
 
@@ -89,22 +86,6 @@ namespace Azure.Identity.Tests
             CliCredential credential = InstrumentClient(new CliCredential(CredentialPipeline.GetInstance(null), mockCliCredentialClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-
-            await Task.CompletedTask;
-        }
-
-        [Test]
-        public async Task CliCredentialAzNotLogInException()
-        {
-            string expectedExMessage = $"Please run 'az login' to setup account";
-
-            var mockCliCredentialClient = new MockCliCredentialClient((expectedExMessage, 1));
-
-            CliCredential credential = InstrumentClient(new CliCredential(CredentialPipeline.GetInstance(null), mockCliCredentialClient));
-
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-
-            Assert.AreEqual(expectedExMessage, ex.Message);
 
             await Task.CompletedTask;
         }
