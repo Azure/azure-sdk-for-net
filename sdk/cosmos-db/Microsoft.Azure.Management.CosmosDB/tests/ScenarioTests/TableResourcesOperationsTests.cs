@@ -25,7 +25,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 CosmosDBManagementClient cosmosDBManagementClient = CosmosDBTestUtilities.GetCosmosDBClient(context, handler1);
                 ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
 
-                string resourceGroupName = "CosmosDBResourceGroup2510";//CosmosDBTestUtilities.CreateResourceGroup(resourcesClient);
+                string resourceGroupName = "CosmosDBResourceGroup2510";
                 string databaseAccountName = "db2527";
 
                 bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
