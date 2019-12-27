@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -357,6 +358,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -364,17 +366,11 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            UploadInternal(
-                content,
-                httpHeaders,
-                metadata,
-                conditions,
-                accessTier: accessTier,
-                progressHandler,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+            CancellationToken cancellationToken = default)
+        {
+            var uploader = new PartitionedUploader(this, default, BlockBlobMaxUploadBlobBytes);
+            return uploader.Upload(content, httpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken);
+        }
 
         /// <summary>
         /// The <see cref="UploadAsync"/> operation creates a new block  blob,
@@ -423,6 +419,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -430,17 +427,12 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            await UploadInternal(
-                content,
-                httpHeaders,
-                metadata,
-                conditions,
-                accessTier: accessTier,
-                progressHandler,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            var uploader = new PartitionedUploader(this, default, BlockBlobMaxUploadBlobBytes);
+
+                return await uploader.UploadAsync(content, httpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
+            }
 
         /// <summary>
         /// The <see cref="UploadInternal"/> operation creates a new block blob,
@@ -492,7 +484,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> UploadInternal(
+        internal virtual async Task<Response<BlobContentInfo>> UploadInternal(
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,

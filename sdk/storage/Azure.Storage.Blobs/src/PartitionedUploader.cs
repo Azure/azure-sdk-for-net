@@ -67,13 +67,14 @@ namespace Azure.Storage.Blobs
             if (TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
-                return await _client.UploadAsync(
+                return await _client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
                     conditions,
                     accessTier,
                     progressHandler,
+                    async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -113,14 +114,15 @@ namespace Azure.Storage.Blobs
             if (TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
-                return _client.Upload(
+                return _client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
                     conditions,
                     accessTier,
                     progressHandler,
-                    cancellationToken);
+                    false,
+                    cancellationToken).EnsureCompleted();
             }
 
             // If the caller provided an explicit block size, we'll use it.
