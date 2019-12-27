@@ -35,8 +35,15 @@ param (
     [string] $ProvisionerApplicationSecret,
 
     [Parameter()]
-    [switch] $Force
+    [switch] $Force,
+
+    [Parameter()]
+    [switch] $SkipARM
 )
+
+if ($SkipARM) {
+    exit
+}
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {

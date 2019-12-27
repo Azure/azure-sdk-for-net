@@ -73,6 +73,7 @@ jobs:
           -CI
           -Force
           -Verbose
+          -SkipARM '${{ parameters.SkipARM }}'
         displayName: "Create test resources"
 
       - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:BuildInParallel=${{ parameters.BuildInParallel }}
@@ -92,6 +93,7 @@ jobs:
           -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
           -Force
           -Verbose
+          -SkipARM '${{ parameters.SkipARM }}'          
         displayName: "Clean up test resources"
         condition: ne(variables['AZURE_RESOURCEGROUP_NAME'], '')
         continueOnError: true

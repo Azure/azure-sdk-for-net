@@ -33,7 +33,7 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
-    [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'Provisioner')]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
     [string] $ProvisionerApplicationId,
 
@@ -59,8 +59,15 @@ param (
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
 
     [Parameter()]
-    [switch] $Force
+    [switch] $Force,
+
+    [Parameter()]
+    [switch] $SkipARM
 )
+
+if ($SkipARM) {
+    exit
+}
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
