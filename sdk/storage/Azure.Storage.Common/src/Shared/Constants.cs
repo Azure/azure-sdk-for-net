@@ -173,6 +173,8 @@ namespace Azure.Storage
                     "Azure.Storage.Blobs.Specialized.BlobBaseClient.DeleteIfExists";
                 public const string SetTierOperationName =
                     "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier";
+                public const string ExistsOperationName =
+                    "Azure.Storage.Blobs.Specialized.BlobBaseClient.Exists";
             }
 
             internal static class Block
@@ -232,6 +234,8 @@ namespace Azure.Storage
                     "Azure.Storage.Blobs.BlobContainerClient.Delete";
                 public const string DeleteIfExistsOperationName =
                     "Azure.Storage.Blobs.BlobContainerClient.DeleteIfExists";
+                public const string ExistsOperationName =
+                    "Azure.Storage.Blobs.BlobContainerClient.Exists";
                 public const string GetPropertiesOperationName =
                     "Azure.Storage.Blobs.BlobContainerClient.GetProperties";
                 public const string SetMetaDataOperationName =

@@ -221,20 +221,20 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType publicAccessType = PublicAccessType.None,
+            PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
 
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 
-            if (publicAccessType == PublicAccessType.None)
+            if (publicAccessType == default)
             {
                 publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
 
