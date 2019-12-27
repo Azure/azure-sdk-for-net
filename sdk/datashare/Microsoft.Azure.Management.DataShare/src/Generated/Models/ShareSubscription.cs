@@ -33,6 +33,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// Initializes a new instance of the ShareSubscription class.
         /// </summary>
         /// <param name="invitationId">The invitation id.</param>
+        /// <param name="sourceShareLocation">Source share location.</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
         /// <param name="type">Type of the azure resource</param>
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// resource</param>
         /// <param name="userName">Name of the user who created the
         /// resource</param>
-        public ShareSubscription(string invitationId, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), string provisioningState = default(string), string shareDescription = default(string), string shareKind = default(string), string shareName = default(string), string shareSubscriptionStatus = default(string), string shareTerms = default(string), string userEmail = default(string), string userName = default(string))
+        public ShareSubscription(string invitationId, string sourceShareLocation, string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string providerEmail = default(string), string providerName = default(string), string providerTenantName = default(string), string provisioningState = default(string), string shareDescription = default(string), string shareKind = default(string), string shareName = default(string), string shareSubscriptionStatus = default(string), string shareTerms = default(string), string userEmail = default(string), string userName = default(string))
             : base(id, name, type)
         {
             CreatedAt = createdAt;
@@ -73,6 +74,7 @@ namespace Microsoft.Azure.Management.DataShare.Models
             ShareName = shareName;
             ShareSubscriptionStatus = shareSubscriptionStatus;
             ShareTerms = shareTerms;
+            SourceShareLocation = sourceShareLocation;
             UserEmail = userEmail;
             UserName = userName;
             CustomInit();
@@ -152,6 +154,12 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public string ShareTerms { get; private set; }
 
         /// <summary>
+        /// Gets or sets source share location.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceShareLocation")]
+        public string SourceShareLocation { get; set; }
+
+        /// <summary>
         /// Gets email of the user who created the resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.userEmail")]
@@ -174,6 +182,10 @@ namespace Microsoft.Azure.Management.DataShare.Models
             if (InvitationId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "InvitationId");
+            }
+            if (SourceShareLocation == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SourceShareLocation");
             }
         }
     }
