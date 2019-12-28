@@ -933,7 +933,7 @@ namespace Azure.Storage.Blobs
 
         #region Exists
         /// <summary>
-        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// The <see cref="Exists"/> operation can be called on a
         /// <see cref="BlobContainerClient"/> to see if the associated container
         /// exists on the storage account in the storage service.
         /// </summary>
@@ -942,7 +942,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// Returns true if the container exists.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -964,7 +964,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// Returns true if the container exists.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -989,7 +989,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> if successful.
+        /// Returns true if the container exists.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
