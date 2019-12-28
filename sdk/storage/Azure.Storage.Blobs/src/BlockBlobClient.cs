@@ -368,8 +368,17 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            var uploader = new PartitionedUploader(this, default, BlockBlobMaxUploadBlobBytes);
-            return uploader.Upload(content, httpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken);
+            var uploader = new PartitionedUploader(
+                this, default, BlockBlobMaxUploadBlobBytes);
+
+            return uploader.Upload(
+                content,
+                httpHeaders,
+                metadata,
+                conditions,
+                progressHandler,
+                accessTier,
+                cancellationToken);
         }
 
         /// <summary>
@@ -429,9 +438,17 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            var uploader = new PartitionedUploader(this, default, BlockBlobMaxUploadBlobBytes);
+            var uploader = new PartitionedUploader(
+                this, default, BlockBlobMaxUploadBlobBytes);
 
-                return await uploader.UploadAsync(content, httpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
+                return await uploader.UploadAsync(
+                    content,
+                    httpHeaders,
+                    metadata,
+                    conditions,
+                    progressHandler,
+                    accessTier,
+                    cancellationToken).ConfigureAwait(false);
             }
 
         /// <summary>
