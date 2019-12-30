@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationAlertSettingsOperations ReplicationAlertSettings { get; }
 
         /// <summary>
+        /// Gets the IReplicationEligibilityResultsOperations.
+        /// </summary>
+        IReplicationEligibilityResultsOperations ReplicationEligibilityResults { get; }
+
+        /// <summary>
         /// Gets the IReplicationEventsOperations.
         /// </summary>
         IReplicationEventsOperations ReplicationEvents { get; }
