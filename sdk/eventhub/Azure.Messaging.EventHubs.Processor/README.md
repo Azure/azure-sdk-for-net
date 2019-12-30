@@ -171,6 +171,24 @@ private async Task ProcessUntilCanceled(CancellationToken cancellationToken)
 }
 ```
 
+### Authenticating with Azure.Identity
+
+The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md) provides easy Azure Active Directory support for authentication.
+
+```csharp
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOBS CONTAINER >>";
+var fullyQualifiedNamespace = "<< FULLY QUALIFED EVENT HUBS NAMESPACE >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+var storageClient = new BlobContainerClient(storageConnectionString, blobContainerName);
+var processor = new EventProcessorClient(storageClient, consumerGroup, fullyQualifiedNamespace, eventHubName, new DefaultAzureIdentity());
+
+// Now the processor may be used like in the above examples.
+```
+When using Azure Active Directory, you must ensure your principal is assigned a role which allows consumer access to Event Hubs (e.g. the Azure Event Hubs Data receiver role). Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](https://docs.microsoft.com/en-us/azure/event-hubs/authorize-access-azure-active-directory).
+
 ## Troubleshooting
 
 ### Common exceptions

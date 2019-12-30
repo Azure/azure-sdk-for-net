@@ -153,6 +153,22 @@ For the majority of production scenarios, it is recommended that the [Event Proc
 
 More details can be found in the Event Processor Client [README](./../Azure.Messaging.EventHubs.Processor/README.md) and the accompanying [samples](./../Azure.Messaging.EventHubs.Processor/samples).
 
+### Authenticating with Azure.Identity
+
+The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md) provides easy Azure Active Directory support for authentication.
+
+```csharp
+var fullyQualifiedNamespace = "<< FULLY QUALIFED EVENT HUBS NAMESPACE >>"
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+
+await using (var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, new DefaultAzureIdentity()))
+{
+   // Now the producer may be used like in the above examples.
+}
+```
+
+When using Azure Active Directory, you must ensure your principal is assigned a role which allows access to Event Hubs (e.g. the Azure Event Hubs Data owner role). Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation](https://docs.microsoft.com/en-us/azure/event-hubs/authorize-access-azure-active-directory).
+
 ## Troubleshooting
 
 ### Common exceptions
