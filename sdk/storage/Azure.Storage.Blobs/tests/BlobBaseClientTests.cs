@@ -1328,16 +1328,15 @@ namespace Azure.Storage.Blobs.Test
         public async Task ExistsAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
-            ;
 
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
-            BlobBaseClient unauthorizedBlobClient = new BlobBaseClient(blob.Uri);
+            BlobBaseClient unauthorizedBlobClient = InstrumentClient(new BlobBaseClient(blob.Uri, GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedBlobClient.ExistsAsync(),
-                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode.Split('\n')[0]));
         }
 
         [Test]
