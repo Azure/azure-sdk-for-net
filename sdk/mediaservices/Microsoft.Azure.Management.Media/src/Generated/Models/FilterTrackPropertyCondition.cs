@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="property">The track property type. Possible values
         /// include: 'Unknown', 'Type', 'Name', 'Language', 'FourCC',
         /// 'Bitrate'</param>
-        /// <param name="value">The track proprty value.</param>
+        /// <param name="value">The track property value.</param>
         /// <param name="operation">The track property condition operation.
         /// Possible values include: 'Equal', 'NotEqual'</param>
         public FilterTrackPropertyCondition(FilterTrackPropertyType property, string value, FilterTrackPropertyCompareOperation operation)
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Media.Models
         public FilterTrackPropertyType Property { get; set; }
 
         /// <summary>
-        /// Gets or sets the track proprty value.
+        /// Gets or sets the track property value.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
