@@ -24,7 +24,6 @@
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
 
     <PackageReference Include="OpenTelemetry" Version="0.2.0-alpha.100" />
-    <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="0.2.0-alpha.100" />
     <PackageReference Include="OpenTelemetry.Exporter.ApplicationInsights" Version="0.2.0-alpha.100" />
     <PackageReference Include="OpenTelemetry.Collector.Dependencies" Version="0.2.0-alpha.100" />
     <PackageReference Include="OpenTelemetry.Collector.AspNetCore" Version="0.2.0-alpha.100" />
