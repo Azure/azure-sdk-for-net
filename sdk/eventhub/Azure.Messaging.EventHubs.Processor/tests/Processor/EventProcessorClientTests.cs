@@ -491,7 +491,8 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
             mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(), Throws.Nothing);
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token), Throws.Nothing);
 
             await mockProcessor.Object.StopProcessingAsync();
         }
@@ -616,12 +617,15 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
             mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            await mockProcessor.Object.StartProcessingAsync();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             Assert.That(() => mockProcessor.Object.PartitionInitializingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => mockProcessor.Object.PartitionClosingAsync += eventArgs => Task.CompletedTask, Throws.InstanceOf<InvalidOperationException>());
 
-            await mockProcessor.Object.StopProcessingAsync();
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
 
             // Once stopped, the processor should allow handlers to be added again.
 
@@ -650,6 +654,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubConsumerClientOptions>()))
                 .Returns(mockConsumer.Object);
 
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             Func<PartitionInitializingEventArgs, Task> initHandler = eventArgs => Task.CompletedTask;
             Func<PartitionClosingEventArgs, Task> closeHandler = eventArgs => Task.CompletedTask;
             Func<ProcessEventArgs, Task> eventHandler = eventArgs => Task.CompletedTask;
@@ -660,14 +668,14 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.ProcessEventAsync += eventHandler;
             mockProcessor.Object.ProcessErrorAsync += errorHandler;
 
-            await mockProcessor.Object.StartProcessingAsync();
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             Assert.That(() => mockProcessor.Object.PartitionInitializingAsync -= initHandler, Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => mockProcessor.Object.PartitionClosingAsync -= closeHandler, Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => mockProcessor.Object.ProcessEventAsync -= eventHandler, Throws.InstanceOf<InvalidOperationException>());
             Assert.That(() => mockProcessor.Object.ProcessErrorAsync -= errorHandler, Throws.InstanceOf<InvalidOperationException>());
 
-            await mockProcessor.Object.StopProcessingAsync();
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
 
             // Once stopped, the processor should allow handlers to be removed again.
 
@@ -701,13 +709,16 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
             mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             Assert.That(mockProcessor.Object.IsRunning, Is.False);
 
-            await mockProcessor.Object.StartProcessingAsync();
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
             Assert.That(mockProcessor.Object.IsRunning, Is.True);
 
-            await mockProcessor.Object.StopProcessingAsync();
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
 
             Assert.That(mockProcessor.Object.IsRunning, Is.False);
         }
@@ -787,9 +798,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
             mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(), Throws.Nothing);
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
 
-            await mockProcessor.Object.StopProcessingAsync();
+            Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token), Throws.Nothing);
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
 
             mockLog.Verify(m => m.EventProcessorStart(mockProcessor.Object.Identifier));
             mockLog.Verify(m => m.RenewOwnershipStart(mockProcessor.Object.Identifier));
@@ -892,17 +904,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
 
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             var completionSource = new TaskCompletionSource<bool>();
 
             mockProcessor.Object.ProcessErrorAsync += async eventArgs =>
             {
-                await mockProcessor.Object.StopProcessingAsync();
+                await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
                 completionSource.SetResult(true);
             };
 
             // Start the processor and wait for the event handler to be triggered.
 
-            await mockProcessor.Object.StartProcessingAsync();
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             await completionSource.Task;
 
             // Ensure that the processor has been stopped.
@@ -956,9 +971,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Start the processor and wait for the event handler to be triggered.
 
-            await mockProcessor.Object.StartProcessingAsync();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+
+            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             await completionSource.Task;
-            await mockProcessor.Object.StopProcessingAsync();
+            await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
 
             // Validate the empty event arguments.
 
@@ -992,17 +1011,22 @@ namespace Azure.Messaging.EventHubs.Tests
                 numberOfPartitions: NumberOfPartitions,
                 clientOptions: default);
 
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+
             // Ownership should start empty.
 
-            var completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup);
-            Assert.That(completeOwnership.Count(), Is.EqualTo(0));
+            var completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
+            Assert.That(completeOwnership.Any(), Is.False);
 
             // Start the processor so that the processor claims a random partition until none are left.
 
-            await processor1.StartProcessingAsync();
+            await processor1.StartProcessingAsync(cancellationSource.Token);
             await processor1.WaitStabilization();
 
-            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup);
+            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
 
             // All partitions are owned by Processor1.
 
@@ -1010,9 +1034,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Stopping the processor should relinquish all partition ownership.
 
-            await processor1.StopProcessingAsync();
+            await processor1.StopProcessingAsync(cancellationSource.Token);
 
-            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup);
+            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
 
             // No partitions are owned by Processor1.
 
@@ -1021,16 +1045,16 @@ namespace Azure.Messaging.EventHubs.Tests
             // Start Processor2 so that the processor claims a random partition until none are left.
             // All partitions should be immediately claimable even though they were just claimed by the Processor1.
 
-            await processor2.StartProcessingAsync();
+            await processor2.StartProcessingAsync(cancellationSource.Token);
             await processor2.WaitStabilization();
 
-            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup);
+            completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
 
             // All partitions are owned by Processor2.
 
             Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(processor2.Identifier)), Is.EqualTo(NumberOfPartitions));
 
-            await processor2.StopProcessingAsync();
+            await processor2.StopProcessingAsync(cancellationSource.Token);
         }
 
         /// <summary>
@@ -1050,21 +1074,26 @@ namespace Azure.Messaging.EventHubs.Tests
                 numberOfPartitions: NumberOfPartitions,
                 clientOptions: default);
 
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             // ownership should start empty.
 
-            var completeOwnership = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
+            var completeOwnership = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
             Assert.That(completeOwnership.Count(), Is.EqualTo(0));
 
             // Start the processor so that the processor claims a random partition until none are left.
 
-            await processor.StartProcessingAsync();
+            await processor.StartProcessingAsync(cancellationSource.Token);
             await processor.WaitStabilization();
 
             completeOwnership = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
 
             Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions));
 
-            await processor.StopProcessingAsync();
+            await processor.StopProcessingAsync(cancellationSource.Token);
         }
 
         /// <summary>
@@ -1086,7 +1115,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 numberOfPartitions: NumberOfPartitions,
                 clientOptions: default);
 
-            Console.WriteLine($"Processor1 = {processor.Identifier}");
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
 
             // Create partitions owned by this Processor.
 
@@ -1109,7 +1141,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Seed the partitionManager with all partitions.
 
-            await partitionManager.ClaimOwnershipAsync(completeOwnership);
+            await partitionManager.ClaimOwnershipAsync(completeOwnership, cancellationSource.Token);
 
             var consumerClient = processor.CreateConsumer(processor.ConsumerGroup, connection, default);
 
@@ -1118,7 +1150,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Get owned partitions.
 
-            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
+            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
             var ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
 
             // Verify owned partitionIds match the owned partitions.
@@ -1126,14 +1158,14 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(ownedByProcessor1.Count(), Is.EqualTo(MinimumpartitionCount));
             Assert.That(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.False);
 
-            // Start the processor to claim owership from of a Partition even though ownedPartitionCount == MinimumOwnedPartitionsCount.
+            // Start the processor to claim ownership from of a Partition even though ownedPartitionCount == MinimumOwnedPartitionsCount.
 
-            await processor.StartProcessingAsync();
+            await processor.StartProcessingAsync(cancellationSource.Token);
             await processor.WaitStabilization();
 
             // Get owned partitions.
 
-            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
+            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
             ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
 
             // Verify that we took ownership of the additional partition.
@@ -1141,7 +1173,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(ownedByProcessor1.Count(), Is.GreaterThan(MinimumpartitionCount));
             Assert.That(ownedByProcessor1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.True);
 
-            await processor.StopProcessingAsync();
+            await processor.StopProcessingAsync(cancellationSource.Token);
         }
 
         /// <summary>
@@ -1164,6 +1196,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 numberOfPartitions: NumberOfPartitions,
                 clientOptions: default);
 
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
             // Create partitions owned by this Processor.
 
             var processor1PartitionIds = Enumerable.Range(1, MinimumpartitionCount);
@@ -1185,11 +1222,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Seed the partitionManager with the owned partitions.
 
-            await partitionManager.ClaimOwnershipAsync(completeOwnership);
+            await partitionManager.ClaimOwnershipAsync(completeOwnership, cancellationSource.Token);
 
             // Get owned partitions.
 
-            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
+            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
             var ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
             var ownedByProcessor3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == Processor3Id);
 
@@ -1201,9 +1238,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(ownedByProcessor3.Count(), Is.GreaterThan(MaximumpartitionCount));
 
-            // Start the processor to steal owership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a processor owns > MaximumPartitionCount.
+            // Start the processor to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a processor owns > MaximumPartitionCount.
 
-            await processor.StartProcessingAsync();
+            await processor.StartProcessingAsync(cancellationSource.Token);
             await processor.WaitStabilization();
 
             // Get owned partitions.
@@ -1220,7 +1257,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(ownedByProcessor3.Count(), Is.EqualTo(MaximumpartitionCount));
 
-            await processor.StopProcessingAsync();
+            await processor.StopProcessingAsync(cancellationSource.Token);
         }
 
         /// <summary>
@@ -1242,6 +1279,11 @@ namespace Azure.Messaging.EventHubs.Tests
                 connectionFactory: connectionFactory,
                 numberOfPartitions: NumberOfPartitions,
                 clientOptions: default);
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             // Create more partitions owned by this Processor.
 
@@ -1268,7 +1310,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Get owned partitions.
 
-            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
+            var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
             var ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
             var ownedByProcessor3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == Processor3Id);
 
@@ -1280,14 +1322,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(ownedByProcessor3.Count(), Is.EqualTo(MaximumpartitionCount));
 
-            // Start the processor to steal owership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a processor owns > MaximumPartitionCount.
+            // Start the processor to steal ownership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a processor owns > MaximumPartitionCount.
 
-            await processor.StartProcessingAsync();
+            await processor.StartProcessingAsync(cancellationSource.Token);
             await processor.WaitStabilization();
 
             // Get owned partitions.
 
-            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup);
+            totalOwnedPartitions = await partitionManager.ListOwnershipAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, cancellationSource.Token);
             ownedByProcessor1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == processor.Identifier);
             ownedByProcessor3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == Processor3Id);
 
@@ -1299,7 +1341,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(ownedByProcessor3.Count(), Is.LessThan(MaximumpartitionCount));
 
-            await processor.StopProcessingAsync();
+            await processor.StopProcessingAsync(cancellationSource.Token);
         }
 
         /// <summary>
