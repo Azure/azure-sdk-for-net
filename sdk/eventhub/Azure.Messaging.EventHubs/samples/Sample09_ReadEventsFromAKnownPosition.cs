@@ -175,7 +175,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 List<EventData> receivedEvents = new List<EventData>();
                 int expectedCount = (eventBatchSize - 3);
-                EventPosition startingPosition = EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber.Value);
+                EventPosition startingPosition = EventPosition.FromSequenceNumber(thirdEvent.SequenceNumber);
 
                 await foreach (PartitionEvent currentEvent in newConsumerClient.ReadEventsFromPartitionAsync(firstPartition, startingPosition, cancellationSource.Token))
                 {
