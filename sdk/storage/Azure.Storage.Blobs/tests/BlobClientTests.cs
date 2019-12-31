@@ -744,6 +744,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [LiveOnly]
         [Test]
         public async Task UploadAsync_ProgressReporting()
         {
