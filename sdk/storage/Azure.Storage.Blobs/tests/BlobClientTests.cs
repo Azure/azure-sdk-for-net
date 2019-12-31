@@ -746,6 +746,7 @@ namespace Azure.Storage.Blobs.Test
 
         [LiveOnly]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadAsync_ProgressReporting()
         {
             // Arrange
