@@ -11,7 +11,7 @@
     <PackageTags>management;cosmosdb;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure CosmosDB SDK.
+        Bug fixes in the version 1.0.0
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
