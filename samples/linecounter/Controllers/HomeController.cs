@@ -63,6 +63,4 @@ namespace LineCounter.Controllers
             return count ?? "-1";
         }
     }
-
-
 }

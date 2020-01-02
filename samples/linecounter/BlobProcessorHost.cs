@@ -58,7 +58,6 @@ namespace LineCounter
             await _processor.StartProcessingAsync();
         }
 
-        //private async Task ProcessEvents(PartitionContext arg1, IEnumerable<EventData> events)
         private async Task ProcessEvent(ProcessEventArgs eventArgs)
         {
             // Note there is a bug with the HasEvent property in Preview 6, so check if Data is not null as work around.
