@@ -145,7 +145,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("lsfjlasf9urw", resultJson["properties"]["parameters"]["storageAccountName"]["value"]);
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIf_ReceivingResponse_DeserializesResult()
         {
             // Arrange.
@@ -346,7 +346,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("myCustomRole", resultJson["properties"]["parameters"]["roleDefName"]["value"]);
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIfAtSubscriptionScope_ReceivingResponse_DeserializesResult()
         {
             // Arrange.

@@ -36,7 +36,7 @@ namespace Policy.Tests
         /// </summary>
         private const string ParentManagementGroup = "AzGovPerfTest";
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicyDefinition()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -90,7 +90,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudDataPlanePolicyDefinition()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -134,7 +134,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicySetDefinition()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -252,7 +252,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicyAssignment()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -327,7 +327,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicyAssignmentAtResourceGroup()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -372,7 +372,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicyAssignmentAtResource()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -417,7 +417,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicyDefinitionAtManagementGroup()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -464,7 +464,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicySetDefinitionAtManagementGroup()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -570,7 +570,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanCrudPolicyAssignmentAtManagementGroup()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -610,7 +610,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ValidatePolicyAssignmentErrorHandling()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -657,7 +657,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ValidatePolicyDefinitionErrorHandling()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -694,7 +694,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ValidatePolicySetDefinitionErrorHandling()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -763,7 +763,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanListAndGetBuiltinPolicyDefinitions()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -786,7 +786,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CannotDeleteBuiltInPolicyDefinitions()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -813,7 +813,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CanListAndGetBuiltinPolicySetDefinitions()
         {
             using (var context = MockContext.Start(this.GetType()))
@@ -846,7 +846,7 @@ namespace Policy.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CannotDeleteBuiltInPolicySetDefinitions()
         {
             using (var context = MockContext.Start(this.GetType()))

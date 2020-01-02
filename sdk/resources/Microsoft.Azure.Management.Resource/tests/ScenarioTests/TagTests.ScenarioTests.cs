@@ -28,7 +28,7 @@ namespace ResourceGroups.Tests
             return client;
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CreateListAndDeleteSubscriptionTag()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -49,7 +49,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CreateListAndDeleteSubscriptionTagValue()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
@@ -74,7 +74,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CreateTagValueWithoutCreatingTag()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };

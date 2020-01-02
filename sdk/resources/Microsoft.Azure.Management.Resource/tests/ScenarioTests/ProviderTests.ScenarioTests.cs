@@ -24,7 +24,7 @@ namespace ResourceGroups.Tests
             return this.GetResourceManagementClientWithHandler(context, handler);
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ProviderGetValidateMessage()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -54,7 +54,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ProviderListValidateMessage()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -86,7 +86,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void GetProviderWithAliases()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -130,7 +130,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void VerifyProviderRegister()
         {
             var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
@@ -146,7 +146,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void VerifyProviderUnregister()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };

@@ -25,7 +25,7 @@ namespace ResourceGroups.Tests
 
         private static readonly string SubscriptionTemplate = LoadTemplateContent("subscription_level_template.json");
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIf_BlankTemplate_ReturnsNoChange()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -58,7 +58,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIf_ResourceIdOnlyMode_ReturnsChangesWithResourceIdsOnly()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -101,7 +101,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIf_CreateResources_ReturnsCreateChanges()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -136,7 +136,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIf_ModifyResources_ReturnsModifyChanges()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -201,7 +201,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIf_DeleteResources_ReturnsDeleteChanges()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -246,7 +246,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIfAtSubscriptionScope_BlankTemplate_ReturnsNoChange()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -275,7 +275,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIfAtSubscriptionScope_ResourceIdOnlyMode_ReturnsChangesWithResourceIdsOnly()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -313,7 +313,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIfAtSubscriptionScope_CreateResources_ReturnsCreateChanges()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -352,7 +352,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void WhatIfAtSubscriptionScope_ModifyResources_ReturnsModifyChanges()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

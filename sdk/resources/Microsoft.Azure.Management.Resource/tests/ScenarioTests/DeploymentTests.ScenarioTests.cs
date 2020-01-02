@@ -78,7 +78,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact()]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CreateDeploymentWithStringTemplateAndParameters()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -106,7 +106,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CreateDeploymentAndValidateProperties()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -126,7 +126,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                         JObject.Parse(
-                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -155,7 +155,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ValidateGoodDeployment()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -176,7 +176,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -214,7 +214,7 @@ namespace ResourceGroups.Tests
                    {
                         Template = File.ReadAllText(Path.Combine("ScenarioTests", "good-website.json")),
                         Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
+                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -233,7 +233,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ValidateBadDeployment()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -253,7 +253,7 @@ namespace ResourceGroups.Tests
                             Uri = BadTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse(@"{ 'siteName': {'value': 'mctest0101'},'hostingPlanName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
+                        JObject.Parse(@"{ 'siteName': {'value': 'mctest0101'},'siteMode': {'value': 'Limited'},'computeMode': {'value': 'Shared'},'siteLocation': {'value': 'North Europe'},'sku': {'value': 'Free'},'workerSize': {'value': '0'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -339,7 +339,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
+                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -369,7 +369,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void CreateLargeWebDeploymentTemplateWorks()
         {
             var handler = new RecordedDelegatingHandler();
@@ -389,7 +389,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
+                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -405,7 +405,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void SubscriptionLevelDeployment()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -447,7 +447,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void ManagementGroupLevelDeployment()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -486,7 +486,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void TenantLevelDeployment()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -527,7 +527,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void DeploymentWithScope_AtTenant()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -568,7 +568,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void DeploymentWithScope_AtManagementGroup()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -612,7 +612,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void DeploymentWithScope_AtSubscription()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
@@ -658,7 +658,7 @@ namespace ResourceGroups.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "disable in hybrid-20190301")]
         public void DeploymentWithScope_AtResourceGroup()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
