@@ -174,10 +174,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        internal PageBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
         {
         }
         #endregion ctors
@@ -207,7 +210,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new PageBlobClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            return new PageBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
         }
 
         ///// <summary>
@@ -583,12 +586,11 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(httpHeaders)}: {httpHeaders}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.CreateAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         contentLength: default,
                         blobContentType: httpHeaders?.ContentType,
                         blobContentEncoding: httpHeaders?.ContentEncoding,
@@ -814,46 +816,33 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     var range = new HttpRange(offset, content.Length);
-                    var uploadAttempt = 0;
-                    return await ReliableOperation.DoSyncOrAsync(
-                        async,
-                        reset: () => content.Seek(0, SeekOrigin.Begin),
-                        predicate: e => true,
-                        maximumRetries: Constants.MaxReliabilityRetries,
-                        operation:
-                            () =>
-                            {
-                                Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                                return BlobRestClient.PageBlob.UploadPagesAsync(
-                                    ClientDiagnostics,
-                                    Pipeline,
-                                    Uri,
-                                    body: content,
-                                    contentLength: content.Length,
-                                    transactionalContentHash: transactionalContentHash,
-                                    timeout: default,
-                                    range: range.ToString(),
-                                    leaseId: conditions?.LeaseId,
-                                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                                    ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
-                                    ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
-                                    ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
-                                    ifModifiedSince: conditions?.IfModifiedSince,
-                                    ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                    ifMatch: conditions?.IfMatch,
-                                    ifNoneMatch: conditions?.IfNoneMatch,
-                                    async: async,
-                                    operationName: Constants.Blob.Page.UploadOperationName,
-                                    cancellationToken: cancellationToken);
-                            },
-                        cleanup: () => { })
-                        .ConfigureAwait(false);
+
+                    return await BlobRestClient.PageBlob.UploadPagesAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        version: Version.ToVersionString(),
+                        transactionalContentHash: transactionalContentHash,
+                        timeout: default,
+                        range: range.ToString(),
+                        leaseId: conditions?.LeaseId,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        ifSequenceNumberLessThanOrEqualTo: conditions?.IfSequenceNumberLessThanOrEqual,
+                        ifSequenceNumberLessThan: conditions?.IfSequenceNumberLessThan,
+                        ifSequenceNumberEqualTo: conditions?.IfSequenceNumberEqual,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        async: async,
+                        operationName: Constants.Blob.Page.UploadOperationName,
+                        cancellationToken: cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -1002,13 +991,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.ClearPagesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         contentLength: default,
+                        version: Version.ToVersionString(),
                         range: range.ToString(),
                         leaseId: conditions?.LeaseId,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -1179,10 +1167,11 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    Response<PageRangesInfoInternal> response =  await BlobRestClient.PageBlob.GetPageRangesAsync(
+                    Response<PageRangesInfoInternal> response = await BlobRestClient.PageBlob.GetPageRangesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         snapshot: snapshot,
                         range: range?.ToString(),
                         leaseId: conditions?.LeaseId,
@@ -1390,6 +1379,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         snapshot: snapshot,
                         prevsnapshot: previousSnapshot,
                         range: range?.ToString(),
@@ -1553,13 +1543,12 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.ResizeAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         blobContentLength: size,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
@@ -1771,6 +1760,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         sequenceNumberAction: action,
+                        version: Version.ToVersionString(),
                         blobSequenceNumber: sequenceNumber,
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
@@ -2114,13 +2104,14 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     // Create copySource Uri
-                    PageBlobClient pageBlobUri = new PageBlobClient(sourceUri, Pipeline, ClientDiagnostics, CustomerProvidedKey).WithSnapshot(snapshot);
+                    PageBlobClient pageBlobUri = new PageBlobClient(sourceUri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey).WithSnapshot(snapshot);
 
                     return await BlobRestClient.PageBlob.CopyIncrementalAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         copySource: pageBlobUri.Uri,
+                        version: Version.ToVersionString(),
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
@@ -2372,8 +2363,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(sourceUri)}: {sourceUri}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.PageBlob.UploadPagesFromUriAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -2382,6 +2371,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         contentLength: default,
+                        version: Version.ToVersionString(),
                         timeout: default,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
@@ -2442,6 +2432,7 @@ namespace Azure.Storage.Blobs.Specialized
             new PageBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
+                client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey);
     }

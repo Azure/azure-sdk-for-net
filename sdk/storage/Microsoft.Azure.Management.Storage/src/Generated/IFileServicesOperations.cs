@@ -70,6 +70,9 @@ namespace Microsoft.Azure.Management.Storage
         /// included in the request body, all CORS rules will be deleted, and
         /// CORS will be disabled for the File service.
         /// </param>
+        /// <param name='shareDeleteRetentionPolicy'>
+        /// The file service properties for share soft delete.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -85,7 +88,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileServiceProperties>> SetServicePropertiesWithHttpMessagesAsync(string resourceGroupName, string accountName, CorsRules cors = default(CorsRules), DeleteRetentionPolicy shareDeleteRetentionPolicy = default(DeleteRetentionPolicy), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the properties of file services in storage accounts, including
         /// CORS (Cross-Origin Resource Sharing) rules.

@@ -7,13 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
 
 namespace Azure.Storage.Files.Shares.Test
 {
@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.Shares.Test
             var fileEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var fileSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+            var connectionString = new StorageConnectionString(credentials, fileStorageUri: (fileEndpoint, fileSecondaryEndpoint));
 
             var shareName = GetNewShareName();
             var filePath = GetNewFileName();
@@ -846,6 +846,9 @@ namespace Azure.Storage.Files.Shares.Test
             Response<ShareFileRangeInfo> response = await file.GetRangeListAsync(range: new HttpRange(0, Constants.MB));
 
             Assert.IsNotNull(response);
+            Assert.AreNotEqual("<null>", response.Value.ETag.ToString());
+            Assert.AreNotEqual(default(DateTimeOffset), response.Value.LastModified);
+            Assert.IsTrue(response.Value.FileContentLength > 0);
         }
 
         [Test]
@@ -945,6 +948,7 @@ namespace Azure.Storage.Files.Shares.Test
         [TestCase(33 * Constants.MB)]
         [TestCase(257 * Constants.MB)]
         [TestCase(1 * Constants.GB)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadAsync_LargeBlobs(int size) =>
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadAndVerify(size, Constants.MB);
@@ -1007,7 +1011,7 @@ namespace Azure.Storage.Files.Shares.Test
             var progressHandler = new Progress<long>(progress => { progressList.Add(progress); /*logger.LogTrace("Progress: {progress}", progress.BytesTransferred);*/ });
 
             // Act
-            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new Exception("Simulated stream fault")))
+            using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
                     writeType: ShareFileRangeWriteType.Update,
@@ -1035,6 +1039,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
         // TODO: #7645
         public async Task UploadRangeFromUriAsync()
         {
@@ -1167,10 +1172,10 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient file = test.File;
 
             // Act
-            int handlesClosed = await file.ForceCloseAllHandlesAsync();
+            CloseHandlesResult reponse = await file.ForceCloseAllHandlesAsync();
 
             // Assert
-            Assert.AreEqual(0, handlesClosed);
+            Assert.AreEqual(0, reponse.ClosedHandlesCount);
         }
 
         [Test]

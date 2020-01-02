@@ -160,7 +160,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// ${operation.description || regionName}`);
     w.line(`/// </summary>`);
-    w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
     for (const arg of operation.request.arguments) {
         const desc = arg.description || arg.model.description;
         if (desc) {
@@ -170,13 +169,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     if (sync) {
         w.line(`/// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>`);
     }
-    w.line(`/// <param name="${clientDiagnostics}">The ClientDiagnostics instance used for operation reporting.</param>`);
     w.line(`/// <param name="${operationName}">Operation name.</param>`);
     w.line(`/// <param name="${cancellationName}">Cancellation token.</param>`);
     w.line(`/// <returns>${operation.response.model.description || returnType.replace(/</g, '{').replace(/>/g, '}')}</returns>`);
     w.write(`public static async System.Threading.Tasks.ValueTask<${sendMethodReturnType}> ${methodName}(`);
     w.scope(() => {
-        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
         const separateParams = IndentWriter.createFenceposter();
         for (const arg of operation.request.arguments) {
             if (separateParams()) { w.line(`,`); }
@@ -206,7 +203,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`using (Azure.Core.HttpMessage ${messageName} = ${methodName}_CreateMessage(`);
             w.scope(() => {
                 const separateParams = IndentWriter.createFenceposter();
-                for (const arg of operation.request.arguments) {
+                for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
                     if (separateParams()) { w.line(`,`); }
                     w.write(`${naming.parameter(arg.clientName)}`);
                 }
@@ -265,8 +262,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// Create the ${regionName} request.`);
     w.line(`/// </summary>`);
-    w.line(`/// <param name="pipeline">The pipeline used for sending requests.</param>`);
-    for (const arg of operation.request.arguments) {
+    for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
         const desc = arg.description || arg.model.description;
         if (desc) {
             w.line(`/// <param name="${naming.parameter(arg.clientName)}">${desc}</param>`);
@@ -276,7 +272,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.write(`internal static Azure.Core.HttpMessage ${methodName}_CreateMessage(`);
     w.scope(() => {
         const separateParams = IndentWriter.createFenceposter();
-        for (const arg of operation.request.arguments) {
+        for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
             if (separateParams()) { w.line(`,`); }
             w.write(`${types.getDeclarationType(arg.model, arg.required, false, true)} ${naming.parameter(arg.clientName)}`);
             if (!arg.required) { w.write(` = default`); }
@@ -332,7 +328,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
 
         if (operation.request.arguments.length > 0) {
             w.line(`// Validation`);
-            for (const arg of operation.request.arguments) {
+            for (const arg of operation.request.arguments.slice(1)) { // Skip ClientDiagnostics
                 generateValidation(w, operation, arg);
             }
             w.line();
@@ -346,7 +342,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         w.line(`// Set the endpoint`);
         const httpMethod = naming.pascalCase(operation.method);
         w.line(`${requestName}.Method = Azure.Core.RequestMethod.${httpMethod};`);
-        const uri = naming.parameter(operation.request.all[1].clientName);
+        const uri = naming.parameter(operation.request.all[2].clientName);
         w.line(`${requestName}.Uri.Reset(${uri});`);
         if (operation.request.queries.length > 0) {
             for (const query of operation.request.queries) {
@@ -361,7 +357,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 });
             }
         }
-        if (operation.request.paths.length > 2) { // We're always ignoring url + pipeline
+        if (operation.request.paths.length > 3) { // We're always ignoring url + pipeline + client diagnostics
             w.line(`// TODO: Ignoring request path vars: ${operation.request.paths.map(p => p.name).join(', ')}`)
         }
         w.line();
@@ -704,26 +700,28 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
     // Generate the enum
     const regionName = `enum ${naming.type(type.name)}`;
     w.line(`#region ${regionName}`);
-    w.line(`namespace ${naming.namespace(type.namespace)}`);
-    w.scope('{', '}', () => {
-        w.line(`/// <summary>`)
-        w.line(`/// ${type.description || type.name + ' values'}`);
-        w.line(`/// </summary>`)
-        const notReallyPlural = naming.type(type.name).endsWith('Status');
-        if (notReallyPlural) { w.line(`#pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names`); }
-        w.line(`${type.public ? 'public' : 'internal'} enum ${naming.type(type.name)}`);
-        if (notReallyPlural) { w.line(`#pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names`); }
-        const separator = IndentWriter.createFenceposter();
-        w.scope(`{`, `}`, () => {
-            for (const value of type.values) {
-                if (separator()) { w.line(','); w.line(); }
-                w.line(`/// <summary>`);
-                w.line(`/// ${value.description || value.value || value.name}`);
-                w.line(`/// </summary>`);
-                w.write(naming.enumField(value.name || value.value));
-            }
+    if (!type.external) {
+        w.line(`namespace ${naming.namespace(type.namespace)}`);
+        w.scope('{', '}', () => {
+            w.line(`/// <summary>`)
+            w.line(`/// ${type.description || type.name + ' values'}`);
+            w.line(`/// </summary>`)
+            const notReallyPlural = naming.type(type.name).endsWith('Status');
+            if (notReallyPlural) { w.line(`#pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names`); }
+            w.line(`${type.public ? 'public' : 'internal'} enum ${naming.type(type.name)}`);
+            if (notReallyPlural) { w.line(`#pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names`); }
+            const separator = IndentWriter.createFenceposter();
+            w.scope(`{`, `}`, () => {
+                for (const value of type.values) {
+                    if (separator()) { w.line(','); w.line(); }
+                    w.line(`/// <summary>`);
+                    w.line(`/// ${value.description || value.value || value.name}`);
+                    w.line(`/// </summary>`);
+                    w.write(naming.enumField(value.name || value.value));
+                }
+            });
         });
-    });
+    }
 
     // Generate the custom serializers if needed
     if (type.customSerialization) {
@@ -772,6 +770,8 @@ function generateEnum(w: IndentWriter, model: IServiceModel, type: IEnumType) {
 }
 
 function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumType) {
+    if (type.external) { return; }
+
     const regionName = `enum strings ${naming.type(type.name)}`;
     w.line(`#region ${regionName}`);
     w.line(`namespace ${naming.namespace(type.namespace)}`);
@@ -866,6 +866,7 @@ function generateEnumStrings(w: IndentWriter, model: IServiceModel, type: IEnumT
 function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType) {
     const service = model.service;
     const regionName = type.struct ? `struct ${naming.type(type.name)}` : `class ${naming.type(type.name)}`;
+    let needsModelFactory = false;
     w.line(`#region ${regionName}`);
     w.line(`namespace ${naming.namespace(type.namespace)}`);
     w.scope('{', '}', () => {
@@ -910,8 +911,13 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                 w.line(`/// Creates a new ${naming.type(type.name)} instance`);
                 w.line(`/// </summary>`);
                 if (type.deserialize) {
+                    let visibility = `public`;
+                    if (type.public && readonlyModel) {
+                        visibility = `internal`;
+                        needsModelFactory = true;
+                    }
                     // Add an optional overload that prevents initialization for deserialiation
-                    w.write(`${!type.public || !readonlyModel ? 'public' : 'internal'} ${naming.type(type.name)}()`);
+                    w.write(`${visibility} ${naming.type(type.name)}()`);
                     w.scope(() => w.write(`: this(false)`));
                     w.scope(`{`, `}`, () => null);
                     w.line();
@@ -944,7 +950,8 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                         w.popScope(`}`);
                     }
                 });
-            } else {
+            } else if (readonlyModel) {
+                needsModelFactory = true;
                 const factoryName = naming.type(model.info.modelFactoryName);
                 w.line();
                 w.line(`/// <summary>`)
@@ -1026,14 +1033,20 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
                     });
                 }
                 else { w.line(`internal ${naming.type(type.name)}() { }`); }
+            } else {
+                w.line();
+                w.line(`/// <summary>`);
+                w.line(`/// Creates a new ${naming.type(type.name)} instance`);
+                w.line(`/// </summary>`);
+                w.line(`public ${naming.type(type.name)}() { }`);
             }
 
             // Create serializers if necessary
             for (const serializationType of model.info.consumes) {
                 const format =
                     (serializationType === 'application/xml') ? 'Xml' :
-                        (serializationType === 'application/json') ? 'Json' :
-                            serializationType;
+                    (serializationType === 'application/json') ? 'Json' :
+                    serializationType;
 
                 // TODO: JSON, ...
                 if (format !== `Xml`) {
@@ -1054,7 +1067,7 @@ function generateObject(w: IndentWriter, model: IServiceModel, type: IObjectType
 
         // If there are readonly properties, we'll create a model factory
         const props = <IProperty[]>Object.values(type.properties);
-        if (type.public && props.some(p => p.readonly)) {
+        if (type.public && (needsModelFactory || props.some(p => p.readonly))) {
             const factoryName = naming.type(model.info.modelFactoryName);
             const typeName = naming.type(type.name);
             const modelName = `_model`;

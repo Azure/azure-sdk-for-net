@@ -229,11 +229,39 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the block blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <returns>
+        /// New instanc of the <see cref="BlockBlobClient"/> class.
+        /// </returns>
+        protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
+        {
+            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null);
         }
         #endregion ctors
 
@@ -262,7 +290,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
         }
 
         ///// <summary>
@@ -475,7 +503,6 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             content = content.WithNoDispose().WithProgress(progressHandler);
-            var uploadAttempt = 0;
             using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 Pipeline.LogMethodEnter(
@@ -486,42 +513,33 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
-                    return await ReliableOperation.DoAsync(
-                        async () =>
-                        {
-                            Pipeline.LogTrace($"Upload attempt {++uploadAttempt}");
-                            return await BlobRestClient.BlockBlob.UploadAsync(
-                                ClientDiagnostics,
-                                Pipeline,
-                                Uri,
-                                body: content,
-                                contentLength: content.Length,
-                                blobContentType: blobHttpHeaders?.ContentType,
-                                blobContentEncoding: blobHttpHeaders?.ContentEncoding,
-                                blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                                blobContentHash: blobHttpHeaders?.ContentHash,
-                                blobCacheControl: blobHttpHeaders?.CacheControl,
-                                metadata: metadata,
-                                leaseId: conditions?.LeaseId,
-                                blobContentDisposition: blobHttpHeaders?.ContentDisposition,
-                                encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                                encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                                encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                                tier: accessTier,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                ifMatch: conditions?.IfMatch,
-                                ifNoneMatch: conditions?.IfNoneMatch,
-                                async: async,
-                                operationName: Constants.Blob.Block.UploadOperationName,
-                                cancellationToken: cancellationToken)
-                                .ConfigureAwait(false);
-                        },
-                        new ReliabilityConfiguration(reset: () => content.Seek(0, SeekOrigin.Begin)))
+                    return await BlobRestClient.BlockBlob.UploadAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        body: content,
+                        contentLength: content.Length,
+                        version: Version.ToVersionString(),
+                        blobContentType: blobHttpHeaders?.ContentType,
+                        blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                        blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                        blobContentHash: blobHttpHeaders?.ContentHash,
+                        blobCacheControl: blobHttpHeaders?.CacheControl,
+                        metadata: metadata,
+                        leaseId: conditions?.LeaseId,
+                        blobContentDisposition: blobHttpHeaders?.ContentDisposition,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        tier: accessTier,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        async: async,
+                        operationName: Constants.Blob.Block.UploadOperationName,
+                        cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
-
                 }
                 catch (Exception ex)
                 {
@@ -737,37 +755,23 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    var stageBlockAttempt = 0;
-                    return await ReliableOperation.DoSyncOrAsync(
-                        async,
-                        reset: () => content.Seek(0, SeekOrigin.Begin),
-                        predicate: e => true,
-                        maximumRetries: Constants.MaxReliabilityRetries,
-                        operation:
-                            () =>
-                            {
-                                Pipeline.LogTrace($"Stage Block {++stageBlockAttempt}");
-                                return BlobRestClient.BlockBlob.StageBlockAsync(
-                                    ClientDiagnostics,
-                                    Pipeline,
-                                    Uri,
-                                    blockId: base64BlockId,
-                                    body: content,
-                                    contentLength: content.Length,
-                                    transactionalContentHash: transactionalContentHash,
-                                    leaseId: conditions?.LeaseId,
-                                    encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                                    encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                                    encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                                    async: async,
-                                    operationName: Constants.Blob.Block.StageBlockOperationName,
-                                    cancellationToken: cancellationToken);
-                            },
-                        cleanup: () => { })
-                        .ConfigureAwait(false);
+                    return await BlobRestClient.BlockBlob.StageBlockAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        blockId: base64BlockId,
+                        body: content,
+                        contentLength: content.Length,
+                        version: Version.ToVersionString(),
+                        transactionalContentHash: transactionalContentHash,
+                        leaseId: conditions?.LeaseId,
+                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
+                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
+                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
+                        async: async,
+                        operationName: Constants.Blob.Block.StageBlockOperationName,
+                        cancellationToken: cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -1019,8 +1023,6 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     return await BlobRestClient.BlockBlob.StageBlockFromUriAsync(
                         ClientDiagnostics,
                         Pipeline,
@@ -1028,6 +1030,7 @@ namespace Azure.Storage.Blobs.Specialized
                         contentLength: default,
                         blockId: base64BlockId,
                         sourceUri: sourceUri,
+                        version: Version.ToVersionString(),
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -1264,14 +1267,13 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
-
                     var blocks = new BlockLookupList() { Uncommitted = base64BlockIds.ToList() };
                     return await BlobRestClient.BlockBlob.CommitBlockListAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         blocks,
+                        version: Version.ToVersionString(),
                         blobCacheControl: blobHttpHeaders?.CacheControl,
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,
@@ -1470,6 +1472,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         listType: blockListTypes.ToBlockListType(),
+                        version: Version.ToVersionString(),
                         snapshot: snapshot,
                         leaseId: conditions?.LeaseId,
                         async: async,
@@ -1516,6 +1519,7 @@ namespace Azure.Storage.Blobs.Specialized
             new BlockBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
+                client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey);
     }

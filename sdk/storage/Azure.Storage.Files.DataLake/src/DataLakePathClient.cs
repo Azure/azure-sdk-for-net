@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -65,6 +66,16 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly DataLakeClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
@@ -242,6 +253,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakePathClient(Uri pathUri, TokenCredential credential)
             : this(pathUri, credential.AsPolicy(), null)
         {
+            Errors.VerifyHttpsTokenAuth(pathUri);
         }
 
         /// <summary>
@@ -264,6 +276,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakePathClient(Uri pathUri, TokenCredential credential, DataLakeClientOptions options)
             : this(pathUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(pathUri);
         }
 
         /// <summary>
@@ -291,9 +304,9 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _blockBlobClient = new BlockBlobClient(_blobUri, _pipeline, _clientDiagnostics, null);
-
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -311,15 +324,68 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
+        /// every request.
         /// </param>
         internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions options = default)
         {
+            options ??= new DataLakeClientOptions();
+            var uriBuilder = new DataLakeUriBuilder(pathUri);
             _uri = pathUri;
-            _blobUri = new DataLakeUriBuilder(pathUri).ToBlobUri();
-            _dfsUri = new DataLakeUriBuilder(pathUri).ToDfsUri();
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
-            _clientDiagnostics = new ClientDiagnostics(options ?? new DataLakeClientOptions());
-            _blockBlobClient = new BlockBlobClient(_blobUri, pipeline, _clientDiagnostics, null);
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakePathClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="pathUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the file system, and the path to the
+        /// resource.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakePathClient(Uri pathUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+        {
+            var uriBuilder = new DataLakeUriBuilder(pathUri);
+            _uri = pathUri;
+            _blobUri = uriBuilder.ToBlobUri();
+            _dfsUri = uriBuilder.ToDfsUri();
+            _pipeline = pipeline;
+            _version = version;
+            _clientDiagnostics = clientDiagnostics;
+            _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of BlockBlobClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class BlockBlobClientInternals : BlockBlobClient
+        {
+            public static BlockBlobClient Create(Uri uri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
+            {
+                return BlockBlobClient.CreateClient(
+                    uri,
+                    new BlobClientOptions(version)
+                    {
+                        Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
+                    },
+                    pipeline);
+            }
         }
         #endregion
 
@@ -404,7 +470,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -487,7 +553,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -573,7 +639,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -606,6 +672,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         resource: resourceType,
                         cacheControl: httpHeaders?.CacheControl,
                         contentEncoding: httpHeaders?.ContentEncoding,
@@ -805,6 +872,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         recursive: recursive,
                         leaseId: conditions?.LeaseId,
                         ifMatch: conditions?.IfMatch,
@@ -853,7 +921,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -912,7 +980,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -974,7 +1042,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created path.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1008,6 +1076,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: destPathClient.DfsUri,
+                        version: Version.ToVersionString(),
                         mode: PathRenameMode.Legacy,
                         renameSource: renameSource,
                         leaseId: destinationConditions?.LeaseId,
@@ -1211,6 +1280,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         action: PathGetPropertiesAction.GetAccessControl,
                         upn: userPrincipalName,
                         leaseId: conditions?.LeaseId,
@@ -1433,6 +1503,7 @@ namespace Azure.Storage.Files.DataLake
                             clientDiagnostics: _clientDiagnostics,
                             pipeline: Pipeline,
                             resourceUri: _dfsUri,
+                            version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -1655,6 +1726,7 @@ namespace Azure.Storage.Files.DataLake
                             clientDiagnostics: _clientDiagnostics,
                             pipeline: Pipeline,
                             resourceUri: _dfsUri,
+                            version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,

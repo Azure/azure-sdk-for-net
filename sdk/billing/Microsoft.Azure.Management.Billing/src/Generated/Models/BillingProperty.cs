@@ -37,27 +37,30 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="type">Resource type.</param>
         /// <param name="billingTenantId">Billing tenant Id.</param>
         /// <param name="billingAccountId">Billing account Id.</param>
-        /// <param name="billingAccountName">Billing account name.</param>
+        /// <param name="billingAccountDisplayName">Billing account display
+        /// name.</param>
         /// <param name="billingProfileId">Billing profile Id.</param>
-        /// <param name="billingProfileName">Billing profile name.</param>
+        /// <param name="billingProfileDisplayName">Billing profile display
+        /// name.</param>
         /// <param name="costCenter">Cost center name.</param>
         /// <param name="invoiceSectionId">Invoice Section Id.</param>
-        /// <param name="invoiceSectionName">Invoice Section name.</param>
+        /// <param name="invoiceSectionDisplayName">Invoice Section display
+        /// name.</param>
         /// <param name="productId">Product Id.</param>
         /// <param name="productName">Product name.</param>
         /// <param name="skuId">SKU Id.</param>
         /// <param name="skuDescription">SKU description.</param>
-        public BillingProperty(string id = default(string), string name = default(string), string type = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountName = default(string), string billingProfileId = default(string), string billingProfileName = default(string), string costCenter = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string productId = default(string), string productName = default(string), string skuId = default(string), string skuDescription = default(string))
+        public BillingProperty(string id = default(string), string name = default(string), string type = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string costCenter = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string productId = default(string), string productName = default(string), string skuId = default(string), string skuDescription = default(string))
             : base(id, name, type)
         {
             BillingTenantId = billingTenantId;
             BillingAccountId = billingAccountId;
-            BillingAccountName = billingAccountName;
+            BillingAccountDisplayName = billingAccountDisplayName;
             BillingProfileId = billingProfileId;
-            BillingProfileName = billingProfileName;
+            BillingProfileDisplayName = billingProfileDisplayName;
             CostCenter = costCenter;
             InvoiceSectionId = invoiceSectionId;
-            InvoiceSectionName = invoiceSectionName;
+            InvoiceSectionDisplayName = invoiceSectionDisplayName;
             ProductId = productId;
             ProductName = productName;
             SkuId = skuId;
@@ -83,10 +86,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string BillingAccountId { get; private set; }
 
         /// <summary>
-        /// Gets billing account name.
+        /// Gets billing account display name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.billingAccountName")]
-        public string BillingAccountName { get; private set; }
+        [JsonProperty(PropertyName = "properties.billingAccountDisplayName")]
+        public string BillingAccountDisplayName { get; private set; }
 
         /// <summary>
         /// Gets billing profile Id.
@@ -95,10 +98,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string BillingProfileId { get; private set; }
 
         /// <summary>
-        /// Gets billing profile name.
+        /// Gets billing profile display name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.billingProfileName")]
-        public string BillingProfileName { get; private set; }
+        [JsonProperty(PropertyName = "properties.billingProfileDisplayName")]
+        public string BillingProfileDisplayName { get; private set; }
 
         /// <summary>
         /// Gets cost center name.
@@ -113,10 +116,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string InvoiceSectionId { get; private set; }
 
         /// <summary>
-        /// Gets invoice Section name.
+        /// Gets invoice Section display name.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.invoiceSectionName")]
-        public string InvoiceSectionName { get; private set; }
+        [JsonProperty(PropertyName = "properties.invoiceSectionDisplayName")]
+        public string InvoiceSectionDisplayName { get; private set; }
 
         /// <summary>
         /// Gets product Id.

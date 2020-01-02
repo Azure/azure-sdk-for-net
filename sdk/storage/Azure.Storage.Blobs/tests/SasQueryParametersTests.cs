@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Test
             var contentLanguage = "en-US";
             var contentType = "text/html";
 
-            var sasQueryParameters = new SasQueryParameters(
+            var sasQueryParameters = SasQueryParametersInternals.Create(
                 version,
                 service,
                 resourceType,
@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs.Test
 
             var sasString = sasQueryParameters.ToString();
 
-            var roundTripSas = new SasQueryParameters(new UriQueryParamsCollection(sasString));
+            var roundTripSas = SasQueryParametersInternals.Create(new UriQueryParamsCollection(sasString));
 
             Assert.AreEqual(sasQueryParameters.ToString(), roundTripSas.ToString());
         }

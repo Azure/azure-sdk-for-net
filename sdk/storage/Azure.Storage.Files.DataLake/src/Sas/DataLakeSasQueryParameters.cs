@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Sas;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Azure.Storage.Files.DataLake.Sas
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// A <see cref="DataLakeSasQueryParameters"/> object represents the components
@@ -16,35 +17,37 @@ namespace Azure.Storage.Files.DataLake.Sas
     /// </summary>
     public sealed class DataLakeSasQueryParameters : SasQueryParameters
     {
+        internal UserDelegationKeyProperties KeyProperties { get; set; }
+
         /// <summary>
         /// Gets the Azure Active Directory object ID in GUID format.
         /// </summary>
-        public string KeyObjectId => _keyObjectId;
+        public string KeyObjectId => KeyProperties?.ObjectId;
 
         /// <summary>
         /// Gets the Azure Active Directory tenant ID in GUID format
         /// </summary>
-        public string KeyTenantId => _keyTenantId;
+        public string KeyTenantId => KeyProperties?.TenantId;
 
         /// <summary>
         /// Gets the time at which the key becomes valid.
         /// </summary>
-        public DateTimeOffset KeyStartsOn => _keyStart;
+        public DateTimeOffset KeyStartsOn => KeyProperties == null ? default : KeyProperties.StartsOn;
 
         /// <summary>
         /// Gets the time at which the key becomes expires.
         /// </summary>
-        public DateTimeOffset KeyExpiresOn => _keyExpiry;
+        public DateTimeOffset KeyExpiresOn => KeyProperties == null ? default : KeyProperties.ExpiresOn;
 
         /// <summary>
         /// Gets the Storage service that accepts the key.
         /// </summary>
-        public string KeyService => _keyService;
+        public string KeyService => KeyProperties?.Service;
 
         /// <summary>
         /// Gets the Storage service version that created the key.
         /// </summary>
-        public string KeyVersion => _keyVersion;
+        public string KeyVersion => KeyProperties?.Version;
 
         /// <summary>
         /// Gets empty shared access signature query parameters.
@@ -57,10 +60,7 @@ namespace Azure.Storage.Files.DataLake.Sas
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataLakeSasQueryParameters"/>
-        /// type.
-        ///
-        /// Expects decoded values.
+        /// Creates a new BlobSasQueryParameters instance.
         /// </summary>
         internal DataLakeSasQueryParameters(
             string version,
@@ -97,30 +97,35 @@ namespace Azure.Storage.Files.DataLake.Sas
                 resource,
                 permissions,
                 signature,
-                keyOid,
-                keyTid,
-                keyStart,
-                keyExpiry,
-                keyService,
-                keyVersion,
                 cacheControl,
                 contentDisposition,
                 contentEncoding,
                 contentLanguage,
                 contentType)
         {
+            KeyProperties = new UserDelegationKeyProperties
+            {
+                ObjectId = keyOid,
+                TenantId = keyTid,
+                StartsOn = keyStart,
+                ExpiresOn = keyExpiry,
+                Service = keyService,
+                Version = keyVersion
+            };
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="DataLakeSasQueryParameters"/>
+        /// Creates a new instance of the <see cref="BlobSasQueryParameters"/>
         /// type based on the supplied query parameters <paramref name="values"/>.
         /// All SAS-related query parameters will be removed from
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        internal DataLakeSasQueryParameters(UriQueryParamsCollection values)
-            : base(values, includeBlobParameters: true)
+        internal DataLakeSasQueryParameters(
+            Dictionary<string, string> values)
+            : base(values)
         {
+            this.ParseKeyProperties(values);
         }
 
         /// <summary>
@@ -129,7 +134,12 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
-        public override string ToString() =>
-            Encode(includeBlobParameters: true);
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            KeyProperties.AppendProperties(sb);
+            this.AppendProperties(sb);
+            return sb.ToString();
+        }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -11,6 +12,7 @@ using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -32,7 +34,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -57,7 +59,7 @@ namespace Azure.Storage.Blobs.Test
         public void Ctor_Uri()
         {
             var accountName = "accountName";
-            var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
             BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
             BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
 
@@ -66,7 +68,35 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.AreEqual(accountName, builder1.AccountName);
             Assert.AreEqual(accountName, builder2.AccountName);
+        }
 
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
         #region Upload
@@ -556,6 +586,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -579,6 +610,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -711,6 +743,35 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
         }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            TestProgress progress = new TestProgress();
+            StorageTransferOptions options = new StorageTransferOptions
+            {
+                MaximumTransferLength = Constants.MB,
+                MaximumConcurrency = 16
+            };
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.GB));
+
+            // Act
+            await blob.UploadAsync(content: stream, progressHandler: progress);
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            for ( int i = 1; i < progress.List.Count; i++)
+            {
+                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
+            }
+
+            Assert.AreEqual(Constants.GB, progress.List[progress.List.Count - 1]);
+        }
         #endregion Upload
 
         [Test]
@@ -787,8 +848,8 @@ namespace Azure.Storage.Blobs.Test
             using var stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
-            // Create a CancellationToken that times out after .1s
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.1));
+            // Create a CancellationToken that times out after .01s
+            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
             CancellationToken token = source.Token;
 
             // Verifying downloading will cancel

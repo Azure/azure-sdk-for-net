@@ -22,6 +22,46 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingPermissionsOperationsExtensions
     {
             /// <summary>
+            /// Lists all billing permissions the caller has for a customer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='customerName'>
+            /// Customer name.
+            /// </param>
+            public static BillingPermissionsListResult ListByCustomer(this IBillingPermissionsOperations operations, string billingAccountName, string customerName)
+            {
+                return operations.ListByCustomerAsync(billingAccountName, customerName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all billing permissions the caller has for a customer.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='customerName'>
+            /// Customer name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BillingPermissionsListResult> ListByCustomerAsync(this IBillingPermissionsOperations operations, string billingAccountName, string customerName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByCustomerWithHttpMessagesAsync(billingAccountName, customerName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all billing permissions for the caller under a billing account.
             /// </summary>
             /// <param name='operations'>
@@ -64,12 +104,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            public static BillingPermissionsListResult ListByInvoiceSections(this IBillingPermissionsOperations operations, string billingAccountName, string invoiceSectionName)
+            public static BillingPermissionsListResult ListByInvoiceSections(this IBillingPermissionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName)
             {
-                return operations.ListByInvoiceSectionsAsync(billingAccountName, invoiceSectionName).GetAwaiter().GetResult();
+                return operations.ListByInvoiceSectionsAsync(billingAccountName, billingProfileName, invoiceSectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -81,22 +124,25 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
+            /// </param>
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingPermissionsListResult> ListByInvoiceSectionsAsync(this IBillingPermissionsOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingPermissionsListResult> ListByInvoiceSectionsAsync(this IBillingPermissionsOperations operations, string billingAccountName, string billingProfileName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByInvoiceSectionsWithHttpMessagesAsync(billingAccountName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByInvoiceSectionsWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all billingPermissions for the caller has for a billing account.
+            /// Lists all billing permissions the caller has for a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -113,7 +159,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Lists all billingPermissions for the caller has for a billing account.
+            /// Lists all billing permissions the caller has for a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

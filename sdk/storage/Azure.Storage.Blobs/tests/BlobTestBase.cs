@@ -12,7 +12,6 @@ using Azure.Core.Testing;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Test;
 using Azure.Storage.Sas;
 
 namespace Azure.Storage.Test.Shared
@@ -52,10 +51,11 @@ namespace Azure.Storage.Test.Shared
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    MaxRetries = Storage.Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
+                },
+                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
@@ -221,20 +221,20 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType publicAccessType = PublicAccessType.None,
+            PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
 
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 
-            if (publicAccessType == PublicAccessType.None)
+            if (publicAccessType == default)
             {
                 publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
 
@@ -373,8 +373,8 @@ namespace Azure.Storage.Test.Shared
         {
             var uriBuilder = new UriBuilder(uri)
             {
-                Scheme = Constants.Https,
-                Port = Constants.HttpPort
+                Scheme = TestConstants.Https,
+                Port = TestConstants.HttpPort
             };
             return uriBuilder.Uri;
         }
@@ -421,21 +421,55 @@ namespace Azure.Storage.Test.Shared
                 new BlobSignedIdentifier
                 {
                     Id = GetNewString(),
-                    AccessPolicy =
-                        new BlobAccessPolicy
-                        {
-                            StartsOn = Recording.UtcNow.AddHours(-1),
-                            ExpiresOn =  Recording.UtcNow.AddHours(1),
-                            Permissions = "rw"
-                        }
+                    AccessPolicy = new BlobAccessPolicy()
+                    {
+                        StartsOn = Recording.UtcNow.AddHours(-1),
+                        ExpiresOn = Recording.UtcNow.AddHours(1),
+                        Permissions = "rw"
+                    }
                 }
             };
+
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true,
+            bool includeTable = false)
+        {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
+            (Uri, Uri) blobUri = StorageConnectionString.ConstructBlobEndpoint(
+                Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            (Uri, Uri) tableUri = default;
+            if (includeTable)
+            {
+                tableUri = StorageConnectionString.ConstructTableEndpoint(
+                    Constants.Https,
+                    TestConfigDefault.AccountName,
+                    default,
+                    default);
+            }
+
+            return new StorageConnectionString(
+                    credentials,
+                    blobStorageUri: blobUri,
+                    tableStorageUri: tableUri);
+        }
 
         public async Task EnableSoftDelete()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy()
             {
                 Enabled = true,
                 Days = 2
@@ -453,10 +487,7 @@ namespace Azure.Storage.Test.Shared
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
             Response<BlobServiceProperties> properties = await service.GetPropertiesAsync();
-            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy
-            {
-                Enabled = false
-            };
+            properties.Value.DeleteRetentionPolicy = new BlobRetentionPolicy() { Enabled = false };
             await service.SetPropertiesAsync(properties);
 
             do

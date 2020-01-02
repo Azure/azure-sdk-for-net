@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary>
         /// Initializes a new instance of the <see cref="Certificates.CertificateIssuer"/> for mocking purposes.
         /// </summary>
-        /// <param name="properties">Sets the <see cref="Certificates.CertificateIssuer.Properties"/> property.</param>
+        /// <param name="properties">Sets the <see cref="Certificates.CertificateIssuer.Id"/>, <see cref="Certificates.CertificateIssuer.Name"/>, and <see cref="Certificates.CertificateIssuer.Provider"/> properties.</param>
         /// <param name="createdOn">Sets the <see cref="Certificates.CertificateIssuer.CreatedOn"/> property.</param>
         /// <param name="updatedOn">Sets the <see cref="Certificates.CertificateIssuer.UpdatedOn"/> property.</param>
         /// <returns>A new instance of the <see cref="Certificates.CertificateIssuer"/> for mocking purposes.</returns>
@@ -66,7 +66,9 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="name">Sets the <see cref="Certificates.CertificateOperationProperties.Name"/> property.</param>
         /// <param name="vaultUri">Sets the <see cref="Certificates.CertificateOperationProperties.VaultUri"/> property.</param>
         /// <param name="issuerName">Sets the <see cref="Certificates.CertificateOperationProperties.IssuerName"/> property.</param>
-        /// <param name="certificateSigningRequest">Sets the <see cref="Certificates.CertificateOperationProperties.CertificateSigningRequest"/> property.</param>
+        /// <param name="certificateType">Sets the <see cref="Certificates.CertificateOperationProperties.CertificateType"/> property.</param>
+        /// <param name="certificateTransparency">Sets the <see cref="Certificates.CertificateOperationProperties.CertificateTransparency"/> property.</param>
+        /// <param name="csr">Sets the <see cref="Certificates.CertificateOperationProperties.Csr"/> property.</param>
         /// <param name="cancellationRequested">Sets the <see cref="Certificates.CertificateOperationProperties.CancellationRequested"/> property.</param>
         /// <param name="requestId">Sets the <see cref="Certificates.CertificateOperationProperties.RequestId"/> property.</param>
         /// <param name="status">Sets the <see cref="Certificates.CertificateOperationProperties.Status"/> property.</param>
@@ -79,7 +81,9 @@ namespace Azure.Security.KeyVault.Certificates
             string name = default,
             Uri vaultUri = default,
             string issuerName = default,
-            string certificateSigningRequest = default,
+            string certificateType = default,
+            bool? certificateTransparency = default,
+            byte[] csr = default,
             bool cancellationRequested = default,
             string requestId = default,
             string status = default,
@@ -91,7 +95,9 @@ namespace Azure.Security.KeyVault.Certificates
                 Name = name,
                 VaultUri = vaultUri,
                 IssuerName = issuerName,
-                CertificateSigningRequest = certificateSigningRequest,
+                CertificateType = certificateType,
+                CertificateTransparency = certificateTransparency,
+                Csr = csr,
                 CancellationRequested = cancellationRequested,
                 RequestId = requestId,
                 Status = status,
@@ -167,7 +173,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="properties">Sets the <see cref="Certificates.KeyVaultCertificate.Properties"/> property.</param>
         /// <param name="keyId">Sets the <see cref="Certificates.KeyVaultCertificate.KeyId"/> property.</param>
         /// <param name="secretId">Sets the <see cref="Certificates.KeyVaultCertificate.SecretId"/> property.</param>
-        /// <param name="contentType">Sets the <see cref="Certificates.KeyVaultCertificate.ContentType"/> property.</param>
         /// <param name="cer">Sets the <see cref="Certificates.KeyVaultCertificate.Cer"/> property.</param>
         /// <param name="policy">Sets the <see cref="Certificates.KeyVaultCertificateWithPolicy.Policy"/> property.</param>
         /// <param name="recoveryId">Sets the <see cref="Certificates.DeletedCertificate.RecoveryId"/> property.</param>
@@ -178,7 +183,6 @@ namespace Azure.Security.KeyVault.Certificates
             CertificateProperties properties,
             Uri keyId = default,
             Uri secretId = default,
-            CertificateContentType contentType = default,
             byte[] cer = default,
             CertificatePolicy policy = default,
             Uri recoveryId = default,
@@ -187,7 +191,6 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 KeyId = keyId,
                 SecretId = secretId,
-                ContentType = contentType,
                 Cer = cer,
                 Policy = policy,
                 RecoveryId = recoveryId,
@@ -201,19 +204,16 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="properties">Sets the <see cref="Certificates.KeyVaultCertificate.Properties"/> property.</param>
         /// <param name="keyId">Sets the <see cref="Certificates.KeyVaultCertificate.KeyId"/> property.</param>
         /// <param name="secretId">Sets the <see cref="Certificates.KeyVaultCertificate.SecretId"/> property.</param>
-        /// <param name="contentType">Sets the <see cref="Certificates.KeyVaultCertificate.ContentType"/> property.</param>
         /// <param name="cer">Sets the <see cref="Certificates.KeyVaultCertificate.Cer"/> property.</param>
         /// <returns>A new instance of the <see cref="Certificates.KeyVaultCertificate"/> for mocking purposes.</returns>
         public static KeyVaultCertificate KeyVaultCertificate(
             CertificateProperties properties,
             Uri keyId = default,
             Uri secretId = default,
-            CertificateContentType contentType = default,
             byte[] cer = default) => new KeyVaultCertificate(properties)
             {
                 KeyId = keyId,
                 SecretId = secretId,
-                ContentType = contentType,
                 Cer = cer,
             };
 
@@ -223,7 +223,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="properties">Sets the <see cref="Certificates.KeyVaultCertificate.Properties"/> property.</param>
         /// <param name="keyId">Sets the <see cref="Certificates.KeyVaultCertificate.KeyId"/> property.</param>
         /// <param name="secretId">Sets the <see cref="Certificates.KeyVaultCertificate.SecretId"/> property.</param>
-        /// <param name="contentType">Sets the <see cref="Certificates.KeyVaultCertificate.ContentType"/> property.</param>
         /// <param name="cer">Sets the <see cref="Certificates.KeyVaultCertificate.Cer"/> property.</param>
         /// <param name="policy">Sets the <see cref="Certificates.KeyVaultCertificateWithPolicy.Policy"/> property.</param>
         /// <returns>A new instance of the <see cref="Certificates.KeyVaultCertificateWithPolicy"/> for mocking purposes.</returns>
@@ -231,13 +230,11 @@ namespace Azure.Security.KeyVault.Certificates
             CertificateProperties properties,
             Uri keyId = default,
             Uri secretId = default,
-            CertificateContentType contentType = default,
             byte[] cer = default,
             CertificatePolicy policy = default) => new KeyVaultCertificateWithPolicy(properties)
             {
                 KeyId = keyId,
                 SecretId = secretId,
-                ContentType = contentType,
                 Cer = cer,
                 Policy = policy,
             };

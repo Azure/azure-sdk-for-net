@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -161,10 +157,13 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        internal BlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
         {
         }
         #endregion ctors
@@ -976,7 +975,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default)
         {
 
-            var client = new BlockBlobClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
             singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
             Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
 

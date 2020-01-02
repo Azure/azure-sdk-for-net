@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// etc.</param>
         /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
         /// server port (6379) is enabled.</param>
+        /// <param name="replicasPerMaster">The number of replicas to be
+        /// created per master.</param>
         /// <param name="tenantSettings">A dictionary of tenant
         /// settings</param>
         /// <param name="shardCount">The number of shards to be created on a
@@ -58,10 +60,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
         /// <param name="tags">Resource tags.</param>
-        public RedisCreateParameters(Sku sku, string location, IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string subnetId = default(string), string staticIP = default(string), IList<string> zones = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public RedisCreateParameters(Sku sku, string location, IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string minimumTlsVersion = default(string), string subnetId = default(string), string staticIP = default(string), IList<string> zones = default(IList<string>), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             RedisConfiguration = redisConfiguration;
             EnableNonSslPort = enableNonSslPort;
+            ReplicasPerMaster = replicasPerMaster;
             TenantSettings = tenantSettings;
             ShardCount = shardCount;
             MinimumTlsVersion = minimumTlsVersion;
@@ -93,6 +96,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableNonSslPort")]
         public bool? EnableNonSslPort { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of replicas to be created per master.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicasPerMaster")]
+        public int? ReplicasPerMaster { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary of tenant settings

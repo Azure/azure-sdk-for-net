@@ -37,6 +37,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="sku">The virtual machine scale set sku.</param>
         /// <param name="plan">The purchase plan when deploying a virtual
         /// machine scale set from VM Marketplace images.</param>
@@ -63,10 +66,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="scaleInPolicy">Specifies the scale-in policy that
         /// decides which virtual machines are chosen for removal when a
         /// Virtual Machine Scale Set is scaled-in.</param>
+        /// <param name="proximityPlacementGroup">Specifies information about
+        /// the proximity placement group that the virtual machine scale set
+        /// should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// 2018-04-01.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
-        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
-            : base(tags)
+        public VirtualMachineScaleSetUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string id = default(string), string name = default(string), string type = default(string), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), AutomaticRepairsPolicy automaticRepairsPolicy = default(AutomaticRepairsPolicy), VirtualMachineScaleSetUpdateVMProfile virtualMachineProfile = default(VirtualMachineScaleSetUpdateVMProfile), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), bool? singlePlacementGroup = default(bool?), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), ScaleInPolicy scaleInPolicy = default(ScaleInPolicy), SubResource proximityPlacementGroup = default(SubResource), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity))
+            : base(tags, id, name, type)
         {
             Sku = sku;
             Plan = plan;
@@ -78,6 +85,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             SinglePlacementGroup = singlePlacementGroup;
             AdditionalCapabilities = additionalCapabilities;
             ScaleInPolicy = scaleInPolicy;
+            ProximityPlacementGroup = proximityPlacementGroup;
             Identity = identity;
             CustomInit();
         }
@@ -158,6 +166,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.scaleInPolicy")]
         public ScaleInPolicy ScaleInPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the proximity placement
+        /// group that the virtual machine scale set should be assigned to.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2018-04-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
+        public SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if

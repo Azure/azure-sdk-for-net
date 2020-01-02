@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Core
 {
@@ -32,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <value>
-        ///   <c>null</c>, if the <see cref="EventHubConsumerClientOptions.TrackLastEnqueuedEventInformation" /> was not requested; otherwise,
+        ///   <c>null</c>, if the tracking of the last enqueued event information was not requested; otherwise,
         ///   the most recently received event.
         /// </value>
         ///

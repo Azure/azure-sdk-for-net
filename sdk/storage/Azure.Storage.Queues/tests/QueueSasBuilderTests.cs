@@ -5,7 +5,7 @@ using System;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
+using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -108,15 +108,15 @@ namespace Azure.Storage.Queues.Test
         {
             var stringToSign = string.Join("\n",
                 Permissions,
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.StartTime),
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.StartTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 "/queue/" + constants.Sas.Account + "/" + queueName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                SasProtocol.Https.ToProtocolString(),
+                SasExtensions.ToProtocolString(SasProtocol.Https),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion);
 
-            return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
     }
 }

@@ -266,7 +266,7 @@ namespace Azure.Storage.Blobs.Tests
                         IsAny<Stream>(),
                         IsAny<byte[]>(),
                         s_conditions,
-                        s_progress,
+                        IsAny<IProgress<long>>(),
                         s_cancellationToken
                     )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.StageAsync);
 
@@ -288,7 +288,7 @@ namespace Azure.Storage.Blobs.Tests
                         IsAny<Stream>(),
                         IsAny<byte[]>(),
                         s_conditions,
-                        s_progress,
+                        IsAny<IProgress<long>>(),
                         s_cancellationToken
                     )).Returns<string, Stream, byte[], BlobRequestConditions, IProgress<long>, CancellationToken>(sink.Stage);
 

@@ -108,7 +108,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -128,7 +129,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -405,7 +407,13 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Sets the state of the virtual machine to generalized.
+            /// Sets the OS state of the virtual machine to generalized. It is recommended
+            /// to sysprep the virtual machine before performing this operation.
+            /// &lt;br&gt;For Windows, please refer to [Create a managed image of a
+            /// generalized VM in
+            /// Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
+            /// Linux, please refer to [How to create an image of a virtual machine or
+            /// VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -422,7 +430,13 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Sets the state of the virtual machine to generalized.
+            /// Sets the OS state of the virtual machine to generalized. It is recommended
+            /// to sysprep the virtual machine before performing this operation.
+            /// &lt;br&gt;For Windows, please refer to [Create a managed image of a
+            /// generalized VM in
+            /// Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
+            /// Linux, please refer to [How to create an image of a virtual machine or
+            /// VHD](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/capture-image).
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -939,7 +953,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -959,7 +974,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update a virtual machine.
+            /// The operation to create or update a virtual machine. Please note some
+            /// properties can be set only during virtual machine creation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

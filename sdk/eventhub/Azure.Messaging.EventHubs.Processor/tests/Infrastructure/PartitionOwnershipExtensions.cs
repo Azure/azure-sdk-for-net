@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -52,8 +51,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 && instance.ConsumerGroup == other.ConsumerGroup
                 && instance.OwnerIdentifier == other.OwnerIdentifier
                 && instance.PartitionId == other.PartitionId
-                && instance.Offset == other.Offset
-                && instance.SequenceNumber == other.SequenceNumber
                 && instance.LastModifiedTime == other.LastModifiedTime
                 && instance.ETag == other.ETag
             );

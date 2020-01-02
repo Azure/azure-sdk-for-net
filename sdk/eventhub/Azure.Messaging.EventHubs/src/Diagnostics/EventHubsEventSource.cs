@@ -3,12 +3,14 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
     ///   Serves as an ETW event source for logging of information about
-    ///   Event Hubs client
+    ///   Event Hubs client.
     /// </summary>
     ///
     /// <remarks>
@@ -191,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>
         ///   Indicates that a client is closing, which may correspond to an <see cref="EventHubConnection" />,
-        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <see cref="EventProcessorClient" />.
+        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -211,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>
         ///   Indicates that a client has been closed, which may correspond to an <see cref="EventHubConnection" />,
-        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <see cref="EventProcessorClient" />.
+        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -231,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>
         ///   Indicates that an exception was encountered while closing an <see cref="EventHubConnection" />,
-        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <see cref="EventProcessorClient" />.
+        ///   <see cref="EventHubProducerClient" />, <see cref="EventHubConsumerClient" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>

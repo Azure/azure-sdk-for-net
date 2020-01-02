@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DeploymentManager.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -31,7 +32,7 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// Initializes a new instance of the WaitStepProperties class.
         /// </summary>
         /// <param name="attributes">The Wait attributes</param>
-        public WaitStepProperties(WaitStepAttributes attributes = default(WaitStepAttributes))
+        public WaitStepProperties(WaitStepAttributes attributes)
         {
             Attributes = attributes;
             CustomInit();
@@ -51,11 +52,15 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Attributes == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Attributes");
+            }
             if (Attributes != null)
             {
                 Attributes.Validate();

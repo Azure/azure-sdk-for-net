@@ -1,0 +1,86 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Billing/validateAddress?api-version=2019-10-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy92YWxpZGF0ZUFkZHJlc3M/YXBpLXZlcnNpb249MjAxOS0xMC0wMS1wcmV2aWV3",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"addressLine1\": \"1 Microsoft Way\",\r\n  \"city\": \"Redmond\",\r\n  \"region\": \"WA\",\r\n  \"country\": \"US\",\r\n  \"postalCode\": \"98052\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7d21673c-fb1d-437c-8559-f338954d30f0"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "128"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-tenant-resource-requests": [
+          "99"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-service-version": [
+          "9.11.1047.343"
+        ],
+        "api-supported-versions": [
+          "2018-11-01-preview, 2019-10-01-preview"
+        ],
+        "X-Frame-Options": [
+          "DENY"
+        ],
+        "x-ms-request-id": [
+          "65c21603-cd3b-4764-ad55-317773fd4421"
+        ],
+        "x-ms-correlation-request-id": [
+          "65c21603-cd3b-4764-ad55-317773fd4421"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191118T234145Z:65c21603-cd3b-4764-ad55-317773fd4421"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 18 Nov 2019 23:41:44 GMT"
+        ],
+        "Content-Length": [
+          "41"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"Valid\",\r\n  \"validationMessage\": \"\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+  }
+}

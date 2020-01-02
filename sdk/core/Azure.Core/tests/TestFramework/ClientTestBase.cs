@@ -35,7 +35,9 @@ namespace Azure.Core.Testing
             return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class
+        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient : class => InstrumentClient(client, null);
+
+        public virtual TClient InstrumentClient<TClient>(TClient client, IEnumerable<IInterceptor> preInterceptors) where TClient : class
         {
             Debug.Assert(!client.GetType().Name.EndsWith("Proxy"), $"{nameof(client)} was already instrumented");
 
@@ -60,6 +62,10 @@ namespace Azure.Core.Testing
             }
 
             List<IInterceptor> interceptors = new List<IInterceptor>();
+            if (preInterceptors != null)
+            {
+                interceptors.AddRange(preInterceptors);
+            }
 
             if (TestDiagnostics)
             {

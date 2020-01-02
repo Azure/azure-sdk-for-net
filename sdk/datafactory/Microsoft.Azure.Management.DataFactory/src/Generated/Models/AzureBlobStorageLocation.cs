@@ -31,7 +31,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the AzureBlobStorageLocation class.
         /// </summary>
-        /// <param name="type">Type of dataset storage location.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="folderPath">Specify the folder path of dataset. Type:
@@ -40,8 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="container">Specify the container of azure blob. Type:
         /// string (or Expression with resultType string).</param>
-        public AzureBlobStorageLocation(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object), object container = default(object))
-            : base(type, additionalProperties, folderPath, fileName)
+        public AzureBlobStorageLocation(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object), object container = default(object))
+            : base(additionalProperties, folderPath, fileName)
         {
             Container = container;
             CustomInit();
@@ -59,15 +58,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "container")]
         public object Container { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

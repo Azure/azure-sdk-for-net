@@ -215,6 +215,60 @@ namespace Management.HDInsight.Tests
         }
 
         [Fact]
+        public void TestCreateKafkaClusterWithRestProxyProperties()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-kafka-restproxy");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            createParams.Properties.ClusterVersion = "4.0";
+            createParams.Properties.ClusterDefinition.Kind = "kafka";
+            createParams.Properties.ClusterDefinition.ComponentVersion = new Dictionary<string, string>{ { "Kafka", "2.1"} };
+            createParams.Location = "South Central US";
+
+            var workerNode = createParams.Properties.ComputeProfile.Roles.First(role => role.Name == "workernode");
+            workerNode.DataDisksGroups = new List<DataDisksGroups>
+            {
+                new DataDisksGroups
+                {
+                     DisksPerNode = 8
+                }
+            };
+
+            //KafkaManagementNode must be defined for Kafka Rest Proxy to be provisioned
+            createParams.Properties.ComputeProfile.Roles.Add(new Role
+            {
+                Name = "kafkamanagementnode",
+                TargetInstanceCount = 2,
+                HardwareProfile = new HardwareProfile
+                {
+                    VmSize = "Standard_D4_v2"
+                },
+                OsProfile = new OsProfile
+                {
+                    LinuxOperatingSystemProfile = new LinuxOperatingSystemProfile
+                    {
+                        Username = CommonData.SshUsername,
+                        Password = CommonData.SshPassword
+                    }
+                }
+            });
+            //only kafaka cluster with hdi 4.0 and above with kafaka version 2.1 and above can be deployed with rest proxy.
+            createParams.Properties.KafkaRestProperties = new KafkaRestProperties
+            {
+                ClientGroupInfo = new ClientGroupInfo
+                {
+                    GroupId = "7bef90fa-0aa3-4bb4-b4d2-2ae7c14cfe41",
+                    GroupName = "KafakaRestProperties"
+                }
+            };
+
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateCluster(clusterName, createParams, cluster);
+            Assert.NotNull(cluster.Properties.KafkaRestProperties);
+        }
+
+        [Fact]
         public void TestCreateWithADLSv1() {
 
             TestInitialize();

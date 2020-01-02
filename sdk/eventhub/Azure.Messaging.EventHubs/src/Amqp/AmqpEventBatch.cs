@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp

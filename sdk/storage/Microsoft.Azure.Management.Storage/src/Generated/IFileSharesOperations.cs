@@ -86,7 +86,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than
-        /// 0, and less than or equal to 5TB (5120).
+        /// 0, and less than or equal to 5TB (5120). For Large File Shares, the
+        /// maximum size is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -130,7 +131,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than
-        /// 0, and less than or equal to 5TB (5120).
+        /// 0, and less than or equal to 5TB (5120). For Large File Shares, the
+        /// maximum size is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -4,7 +4,7 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// CopyStatus values
+    /// CopyStatus values.
     /// </summary>
 #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum CopyStatus

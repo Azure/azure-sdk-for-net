@@ -5,10 +5,10 @@ using System;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Storage.Files.DataLake;
 using Azure.Storage.Files.DataLake.Models;
-using Azure.Storage.Sas;
 
-namespace Azure.Storage.Files.DataLake.Sas
+namespace Azure.Storage.Sas
 {
     /// <summary>
     /// <see cref="DataLakeSasBuilder"/> is used to generate a Shared Access
@@ -52,9 +52,9 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// The permissions associated with the shared access signature. The
         /// user is restricted to operations allowed by the permissions. This
         /// field must be omitted if it has been specified in an associated
-        /// stored access policy.  The <see cref="BlobSasPermissions"/>,
-        /// <see cref="BlobContainerSasPermissions"/>, <see cref="SnapshotSasPermissions"/>,
-        /// or <see cref="BlobAccountSasPermissions"/> can be used to create the
+        /// stored access policy.  The <see cref="DataLakeSasPermissions"/>,
+        /// <see cref="DataLakeFileSystemSasPermissions"/>
+        /// or <see cref="DataLakeAccountSasPermissions"/> can be used to create the
         /// permissions string.
         /// </summary>
         public string Permissions { get; private set; }
@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.DataLake.Sas
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
-        /// correlates to an access policy specified for the container.
+        /// correlates to an access policy specified for the file system.
         /// </summary>
         public string Identifier { get; set; }
 
@@ -190,8 +190,8 @@ namespace Azure.Storage.Files.DataLake.Sas
 
             EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, FileSystemName ?? String.Empty, Path ?? String.Empty),
                 Identifier,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 null, // snapshot
@@ -211,7 +211,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 ContentLanguage,
                 ContentType);
 
-            var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            var signature = StorageSharedKeyCredentialInternals.ComputeSasSignature(sharedKeyCredential, stringToSign);
 
             var p = new DataLakeSasQueryParameters(
                 version: Version,
@@ -252,10 +252,10 @@ namespace Azure.Storage.Files.DataLake.Sas
 
             EnsureState();
 
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiresOn);
-            var signedStart = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
-            var signedExpiry = SasQueryParameters.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
+            var signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = String.Join("\n",
@@ -270,7 +270,7 @@ namespace Azure.Storage.Files.DataLake.Sas
                 userDelegationKey.SignedService,
                 userDelegationKey.SignedVersion,
                 IPRange.ToString(),
-                Protocol.ToProtocolString(),
+                SasExtensions.ToProtocolString(Protocol),
                 Version,
                 Resource,
                 null, // snapshot
@@ -342,18 +342,24 @@ namespace Azure.Storage.Files.DataLake.Sas
         /// Ensure the <see cref="DataLakeSasBuilder"/>'s properties are in a
         /// consistent state.
         /// </summary>
-        private void EnsureState()
+        internal void EnsureState()
         {
-            if (ExpiresOn == default)
+            // Identifier is not present
+            if (string.IsNullOrEmpty(Identifier))
             {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
+
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
             }
-            if (string.IsNullOrEmpty(Permissions))
-            {
-                throw Errors.SasMissingData(nameof(Permissions));
-            }
+
             // File System
-            if (String.IsNullOrEmpty(Path))
+            if (string.IsNullOrEmpty(Path))
             {
                 Resource = Constants.Sas.Resource.Container;
             }
@@ -363,7 +369,7 @@ namespace Azure.Storage.Files.DataLake.Sas
             {
                 Resource = Constants.Sas.Resource.Blob;
             }
-            if (String.IsNullOrEmpty(Version))
+            if (string.IsNullOrEmpty(Version))
             {
                 Version = SasQueryParameters.DefaultSasVersion;
             }

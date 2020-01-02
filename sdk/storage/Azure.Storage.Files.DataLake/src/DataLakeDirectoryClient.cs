@@ -113,6 +113,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential)
             : this(directoryUri, credential.AsPolicy(), null)
         {
+            Errors.VerifyHttpsTokenAuth(directoryUri);
         }
 
         /// <summary>
@@ -135,6 +136,7 @@ namespace Azure.Storage.Files.DataLake
         public DataLakeDirectoryClient(Uri directoryUri, TokenCredential credential, DataLakeClientOptions options)
             : this(directoryUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(directoryUri);
         }
 
         /// <summary>
@@ -171,7 +173,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipeline pipeline) : base(directoryUri, pipeline)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeDirectoryClient(Uri directoryUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+            : base(directoryUri, pipeline, version, clientDiagnostics)
         {
         }
         #endregion ctors
@@ -185,7 +195,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the file.</param>
         /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline);
+            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Creates a new <see cref="DataLakeDirectoryClient"/> object by appending
@@ -196,7 +206,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="subdirectoryName">The name of the subdirectory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline);
+            => new DataLakeDirectoryClient(Uri.AppendToPath(subdirectoryName), Pipeline, Version, ClientDiagnostics);
 
         #region Create
         /// <summary>
@@ -236,7 +246,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -313,7 +323,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -476,8 +486,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for the
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -502,7 +512,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -537,8 +547,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for
+        /// the newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -564,7 +574,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeDirectoryClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -1253,7 +1263,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the updated
+        /// A <see cref="Response{PathInfo}"/> describing the updated
         /// path.
         /// </returns>
         /// <remarks>
@@ -1331,8 +1341,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{FileClient}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeFileClient}"/> for the
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1417,8 +1427,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{FileClient}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeFileClient}"/> for the
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1609,8 +1619,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for the
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1696,8 +1706,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeDirectoryClient}"/> for the
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

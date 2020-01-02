@@ -50,6 +50,16 @@ namespace Azure.Storage.Queues
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly QueueClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual QueueClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -165,6 +175,7 @@ namespace Azure.Storage.Queues
             _messagesUri = _uri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -229,6 +240,7 @@ namespace Azure.Storage.Queues
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
             : this(queueUri, credential.AsPolicy(), options)
         {
+            Errors.VerifyHttpsTokenAuth(queueUri);
         }
 
         /// <summary>
@@ -254,6 +266,7 @@ namespace Azure.Storage.Queues
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -269,12 +282,19 @@ namespace Azure.Storage.Queues
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal QueueClient(Uri queueUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal QueueClient(Uri queueUri, HttpPipeline pipeline, QueueClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             _uri = queueUri;
             _messagesUri = queueUri.AppendToPath(Constants.Queue.MessagesUri);
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
@@ -372,6 +392,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -453,6 +474,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -536,6 +558,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -630,6 +653,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -714,6 +738,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -808,6 +833,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         permissions: permissions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -889,6 +915,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Queue.ClearMessagesOperationName,
                         cancellationToken: cancellationToken)
@@ -1095,6 +1122,7 @@ namespace Azure.Storage.Queues
                             Pipeline,
                             MessagesUri,
                             message: new QueueSendMessage { MessageText = messageText },
+                            version: Version.ToVersionString(),
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
@@ -1268,6 +1296,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
+                        version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
@@ -1375,6 +1404,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         MessagesUri,
+                        version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         async: async,
                         operationName: Constants.Queue.PeekMessagesOperationName,
@@ -1496,6 +1526,7 @@ namespace Azure.Storage.Queues
                         Pipeline,
                         uri,
                         popReceipt: popReceipt,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Queue.DeleteMessageOperationName,
                         cancellationToken: cancellationToken)
@@ -1640,6 +1671,7 @@ namespace Azure.Storage.Queues
                         message: new QueueSendMessage { MessageText = messageText },
                         popReceipt: popReceipt,
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Queue.UpdateMessageOperationName,
                         cancellationToken: cancellationToken)

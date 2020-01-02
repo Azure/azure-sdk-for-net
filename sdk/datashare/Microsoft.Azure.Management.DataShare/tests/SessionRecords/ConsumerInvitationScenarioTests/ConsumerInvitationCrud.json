@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.DataShare/locations/eastus2/consumerInvitations/694e289a-8430-4d46-bd4a-2c61f467fe6f?api-version=2018-11-01-preview",
+      "RequestUri": "/providers/Microsoft.DataShare/locations/eastus2/consumerInvitations/694e289a-8430-4d46-bd4a-2c61f467fe6f?api-version=2019-11-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YVNoYXJlL2xvY2F0aW9ucy9lYXN0dXMyL2NvbnN1bWVySW52aXRhdGlvbnMvNjk0ZTI4OWEtODQzMC00ZDQ2LWJkNGEtMmM2MWY0NjdmZTZmP2FwaS12ZXJzaW9uPTIwMTgtMTEtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestHeaders": {

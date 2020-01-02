@@ -49,12 +49,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// activity.</param>
         /// <param name="integrationRuntime">The integration runtime
         /// reference.</param>
-        public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference))
+        /// <param name="compute">Compute properties for data flow
+        /// activity.</param>
+        public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             DataFlow = dataFlow;
             Staging = staging;
             IntegrationRuntime = integrationRuntime;
+            Compute = compute;
             CustomInit();
         }
 
@@ -80,6 +83,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.integrationRuntime")]
         public IntegrationRuntimeReference IntegrationRuntime { get; set; }
+
+        /// <summary>
+        /// Gets or sets compute properties for data flow activity.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.compute")]
+        public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
 
         /// <summary>
         /// Validate the object.

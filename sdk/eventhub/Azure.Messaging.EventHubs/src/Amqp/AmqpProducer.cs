@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public override async Task SendAsync(IEnumerable<EventData> events,
-                                             SendOptions sendOptions,
+                                             SendEventOptions sendOptions,
                                              CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(events, nameof(events));
@@ -297,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new MessageSizeExceededException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize));
+                            throw new EventHubsException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
                         }
 
                         // Attempt to send the message batch.

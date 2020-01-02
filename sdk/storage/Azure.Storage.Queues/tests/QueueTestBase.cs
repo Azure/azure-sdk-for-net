@@ -41,11 +41,12 @@ namespace Azure.Storage.Queues.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
-            };
+                },
+                Transport = GetTransport()
+        };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
@@ -170,6 +171,29 @@ namespace Azure.Storage.Queues.Tests
             };
             builder.SetPermissions(QueueAccountSasPermissions.Read | QueueAccountSasPermissions.Update | QueueAccountSasPermissions.Process | QueueAccountSasPermissions.Add);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
+        }
+
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true)
+        {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
+            (Uri, Uri) queueUri = StorageConnectionString.ConstructQueueEndpoint(
+                Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            return new StorageConnectionString(
+                    credentials,
+                    queueStorageUri: queueUri);
         }
 
         public class DisposingQueue : IAsyncDisposable
