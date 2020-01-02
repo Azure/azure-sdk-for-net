@@ -17,13 +17,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of reading events from a single Event Hub partition, starting at a well-known position.
     /// </summary>
     ///
-    public class Sample09_ReadEventsFromAKnownPosition : IEventHubsSample
+    public class Sample10_ReadEventsFromAKnownPosition : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name => nameof(Sample09_ReadEventsFromAKnownPosition);
+        public string Name => nameof(Sample10_ReadEventsFromAKnownPosition);
 
         /// <summary>
         ///   A short description of the sample.

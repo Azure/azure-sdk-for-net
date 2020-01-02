@@ -26,13 +26,13 @@ namespace Azure.Messaging.EventHubs.Samples
     /// <seealso href="https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals"/>
     /// <seealso href="https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow"/>
     ///
-    public class Sample11_AuthenticateWithClientSecretCredential : IEventHubsIdentitySample
+    public class Sample12_AuthenticateWithClientSecretCredential : IEventHubsIdentitySample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name => nameof(Sample11_AuthenticateWithClientSecretCredential);
+        public string Name => nameof(Sample12_AuthenticateWithClientSecretCredential);
 
         /// <summary>
         ///   A short description of the sample.
