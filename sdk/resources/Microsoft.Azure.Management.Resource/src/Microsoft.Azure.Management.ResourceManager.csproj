@@ -4,9 +4,9 @@
 	<!-- Please do not move/edit code below this line -->
 
 	<PropertyGroup>
-		<PackageId>Microsoft.Azure.Management.ResourceManager</PackageId>
+		<PackageId>Microsoft.Azure.Management.ResourceManager.Hybrid20190301</PackageId>
 		<Description>Provides resource group and resource management capabilities for Microsoft Azure.</Description>
-		<AssemblyName>Microsoft.Azure.Management.ResourceManager</AssemblyName>
+		<AssemblyName>Microsoft.Azure.Management.ResourceManager.Hybrid20190301</AssemblyName>
 		<Version>2.4.5-preview</Version>
 		<PackageTags>Microsoft Azure resource management;resource management;resource groups;</PackageTags>
 		<PackageReleaseNotes>

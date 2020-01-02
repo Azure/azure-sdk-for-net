@@ -807,6 +807,56 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Gets all the management locks for a scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope for the lock. When providing a scope for the assignment, use
+            /// '/subscriptions/{subscriptionId}' for subscriptions,
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for
+            /// resource groups, and
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}'
+            /// for resources.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<ManagementLockObject> ListByScope(this IManagementLocksOperations operations, string scope, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>))
+            {
+                return operations.ListByScopeAsync(scope, odataQuery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the management locks for a scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The scope for the lock. When providing a scope for the assignment, use
+            /// '/subscriptions/{subscriptionId}' for subscriptions,
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for
+            /// resource groups, and
+            /// '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}'
+            /// for resources.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ManagementLockObject>> ListByScopeAsync(this IManagementLocksOperations operations, string scope, ODataQuery<ManagementLockObject> odataQuery = default(ODataQuery<ManagementLockObject>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByScopeWithHttpMessagesAsync(scope, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets all the management locks for a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -903,6 +953,40 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<ManagementLockObject>> ListAtSubscriptionLevelNextAsync(this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListAtSubscriptionLevelNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the management locks for a scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ManagementLockObject> ListByScopeNext(this IManagementLocksOperations operations, string nextPageLink)
+            {
+                return operations.ListByScopeNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the management locks for a scope.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ManagementLockObject>> ListByScopeNextAsync(this IManagementLocksOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByScopeNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

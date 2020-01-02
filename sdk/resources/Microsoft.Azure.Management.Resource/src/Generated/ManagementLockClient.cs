@@ -76,6 +76,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IAuthorizationOperations.
+        /// </summary>
+        public virtual IAuthorizationOperations AuthorizationOperations { get; private set; }
+
+        /// <summary>
         /// Gets the IManagementLocksOperations.
         /// </summary>
         public virtual IManagementLocksOperations ManagementLocks { get; private set; }
@@ -321,6 +326,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         private void Initialize()
         {
+            AuthorizationOperations = new AuthorizationOperations(this);
             ManagementLocks = new ManagementLocksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2016-09-01";

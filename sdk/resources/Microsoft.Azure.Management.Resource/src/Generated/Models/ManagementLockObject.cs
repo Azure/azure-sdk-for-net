@@ -100,10 +100,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the lock.
+        /// Gets the name of the lock.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Validate the object.

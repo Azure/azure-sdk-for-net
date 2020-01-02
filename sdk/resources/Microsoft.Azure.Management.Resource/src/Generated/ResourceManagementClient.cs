@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             Tags = new TagsOperations(this);
             DeploymentOperations = new DeploymentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-07-01";
+            ApiVersion = "2018-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -375,7 +375,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
@@ -389,7 +388,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                     }
             };
             CustomInitialize();
-            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
     }

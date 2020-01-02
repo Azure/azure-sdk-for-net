@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Please do not move/edit code below this line -->
 	  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
 	<!-- Please do not move/edit code above this line -->
@@ -6,8 +6,8 @@
   <PropertyGroup>
 		<Description>Microsoft Azure Management Groups Library</Description>
 		<Version>1.1.1-preview</Version>
-		<AssemblyName>Microsoft.Azure.Management.ManagementGroups</AssemblyName>
-		<PackageId>Microsoft.Azure.Management.ManagementGroups</PackageId>
+		<AssemblyName>Microsoft.Azure.Management.ManagementGroups.Hybrid20190301</AssemblyName>
+		<PackageId>Microsoft.Azure.Management.ManagementGroups.Hybrid20190301</PackageId>
 		<PackageTags>Microsoft Azure Management Groups;Management Groups;Groups;</PackageTags>
 		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
 	</PropertyGroup>

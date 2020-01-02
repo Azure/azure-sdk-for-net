@@ -14,8 +14,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,43 +35,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         /// <param name="displayName">The display name of the policy
         /// assignment.</param>
-        /// <param name="policyDefinitionId">The ID of the policy definition or
-        /// policy set definition being assigned.</param>
+        /// <param name="policyDefinitionId">The ID of the policy
+        /// definition.</param>
         /// <param name="scope">The scope for the policy assignment.</param>
-        /// <param name="notScopes">The policy's excluded scopes.</param>
         /// <param name="parameters">Required if a parameter is used in policy
         /// rule.</param>
         /// <param name="description">This message will be part of response in
         /// case of policy violation.</param>
-        /// <param name="metadata">The policy assignment metadata.</param>
-        /// <param name="enforcementMode">The policy assignment enforcement
-        /// mode. Possible values are Default and DoNotEnforce. Possible values
-        /// include: 'Default', 'DoNotEnforce'</param>
         /// <param name="id">The ID of the policy assignment.</param>
         /// <param name="type">The type of the policy assignment.</param>
         /// <param name="name">The name of the policy assignment.</param>
-        /// <param name="sku">The policy sku. This property is optional,
-        /// obsolete, and will be ignored.</param>
-        /// <param name="location">The location of the policy assignment. Only
-        /// required when utilizing managed identity.</param>
-        /// <param name="identity">The managed identity associated with the
-        /// policy assignment.</param>
-        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), IList<string> notScopes = default(IList<string>), object parameters = default(object), string description = default(string), object metadata = default(object), string enforcementMode = default(string), string id = default(string), string type = default(string), string name = default(string), PolicySku sku = default(PolicySku), string location = default(string), Identity identity = default(Identity))
+        public PolicyAssignment(string displayName = default(string), string policyDefinitionId = default(string), string scope = default(string), object parameters = default(object), string description = default(string), string id = default(string), string type = default(string), string name = default(string))
         {
             DisplayName = displayName;
             PolicyDefinitionId = policyDefinitionId;
             Scope = scope;
-            NotScopes = notScopes;
             Parameters = parameters;
             Description = description;
-            Metadata = metadata;
-            EnforcementMode = enforcementMode;
             Id = id;
             Type = type;
             Name = name;
-            Sku = sku;
-            Location = location;
-            Identity = identity;
             CustomInit();
         }
 
@@ -89,8 +70,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the ID of the policy definition or policy set
-        /// definition being assigned.
+        /// Gets or sets the ID of the policy definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
@@ -100,12 +80,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.scope")]
         public string Scope { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy's excluded scopes.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.notScopes")]
-        public IList<string> NotScopes { get; set; }
 
         /// <summary>
         /// Gets or sets required if a parameter is used in policy rule.
@@ -121,70 +95,22 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy assignment metadata.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.metadata")]
-        public object Metadata { get; set; }
-
-        /// <summary>
-        /// Gets or sets the policy assignment enforcement mode. Possible
-        /// values are Default and DoNotEnforce. Possible values include:
-        /// 'Default', 'DoNotEnforce'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.enforcementMode")]
-        public string EnforcementMode { get; set; }
-
-        /// <summary>
         /// Gets the ID of the policy assignment.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the type of the policy assignment.
+        /// Gets or sets the type of the policy assignment.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// Gets the name of the policy assignment.
+        /// Gets or sets the name of the policy assignment.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        /// <summary>
-        /// Gets or sets the policy sku. This property is optional, obsolete,
-        /// and will be ignored.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public PolicySku Sku { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of the policy assignment. Only required
-        /// when utilizing managed identity.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the managed identity associated with the policy
-        /// assignment.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public Identity Identity { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
-        }
     }
 }

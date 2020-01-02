@@ -241,7 +241,6 @@ namespace Policy.Tests
                 {
                     DisplayName = $"{thisTestName} Policy Assignment ${LivePolicyTests.NameTag}",
                     PolicyDefinitionId = definitionResult.Id,
-                    Sku = LivePolicyTests.A0Free
                 };
 
                 var result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
@@ -251,25 +250,16 @@ namespace Policy.Tests
                 var getResult = client.PolicyAssignments.Get(assignmentScope, assignmentName);
 
                 // Default enforcement should be set even if not provided as input in PUT request.
-                policyAssignment.EnforcementMode = EnforcementMode.Default;
                 this.AssertValid(assignmentName, policyAssignment, getResult);
-                Assert.Null(getResult.NotScopes);
                 Assert.Null(getResult.Description);
-                AssertMetadataValid(getResult.Metadata);
                 Assert.Null(getResult.Parameters);
-                Assert.Equal(EnforcementMode.Default, getResult.EnforcementMode);
 
                 var listResult = client.PolicyAssignments.List();
                 this.AssertInList(assignmentName, policyAssignment, listResult);
 
                 // Update with extra properties
                 policyAssignment.Description = LivePolicyTests.BasicDescription;
-                policyAssignment.Metadata = LivePolicyTests.BasicMetadata;
                 policyAssignment.DisplayName = $"Updated {policyAssignment.DisplayName}";
-                policyAssignment.Sku = LivePolicyTests.A1Standard;
-                policyAssignment.Location = "eastus";
-                policyAssignment.Identity = new Identity(type: ResourceIdentityType.SystemAssigned);
-                policyAssignment.EnforcementMode = EnforcementMode.DoNotEnforce;
 
                 result = client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment);
                 Assert.NotNull(result);
@@ -330,7 +320,6 @@ namespace Policy.Tests
                     DisplayName = $"{thisTestName} Policy Assignment",
                     PolicyDefinitionId = policyDefinition.Id,
                     Scope = assignmentScope,
-                    Sku = LivePolicyTests.A0Free
                 };
 
                 var assignment = client.PolicyAssignments.Create(assignmentScope, policyAssignmentName, policyAssignment);
@@ -380,14 +369,9 @@ namespace Policy.Tests
                     DisplayName = $"{thisTestName} Policy Assignment",
                     PolicyDefinitionId = policyDefinition.Id,
                     Scope = assignmentScope,
-                    Sku = LivePolicyTests.A0Free
                 };
 
                 var assignment = client.PolicyAssignments.Create(assignmentScope, policyAssignmentName, policyAssignment);
-
-                // retrieve list of policies that apply to this resource, validate exactly one matches the one we just created
-                var assignments = client.PolicyAssignments.ListForResource(resourceGroup.Name, "", "", resource.Type, resource.Name);
-                Assert.Single(assignments.Where(assign => assign.Name.Equals(assignment.Name)));
 
                 // get the same item at scope and ensure it matches
                 var getAssignment = client.PolicyAssignments.Get(assignmentScope, assignment.Name);
@@ -575,7 +559,6 @@ namespace Policy.Tests
                     DisplayName = $"{thisTestName} Policy Assignment",
                     PolicyDefinitionId = policyDefinition.Id,
                     Scope = assignmentScope,
-                    Sku = LivePolicyTests.A0Free
                 };
 
                 // assign at management group scope
@@ -611,7 +594,6 @@ namespace Policy.Tests
                 var policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Bad Assignment - Missing Policy Definition Id {LivePolicyTests.NameTag}",
-                    Sku = LivePolicyTests.A0Free
                 };
 
                 this.AssertThrowsErrorResponse(() => client.PolicyAssignments.Create(assignmentScope, assignmentName, policyAssignment), "InvalidRequestContent");
@@ -620,7 +602,6 @@ namespace Policy.Tests
                 policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Bad Assignment - Bad Policy Definition Id {LivePolicyTests.NameTag}",
-                    Sku = LivePolicyTests.A0Free,
                     PolicyDefinitionId = definitionResult.Id.Replace(definitionName, TestUtilities.GenerateName())
                 };
 
@@ -630,7 +611,6 @@ namespace Policy.Tests
                 policyAssignment = new PolicyAssignment
                 {
                     DisplayName = $"{thisTestName} Bad Assignment - Bad Policy Sku {LivePolicyTests.NameTag}",
-                    Sku = LivePolicyTests.A2FreeInvalid,
                     PolicyDefinitionId = definitionResult.Id
                 };
 
@@ -987,10 +967,7 @@ namespace Policy.Tests
             Assert.Equal(isBuiltin ? "BuiltIn" : "Custom", result.PolicyType);
             Assert.NotNull(result.PolicyRule);
             Assert.NotEmpty(result.PolicyRule.ToString());
-            Assert.NotNull(result.Type);
-            Assert.Equal("Microsoft.Authorization/policyDefinitions", result.Type);
             Assert.NotNull(result.Id);
-            Assert.EndsWith($"/providers/{result.Type}/{result.Name}", result.Id);
             if (isBuiltin)
             {
                 Assert.NotNull(result.Description);
@@ -1035,7 +1012,6 @@ namespace Policy.Tests
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyRule.ToString(), result.PolicyRule.ToString());
             Assert.Equal(expected.PolicyType, result.PolicyType);
-            Assert.Equal(expected.Type, result.Type);
         }
 
         // validate that the given list result contains exactly one policy definition that matches the given name and model
@@ -1169,23 +1145,8 @@ namespace Policy.Tests
 
             Assert.Equal(model.DisplayName, result.DisplayName);
             Assert.Equal(model.Description, result.Description);
-            AssertMetadataValid(result.Metadata);
             Assert.Equal(model.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(model.PolicyDefinitionId, result.PolicyDefinitionId);
-            Assert.Equal(model.Sku.Name, result.Sku.Name);
-            Assert.Equal(model.Sku.Tier, result.Sku.Tier);
-            Assert.Equal(model.Location, result.Location);
-            Assert.Equal(model.EnforcementMode, result.EnforcementMode);
-            if (model.Identity != null)
-            {
-                Assert.Equal(model.Identity.Type, result.Identity.Type);
-                Assert.NotNull(result.Identity.PrincipalId);
-                Assert.NotNull(result.Identity.TenantId);
-            }
-            else
-            {
-                Assert.Null(result.Identity);
-            }
         }
 
         // validate that the given result policy assignment is equal to the expected one
@@ -1196,30 +1157,12 @@ namespace Policy.Tests
             Assert.Equal(expected.Description, result.Description);
             Assert.Equal(expected.DisplayName, result.DisplayName);
             Assert.Equal(expected.Id, result.Id);
-            AssertMetadataEqual(expected.Metadata, result.Metadata, false);
             Assert.Equal(expected.Name, result.Name);
-            if (expected.NotScopes == null)
-            {
-                Assert.Null(result.NotScopes);
-            }
-            else
-            {
-                Assert.Equal(expected.NotScopes.Count, result.NotScopes.Count);
-                foreach (var notscope in expected.NotScopes)
-                {
-                    Assert.Single(notscope, result.NotScopes.Where(item => item == notscope));
-                }
-            }
 
             Assert.Equal(expected.Parameters?.ToString(), result.Parameters?.ToString());
             Assert.Equal(expected.PolicyDefinitionId, result.PolicyDefinitionId);
             Assert.Equal(expected.Scope, result.Scope);
-            Assert.Equal(expected.Sku.ToString(), result.Sku.ToString());
             Assert.Equal(expected.Type, result.Type);
-            Assert.Equal(expected.Location, result.Location);
-            Assert.Equal(expected.Identity?.Type, result.Identity?.Type);
-            Assert.Equal(expected.Identity?.PrincipalId, result.Identity?.PrincipalId);
-            Assert.Equal(expected.Identity?.TenantId, result.Identity?.TenantId);
         }
 
         // validate that the given list result contains exactly one policy assignment matching the given name and model model

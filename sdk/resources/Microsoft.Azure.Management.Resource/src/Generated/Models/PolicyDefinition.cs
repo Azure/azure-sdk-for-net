@@ -36,8 +36,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="policyType">The type of policy definition. Possible
         /// values are NotSpecified, BuiltIn, and Custom. Possible values
         /// include: 'NotSpecified', 'BuiltIn', 'Custom'</param>
-        /// <param name="mode">The policy definition mode. Some examples are
-        /// All, Indexed, Microsoft.KeyVault.Data.</param>
+        /// <param name="mode">The policy definition mode. Possible values are
+        /// NotSpecified, Indexed, and All. Possible values include:
+        /// 'NotSpecified', 'Indexed', 'All'</param>
         /// <param name="displayName">The display name of the policy
         /// definition.</param>
         /// <param name="description">The policy definition
@@ -48,9 +49,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// rule.</param>
         /// <param name="id">The ID of the policy definition.</param>
         /// <param name="name">The name of the policy definition.</param>
-        /// <param name="type">The type of the resource
-        /// (Microsoft.Authorization/policyDefinitions).</param>
-        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), object parameters = default(object), string id = default(string), string name = default(string), string type = default(string))
+        public PolicyDefinition(string policyType = default(string), string mode = default(string), string displayName = default(string), string description = default(string), object policyRule = default(object), object metadata = default(object), object parameters = default(object), string id = default(string), string name = default(string))
         {
             PolicyType = policyType;
             Mode = mode;
@@ -61,7 +60,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
             Parameters = parameters;
             Id = id;
             Name = name;
-            Type = type;
             CustomInit();
         }
 
@@ -79,8 +77,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string PolicyType { get; set; }
 
         /// <summary>
-        /// Gets or sets the policy definition mode. Some examples are All,
-        /// Indexed, Microsoft.KeyVault.Data.
+        /// Gets or sets the policy definition mode. Possible values are
+        /// NotSpecified, Indexed, and All. Possible values include:
+        /// 'NotSpecified', 'Indexed', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "properties.mode")]
         public string Mode { get; set; }
@@ -126,13 +125,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource
-        /// (Microsoft.Authorization/policyDefinitions).
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
     }
 }

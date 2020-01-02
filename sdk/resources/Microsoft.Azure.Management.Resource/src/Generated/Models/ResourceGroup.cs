@@ -39,7 +39,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="id">The ID of the resource group.</param>
         /// <param name="name">The name of the resource group.</param>
         /// <param name="type">The type of the resource group.</param>
-        /// <param name="properties">The resource group properties.</param>
         /// <param name="managedBy">The ID of the resource that manages this
         /// resource group.</param>
         /// <param name="tags">The tags attached to the resource group.</param>
@@ -79,7 +78,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource group properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public ResourceGroupProperties Properties { get; set; }

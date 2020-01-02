@@ -51,12 +51,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         public PolicyClient Client { get; private set; }
 
         /// <summary>
-        /// Creates or updates a policy definition in a subscription.
+        /// Creates or updates a policy definition.
         /// </summary>
-        /// <remarks>
-        /// This operation creates or updates a policy definition in the given
-        /// subscription with the given name.
-        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to create.
         /// </param>
@@ -256,12 +252,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Deletes a policy definition in a subscription.
+        /// Deletes a policy definition.
         /// </summary>
-        /// <remarks>
-        /// This operation deletes the policy definition in the given subscription with
-        /// the given name.
-        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to delete.
         /// </param>
@@ -426,12 +418,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves a policy definition in a subscription.
+        /// Gets the policy definition.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves the policy definition in the given subscription
-        /// with the given name.
-        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to get.
         /// </param>
@@ -617,14 +605,10 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves a built-in policy definition.
+        /// Gets the built in policy definition.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves the built-in policy definition with the given
-        /// name.
-        /// </remarks>
         /// <param name='policyDefinitionName'>
-        /// The name of the built-in policy definition to get.
+        /// The name of the built in policy definition to get.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -803,12 +787,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Creates or updates a policy definition in a management group.
+        /// Creates or updates a policy definition at management group level.
         /// </summary>
-        /// <remarks>
-        /// This operation creates or updates a policy definition in the given
-        /// management group with the given name.
-        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to create.
         /// </param>
@@ -1012,12 +992,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Deletes a policy definition in a management group.
+        /// Deletes a policy definition at management group level.
         /// </summary>
-        /// <remarks>
-        /// This operation deletes the policy definition in the given management group
-        /// with the given name.
-        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to delete.
         /// </param>
@@ -1186,12 +1162,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieve a policy definition in a management group.
+        /// Gets the policy definition at management group level.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves the policy definition in the given management
-        /// group with the given name.
-        /// </remarks>
         /// <param name='policyDefinitionName'>
         /// The name of the policy definition to get.
         /// </param>
@@ -1381,12 +1353,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves policy definitions in a subscription
+        /// Gets all the policy definitions for a subscription.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves a list of all the policy definitions in a given
-        /// subscription.
-        /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1563,11 +1531,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieve built-in policy definitions
+        /// Gets all the built in policy definitions.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves a list of all the built-in policy definitions.
-        /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1739,12 +1704,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieve policy definitions in a management group
+        /// Gets all the policy definitions for a subscription at management group
+        /// level.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves a list of all the policy definitions in a given
-        /// management group.
-        /// </remarks>
         /// <param name='managementGroupId'>
         /// The ID of the management group.
         /// </param>
@@ -1925,12 +1887,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieves policy definitions in a subscription
+        /// Gets all the policy definitions for a subscription.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves a list of all the policy definitions in a given
-        /// subscription.
-        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -2102,11 +2060,8 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieve built-in policy definitions
+        /// Gets all the built in policy definitions.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves a list of all the built-in policy definitions.
-        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -2278,12 +2233,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Retrieve policy definitions in a management group
+        /// Gets all the policy definitions for a subscription at management group
+        /// level.
         /// </summary>
-        /// <remarks>
-        /// This operation retrieves a list of all the policy definitions in a given
-        /// management group.
-        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

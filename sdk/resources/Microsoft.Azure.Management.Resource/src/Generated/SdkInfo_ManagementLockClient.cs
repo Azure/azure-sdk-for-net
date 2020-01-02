@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.ResourceManager
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Authorization", "AuthorizationOperations", "2016-09-01"),
                 new Tuple<string, string, string>("Authorization", "ManagementLocks", "2016-09-01"),
               }.AsEnumerable();
           }

@@ -71,6 +71,11 @@ namespace Microsoft.Azure.Management.ResourceManager
 
 
         /// <summary>
+        /// Gets the IAuthorizationOperations.
+        /// </summary>
+        IAuthorizationOperations AuthorizationOperations { get; }
+
+        /// <summary>
         /// Gets the IManagementLocksOperations.
         /// </summary>
         IManagementLocksOperations ManagementLocks { get; }
