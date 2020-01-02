@@ -32,7 +32,8 @@ namespace LineCounter
 
         public LineCounterService(
             IAzureClientFactory<EventHubProducerClient> producerFactory,
-            BlobServiceClient blobServiceClient, ILogger<LineCounterService> logger,
+            BlobServiceClient blobServiceClient,
+            ILogger<LineCounterService> logger,
             IConfiguration configuration)
         {
             _logger = logger;
