@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1455,6 +1456,44 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_BlobSasWithContentHeaders()
+        {
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                Protocol = SasProtocol.None,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                CacheControl = "|cache control?",
+                ContentDisposition = "|content disposition?",
+                ContentEncoding = "|content encoding?",
+                ContentLanguage = "|content language?",
+                ContentType = "|content type?"
+            };
+            blobSasBuilder.SetPermissions(
+                BlobSasPermissions.All);
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+
+            BlockBlobClient sasBlob = InstrumentClient(new BlockBlobClient(new Uri($"{TestConfigDefault.BlobServiceEndpoint}/{containerName}/{blobName}?{blobSasQueryParameters}"), GetOptions()));
+
+            // Act
+            Response<BlobProperties> response = await sasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
