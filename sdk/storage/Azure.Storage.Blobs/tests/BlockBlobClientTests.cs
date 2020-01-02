@@ -327,11 +327,6 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsFalse(progress.List.Count == 0);
 
-            for (int i = 1; i < progress.List.Count; i++)
-            {
-                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
-            }
-
             Assert.AreEqual(100 * Constants.MB, progress.List[progress.List.Count - 1]);
         }
 
@@ -1365,11 +1360,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(progress.List.Count == 0);
-
-            for (int i = 1; i < progress.List.Count; i++)
-            {
-                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
-            }
 
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }

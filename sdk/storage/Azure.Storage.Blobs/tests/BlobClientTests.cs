@@ -766,11 +766,6 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsFalse(progress.List.Count == 0);
 
-            for ( int i = 1; i < progress.List.Count; i++)
-            {
-                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
-            }
-
             Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
         }
         #endregion Upload
