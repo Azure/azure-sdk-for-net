@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An example of publishing events using a custom size limitation with the batch.
     /// </summary>
     ///
-    public class Sample10_PublishAnEventBatchWithCustomSizeLimit : IEventHubsSample
+    public class Sample11_PublishAnEventBatchWithCustomSizeLimit : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name => nameof(Sample10_PublishAnEventBatchWithCustomSizeLimit);
+        public string Name => nameof(Sample11_PublishAnEventBatchWithCustomSizeLimit);
 
         /// <summary>
         ///   A short description of the sample.

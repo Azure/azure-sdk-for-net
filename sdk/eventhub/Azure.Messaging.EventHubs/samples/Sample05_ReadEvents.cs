@@ -15,13 +15,13 @@ namespace Azure.Messaging.EventHubs.Samples
     ///   An introduction to reading all events available from an Event Hub.
     /// </summary>
     ///
-    public class Sample04_ReadEvents : IEventHubsSample
+    public class Sample05_ReadEvents : IEventHubsSample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name => nameof(Sample04_ReadEvents);
+        public string Name => nameof(Sample05_ReadEvents);
 
         /// <summary>
         ///   A short description of the sample.
