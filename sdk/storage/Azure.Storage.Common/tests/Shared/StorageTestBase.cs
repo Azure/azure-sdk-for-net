@@ -442,14 +442,16 @@ namespace Azure.Storage.Test.Shared
         protected async Task<T> RetryAsync<T>(
             Func<Task<T>> operation,
             Func<RequestFailedException, bool> shouldRetry,
-            int retryDelay = TestConstants.RetryDelay) =>
-            await RetryAsync(Mode, operation, shouldRetry, retryDelay);
+            int retryDelay = TestConstants.RetryDelay,
+            int retryAttempts = Constants.MaxReliabilityRetries) =>
+            await RetryAsync(Mode, operation, shouldRetry, retryDelay, retryAttempts);
 
         public static async Task<T> RetryAsync<T>(
             RecordedTestMode mode,
             Func<Task<T>> operation,
             Func<RequestFailedException, bool> shouldRetry,
-            int retryDelay = TestConstants.RetryDelay)
+            int retryDelay = TestConstants.RetryDelay,
+            int retryAttempts = Constants.MaxReliabilityRetries)
         {
             for (int attempt = 0; ;)
             {
@@ -458,7 +460,7 @@ namespace Azure.Storage.Test.Shared
                     return await operation();
                 }
                 catch (RequestFailedException ex)
-                    when (attempt++ < Constants.MaxReliabilityRetries && shouldRetry(ex))
+                    when (attempt++ < retryAttempts && shouldRetry(ex))
                 {
                     await Delay(mode, retryDelay);
                 }
