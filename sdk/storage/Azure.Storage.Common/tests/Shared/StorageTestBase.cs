@@ -443,7 +443,7 @@ namespace Azure.Storage.Test.Shared
             Func<Task<T>> operation,
             Func<RequestFailedException, bool> shouldRetry,
             int retryDelay = TestConstants.RetryDelay) =>
-            await RetryAsync(Mode, operation, shouldRetry);
+            await RetryAsync(Mode, operation, shouldRetry, retryDelay);
 
         public static async Task<T> RetryAsync<T>(
             RecordedTestMode mode,
