@@ -252,14 +252,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Closes the connection to the Event Hubs namespace and associated Event Hub.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
-
-        /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventHubConnection" />,
         ///   including ensuring that the connection itself has been closed.
         /// </summary>

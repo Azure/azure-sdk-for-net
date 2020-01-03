@@ -453,20 +453,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConnection.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseDelegatesToCloseAsync()
-        {
-            var client = new ObservableOperationsMock("Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            client.Close();
-
-            Assert.That(client.WasCloseAsyncCalled, Is.True);
-        }
-
-        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubConnection.DisposeAsync" />
         ///   method.
         /// </summary>
@@ -608,22 +594,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
 
             await client.CloseAsync();
-
-            Assert.That(transportClient.WasCloseCalled, Is.True);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubConnection.Close" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void CloseClosesTheTransportClient()
-        {
-            var transportClient = new ObservableTransportClientMock();
-            var client = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-
-            client.Close();
 
             Assert.That(transportClient.WasCloseCalled, Is.True);
         }
