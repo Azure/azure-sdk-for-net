@@ -757,20 +757,16 @@ namespace Azure.Storage.Blobs.Test
                 MaximumTransferLength = Constants.MB,
                 MaximumConcurrency = 16
             };
-            using var stream = new MemoryStream(GetRandomBuffer(Constants.GB));
+            int size = Constants.Blob.Block.MaxUploadBytes + 1; // ensure that the Parallel upload code path is hit
+            using var stream = new MemoryStream(GetRandomBuffer(size));
 
             // Act
-            await blob.UploadAsync(content: stream, progressHandler: progress);
+            await blob.UploadAsync(content: stream, progressHandler: progress, transferOptions: options);
 
             // Assert
             Assert.IsFalse(progress.List.Count == 0);
 
-            for ( int i = 1; i < progress.List.Count; i++)
-            {
-                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
-            }
-
-            Assert.AreEqual(Constants.GB, progress.List[progress.List.Count - 1]);
+            Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
         }
         #endregion Upload
 
