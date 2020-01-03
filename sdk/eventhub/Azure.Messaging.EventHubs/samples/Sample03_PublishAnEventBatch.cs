@@ -67,7 +67,7 @@ namespace Azure.Messaging.EventHubs.Samples
 
                 await producerClient.SendAsync(eventBatch);
 
-                Console.WriteLine("The event has been published.");
+                Console.WriteLine("The simple event batch has been published.");
             }
 
             // At this point, our client has passed its "using" scope and has safely been disposed of.  We

@@ -23,25 +23,25 @@ namespace Microsoft.Azure.Management.Network
     /// </summary>
     public static partial class ConnectionMonitorsOperationsExtensions
     {
-            /// <summary>
-            /// Create or update a connection monitor.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing Network Watcher.
-            /// </param>
-            /// <param name='networkWatcherName'>
-            /// The name of the Network Watcher resource.
-            /// </param>
-            /// <param name='connectionMonitorName'>
-            /// The name of the connection monitor.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters that define the operation to create a connection monitor.
-            /// </param>
-            public static ConnectionMonitorResult CreateOrUpdate(this IConnectionMonitorsOperations operations, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters)
+        /// <summary>
+        /// Create or update a connection monitor.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing Network Watcher.
+        /// </param>
+        /// <param name='networkWatcherName'>
+        /// The name of the Network Watcher resource.
+        /// </param>
+        /// <param name='connectionMonitorName'>
+        /// The name of the connection monitor.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters that define the operation to create a connection monitor.
+        /// </param>
+        public static ConnectionMonitorResult CreateOrUpdate(this IConnectionMonitorsOperations operations, string resourceGroupName, string networkWatcherName, string connectionMonitorName, ConnectionMonitor parameters)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, networkWatcherName, connectionMonitorName, parameters).GetAwaiter().GetResult();
             }

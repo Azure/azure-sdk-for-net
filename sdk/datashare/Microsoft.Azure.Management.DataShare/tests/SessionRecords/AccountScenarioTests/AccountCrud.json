@@ -1,7 +1,7 @@
 ﻿{
   "Entries": [
     {
-      "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktestingshareaccount?api-version=2018-11-01-preview",
+      "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktestingshareaccount?api-version=2019-11-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -61,7 +61,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktestingshareaccount?api-version=2018-11-01-preview",
+      "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktestingshareaccount?api-version=2019-11-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -380,7 +380,7 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktestingshareaccount?api-version=2018-11-01-preview",
+      "RequestUri": "/subscriptions/c39dce18-cead-4065-8fb1-3af7683a5038/resourceGroups/sdktestingadsrg/providers/Microsoft.DataShare/accounts/sdktestingshareaccount?api-version=2019-11-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US 2\"\r\n}",
       "RequestHeaders": {

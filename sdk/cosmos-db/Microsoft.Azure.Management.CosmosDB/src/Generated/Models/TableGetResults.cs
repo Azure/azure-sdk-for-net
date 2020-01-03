@@ -34,26 +34,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <summary>
         /// Initializes a new instance of the TableGetResults class.
         /// </summary>
-        /// <param name="tableGetResultsId">Name of the Cosmos DB table</param>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        /// <param name="_rid">A system generated property. A unique
-        /// identifier.</param>
-        /// <param name="_ts">A system generated property that denotes the last
-        /// updated timestamp of the resource.</param>
-        /// <param name="_etag">A system generated property representing the
-        /// resource etag required for optimistic concurrency control.</param>
-        public TableGetResults(string tableGetResultsId, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string _rid = default(string), object _ts = default(object), string _etag = default(string))
+        public TableGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), TableGetPropertiesResource resource = default(TableGetPropertiesResource))
             : base(id, name, type, location, tags)
         {
-            TableGetResultsId = tableGetResultsId;
-            this._rid = _rid;
-            this._ts = _ts;
-            this._etag = _etag;
+            Resource = resource;
             CustomInit();
         }
 
@@ -63,30 +53,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the Cosmos DB table
         /// </summary>
-        [JsonProperty(PropertyName = "properties.id")]
-        public string TableGetResultsId { get; set; }
-
-        /// <summary>
-        /// Gets a system generated property. A unique identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._rid")]
-        public string _rid { get; private set; }
-
-        /// <summary>
-        /// Gets a system generated property that denotes the last updated
-        /// timestamp of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._ts")]
-        public object _ts { get; private set; }
-
-        /// <summary>
-        /// Gets a system generated property representing the resource etag
-        /// required for optimistic concurrency control.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._etag")]
-        public string _etag { get; private set; }
+        [JsonProperty(PropertyName = "properties.resource")]
+        public TableGetPropertiesResource Resource { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -96,9 +65,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TableGetResultsId == null)
+            if (Resource != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TableGetResultsId");
+                Resource.Validate();
             }
         }
     }

@@ -26,7 +26,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 ResourceManagementClient resourcesClient = CosmosDBTestUtilities.GetResourceManagementClient(context, handler2);
 
                 string resourceGroupName = "CosmosDBResourceGroup3668";
-                string databaseAccountName = "db001";
+                string databaseAccountName = "db001"; // Using a pre-existing ResourceGroup and DatabaseAccount, because Database Account provisioning takes some time
 
                 bool isDatabaseNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
 
@@ -122,9 +122,10 @@ namespace CosmosDB.Tests.ScenarioTests
 
         private void VerifyEqualMongoDBDatabases(MongoDBDatabaseGetResults expectedValue, MongoDBDatabaseGetResults actualValue)
         {
-            Assert.Equal(expectedValue._rid, actualValue._rid);
-            Assert.Equal(expectedValue._ts, actualValue._ts);
-            Assert.Equal(expectedValue._etag, actualValue._etag);
+            Assert.Equal(expectedValue.Resource.Id, actualValue.Resource.Id);
+            Assert.Equal(expectedValue.Resource._rid, actualValue.Resource._rid);
+            Assert.Equal(expectedValue.Resource._ts, actualValue.Resource._ts);
+            Assert.Equal(expectedValue.Resource._etag, actualValue.Resource._etag);
         }
     }
 }

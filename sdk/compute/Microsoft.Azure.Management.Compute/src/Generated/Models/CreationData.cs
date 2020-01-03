@@ -33,10 +33,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="createOption">This enumerates the possible sources of
         /// a disk's creation. Possible values include: 'Empty', 'Attach',
         /// 'FromImage', 'Import', 'Copy', 'Restore', 'Upload'</param>
-        /// <param name="storageAccountId">If createOption is Import, the Azure
-        /// Resource Manager identifier of the storage account containing the
-        /// blob to import as a disk. Required only if the blob is in a
-        /// different subscription</param>
+        /// <param name="storageAccountId">Required if createOption is Import.
+        /// The Azure Resource Manager identifier of the storage account
+        /// containing the blob to import as a disk.</param>
         /// <param name="imageReference">Disk source information.</param>
         /// <param name="sourceUri">If createOption is Import, this is the URI
         /// of a blob to be imported into a managed disk.</param>
@@ -75,9 +74,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string CreateOption { get; set; }
 
         /// <summary>
-        /// Gets or sets if createOption is Import, the Azure Resource Manager
-        /// identifier of the storage account containing the blob to import as
-        /// a disk. Required only if the blob is in a different subscription
+        /// Gets or sets required if createOption is Import. The Azure Resource
+        /// Manager identifier of the storage account containing the blob to
+        /// import as a disk.
         /// </summary>
         [JsonProperty(PropertyName = "storageAccountId")]
         public string StorageAccountId { get; set; }

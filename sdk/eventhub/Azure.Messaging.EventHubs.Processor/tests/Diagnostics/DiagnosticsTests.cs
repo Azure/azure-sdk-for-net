@@ -174,9 +174,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             public MockEventData(ReadOnlyMemory<byte> eventBody,
                                  IDictionary<string, object> properties = null,
                                  IReadOnlyDictionary<string, object> systemProperties = null,
-                                 long? sequenceNumber = null,
-                                 long? offset = null,
-                                 DateTimeOffset? enqueuedTime = null,
+                                 long sequenceNumber = long.MinValue,
+                                 long offset = long.MinValue,
+                                 DateTimeOffset enqueuedTime = default,
                                  string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
             {
             }
