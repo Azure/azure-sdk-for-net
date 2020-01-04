@@ -10,6 +10,8 @@ using NUnit.Framework;
 using Azure.Core.Testing;
 using Azure.Identity.Tests.Mock;
 using System.Threading.Tasks;
+using System.IO;
+using System.Threading;
 
 namespace Azure.Identity.Tests
 {
@@ -36,6 +38,7 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "mockclientsecret");
 
                 var provider = new EnvironmentCredential();
+                _forceInitialization(provider);
 
                 ClientSecretCredential cred =_credential(provider) as ClientSecretCredential;
 
@@ -56,10 +59,51 @@ namespace Azure.Identity.Tests
             }
         }
 
+        [NonParallelizable]
+        [Test]
+        public void CredentialConstructionFromAuthFile()
+        {
+            string clientIdBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+            string tenantIdBackup = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            string clientSecretBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
+            string authLocationBackup = Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
+
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", "");
+
+                Environment.SetEnvironmentVariable("AZURE_TENANT_ID", "");
+
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "");
+
+                Environment.SetEnvironmentVariable("AZURE_AUTH_LOCATION", Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "authfile.json"));
+
+                var provider = new EnvironmentCredential();
+                _forceInitialization(provider);
+
+                ClientSecretCredential cred = _credential(provider) as ClientSecretCredential;
+
+                Assert.NotNull(cred);
+
+                Assert.AreEqual("mockclientid", cred.ClientId);
+
+                Assert.AreEqual("mocktenantid", cred.TenantId);
+
+                Assert.AreEqual("mockclientsecret", cred.ClientSecret);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientIdBackup);
+                Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantIdBackup);
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecretBackup);
+                Environment.SetEnvironmentVariable("AZURE_AUTH_LOCATION", authLocationBackup);
+            }
+        }
+
         [Test]
         public async Task EnvironmentCredentialUnavailableException()
         {
-            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), null));
+            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), null, "The crendential is not available"));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -75,7 +119,7 @@ namespace Azure.Identity.Tests
 
             ClientSecretCredential innerCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), CredentialPipeline.GetInstance(null), mockAadClient);
 
-            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), innerCred));
+            var credential = InstrumentClient(new EnvironmentCredential(CredentialPipeline.GetInstance(null), innerCred, null));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -89,6 +133,11 @@ namespace Azure.Identity.Tests
         public static TokenCredential _credential(EnvironmentCredential provider)
         {
             return (TokenCredential)typeof(EnvironmentCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
+        }
+
+        public void _forceInitialization(EnvironmentCredential provider)
+        {
+            typeof(EnvironmentCredential).GetMethod("EnsureInitialized", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(provider, new object[] { false, default(CancellationToken) });
         }
     }
 }
