@@ -363,7 +363,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing has stopped.</param>
         /// <param name="reason">The reason why the processing for the specified partition has stopped.</param>
         ///
-        [Event(21, Level = EventLevel.Verbose, Message = "Stopped partition processing task for partition id '{0}' with reason '{1}'.")]
+        [Event(21, Level = EventLevel.Informational, Message = "Stopped partition processing task for partition id '{0}' with reason '{1}'.")]
         public virtual void StopPartitionProcessingComplete(string partitionId,
                                                             ProcessingStoppedReason reason)
         {
@@ -411,7 +411,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         ///
-        [Event(24, Level = EventLevel.Verbose, Message = "Stopped processing events. (Identifier '{0}')")]
+        [Event(24, Level = EventLevel.Informational, Message = "Stopped processing events. (Identifier '{0}')")]
         public virtual void EventProcessorStopComplete(string identifier)
         {
             if (IsEnabled())

@@ -429,6 +429,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -477,6 +478,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -533,6 +535,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
