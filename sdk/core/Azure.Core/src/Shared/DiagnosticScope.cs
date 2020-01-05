@@ -78,7 +78,7 @@ namespace Azure.Core.Pipeline
 
             if (_source != null)
             {
-                _source.StopActivity(_activity, null);
+                _source.StopActivity(_activity, _activity);
             }
             else
             {
