@@ -56,10 +56,11 @@ namespace Azure.Core.Tests
                 else if (value.Key.EndsWith(stopSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
+                    PropertyInfo propertyInfo = value.Value.GetType().GetProperty("Id");
+                    var activityId = propertyInfo?.GetValue(value.Value) as string ?? string.Empty;
+
                     foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        PropertyInfo propertyInfo = value.Value.GetType().GetProperty("Id");
-                        var activityId = propertyInfo?.GetValue(value.Value) as string ?? string.Empty;
                         if (producedDiagnosticScope.Activity.Id == activityId)
                         {
                             producedDiagnosticScope.IsCompleted = true;
