@@ -103,7 +103,28 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
 
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(fileSystemName));
-            await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+
+            // due to a service issue, if the initial container creation request times out, subsequent requests
+            // can return a ContainerAlreadyExists code even though the container doesn't really exist.
+            // we delay until after the service cache timeout and then attempt to create the container one more time.
+            // If this attempt fails, we let the exception propagate.
+            // TODO Note this issue will be fixed in the 72 rollout. After that time, this try/catch can be removed.
+            try
+            {
+                await RetryAsync(
+                    async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType),
+                    ex => ex.ErrorCode == Constants.Blob.Container.AlreadyExists,
+                    retryDelay: TestConstants.DataLakeRetryDelay,
+                    retryAttempts: 1);
+            }
+            catch (RequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
+            {
+                // if we get this error after retrying once, that means the container really does
+                // exist, since the retry attempt occurred after the cache timeout.
+                // so we just swallow this error and continue on in the test.
+            }
+
             return new DisposingFileSystem(fileSystem);
         }
 

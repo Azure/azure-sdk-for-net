@@ -81,13 +81,8 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                     // may be created.
                     //
                     // If the "HasEvent" property is unset, the event will be empty and checkpoints may not be created.
-                    //
-                    // NOTE:  There is a bug in the Event Hubs preview 6 library causing "HasEvents" to return the
-                    //        wrong value.  We'll substitute a check against the "Data" property to work around it.
-                    //
-                    //        if (eventArgs.HasEvents) {} is the preferred snippet.
 
-                    if (eventArgs.Data != null)
+                    if (eventArgs.HasEvent)
                     {
                         Console.WriteLine($"Event Received: { Encoding.UTF8.GetString(eventArgs.Data.Body.ToArray()) }");
                     }

@@ -51,7 +51,7 @@ To quickly create the needed resources in Azure and to receive connection string
 - [Track when an Event Hub partition will no longer be processed by a specific Event Processor client](./Sample06_TrackWhenAPartitionIsClosed.cs)  
   An introduction to the Event Processor client, illustrating how to track when processing stops for a partition.
   
-- [Manage the Event Processor when an error is encountered](./Sample07_RestartProcessongOnError.cs)  
+- [Manage the Event Processor when an error is encountered](./Sample07_RestartProcessingOnError.cs)  
   An example of stopping and restarting the Event Processor client when a specific error is encountered.
 
 - [Send a heartbeat for health monitoring while processing events](./Sample08_EventProcessingHeartbeat.cs)  

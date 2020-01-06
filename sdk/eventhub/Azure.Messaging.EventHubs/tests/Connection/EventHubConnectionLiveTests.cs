@@ -247,9 +247,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task ConnectionTransportCannotRetrieveMetadataWhenClosed(bool sync)
+        public async Task ConnectionTransportCannotRetrieveMetadataWhenClosed()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -262,15 +260,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(async () => await connection.GetPropertiesAsync(), Throws.Nothing);
                     Assert.That(async () => await connection.GetPartitionPropertiesAsync(partition), Throws.Nothing);
 
-                    if (sync)
-                    {
-                        connection.Close();
-                    }
-                    else
-                    {
-                        await connection.CloseAsync();
-                    }
-
+                    await connection.CloseAsync();
                     await Task.Delay(TimeSpan.FromSeconds(5));
 
                     Assert.That(async () => await connection.GetPartitionIdsAsync(), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
