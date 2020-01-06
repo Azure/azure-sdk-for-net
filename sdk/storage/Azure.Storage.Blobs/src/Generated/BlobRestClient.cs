@@ -15140,6 +15140,11 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet { get; } = new BlobErrorCode(@"MaxBlobSizeConditionNotMet");
 
         /// <summary>
+        /// NoAuthenticationInformation
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoAuthenticationInformation { get; } = new BlobErrorCode(@"NoAuthenticationInformation");
+
+        /// <summary>
         /// NoPendingCopyOperation
         /// </summary>
         public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation { get; } = new BlobErrorCode(@"NoPendingCopyOperation");
