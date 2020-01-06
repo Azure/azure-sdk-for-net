@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Management.Billing
         IAvailableBalancesOperations AvailableBalances { get; }
 
         /// <summary>
+        /// Gets the IInstructionsOperations.
+        /// </summary>
+        IInstructionsOperations Instructions { get; }
+
+        /// <summary>
         /// Gets the IBillingProfilesOperations.
         /// </summary>
         IBillingProfilesOperations BillingProfiles { get; }
@@ -125,7 +130,17 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the ITransactionsOperations.
         /// </summary>
         ITransactionsOperations Transactions { get; }
-        
+
+        /// <summary>
+        /// Gets the IDepartmentsOperations.
+        /// </summary>
+        IDepartmentsOperations Departments { get; }
+
+        /// <summary>
+        /// Gets the IEnrollmentAccountsOperations.
+        /// </summary>
+        IEnrollmentAccountsOperations EnrollmentAccounts { get; }
+
         /// <summary>
         /// Gets the IInvoicesOperations.
         /// </summary>
@@ -147,6 +162,21 @@ namespace Microsoft.Azure.Management.Billing
         IBillingPropertyOperations BillingProperty { get; }
 
         /// <summary>
+        /// Gets the ITransfersOperations.
+        /// </summary>
+        ITransfersOperations Transfers { get; }
+
+        /// <summary>
+        /// Gets the IPartnerTransfersOperations.
+        /// </summary>
+        IPartnerTransfersOperations PartnerTransfers { get; }
+
+        /// <summary>
+        /// Gets the IRecipientTransfersOperations.
+        /// </summary>
+        IRecipientTransfersOperations RecipientTransfers { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
@@ -165,6 +195,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IAgreementsOperations.
         /// </summary>
         IAgreementsOperations Agreements { get; }
+
+        /// <summary>
+        /// Gets the ILineOfCreditsOperations.
+        /// </summary>
+        ILineOfCreditsOperations LineOfCredits { get; }
 
     }
 }
