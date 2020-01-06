@@ -71,8 +71,11 @@ namespace Azure.Storage.Test.Shared
         /// This will run prior to the start of each test.
         /// </summary>
         [SetUp]
-        public void SetupEventsForTest() =>
+        public void SetupEventsForTest()
+        {
+            TestContext.Progress.WriteLine($"Mode: {(IsAsync ? "Async" : "Sync")}");
             s_listener?.SetupEventsForTest();
+        }
 
         /// <summary>
         /// Output the Events to the console in the case of test failure.
