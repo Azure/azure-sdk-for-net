@@ -30,7 +30,7 @@ client.SetConfigurationSetting(setting);
 
 ##  Retrieve a configuration setting
 
-You can now retrieve a previously stored configuration setting by calling `GetConfigurationSetting`
+Once you've created a configuration setting, you can retrieve it by calling `GetConfigurationSetting`
 
 ```C# Snippet:AzConfigSample1_RetrieveConfigurationSetting
 ConfigurationSetting retrievedSetting = client.GetConfigurationSetting("some_key");
@@ -39,7 +39,7 @@ Console.WriteLine($"The value of the configuration setting is: {retrievedSetting
 
 ## Delete a configuration setting
 
-To delete configuration setting that is no longer needed you can call `DeleteConfigurationSetting`.
+To delete a configuration setting that is no longer needed you can call `DeleteConfigurationSetting`.
 
 ```C# Snippet:AzConfigSample1_DeleteConfigurationSetting
 client.DeleteConfigurationSetting("some_key");
