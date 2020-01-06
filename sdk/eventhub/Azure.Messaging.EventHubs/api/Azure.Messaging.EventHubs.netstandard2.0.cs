@@ -30,7 +30,6 @@ namespace Azure.Messaging.EventHubs
         public string EventHubName { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string FullyQualifiedNamespace { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public bool IsClosed { get { throw null; } }
-        public virtual void Close(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
