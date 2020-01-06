@@ -49,9 +49,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="dockerBridgeCidr">A CIDR notation IP range assigned to
         /// the Docker bridge network. It must not overlap with any Subnet IP
         /// ranges or the Kubernetes service address range.</param>
+        /// <param name="outboundType">The outbound (egress) routing method.
+        /// Possible values include: 'loadBalancer',
+        /// 'userDefinedRouting'</param>
         /// <param name="loadBalancerSku">The load balancer sku for the managed
         /// cluster. Possible values include: 'standard', 'basic'</param>
-        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string loadBalancerSku = default(string))
+        /// <param name="loadBalancerProfile">Profile of the cluster load
+        /// balancer.</param>
+        public ContainerServiceNetworkProfile(string networkPlugin = default(string), string networkPolicy = default(string), string podCidr = default(string), string serviceCidr = default(string), string dnsServiceIP = default(string), string dockerBridgeCidr = default(string), string outboundType = default(string), string loadBalancerSku = default(string), ManagedClusterLoadBalancerProfile loadBalancerProfile = default(ManagedClusterLoadBalancerProfile))
         {
             NetworkPlugin = networkPlugin;
             NetworkPolicy = networkPolicy;
@@ -59,7 +64,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             ServiceCidr = serviceCidr;
             DnsServiceIP = dnsServiceIP;
             DockerBridgeCidr = dockerBridgeCidr;
+            OutboundType = outboundType;
             LoadBalancerSku = loadBalancerSku;
+            LoadBalancerProfile = loadBalancerProfile;
             CustomInit();
         }
 
@@ -113,11 +120,24 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string DockerBridgeCidr { get; set; }
 
         /// <summary>
+        /// Gets or sets the outbound (egress) routing method. Possible values
+        /// include: 'loadBalancer', 'userDefinedRouting'
+        /// </summary>
+        [JsonProperty(PropertyName = "outboundType")]
+        public string OutboundType { get; set; }
+
+        /// <summary>
         /// Gets or sets the load balancer sku for the managed cluster.
         /// Possible values include: 'standard', 'basic'
         /// </summary>
         [JsonProperty(PropertyName = "loadBalancerSku")]
         public string LoadBalancerSku { get; set; }
+
+        /// <summary>
+        /// Gets or sets profile of the cluster load balancer.
+        /// </summary>
+        [JsonProperty(PropertyName = "loadBalancerProfile")]
+        public ManagedClusterLoadBalancerProfile LoadBalancerProfile { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -154,6 +174,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
                 {
                     throw new ValidationException(ValidationRules.Pattern, "DockerBridgeCidr", "^([0-9]{1,3}\\.){3}[0-9]{1,3}(\\/([0-9]|[1-2][0-9]|3[0-2]))?$");
                 }
+            }
+            if (LoadBalancerProfile != null)
+            {
+                LoadBalancerProfile.Validate();
             }
         }
     }
