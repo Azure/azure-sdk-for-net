@@ -24,6 +24,14 @@ namespace Azure.Storage
         public const string DefaultSasVersion = "2019-07-07";
 
         /// <summary>
+        /// The 2019-02-02 service version.
+        /// </summary>
+        public const string ServiceVersion_2019_02_02 = "2019-02-02";
+
+        // The 2019-07-07 service version.
+        public const string ServiceVersion_2019_07_07 = "2019-07-07";
+
+        /// <summary>
         /// The default size of staged blocks when uploading small blobs.
         /// </summary>
         public const int DefaultBufferSize = 4 * Constants.MB;
@@ -68,6 +76,9 @@ namespace Azure.Storage
 
         public const string Https = "https";
         public const string Http = "http";
+
+        public const string BlobServiceName = "blob";
+        public const string FileServiceName = "file";
 
         /// <summary>
         /// Storage Connection Strings
@@ -132,6 +143,7 @@ namespace Azure.Storage
             public const string IfUnmodifiedSince = "If-Unmodified-Since";
             public const string Range = "Range";
             public const string ContentRange = "Content-Range";
+            public const string ServiceVersion = "x-ms-version";
         }
 
         internal static class ErrorCodes

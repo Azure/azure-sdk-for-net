@@ -45,7 +45,29 @@ namespace Azure.Storage.Test.Shared
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {
-            var options = new BlobClientOptions
+            var options = new BlobClientOptions()
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Storage.Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                },
+                Transport = GetTransport()
+            };
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording, parallelRange), HttpPipelinePosition.PerCall);
+            }
+
+            return Recording.InstrumentClientOptions(options);
+        }
+
+        public BlobClientOptions GetOptions(BlobClientOptions.ServiceVersion serviceVersion, bool parallelRange = false)
+        {
+            var options = new BlobClientOptions(serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
