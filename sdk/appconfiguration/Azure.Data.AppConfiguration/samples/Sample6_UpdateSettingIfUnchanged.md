@@ -22,7 +22,7 @@ private int ReleaseVMs(int vmsToRelease)
 
 When `SetConfigurationSetting` is called with `onlyIfUnchanged: true`, it adds optional `If-Match` header to the HTTP request. Response will have HTTP status code equals to either 200 if client setting ETag matched the service one and setting has been successfully updated or 412 otherwise. See App Configuration [REST API](https://github.com/Azure/AppConfiguration/blob/master/docs/REST/kv.md#set-key-conditionally) and [Azure API design](https://azure.github.io/azure-sdk/general_design.html#conditional-requests) for more information about conditional requests.
 
-To increase the amount of available VMs, we need to get current amount of VMs, add the number of released ones and send it back to the service. If `available_vms` setting has been modified since the last time our client retrieved it from the service, we need to catch `RequestFailedException` exception and re-apply our update logic before attempting to set it again on the service. This logic can be encapsulates into helper method that will return the amount of available VMs after the update.
+To increase the number of available VMs, we need to get current number of VMs, add the number of released ones and send this number back to the service. If the `available_vms` setting has been modified since the last time our client retrieved it from the service, we need to catch `RequestFailedException` exception and re-apply our update logic before attempting to set it again on the service. This logic can be encapsulates into a helper method that will return the number of available VMs after the update.
 
 ```C# Snippet:AzConfigSample6_UpdateAvailableVms
 private static int UpdateAvailableVms(ConfigurationClient client, int releasedVMs)
@@ -49,7 +49,7 @@ private static int UpdateAvailableVms(ConfigurationClient client, int releasedVM
 
 To interact with Azure App Configuration, you need to instantiate a `ConfigurationClient`. You can use either an endpoint URL and a [`TokenCredential`](../../../identity/Azure.Identity/README.md#credentials) or a connection string.
  
-For the sample below, you can set `connectionString` in environment variable, configuration setting, or any way that works for your application. The connection string is available from the App Configuration Access Keys view in the Azure Portal.
+For the sample below, you can set `connectionString` in an environment variable, a configuration setting, or any way that works for your application. The connection string is available from the App Configuration Access Keys view in the Azure Portal.
 
 ```C# Snippet:AzConfigSample6_CreateConfigurationClient
 var client = new ConfigurationClient(connectionString);
@@ -57,7 +57,7 @@ var client = new ConfigurationClient(connectionString);
 
 ## Set amount of available VMs before update.
 
-For the test purposes, we need to specify some initial value for the `available_vms`.
+For test purposes, we need to specify some initial value for the `available_vms`.
 
 ```C# Snippet:AzConfigSample6_SetInitialVMs
 client.SetConfigurationSetting("available_vms", "10");
