@@ -15,6 +15,9 @@
     <ProjectReference Include="..\..\..\identity\Azure.Identity\src\Azure.Identity.csproj" />
     <ProjectReference Include="..\src\Azure.Data.AppConfiguration.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="samples\" />
+  </ItemGroup>
 
   <Import Project="..\..\..\core\Azure.Core\tests\TestFramework.props" />
 </Project>

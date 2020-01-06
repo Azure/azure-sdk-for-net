@@ -13,44 +13,45 @@ namespace Azure.Data.AppConfiguration.Samples
     public partial class ConfigurationSamples
     {
         [Test]
-        /*
-         * This sample demonstrates how to read the revision history of a
-         * Configuration Settings in a Configuration Store. To do this, we
-         * create a setting, change it twice to create revisions, then read the
-         * revision history for that setting.
-         */
         public async Task ReadRevisionHistory()
         {
-            // Retrieve the connection string from the environment.
-            // The connection string is available from the App Configuration Access Keys view in the Azure Portal.
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
-            // Instantiate a client that will be used to call the service.
+            #region Snippet:AzConfigSample4_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);
+            #endregion
 
-            // Create the Configuration Settings to be stored in the Configuration Store.
-            ConfigurationSetting setting = new ConfigurationSetting($"setting_with_revisions-{DateTime.Now.ToString("s")}", "v1");
-            ConfigurationSetting settingV1 = await client.SetConfigurationSettingAsync(setting);
+            #region Snippet:AzConfigSample4_SetConfigurationSetting
+            ConfigurationSetting setting = new ConfigurationSetting($"setting_with_revisions-{DateTime.Now:s}", "v1");
+            await client.SetConfigurationSettingAsync(setting);
+            #endregion
 
-            // Create a first revision.
-            settingV1.Value = "v2";
-            ConfigurationSetting settingV2 = await client.SetConfigurationSettingAsync(settingV1);
+            #region Snippet:AzConfigSample4_AddRevisions
+            setting.Value = "v2";
+            await client.SetConfigurationSettingAsync(setting);
 
-            // Create a second revision.
-            settingV2.Value = "v3";
-            ConfigurationSetting settingV3 = await client.SetConfigurationSettingAsync(settingV2);
+            setting.Value = "v3";
+            await client.SetConfigurationSettingAsync(setting);
+            #endregion
 
-            // Retrieve revisions for the setting.
+            #region Snippet:AzConfigSample4_GetRevisions
             var selector = new SettingSelector { KeyFilter = setting.Key };
 
             Debug.WriteLine("Revisions of the setting: ");
             await foreach (ConfigurationSetting settingVersion in client.GetRevisionsAsync(selector))
             {
-                Debug.WriteLine($"Setting was {settingVersion} at {settingVersion.LastModified}.");
+                Console.WriteLine($"Setting was {settingVersion} at {settingVersion.LastModified}.");
             }
+            #endregion
 
-            // Delete the Configuration Settings from the Configuration Store.
+            #region Snippet:AzConfigSample4_GetRevisionsAfterDeletion
             await client.DeleteConfigurationSettingAsync(setting.Key, setting.Label);
+
+            await foreach (ConfigurationSetting settingVersion in client.GetRevisionsAsync(selector))
+            {
+                Console.WriteLine($"Setting was {settingVersion} at {settingVersion.LastModified}.");
+            }
+            #endregion
         }
     }
 }

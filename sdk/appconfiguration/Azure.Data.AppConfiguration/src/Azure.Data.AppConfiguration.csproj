@@ -5,6 +5,14 @@
     <AssemblyTitle>Microsoft Azure.Data.AppConfiguration client library</AssemblyTitle>
     <Version>1.0.0-preview.6</Version>
     <PackageTags>Microsoft Azure Application Configuration;$(PackageCommonTags)</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+      - Keys and Labels properties in SettingSelector are replaced with KeyFilter and LabelFilter to provide full filtering support.
+      - Fixed multiple issues with connection string parsing in ConfigurationClient.
+      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Data.AppConfiguration_1.0.0/sdk/appconfiguration/Azure.Data.AppConfiguration/CHANGELOG.md
+      ]]>
+    </PackageReleaseNotes>
+
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

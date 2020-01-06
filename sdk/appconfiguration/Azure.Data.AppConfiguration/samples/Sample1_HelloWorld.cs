@@ -9,37 +9,34 @@ using NUnit.Framework;
 namespace Azure.Data.AppConfiguration.Samples
 {
     [LiveOnly]
+    [NonParallelizable]
     public partial class ConfigurationSamples
     {
         [Test]
-        /*
-         * This sample ilustrates the simple scenario of adding a setting to a
-         * configuration store, retrieving it from the configuration store, and
-         * finally, deleting it from the configuration store.
-         */
         public void HelloWorld()
         {
-            // Retrieve the connection string from the environment.
-            // The connection string is available from the App Configuration Access Keys view in the Azure Portal.
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
-            // Instantiate a client that will be used to call the service.
+            #region Snippet:AzConfigSample1_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);
+            #endregion
 
-            // Create a Configuration Setting to be stored in the Configuration Store.
+            #region Snippet:AzConfigSample1_CreateConfigurationSetting
             var setting = new ConfigurationSetting("some_key", "some_value");
+            #endregion
 
-            // There are two ways to create a Configuration Setting:
-            //   - AddConfigurationSetting creates a setting only if the setting does not already exist in the store.
-            //   - SetConfigurationSetting creates a setting if it doesn't exist or overrides an existing setting with the same key and label.
+            #region Snippet:AzConfigSample1_SetConfigurationSetting
             client.SetConfigurationSetting(setting);
+            #endregion
 
-            // Retrieve a previously stored Configuration Setting by calling GetConfigurationSetting.
+            #region Snippet:AzConfigSample1_RetrieveConfigurationSetting
             ConfigurationSetting retrievedSetting = client.GetConfigurationSetting("some_key");
-            Debug.WriteLine($"The value of the configuration setting is: {retrievedSetting.Value}");
+            Console.WriteLine($"The value of the configuration setting is: {retrievedSetting.Value}");
+            #endregion
 
-            // Delete the Configuration Setting from the Configuration Store.
+            #region Snippet:AzConfigSample1_DeleteConfigurationSetting
             client.DeleteConfigurationSetting("some_key");
+            #endregion
         }
     }
 }
