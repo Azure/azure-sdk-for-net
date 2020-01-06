@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading;
+using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 
@@ -10,27 +11,51 @@ namespace Azure.Data.AppConfiguration.Samples
     public partial class ConfigurationSamples
     {
         [Test]
-        /*
-         * This sample illustrates how to use Moq to create a unit test that
-         * mocks the reponse from a ConfigurationClient method.  For more
-         * examples of mocking, see the Azure.Data.AppConfiguration.Tests project.
-         */
-        public void MockClient()
+        public async Task MockClient()
         {
-            // Create a mock response.
+            #region Snippet:AzConfigSample7_CreateMocks
             var mockResponse = new Mock<Response>();
-
-            // Create a mock client.
             var mockClient = new Mock<ConfigurationClient>();
+            #endregion
 
-            // Set up a client method that will be called when GetConfigurationSetting is called on the mock client.
-            mockClient.Setup(c => c.GetConfigurationSetting("Key", It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Returns(Response.FromValue(ConfigurationModelFactory.ConfigurationSetting("Key", "Value"), mockResponse.Object));
+            #region Snippet:AzConfigSample7_SetupMocks
 
-            // Use the mock client to validate client functionality without making a network call.
+            Response<ConfigurationSetting> response = Response.FromValue(ConfigurationModelFactory.ConfigurationSetting("available_vms", "10"), mockResponse.Object);
+            mockClient.Setup(c => c.GetConfigurationSettingAsync("available_vms", It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(response));
+            mockClient.Setup(c => c.SetConfigurationSettingAsync(It.IsAny<ConfigurationSetting>(), true, It.IsAny<CancellationToken>()))
+                .Returns((ConfigurationSetting cs, bool onlyIfUnchanged, CancellationToken ct) => Task.FromResult(Response.FromValue(cs, new Mock<Response>().Object)));
+            #endregion
+
+            #region Snippet:AzConfigSample7_UseMocks
             ConfigurationClient client = mockClient.Object;
-            ConfigurationSetting setting = client.GetConfigurationSetting("Key");
-            Assert.AreEqual("Value", setting.Value);
+            int availableVms = await UpdateAvailableVmsAsync(client, 2, default);
+            Assert.AreEqual(12, availableVms);
+            #endregion
         }
+
+        #region Snippet:AzConfigSample7_MethodToTest
+        private static async Task<int> UpdateAvailableVmsAsync(ConfigurationClient client, int releasedVMs, CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                ConfigurationSetting setting = await client.GetConfigurationSettingAsync("available_vms", cancellationToken: cancellationToken);
+                var availableVmsCount = int.Parse(setting.Value);
+                setting.Value = (availableVmsCount + releasedVMs).ToString();
+
+                try
+                {
+                    ConfigurationSetting updatedSetting = await client.SetConfigurationSettingAsync(setting, onlyIfUnchanged: true, cancellationToken);
+                    return int.Parse(updatedSetting.Value);
+                }
+                catch (RequestFailedException e) when (e.Status == 412)
+                {
+                }
+            }
+
+            cancellationToken.ThrowIfCancellationRequested();
+            return 0;
+        }
+        #endregion
     }
 }

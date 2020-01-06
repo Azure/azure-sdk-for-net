@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using Azure.Core.Testing;
 using NUnit.Framework;
 
@@ -12,73 +11,59 @@ namespace Azure.Data.AppConfiguration.Samples
     public partial class ConfigurationSamples
     {
         [Test]
-        /*
-         * This sample ilustrates how to update a setting in the configuration
-         * store only when the store holds same version it did when you last
-         * retrieved it from the configuration store, as determined by whether
-         * the client and service setting ETags match.  This ensures our client
-         * will not overwrite updates applied to the setting from other sources.
-         */
         public void UpdateSettingIfUnchanged()
         {
-            // Retrieve the connection string from the environment.
-            // The connection string is available from the App Configuration Access Keys view in the Azure Portal.
             var connectionString = Environment.GetEnvironmentVariable("APPCONFIGURATION_CONNECTION_STRING");
 
-            // Instantiate a client that will be used to call the service.
+            #region Snippet:AzConfigSample6_CreateConfigurationClient
             var client = new ConfigurationClient(connectionString);
+            #endregion
 
-            // Create a Configuration Setting for this sample.
-            ConfigurationSetting setting = new ConfigurationSetting("available_vms", "10");
+            #region Snippet:AzConfigSample6_SetInitialVMs
+            client.SetConfigurationSetting("available_vms", "10");
+            #endregion
 
-            // Add the setting to the Configuration Store.
-            setting = client.SetConfigurationSetting(setting);
-
-            // Here we invoke code that releases VMs from our application's pool of resources.
-            // After this completes, we will update the total number of available VMs
+            #region Snippet:AzConfigSample6_CallReleaseVMs
             int releasedVMs = ReleaseVMs(vmsToRelease: 2);
+            #endregion
 
-            // Modify the setting before updating it in the Configuration Store.
-            int availableVMCount = int.Parse(setting.Value);
-            setting.Value = (availableVMCount + releasedVMs).ToString();
+            #region Snippet:AzConfigSample6_CallUpdateAvailableVms
+            var availableVms = UpdateAvailableVms(client, releasedVMs);
+            Console.WriteLine($"Available VMs after update: {availableVms}");
+            #endregion
 
-            // Update the value only if it hasn't been updated by another client,
-            // so that updates from other sources don't get overwritten.
-            ConfigurationSetting updatedSetting = null;
-            bool hasChanged;
-            do
+            #region Snippet:AzConfigSample6_DeleteConfigurationSetting
+            client.DeleteConfigurationSetting("available_vms");
+            #endregion
+        }
+
+        #region Snippet:AzConfigSample6_UpdateAvailableVms
+        private static int UpdateAvailableVms(ConfigurationClient client, int releasedVMs)
+        {
+            while (true)
             {
+                ConfigurationSetting setting = client.GetConfigurationSetting("available_vms");
+                var availableVmsCount = int.Parse(setting.Value);
+                setting.Value = (availableVmsCount + releasedVMs).ToString();
+
                 try
                 {
-                    updatedSetting = client.SetConfigurationSetting(setting, onlyIfUnchanged: true);
-                    hasChanged = false;
+                    ConfigurationSetting updatedSetting = client.SetConfigurationSetting(setting, onlyIfUnchanged: true);
+                    return int.Parse(updatedSetting.Value);
                 }
                 catch (RequestFailedException e) when (e.Status == 412)
                 {
-                    hasChanged = true;
-
-                    // The setting has been modified since the last time our client retrieved it from the service.
-                    // Get the latest value and re-apply our update logic before attempting to set it again on the service.
-                    setting = client.GetConfigurationSetting(setting);
-
-                    availableVMCount = int.Parse(setting.Value);
-                    setting.Value = (availableVMCount + releasedVMs).ToString();
                 }
             }
-            while (hasChanged);
-
-            Debug.WriteLine($"Setting after update was applied: {updatedSetting}");
-
-            // Delete the Configuration Setting from the Configuration Store.
-            client.DeleteConfigurationSetting("available_vms");
         }
+        #endregion
 
+        #region Snippet:AzConfigSample6_ReleaseVMs
         private int ReleaseVMs(int vmsToRelease)
         {
-            // Code to release a VM and give it back to our application's shared pool.
-
-            // In a real system, we would count how many VMs were successfully released and return that number.
+            // TODO
             return vmsToRelease;
         }
+        #endregion
     }
 }
