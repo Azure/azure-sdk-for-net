@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// Initializes a new instance of the AppSkuInfo class.
         /// </summary>
         /// <param name="name">The name of the SKU. Possible values include:
-        /// 'F1', 'S1'</param>
+        /// 'F1', 'S1', 'ST0', 'ST1', 'ST2'</param>
         public AppSkuInfo(string name)
         {
             Name = name;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.IotCentral.Models
 
         /// <summary>
         /// Gets or sets the name of the SKU. Possible values include: 'F1',
-        /// 'S1'
+        /// 'S1', 'ST0', 'ST1', 'ST2'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
