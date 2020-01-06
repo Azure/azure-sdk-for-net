@@ -32,7 +32,7 @@ private static async Task<int> UpdateAvailableVmsAsync(ConfigurationClient clien
 
 ## Create and setup mocks
 
-For this test, create a mock for the `ConfigurationClient` and `Response`
+For this test, create a mock for the `ConfigurationClient` and `Response`.
 
 ```C# Snippet:AzConfigSample7_CreateMocks
 var mockResponse = new Mock<Response>();
