@@ -73,7 +73,7 @@ namespace Azure.Storage.Test.Shared
         [SetUp]
         public void SetupEventsForTest()
         {
-            TestContext.Progress.WriteLine($"Mode: {(IsAsync ? "Async" : "Sync")}");
+            TestContext.Out.WriteLine($"Mode: {(IsAsync ? "Async" : "Sync")}");
             s_listener?.SetupEventsForTest();
         }
 
