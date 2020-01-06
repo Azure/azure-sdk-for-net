@@ -241,6 +241,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(readOptions, Is.Not.Null, "The constructor should have set the processing read event options.");
             Assert.That(readOptions.TrackLastEnqueuedEventProperties, Is.EqualTo(options.TrackLastEnqueuedEventProperties), "The tracking of last event information of the processing read event options should match.");
             Assert.That(readOptions.MaximumWaitTime, Is.EqualTo(options.MaximumWaitTime), "The constructor should have set the correct maximum wait time.");
+            Assert.That(readOptions.OwnerLevel, Is.EqualTo(0), "The constructor should have set the owner level as 0.");
         }
 
         /// <summary>
