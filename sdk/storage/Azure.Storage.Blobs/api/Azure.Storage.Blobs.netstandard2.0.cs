@@ -432,6 +432,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredQueryParameter { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode MissingRequiredXmlNode { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode MultipleConditionHeadersNotSupported { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoAuthenticationInformation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode OperationNotAllowedOnIncrementalCopyBlob { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode OperationTimedOut { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
