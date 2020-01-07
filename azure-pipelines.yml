@@ -13,9 +13,5 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '3.1.x'
 - script: dotnet build samples/linecounter/LineCounter.csproj --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
