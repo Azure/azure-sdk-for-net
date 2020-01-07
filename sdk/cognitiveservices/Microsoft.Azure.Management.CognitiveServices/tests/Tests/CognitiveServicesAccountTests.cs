@@ -596,6 +596,25 @@ namespace CognitiveServices.Tests
         }
 
         [Fact]
+        public void CognitiveServicesCheckDomainAvailabilityTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = CognitiveServicesManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var cognitiveServicesMgmtClient = CognitiveServicesManagementTestUtilities.GetCognitiveServicesManagementClient(context, handler);
+
+                var domainAvailability = cognitiveServicesMgmtClient.CheckDomainAvailability(
+                    subdomainName: "atestsubdomain",
+                    type: $"{c_resourceNamespace}/{c_resourceType}");
+
+                Assert.NotNull(domainAvailability);
+                Assert.NotNull(domainAvailability.SubdomainName);
+            }
+        }
+
+        [Fact]
         public void CognitiveServicesResourceSkusListTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
