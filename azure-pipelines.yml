@@ -17,5 +17,5 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '3.1.x'
-- script: dotnet build --configuration $(buildConfiguration)
+- script: dotnet build ../../samples/linecounter/LineCounter.csproj --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
