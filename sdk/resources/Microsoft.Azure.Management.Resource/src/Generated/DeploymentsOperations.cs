@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// the Location header returns an error-level status code.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Checks whether the deployment exists.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// to JSON files.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets a deployment.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// template deployment and leaves the resources partially deployed.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -701,7 +701,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// be accepted by Azure Resource Manager..
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -944,7 +944,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Exports the template used for specified deployment.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -1150,7 +1150,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Get all the deployments at the given scope.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -6849,7 +6849,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// the Location header returns an error-level status code.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -7038,7 +7038,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// to JSON files.
         /// </remarks>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
