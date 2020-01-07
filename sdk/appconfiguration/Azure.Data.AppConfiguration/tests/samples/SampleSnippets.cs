@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
@@ -23,6 +24,17 @@ namespace Azure.Data.AppConfiguration.Samples
             //@@ string connectionString = "<connection_string>";
             var client = new ConfigurationClient(connectionString);
             #endregion Snippet:CreateConfigurationClient
+        }
+
+        [Test]
+        public void CreateClientTokenCredential()
+        {
+            var endpoint = Environment.GetEnvironmentVariable("APPCONFIGURATION_ENDPOINT_STRING");
+
+            #region Snippet:CreateConfigurationClientTokenCredential
+            //@@ string endpoint = "<endpoint>";
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
         }
 
         [Test]
