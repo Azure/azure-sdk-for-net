@@ -6,6 +6,7 @@ resources:
     - repository: azure-sdk-tools
       type: github
       name: Azure/azure-sdk-tools
+      ref: refs/pull/311/merge
       endpoint: azure
     - repository: azure-sdk-build-tools
       type: git
