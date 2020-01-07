@@ -13,28 +13,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Name of a metric for any resource .
-    /// </summary>
-    public partial class ResourceMetricName
+    public partial class ContainerThrottlingData
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceMetricName class.
+        /// Initializes a new instance of the ContainerThrottlingData class.
         /// </summary>
-        public ResourceMetricName()
+        public ContainerThrottlingData()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceMetricName class.
+        /// Initializes a new instance of the ContainerThrottlingData class.
         /// </summary>
-        /// <param name="value">metric name value.</param>
-        /// <param name="localizedValue">Localized metric name value.</param>
-        public ResourceMetricName(string value = default(string), string localizedValue = default(string))
+        public ContainerThrottlingData(int? periods = default(int?), int? throttledPeriods = default(int?), int? throttledTime = default(int?))
         {
-            Value = value;
-            LocalizedValue = localizedValue;
+            Periods = periods;
+            ThrottledPeriods = throttledPeriods;
+            ThrottledTime = throttledTime;
             CustomInit();
         }
 
@@ -44,16 +40,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets metric name value.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; private set; }
+        [JsonProperty(PropertyName = "periods")]
+        public int? Periods { get; set; }
 
         /// <summary>
-        /// Gets localized metric name value.
         /// </summary>
-        [JsonProperty(PropertyName = "localizedValue")]
-        public string LocalizedValue { get; private set; }
+        [JsonProperty(PropertyName = "throttledPeriods")]
+        public int? ThrottledPeriods { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "throttledTime")]
+        public int? ThrottledTime { get; set; }
 
     }
 }

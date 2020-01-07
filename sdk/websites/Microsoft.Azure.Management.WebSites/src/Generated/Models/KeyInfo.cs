@@ -14,28 +14,27 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Metric availability and retention.
+    /// Function key info.
     /// </summary>
-    public partial class MetricAvailabilily
+    public partial class KeyInfo
     {
         /// <summary>
-        /// Initializes a new instance of the MetricAvailabilily class.
+        /// Initializes a new instance of the KeyInfo class.
         /// </summary>
-        public MetricAvailabilily()
+        public KeyInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MetricAvailabilily class.
+        /// Initializes a new instance of the KeyInfo class.
         /// </summary>
-        /// <param name="timeGrain">Time grain.</param>
-        /// <param name="retention">Retention period for the current time
-        /// grain.</param>
-        public MetricAvailabilily(string timeGrain = default(string), string retention = default(string))
+        /// <param name="name">Key name</param>
+        /// <param name="value">Key value</param>
+        public KeyInfo(string name = default(string), string value = default(string))
         {
-            TimeGrain = timeGrain;
-            Retention = retention;
+            Name = name;
+            Value = value;
             CustomInit();
         }
 
@@ -45,16 +44,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets time grain.
+        /// Gets or sets key name
         /// </summary>
-        [JsonProperty(PropertyName = "timeGrain")]
-        public string TimeGrain { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets retention period for the current time grain.
+        /// Gets or sets key value
         /// </summary>
-        [JsonProperty(PropertyName = "retention")]
-        public string Retention { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
     }
 }

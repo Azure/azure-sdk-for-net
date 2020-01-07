@@ -55,6 +55,11 @@ namespace Microsoft.Azure.Management.WebSites
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// API Version
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -398,6 +403,7 @@ namespace Microsoft.Azure.Management.WebSites
             AppServicePlans = new AppServicePlansOperations(this);
             ResourceHealthMetadata = new ResourceHealthMetadataOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2019-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -435,7 +441,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets publishing user
         /// </summary>
         /// <remarks>
-        /// Gets publishing user
+        /// Description for Gets publishing user
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -449,12 +455,21 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<AzureOperationResponse<User>> GetPublishingUserWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -462,7 +477,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetPublishingUser", tracingParameters);
             }
@@ -470,9 +484,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Web/publishingUsers/web").ToString();
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -598,7 +612,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Updates publishing user
         /// </summary>
         /// <remarks>
-        /// Updates publishing user
+        /// Description for Updates publishing user
         /// </remarks>
         /// <param name='userDetails'>
         /// Details of publishing user
@@ -634,7 +648,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 userDetails.Validate();
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -643,7 +660,6 @@ namespace Microsoft.Azure.Management.WebSites
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("userDetails", userDetails);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdatePublishingUser", tracingParameters);
             }
@@ -651,9 +667,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Web/publishingUsers/web").ToString();
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -785,7 +801,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the source controls available for Azure websites.
         /// </summary>
         /// <remarks>
-        /// Gets the source controls available for Azure websites.
+        /// Description for Gets the source controls available for Azure websites.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -799,12 +815,21 @@ namespace Microsoft.Azure.Management.WebSites
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
         public async Task<AzureOperationResponse<IPage<SourceControl>>> ListSourceControlsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -812,7 +837,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSourceControls", tracingParameters);
             }
@@ -820,9 +844,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Web/sourcecontrols").ToString();
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -948,7 +972,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets source control token
         /// </summary>
         /// <remarks>
-        /// Gets source control token
+        /// Description for Gets source control token
         /// </remarks>
         /// <param name='sourceControlType'>
         /// Type of source control
@@ -980,7 +1004,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "sourceControlType");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -989,7 +1016,6 @@ namespace Microsoft.Azure.Management.WebSites
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("sourceControlType", sourceControlType);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSourceControl", tracingParameters);
             }
@@ -998,9 +1024,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Web/sourcecontrols/{sourceControlType}").ToString();
             _url = _url.Replace("{sourceControlType}", System.Uri.EscapeDataString(sourceControlType));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1126,7 +1152,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Updates source control token
         /// </summary>
         /// <remarks>
-        /// Updates source control token
+        /// Description for Updates source control token
         /// </remarks>
         /// <param name='sourceControlType'>
         /// Type of source control
@@ -1165,7 +1191,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "requestMessage");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1175,7 +1204,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("sourceControlType", sourceControlType);
                 tracingParameters.Add("requestMessage", requestMessage);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSourceControl", tracingParameters);
             }
@@ -1184,9 +1212,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Web/sourcecontrols/{sourceControlType}").ToString();
             _url = _url.Replace("{sourceControlType}", System.Uri.EscapeDataString(sourceControlType));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1318,7 +1346,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets a list of meters for a given location.
         /// </summary>
         /// <remarks>
-        /// Gets a list of meters for a given location.
+        /// Description for Gets a list of meters for a given location.
         /// </remarks>
         /// <param name='billingLocation'>
         /// Azure Location of billable resource
@@ -1353,7 +1381,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1363,7 +1394,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingLocation", billingLocation);
                 tracingParameters.Add("osType", osType);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListBillingMeters", tracingParameters);
             }
@@ -1380,9 +1410,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("osType={0}", System.Uri.EscapeDataString(osType)));
             }
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1508,7 +1538,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Check if a resource name is available.
         /// </summary>
         /// <remarks>
-        /// Check if a resource name is available.
+        /// Description for Check if a resource name is available.
         /// </remarks>
         /// <param name='name'>
         /// Resource name to verify.
@@ -1549,6 +1579,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -1557,7 +1591,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "type");
             }
-            string apiVersion = "2018-02-01";
             ResourceNameAvailabilityRequest request = new ResourceNameAvailabilityRequest();
             if (name != null || type != null || isFqdn != null)
             {
@@ -1572,7 +1605,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("request", request);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
@@ -1582,9 +1614,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1716,7 +1748,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets list of available geo regions plus ministamps
         /// </summary>
         /// <remarks>
-        /// Gets list of available geo regions plus ministamps
+        /// Description for Gets list of available geo regions plus ministamps
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1745,7 +1777,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1753,7 +1788,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSubscriptionDeploymentLocations", tracingParameters);
             }
@@ -1762,9 +1796,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/deploymentLocations").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1890,7 +1924,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a list of available geographical regions.
         /// </summary>
         /// <remarks>
-        /// Get a list of available geographical regions.
+        /// Description for Get a list of available geographical regions.
         /// </remarks>
         /// <param name='sku'>
         /// Name of SKU used to filter the regions. Possible values include: 'Free',
@@ -1936,7 +1970,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1948,7 +1985,6 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("linuxWorkersEnabled", linuxWorkersEnabled);
                 tracingParameters.Add("xenonWorkersEnabled", xenonWorkersEnabled);
                 tracingParameters.Add("linuxDynamicWorkersEnabled", linuxDynamicWorkersEnabled);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListGeoRegions", tracingParameters);
             }
@@ -1973,9 +2009,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _queryParameters.Add(string.Format("linuxDynamicWorkersEnabled={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(linuxDynamicWorkersEnabled, SerializationSettings).Trim('"'))));
             }
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2101,7 +2137,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all apps that are assigned to a hostname.
         /// </summary>
         /// <remarks>
-        /// List all apps that are assigned to a hostname.
+        /// Description for List all apps that are assigned to a hostname.
         /// </remarks>
         /// <param name='nameIdentifier'>
         /// Hostname information.
@@ -2137,7 +2173,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2146,7 +2185,6 @@ namespace Microsoft.Azure.Management.WebSites
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nameIdentifier", nameIdentifier);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSiteIdentifiersAssignedToHostName", tracingParameters);
             }
@@ -2155,9 +2193,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2289,7 +2327,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all premier add-on offers.
         /// </summary>
         /// <remarks>
-        /// List all premier add-on offers.
+        /// Description for List all premier add-on offers.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2318,7 +2356,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2326,7 +2367,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListPremierAddOnOffers", tracingParameters);
             }
@@ -2335,9 +2375,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2463,7 +2503,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all SKUs.
         /// </summary>
         /// <remarks>
-        /// List all SKUs.
+        /// Description for List all SKUs.
         /// </remarks>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2492,7 +2532,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2500,7 +2543,6 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListSkus", tracingParameters);
             }
@@ -2509,9 +2551,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/skus").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2638,8 +2680,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// analyzing the Network Security Group rules.
         /// </summary>
         /// <remarks>
-        /// Verifies if this VNET is compatible with an App Service Environment by
-        /// analyzing the Network Security Group rules.
+        /// Description for Verifies if this VNET is compatible with an App Service
+        /// Environment by analyzing the Network Security Group rules.
         /// </remarks>
         /// <param name='parameters'>
         /// VNET information
@@ -2675,7 +2717,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2684,7 +2729,6 @@ namespace Microsoft.Azure.Management.WebSites
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "VerifyHostingEnvironmentVnet", tracingParameters);
             }
@@ -2693,9 +2737,9 @@ namespace Microsoft.Azure.Management.WebSites
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Web/verifyHostingEnvironmentVnet").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2827,7 +2871,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Move resources between resource groups.
         /// </summary>
         /// <remarks>
-        /// Move resources between resource groups.
+        /// Description for Move resources between resource groups.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -2841,7 +2885,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2886,7 +2930,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2896,7 +2943,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("moveResourceEnvelope", moveResourceEnvelope);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Move", tracingParameters);
             }
@@ -2906,9 +2952,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2976,14 +3022,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -2993,10 +3038,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -3027,7 +3068,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Validate if a resource can be created.
         /// </summary>
         /// <remarks>
-        /// Validate if a resource can be created.
+        /// Description for Validate if a resource can be created.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -3089,7 +3130,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3099,7 +3143,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("validateRequest", validateRequest);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Validate", tracingParameters);
             }
@@ -3109,9 +3152,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3240,221 +3283,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Validate if the container settings are correct.
-        /// </summary>
-        /// <remarks>
-        /// Validate if the container settings are correct.
-        /// </remarks>
-        /// <param name='validateContainerSettingsRequest'>
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group to which the resource belongs.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="DefaultErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<AzureOperationResponse<object>> ValidateContainerSettingsWithHttpMessagesAsync(ValidateContainerSettingsRequest validateContainerSettingsRequest, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (validateContainerSettingsRequest == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "validateContainerSettingsRequest");
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+[^\\.]$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+[^\\.]$");
-                }
-            }
-            if (SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
-            }
-            string apiVersion = "2018-02-01";
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("validateContainerSettingsRequest", validateContainerSettingsRequest);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ValidateContainerSettings", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/validateContainerSettings").ToString();
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
-            }
-            if (AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
-            }
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(validateContainerSettingsRequest != null)
-            {
-                _requestContent = SafeJsonConvert.SerializeObject(validateContainerSettingsRequest, SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    DefaultErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
         /// Validate whether a resource can be moved.
         /// </summary>
         /// <remarks>
-        /// Validate whether a resource can be moved.
+        /// Description for Validate whether a resource can be moved.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -3468,7 +3300,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="DefaultErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -3513,7 +3345,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-02-01";
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3523,7 +3358,6 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("moveResourceEnvelope", moveResourceEnvelope);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ValidateMove", tracingParameters);
             }
@@ -3533,9 +3367,9 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3603,14 +3437,13 @@ namespace Microsoft.Azure.Management.WebSites
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, DeserializationSettings);
+                    DefaultErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<DefaultErrorResponse>(_responseContent, DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -3620,10 +3453,6 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -3654,7 +3483,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets the source controls available for Azure websites.
         /// </summary>
         /// <remarks>
-        /// Gets the source controls available for Azure websites.
+        /// Description for Gets the source controls available for Azure websites.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -3825,7 +3654,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Gets a list of meters for a given location.
         /// </summary>
         /// <remarks>
-        /// Gets a list of meters for a given location.
+        /// Description for Gets a list of meters for a given location.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -3996,7 +3825,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Get a list of available geographical regions.
         /// </summary>
         /// <remarks>
-        /// Get a list of available geographical regions.
+        /// Description for Get a list of available geographical regions.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -4167,7 +3996,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all apps that are assigned to a hostname.
         /// </summary>
         /// <remarks>
-        /// List all apps that are assigned to a hostname.
+        /// Description for List all apps that are assigned to a hostname.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -4338,7 +4167,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// List all premier add-on offers.
         /// </summary>
         /// <remarks>
-        /// List all premier add-on offers.
+        /// Description for List all premier add-on offers.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
