@@ -122,12 +122,17 @@ namespace Microsoft.Azure.EventHubs.Processor
             // else
             //	lease store already exists, no work needed
 
+            var partitionIds = await this.GetPartitionIdsAsync().ConfigureAwait(false);
+
             // Now make sure the leases exist
-            foreach (string id in await this.GetPartitionIdsAsync().ConfigureAwait(false))
+            var createLeaseTasks = new List<Task>();
+            foreach (string id in partitionIds)
             {
-                await RetryAsync(() => leaseManager.CreateLeaseIfNotExistsAsync(id), id, $"Failure creating lease for partition {id}, retrying",
-                        $"Out of retries creating lease for partition {id}", EventProcessorHostActionStrings.CreatingLease, 5).ConfigureAwait(false);
+                createLeaseTasks.Add(RetryAsync(() => leaseManager.CreateLeaseIfNotExistsAsync(id), id, $"Failure creating lease for partition {id}, retrying",
+                        $"Out of retries creating lease for partition {id}", EventProcessorHostActionStrings.CreatingLease, 5));
             }
+
+            await Task.WhenAll(createLeaseTasks).ConfigureAwait(false);
 
             // Make sure the checkpoint store exists
             ICheckpointManager checkpointManager = this.host.CheckpointManager;
@@ -140,11 +145,14 @@ namespace Microsoft.Azure.EventHubs.Processor
             //	checkpoint store already exists, no work needed
 
             // Now make sure the checkpoints exist
-            foreach (string id in await this.GetPartitionIdsAsync().ConfigureAwait(false))
+            var createCheckpointTasks = new List<Task>();
+            foreach (string id in partitionIds)
             {
-                await RetryAsync(() => checkpointManager.CreateCheckpointIfNotExistsAsync(id), id, $"Failure creating checkpoint for partition {id}, retrying",
-                        $"Out of retries creating checkpoint for partition {id}", EventProcessorHostActionStrings.CreatingCheckpoint, 5).ConfigureAwait(false);
+                createCheckpointTasks.Add(RetryAsync(() => checkpointManager.CreateCheckpointIfNotExistsAsync(id), id, $"Failure creating checkpoint for partition {id}, retrying",
+                        $"Out of retries creating checkpoint for partition {id}", EventProcessorHostActionStrings.CreatingCheckpoint, 5));
             }
+
+            await Task.WhenAll(createCheckpointTasks).ConfigureAwait(false);
         }
 
         // Throws if it runs out of retries. If it returns, action succeeded.
@@ -170,6 +178,8 @@ namespace Microsoft.Azure.EventHubs.Processor
                     {
                         ProcessorEventSource.Log.EventProcessorHostWarning(this.host.HostName, retryMessage, ex.ToString());
                     }
+
+                    this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, partitionId, ex, action);
 
                     finalException = ex;
                     retryCount++;
@@ -216,7 +226,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                 { 
                     try
                     {
-                        downloadedLeases = await leaseManager.GetAllLeasesAsync();
+                        downloadedLeases = await leaseManager.GetAllLeasesAsync().ConfigureAwait(false);
                     }
                     catch (Exception e)
                     {
@@ -224,7 +234,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                         this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.DownloadingLeases);
 
                         // Avoid tight spin if getallleases call keeps failing.
-                        await Task.Delay(1000);
+                        await Task.Delay(1000).ConfigureAwait(false);
 
                         continue;
                     }
@@ -487,7 +497,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         async Task CreateNewPumpAsync(string partitionId)
         {
             // Refresh lease content and do last minute check to reduce partition moves.
-            var refreshedLease = await this.host.LeaseManager.GetLeaseAsync(partitionId);
+            var refreshedLease = await this.host.LeaseManager.GetLeaseAsync(partitionId).ConfigureAwait(false);
             if (refreshedLease.Owner != this.host.HostName || await refreshedLease.IsExpired().ConfigureAwait(false))
             {
                 // Partition moved to some other node after lease acquisition.
