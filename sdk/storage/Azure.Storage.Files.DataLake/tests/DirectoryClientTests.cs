@@ -514,7 +514,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-
         [Test]
         public async Task GetAccessControlAsync_FileSystemSAS()
         {

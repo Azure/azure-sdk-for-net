@@ -162,6 +162,24 @@ directive:
     $.patch.responses["200"]["x-az-public"] = false;
 ```
 
+### /{filesystem}/?action=getAccessControl"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/?action=getAccessControl"]
+  transform: >
+    $.head.responses["200"]["x-az-public"] = false;
+```
+
+### /{filesystem}/?action=setAccessControl"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/?action=setAccessControl"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+```
+
 ### /{filesystem}?resource=filesystem
 ``` yaml
 directive:

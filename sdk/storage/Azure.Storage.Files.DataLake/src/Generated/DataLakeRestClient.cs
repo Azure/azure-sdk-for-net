@@ -1050,6 +1050,484 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
             #endregion FileSystem.ListPathsAsync
+
+            #region FileSystem.SetAccessControlAsync
+            /// <summary>
+            /// Set the owner, group, permissions, or access control list for a file system.
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="owner">Optional. The owner of the blob or directory.</param>
+            /// <param name="group">Optional. The owning group of the blob or directory.</param>
+            /// <param name="permissions">Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported.</param>
+            /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemSetAccessControlResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemSetAccessControlResult>> SetAccessControlAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string leaseId = default,
+                string owner = default,
+                string group = default,
+                string permissions = default,
+                string acl = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default,
+                string requestId = default,
+                bool async = true,
+                string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.SetAccessControl",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = SetAccessControlAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        timeout,
+                        leaseId,
+                        owner,
+                        group,
+                        permissions,
+                        acl,
+                        ifMatch,
+                        ifNoneMatch,
+                        ifModifiedSince,
+                        ifUnmodifiedSince,
+                        requestId))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return SetAccessControlAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the FileSystem.SetAccessControlAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="owner">Optional. The owner of the blob or directory.</param>
+            /// <param name="group">Optional. The owning group of the blob or directory.</param>
+            /// <param name="permissions">Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access permissions for the file owner, the file owning group, and others. Each class may be granted read, write, or execute permission.  The sticky bit is also supported.  Both symbolic (rwxrw-rw-) and 4-digit octal notation (e.g. 0766) are supported.</param>
+            /// <param name="acl">Sets POSIX access control rights on files and directories. The value is a comma-separated list of access control entries. Each access control entry (ACE) consists of a scope, a type, a user or group identifier, and permissions in the format "[scope:][type]:[id]:[permissions]".</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <returns>The FileSystem.SetAccessControlAsync Message.</returns>
+            internal static Azure.Core.HttpMessage SetAccessControlAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                int? timeout = default,
+                string leaseId = default,
+                string owner = default,
+                string group = default,
+                string permissions = default,
+                string acl = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default,
+                string requestId = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Patch;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("action", "setAccessControl", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (owner != null) { _request.Headers.SetValue("x-ms-owner", owner); }
+                if (group != null) { _request.Headers.SetValue("x-ms-group", group); }
+                if (permissions != null) { _request.Headers.SetValue("x-ms-permissions", permissions); }
+                if (acl != null) { _request.Headers.SetValue("x-ms-acl", acl); }
+                if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
+                if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the FileSystem.SetAccessControlAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The FileSystem.SetAccessControlAsync Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemSetAccessControlResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemSetAccessControlResult> SetAccessControlAsync_CreateResponse(
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.DataLake.Models.FileSystemSetAccessControlResult _value = new Azure.Storage.Files.DataLake.Models.FileSystemSetAccessControlResult();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-client-request-id", out _header))
+                        {
+                            _value.ClientRequestId = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        throw _value.CreateException(response);
+                    }
+                }
+            }
+            #endregion FileSystem.SetAccessControlAsync
+
+            #region FileSystem.GetAccessControlAsync
+            /// <summary>
+            /// Get Access Control List returns the access control list for a file system. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations).
+            /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance used for operation reporting.</param>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="upn">Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
+            /// <param name="operationName">Operation name.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemGetAccessControlResult}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemGetAccessControlResult>> GetAccessControlAsync(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                string requestId = default,
+                int? timeout = default,
+                bool? upn = default,
+                string leaseId = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default,
+                bool async = true,
+                string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.GetAccessControl",
+                System.Threading.CancellationToken cancellationToken = default)
+            {
+                Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
+                try
+                {
+                    _scope.AddAttribute("url", resourceUri);
+                    _scope.Start();
+                    using (Azure.Core.HttpMessage _message = GetAccessControlAsync_CreateMessage(
+                        pipeline,
+                        resourceUri,
+                        version,
+                        requestId,
+                        timeout,
+                        upn,
+                        leaseId,
+                        ifMatch,
+                        ifNoneMatch,
+                        ifModifiedSince,
+                        ifUnmodifiedSince))
+                    {
+                        if (async)
+                        {
+                            // Send the request asynchronously if we're being called via an async path
+                            await pipeline.SendAsync(_message, cancellationToken).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            // Send the request synchronously through the API that blocks if we're being called via a sync path
+                            // (this is safe because the Task will complete before the user can call Wait)
+                            pipeline.Send(_message, cancellationToken);
+                        }
+                        Azure.Response _response = _message.Response;
+                        cancellationToken.ThrowIfCancellationRequested();
+                        return GetAccessControlAsync_CreateResponse(_response);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    _scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    _scope.Dispose();
+                }
+            }
+
+            /// <summary>
+            /// Create the FileSystem.GetAccessControlAsync request.
+            /// </summary>
+            /// <param name="pipeline">The pipeline used for sending requests.</param>
+            /// <param name="resourceUri">The URL of the service account, container, or blob that is the targe of the desired operation.</param>
+            /// <param name="version">Specifies the version of the operation to use for this request.</param>
+            /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
+            /// <param name="upn">Optional. Valid only when Hierarchical Namespace is enabled for the account. If "true", the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response headers will be transformed from Azure Active Directory Object IDs to User Principal Names.  If "false", the values will be returned as Azure Active Directory Object IDs. The default value is false. Note that group and application Object IDs are not translated because they do not have unique friendly names.</param>
+            /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
+            /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
+            /// <param name="ifNoneMatch">Specify an ETag value to operate only on blobs without a matching value.</param>
+            /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
+            /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
+            /// <returns>The FileSystem.GetAccessControlAsync Message.</returns>
+            internal static Azure.Core.HttpMessage GetAccessControlAsync_CreateMessage(
+                Azure.Core.Pipeline.HttpPipeline pipeline,
+                System.Uri resourceUri,
+                string version,
+                string requestId = default,
+                int? timeout = default,
+                bool? upn = default,
+                string leaseId = default,
+                Azure.ETag? ifMatch = default,
+                Azure.ETag? ifNoneMatch = default,
+                System.DateTimeOffset? ifModifiedSince = default,
+                System.DateTimeOffset? ifUnmodifiedSince = default)
+            {
+                // Validation
+                if (resourceUri == null)
+                {
+                    throw new System.ArgumentNullException(nameof(resourceUri));
+                }
+                if (version == null)
+                {
+                    throw new System.ArgumentNullException(nameof(version));
+                }
+
+                // Create the request
+                Azure.Core.HttpMessage _message = pipeline.CreateMessage();
+                Azure.Core.Request _request = _message.Request;
+
+                // Set the endpoint
+                _request.Method = Azure.Core.RequestMethod.Head;
+                _request.Uri.Reset(resourceUri);
+                _request.Uri.AppendQuery("action", "getAccessControl", escapeValue: false);
+                if (timeout != null) { _request.Uri.AppendQuery("timeout", timeout.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+                if (upn != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Uri.AppendQuery("upn", upn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
+
+                // Add request headers
+                _request.Headers.SetValue("x-ms-version", version);
+                if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
+                if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
+                if (ifNoneMatch != null) { _request.Headers.SetValue("If-None-Match", ifNoneMatch.Value.ToString()); }
+                if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+                if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
+
+                return _message;
+            }
+
+            /// <summary>
+            /// Create the FileSystem.GetAccessControlAsync response or throw a failure exception.
+            /// </summary>
+            /// <param name="response">The raw Response.</param>
+            /// <returns>The FileSystem.GetAccessControlAsync Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemGetAccessControlResult}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemGetAccessControlResult> GetAccessControlAsync_CreateResponse(
+                Azure.Response response)
+            {
+                // Process the response
+                switch (response.Status)
+                {
+                    case 200:
+                    {
+                        // Create the result
+                        Azure.Storage.Files.DataLake.Models.FileSystemGetAccessControlResult _value = new Azure.Storage.Files.DataLake.Models.FileSystemGetAccessControlResult();
+
+                        // Get response headers
+                        string _header;
+                        if (response.Headers.TryGetValue("Accept-Ranges", out _header))
+                        {
+                            _value.AcceptRanges = _header;
+                        }
+                        if (response.Headers.TryGetValue("Cache-Control", out _header))
+                        {
+                            _value.CacheControl = _header;
+                        }
+                        if (response.Headers.TryGetValue("Content-Disposition", out _header))
+                        {
+                            _value.ContentDisposition = _header;
+                        }
+                        if (response.Headers.TryGetValue("Content-Encoding", out _header))
+                        {
+                            _value.ContentEncoding = _header;
+                        }
+                        if (response.Headers.TryGetValue("Content-Language", out _header))
+                        {
+                            _value.ContentLanguage = _header;
+                        }
+                        if (response.Headers.TryGetValue("Content-Length", out _header))
+                        {
+                            _value.ContentLength = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("Content-Range", out _header))
+                        {
+                            _value.ContentRange = _header;
+                        }
+                        if (response.Headers.TryGetValue("Content-Type", out _header))
+                        {
+                            _value.ContentType = _header;
+                        }
+                        if (response.Headers.TryGetValue("Content-MD5", out _header))
+                        {
+                            _value.ContentMD5 = _header;
+                        }
+                        if (response.Headers.TryGetValue("ETag", out _header))
+                        {
+                            _value.ETag = new Azure.ETag(_header);
+                        }
+                        if (response.Headers.TryGetValue("Last-Modified", out _header))
+                        {
+                            _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-resource-type", out _header))
+                        {
+                            _value.ResourceType = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-properties", out _header))
+                        {
+                            _value.Properties = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-owner", out _header))
+                        {
+                            _value.Owner = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-group", out _header))
+                        {
+                            _value.Group = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-permissions", out _header))
+                        {
+                            _value.Permissions = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-acl", out _header))
+                        {
+                            _value.ACL = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-duration", out _header))
+                        {
+                            _value.LeaseDuration = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-state", out _header))
+                        {
+                            _value.LeaseState = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-lease-status", out _header))
+                        {
+                            _value.LeaseStatus = _header;
+                        }
+
+                        // Create the response
+                        return Response.FromValue(_value, response);
+                    }
+                    case 304:
+                    {
+                        return new Azure.NoBodyResponse<Azure.Storage.Files.DataLake.Models.FileSystemGetAccessControlResult>(response);
+                    }
+                    default:
+                    {
+                        // Create the result
+                        string _value;
+                        using (System.IO.StreamReader _streamReader = new System.IO.StreamReader(response.ContentStream))
+                        {
+                            _value = _streamReader.ReadToEnd();
+                        }
+
+                        throw _value.CreateException(response);
+                    }
+                }
+            }
+            #endregion FileSystem.GetAccessControlAsync
         }
         #endregion FileSystem operations
 
@@ -3514,6 +3992,123 @@ namespace Azure.Storage.Files.DataLake.Models
 }
 #endregion class FileSystemCreateResult
 
+#region class FileSystemGetAccessControlResult
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// FileSystem GetAccessControlResult
+    /// </summary>
+    internal partial class FileSystemGetAccessControlResult
+    {
+        /// <summary>
+        /// Indicates that the service supports requests for partial file content.
+        /// </summary>
+        public string AcceptRanges { get; internal set; }
+
+        /// <summary>
+        /// If the Cache-Control request header has previously been set for the resource, that value is returned in this header.
+        /// </summary>
+        public string CacheControl { get; internal set; }
+
+        /// <summary>
+        /// If the Content-Disposition request header has previously been set for the resource, that value is returned in this header.
+        /// </summary>
+        public string ContentDisposition { get; internal set; }
+
+        /// <summary>
+        /// If the Content-Encoding request header has previously been set for the resource, that value is returned in this header.
+        /// </summary>
+        public string ContentEncoding { get; internal set; }
+
+        /// <summary>
+        /// If the Content-Language request header has previously been set for the resource, that value is returned in this header.
+        /// </summary>
+        public string ContentLanguage { get; internal set; }
+
+        /// <summary>
+        /// The size of the resource in bytes.
+        /// </summary>
+        public long ContentLength { get; internal set; }
+
+        /// <summary>
+        /// Indicates the range of bytes returned in the event that the client requested a subset of the file by setting the Range request header.
+        /// </summary>
+        public string ContentRange { get; internal set; }
+
+        /// <summary>
+        /// The content type specified for the resource. If no content type was specified, the default content type is application/octet-stream.
+        /// </summary>
+        public string ContentType { get; internal set; }
+
+        /// <summary>
+        /// The MD5 hash of complete file stored in storage. This header is returned only for "GetProperties" operation. If the Content-MD5 header has been set for the file, this response header is returned for GetProperties call so that the client can check for message content integrity.
+        /// </summary>
+        public string ContentMD5 { get; internal set; }
+
+        /// <summary>
+        /// An HTTP entity tag associated with the file or directory.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// The data and time the file or directory was last modified.  Write operations on the file or directory update the last modified time.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// The type of the resource.  The value may be "file" or "directory".  If not set, the value is "file".
+        /// </summary>
+        public string ResourceType { get; internal set; }
+
+        /// <summary>
+        /// The user-defined properties associated with the file or directory, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set.
+        /// </summary>
+        public string Properties { get; internal set; }
+
+        /// <summary>
+        /// The owner of the file or directory. Included in the response if Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string Owner { get; internal set; }
+
+        /// <summary>
+        /// The owning group of the file or directory. Included in the response if Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string Group { get; internal set; }
+
+        /// <summary>
+        /// The POSIX access permissions for the file owner, the file owning group, and others. Included in the response if Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string Permissions { get; internal set; }
+
+        /// <summary>
+        /// The POSIX access control list for the file or directory.  Included in the response only if the action is "getAccessControl" and Hierarchical Namespace is enabled for the account.
+        /// </summary>
+        public string ACL { get; internal set; }
+
+        /// <summary>
+        /// When a resource is leased, specifies whether the lease is of infinite or fixed duration.
+        /// </summary>
+        public string LeaseDuration { get; internal set; }
+
+        /// <summary>
+        /// Lease state of the resource.
+        /// </summary>
+        public string LeaseState { get; internal set; }
+
+        /// <summary>
+        /// The lease status of the resource.
+        /// </summary>
+        public string LeaseStatus { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileSystemGetAccessControlResult instances.
+        /// You can use DataLakeModelFactory.FileSystemGetAccessControlResult instead.
+        /// </summary>
+        internal FileSystemGetAccessControlResult() { }
+    }
+}
+#endregion class FileSystemGetAccessControlResult
+
 #region class FileSystemGetPropertiesResult
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -3587,6 +4182,38 @@ namespace Azure.Storage.Files.DataLake.Models
     }
 }
 #endregion class FileSystemListPathsResult
+
+#region class FileSystemSetAccessControlResult
+namespace Azure.Storage.Files.DataLake.Models
+{
+    /// <summary>
+    /// FileSystem SetAccessControlResult
+    /// </summary>
+    internal partial class FileSystemSetAccessControlResult
+    {
+        /// <summary>
+        /// An HTTP entity tag associated with the file or directory.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// The data and time the file or directory was last modified. Write operations on the file system update the last modified time.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// If a client request id header is sent in the request, this header will be present in the response with the same value.
+        /// </summary>
+        public string ClientRequestId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileSystemSetAccessControlResult instances.
+        /// You can use DataLakeModelFactory.FileSystemSetAccessControlResult instead.
+        /// </summary>
+        internal FileSystemSetAccessControlResult() { }
+    }
+}
+#endregion class FileSystemSetAccessControlResult
 
 #region class FileSystemSetPropertiesResult
 namespace Azure.Storage.Files.DataLake.Models

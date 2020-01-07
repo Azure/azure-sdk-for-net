@@ -1297,7 +1297,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task GetAccesPolicyAsync()
+        public async Task GetAccessPolicyAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
 
@@ -1505,6 +1505,324 @@ namespace Azure.Storage.Files.DataLake.Tests
                         accessType: publicAccessType,
                         permissions: signedIdentifiers,
                         conditions: conditions),
+                    e => { });
+            }
+        }
+
+        [Test]
+        public async Task GetAccessControlAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act
+            PathAccessControl accessControl = await test.FileSystem.GetAccessControlAsync();
+
+            // Assert
+            Assert.IsNotNull(accessControl.Owner);
+            Assert.IsNotNull(accessControl.Group);
+            Assert.IsNotNull(accessControl.Permissions);
+            Assert.IsNotNull(accessControl.AccessControlList);
+        }
+
+        [Test]
+        public async Task GetAccessControlAsync_TrailingSlash()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            Uri uri = new Uri(test.FileSystem.Uri.ToString() + "/");
+            StorageSharedKeyCredential storageSharedKey = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            DataLakeFileSystemClient fileSystemClient = new DataLakeFileSystemClient(uri, storageSharedKey);
+
+            // Act
+            PathAccessControl accessControl = await test.FileSystem.GetAccessControlAsync();
+
+            // Assert
+            Assert.IsNotNull(accessControl.Owner);
+            Assert.IsNotNull(accessControl.Group);
+            Assert.IsNotNull(accessControl.Permissions);
+            Assert.IsNotNull(accessControl.AccessControlList);
+        }
+
+        [Test]
+        public async Task GetAccessControlAsync_Oauth()
+        {
+            // Arrnage
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            // Act
+            PathAccessControl accessControl = await test.FileSystem.GetAccessControlAsync();
+
+            // Assert
+            Assert.IsNotNull(accessControl.Owner);
+            Assert.IsNotNull(accessControl.Group);
+            Assert.IsNotNull(accessControl.Permissions);
+            Assert.IsNotNull(accessControl.AccessControlList);
+        }
+
+        [Test]
+        public async Task GetAccessControlAsync_FileSystemSAS()
+        {
+            // Arrange
+            string fileSystemName = GetNewFileSystemName();
+            await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
+
+
+            DataLakeFileSystemClient sasFileSystem = InstrumentClient(
+                GetServiceClient_DataLakeServiceSas_FileSystem(
+                    fileSystemName: fileSystemName)
+                .GetFileSystemClient(fileSystemName));
+
+            // Act
+            PathAccessControl accessControl = await sasFileSystem.GetAccessControlAsync();
+
+            // Assert
+            Assert.IsNotNull(accessControl.Owner);
+            Assert.IsNotNull(accessControl.Group);
+            Assert.IsNotNull(accessControl.Permissions);
+            Assert.IsNotNull(accessControl.AccessControlList);
+        }
+
+        [Test]
+        public async Task GetAccessControlAsync_FileSystemIdentitySAS()
+        {
+            // Arrange
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            string fileSystemName = GetNewFileSystemName();
+
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService, fileSystemName: fileSystemName);
+
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
+                startsOn: null,
+                expiresOn: Recording.UtcNow.AddHours(1));
+
+            DataLakeFileSystemClient identitySasFileSystem = InstrumentClient(
+                GetServiceClient_DataLakeServiceIdentitySas_FileSystem(
+                    fileSystemName: fileSystemName,
+                    userDelegationKey: userDelegationKey)
+                .GetFileSystemClient(fileSystemName));
+
+            // Act
+            PathAccessControl accessControl = await identitySasFileSystem.GetAccessControlAsync();
+
+            // Assert
+            Assert.IsNotNull(accessControl.Owner);
+            Assert.IsNotNull(accessControl.Group);
+            Assert.IsNotNull(accessControl.Permissions);
+            Assert.IsNotNull(accessControl.AccessControlList);
+        }
+
+        [Test]
+        public async Task GetAccessControlAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient serviceClient = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = serviceClient.GetFileSystemClient(GetNewFileSystemName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                fileSystem.GetAccessControlAsync(),
+                e => Assert.AreEqual("404", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task GetAccessControlAsync_Conditions()
+        {
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                DataLakeRequestConditions conditions = BuildFileSystemConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: false);
+
+                // Act
+                await test.FileSystem.GetAccessControlAsync(conditions: conditions);
+            }
+        }
+
+        [Ignore("service bug")]
+        [Test]
+        public async Task GetAccessControlAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in ConditionsFail_Data)
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                parameters.LeaseId = await SetupFileSystemLeaseCondition(test.FileSystem, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildFileSystemConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    test.FileSystem.GetAccessControlAsync(conditions: conditions),
+                    e => { });
+            }
+        }
+
+        [Test]
+        public async Task SetAccessControlListAsync()
+        {
+            // Arrnage
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act
+            Response<FileSystemInfo> response = await test.FileSystem.SetAccessControlListAsync(AccessControlList);
+
+            // Assert
+            AssertValidStorageFileSystemInfo(response);
+        }
+
+        [Test]
+        public async Task SetAccessControlListAsync_TrailingSlash()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            Uri uri = new Uri(test.FileSystem.Uri.ToString() + "/");
+            StorageSharedKeyCredential storageSharedKey = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, storageSharedKey, GetOptions()));
+
+            // Act
+            Response<FileSystemInfo> response = await fileSystemClient.SetAccessControlListAsync(AccessControlList);
+
+            // Assert
+            AssertValidStorageFileSystemInfo(response);
+        }
+
+        [Test]
+        public async Task SetAccessControlListAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient serviceClient = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = serviceClient.GetFileSystemClient(GetNewFileSystemName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                fileSystem.SetAccessControlListAsync(AccessControlList),
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task SetAccessControlListAsync_Conditions()
+        {
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                DataLakeRequestConditions conditions = BuildFileSystemConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: false);
+
+                // Act
+                await test.FileSystem.SetAccessControlListAsync(AccessControlList, conditions: conditions);
+            }
+        }
+
+        [Test]
+        public async Task SetAccessControlListAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in ConditionsFail_Data)
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                parameters.LeaseId = await SetupFileSystemLeaseCondition(test.FileSystem, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildFileSystemConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    test.FileSystem.SetAccessControlListAsync(AccessControlList, conditions: conditions),
+                    e => { });
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act
+            Response<FileSystemInfo> response = await test.FileSystem.SetPermissionsAsync(permissions: PathPermissions);
+
+            // Assert
+            AssertValidStorageFileSystemInfo(response);
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_TrailingSlash()
+        {
+            // Arrnage
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            Uri uri = new Uri(test.FileSystem.Uri.ToString() + "/");
+            StorageSharedKeyCredential storageSharedKey = new StorageSharedKeyCredential(TestConfigHierarchicalNamespace.AccountName, TestConfigHierarchicalNamespace.AccountKey);
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, storageSharedKey, GetOptions()));
+
+            // Act
+            Response<FileSystemInfo> response = await fileSystemClient.SetPermissionsAsync(permissions: PathPermissions);
+
+            // Assert
+            AssertValidStorageFileSystemInfo(response);
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient serviceClient = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = serviceClient.GetFileSystemClient(GetNewFileSystemName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                fileSystem.SetPermissionsAsync(permissions: PathPermissions),
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_Conditions()
+        {
+            foreach (AccessConditionParameters parameters in Conditions_Data)
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                DataLakeRequestConditions conditions = BuildFileSystemConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: false);
+
+                // Act
+                await test.FileSystem.SetPermissionsAsync(PathPermissions, conditions: conditions);
+            }
+        }
+
+        [Test]
+        public async Task SetPermissionsAsync_ConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in ConditionsFail_Data)
+            {
+                // Arrange
+                await using DisposingFileSystem test = await GetNewFileSystem();
+
+                parameters.LeaseId = await SetupFileSystemLeaseCondition(test.FileSystem, parameters.LeaseId, garbageLeaseId);
+                DataLakeRequestConditions conditions = BuildFileSystemConditions(
+                    parameters: parameters,
+                    ifUnmodifiedSince: true,
+                    lease: true);
+
+                // Act
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    test.FileSystem.SetPermissionsAsync(PathPermissions, conditions: conditions),
                     e => { });
             }
         }

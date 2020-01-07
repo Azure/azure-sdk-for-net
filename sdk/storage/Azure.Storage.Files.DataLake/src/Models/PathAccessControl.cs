@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// The Access Control for a path.
+    /// The Access Control for a file system or path.
     /// </summary>
     public class PathAccessControl
     {

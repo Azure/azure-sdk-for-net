@@ -134,6 +134,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(pathInfo.LastModified);
         }
 
+        public static void AssertValidStorageFileSystemInfo(FileSystemInfo fileSystemInfo)
+        {
+            Assert.IsNotNull(fileSystemInfo.ETag);
+            Assert.IsNotNull(fileSystemInfo.LastModified);
+        }
+
         public void AssertMetadataEquality(
             IDictionary<string, string> expected,
             IDictionary<string, string> actual,

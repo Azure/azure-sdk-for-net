@@ -13,6 +13,7 @@ using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Azure.Storage.Files.DataLake
 {
@@ -1844,5 +1845,675 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion SetAccessPolicy
+
+        #region Get Access Control
+        /// <summary>
+        /// The <see cref="GetAccessControl"/> operation returns the
+        /// access control data for a file system.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// </summary>
+        /// <param name="userPrincipalName">
+        /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
+        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
+        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
+        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
+        /// value is false. Note that group and application Object IDs are not translated because they
+        /// do not have unique friendly names.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the file system's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathAccessControl}"/> describing the
+        /// file systems's access control.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathAccessControl> GetAccessControl(
+            bool? userPrincipalName = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessControl)}");
+
+            try
+            {
+                scope.Start();
+
+                return GetAccessControlInternal(
+                    userPrincipalName,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetAccessControlAsync"/> operation returns the
+        /// access control data for a file system.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// </summary>
+        /// <param name="userPrincipalName">
+        /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
+        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
+        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
+        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
+        /// value is false. Note that group and application Object IDs are not translated because they
+        /// do not have unique friendly names.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the file system's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathAccessControl}"/> describing the
+        /// file system's access control.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathAccessControl>> GetAccessControlAsync(
+            bool? userPrincipalName = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessControl)}");
+
+            try
+            {
+                scope.Start();
+
+                return await GetAccessControlInternal(
+                    userPrincipalName,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetAccessControlInternal"/> operation returns the
+        /// access control data for a file system.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties" />.
+        /// </summary>
+        /// <param name="userPrincipalName">
+        /// Optional.Valid only when Hierarchical Namespace is enabled for the account.If "true",
+        /// the user identity values returned in the x-ms-owner, x-ms-group, and x-ms-acl response
+        /// headers will be transformed from Azure Active Directory Object IDs to User Principal Names.
+        /// If "false", the values will be returned as Azure Active Directory Object IDs.The default
+        /// value is false. Note that group and application Object IDs are not translated because they
+        /// do not have unique friendly names.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add
+        /// conditions on getting the file system's access control.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathAccessControl}"/> describing the
+        /// file system's access control.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<PathAccessControl>> GetAccessControlInternal(
+            bool? userPrincipalName,
+            DataLakeRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakePathClient)))
+            {
+                UriBuilder uriBuilder = new UriBuilder(_dfsUri);
+
+                if (!uriBuilder.Path.EndsWith("/", StringComparison.InvariantCulture))
+                {
+                    uriBuilder.Path += "/";
+                }
+
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakePathClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n");
+                try
+                {
+                    Response<FileSystemGetAccessControlResult> response = await DataLakeRestClient.FileSystem.GetAccessControlAsync(
+                        clientDiagnostics: _clientDiagnostics,
+                        pipeline: Pipeline,
+                        resourceUri: uriBuilder.Uri,
+                        version: Version.ToVersionString(),
+                        upn: userPrincipalName,
+                        leaseId: conditions?.LeaseId,
+                        ifMatch: conditions?.IfMatch,
+                        ifNoneMatch: conditions?.IfNoneMatch,
+                        ifModifiedSince: conditions?.IfModifiedSince,
+                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new PathAccessControl()
+                        {
+                            Owner = response.Value.Owner,
+                            Group = response.Value.Group,
+                            Permissions = PathPermissions.ParseSymbolicPermissions(response.Value.Permissions),
+                            AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Value.ACL)
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakePathClient));
+                }
+            }
+        }
+        #endregion Get Access Control
+
+        #region Set Access Control List
+        /// <summary>
+        /// The <see cref="SetAccessControlList"/> operation sets the
+        /// Access Control on a file system
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file system.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file system.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file system.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the file system's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the updated
+        /// file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSystemInfo> SetAccessControlList(
+            IList<PathAccessControlItem> accessControlList,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessControlList)}");
+
+            try
+            {
+                scope.Start();
+
+                return SetAccessControlListInternal(
+                    accessControlList,
+                    owner,
+                    group,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlListAsync"/> operation sets the
+        /// Access Control on a file system
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file system.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file system.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file system.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the file system's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the updated
+        /// file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemInfo>> SetAccessControlListAsync(
+            IList<PathAccessControlItem> accessControlList,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessControlList)}");
+
+            try
+            {
+                scope.Start();
+
+                return await SetAccessControlListInternal(
+                    accessControlList,
+                    owner,
+                    group,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessControlListInternal"/> operation sets the
+        /// Access Control on a file system
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file system.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file system.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file system.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the file system's access control.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the updated
+        /// file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<FileSystemInfo>> SetAccessControlListInternal(
+            IList<PathAccessControlItem> accessControlList,
+            string owner,
+            string group,
+            DataLakeRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakeFileSystemClient)))
+            {
+                UriBuilder uriBuilder = new UriBuilder(_dfsUri);
+
+                if (!uriBuilder.Path.EndsWith("/", StringComparison.InvariantCulture))
+                {
+                    uriBuilder.Path += "/";
+                }
+
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakeFileSystemClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(accessControlList)}: {accessControlList}\n" +
+                    $"{nameof(owner)}: {owner}\n" +
+                    $"{nameof(group)}: {group}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    Response<FileSystemSetAccessControlResult> response =
+                        await DataLakeRestClient.FileSystem.SetAccessControlAsync(
+                            clientDiagnostics: _clientDiagnostics,
+                            pipeline: Pipeline,
+                            resourceUri: uriBuilder.Uri,
+                            version: Version.ToVersionString(),
+                            leaseId: conditions?.LeaseId,
+                            owner: owner,
+                            group: group,
+                            acl: PathAccessControlExtensions.ToAccessControlListString(accessControlList),
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new FileSystemInfo()
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakeFileSystemClient));
+                }
+            }
+        }
+        #endregion Set Access Control List
+
+        #region Set Permissions
+        /// <summary>
+        /// The <see cref="SetPermissions"/> operation sets the
+        /// file permissions on a path.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file or directory.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file or directory.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the path's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<FileSystemInfo> SetPermissions(
+            PathPermissions permissions,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetPermissions)}");
+
+            try
+            {
+                scope.Start();
+
+                return SetPermissionsInternal(
+                    permissions,
+                    owner,
+                    group,
+                    conditions,
+                    false, // async
+                    cancellationToken)
+                    .EnsureCompleted();
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+
+        }
+
+        /// <summary>
+        /// The <see cref="SetPermissionsAsync"/> operation sets the
+        /// file permissions on a file system.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file system owner, owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file system.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file system.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the file system's access control.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the updated
+        /// file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemInfo>> SetPermissionsAsync(
+            PathPermissions permissions,
+            string owner = default,
+            string group = default,
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileSystemClient)}.{nameof(SetPermissions)}");
+
+            try
+            {
+                scope.Start();
+
+                return await SetPermissionsInternal(
+                    permissions,
+                    owner,
+                    group,
+                    conditions,
+                    true, // async
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetPermissionsInternal"/> operation sets the
+        /// file permissions on a file system.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="permissions">
+        ///  The POSIX access permissions for the file system owner, owning group, and others.
+        /// </param>
+        /// <param name="owner">
+        /// The owner of the file system.
+        /// </param>
+        /// <param name="group">
+        /// The owning group of the file system.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// setting the the file systems's access control.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the updated
+        /// file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<FileSystemInfo>> SetPermissionsInternal(
+            PathPermissions permissions,
+            string owner,
+            string group,
+            DataLakeRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(DataLakeFileSystemClient)))
+            {
+                UriBuilder uriBuilder = new UriBuilder(_dfsUri);
+
+                if (!uriBuilder.Path.EndsWith("/", StringComparison.InvariantCulture))
+                {
+                    uriBuilder.Path += "/";
+                }
+
+                Pipeline.LogMethodEnter(
+                    nameof(DataLakeFileSystemClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(permissions)}: {permissions}\n" +
+                    $"{nameof(owner)}: {owner}\n" +
+                    $"{nameof(group)}: {group}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    Response<FileSystemSetAccessControlResult> response =
+                        await DataLakeRestClient.FileSystem.SetAccessControlAsync(
+                            clientDiagnostics: _clientDiagnostics,
+                            pipeline: Pipeline,
+                            resourceUri: uriBuilder.Uri,
+                            version: Version.ToVersionString(),
+                            leaseId: conditions?.LeaseId,
+                            owner: owner,
+                            group: group,
+                            permissions: permissions.ToSymbolicPermissions(),
+                            ifMatch: conditions?.IfMatch,
+                            ifNoneMatch: conditions?.IfNoneMatch,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            async: async,
+                            cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        new FileSystemInfo()
+                        {
+                            ETag = response.Value.ETag,
+                            LastModified = response.Value.LastModified
+                        },
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(DataLakeFileSystemClient));
+                }
+            }
+        }
+        #endregion Set Permissions
     }
 }

@@ -1315,7 +1315,7 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Get Access Control
 
-        #region Set Access Control
+        #region Set Access Control List
         /// <summary>
         /// The <see cref="SetAccessControlList"/> operation sets the
         /// Access Control on a path
@@ -1535,7 +1535,7 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
-        #endregion Set Access Control
+        #endregion Set Access Control List
 
         #region Set Permissions
         /// <summary>
