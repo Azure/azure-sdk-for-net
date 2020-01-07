@@ -115,7 +115,7 @@ DetectedLanguage language = result.PrimaryLanguage;
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
 ```
 
-Please refer to the service documentation for a conceptual discussion of [language detection][language_dectection].
+Please refer to the service documentation for a conceptual discussion of [language detection][language_detection].
 
 ### Analyze Sentiment
 Run a Text Analytics predictive model to identify the positive, negative, neutral or mixed sentiment contained in the passed-in input text or batch of input text documents.
@@ -336,7 +336,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-Preview-1/operations/Languages
 [cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
 
-[language_dectection]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
+[language_detection]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
 [sentiment_analysis]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
 [key_phrase_extraction]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
 [named_entity_recognition]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-entity-linking
