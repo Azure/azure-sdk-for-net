@@ -30,7 +30,7 @@ namespace Azure.Storage.Tests
 
             // Assert
             Assert.IsTrue(message.Request.Headers.TryGetValue("x-ms-date", out string secondDate));
-            Assert.AreNotEqual(firstDate, secondDate);
+            Assert.IsTrue(Convert.ToDateTime(firstDate) < Convert.ToDateTime(secondDate));
         }
     }
 }

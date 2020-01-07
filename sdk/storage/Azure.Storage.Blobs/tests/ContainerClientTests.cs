@@ -307,7 +307,6 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             var testExceptionPolicy = new TestExceptionPolicy(
                 numberOfFailuresToSimulate: 2,
-                options.GeoRedundantSecondaryUri,
                 trackedRequestMethods: new List<RequestMethod>(new RequestMethod[] { RequestMethod.Put }),
                 delayBetweenAttempts: 1000);
 

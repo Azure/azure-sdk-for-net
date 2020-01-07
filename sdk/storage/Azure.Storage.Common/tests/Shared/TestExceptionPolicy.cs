@@ -17,31 +17,31 @@ namespace Azure.Storage.Test
 
         public List<DateTime> DatesSetInRequests { get; private set; }
 
-        private int CurrentInvocationNumber { get; set; }
+        private int _currentInvocationNumber;
 
-        private int NumberOfFailuresToSimulate { get; set; }
+        private readonly int _numberOfFailuresToSimulate;
 
-        private Uri SecondaryUri { get; set; }
+        private readonly Uri _secondaryUri;
 
-        private bool Simulate404 { get; set; }
+        private readonly bool _simulate404;
 
-        private List<RequestMethod> TrackedRequestMethods { get; set; }
+        private readonly List<RequestMethod> _trackedRequestMethods;
 
         private readonly int _delayBetweenAttempts;
 
         public TestExceptionPolicy(
             int numberOfFailuresToSimulate,
-            Uri secondaryUri,
+            Uri secondaryUri = default,
             bool simulate404 = false,
             List<RequestMethod> trackedRequestMethods = null,
             int delayBetweenAttempts = default)
         {
-            NumberOfFailuresToSimulate = numberOfFailuresToSimulate;
-            Simulate404 = simulate404;
-            SecondaryUri = secondaryUri;
+            _numberOfFailuresToSimulate = numberOfFailuresToSimulate;
+            _simulate404 = simulate404;
+            _secondaryUri = secondaryUri;
             HostsSetInRequests = new List<string>();
             DatesSetInRequests = new List<DateTime>();
-            TrackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
+            _trackedRequestMethods = trackedRequestMethods ?? new List<RequestMethod>(new RequestMethod[] { RequestMethod.Get, RequestMethod.Head });
             _delayBetweenAttempts = delayBetweenAttempts;
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Storage.Test
 
         private async Task<bool> SimulateFailureAsync(HttpMessage message, bool async)
         {
-            if (TrackedRequestMethods.Contains(message.Request.Method))
+            if (_trackedRequestMethods.Contains(message.Request.Method))
             {
                 if (_delayBetweenAttempts > 0)
                 {
@@ -76,15 +76,16 @@ namespace Azure.Storage.Test
                         Thread.Sleep(_delayBetweenAttempts);
                     }
                 }
-                CurrentInvocationNumber++;
+                _currentInvocationNumber++;
                 HostsSetInRequests.Add(message.Request.Uri.Host);
                 if (message.Request.Headers.TryGetValue("x-ms-date", out string date))
                 {
                     DatesSetInRequests.Add(Convert.ToDateTime(date));
                 }
-                if (CurrentInvocationNumber <= NumberOfFailuresToSimulate)
+                if (_currentInvocationNumber <= _numberOfFailuresToSimulate)
                 {
-                    message.Response = new MockResponse(Simulate404 && message.Request.Uri.Host == SecondaryUri.Host ? 404 : 429);
+                    message.Response = new MockResponse(
+                        _simulate404 && message.Request.Uri.Host == _secondaryUri?.Host ? 404 : 429);
                     return true;
                 }
             }
