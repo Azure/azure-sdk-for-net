@@ -1,0 +1,12 @@
+{
+  "clientId": "mockclientid",
+  "clientSecret": "mockclientsecret",
+  "subscriptionId": "mocksubscriptionid",
+  "tenantId": "mocktenantid",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
