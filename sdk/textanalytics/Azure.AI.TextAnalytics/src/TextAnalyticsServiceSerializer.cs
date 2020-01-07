@@ -293,7 +293,7 @@ namespace Azure.AI.TextAnalytics
         {
             string text = default;
             string type = default;
-            string subType = default;
+            string subtype = default;
             int offset = default;
             int length = default;
             double score = default;
@@ -302,8 +302,8 @@ namespace Azure.AI.TextAnalytics
                 text = textValue.GetString();
             if (entityElement.TryGetProperty("type", out JsonElement typeValue))
                 type = typeValue.ToString();
-            if (entityElement.TryGetProperty("subType", out JsonElement subTypeValue))
-                subType = subTypeValue.ToString();
+            if (entityElement.TryGetProperty("subtype", out JsonElement subTypeValue))
+                subtype = subTypeValue.ToString();
             if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
                 offsetValue.TryGetInt32(out offset);
             if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
@@ -311,7 +311,7 @@ namespace Azure.AI.TextAnalytics
             if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
                 scoreValue.TryGetDouble(out score);
 
-            return new NamedEntity(text, type, subType, offset, length, score);
+            return new NamedEntity(text, type, subtype, offset, length, score);
         }
 
         #endregion Recognize Entities
