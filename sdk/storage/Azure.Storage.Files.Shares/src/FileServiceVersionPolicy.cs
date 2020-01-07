@@ -18,7 +18,9 @@ namespace Azure.Storage.Files.Shares
             // Get ServiceVersion header
             if (!message.Request.Headers.TryGetValue(Constants.HeaderNames.ServiceVersion, out string serviceVersionString))
             {
-                return;
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
+                throw new ArgumentNullException("x-ms-version");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             // Convert to ServiceVersion
@@ -54,35 +56,28 @@ namespace Azure.Storage.Files.Shares
                     throw new ArgumentException($"File lease operations are not supported in service version {serviceVersionString}");
                 }
 
-                // File Copy SMB Headers
+                // File Copy SMB Headers.  The file copy operation does not recognize contain any of the following
+                // headers in service versions < 2019-07-07.
                 if (message.Request.Headers.Contains("x-ms-copy-source"))
                 {
-                    ThrowIfContainsHeader(message, "x-ms-file-permission", "copy file", serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-permission-key", "copy file", serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-permission-copy-mode", "copy file", serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-copy-ignore-read-only", "copy file", serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-copy-set-archive", "copy file", serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-attributes", "copy file", serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-creation-time", "copy file", serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-last-write-time", "copy file", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-permission", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-permission-key", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-permission-copy-mode", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-copy-ignore-read-only", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-copy-set-archive", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-attributes", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-creation-time", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-last-write-time", Constants.File.StartCopyOperationName, serviceVersionString);
                 }
             }
         }
 
         private static ShareClientOptions.ServiceVersion ToServiceVersion(string serviceVersionString)
-        {
-            if (serviceVersionString == Constants.ServiceVersion_2019_02_02)
+            => serviceVersionString switch
             {
-                return ShareClientOptions.ServiceVersion.V2019_02_02;
-            }
-            else if (serviceVersionString == Constants.ServiceVersion_2019_07_07)
-            {
-                return ShareClientOptions.ServiceVersion.V2019_07_07;
-            }
-            else
-            {
-                return default;
-            }
-        }
+                Constants.ServiceVersion_2019_02_02 => ShareClientOptions.ServiceVersion.V2019_02_02,
+                Constants.ServiceVersion_2019_07_07 => ShareClientOptions.ServiceVersion.V2019_07_07,
+                _ => default,
+            };
     }
 }

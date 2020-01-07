@@ -55,19 +55,19 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, filePermission: "filePermission"),
-                e => Assert.AreEqual("x-ms-file-permission is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-permission is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, filePermissionCopyMode: PermissionCopyModeType.Override),
-                e => Assert.AreEqual("x-ms-file-permission-copy-mode is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-permission-copy-mode is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, ignoreReadOnly: true),
-                e => Assert.AreEqual("x-ms-file-copy-ignore-read-only is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-copy-ignore-read-only is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, setArchiveAttribute: true),
-                e => Assert.AreEqual("x-ms-file-copy-set-archive is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-copy-set-archive is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
 
             FileSmbProperties smbProperties = new FileSmbProperties
             {
@@ -76,14 +76,14 @@ namespace Azure.Storage.Files.Shares.Test
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, smbProperties: smbProperties),
-                e => Assert.AreEqual("x-ms-file-permission-key is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-permission-key is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
 
             smbProperties.FilePermissionKey = null;
             smbProperties.FileAttributes = NtfsFileAttributes.Archive;
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, smbProperties: smbProperties),
-                e => Assert.AreEqual("x-ms-file-attributes is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-attributes is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
 
             smbProperties.FileAttributes = null;
             DateTimeOffset dateTimeOffset = new DateTimeOffset(2019, 8, 15, 5, 15, 25, 60, TimeSpan.Zero);
@@ -91,14 +91,14 @@ namespace Azure.Storage.Files.Shares.Test
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, smbProperties: smbProperties),
-                e => Assert.AreEqual("x-ms-file-creation-time is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-creation-time is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
 
             smbProperties.FileCreatedOn = null;
             smbProperties.FileLastWrittenOn = dateTimeOffset;
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 oldVersionFileClient.StartCopyAsync(fileClient.Uri, smbProperties: smbProperties),
-                e => Assert.AreEqual("x-ms-file-last-write-time is not supported for copy file in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-file-last-write-time is not supported for {Constants.File.StartCopyOperationName} in service version 2019-02-02", e.Message));
         }
     }
 }

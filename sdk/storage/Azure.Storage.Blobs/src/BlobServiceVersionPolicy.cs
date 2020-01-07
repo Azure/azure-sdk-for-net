@@ -18,7 +18,9 @@ namespace Azure.Storage.Blobs
             // Get ServiceVersion header
             if (!message.Request.Headers.TryGetValue(Constants.HeaderNames.ServiceVersion, out string serviceVersionString))
             {
-                return;
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
+                throw new ArgumentNullException("x-ms-version");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             // Convert to ServiceVersion
@@ -34,29 +36,21 @@ namespace Azure.Storage.Blobs
             if (serviceVersion < BlobClientOptions.ServiceVersion.V2019_07_07)
             {
                 // Encryption Scope
-                ThrowIfContainsHeader(message, "x-ms-default-encryption-scope", "create container", serviceVersionString);
-                ThrowIfContainsHeader(message, "x-ms-deny-encryption-scope-override", "create container", serviceVersionString);
+                ThrowIfContainsHeader(message, "x-ms-default-encryption-scope", Constants.Blob.Container.CreateOperationName, serviceVersionString);
+                ThrowIfContainsHeader(message, "x-ms-deny-encryption-scope-override", Constants.Blob.Container.CreateOperationName, serviceVersionString);
                 ThrowIfContainsHeader(message, "x-ms-encryption-scope", "any API", serviceVersionString);
 
                 // Previous Snapshot URL
-                ThrowIfContainsHeader(message, "x-ms-previous-snapshot-url", "get page range diff", serviceVersionString);
+                throw new ArgumentException($"{Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName} is not supported in service version {serviceVersionString}");
             }
         }
 
         private static BlobClientOptions.ServiceVersion ToServiceVersion(string serviceVersionString)
-        {
-            if (serviceVersionString == Constants.ServiceVersion_2019_02_02)
+            => serviceVersionString switch
             {
-                return BlobClientOptions.ServiceVersion.V2019_02_02;
-            }
-            else if (serviceVersionString == Constants.ServiceVersion_2019_07_07)
-            {
-                return BlobClientOptions.ServiceVersion.V2019_07_07;
-            }
-            else
-            {
-                return default;
-            }
-        }
+                Constants.ServiceVersion_2019_02_02 => BlobClientOptions.ServiceVersion.V2019_02_02,
+                Constants.ServiceVersion_2019_07_07 => BlobClientOptions.ServiceVersion.V2019_07_07,
+                _ => default,
+            };
     }
 }
