@@ -13,8 +13,10 @@ namespace Azure.Identity
         {
             string fileName = string.Empty;
             string argument = string.Empty;
+            int exitCode = default;
 
-            Process proc = new Process();
+            StringBuilder stdOutput = new StringBuilder();
+            StringBuilder stdError = new StringBuilder();
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -27,30 +29,30 @@ namespace Azure.Identity
                 argument = $"-c \"{extendCommand}\"";
             }
 
-            ProcessStartInfo procStartInfo = new ProcessStartInfo()
+            using (Process proc = new Process())
             {
-                FileName = fileName,
-                Arguments = argument,
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                CreateNoWindow = true
-            };
 
-            proc.StartInfo = procStartInfo;
+                ProcessStartInfo procStartInfo = new ProcessStartInfo()
+                {
+                    FileName = fileName,
+                    Arguments = argument,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
 
-            StringBuilder stdOutput = new StringBuilder();
-            proc.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
+                proc.StartInfo = procStartInfo;
+                proc.OutputDataReceived += new DataReceivedEventHandler((sender, e) => stdOutput.AppendLine(e.Data));
+                proc.ErrorDataReceived += new DataReceivedEventHandler((sender, e) => stdError.AppendLine(e.Data));
 
-            StringBuilder stdError = new StringBuilder();
-            proc.ErrorDataReceived += new DataReceivedEventHandler((sender, e) => stdError.AppendLine(e.Data));
+                proc.Start();
+                proc.BeginOutputReadLine();
+                proc.BeginErrorReadLine();
+                proc.WaitForExit();
 
-            proc.Start();
-            proc.BeginOutputReadLine();
-            proc.BeginErrorReadLine();
-            proc.WaitForExit();
-
-            int exitCode = proc.ExitCode;
+                exitCode = proc.ExitCode;
+            }
 
             if (exitCode != 0)
             {

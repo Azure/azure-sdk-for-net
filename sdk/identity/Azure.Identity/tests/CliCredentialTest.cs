@@ -21,7 +21,7 @@ namespace Azure.Identity.Tests
         {
             var expectedToken = "mock-cli-access-token";
 
-            string mockResult = $"{{ \"accessToken\": \"{expectedToken}\", \"expiresOn\": \"1900-01-01 00:00:00.1\" }}";
+            string mockResult = $"{{ \"accessToken\": \"{expectedToken}\", \"expiresOn\": \"1900-01-01 00:00:00.123456\" }}";
 
             var mockCliCredentialClient = new MockCliCredentialClient((mockResult, 0));
 

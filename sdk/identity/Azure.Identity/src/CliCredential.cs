@@ -112,7 +112,9 @@ namespace Azure.Identity
                 Dictionary<string, string> result = await JsonSerializer.DeserializeAsync<Dictionary<string, string>>(stream, null, cancellationToken);
                 result.TryGetValue("accessToken", out string accessToken);
                 result.TryGetValue("expiresOn", out string expiresOnValue);
-                DateTimeOffset expiresOn = DateTimeOffset.Parse(expiresOnValue, null, DateTimeStyles.AdjustToUniversal);
+
+                string expiresOnFormat = "yyyy-MM-dd HH:mm:ss.ffffff";
+                DateTimeOffset expiresOn = DateTimeOffset.ParseExact(expiresOnValue, expiresOnFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
 
                 AccessToken token = new AccessToken(accessToken, expiresOn);
 
