@@ -174,7 +174,8 @@ namespace Microsoft.Azure.Management.EventHub
         Task<AzureOperationResponse<IPage<AuthorizationRule>>> ListAuthorizationRulesWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates an AuthorizationRule for the specified Event
-        /// Hub.
+        /// Hub. Creation/update of the AuthorizationRule will take a few
+        /// seconds to take effect.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group within the azure subscription.
