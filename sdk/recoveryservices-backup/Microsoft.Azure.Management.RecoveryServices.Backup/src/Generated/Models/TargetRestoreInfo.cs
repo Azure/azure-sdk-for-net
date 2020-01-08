@@ -36,11 +36,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// which Target DataBase resides</param>
         /// <param name="databaseName">Database name InstanceName/DataBaseName
         /// for SQL or System/DbName for SAP Hana</param>
-        public TargetRestoreInfo(string overwriteOption = default(string), string containerId = default(string), string databaseName = default(string))
+        /// <param name="targetDirectoryForFileRestore">Target directory
+        /// location for restore as files.</param>
+        public TargetRestoreInfo(string overwriteOption = default(string), string containerId = default(string), string databaseName = default(string), string targetDirectoryForFileRestore = default(string))
         {
             OverwriteOption = overwriteOption;
             ContainerId = containerId;
             DatabaseName = databaseName;
+            TargetDirectoryForFileRestore = targetDirectoryForFileRestore;
             CustomInit();
         }
 
@@ -69,6 +72,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
+
+        /// <summary>
+        /// Gets or sets target directory location for restore as files.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetDirectoryForFileRestore")]
+        public string TargetDirectoryForFileRestore { get; set; }
 
     }
 }
