@@ -19,9 +19,9 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
+            #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
             var inputs = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
@@ -35,6 +35,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            #endregion
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");

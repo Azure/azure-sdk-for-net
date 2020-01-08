@@ -1,6 +1,6 @@
 # Detecting the Language of Text Inputs
 
-This sample demonstrates how to detect the language a text input is written in using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README](../README.md) for links and instructions.
+This sample demonstrates how to detect the language one or more text inputs are written in using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README](../README.md) for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -11,7 +11,7 @@ To create a new `TextAnalyticsClient` to detect the language a text input is wri
 
 ## Detecting a language for a single text input
 
-To detect the language of a single text input, simply pass the input string to the client's `DetectLanguage` method.  The primary language the input is written in will be returned as the result's `PrimaryLanguage` property, and this object contains both the name of the language and the confidence that the service's prediction is correct.
+To detect the language of a single text input, pass the input string to the client's `DetectLanguage` method.  The primary language the input is written in will be returned as the result's `PrimaryLanguage` property, and this object contains both the name of the language and the confidence that the service's prediction is correct.
 
 ```C# Snippet:DetectLanguage
 ```
@@ -28,9 +28,11 @@ To detect the languages of a collection of text inputs in different language, ca
 ```C# Snippet:TextAnalyticsSample1DetectLanguages
 ```
 
+To see the full example source files, see:
 
-
-
-
+* [Synchronous Sample1_DetectLanguage.cs](../tests/samples/Sample1_DetectLanguage.cs)
+* [Asynchronous Sample1_DetectLanguage.cs](../tests/samples/Sample1_DetectLanguageAsync.cs)
+* [Synchronous Sample1_DetectLanguageBatch.cs](../tests/samples/Sample1_DetectLanguageBatch.cs)
+* [Synchronous Sample1_DetectLanguageBatchConvenience.cs](../tests/samples/Sample1_DetectLanguageBatchConvenience.cs)
 
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

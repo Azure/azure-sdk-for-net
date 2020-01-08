@@ -19,10 +19,9 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-
+            #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
             var inputs = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
@@ -40,6 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            #endregion
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");

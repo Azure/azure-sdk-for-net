@@ -18,13 +18,13 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
+            #region Snippet:TextAnalyticsSample4CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #endregion
 
             #region Snippet:RecognizeEntities
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            // Recognize categorized entities in the input text
             RecognizeEntitiesResult result = client.RecognizeEntities(input);
             IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 

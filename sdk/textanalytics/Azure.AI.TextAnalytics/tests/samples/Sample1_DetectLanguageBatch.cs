@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
-            #region Snippet:TextAnalyticsSample1DetectLanguages
+            #region Snippet:TextAnalyticsSample1DetectLanguagesBatch
             var inputs = new List<DetectLanguageInput>
             {
                 new DetectLanguageInput("1", "Hello world")
