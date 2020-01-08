@@ -1,0 +1,36 @@
+# Detecting the Language of Text Inputs
+
+This sample demonstrates how to detect the language a text input is written in using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README](../README.md) for links and instructions.
+
+## Creating a `TextAnalyticsClient`
+
+To create a new `TextAnalyticsClient` to detect the language a text input is written in, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics subscription key.  You can set `endpoint` and `subscriptionKey` based on an environment variable, a configuration setting, or any way that works for your application.
+
+```C# Snippet:TextAnalyticsSample1CreateClient
+```
+
+## Detecting a language for a single text input
+
+To detect the language of a single text input, simply pass the input string to the client's `DetectLanguage` method.  The primary language the input is written in will be returned as the result's `PrimaryLanguage` property, and this object contains both the name of the language and the confidence that the service's prediction is correct.
+
+```C# Snippet:DetectLanguage
+```
+
+## Detecting the language of multiple text inputs
+
+To detect the language of a collection of text inputs in the same language, call `DetectLanguages` on an `IEnumerable` of strings.  The results are returned as a `DetectLanguageResultCollection`.
+
+```C# Snippet:TextAnalyticsSample1DetectLanguagesConvenience
+```
+
+To detect the languages of a collection of text inputs in different language, call `DetectLanguages` on an `IEnumerable` of `DetectLanguageInput` objects, setting the `CountryHint` on each input.
+
+```C# Snippet:TextAnalyticsSample1DetectLanguages
+```
+
+
+
+
+
+
+[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
