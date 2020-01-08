@@ -414,27 +414,39 @@ namespace Microsoft.Azure.EventHubs.Processor
                     {
                         var subjectPartitionId = partitionId;
 
-                        createRemovePumpTasks.Add(Task.Run(async () =>
+                        Lease updatedLease = allLeases[subjectPartitionId];
+                        ProcessorEventSource.Log.EventProcessorHostInfo(this.host.HostName, $"Lease on partition {updatedLease.PartitionId} owned by {updatedLease.Owner}");
+
+                        if (updatedLease.Owner == this.host.HostName)
                         {
-                            try
+                            createRemovePumpTasks.Add(Task.Run(async () =>
                             {
-                                Lease updatedLease = allLeases[subjectPartitionId];
-                                ProcessorEventSource.Log.EventProcessorHostInfo(this.host.HostName, $"Lease on partition {updatedLease.PartitionId} owned by {updatedLease.Owner}");
-                                if (updatedLease.Owner == this.host.HostName)
+                                try
                                 {
                                     await this.CheckAndAddPumpAsync(subjectPartitionId, updatedLease).ConfigureAwait(false);
                                 }
-                                else
+                                catch (Exception e)
+                                {
+                                    ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, $"Exception during add pump on partition {subjectPartitionId}", e.Message);
+                                    this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, subjectPartitionId, e, EventProcessorHostActionStrings.PartitionPumpManagement);
+                                }
+                            }, cancellationToken));
+                        }
+                        else if (this.partitionPumps.ContainsKey(partitionId))
+                        {
+                            createRemovePumpTasks.Add(Task.Run(async () =>
+                            {
+                                try
                                 {
                                     await this.TryRemovePumpAsync(subjectPartitionId, CloseReason.LeaseLost).ConfigureAwait(false);
                                 }
-                            }
-                            catch (Exception e)
-                            {
-                                ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, $"Exception during add/remove pump on partition {subjectPartitionId}", e.Message);
-                                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, subjectPartitionId, e, EventProcessorHostActionStrings.PartitionPumpManagement);
-                            }
-                        }, cancellationToken));
+                                catch (Exception e)
+                                {
+                                    ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, $"Exception during remove pump on partition {subjectPartitionId}", e.Message);
+                                    this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, subjectPartitionId, e, EventProcessorHostActionStrings.PartitionPumpManagement);
+                                }
+                            }, cancellationToken));
+                        }
                     }
 
                     await Task.WhenAll(createRemovePumpTasks).ConfigureAwait(false);
