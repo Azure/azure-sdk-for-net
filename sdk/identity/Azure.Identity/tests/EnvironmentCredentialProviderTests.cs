@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Azure.Core.Testing;
 using Azure.Identity.Tests.Mock;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Azure.Identity.Tests
 {
@@ -21,7 +22,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void CredentialConstruction()
+        public void CredentialConstructionClientId()
         {
             string clientIdBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
             string tenantIdBackup = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
@@ -53,6 +54,29 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantIdBackup);
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecretBackup);
 
+            }
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void CredentialConstructionAuthLocation()
+        {
+            string authLocationBackup = Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
+            string pathToFile = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "authfile.json");
+
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_AUTH_LOCATION", pathToFile);
+
+                var provider = new EnvironmentCredential();
+                AuthFileCredential cred = _credential(provider) as AuthFileCredential;
+
+                Assert.NotNull(cred);
+                Assert.AreEqual(pathToFile, cred.FilePath);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_AUTH_LOCATION", authLocationBackup);
             }
         }
 
