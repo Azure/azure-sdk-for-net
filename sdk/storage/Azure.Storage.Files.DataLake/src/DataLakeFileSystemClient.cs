@@ -2008,6 +2008,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 UriBuilder uriBuilder = new UriBuilder(_dfsUri);
 
+                // The service requires the file system path to contain a trailing "/" for get access controls.
                 if (!uriBuilder.Path.EndsWith("/", StringComparison.InvariantCulture))
                 {
                     uriBuilder.Path += "/";
@@ -2232,6 +2233,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 UriBuilder uriBuilder = new UriBuilder(_dfsUri);
 
+                // The service requires the file system path to contain a trailing "/" for set access control list.
                 if (!uriBuilder.Path.EndsWith("/", StringComparison.InvariantCulture))
                 {
                     uriBuilder.Path += "/";
@@ -2349,7 +2351,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-
         }
 
         /// <summary>
@@ -2462,6 +2463,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 UriBuilder uriBuilder = new UriBuilder(_dfsUri);
 
+                // The service requires the file system path to contain a trailing "/" for set permissions
                 if (!uriBuilder.Path.EndsWith("/", StringComparison.InvariantCulture))
                 {
                     uriBuilder.Path += "/";

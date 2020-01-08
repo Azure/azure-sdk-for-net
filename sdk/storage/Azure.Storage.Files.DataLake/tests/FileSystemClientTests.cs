@@ -1518,10 +1518,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await test.FileSystem.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -1536,10 +1533,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await test.FileSystem.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -1554,10 +1548,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await test.FileSystem.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -1577,10 +1568,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await sasFileSystem.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -1606,10 +1594,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await identitySasFileSystem.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]

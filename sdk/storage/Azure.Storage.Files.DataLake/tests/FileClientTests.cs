@@ -501,10 +501,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await file.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -529,10 +526,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await oauthFile.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -559,10 +553,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await sasFile.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -595,10 +586,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await identitySasFile.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
             AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
         }
 
@@ -638,10 +626,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await sasFile.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
         }
 
         [Test]
@@ -675,10 +660,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             PathAccessControl accessControl = await identitySasFile.GetAccessControlAsync();
 
             // Assert
-            Assert.IsNotNull(accessControl.Owner);
-            Assert.IsNotNull(accessControl.Group);
-            Assert.IsNotNull(accessControl.Permissions);
-            Assert.IsNotNull(accessControl.AccessControlList);
+            AssertValidAccessControl(accessControl);
             AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
         }
 

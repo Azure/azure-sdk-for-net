@@ -140,6 +140,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(fileSystemInfo.LastModified);
         }
 
+        public static void AssertValidAccessControl(PathAccessControl accessControl)
+        {
+            Assert.IsNotNull(accessControl.Owner);
+            Assert.IsNotNull(accessControl.Group);
+            Assert.IsNotNull(accessControl.Permissions);
+            Assert.IsNotNull(accessControl.AccessControlList);
+        }
+
         public void AssertMetadataEquality(
             IDictionary<string, string> expected,
             IDictionary<string, string> actual,
