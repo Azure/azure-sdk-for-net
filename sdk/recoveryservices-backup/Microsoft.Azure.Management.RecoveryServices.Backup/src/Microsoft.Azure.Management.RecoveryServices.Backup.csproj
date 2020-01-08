@@ -13,6 +13,7 @@
 			<![CDATA[
 New features:
 - Added new fields RGNamePrefix and RGSuffix in AzureIaasVMProtectionPolicy
+- Added property TargetDirectoryForFileRestore in TargetRestoreInfo
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
