@@ -23,12 +23,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Runtime operations.
+    /// EndpointSettings operations.
     /// </summary>
-    public partial class Runtime : IServiceOperations<QnAMakerRuntimeClient>, IRuntime
+    public partial class EndpointSettings : IServiceOperations<QnAMakerClient>, IEndpointSettings
     {
         /// <summary>
-        /// Initializes a new instance of the Runtime class.
+        /// Initializes a new instance of the EndpointSettings class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public Runtime(QnAMakerRuntimeClient client)
+        public EndpointSettings(QnAMakerClient client)
         {
             if (client == null)
             {
@@ -46,17 +46,158 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         }
 
         /// <summary>
-        /// Gets a reference to the QnAMakerRuntimeClient
+        /// Gets a reference to the QnAMakerClient
         /// </summary>
-        public QnAMakerRuntimeClient Client { get; private set; }
+        public QnAMakerClient Client { get; private set; }
 
         /// <summary>
-        /// GenerateAnswer call to query the knowledgebase.
+        /// Gets endpoint settings for an endpoint.
         /// </summary>
-        /// <param name='kbId'>
-        /// Knowledgebase id.
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
         /// </param>
-        /// <param name='generateAnswerPayload'>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<EndpointSettingsDTO>> GetSettingsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSettings", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "endpointSettings";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<EndpointSettingsDTO>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EndpointSettingsDTO>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates endpoint settings for an endpoint.
+        /// </summary>
+        /// <param name='endpointSettingsPayload'>
         /// Post body of the request.
         /// </param>
         /// <param name='customHeaders'>
@@ -80,19 +221,15 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<QnASearchResultList>> GenerateAnswerWithHttpMessagesAsync(string kbId, QueryDTO generateAnswerPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<string>> UpdateSettingsWithHttpMessagesAsync(EndpointSettingsDTO endpointSettingsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.RuntimeEndpoint == null)
+            if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.RuntimeEndpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (kbId == null)
+            if (endpointSettingsPayload == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "kbId");
-            }
-            if (generateAnswerPayload == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "generateAnswerPayload");
+                throw new ValidationException(ValidationRules.CannotBeNull, "endpointSettingsPayload");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -101,20 +238,18 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("kbId", kbId);
-                tracingParameters.Add("generateAnswerPayload", generateAnswerPayload);
+                tracingParameters.Add("endpointSettingsPayload", endpointSettingsPayload);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GenerateAnswer", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSettings", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "knowledgebases/{kbId}/generateAnswer";
-            _url = _url.Replace("{RuntimeEndpoint}", Client.RuntimeEndpoint);
-            _url = _url.Replace("{kbId}", System.Uri.EscapeDataString(kbId));
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "endpointSettings";
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("PATCH");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
 
@@ -133,9 +268,9 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
 
             // Serialize Request
             string _requestContent = null;
-            if(generateAnswerPayload != null)
+            if(endpointSettingsPayload != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(generateAnswerPayload, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(endpointSettingsPayload, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -189,7 +324,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<QnASearchResultList>();
+            var _result = new HttpOperationResponse<string>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -198,7 +333,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<QnASearchResultList>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<string>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -210,152 +345,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Train call to add suggestions to the knowledgebase.
-        /// </summary>
-        /// <param name='kbId'>
-        /// Knowledgebase id.
-        /// </param>
-        /// <param name='trainPayload'>
-        /// Post body of the request.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse> TrainWithHttpMessagesAsync(string kbId, FeedbackRecordsDTO trainPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Client.RuntimeEndpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.RuntimeEndpoint");
-            }
-            if (kbId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "kbId");
-            }
-            if (trainPayload == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "trainPayload");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("kbId", kbId);
-                tracingParameters.Add("trainPayload", trainPayload);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Train", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "knowledgebases/{kbId}/train";
-            _url = _url.Replace("{RuntimeEndpoint}", Client.RuntimeEndpoint);
-            _url = _url.Replace("{kbId}", System.Uri.EscapeDataString(kbId));
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(trainPayload != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(trainPayload, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 204)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);

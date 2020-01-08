@@ -18,17 +18,33 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Runtime operations.
+    /// EndpointSettings operations.
     /// </summary>
-    public partial interface IRuntime
+    public partial interface IEndpointSettings
     {
         /// <summary>
-        /// GenerateAnswer call to query the knowledgebase.
+        /// Gets endpoint settings for an endpoint.
         /// </summary>
-        /// <param name='kbId'>
-        /// Knowledgebase id.
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
         /// </param>
-        /// <param name='generateAnswerPayload'>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<EndpointSettingsDTO>> GetSettingsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates endpoint settings for an endpoint.
+        /// </summary>
+        /// <param name='endpointSettingsPayload'>
         /// Post body of the request.
         /// </param>
         /// <param name='customHeaders'>
@@ -46,28 +62,6 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<QnASearchResultList>> GenerateAnswerWithHttpMessagesAsync(string kbId, QueryDTO generateAnswerPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Train call to add suggestions to the knowledgebase.
-        /// </summary>
-        /// <param name='kbId'>
-        /// Knowledgebase id.
-        /// </param>
-        /// <param name='trainPayload'>
-        /// Post body of the request.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<HttpOperationResponse> TrainWithHttpMessagesAsync(string kbId, FeedbackRecordsDTO trainPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<string>> UpdateSettingsWithHttpMessagesAsync(EndpointSettingsDTO endpointSettingsPayload, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

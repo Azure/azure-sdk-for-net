@@ -10,30 +10,30 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Context object with previous QnA's information.
+    /// Endpoint settings.
     /// </summary>
-    public partial class QueryDTOContext : QueryContextDTO
+    public partial class EndpointSettingsDTO
     {
         /// <summary>
-        /// Initializes a new instance of the QueryDTOContext class.
+        /// Initializes a new instance of the EndpointSettingsDTO class.
         /// </summary>
-        public QueryDTOContext()
+        public EndpointSettingsDTO()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryDTOContext class.
+        /// Initializes a new instance of the EndpointSettingsDTO class.
         /// </summary>
-        /// <param name="previousQnaId">Previous QnA Id - qnaId of the top
-        /// result.</param>
-        /// <param name="previousUserQuery">Previous user query.</param>
-        public QueryDTOContext(string previousQnaId = default(string), string previousUserQuery = default(string))
-            : base(previousQnaId, previousUserQuery)
+        /// <param name="activeLearning">Active Learning settings of the
+        /// endpoint.</param>
+        public EndpointSettingsDTO(EndpointSettingsDTOActiveLearning activeLearning = default(EndpointSettingsDTOActiveLearning))
         {
+            ActiveLearning = activeLearning;
             CustomInit();
         }
 
@@ -41,6 +41,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets active Learning settings of the endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "activeLearning")]
+        public EndpointSettingsDTOActiveLearning ActiveLearning { get; set; }
 
     }
 }

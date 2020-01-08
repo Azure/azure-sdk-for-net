@@ -10,30 +10,30 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Context object with previous QnA's information.
+    /// Active Learning settings of the endpoint.
     /// </summary>
-    public partial class QueryDTOContext : QueryContextDTO
+    public partial class ActiveLearningSettingsDTO
     {
         /// <summary>
-        /// Initializes a new instance of the QueryDTOContext class.
+        /// Initializes a new instance of the ActiveLearningSettingsDTO class.
         /// </summary>
-        public QueryDTOContext()
+        public ActiveLearningSettingsDTO()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryDTOContext class.
+        /// Initializes a new instance of the ActiveLearningSettingsDTO class.
         /// </summary>
-        /// <param name="previousQnaId">Previous QnA Id - qnaId of the top
-        /// result.</param>
-        /// <param name="previousUserQuery">Previous user query.</param>
-        public QueryDTOContext(string previousQnaId = default(string), string previousUserQuery = default(string))
-            : base(previousQnaId, previousUserQuery)
+        /// <param name="enable">True/False string providing Active
+        /// Learning</param>
+        public ActiveLearningSettingsDTO(string enable = default(string))
         {
+            Enable = enable;
             CustomInit();
         }
 
@@ -41,6 +41,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets true/False string providing Active Learning
+        /// </summary>
+        [JsonProperty(PropertyName = "enable")]
+        public string Enable { get; set; }
 
     }
 }
