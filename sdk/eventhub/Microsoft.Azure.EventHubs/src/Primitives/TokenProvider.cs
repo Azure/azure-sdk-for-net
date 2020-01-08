@@ -91,7 +91,7 @@ namespace Microsoft.Azure.EventHubs
             return new AzureActiveDirectoryTokenProvider(authCallback, authority, state);
         }
 
-        /// <summary>Creates Azure Managed Identity token provider.</summary>
+        /// <summary>Creates system assigned Azure Managed Identity token provider.</summary>
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateManagedIdentityTokenProvider()
         {
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.EventHubs
         }
 
 
-        /// <summary>Creates Azure Managed Identity token provider.</summary>
+        /// <summary>Creates user assigned Azure Managed Identity token provider.</summary>
         /// <param name="managedIdentityClientId">The client ID of user assigned managed identity.</param>
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateManagedIdentityTokenProvider(string managedIdentityClientId)
