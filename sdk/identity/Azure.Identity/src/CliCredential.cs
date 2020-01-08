@@ -22,7 +22,7 @@ namespace Azure.Identity
         private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to setup account";
         private const string WinAzureCLIError = "'az' is not recognized";
-        private const string InvalidResourceTemplate = "Resource is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
+        private const string InvalidResourceMessage = "Resource is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
 
         private readonly CredentialPipeline _pipeline;
         private readonly CliCredentialClient _client;
@@ -89,7 +89,7 @@ namespace Azure.Identity
 
                 if (!isResourceMatch)
                 {
-                    throw new Exception(InvalidResourceTemplate);
+                    throw new Exception(InvalidResourceMessage);
                 }
 
                 string command = $"az account get-access-token --output json --resource {resource}";
