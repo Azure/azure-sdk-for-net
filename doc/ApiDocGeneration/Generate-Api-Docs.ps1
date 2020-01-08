@@ -11,24 +11,8 @@ Param (
     $DocGenDir
 )
 
-Write-Verbose "Create variables for identifying package location and package safe names"
-$PackageLocation = "${ServiceDirectory}/${ArtifactName}"
-
-if ($ServiceDirectory -eq '*') {
-    $PackageLocation = "core/${ArtifactName}"
-}
-
-if ($ServiceDirectory -eq 'cognitiveservices') {
-    $PackageLocation = "cognitiveservices/${ArtifactsDirectoryName}"
-}
-
-if ($LibType -eq 'Management') {
-    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
-}
-
-Write-Verbose "Package Location ${PackageLocation}"
-
 Write-Verbose "Name Reccuring paths with variable names"
+$PackageLocation = "${ServiceDirectory}/${ArtifactName}"
 $FrameworkDir = "${BinDirectory}/${ArtifactName}/dll-docs"
 $ApiDir = "${FrameworkDir}/my-api"
 $ApiDependenciesDir = "${FrameworkDir}/dependencies/my-api"
@@ -39,6 +23,24 @@ $DocOutApiDir = "${DocOutDir}/api"
 $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
+
+if ($ServiceDirectory -eq '*') {
+    $PackageLocation = "core/${ArtifactName}"
+}
+
+if ($ServiceDirectory -eq 'cognitiveservices') {
+    $PackageLocation = "cognitiveservices/${ArtifactsDirectoryName}"
+    $FrameworkDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-docs"
+    $XmlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-xml-output"
+    $YamlOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/dll-yaml-output"
+    $DocOutDir = "${BinDirectory}/${ArtifactsDirectoryName}/docfx-output/docfx_project"
+}
+
+if ($LibType -eq 'Management') {
+    $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
+}
+
+Write-Verbose "Package Location ${PackageLocation}"
 
 Write-Verbose "Create Directories Required for Doc Generation"
 mkdir $ApiDir
