@@ -82,5 +82,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.Throws<ArgumentNullException>(() => Client.GetPropertiesOfSecretVersionsAsync(null));
             Assert.Throws<ArgumentException>(() => Client.GetPropertiesOfSecretVersionsAsync(""));
         }
+
+        [Test]
+        public void ChallengeBasedAuthenticationRequiresHttps()
+        {
+            // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
+            Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetSecretAsync("test"));
+        }
     }
 }

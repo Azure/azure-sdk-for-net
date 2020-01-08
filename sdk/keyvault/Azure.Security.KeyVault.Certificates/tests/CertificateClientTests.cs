@@ -55,5 +55,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             ex = Assert.ThrowsAsync<ArgumentException>(() => Client.DeleteIssuerAsync(string.Empty));
             Assert.AreEqual("issuerName", ex.ParamName);
         }
+
+        [Test]
+        public void ChallengeBasedAuthenticationRequiresHttps()
+        {
+            // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
+            Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetCertificateAsync("test"));
+        }
     }
 }
