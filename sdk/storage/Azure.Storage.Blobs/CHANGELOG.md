@@ -1,5 +1,12 @@
 # Release History
 
+## 12.2.0 (2020-01)
+ - Added Exists API to BlobBaseClient and BlobContainerClient
+ - Fixed issue where SAS content headers were not URL encoded when using BlobSasBuilder.
+ - Fixed progress reporting issue for parallel uploads
+ - Fixed bug where using SAS connection string from portal would throw an exception if it included
+   table endpoint.
+
 ## 12.1.0
 - Added check to enforce TokenCredential is used only over HTTPS
 - Support using SAS token from connection string
