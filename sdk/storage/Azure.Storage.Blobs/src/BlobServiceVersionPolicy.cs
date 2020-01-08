@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Azure.Core;
 
@@ -16,12 +17,7 @@ namespace Azure.Storage.Blobs
         public override void OnSendingRequest(HttpMessage message)
         {
             // Get ServiceVersion header
-            if (!message.Request.Headers.TryGetValue(Constants.HeaderNames.ServiceVersion, out string serviceVersionString))
-            {
-#pragma warning disable CA2208 // Instantiate argument exceptions correctly
-                throw new ArgumentNullException("x-ms-version");
-#pragma warning restore CA2208 // Instantiate argument exceptions correctly
-            }
+            Debug.Assert(message.Request.Headers.TryGetValue(Constants.HeaderNames.ServiceVersion, out string serviceVersionString));
 
             // Convert to ServiceVersion
             BlobClientOptions.ServiceVersion serviceVersion = ToServiceVersion(serviceVersionString);
