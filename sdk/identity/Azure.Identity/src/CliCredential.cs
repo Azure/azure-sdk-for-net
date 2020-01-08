@@ -22,6 +22,7 @@ namespace Azure.Identity
         private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to setup account";
         private const string WinAzureCLIError = "'az' is not recognized";
+        private const string InvalidResourceTemplate = "Resource is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
 
         private readonly CredentialPipeline _pipeline;
         private readonly CliCredentialClient _client;
@@ -82,10 +83,17 @@ namespace Azure.Identity
 
             try
             {
-                string command = ScopeUtilities.ScopesToResource(requestContext.Scopes);
-                string extendCommand = $"az account get-access-token --resource {command}";
+                string resource = ScopeUtilities.ScopesToResource(requestContext.Scopes);
+                string resourcePatter = "^[0-9a-zA-Z-.:/]+$";
+                bool isResourceMatch = Regex.IsMatch(resource, resourcePatter);
 
-                (string output, int exitCode) = _client.CreateProcess(extendCommand);
+                if (!isResourceMatch)
+                {
+                    throw new Exception(InvalidResourceTemplate);
+                }
+
+                string command = $"az account get-access-token --output json --resource {resource}";
+                (string output, int exitCode) = _client.CreateProcess(command);
 
                 if (exitCode != 0)
                 {
