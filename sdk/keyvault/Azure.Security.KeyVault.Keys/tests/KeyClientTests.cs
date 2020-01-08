@@ -13,7 +13,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new DefaultAzureCredential()));
+            KeyClientOptions options = new KeyClientOptions
+            {
+                Transport = new MockTransport(),
+            };
+
+            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public KeyClient Client { get; set; }
@@ -102,6 +107,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         {
             Assert.Throws<ArgumentNullException>(() => Client.GetPropertiesOfKeyVersionsAsync(null));
             Assert.Throws<ArgumentException>(() => Client.GetPropertiesOfKeyVersionsAsync(string.Empty));
+        }
+
+        [Test]
+        public void ChallengeBasedAuthenticationRequiresHttps()
+        {
+            // After passing parameter validation, ChallengeBasedAuthenticationPolicy should throw for "http" requests.
+            Assert.ThrowsAsync<InvalidOperationException>(() => Client.GetKeyAsync("test"));
         }
     }
 }
