@@ -7,7 +7,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Recognition of Personally Identifiable Information 
 * Linked Entity Recognition
 
-[Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation](textanalytics_refdocs) | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
+[Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
 ## Getting started
 
