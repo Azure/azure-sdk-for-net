@@ -17,7 +17,12 @@ namespace Azure.Storage.Files.Shares
         public override void OnSendingRequest(HttpMessage message)
         {
             // Get ServiceVersion header
-            Debug.Assert(message.Request.Headers.TryGetValue(Constants.HeaderNames.ServiceVersion, out string serviceVersionString));
+            if (!message.Request.Headers.TryGetValue(Constants.HeaderNames.ServiceVersion, out string serviceVersionString))
+            {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
+                throw new ArgumentNullException("x-ms-version");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
+            }
 
             // Convert to ServiceVersion
             ShareClientOptions.ServiceVersion serviceVersion = ToServiceVersion(serviceVersionString);
