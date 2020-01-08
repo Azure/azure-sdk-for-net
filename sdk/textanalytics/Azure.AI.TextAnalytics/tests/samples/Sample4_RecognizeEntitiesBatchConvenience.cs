@@ -34,12 +34,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"Recognized entities for each input are:");
             int i = 0;
-            foreach (var result in results)
+            foreach (RecognizeEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
                 Debug.WriteLine($"the following {result.NamedEntities.Count()} entities were found: ");
 
-                foreach (var entity in result.NamedEntities)
+                foreach (NamedEntity entity in result.NamedEntities)
                 {
                     Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }

@@ -45,9 +45,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (RecognizeLinkedEntitiesResult result in results)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     Debug.WriteLine($"    Extracted the following {result.LinkedEntities.Count()} linked entities:");
 
-                    foreach (var linkedEntity in result.LinkedEntities)
+                    foreach (LinkedEntity linkedEntity in result.LinkedEntities)
                     {
                         Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
                         foreach (LinkedEntityMatch match in linkedEntity.Matches)

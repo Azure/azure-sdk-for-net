@@ -33,12 +33,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
             int i = 0;
-            foreach (var result in results)
+            foreach (RecognizePiiEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
                 Debug.WriteLine($"the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies were" : "y was")} found:");
 
-                foreach (var entity in result.NamedEntities)
+                foreach (NamedEntity entity in result.NamedEntities)
                 {
                     Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }

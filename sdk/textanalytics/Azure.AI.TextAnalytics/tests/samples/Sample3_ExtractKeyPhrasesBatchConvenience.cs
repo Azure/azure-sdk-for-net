@@ -34,12 +34,12 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"Extracted key phrases for each input are:");
             int i = 0;
-            foreach (var result in results)
+            foreach (ExtractKeyPhrasesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
                 Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");
 
-                foreach (var keyPhrase in result.KeyPhrases)
+                foreach (string keyPhrase in result.KeyPhrases)
                 {
                     Debug.WriteLine($"    {keyPhrase}");
                 }

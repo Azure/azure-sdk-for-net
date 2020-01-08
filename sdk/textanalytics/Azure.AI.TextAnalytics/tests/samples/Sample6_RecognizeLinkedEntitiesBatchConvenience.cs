@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
             Debug.WriteLine($"Linked entities for each input are:\n");
             int i = 0;
-            foreach (var result in results)
+            foreach (RecognizeLinkedEntitiesResult result in results)
             {
                 Debug.Write($"For input: \"{inputs[i++]}\", ");
                 Debug.WriteLine($"extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");

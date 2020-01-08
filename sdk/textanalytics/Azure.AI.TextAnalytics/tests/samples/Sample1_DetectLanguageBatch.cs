@@ -48,9 +48,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (DetectLanguageResult result in results)
             {
-                var document = inputs[i++];
+                DetectLanguageInput document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
 

@@ -56,9 +56,11 @@ var inputs = new List<TextDocumentInput>
 RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
+To see the full example source files, see:
+
 * [Synchronously Sample4_RecognizeEntities.cs](../tests/samples/Sample4_RecognizeEntities.cs)
 * [Asynchronously Sample4_RecognizeEntitiesAsync.cs](../tests/samples/Sample4_RecognizeEntitiesAsync.cs)
 * [Synchronously Sample4_RecognizeEntitiesBatch.cs](../tests/samples/Sample4_RecognizeEntitiesBatch.cs)
-* [Synchronously Sample4_RecognizeEntitiesBatchConvienice.cs](../tests/samples/Sample4_RecognizeEntitiesBatchConvienice.cs)
+* [Synchronously Sample4_RecognizeEntitiesBatchConvenience.cs](../tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs)
 
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

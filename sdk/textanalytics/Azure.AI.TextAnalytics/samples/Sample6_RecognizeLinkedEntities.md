@@ -59,6 +59,8 @@ var inputs = new List<TextDocumentInput>
 RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
+To see the full example source files, see:
+
 * [Sample6_RecognizeLinkedEntities.cs](../tests/samples/Sample6_RecognizeLinkedEntities.cs)
 * [Sample6_RecognizeLinkedEntitiesBatch.cs](../tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs)
 * [Sample6_RecognizeLinkedEntitiesBatchConvienice.cs](../tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvienice.cs)

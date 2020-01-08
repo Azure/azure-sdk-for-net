@@ -45,9 +45,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (ExtractKeyPhrasesResult result in results)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     Debug.WriteLine($"    Extracted the following {result.KeyPhrases.Count()} key phrases:");
 
-                    foreach (var keyPhrase in result.KeyPhrases)
+                    foreach (string keyPhrase in result.KeyPhrases)
                     {
                         Debug.WriteLine($"        {keyPhrase}");
                     }

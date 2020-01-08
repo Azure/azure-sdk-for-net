@@ -45,9 +45,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (RecognizeEntitiesResult result in results)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
@@ -59,7 +59,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} entities:");
 
-                    foreach (var entity in result.NamedEntities)
+                    foreach (NamedEntity entity in result.NamedEntities)
                     {
                         Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }

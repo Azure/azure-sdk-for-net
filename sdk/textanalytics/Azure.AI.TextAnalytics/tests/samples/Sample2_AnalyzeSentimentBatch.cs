@@ -48,9 +48,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (AnalyzeSentimentResult result in results)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = inputs[i++];
 
                 if (result.ErrorMessage != default)
                 {
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
-                    foreach (var sentenceSentiment in result.SentenceSentiments)
+                    foreach (TextSentiment sentenceSentiment in result.SentenceSentiments)
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 

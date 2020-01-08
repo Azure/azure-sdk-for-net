@@ -41,9 +41,9 @@ namespace Azure.AI.TextAnalytics.Samples
             Debug.WriteLine($"Results of Azure Text Analytics \"Pii Entity Recognition\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (RecognizePiiEntitiesResult result in results)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = inputs[i++];
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
@@ -55,7 +55,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                     Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies" : "y ")}:");
 
-                    foreach (var entity in result.NamedEntities)
+                    foreach (NamedEntity entity in result.NamedEntities)
                     {
                         Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }

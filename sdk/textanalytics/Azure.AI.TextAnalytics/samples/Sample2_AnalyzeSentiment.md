@@ -4,7 +4,7 @@ This sample demonstrates how to analyze the sentiment in one or more text inputs
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to the sentiment in a text input, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics subscription key.  You can set `endpoint` and `subscriptionKey` based on an environment variable, a configuration setting, or any way that works for your application.
+To create a new `TextAnalyticsClient` to analyze the sentiment in a text input, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics subscription key.  You can set `endpoint` and `subscriptionKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample2CreateClient
 var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
@@ -60,8 +60,10 @@ var inputs = new List<TextDocumentInput>
 AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
+To see the full example source files, see:
+
 * [Sample2_AnalyzeSentiment.cs](../tests/samples/Sample2_AnalyzeSentiment.cs)
 * [Sample2_AnalyzeSentimentBatch.cs](../tests/samples/Sample2_AnalyzeSentimentBatch.cs)
-* [Sample2_AnalyzeSentimentBatchConvienice.cs](../tests/samples/Sample2_AnalyzeSentimentBatchConvienice.cs)
+* [Sample2_AnalyzeSentimentBatchConvenience.cs](../tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs)
 
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md

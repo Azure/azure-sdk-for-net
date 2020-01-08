@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             Debug.WriteLine($"Analyzing sentiment for inputs:");
-            foreach (var input in inputs)
+            foreach (string input in inputs)
             {
                 Debug.WriteLine($"    {input}");
             }

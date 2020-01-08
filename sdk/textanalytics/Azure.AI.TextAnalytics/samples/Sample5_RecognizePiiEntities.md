@@ -52,8 +52,10 @@ var inputs = new List<TextDocumentInput>
 RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
+To see the full example source files, see:
+
 * [Sample5_RecognizePiiEntities.cs](../tests/samples/Sample5_RecognizePiiEntities.cs)
 * [Sample5_RecognizePiiEntitiesBatch.cs](../tests/samples/Sample5_RecognizePiiEntitiesBatch.cs)
-* [Sample5_RecognizePiiEntitiesBatchConvienice.cs](../tests/samples/Sample5_RecognizePiiEntitiesBatchConvienice.cs)
+* [Sample5_RecognizePiiEntitiesBatchConvenience.cs](../tests/samples/Sample5_RecognizePiiEntitiesBatchConvenience.cs)
 
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
