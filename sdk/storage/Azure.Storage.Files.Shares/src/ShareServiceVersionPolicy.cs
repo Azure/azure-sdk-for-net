@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileServiceVersionPolicy : ServiceVersionPolicy
+    internal class ShareServiceVersionPolicy : ServiceVersionPolicy
     {
         /// <summary>
         /// OnSendingRequest override.

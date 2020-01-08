@@ -88,6 +88,8 @@ namespace Azure.Storage
             ServiceVersionPolicy serviceVersionPolicy = null)
         {
             List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
+            List<HttpPipelinePolicy> perCallClientPolicies = new List<HttpPipelinePolicy>();
+
             StorageResponseClassifier classifier = new StorageResponseClassifier();
 
             if (geoRedundantSecondaryStorageUri != null)
@@ -98,14 +100,14 @@ namespace Azure.Storage
 
             if (serviceVersionPolicy != null)
             {
-                perRetryClientPolicies.Add(serviceVersionPolicy);
+                perCallClientPolicies.Add(serviceVersionPolicy);
             }
 
             perRetryClientPolicies.Add(StorageRequestValidationPipelinePolicy.Shared);
             perRetryClientPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
             return HttpPipelineBuilder.Build(
                options,
-               Array.Empty<HttpPipelinePolicy>(),
+               perCallClientPolicies.ToArray(),
                perRetryClientPolicies.ToArray(),
                classifier);
         }
