@@ -128,6 +128,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -385,6 +389,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -616,6 +624,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
@@ -873,6 +885,10 @@ namespace Microsoft.Azure.Management.EventHub
             }
             if (eventHubName != null)
             {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
                 if (eventHubName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);

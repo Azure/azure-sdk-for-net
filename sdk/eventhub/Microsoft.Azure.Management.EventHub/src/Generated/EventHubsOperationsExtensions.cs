@@ -270,6 +270,8 @@ namespace Microsoft.Azure.Management.EventHub
 
             /// <summary>
             /// Creates or updates an AuthorizationRule for the specified Event Hub.
+            /// Creation/update of the AuthorizationRule will take a few seconds to take
+            /// effect.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -296,6 +298,8 @@ namespace Microsoft.Azure.Management.EventHub
 
             /// <summary>
             /// Creates or updates an AuthorizationRule for the specified Event Hub.
+            /// Creation/update of the AuthorizationRule will take a few seconds to take
+            /// effect.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
