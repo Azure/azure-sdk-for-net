@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
+using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 
@@ -125,7 +125,14 @@ namespace Azure.Messaging.EventHubs.Amqp
             RetryPolicy = retryPolicy;
             ConnectionScope = connectionScope;
             MessageConverter = messageConverter;
-            SendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, timeout, CancellationToken.None), link => link.SafeClose());
+
+            SendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
+                timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, timeout, CancellationToken.None),
+                link =>
+                {
+                    link.Session?.SafeClose();
+                    link.SafeClose();
+                });
         }
 
         /// <summary>
@@ -297,7 +304,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (batchMessage.SerializedMessageSize > MaximumMessageSize)
                         {
-                            throw new MessageSizeExceededException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize));
+                            throw new EventHubsException(EventHubName, string.Format(Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaximumMessageSize), EventHubsException.FailureReason.MessageSizeExceeded);
                         }
 
                         // Attempt to send the message batch.

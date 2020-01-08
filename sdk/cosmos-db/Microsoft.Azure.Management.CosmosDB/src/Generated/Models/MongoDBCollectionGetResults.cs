@@ -36,32 +36,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// Initializes a new instance of the MongoDBCollectionGetResults
         /// class.
         /// </summary>
-        /// <param name="mongoDBCollectionGetResultsId">Name of the Cosmos DB
-        /// MongoDB collection</param>
         /// <param name="id">The unique resource identifier of the ARM
         /// resource.</param>
         /// <param name="name">The name of the ARM resource.</param>
         /// <param name="type">The type of Azure resource.</param>
         /// <param name="location">The location of the resource group to which
         /// the resource belongs.</param>
-        /// <param name="shardKey">A key-value pair of shard keys to be applied
-        /// for the request.</param>
-        /// <param name="indexes">List of index keys</param>
-        /// <param name="_rid">A system generated property. A unique
-        /// identifier.</param>
-        /// <param name="_ts">A system generated property that denotes the last
-        /// updated timestamp of the resource.</param>
-        /// <param name="_etag">A system generated property representing the
-        /// resource etag required for optimistic concurrency control.</param>
-        public MongoDBCollectionGetResults(string mongoDBCollectionGetResultsId, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> shardKey = default(IDictionary<string, string>), IList<MongoIndex> indexes = default(IList<MongoIndex>), string _rid = default(string), object _ts = default(object), string _etag = default(string))
+        public MongoDBCollectionGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), MongoDBCollectionGetPropertiesResource resource = default(MongoDBCollectionGetPropertiesResource))
             : base(id, name, type, location, tags)
         {
-            MongoDBCollectionGetResultsId = mongoDBCollectionGetResultsId;
-            ShardKey = shardKey;
-            Indexes = indexes;
-            this._rid = _rid;
-            this._ts = _ts;
-            this._etag = _etag;
+            Resource = resource;
             CustomInit();
         }
 
@@ -71,43 +55,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the Cosmos DB MongoDB collection
         /// </summary>
-        [JsonProperty(PropertyName = "properties.id")]
-        public string MongoDBCollectionGetResultsId { get; set; }
-
-        /// <summary>
-        /// Gets or sets a key-value pair of shard keys to be applied for the
-        /// request.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.shardKey")]
-        public IDictionary<string, string> ShardKey { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of index keys
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.indexes")]
-        public IList<MongoIndex> Indexes { get; set; }
-
-        /// <summary>
-        /// Gets a system generated property. A unique identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._rid")]
-        public string _rid { get; private set; }
-
-        /// <summary>
-        /// Gets a system generated property that denotes the last updated
-        /// timestamp of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._ts")]
-        public object _ts { get; private set; }
-
-        /// <summary>
-        /// Gets a system generated property representing the resource etag
-        /// required for optimistic concurrency control.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties._etag")]
-        public string _etag { get; private set; }
+        [JsonProperty(PropertyName = "properties.resource")]
+        public MongoDBCollectionGetPropertiesResource Resource { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -117,9 +67,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MongoDBCollectionGetResultsId == null)
+            if (Resource != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MongoDBCollectionGetResultsId");
+                Resource.Validate();
             }
         }
     }

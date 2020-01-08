@@ -68,6 +68,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// set.</param>
         /// <param name="selectedRecoveryAzureNetworkId">The recovery virtual
         /// network.</param>
+        /// <param name="selectedTfoAzureNetworkId">The test failover virtual
+        /// network.</param>
         /// <param name="vmNics">The virtual machine nic details.</param>
         /// <param name="vmSyncedConfigDetails">The synced configuration
         /// details.</param>
@@ -104,7 +106,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="vmEncryptionType">The encryption type of the VM.
         /// Possible values include: 'NotEncrypted', 'OnePassEncrypted',
         /// 'TwoPassEncrypted'</param>
-        public A2AReplicationDetails(string fabricObjectId = default(string), string initialPrimaryFabricLocation = default(string), string initialRecoveryFabricLocation = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmGroupCreateOption = default(string), string managementId = default(string), IList<A2AProtectedDiskDetails> protectedDisks = default(IList<A2AProtectedDiskDetails>), IList<A2AUnprotectedDiskDetails> unprotectedDisks = default(IList<A2AUnprotectedDiskDetails>), IList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default(IList<A2AProtectedManagedDiskDetails>), string recoveryBootDiagStorageAccountId = default(string), string primaryFabricLocation = default(string), string recoveryFabricLocation = default(string), string osType = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureVMName = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryCloudService = default(string), string recoveryAvailabilitySet = default(string), string selectedRecoveryAzureNetworkId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails = default(AzureToAzureVmSyncedConfigDetails), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string agentVersion = default(string), bool? isReplicationAgentUpdateRequired = default(bool?), string recoveryFabricObjectId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), string lifecycleId = default(string), string testFailoverRecoveryFabricObjectId = default(string), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string recoveryAvailabilityZone = default(string), string vmEncryptionType = default(string))
+        /// <param name="tfoAzureVMName">The test failover VM name.</param>
+        public A2AReplicationDetails(string fabricObjectId = default(string), string initialPrimaryFabricLocation = default(string), string initialRecoveryFabricLocation = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmGroupCreateOption = default(string), string managementId = default(string), IList<A2AProtectedDiskDetails> protectedDisks = default(IList<A2AProtectedDiskDetails>), IList<A2AUnprotectedDiskDetails> unprotectedDisks = default(IList<A2AUnprotectedDiskDetails>), IList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default(IList<A2AProtectedManagedDiskDetails>), string recoveryBootDiagStorageAccountId = default(string), string primaryFabricLocation = default(string), string recoveryFabricLocation = default(string), string osType = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureVMName = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryCloudService = default(string), string recoveryAvailabilitySet = default(string), string selectedRecoveryAzureNetworkId = default(string), string selectedTfoAzureNetworkId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails = default(AzureToAzureVmSyncedConfigDetails), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string agentVersion = default(string), bool? isReplicationAgentUpdateRequired = default(bool?), string recoveryFabricObjectId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), string lifecycleId = default(string), string testFailoverRecoveryFabricObjectId = default(string), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string recoveryAvailabilityZone = default(string), string vmEncryptionType = default(string), string tfoAzureVMName = default(string))
         {
             FabricObjectId = fabricObjectId;
             InitialPrimaryFabricLocation = initialPrimaryFabricLocation;
@@ -126,6 +129,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             RecoveryCloudService = recoveryCloudService;
             RecoveryAvailabilitySet = recoveryAvailabilitySet;
             SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkId;
+            SelectedTfoAzureNetworkId = selectedTfoAzureNetworkId;
             VmNics = vmNics;
             VmSyncedConfigDetails = vmSyncedConfigDetails;
             MonitoringPercentageCompletion = monitoringPercentageCompletion;
@@ -142,6 +146,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LastRpoCalculatedTime = lastRpoCalculatedTime;
             RecoveryAvailabilityZone = recoveryAvailabilityZone;
             VmEncryptionType = vmEncryptionType;
+            TfoAzureVMName = tfoAzureVMName;
             CustomInit();
         }
 
@@ -272,6 +277,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string SelectedRecoveryAzureNetworkId { get; set; }
 
         /// <summary>
+        /// Gets or sets the test failover virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedTfoAzureNetworkId")]
+        public string SelectedTfoAzureNetworkId { get; set; }
+
+        /// <summary>
         /// Gets or sets the virtual machine nic details.
         /// </summary>
         [JsonProperty(PropertyName = "vmNics")]
@@ -376,6 +387,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "vmEncryptionType")]
         public string VmEncryptionType { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the test failover VM name.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoAzureVMName")]
+        public string TfoAzureVMName { get; set; }
 
     }
 }

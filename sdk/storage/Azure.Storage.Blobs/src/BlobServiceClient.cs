@@ -42,6 +42,16 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly BlobClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The authentication policy for our pipeline.  We cache it here in
         /// case we need to construct a pipeline for authenticating batch
         /// operations.
@@ -140,6 +150,7 @@ namespace Azure.Storage.Blobs
             options ??= new BlobClientOptions();
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _pipeline = options.Build(_authenticationPolicy);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
         }
@@ -222,7 +233,13 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions options)
-            : this(serviceUri, authentication, new ClientDiagnostics(options), options?.CustomerProvidedKey, options.Build(authentication))
+            : this(
+                serviceUri,
+                authentication,
+                options?.Version ?? BlobClientOptions.LatestVersion,
+                new ClientDiagnostics(options),
+                options?.CustomerProvidedKey,
+                options.Build(authentication))
         {
 
         }
@@ -235,17 +252,26 @@ namespace Azure.Storage.Blobs
         /// A <see cref="Uri"/> referencing the blob service.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
         /// </param>
-        /// <param name="authentication"></param>
-        /// <param name="clientDiagnostics"></param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey, HttpPipeline pipeline)
+        internal BlobServiceClient(Uri serviceUri, HttpPipelinePolicy authentication, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey, HttpPipeline pipeline)
         {
             _uri = serviceUri;
             _authenticationPolicy = authentication;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
@@ -276,7 +302,7 @@ namespace Azure.Storage.Blobs
         /// </returns>
         protected static BlobServiceClient CreateClient(Uri serviceUri, BlobClientOptions options, HttpPipelinePolicy authentication, HttpPipeline pipeline)
         {
-            return new BlobServiceClient(serviceUri, authentication, new ClientDiagnostics(options), null, pipeline);
+            return new BlobServiceClient(serviceUri, authentication, options.Version, new ClientDiagnostics(options), null, pipeline);
         }
         #endregion ctors
 
@@ -293,7 +319,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="BlobContainerClient"/> for the desired container.
         /// </returns>
         public virtual BlobContainerClient GetBlobContainerClient(string blobContainerName) =>
-            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            new BlobContainerClient(Uri.AppendToPath(blobContainerName), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
 
         #region protected static accessors for Azure.Storage.Blobs.Batch
         /// <summary>
@@ -321,8 +347,7 @@ namespace Azure.Storage.Blobs
         /// <param name="client">The BlobServiceClient.</param>
         /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
         protected static BlobClientOptions GetClientOptions(BlobServiceClient client) =>
-            // TODO: Replace this with the client's version once that's relevant
-            new BlobClientOptions(BlobClientOptions.LatestVersion)
+            new BlobClientOptions(client.Version)
             {
                 // We only use this for communicating diagnostics, at the moment
                 Diagnostics =
@@ -468,6 +493,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: continuationToken,
                         prefix: prefix,
                         maxresults: pageSizeHint,
@@ -580,6 +606,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Blob.Service.GetAccountInfoOperationName,
                         cancellationToken: cancellationToken)
@@ -686,6 +713,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Blob.Service.GetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -814,6 +842,7 @@ namespace Azure.Storage.Blobs
                         Pipeline,
                         Uri,
                         properties,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Blob.Service.SetPropertiesOperationName,
                         cancellationToken: cancellationToken)
@@ -926,6 +955,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Blob.Service.GetStatisticsOperationName,
                         cancellationToken: cancellationToken)
@@ -1071,6 +1101,7 @@ namespace Azure.Storage.Blobs
                         Pipeline,
                         Uri,
                         keyInfo: keyInfo,
+                        version: Version.ToVersionString(),
                         async: async,
                         operationName: Constants.Blob.Service.GetUserDelegationKeyOperationName,
                         cancellationToken: cancellationToken)

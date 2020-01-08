@@ -11,6 +11,8 @@ jobs:
   - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
     parameters:
       ServiceDirectory: storage
+      BuildInParallel: false
+      TimeoutInMinutes: 300
       PreSteps:
         - pwsh: |
             $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"

@@ -60,6 +60,16 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly BlobClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -169,6 +179,7 @@ namespace Azure.Storage.Blobs
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
         }
@@ -259,6 +270,7 @@ namespace Azure.Storage.Blobs
             _uri = blobContainerUri;
             options ??= new BlobClientOptions();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
@@ -276,12 +288,16 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics"></param>
-        /// /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        /// <param name="customerProvidedKey">Customer provided key.</param>
+        internal BlobContainerClient(Uri containerUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
             _uri = containerUri;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
@@ -307,10 +323,8 @@ namespace Azure.Storage.Blobs
         /// <returns>
         /// New instance of the <see cref="BlobContainerClient"/> class.
         /// </returns>
-        protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline)
-        {
-            return new BlobContainerClient(containerUri, pipeline, new ClientDiagnostics(options), null);
-        }
+        protected static BlobContainerClient CreateClient(Uri containerUri, BlobClientOptions options, HttpPipeline pipeline) =>
+            new BlobContainerClient(containerUri, pipeline, options.Version, new ClientDiagnostics(options), null);
         #endregion ctor
 
         /// <summary>
@@ -322,7 +336,7 @@ namespace Azure.Storage.Blobs
         /// <param name="blobName">The name of the blob.</param>
         /// <returns>A new <see cref="BlobClient"/> instance.</returns>
         public virtual BlobClient GetBlobClient(string blobName) =>
-            new BlobClient(Uri.AppendToPath(blobName), _pipeline, ClientDiagnostics, CustomerProvidedKey);
+            new BlobClient(Uri.AppendToPath(blobName), _pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -646,8 +660,9 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
-                        metadata: metadata,
                         access: publicAccessType,
+                        version: Version.ToVersionString(),
+                        metadata: metadata,
                         async: async,
                         operationName: operationName,
                         cancellationToken: cancellationToken)
@@ -894,6 +909,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -914,6 +930,113 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion Delete
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<FlattenedContainerItem> response = await BlobRestClient.Container.GetPropertiesAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: Constants.Blob.Container.ExistsOperationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+            }
+        }
+        #endregion Exists
 
         #region GetProperties
         /// <summary>
@@ -1029,6 +1152,7 @@ namespace Azure.Storage.Blobs
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             async: async,
                             operationName: Constants.Blob.Container.GetPropertiesOperationName,
@@ -1191,6 +1315,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
@@ -1321,6 +1446,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: Constants.Blob.Container.GetAccessPolicyOperationName,
@@ -1516,6 +1642,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         permissions: permissions,
                         leaseId: conditions?.LeaseId,
                         access: accessType,
@@ -1689,6 +1816,7 @@ namespace Azure.Storage.Blobs
                           ClientDiagnostics,
                           Pipeline,
                           Uri,
+                          version: Version.ToVersionString(),
                           marker: marker,
                           prefix: prefix,
                           maxresults: pageSizeHint,
@@ -1929,6 +2057,7 @@ namespace Azure.Storage.Blobs
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,

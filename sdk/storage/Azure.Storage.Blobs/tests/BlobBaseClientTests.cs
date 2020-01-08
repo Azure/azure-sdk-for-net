@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1295,6 +1296,51 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task ExistsAsync_Exists()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+
+            // Act
+            Response<bool> response = await blob.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_NotExists()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlobBaseClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+
+            // Act
+            Response<bool> response = await blob.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            BlobBaseClient unauthorizedBlobClient = InstrumentClient(new BlobBaseClient(blob.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedBlobClient.ExistsAsync(),
+                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode.Split('\n')[0]));
+        }
+
+        [Test]
         public async Task GetPropertiesAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1410,6 +1456,63 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_BlobSasWithContentHeaders()
+        {
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+
+            // Arrange
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                Protocol = SasProtocol.None,
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                CacheControl = "\\cache control?",
+                ContentDisposition = "\\content disposition?",
+                ContentEncoding = "\\content encoding?",
+                ContentLanguage = "\\content language?",
+                ContentType = "\\content type?"
+            };
+            blobSasBuilder.SetPermissions(
+                BlobSasPermissions.All);
+
+            BlobSasQueryParameters blobSasQueryParameters = blobSasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+
+            // Act
+            string queryParametersString = blobSasQueryParameters.ToString();
+
+            // Assert
+            Assert.IsTrue(queryParametersString.Contains("rscc=%5Ccache+control%3F"));
+            Assert.IsTrue(queryParametersString.Contains("rscd=%5Ccontent+disposition%3F"));
+            Assert.IsTrue(queryParametersString.Contains("rsce=%5Ccontent+encoding%3F"));
+            Assert.IsTrue(queryParametersString.Contains("rscl=%5Ccontent+language%3F"));
+            Assert.IsTrue(queryParametersString.Contains("rsct=%5Ccontent+type%3F"));
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(new Uri(TestConfigDefault.BlobServiceEndpoint));
+            blobUriBuilder.BlobName = blobName;
+            blobUriBuilder.BlobContainerName = containerName;
+            blobUriBuilder.Sas = blobSasQueryParameters;
+            BlockBlobClient sasBlob = InstrumentClient(new BlockBlobClient(blobUriBuilder.ToUri(), GetOptions()));
+            // Act
+            Response<BlobProperties> response = await sasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+            Assert.IsTrue(sasBlob.Uri.Query.Contains("rscc=%5Ccache+control%3F"));
+            Assert.IsTrue(sasBlob.Uri.Query.Contains("rscd=%5Ccontent+disposition%3F"));
+            Assert.IsTrue(sasBlob.Uri.Query.Contains("rsce=%5Ccontent+encoding%3F"));
+            Assert.IsTrue(sasBlob.Uri.Query.Contains("rscl=%5Ccontent+language%3F"));
+            Assert.IsTrue(sasBlob.Uri.Query.Contains("rsct=%5Ccontent+type%3F"));
         }
 
         [Test]

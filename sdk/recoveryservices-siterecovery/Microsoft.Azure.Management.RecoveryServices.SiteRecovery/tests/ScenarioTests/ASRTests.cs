@@ -52,6 +52,7 @@ namespace RecoveryServices.SiteRecovery.Tests
         private const string a2aRecoveryResourceGroup =
             "/subscriptions/a7d8f9d0-930c-4dc8-9c14-1526ba255c20/resourceGroups/sdkTestVmRG-asr";
         private const string a2aReplicationProtectedItemName = "sdkTestVm1";
+        private const string a2aVirtualMachineToValidate = "testVm1";
 
         TestHelper testHelper { get; set; }
 
@@ -1997,6 +1998,34 @@ namespace RecoveryServices.SiteRecovery.Tests
                 var client = testHelper.SiteRecoveryClient;
 
                 client.ReplicationVaultHealth.Get();
+            }
+        }
+
+        [Fact]
+        public void GetReplicationEligibilityResults()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                testHelper.Initialize(context, "testRg1", "");
+                var client = testHelper.SiteRecoveryClient;
+
+                var replicationEligibilityResults = client.ReplicationEligibilityResults.Get(a2aVirtualMachineToValidate);
+
+                Assert.NotNull(replicationEligibilityResults);
+            }
+        }
+
+        [Fact]
+        public void EnumerateReplicationEligibilityResults()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                testHelper.Initialize(context, "testRg1", "");
+                var client = testHelper.SiteRecoveryClient;
+
+                var replicationEligibilityResultsCollection = client.ReplicationEligibilityResults.List(a2aVirtualMachineToValidate);
+
+                Assert.NotNull(replicationEligibilityResultsCollection);
             }
         }
     }

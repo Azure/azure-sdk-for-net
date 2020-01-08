@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// the specified artifact.</param>
         /// <param name="resourceGroup">Name of the resource group placeholder
         /// to which the policy will be assigned.</param>
-        public PolicyAssignmentArtifact(string policyDefinitionId, IDictionary<string, ParameterValueBase> parameters, string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), IList<string> dependsOn = default(IList<string>), string resourceGroup = default(string))
+        public PolicyAssignmentArtifact(string policyDefinitionId, IDictionary<string, ParameterValue> parameters, string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), IList<string> dependsOn = default(IList<string>), string resourceGroup = default(string))
             : base(id, type, name)
         {
             DisplayName = displayName;
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// Gets or sets parameter values for the policy definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
-        public IDictionary<string, ParameterValueBase> Parameters { get; set; }
+        public IDictionary<string, ParameterValue> Parameters { get; set; }
 
         /// <summary>
         /// Gets or sets name of the resource group placeholder to which the
@@ -133,6 +133,16 @@ namespace Microsoft.Azure.Management.Blueprint.Models
                 if (Description.Length > 500)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "Description", 500);
+                }
+            }
+            if (Parameters != null)
+            {
+                foreach (var valueElement in Parameters.Values)
+                {
+                    if (valueElement != null)
+                    {
+                        valueElement.Validate();
+                    }
                 }
             }
         }

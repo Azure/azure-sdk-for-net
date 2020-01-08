@@ -53,12 +53,18 @@ namespace Microsoft.Azure.Management.Media.Models
         /// this JobOutput within the Job. Note that this index is the same as
         /// the relative index of the corresponding TransformOutput within its
         /// Transform.</param>
-        public JobOutput(JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string))
+        /// <param name="startTime">The UTC date and time at which this Job
+        /// Output began processing.</param>
+        /// <param name="endTime">The UTC date and time at which this Job
+        /// Output finished processing.</param>
+        public JobOutput(JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
         {
             Error = error;
             State = state;
             Progress = progress;
             Label = label;
+            StartTime = startTime;
+            EndTime = endTime;
             CustomInit();
         }
 
@@ -108,6 +114,20 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "label")]
         public string Label { get; set; }
+
+        /// <summary>
+        /// Gets the UTC date and time at which this Job Output began
+        /// processing.
+        /// </summary>
+        [JsonProperty(PropertyName = "startTime")]
+        public System.DateTime? StartTime { get; private set; }
+
+        /// <summary>
+        /// Gets the UTC date and time at which this Job Output finished
+        /// processing.
+        /// </summary>
+        [JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; private set; }
 
     }
 }

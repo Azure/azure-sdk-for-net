@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Details of an administrator of a certificate <see cref="CertificateIssuer"/>.
+    /// Details of an administrator of a <see cref="CertificateIssuer"/>.
     /// </summary>
     public class AdministratorContact
     {

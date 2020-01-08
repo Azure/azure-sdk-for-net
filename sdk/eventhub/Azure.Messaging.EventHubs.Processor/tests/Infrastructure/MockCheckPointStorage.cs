@@ -24,17 +24,23 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <summary>The primitive for synchronizing access during ownership update.</summary>
         private readonly object _ownershipLock = new object();
 
-        /// <summary>The set of stored ownership.</summary>
-        private readonly Dictionary<(string, string, string, string), PartitionOwnership> _ownership;
-
         /// <summary>The primitive for synchronizing access during checkpoint update.</summary>
         private readonly object _checkpointLock = new object();
 
-        /// <summary>The set of stored checkpoints.</summary>
-        private readonly Dictionary<(string, string, string, string), Checkpoint> _checkpoints;
-
         /// <summary>Logs activities performed by this partition manager.</summary>
         private readonly Action<string> _logger;
+
+        /// <summary>
+        ///   The set of checkpoints held for this instance.
+        /// </summary>
+        ///
+        public Dictionary<(string, string, string, string), Checkpoint> Checkpoints { get; }
+
+        /// <summary>
+        ///   The set of stored ownership.
+        /// </summary>
+        ///
+        public Dictionary<(string, string, string, string), PartitionOwnership> Ownership { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="MockCheckPointStorage"/> class.
@@ -46,8 +52,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         {
             _logger = logger;
 
-            _ownership = new Dictionary<(string, string, string, string), PartitionOwnership>();
-            _checkpoints = new Dictionary<(string, string, string, string), Checkpoint>();
+            Ownership = new Dictionary<(string, string, string, string), PartitionOwnership>();
+            Checkpoints = new Dictionary<(string, string, string, string), Checkpoint>();
         }
 
         /// <summary>
@@ -70,7 +76,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             lock (_ownershipLock)
             {
-                ownershipList = _ownership.Values
+                ownershipList = Ownership.Values
                     .Where(ownership => ownership.FullyQualifiedNamespace == fullyQualifiedNamespace
                         && ownership.EventHubName == eventHubName
                         && ownership.ConsumerGroup == consumerGroup)
@@ -106,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
                     // In case the partition already has an owner, the ETags must match in order to claim it.
 
-                    if (_ownership.TryGetValue(key, out PartitionOwnership currentOwnership))
+                    if (Ownership.TryGetValue(key, out PartitionOwnership currentOwnership))
                     {
                         isClaimable = string.Equals(ownership.ETag, currentOwnership.ETag, StringComparison.InvariantCultureIgnoreCase);
                     }
@@ -115,14 +121,14 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                     {
                         ownership.ETag = Guid.NewGuid().ToString();
 
-                        _ownership[key] = ownership;
+                        Ownership[key] = ownership;
                         claimedOwnership.Add(ownership);
 
-                        Log($"Ownership with partition id = '{ownership.PartitionId}' claimed.");
+                        Log($"Ownership with partition id = '{ownership.PartitionId}' claimed by OwnershipIdentifier = '{ownership.OwnerIdentifier}'.");
                     }
                     else
                     {
-                        Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable.");
+                        Log($"Ownership with partition id = '{ownership.PartitionId}' is not claimable by OwnershipIdentifier = '{ownership.OwnerIdentifier}'.");
                     }
                 }
             }
@@ -150,7 +156,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             lock (_checkpointLock)
             {
-                checkpointList = _checkpoints.Values
+                checkpointList = Checkpoints.Values
                     .Where(checkpoint => checkpoint.FullyQualifiedNamespace == fullyQualifiedNamespace
                         && checkpoint.EventHubName == eventHubName
                         && checkpoint.ConsumerGroup == consumerGroup)
@@ -173,7 +179,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             lock (_checkpointLock)
             {
                 var key = (checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId);
-                _checkpoints[key] = checkpoint;
+                Checkpoints[key] = checkpoint;
 
                 Log($"Checkpoint with partition id = '{checkpoint.PartitionId}' updated successfully.");
             }

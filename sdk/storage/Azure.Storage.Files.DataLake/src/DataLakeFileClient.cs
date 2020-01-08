@@ -166,7 +166,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal DataLakeFileClient(Uri fileUri, HttpPipeline pipeline) : base(fileUri, pipeline)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeFileClient(Uri fileUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+            : base(fileUri, pipeline, version, clientDiagnostics)
         {
         }
         #endregion ctors
@@ -475,7 +483,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -537,7 +545,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -1468,6 +1476,7 @@ namespace Azure.Storage.Files.DataLake
                         pipeline: Pipeline,
                         resourceUri: DfsUri,
                         body: content,
+                        version: Version.ToVersionString(),
                         position: offset,
                         contentLength: content.Length,
                         transactionalContentHash: contentHash,
@@ -1728,6 +1737,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: DfsUri,
+                        version: Version.ToVersionString(),
                         position: position,
                         retainUncommittedData: retainUncommittedData,
                         close: close,

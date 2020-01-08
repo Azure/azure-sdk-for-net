@@ -56,7 +56,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Low', 'Normal', 'High'</param>
         /// <param name="correlationData">Customer provided key, value pairs
         /// that will be returned in Job and JobOutput state events.</param>
-        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?), IDictionary<string, string> correlationData = default(IDictionary<string, string>))
+        /// <param name="startTime">The UTC date and time at which this Job
+        /// began processing.</param>
+        /// <param name="endTime">The UTC date and time at which this Job
+        /// finished processing.</param>
+        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?), IDictionary<string, string> correlationData = default(IDictionary<string, string>), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
             : base(id, name, type)
         {
             Created = created;
@@ -67,6 +71,8 @@ namespace Microsoft.Azure.Management.Media.Models
             Outputs = outputs;
             Priority = priority;
             CorrelationData = correlationData;
+            StartTime = startTime;
+            EndTime = endTime;
             CustomInit();
         }
 
@@ -130,6 +136,18 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlationData")]
         public IDictionary<string, string> CorrelationData { get; set; }
+
+        /// <summary>
+        /// Gets the UTC date and time at which this Job began processing.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.startTime")]
+        public System.DateTime? StartTime { get; private set; }
+
+        /// <summary>
+        /// Gets the UTC date and time at which this Job finished processing.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.endTime")]
+        public System.DateTime? EndTime { get; private set; }
 
         /// <summary>
         /// Validate the object.

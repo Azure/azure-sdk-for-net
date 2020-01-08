@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Metadata;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -250,14 +250,6 @@ namespace Azure.Messaging.EventHubs
                 EventHubsEventSource.Log.ClientCloseComplete(typeof(EventHubConnection), EventHubName, FullyQualifiedNamespace);
             }
         }
-
-        /// <summary>
-        ///   Closes the connection to the Event Hubs namespace and associated Event Hub.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        public virtual void Close(CancellationToken cancellationToken = default) => CloseAsync(cancellationToken).GetAwaiter().GetResult();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="EventHubConnection" />,

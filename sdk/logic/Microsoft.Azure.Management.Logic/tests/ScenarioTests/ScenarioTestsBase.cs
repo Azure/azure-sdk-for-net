@@ -1,10 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
 namespace Test.Azure.Management.Logic
 {
-    using System;
     using System.Globalization;
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
@@ -19,7 +18,7 @@ namespace Test.Azure.Management.Logic
         /// <summary>
         /// Name of the test class
         /// </summary>
-        protected Type TestClassType => this.GetType();
+        protected string TestClassName => this.GetType().FullName;
 
         /// <summary>
         /// Default Service Plan resource id 
@@ -54,7 +53,7 @@ namespace Test.Azure.Management.Logic
         }
 
         protected LogicManagementClient GetClient(MockContext context)
-        {
+        {            
             return context.GetServiceClient<LogicManagementClient>();
         }
 
@@ -116,4 +115,3 @@ namespace Test.Azure.Management.Logic
         }");
     }
 }
-
