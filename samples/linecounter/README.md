@@ -6,6 +6,7 @@ products:
 - azure
 - azure-storage
 - azure-event-hubs
+urlFragment: line-counter
 name: LineCounter
 description: Sample that illustrates using blob and event hub clients along with ASP.NET Core integration, distributed tracing and hosted services.
 ---
