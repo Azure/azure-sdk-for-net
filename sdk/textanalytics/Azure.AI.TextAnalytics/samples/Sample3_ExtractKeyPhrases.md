@@ -59,6 +59,6 @@ ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new
 
 * [Sample3_ExtractKeyPhrases.cs](../tests/samples/Sample3_ExtractKeyPhrases.cs)
 * [Sample3_ExtractKeyPhrasesBatch.cs](../tests/samples/Sample3_ExtractKeyPhrasesBatch.cs)
-* [Sample3_ExtractKeyPhrasesBatchConvienice.cs](../tests/samples/Sample3_ExtractKeyPhrasesBatchConvienice.cs)
+* [Sample3_ExtractKeyPhrasesBatchConvenience.cs](../tests/samples/Sample3_ExtractKeyPhrasesBatchConvenience.cs)
 
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
