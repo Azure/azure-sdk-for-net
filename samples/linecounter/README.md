@@ -1,6 +1,15 @@
-# README
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-storage
+- azure-event-hubs
+name: LineCounter
+description: Sample that illustrates using blob and event hub clients along with ASP.NET Core integration, distributed tracing and hosted services.
+---
 
-Sample that uses illustrates using blob and event hub clients along with ASP.NET Core integration, distributed tracing and hosted services.
 
 # Configuration
 
