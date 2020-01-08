@@ -317,7 +317,7 @@ namespace Microsoft.Azure.EventHubs
             {
                 throw Fx.Exception.Argument(
                     ManagedIdentityClientIdConfigName,
-                    Resources.KeyShouldNotBeAlone.FormatForUser(AuthenticationConfigName, SharedAccessSignatureConfigName));
+                    Resources.KeyShouldNotBeAlone.FormatForUser(ManagedIdentityClientIdConfigName, AuthenticationConfigName));
             }
 
             if (hasAuthentication && hasSharedAccessSignature)
