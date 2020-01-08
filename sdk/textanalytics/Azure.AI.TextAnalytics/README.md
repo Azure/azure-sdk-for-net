@@ -108,7 +108,6 @@ Run a Text Analytics predictive model to determine the language that the passed-
 ```C# Snippet:DetectLanguage
 string input = "Este documento está en español.";
 
-// Detect the language the input text is written in
 DetectLanguageResult result = client.DetectLanguage(input);
 DetectedLanguage language = result.PrimaryLanguage;
 
@@ -123,7 +122,6 @@ Run a Text Analytics predictive model to identify the positive, negative, neutra
 ```C# Snippet:AnalyzeSentiment
 string input = "That was the best day of my life!";
 
-// Analyze the sentiment of the input text.
 AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
 TextSentiment sentiment = result.DocumentSentiment;
 
@@ -141,7 +139,6 @@ Run a model to identify a collection of significant phrases found in the passed-
 ```C# Snippet:ExtractKeyPhrases
 string input = "My cat might need to see a veterinarian.";
 
-// Extract key phrases from the input text.
 ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
 IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
 
@@ -160,7 +157,6 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-// Recognize categorized entities in the input text
 RecognizeEntitiesResult result = client.RecognizeEntities(input);
 IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
@@ -179,7 +175,6 @@ Run a predictive model to identify a collection of entities containing personall
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-// Recognize entities containing personally identifiable information in the input text
 RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
 IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
@@ -196,7 +191,6 @@ Run a predictive model to identify a collection of entities found in the passed-
 ```C# Snippet:RecognizeLinkedEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-// Recognize entities associated with the Wikipedia knowledge base in the input text
 RecognizeLinkedEntitiesResult result = client.RecognizeLinkedEntities(input);
 
 Console.WriteLine($"Extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
@@ -218,7 +212,6 @@ Run a Text Analytics predictive model to determine the language that the passed-
 ```C# Snippet:DetectLanguageAsync
 string input = "Este documento está en español.";
 
-// Asynchronously detect the language the input text is written in
 DetectLanguageResult result = await client.DetectLanguageAsync(input);
 DetectedLanguage language = result.PrimaryLanguage;
 
@@ -231,7 +224,6 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-// Recognize categorized entities in the input text
 RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
 IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
