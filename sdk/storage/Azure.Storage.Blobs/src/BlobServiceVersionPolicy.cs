@@ -42,7 +42,7 @@ namespace Azure.Storage.Blobs
                 ThrowIfContainsHeader(message, "x-ms-encryption-scope", "any API", serviceVersionString);
 
                 // Previous Snapshot URL
-                throw new ArgumentException($"{Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName} is not supported in service version {serviceVersionString}");
+                ThrowIfContainsHeader(message, "x-ms-previous-snapshot-url", Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName, serviceVersionString);
             }
         }
 

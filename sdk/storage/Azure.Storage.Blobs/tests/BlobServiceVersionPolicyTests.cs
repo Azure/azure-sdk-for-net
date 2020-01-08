@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Test
             // Arange
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 pageBlob.GetManagedDiskPageRangesDiffAsync(previousSnapshotUrl: pageBlob.Uri),
-                e => Assert.AreEqual($"{Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName} is not supported in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-previous-snapshot-url is not supported for {Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName} in service version 2019-02-02", e.Message));
         }
     }
 }

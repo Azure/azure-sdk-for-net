@@ -37,20 +37,9 @@ namespace Azure.Storage.Files.Shares
             if (serviceVersion < ShareClientOptions.ServiceVersion.V2019_07_07)
             {
                 // File Lease
-                if (message.Request.Headers.Contains("x-ms-lease-id"))
-                {
-                    ThrowIfContainsHeader(message, "x-ms-lease-id", "any file API", serviceVersionString);
-                }
-
-                if (message.Request.Headers.Contains("x-ms-lease-duration"))
-                {
-                    ThrowIfContainsHeader(message, "x-ms-lease-duration", "any file API", serviceVersionString);
-                }
-
-                if (message.Request.Headers.Contains("x-ms-proposed-lease-id"))
-                {
-                    ThrowIfContainsHeader(message, "x-ms-proposed-lease-id", "any file API", serviceVersionString);
-                }
+                ThrowIfContainsHeader(message, "x-ms-lease-id", "any file API", serviceVersionString);
+                ThrowIfContainsHeader(message, "x-ms-lease-duration", "any file API", serviceVersionString);
+                ThrowIfContainsHeader(message, "x-ms-proposed-lease-id", "any file API", serviceVersionString);
 
                 if (message.Request.Uri.Query.Contains("comp=lease"))
                 {
