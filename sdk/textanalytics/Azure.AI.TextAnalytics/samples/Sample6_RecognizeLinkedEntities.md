@@ -63,6 +63,6 @@ To see the full example source files, see:
 
 * [Sample6_RecognizeLinkedEntities.cs](../tests/samples/Sample6_RecognizeLinkedEntities.cs)
 * [Sample6_RecognizeLinkedEntitiesBatch.cs](../tests/samples/Sample6_RecognizeLinkedEntitiesBatch.cs)
-* [Sample6_RecognizeLinkedEntitiesBatchConvienice.cs](../tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvienice.cs)
+* [Sample6_RecognizeLinkedEntitiesBatchConvenience.cs](../tests/samples/Sample6_RecognizeLinkedEntitiesBatchConvenience.cs)
 
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
