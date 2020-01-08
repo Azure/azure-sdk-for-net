@@ -230,5 +230,16 @@ namespace Microsoft.Azure.EventHubs {
                 return ResourceManager.GetString("ValueOutOfRange", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The '{0}' can only be specified along with '{1}'..
+        /// </summary>
+        internal static string KeyShouldNotBeAlone
+        {
+            get
+            {
+                return ResourceManager.GetString("KeyShouldNotBeAlone", resourceCulture);
+            }
+        }
     }
 }

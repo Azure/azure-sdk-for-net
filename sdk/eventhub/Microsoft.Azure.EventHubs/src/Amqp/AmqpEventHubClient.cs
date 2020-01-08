@@ -47,7 +47,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
             }
             else if (!string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
             {
-                this.InternalTokenProvider = TokenProvider.CreateManagedIdentityTokenProvider();
+                this.InternalTokenProvider = TokenProvider.CreateManagedIdentityTokenProvider(csb.ManagedIdentityClientId);
             }
 
             this.CbsTokenProvider = new TokenProviderAdapter(this);

@@ -59,6 +59,7 @@ namespace Microsoft.Azure.EventHubs
         static readonly string TransportTypeConfigName = "TransportType";
         static readonly string SharedAccessSignatureConfigName = "SharedAccessSignature";
         static readonly string AuthenticationConfigName = "Authentication";
+        static readonly string ManagedIdentityClientIdConfigName = "ManagedIdentityClientId";
 
         /// <summary>
         /// Build a connection string consumable by <see cref="EventHubClient.CreateFromConnectionString(string)"/>
@@ -201,6 +202,11 @@ namespace Microsoft.Azure.EventHubs
         public string Authentication { get; set; }
 
         /// <summary>
+        /// Client Id of User Assigned Managed Identity
+        /// </summary>
+        public string ManagedIdentityClientId { get; set; }
+
+        /// <summary>
         /// Creates a cloned object of the current <see cref="EventHubsConnectionStringBuilder"/>.
         /// </summary>
         /// <returns>A new <see cref="EventHubsConnectionStringBuilder"/></returns>
@@ -259,6 +265,11 @@ namespace Microsoft.Azure.EventHubs
                 connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication}{KeyValuePairDelimiter}");
             }
 
+            if (!string.IsNullOrWhiteSpace(this.ManagedIdentityClientId))
+            {
+                connectionStringBuilder.Append($"{ManagedIdentityClientIdConfigName}{KeyValueSeparator}{this.ManagedIdentityClientId}{KeyValuePairDelimiter}");
+            }
+
             return connectionStringBuilder.ToString();
         }
 
@@ -299,7 +310,16 @@ namespace Microsoft.Azure.EventHubs
                     Resources.ArgumentInvalidCombination.FormatForUser(SharedAccessKeyNameConfigName, SharedAccessKeyConfigName));
             }
 
+            var hasManagedClientIdentity = !string.IsNullOrWhiteSpace(this.ManagedIdentityClientId);
             var hasAuthentication = !string.IsNullOrWhiteSpace(this.Authentication);
+
+            if (hasManagedClientIdentity && !hasAuthentication)
+            {
+                throw Fx.Exception.Argument(
+                    ManagedIdentityClientIdConfigName,
+                    Resources.KeyShouldNotBeAlone.FormatForUser(AuthenticationConfigName, SharedAccessSignatureConfigName));
+            }
+
             if (hasAuthentication && hasSharedAccessSignature)
             {
                 throw Fx.Exception.Argument(
@@ -361,6 +381,10 @@ namespace Microsoft.Azure.EventHubs
                 else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     this.Authentication = value;
+                }
+                else if (key.Equals(ManagedIdentityClientIdConfigName, StringComparison.OrdinalIgnoreCase))
+                {
+                    this.ManagedIdentityClientId = value;
                 }
                 else
                 {

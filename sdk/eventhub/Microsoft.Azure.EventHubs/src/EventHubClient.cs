@@ -122,17 +122,19 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="entityPath">Event Hub path</param>
         /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
         /// <param name="transportType">Transport type on connection.</param>
+        /// <param name="managedIdentityClientId">Client Id of User Assigned Managed Identity.</param>
         /// <returns></returns>
         public static EventHubClient CreateWithManagedIdentity(
             Uri endpointAddress,
             string entityPath,
             TimeSpan? operationTimeout = null,
-            TransportType transportType = TransportType.Amqp)
+            TransportType transportType = TransportType.Amqp,
+            string managedIdentityClientId = null)
         {
             return CreateWithTokenProvider(
                 endpointAddress,
                 entityPath,
-                TokenProvider.CreateManagedIdentityTokenProvider(),
+                TokenProvider.CreateManagedIdentityTokenProvider(managedIdentityClientId),
                 operationTimeout,
                 transportType);
         }

@@ -174,4 +174,7 @@
   <data name="PluginRegistrationFailed" xml:space="preserve">
     <value>There was an error trying to register the {0} plugin.</value>
   </data>
+  <data name="KeyShouldNotBeAlone" xml:space="preserve">
+    <value>The '{0}' can only be specified along with '{1}'.</value>
+  </data>
 </root>

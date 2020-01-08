@@ -12,7 +12,21 @@ namespace Microsoft.Azure.EventHubs
     /// </summary>
     public class ManagedIdentityTokenProvider : TokenProvider
     {
-        static readonly AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
+        readonly AzureServiceTokenProvider azureServiceTokenProvider;
+
+        internal ManagedIdentityTokenProvider(string managedIdentityClientId)
+        {
+            if (string.IsNullOrEmpty(managedIdentityClientId))
+            {
+                // System assigned managed identity
+                this.azureServiceTokenProvider = new AzureServiceTokenProvider();
+            }
+            else
+            {
+                // User assigned managed identity
+                this.azureServiceTokenProvider = new AzureServiceTokenProvider($"RunAs=App;AppId={managedIdentityClientId}");
+            }
+        }
 
         /// <summary>
         /// Gets a <see cref="SecurityToken"/> for the given audience and duration.

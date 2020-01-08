@@ -95,7 +95,16 @@ namespace Microsoft.Azure.EventHubs
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateManagedIdentityTokenProvider()
         {
-            return new ManagedIdentityTokenProvider();
+            return CreateManagedIdentityTokenProvider(null);
+        }
+
+
+        /// <summary>Creates Azure Managed Identity token provider.</summary>
+        /// <param name="managedIdentityClientId">The client ID of user assigned managed identity.</param>
+        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
+        public static TokenProvider CreateManagedIdentityTokenProvider(string managedIdentityClientId)
+        {
+            return new ManagedIdentityTokenProvider(managedIdentityClientId);
         }
 
         /// <summary>
