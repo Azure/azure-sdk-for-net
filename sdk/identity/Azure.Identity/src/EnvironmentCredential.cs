@@ -21,7 +21,7 @@ namespace Azure.Identity
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
     /// <item><term>AZURE_AUTH_LOCATION</term><description>The path to an SDK Auth file which contains configuration information.</description></item>
     /// </list>
-    /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="UsernamePasswordCredential"/> or <see cref="SdkAuthFileCredential"/>
+    /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="UsernamePasswordCredential"/> or <see cref="AuthFileCredential"/>
     /// perform the authentication using these details. Please consult the documentation of that class for more details.
     /// </summary>
     public class EnvironmentCredential : TokenCredential, IExtendedTokenCredential
@@ -74,7 +74,7 @@ namespace Azure.Identity
 
             if (_credential is null && sdkAuthLocation != null)
             {
-                _credential = new SdkAuthFileCredential(sdkAuthLocation);
+                _credential = new AuthFileCredential(sdkAuthLocation);
             }
 
             if (_credential is null)

@@ -5,6 +5,13 @@ namespace Azure.Identity
         public AuthenticationFailedException(string message) { }
         public AuthenticationFailedException(string message, System.Exception innerException) { }
     }
+    public partial class AuthFileCredential : Azure.Core.TokenCredential
+    {
+        public AuthFileCredential(string filePath) { }
+        public AuthFileCredential(string pathToFile, Azure.Identity.TokenCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public partial class AuthorizationCodeCredential : Azure.Core.TokenCredential
     {
         protected AuthorizationCodeCredential() { }
@@ -101,13 +108,6 @@ namespace Azure.Identity
         public ManagedIdentityCredential(string clientId = null, Azure.Identity.TokenCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class SdkAuthFileCredential : Azure.Core.TokenCredential
-    {
-        public SdkAuthFileCredential(string filePath) { }
-        public SdkAuthFileCredential(string pathToFile, Azure.Identity.TokenCredentialOptions options) { }
-        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class SharedTokenCacheCredential : Azure.Core.TokenCredential
     {

@@ -14,16 +14,16 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class SdkAuthFileCredentialTests : ClientTestBase
+    public class AuthFileCredentialTests : ClientTestBase
     {
-        public SdkAuthFileCredentialTests(bool isAsync) : base(isAsync)
+        public AuthFileCredentialTests(bool isAsync) : base(isAsync)
         {
         }
 
         [Test]
         public async Task SdkAuthFileEnsureCredentialParsesCorrectly()
         {
-            var credential = new SdkAuthFileCredential(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "authfile.json"));
+            var credential = new AuthFileCredential(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "authfile.json"));
             var innerCredential = await _credential(credential);
 
             ClientSecretCredential cred = innerCredential as ClientSecretCredential;
@@ -36,7 +36,7 @@ namespace Azure.Identity.Tests
         [Test]
         public Task BadSdkAuthFilePathThrowsDuringGetToken()
         {
-            var credential = new SdkAuthFileCredential("Bougs*File*Path");
+            var credential = new AuthFileCredential("Bougs*File*Path");
 
             if (IsAsync)
             {
@@ -50,10 +50,10 @@ namespace Azure.Identity.Tests
             return Task.CompletedTask;
         }
 
-        public async Task<TokenCredential> _credential(SdkAuthFileCredential provider)
+        public async Task<TokenCredential> _credential(AuthFileCredential provider)
         {
             await provider.EnsureCredential(IsAsync, default);
-            return (TokenCredential)typeof(SdkAuthFileCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
+            return (TokenCredential)typeof(AuthFileCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
         }
     }
 }

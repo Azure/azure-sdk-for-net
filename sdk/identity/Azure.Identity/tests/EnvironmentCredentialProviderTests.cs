@@ -69,7 +69,7 @@ namespace Azure.Identity.Tests
                 Environment.SetEnvironmentVariable("AZURE_AUTH_LOCATION", pathToFile);
 
                 var provider = new EnvironmentCredential();
-                SdkAuthFileCredential cred = _credential(provider) as SdkAuthFileCredential;
+                AuthFileCredential cred = _credential(provider) as AuthFileCredential;
 
                 Assert.NotNull(cred);
                 Assert.AreEqual(pathToFile, cred.FilePath);
