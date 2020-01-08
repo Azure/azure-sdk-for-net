@@ -62,6 +62,6 @@ AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new T
 
 * [Sample2_AnalyzeSentiment.cs](../tests/samples/Sample2_AnalyzeSentiment.cs)
 * [Sample2_AnalyzeSentimentBatch.cs](../tests/samples/Sample2_AnalyzeSentimentBatch.cs)
-* [Sample2_AnalyzeSentimentBatchConvienice.cs](../tests/samples/Sample2_AnalyzeSentimentBatchConvienice.cs)
+* [Sample2_AnalyzeSentimentBatchConvenience.cs](../tests/samples/Sample2_AnalyzeSentimentBatchConvenience.cs)
 
 [DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
