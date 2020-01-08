@@ -13,7 +13,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         public KeyClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new DefaultAzureCredential()));
+            KeyClientOptions options = new KeyClientOptions
+            {
+                Transport = new MockTransport(),
+            };
+
+            Client = InstrumentClient(new KeyClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public KeyClient Client { get; set; }

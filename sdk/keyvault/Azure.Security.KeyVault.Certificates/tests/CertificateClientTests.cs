@@ -12,7 +12,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     {
         public CertificateClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new CertificateClient(new Uri("http://localhost"), new DefaultAzureCredential()));
+            CertificateClientOptions options = new CertificateClientOptions
+            {
+                Transport = new MockTransport(),
+            };
+
+            Client = InstrumentClient(new CertificateClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public CertificateClient Client { get; }

@@ -12,7 +12,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
         {
-            Client = InstrumentClient(new SecretClient(new Uri("http://localhost"), new DefaultAzureCredential()));
+            SecretClientOptions options = new SecretClientOptions
+            {
+                Transport = new MockTransport(),
+            };
+
+            Client = InstrumentClient(new SecretClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public SecretClient Client { get; set; }
