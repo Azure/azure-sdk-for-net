@@ -440,11 +440,6 @@ namespace Azure.Storage
             /// The Azure Storage error codes for Datalake Client.
             /// </summary>
             public const string AlreadyExists = "ContainerAlreadyExists";
-
-            /// <summary>
-            /// The path to the root directory of a file system.
-            /// </summary>
-            public const string RootDirectoryPath = "/";
         }
 
         /// <summary>

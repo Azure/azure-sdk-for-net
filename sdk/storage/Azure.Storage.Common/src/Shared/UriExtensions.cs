@@ -23,12 +23,6 @@ namespace Azure.Storage
         public static Uri AppendToPath(this Uri uri, string segment)
         {
             var builder = new UriBuilder(uri);
-
-            if (segment == "/")
-            {
-                builder.Path += "/";
-                return builder.Uri;
-            }
             var path = builder.Path;
             var seperator = (path.Length == 0 || path[path.Length - 1] != '/') ? "/" : "";
             builder.Path += seperator + segment;
