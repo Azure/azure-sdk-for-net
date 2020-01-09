@@ -107,8 +107,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // due to a service issue, if the initial container creation request times out, subsequent requests
             // can return a ContainerAlreadyExists code even though the container doesn't really exist.
             // we delay until after the service cache timeout and then attempt to create the container one more time.
-            // If this attempt fails, we let the exception propagate.
-            // TODO Note this issue will be fixed in the 72 rollout. After that time, this try/catch can be removed.
+            // If this attempt still fails, we mark the test as inconclusive.
+            // TODO Remove this handling after the service bug is fixed https://github.com/Azure/azure-sdk-for-net/issues/9399
             try
             {
                 await RetryAsync(
@@ -120,9 +120,11 @@ namespace Azure.Storage.Files.DataLake.Tests
             catch (RequestFailedException storageRequestFailedException)
             when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
             {
-                // if we get this error after retrying once, that means the container really does
-                // exist, since the retry attempt occurred after the cache timeout.
-                // so we just swallow this error and continue on in the test.
+                // if we still get this error after retrying, mark the test as inconclusive
+                TestContext.Out.WriteLine(
+                    $"{TestContext.CurrentContext.Test.Name} is inconclusive due to hitting " +
+                    $"the DataLake service bug described in https://github.com/Azure/azure-sdk-for-net/issues/9399");
+                Assert.Inconclusive(); // passing the message in Inconclusive call doesn't show up in Console output.
             }
 
             return new DisposingFileSystem(fileSystem);
