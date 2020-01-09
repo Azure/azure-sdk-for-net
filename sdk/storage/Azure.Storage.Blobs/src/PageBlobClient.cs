@@ -816,15 +816,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    content = content.WithNoDispose().WithProgress(progressHandler);
-                    var range = new HttpRange(offset, content.Length);
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
+                    var range = new HttpRange(offset, content?.Length ?? null);
 
                     return await BlobRestClient.PageBlob.UploadPagesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: content?.Length ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         timeout: default,

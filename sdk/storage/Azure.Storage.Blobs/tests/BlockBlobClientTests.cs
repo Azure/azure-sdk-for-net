@@ -1313,6 +1313,25 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadAsync_NullStream_Error()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadAsync(content: stream),
+                    e => Assert.AreEqual("body", e.ParamName));
+            }
+        }
+
+        [Test]
         public async Task UploadAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;

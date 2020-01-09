@@ -699,13 +699,13 @@ namespace Azure.Storage.Blobs.Specialized
                 {
                     BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
 
-                    content = content.WithNoDispose().WithProgress(progressHandler);
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
                     return await BlobRestClient.AppendBlob.AppendBlockAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: content?.Length ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         leaseId: conditions?.LeaseId,

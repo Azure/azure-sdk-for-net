@@ -824,6 +824,25 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task AppendBlockAsync_NullStream_Error()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.AppendBlockAsync(content: stream),
+                    e => Assert.AreEqual("body", e.ParamName));
+            }
+        }
+
         private AppendBlobRequestConditions BuildDestinationAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,

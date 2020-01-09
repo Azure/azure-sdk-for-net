@@ -361,6 +361,27 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        public async Task UploadPagesAsync_NullStream_Error()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadPagesAsync(
+                        content: stream,
+                        offset: 0),
+                    e => Assert.AreEqual("body", e.ParamName));
+            }
+        }
+
         public IEnumerable<AccessConditionParameters> UploadClearAsync_AccessConditions_Data
             => new[]
             {
