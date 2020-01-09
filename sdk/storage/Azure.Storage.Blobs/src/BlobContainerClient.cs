@@ -946,7 +946,8 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use <see cref="CreateIfNotExists"/> instead.
         /// </remarks>
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default) =>
@@ -968,7 +969,8 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use <see cref="CreateIfNotExistsAsync"/> instead.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default) =>
