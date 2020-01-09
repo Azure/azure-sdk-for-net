@@ -1477,11 +1477,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessingAsync(CancellationToken)" />
-        ///   and <see cref="EventProcessorClient.StopProcessingAsync(CancellationToken) methods" />.
+        ///   method.
         /// </summary>
         ///
         [Test]
-        public void AlreadyCancelledTokenMakesStartAndStopProcessingThrowAsync()
+        public void AlreadyCancelledTokenMakesStartProcessingAsyncThrow()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
@@ -1504,16 +1504,48 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.Cancel();
 
             Assert.That(async () => await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StopProcessingAsync(CancellationToken)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task AlreadyCancelledTokenMakesStopProcessingAsyncThrow()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Array.Empty<string>()));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            await mockProcessor.Object.StartProcessingAsync();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
             Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
         ///   Verifies functionality of the <see cref="EventProcessorClient.StartProcessing(CancellationToken)" />
-        ///   and <see cref="EventProcessorClient.StopProcessing(CancellationToken) methods" />.
+        ///   methods.
         /// </summary>
         ///
         [Test]
-        public void AlreadyCancelledTokenMakesStartAndStopProcessingThrow()
+        public void AlreadyCancelledTokenMakesStartProcessingThrow()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
@@ -1536,6 +1568,38 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.Cancel();
 
             Assert.That(() => mockProcessor.Object.StartProcessing(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StopProcessing(CancellationToken)" />
+        ///   methods.
+        /// </summary>
+        ///
+        [Test]
+        public void AlreadyCancelledTokenMakesStopProcessingThrow()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Array.Empty<string>()));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConsumer(
+                    It.IsAny<string>(),
+                    It.IsAny<EventHubConnection>(),
+                    It.IsAny<EventHubConsumerClientOptions>()))
+                .Returns(mockConsumer.Object);
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
+            mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            mockProcessor.Object.StartProcessing();
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
             Assert.That(() => mockProcessor.Object.StopProcessing(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
@@ -1587,12 +1651,21 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SupportsStartProcessingAfterStop()
         {
+            var partitionId = "expectedPartition";
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
 
             mockConsumer
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Array.Empty<string>()));
+                .Returns(Task.FromResult(new[] { partitionId }));
+
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockEmptyPartitionEventEnumerable(1, token));
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(
@@ -1601,8 +1674,18 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubConsumerClientOptions>()))
                 .Returns(mockConsumer.Object);
 
-            mockProcessor.Object.ProcessEventAsync += eventArgs => Task.CompletedTask;
             mockProcessor.Object.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            var completionSource = new TaskCompletionSource<bool>();
+            var isProcessEventHandlerInvoked = false;
+
+            mockProcessor.Object.ProcessEventAsync += eventArgs =>
+            {
+                isProcessEventHandlerInvoked = true;
+                completionSource.SetResult(true);
+
+                return Task.CompletedTask;
+            };
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
@@ -1610,19 +1693,28 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(mockProcessor.Object.IsRunning, Is.False);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
 
             Assert.That(mockProcessor.Object.IsRunning, Is.True);
+            Assert.That(isProcessEventHandlerInvoked, Is.EqualTo(true));
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
+
+            isProcessEventHandlerInvoked = false;
+            completionSource = new TaskCompletionSource<bool>();
 
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
             Assert.That(mockProcessor.Object.IsRunning, Is.False);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+
             Assert.That(mockProcessor.Object.IsRunning, Is.True);
+            Assert.That(isProcessEventHandlerInvoked, Is.EqualTo(true));
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
 
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
             Assert.That(mockProcessor.Object.IsRunning, Is.False);
         }
 
@@ -1737,7 +1829,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task WhenProcessEventTriggersWithNoDataUpdateCheckpointThrows()
+        public async Task WhenProcessEventTriggersWithNoDataUpdateCheckpointThrow()
         {
             var partitionId = "expectedPartition";
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -1770,9 +1862,10 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.ProcessEventAsync += eventArgs =>
             {
                 emptyEventArgs = eventArgs;
-                completionSource.SetResult(true);
 
                 Assert.That(async () => await eventArgs.UpdateCheckpointAsync(), Throws.InstanceOf<InvalidOperationException>(), "An exception should have been thrown When ProcessEventAsync triggers with no data.");
+
+                completionSource.SetResult(true);
 
                 return Task.CompletedTask;
             };
@@ -1799,7 +1892,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task AlreadyCancelledTokenMakesUpdateCheckpointThrows()
+        public async Task AlreadyCancelledTokenMakesUpdateCheckpointThrow()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new Mock<EventProcessorClient>(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
@@ -1829,12 +1922,12 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor.Object.ProcessEventAsync += eventArgs =>
             {
-                completionSource.SetResult(true);
-
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.Cancel();
 
                 Assert.That(async () => await eventArgs.UpdateCheckpointAsync(cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+
+                completionSource.SetResult(true);
 
                 return Task.CompletedTask;
             };
