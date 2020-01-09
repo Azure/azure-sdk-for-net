@@ -108,6 +108,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // can return a ContainerAlreadyExists code even though the container doesn't really exist.
             // we delay until after the service cache timeout and then attempt to create the container one more time.
             // If this attempt still fails, we mark the test as inconclusive.
+            // TODO Remove this handling after the service bug is fixed https://github.com/Azure/azure-sdk-for-net/issues/9399
             try
             {
                 await RetryAsync(
@@ -122,7 +123,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 // if we still get this error after retrying, mark the test as inconclusive
                 TestContext.Out.WriteLine(
                     $"{TestContext.CurrentContext.Test.Name} is inconclusive due to hitting " +
-                    $"the DataLake service issue described in https://github.com/Azure/azure-sdk-for-net/issues/9399");
+                    $"the DataLake service bug described in https://github.com/Azure/azure-sdk-for-net/issues/9399");
                 Assert.Inconclusive(); // passing the message in Inconclusive call doesn't show up in Console output.
             }
 
