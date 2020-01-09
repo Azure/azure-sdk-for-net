@@ -218,7 +218,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri);
+            return this.Build(authentication, GeoRedundantSecondaryUri, serviceVersionPolicy: new BlobServiceVersionPolicy());
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri);
+            return this.Build(credentials, GeoRedundantSecondaryUri, serviceVersionPolicy: new BlobServiceVersionPolicy());
         }
     }
 }

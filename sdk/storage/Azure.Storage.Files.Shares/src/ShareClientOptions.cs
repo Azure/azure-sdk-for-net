@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -142,6 +143,26 @@ namespace Azure.Storage.Files.Shares
             Diagnostics.LoggedQueryParameters.Add("sv");
             Diagnostics.LoggedQueryParameters.Add("copyid");
             Diagnostics.LoggedQueryParameters.Add("restype");
+        }
+
+        /// <summary>
+        /// Create an HttpPipeline from BlobClientOptions.
+        /// </summary>
+        /// <param name="authentication">Optional authentication policy.</param>
+        /// <returns>An HttpPipeline to use for Storage requests.</returns>
+        internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
+        {
+            return this.Build(authentication, serviceVersionPolicy: new ShareServiceVersionPolicy());
+        }
+
+        /// <summary>
+        /// Create an HttpPipeline from BlobClientOptions.
+        /// </summary>
+        /// <param name="credentials">Optional authentication credentials.</param>
+        /// <returns>An HttpPipeline to use for Storage requests.</returns>
+        internal HttpPipeline Build(object credentials)
+        {
+            return this.Build(credentials, serviceVersionPolicy: new ShareServiceVersionPolicy());
         }
     }
 }
