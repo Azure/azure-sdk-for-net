@@ -1,6 +1,6 @@
 # Release History
 
-## 12.1.1 (2020-01)
+## 12.0.1 (2020-01)
  - Fixed issue where SAS content headers were not URL encoded when using ShareSasBuilder.
  - Fixed bug where using SAS connection string from portal would throw an exception if it included
    table endpoint.
