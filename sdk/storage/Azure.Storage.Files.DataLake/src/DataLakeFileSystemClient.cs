@@ -326,6 +326,16 @@ namespace Azure.Storage.Files.DataLake
             => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
+        /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
+        /// root directory of the file system.
+        /// </summary>
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/></returns>
+        public virtual DataLakeDirectoryClient GetRootDirectoryClient()
+        {
+            return GetDirectoryClient(Constants.DataLake.RootDirectoryPath);
+        }
+
+        /// <summary>
         /// Create a new <see cref="DataLakeFileClient"/> object by appending
         /// <paramref name="fileName"/> to the end of <see cref="Uri"/>.  The
         /// new <see cref="DataLakeFileClient"/> uses the same request policy
