@@ -502,7 +502,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            content = content.WithNoDispose().WithProgress(progressHandler);
+            content = content?.WithNoDispose().WithProgress(progressHandler);
             using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 Pipeline.LogMethodEnter(
@@ -518,7 +518,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: content?.Length ?? 0,
                         version: Version.ToVersionString(),
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,
