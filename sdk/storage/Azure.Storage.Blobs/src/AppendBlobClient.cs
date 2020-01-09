@@ -318,8 +318,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created append blob.
+        /// If the append blob does not already exist, a <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created append blob. Otherwise, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -356,8 +356,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created append blob.
+        /// If the append blob does not already exist, a <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created append blob. Otherwise, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -397,8 +397,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created append blob.
+        /// If the append blob does not already exist, a <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created append blob. Otherwise, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
