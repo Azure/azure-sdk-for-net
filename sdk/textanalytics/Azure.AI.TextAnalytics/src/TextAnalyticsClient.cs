@@ -19,11 +19,27 @@ namespace Azure.AI.TextAnalytics
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _subscriptionKey;
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
 
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+
+        private string _subscriptionKey;
+
+        private string SubscriptionKey
+        {
+            get => Volatile.Read(ref _subscriptionKey);
+            set => Volatile.Write(ref _subscriptionKey, value);
+        }
+
+        /// <summary>
+        /// Updates the Text Analytics subscription key.
+        /// This is intended to be used when you've regenerated your service subscription key
+        /// and want to update long lived clients.
+        /// </summary>
+        /// <param name="subscriptionKey">A Text Analytics subscription key.</param>
+        public void SetSubscriptionKey(string subscriptionKey) =>
+            SubscriptionKey = subscriptionKey;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -98,7 +114,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _subscriptionKey = subscriptionKey;
+            SetSubscriptionKey(subscriptionKey);
             _apiVersion = options.GetVersionString();
             _pipeline = HttpPipelineBuilder.Build(options);
             _clientDiagnostics = new ClientDiagnostics(options);
@@ -1739,7 +1755,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
 
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+            request.Headers.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
 
             return request;
         }
@@ -1756,7 +1772,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
 
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+            request.Headers.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
 
             return request;
         }
