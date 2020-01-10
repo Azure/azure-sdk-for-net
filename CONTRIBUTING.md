@@ -121,6 +121,15 @@ In some cases, you might want to test against the latest versions of the client 
 
 If you make a public API change `eng\Export-API.ps1` script has to be run to update public API listings.
 
+## Dev Feed
+We publish nightly built packages to a dev feed which can be consumed by adding the dev feed blob storage as a package source in visual studio. Follow instruction provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources). Use https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json  as the source.
+
+You can also achieve this from the command line.
+
+`nuget.exe sources add -Name “Azure SDK for Net Dev Feed” -Source “https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json”`
+
+You can then consume packages from this package source.
+
 # On-boarding New Libraries
 
 ### Project Structure
