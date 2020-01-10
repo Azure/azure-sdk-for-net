@@ -12,9 +12,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task GetServiceConfiguration()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "GetServiceConfiguration");
+                HttpMockServer.Initialize(this.GetType(), "GetServiceConfiguration");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 ServiceConfiguration defaultConfig = await client.ServiceConfiguration.GetAsync();
                 Assert.Equal(TimeSpan.FromMinutes(1), defaultConfig.RewardWaitTime);
@@ -28,9 +28,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task UpdateServiceConfiguration()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "UpdateServiceConfiguration");
+                HttpMockServer.Initialize(this.GetType(), "UpdateServiceConfiguration");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 TimeSpan newExperimentalUnitDuration = TimeSpan.FromMinutes(1);
                 TimeSpan modelExportFrequency = TimeSpan.FromHours(1);
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task GetPolicy()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "GetPolicy");
+                HttpMockServer.Initialize(this.GetType(), "GetPolicy");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 PolicyContract policy = await client.Policy.GetAsync();
                 Assert.Equal("app1", policy.Name);
@@ -71,9 +71,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task UpdatePolicy()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "UpdatePolicy");
+                HttpMockServer.Initialize(this.GetType(), "UpdatePolicy");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 var policy = new PolicyContract
                 {
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task ResetPolicy()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ResetPolicy");
+                HttpMockServer.Initialize(this.GetType(), "ResetPolicy");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 PolicyContract policy = await client.Policy.ResetAsync();
                 Assert.Equal("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",

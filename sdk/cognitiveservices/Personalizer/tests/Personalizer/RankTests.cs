@@ -12,9 +12,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task RankNullParameters()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "RankNullParameters");
+                HttpMockServer.Initialize(this.GetType(), "RankNullParameters");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 IList<RankableAction> actions = new List<RankableAction>();
                 actions.Add(new RankableAction
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task RankServerFeatures()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "RankServerFeatures");
+                HttpMockServer.Initialize(this.GetType(), "RankServerFeatures");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 IList<object> contextFeatures = new List<object>() {
                     new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },

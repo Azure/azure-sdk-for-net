@@ -12,9 +12,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task GetModel()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "GetModel");
+                HttpMockServer.Initialize(this.GetType(), "GetModel");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 Stream stream = await client.Model.GetAsync();
                 Assert.NotEqual(-1 , stream.ReadByte());
@@ -24,9 +24,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task ResetModel()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "ResetModel");
+                HttpMockServer.Initialize(this.GetType(), "ResetModel");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 await client.Model.ResetAsync();
             }
@@ -35,9 +35,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
         [Fact]
         public async Task GetModelProperties()
         {
-            using (MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "GetModelProperties");
+                HttpMockServer.Initialize(this.GetType(), "GetModelProperties");
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
                 ModelProperties modelProperties = await client.Model.GetPropertiesAsync();
                 Assert.True(modelProperties.CreationTime != null);
