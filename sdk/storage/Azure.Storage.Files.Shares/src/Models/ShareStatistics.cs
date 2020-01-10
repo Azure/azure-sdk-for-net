@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+#pragma warning disable SA1402 // File may only contain a single type
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
@@ -12,6 +14,8 @@ namespace Azure.Storage.Files.Shares.Models
     /// </summary>
     public partial class ShareStatistics
     {
+
+
         /// <summary>
         /// Warning: Share usage may exceed int.MaxValue.  Use ShareUsageInBytes instead.
         /// </summary>
@@ -28,5 +32,20 @@ namespace Azure.Storage.Files.Shares.Models
             }
             internal set { ShareUsageInBytes = value; }
         }
+    }
+
+    /// <summary>
+    /// ShareModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class ShareModelFactory
+    {
+        /// <summary>
+        /// Creates a new PermissionInfo instance for mocking.
+        /// </summary>
+        public static ShareStatistics ShareStatistics(int shareUsageBytes)
+            => new ShareStatistics
+            {
+                ShareUsageBytes = shareUsageBytes
+            };
     }
 }
