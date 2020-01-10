@@ -15,13 +15,10 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
             using (MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "GetLogsProperties");
-
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
-
                 LogsProperties properties = await client.Log.GetPropertiesAsync();
                 Assert.Equal(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.FromProperty.Value.Year, properties.DateRange.FromProperty.Value.Month, properties.DateRange.FromProperty.Value.Day));
                 Assert.Equal(new DateTime(0001, 01, 01), new DateTime(properties.DateRange.To.Value.Year, properties.DateRange.To.Value.Month, properties.DateRange.To.Value.Day));
-
             }
         }
 
@@ -31,9 +28,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
             using (MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DeleteLogs");
-
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
-
                 await client.Log.DeleteAsync();
             }
         }

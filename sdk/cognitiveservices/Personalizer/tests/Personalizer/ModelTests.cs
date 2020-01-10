@@ -15,9 +15,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
             using (MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "GetModel");
-
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
-
                 Stream stream = await client.Model.GetAsync();
                 Assert.NotEqual(-1 , stream.ReadByte());
             }
@@ -29,9 +27,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
             using (MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "ResetModel");
-
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
-
                 await client.Model.ResetAsync();
             }
         }
@@ -42,9 +38,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
             using (MockContext.Start(this.GetType().FullName))
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "GetModelProperties");
-
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
-
                 ModelProperties modelProperties = await client.Model.GetPropertiesAsync();
                 Assert.True(modelProperties.CreationTime != null);
                 Assert.True(modelProperties.LastModifiedTime != null);

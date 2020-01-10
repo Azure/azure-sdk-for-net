@@ -17,7 +17,8 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
     using System.Linq;
 
     /// <summary>
-    /// A resulting ordered list of actions that result from a rank request.
+    /// Returns which action to use as rewardActionId, and additional
+    /// information about each action as a result of a Rank request.
     /// </summary>
     public partial class RankResponse
     {
@@ -37,8 +38,8 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// <param name="eventId">The eventId for the round trip from request
         /// to response.</param>
         /// <param name="rewardActionId">The action chosen by the Personalizer
-        /// service. This is the action for which to report the reward. This
-        /// might not be the
+        /// service. This is the action your application should display, and
+        /// for which to report the reward. This might not be the
         /// first found in 'ranking' if an action in the request in first
         /// position was part of the excluded ids.</param>
         public RankResponse(IList<RankedAction> ranking = default(IList<RankedAction>), string eventId = default(string), string rewardActionId = default(string))
@@ -68,7 +69,8 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 
         /// <summary>
         /// Gets the action chosen by the Personalizer service. This is the
-        /// action for which to report the reward. This might not be the
+        /// action your application should display, and for which to report the
+        /// reward. This might not be the
         /// first found in 'ranking' if an action in the request in first
         /// position was part of the excluded ids.
         /// </summary>
