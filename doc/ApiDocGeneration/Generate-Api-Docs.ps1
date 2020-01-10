@@ -25,10 +25,6 @@ $DocOutHtmlDir = "${DocOutDir}/_site"
 $MDocTool = "${BinDirectory}/mdoc/mdoc.exe"
 $DocFxTool = "${BinDirectory}/docfx/docfx.exe"
 
-if ($ServiceDirectory -eq '*') {
-    $PackageLocation = "core/${ArtifactName}"
-}
-
 if ($LibType -eq 'Management') {
     $ArtifactName = $ArtifactName.Substring($ArtifactName.LastIndexOf('.Management') + 1)
 }

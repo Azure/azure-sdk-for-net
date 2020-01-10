@@ -38,7 +38,8 @@ pr:
 stages:
 - template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: '*'
+    ServiceDirectory: core
+    ServiceToBuild: '*'
     ArtifactName: packages
     Artifacts:
     - name: Azure.Core
