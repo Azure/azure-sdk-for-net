@@ -441,6 +441,26 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        public async Task GetStatisticsAsync_LargeShare()
+        {
+            // Arrange
+            long size = 3 * (long)Constants.GB;
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.SetContent($"﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><ShareStats><ShareUsageBytes>{size}</ShareUsageBytes></ShareStats>");
+            ShareClientOptions shareClientOption = new ShareClientOptions()
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+            ShareClient shareClient = new ShareClient(new Uri(TestConfigDefault.FileServiceEndpoint), shareClientOption);
+
+            // Act
+            Response<ShareStatistics> response = await shareClient.GetStatisticsAsync();
+
+            // Assert
+            Assert.AreEqual(size, response.Value.ShareUsageInBytes);
+        }
+
+        [Test]
         public async Task GetStatisticsAsync_Error()
         {
             // Arrange
