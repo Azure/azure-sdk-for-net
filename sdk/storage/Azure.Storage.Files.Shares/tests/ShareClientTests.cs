@@ -462,7 +462,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             TestHelper.AssertExpectedException(
                 () => { int intSize = response.Value.ShareUsageBytes; },
-                new OverflowException("ShareUsageInBytes exceeds int.MaxValue"));
+                new OverflowException("ShareUsageInBytes exceeds int.MaxValue.  Use ShareUsageInBytes instead."));
         }
 
         [Test]
