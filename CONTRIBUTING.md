@@ -114,6 +114,9 @@ If for any reason there is an update to the build tools, you will then need to f
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
 
+### Testing Against Latest Versions of Client Libraries
+In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
+
 ## Public API changes
 
 If you make a public API change `eng\Export-API.ps1` script has to be run to update public API listings.

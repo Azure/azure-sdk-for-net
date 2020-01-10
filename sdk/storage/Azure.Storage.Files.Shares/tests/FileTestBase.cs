@@ -38,11 +38,12 @@ namespace Azure.Storage.Files.Shares.Tests
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
-                    MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
+                    MaxRetries = Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
-            };
+                },
+                Transport = GetTransport()
+        };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
@@ -178,6 +179,29 @@ namespace Azure.Storage.Files.Shares.Tests
                         }
                 }
             };
+
+        internal StorageConnectionString GetConnectionString(
+            SharedAccessSignatureCredentials credentials = default,
+            bool includeEndpoint = true)
+        {
+            credentials ??= GetAccountSasCredentials();
+            if (!includeEndpoint)
+            {
+                return TestExtensions.CreateStorageConnectionString(
+                    credentials,
+                    TestConfigDefault.AccountName);
+            }
+
+            (Uri, Uri) fileUri = StorageConnectionString.ConstructFileEndpoint(
+                Constants.Https,
+                TestConfigDefault.AccountName,
+                default,
+                default);
+
+            return new StorageConnectionString(
+                    credentials,
+                    fileStorageUri: fileUri);
+        }
 
         public static void AssertValidStorageFileInfo(ShareFileInfo storageFileInfo)
         {

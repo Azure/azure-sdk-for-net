@@ -8,9 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Errors;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -159,17 +159,22 @@ namespace Azure.Messaging.EventHubs.Amqp
             RetryPolicy = retryPolicy;
             MessageConverter = messageConverter;
 
-            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(timeout =>
-                ConnectionScope.OpenConsumerLinkAsync(
-                    consumerGroup,
-                    partitionId,
-                    CurrentEventPosition,
-                    timeout,
-                    prefetchCount ?? DefaultPrefetchCount,
-                    ownerLevel,
-                    trackLastEnqueuedEventProperties,
-                    CancellationToken.None),
-                link => link.SafeClose());
+            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
+                timeout =>
+                    ConnectionScope.OpenConsumerLinkAsync(
+                        consumerGroup,
+                        partitionId,
+                        CurrentEventPosition,
+                        timeout,
+                        prefetchCount ?? DefaultPrefetchCount,
+                        ownerLevel,
+                        trackLastEnqueuedEventProperties,
+                        CancellationToken.None),
+                link =>
+                {
+                    link.Session?.SafeClose();
+                    link.SafeClose();
+                });
         }
 
         /// <summary>
@@ -241,9 +246,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                             {
                                 lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
-                                if (lastReceivedEvent.Offset.HasValue)
+                                if (lastReceivedEvent.Offset > long.MinValue)
                                 {
-                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset.Value);
+                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset);
                                 }
 
                                 if (TrackLastEnqueuedEventProperties)
@@ -259,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         return Enumerable.Empty<EventData>();
                     }
-                    catch (EventHubsTimeoutException)
+                    catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ServiceTimeout)
                     {
                         // Because the timeout specified with the request is intended to be the maximum
                         // amount of time to wait for events, a timeout isn't considered an error condition,

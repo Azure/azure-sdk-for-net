@@ -90,6 +90,72 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Update a gallery Image Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery in which the Image Definition resides.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the gallery Image Definition in which the Image Version is to
+            /// be updated.
+            /// </param>
+            /// <param name='galleryImageVersionName'>
+            /// The name of the gallery Image Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryImageVersion'>
+            /// Parameters supplied to the update gallery Image Version operation.
+            /// </param>
+            public static GalleryImageVersion Update(this IGalleryImageVersionsOperations operations, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion)
+            {
+                return operations.UpdateAsync(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a gallery Image Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery in which the Image Definition resides.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the gallery Image Definition in which the Image Version is to
+            /// be updated.
+            /// </param>
+            /// <param name='galleryImageVersionName'>
+            /// The name of the gallery Image Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryImageVersion'>
+            /// Parameters supplied to the update gallery Image Version operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GalleryImageVersion> UpdateAsync(this IGalleryImageVersionsOperations operations, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Retrieves information about a gallery Image Version.
             /// </summary>
             /// <param name='operations'>
@@ -313,6 +379,72 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task<GalleryImageVersion> BeginCreateOrUpdateAsync(this IGalleryImageVersionsOperations operations, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersion galleryImageVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a gallery Image Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery in which the Image Definition resides.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the gallery Image Definition in which the Image Version is to
+            /// be updated.
+            /// </param>
+            /// <param name='galleryImageVersionName'>
+            /// The name of the gallery Image Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryImageVersion'>
+            /// Parameters supplied to the update gallery Image Version operation.
+            /// </param>
+            public static GalleryImageVersion BeginUpdate(this IGalleryImageVersionsOperations operations, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a gallery Image Version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='galleryName'>
+            /// The name of the Shared Image Gallery in which the Image Definition resides.
+            /// </param>
+            /// <param name='galleryImageName'>
+            /// The name of the gallery Image Definition in which the Image Version is to
+            /// be updated.
+            /// </param>
+            /// <param name='galleryImageVersionName'>
+            /// The name of the gallery Image Version to be updated. Needs to follow
+            /// semantic version name pattern: The allowed characters are digit and period.
+            /// Digits must be within the range of a 32-bit integer. Format:
+            /// &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;
+            /// </param>
+            /// <param name='galleryImageVersion'>
+            /// Parameters supplied to the update gallery Image Version operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GalleryImageVersion> BeginUpdateAsync(this IGalleryImageVersionsOperations operations, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, GalleryImageVersionUpdate galleryImageVersion, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, galleryName, galleryImageName, galleryImageVersionName, galleryImageVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

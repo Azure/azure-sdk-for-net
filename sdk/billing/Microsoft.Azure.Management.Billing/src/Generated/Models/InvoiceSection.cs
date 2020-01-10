@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Billing.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,13 +36,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="displayName">The name of the InvoiceSection.</param>
-        /// <param name="billingProfiles">The billing profiles associated to
-        /// the billing account.</param>
-        public InvoiceSection(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>))
+        public InvoiceSection(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
-            BillingProfiles = billingProfiles;
             CustomInit();
         }
 
@@ -58,13 +53,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the billing profiles associated to the billing
-        /// account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.billingProfiles")]
-        public IList<BillingProfile> BillingProfiles { get; set; }
 
     }
 }

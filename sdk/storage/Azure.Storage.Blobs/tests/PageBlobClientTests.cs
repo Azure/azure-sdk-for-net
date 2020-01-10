@@ -12,8 +12,10 @@ using System.Threading.Tasks;
 using Azure.Core.Testing;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -41,7 +43,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -498,6 +500,33 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadPagesAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            long blobSize = 4 * Constants.MB;
+            PageBlobClient blob = await CreatePageBlobClientAsync(test.Container, blobSize);
+            var data = GetRandomBuffer(blobSize);
+            TestProgress progress = new TestProgress();
+
+            using (var stream = new MemoryStream(data))
+            {
+                // Act
+                await blob.UploadPagesAsync(
+                    content: stream,
+                    offset: 0,
+                    progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
         [Test]

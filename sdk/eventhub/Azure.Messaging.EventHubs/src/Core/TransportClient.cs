@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.EventHubs.Metadata;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Core
 {

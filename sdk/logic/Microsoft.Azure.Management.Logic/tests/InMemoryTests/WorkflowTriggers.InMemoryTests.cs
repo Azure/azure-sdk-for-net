@@ -71,7 +71,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.List(null, "wfName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.List("rgName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggers.List("rgName", "wfName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggers.List("rgName", "wfName"));
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListNext(null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggers.ListNext("http://management.azure.com/triggerNext"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggers.ListNext("http://management.azure.com/triggerNext"));
         }
 
         [Fact]
@@ -157,7 +157,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Get(null, "wfName", "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Get("rgName", null, "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Get("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggers.Get("rgName", "wfName", "triggerName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggers.Get("rgName", "wfName", "triggerName"));
         }
 
         [Fact]
@@ -280,7 +280,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListCallbackUrl(null, "wfName", "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListCallbackUrl("rgName", null, "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListCallbackUrl("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggers.ListCallbackUrl("rgName", "wfName", "triggerName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowTriggers.ListCallbackUrl("rgName", "wfName", "triggerName"));
         }
 
         [Fact]

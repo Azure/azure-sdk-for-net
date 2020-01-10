@@ -45,8 +45,9 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="effectiveParameters">Effective parameters for the
         /// policy assignment.</param>
         /// <param name="isCompliant">Flag which states whether the resource is
-        /// compliant against the policy assignment it was evaluated
-        /// against.</param>
+        /// compliant against the policy assignment it was evaluated against.
+        /// This property is deprecated; please use ComplianceState
+        /// instead.</param>
         /// <param name="subscriptionId">Subscription ID.</param>
         /// <param name="resourceType">Resource type.</param>
         /// <param name="resourceLocation">Resource location.</param>
@@ -84,7 +85,9 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// resource.</param>
         /// <param name="policyEvaluationDetails">Policy evaluation
         /// details.</param>
-        public PolicyState(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), PolicyEvaluationDetails policyEvaluationDetails = default(PolicyEvaluationDetails))
+        /// <param name="policyDefinitionGroupNames">Policy definition group
+        /// names.</param>
+        public PolicyState(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), PolicyEvaluationDetails policyEvaluationDetails = default(PolicyEvaluationDetails), IList<string> policyDefinitionGroupNames = default(IList<string>))
         {
             AdditionalProperties = additionalProperties;
             Odataid = odataid;
@@ -116,6 +119,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
             ComplianceState = complianceState;
             PolicyEvaluationDetails = policyEvaluationDetails;
+            PolicyDefinitionGroupNames = policyDefinitionGroupNames;
             CustomInit();
         }
 
@@ -177,7 +181,8 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
 
         /// <summary>
         /// Gets or sets flag which states whether the resource is compliant
-        /// against the policy assignment it was evaluated against.
+        /// against the policy assignment it was evaluated against. This
+        /// property is deprecated; please use ComplianceState instead.
         /// </summary>
         [JsonProperty(PropertyName = "isCompliant")]
         public bool? IsCompliant { get; set; }
@@ -315,6 +320,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyEvaluationDetails")]
         public PolicyEvaluationDetails PolicyEvaluationDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy definition group names.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyDefinitionGroupNames")]
+        public IList<string> PolicyDefinitionGroupNames { get; set; }
 
     }
 }

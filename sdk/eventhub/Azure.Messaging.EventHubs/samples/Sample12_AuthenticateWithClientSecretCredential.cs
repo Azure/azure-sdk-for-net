@@ -2,49 +2,53 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Samples.Infrastructure;
 
 namespace Azure.Messaging.EventHubs.Samples
 {
     /// <summary>
-    ///   An example of how to produce and consume events with Azure.Identity.
-    ///
-    ///   A script may be used to create all the resources needed to run this sample that can be found at:
-    ///
-    ///   https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-tests-azure-setup.ps1
-    ///
-    ///   An extract of this sample was taken from <see cref="Sample08_ConsumeEvents" />
-    ///
+    ///   An example of publishing and reading from an Event Hub using an Azure Active Directory application
+    ///   with a client secret for authorization.
     /// </summary>
+    ///
+    /// <remarks>
+    ///   This sample requires a service principal in addition to the Event Hubs environment used for
+    ///   samples.  The following script may be used to create all the resources needed to run this sample that can be found at:
+    ///   https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/assets/identity-tests-azure-setup.ps1
+    /// </remarks>
+    ///
+    /// <seealso href="https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals"/>
+    /// <seealso href="https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow"/>
+    ///
     public class Sample12_AuthenticateWithClientSecretCredential : IEventHubsIdentitySample
     {
         /// <summary>
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; } = nameof(Sample12_AuthenticateWithClientSecretCredential);
+        public string Name => nameof(Sample12_AuthenticateWithClientSecretCredential);
 
         /// <summary>
         ///   A short description of the sample.
         /// </summary>
         ///
-        public string Description { get; } = "An example of creating an Event Hub client using a Azure Active Directory application with a client secret for authorization.";
+        public string Description => "An example of interacting with an Event Hub using an Azure Active Directory application with client secret for authorization.";
 
         /// <summary>
         ///   Runs the sample using the specified Event Hubs connection information.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</param>
-        /// <param name="eventHubName">The name of the Event Hub, sometimes known as its path, that the sample should run against</param>
-        /// <param name="tenantId">The Azure Active Directory tenant that holds the service principal</param>
-        /// <param name="clientId">The Azure Active Directory client identifier of the service principal</param>
-        /// <param name="secret">The Azure Active Directory secret of the service principal</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the Event Hub, sometimes known as its path, that the sample should run against.</param>
+        /// <param name="tenantId">The Azure Active Directory tenant that holds the service principal.</param>
+        /// <param name="clientId">The Azure Active Directory client identifier of the service principal.</param>
+        /// <param name="secret">The Azure Active Directory secret of the service principal.</param>
         ///
         public async Task RunAsync(string fullyQualifiedNamespace,
                                    string eventHubName,
@@ -52,90 +56,58 @@ namespace Azure.Messaging.EventHubs.Samples
                                    string clientId,
                                    string secret)
         {
-            // Service principal authentication is a means for applications to authenticate
-            // against Azure Active Directory and consume Azure services. This is advantageous compared
-            // to signing in using fully privileged users as it allows to enforce role-based authorization
-            // from the portal.
+            int eventsPublished = 0;
+            int eventsRead = 0;
+
+            // Service principal authentication is a means for applications to authenticate against Azure Active
+            // Directory and consume Azure services. This is advantageous compared to using a connection string for
+            // authorization, as it offers a far more robust mechanism for transparently updating credentials in place,
+            // without an application being explicitly aware or involved.
             //
-            // Service principal authentication differs from managed identity authentication also because the principal to be used
-            // will be able to authenticate with the portal without the need for the code to run within the portal.
-            // The authentication between the Event Hubs client and the portal is performed through OAuth 2.0.
-            // (see: https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
+            // For this example, we'll take advantage of a service principal to publish and receive events.  To do so, we'll make
+            // use of the ClientSecretCredential from the Azure.Identity library to enable the Event Hubs clients to perform authorization
+            // using a service principal.
 
-            // ClientSecretCredential allows performing service principal authentication passing
-            // tenantId, clientId and clientSecret directly from the constructor.
-            // (see: https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow)
+            ClientSecretCredential credential = new ClientSecretCredential(tenantId, clientId, secret);
 
-            var credentials = new ClientSecretCredential(tenantId, clientId, secret);
+            // To start, we'll publish a small number of events using a producer client.  To ensure that our client is appropriately closed, we'll
+            // take advantage of the asynchronous dispose when we are done or when an exception is encountered.
 
-            // EventHubProducerClient takes ClientSecretCredential from its constructor and tries to issue a token from Azure Active Directory.
-
-            await using (EventHubProducerClient client = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credentials))
+            await using (var producerClient = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential))
             {
-                // It will then use that token to authenticate on the portal and enquiry the Hub properties.
+                using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
+                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("The middle event is this one")));
+                eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Goodbye, Event Hubs!")));
 
-                Console.WriteLine($"Contacting the hub using the token issued from client credentials.");
+                await producerClient.SendAsync(eventBatch);
 
-                var properties = await client.GetEventHubPropertiesAsync();
-
-                Console.WriteLine($"Event Hub \"{ properties.Name }\" reached successfully.");
+                eventsPublished = eventBatch.Count;
+                Console.WriteLine("The event batch has been published.");
             }
 
-            // The instances of "EventHubProducerClient" and "EventHubProducerClient" will be created
-            // passing in "ClientSecretCredential" instead of the connection string. In this way, two things will happen:
-            //
-            // 1. An OAuth 2.0 token will be created by authenticating against Azure Active Directory using the tenant, client and the secret passed in
-            // 2. Role-based authorization will be performed and the "Azure Event Hubs Data Owner" role will be needed to produce and consume events
-            //
-            // (see: https://docs.microsoft.com/en-us/azure/role-based-access-control/role-definitions)
-            // (see: https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner)
+            // With our events published, we'll create a consumer client to read them.  We'll stop reading after we've received all events in the
+            // batch.
 
-            await using (var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credentials))
+            await using (var consumerClient = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, fullyQualifiedNamespace, eventHubName, credential))
             {
-                string firstPartition = (await consumerClient.GetPartitionIdsAsync()).First();
+                // To ensure that we do not wait for an indeterminate length of time, we'll stop reading after we receive three events.  For a
+                // fresh Event Hub, those will be the three that we had published.  We'll also ask for cancellation after 30 seconds, just to be
+                // safe.
 
-                PartitionEvent receivedEvent;
+                using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(60));
 
-                ReadEventOptions readOptions = new ReadEventOptions
+                await foreach (PartitionEvent partitionEvent in consumerClient.ReadEventsAsync(cancellationSource.Token))
                 {
-                    MaximumWaitTime = TimeSpan.FromMilliseconds(150)
-                };
+                    Console.WriteLine($"Event Read: { Encoding.UTF8.GetString(partitionEvent.Data.Body.ToArray()) }");
+                    eventsRead++;
 
-                Stopwatch watch = Stopwatch.StartNew();
-                bool wereEventsPublished = false;
-
-                CancellationTokenSource cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-                await foreach (PartitionEvent currentEvent in consumerClient.ReadEventsFromPartitionAsync(firstPartition, EventPosition.Latest, readOptions, cancellationSource.Token))
-                {
-                    if (!wereEventsPublished)
+                    if (eventsRead >= eventsPublished)
                     {
-                        await using (var producerClient = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credentials))
-                        {
-                            using EventDataBatch eventBatch = await producerClient.CreateBatchAsync(new CreateBatchOptions { PartitionId = firstPartition });
-                            eventBatch.TryAdd(new EventData(Encoding.UTF8.GetBytes("Hello, Event Hubs!")));
-
-                            await producerClient.SendAsync(eventBatch);
-                            wereEventsPublished = true;
-
-                            Console.WriteLine("The event batch has been published.");
-                        }
-                    }
-
-                    if (currentEvent.Data != null)
-                    {
-                        receivedEvent = currentEvent;
-                        watch.Stop();
                         break;
                     }
                 }
-
-                Console.WriteLine();
-                Console.WriteLine($"The following event was consumed in { watch.ElapsedMilliseconds } milliseconds:");
-
-                string message = (receivedEvent.Data == null) ? "No event was received." : Encoding.UTF8.GetString(receivedEvent.Data.Body.ToArray());
-                Console.WriteLine($"\tMessage: \"{ message }\"");
             }
 
             Console.WriteLine();

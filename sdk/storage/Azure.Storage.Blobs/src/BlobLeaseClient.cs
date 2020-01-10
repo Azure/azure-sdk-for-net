@@ -54,6 +54,11 @@ namespace Azure.Storage.Blobs.Specialized
         private HttpPipeline Pipeline => BlobClient?.Pipeline ?? BlobContainerClient.Pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => BlobClient?.Version ?? BlobContainerClient.Version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -280,6 +285,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             duration: serviceDuration,
                             proposedLeaseId: LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -303,6 +309,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             duration: serviceDuration,
                             proposedLeaseId: LeaseId,
                             ifModifiedSince: conditions?.IfModifiedSince,
@@ -451,6 +458,7 @@ namespace Azure.Storage.Blobs.Specialized
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
@@ -473,6 +481,7 @@ namespace Azure.Storage.Blobs.Specialized
                             Pipeline,
                             Uri,
                             leaseId: LeaseId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
@@ -621,6 +630,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 Pipeline,
                                 Uri,
                                 leaseId: LeaseId,
+                                version: Version.ToVersionString(),
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 ifMatch: conditions?.IfMatch,
@@ -645,6 +655,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 Pipeline,
                                 Uri,
                                 leaseId: LeaseId,
+                                version: Version.ToVersionString(),
                                 ifModifiedSince: conditions?.IfModifiedSince,
                                 ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                                 async: async,
@@ -800,6 +811,7 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             leaseId: LeaseId,
                             proposedLeaseId: proposedId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
@@ -823,6 +835,7 @@ namespace Azure.Storage.Blobs.Specialized
                             Uri,
                             leaseId: LeaseId,
                             proposedLeaseId: proposedId,
+                            version: Version.ToVersionString(),
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             async: async,
@@ -1029,6 +1042,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             breakPeriod: serviceBreakPeriod,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -1052,6 +1066,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             breakPeriod: serviceBreakPeriod,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,

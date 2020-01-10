@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -543,6 +543,32 @@ namespace Azure.Storage.Blobs.Test
             await downloadResponse.Value.Content.CopyToAsync(actual);
             Assert.AreEqual(data.Length, actual.Length);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task AppendBlockAsync_ProgressReporting()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blobName = GetNewBlobName();
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+            await blob.CreateAsync();
+            const int blobSize = 4 * Constants.MB;
+            var data = GetRandomBuffer(blobSize);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.AppendBlockAsync(stream, progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
         [Test]

@@ -3,13 +3,11 @@
 
 using System.Threading.Tasks;
 using NUnit.Framework;
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Azure.Storage.Files.Shares.Models;
-using Azure.Storage.Files.Samples;
 
 namespace Azure.Storage.Files.Shares.Samples.Tests
 {

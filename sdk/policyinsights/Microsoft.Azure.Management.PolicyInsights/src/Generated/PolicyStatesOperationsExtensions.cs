@@ -829,41 +829,5 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 }
             }
 
-            /// <summary>
-            /// Gets OData metadata XML document.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// A valid scope, i.e. management group, subscription, resource group, or
-            /// resource ID. Scope used has no effect on metadata returned.
-            /// </param>
-            public static string GetMetadata(this IPolicyStatesOperations operations, string scope)
-            {
-                return operations.GetMetadataAsync(scope).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets OData metadata XML document.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='scope'>
-            /// A valid scope, i.e. management group, subscription, resource group, or
-            /// resource ID. Scope used has no effect on metadata returned.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<string> GetMetadataAsync(this IPolicyStatesOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetMetadataWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
     }
 }

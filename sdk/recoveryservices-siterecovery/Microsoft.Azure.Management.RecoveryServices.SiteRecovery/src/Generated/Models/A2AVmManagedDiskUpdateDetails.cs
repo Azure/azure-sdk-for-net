@@ -38,12 +38,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// before failover.</param>
         /// <param name="diskEncryptionInfo">The recovery disk encryption
         /// information (for one / single pass flows).</param>
-        public A2AVmManagedDiskUpdateDetails(string diskId = default(string), string recoveryTargetDiskAccountType = default(string), string recoveryReplicaDiskAccountType = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo))
+        /// <param name="failoverDiskName">The target disk name for unplanned
+        /// failover operation.</param>
+        /// <param name="tfoDiskName">The target disk name for test failover
+        /// operation.</param>
+        public A2AVmManagedDiskUpdateDetails(string diskId = default(string), string recoveryTargetDiskAccountType = default(string), string recoveryReplicaDiskAccountType = default(string), DiskEncryptionInfo diskEncryptionInfo = default(DiskEncryptionInfo), string failoverDiskName = default(string), string tfoDiskName = default(string))
         {
             DiskId = diskId;
             RecoveryTargetDiskAccountType = recoveryTargetDiskAccountType;
             RecoveryReplicaDiskAccountType = recoveryReplicaDiskAccountType;
             DiskEncryptionInfo = diskEncryptionInfo;
+            FailoverDiskName = failoverDiskName;
+            TfoDiskName = tfoDiskName;
             CustomInit();
         }
 
@@ -76,6 +82,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionInfo")]
         public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target disk name for unplanned failover operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "failoverDiskName")]
+        public string FailoverDiskName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target disk name for test failover operation.
+        /// </summary>
+        [JsonProperty(PropertyName = "tfoDiskName")]
+        public string TfoDiskName { get; set; }
 
     }
 }

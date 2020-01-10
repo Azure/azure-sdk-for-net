@@ -32,6 +32,11 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual HttpPipeline Pipeline { get; }
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version { get; }
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -62,24 +67,17 @@ namespace Azure.Storage.Blobs.Specialized
         public BlobBatchClient(BlobServiceClient client)
         {
             Uri = client.Uri;
-            Pipeline = client.Pipeline;
-            ClientDiagnostics = client.ClientDiagnostics;
-            BatchOperationPipeline = client.BatchOperationPipeline;
+            Pipeline = BlobServiceClientInternals.GetHttpPipeline(client);
+            BlobClientOptions options = BlobServiceClientInternals.GetClientOptions(client);
+            Version = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options);
 
             // Construct a dummy pipeline for processing batch sub-operations
             // if we don't have one cached on the service
-            if (BatchOperationPipeline == null)
-            {
-                BatchOperationPipeline = CreateBatchPipeline(
-                    Pipeline,
-                    client.AuthenticationPolicy,
-                    // TODO: Replace this with the client's version once that's relevant
-                    BlobClientOptions.LatestVersion);
-
-                // We're not worried about synchronizing this update because
-                // one pipeline is as good as another
-                client.BatchOperationPipeline = BatchOperationPipeline;
-            }
+            BatchOperationPipeline = CreateBatchPipeline(
+                Pipeline,
+                BlobServiceClientInternals.GetAuthenticationPolicy(client),
+                Version);
         }
 
         /// <summary>
@@ -117,6 +115,45 @@ namespace Azure.Storage.Blobs.Specialized
                 options,
                 RemoveVersionHeaderPolicy.Shared,
                 authenticationPolicy);
+        }
+
+        /// <summary>
+        /// Helper to access protected static members of BlobServiceClient
+        /// that should not be exposed directly to customers.
+        /// </summary>
+        private class BlobServiceClientInternals : BlobServiceClient
+        {
+            /// <summary>
+            /// Prevent instantiation.
+            /// </summary>
+            private BlobServiceClientInternals() { }
+
+            /// <summary>
+            /// Get a <see cref="BlobServiceClient"/>'s <see cref="HttpPipeline"/>
+            /// for creating child clients.
+            /// </summary>
+            /// <param name="client">The BlobServiceClient.</param>
+            /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+            public static new HttpPipeline GetHttpPipeline(BlobServiceClient client) =>
+                BlobServiceClient.GetHttpPipeline(client);
+
+            /// <summary>
+            /// Get a <see cref="BlobServiceClient"/>'s authentication
+            /// <see cref="HttpPipelinePolicy"/> for creating child clients.
+            /// </summary>
+            /// <param name="client">The BlobServiceClient.</param>
+            /// <returns>The BlobServiceClient's authentication policy.</returns>
+            public static new HttpPipelinePolicy GetAuthenticationPolicy(BlobServiceClient client) =>
+                BlobServiceClient.GetAuthenticationPolicy(client);
+
+            /// <summary>
+            /// Get a <see cref="BlobServiceClient"/>'s <see cref="BlobClientOptions"/>
+            /// for creating child clients.
+            /// </summary>
+            /// <param name="client">The BlobServiceClient.</param>
+            /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
+            public static new BlobClientOptions GetClientOptions(BlobServiceClient client) =>
+                BlobServiceClient.GetClientOptions(client);
         }
         #endregion ctors
 
@@ -258,13 +295,14 @@ namespace Azure.Storage.Blobs.Specialized
 
             // Send the batch request
             Response<BlobBatchResult> batchResult =
-                await BlobRestClient.Service.SubmitBatchAsync(
+                await BatchRestClient.Service.SubmitBatchAsync(
                     ClientDiagnostics,
                     Pipeline,
                     Uri,
                     body: content,
                     contentLength: content.Length,
                     multipartContentType: contentType,
+                    version: Version.ToVersionString(),
                     async: async,
                     operationName: BatchConstants.BatchOperationName,
                     cancellationToken: cancellationToken)
@@ -390,7 +428,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (responses.Length == 1 && responses[0].Status == 400)
                     {
                         // We'll re-process this response as a batch result
-                        BlobRestClient.Service.SubmitBatchAsync_CreateResponse(responses[0]);
+                        BatchRestClient.Service.SubmitBatchAsync_CreateResponse(responses[0]);
                     }
                     else
                     {

@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryAzureVMSize">Target Azure Vm size.</param>
         /// <param name="selectedRecoveryAzureNetworkId">Target Azure Network
         /// Id.</param>
+        /// <param name="selectedTfoAzureNetworkId">The Azure Network Id for
+        /// test failover.</param>
         /// <param name="selectedSourceNicId">The selected source nic Id which
         /// will be used as the primary nic during failover.</param>
         /// <param name="enableRdpOnTargetOption">The selected option to enable
@@ -50,11 +52,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// id.</param>
         /// <param name="providerSpecificDetails">The provider specific input
         /// to update replication protected item.</param>
-        public UpdateReplicationProtectedItemInputProperties(string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string selectedRecoveryAzureNetworkId = default(string), string selectedSourceNicId = default(string), string enableRdpOnTargetOption = default(string), IList<VMNicInputDetails> vmNics = default(IList<VMNicInputDetails>), string licenseType = default(string), string recoveryAvailabilitySetId = default(string), UpdateReplicationProtectedItemProviderInput providerSpecificDetails = default(UpdateReplicationProtectedItemProviderInput))
+        public UpdateReplicationProtectedItemInputProperties(string recoveryAzureVMName = default(string), string recoveryAzureVMSize = default(string), string selectedRecoveryAzureNetworkId = default(string), string selectedTfoAzureNetworkId = default(string), string selectedSourceNicId = default(string), string enableRdpOnTargetOption = default(string), IList<VMNicInputDetails> vmNics = default(IList<VMNicInputDetails>), string licenseType = default(string), string recoveryAvailabilitySetId = default(string), UpdateReplicationProtectedItemProviderInput providerSpecificDetails = default(UpdateReplicationProtectedItemProviderInput))
         {
             RecoveryAzureVMName = recoveryAzureVMName;
             RecoveryAzureVMSize = recoveryAzureVMSize;
             SelectedRecoveryAzureNetworkId = selectedRecoveryAzureNetworkId;
+            SelectedTfoAzureNetworkId = selectedTfoAzureNetworkId;
             SelectedSourceNicId = selectedSourceNicId;
             EnableRdpOnTargetOption = enableRdpOnTargetOption;
             VmNics = vmNics;
@@ -86,6 +89,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "selectedRecoveryAzureNetworkId")]
         public string SelectedRecoveryAzureNetworkId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Azure Network Id for test failover.
+        /// </summary>
+        [JsonProperty(PropertyName = "selectedTfoAzureNetworkId")]
+        public string SelectedTfoAzureNetworkId { get; set; }
 
         /// <summary>
         /// Gets or sets the selected source nic Id which will be used as the

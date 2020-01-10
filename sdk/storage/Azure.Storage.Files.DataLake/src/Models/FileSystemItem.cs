@@ -4,17 +4,17 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// An Azure Data Lake file system
+    /// An Azure Data Lake file system.
     /// </summary>
     public class FileSystemItem
     {
         /// <summary>
-        /// Name
+        /// The name of the file system.
         /// </summary>
         public string Name { get; internal set; }
 
         /// <summary>
-        /// Properties of a file system.
+        /// <see cref="FileSystemProperties"/> of the file system.
         /// </summary>
         public FileSystemProperties Properties { get; internal set; }
 

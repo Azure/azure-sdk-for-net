@@ -38,6 +38,16 @@ namespace Azure.Storage.Queues
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly QueueClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual QueueClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
         /// every request.
         /// </summary>
@@ -48,6 +58,7 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </summary>
         internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
         /// <summary>
         /// The Storage account name corresponding to the service client.
         /// </summary>
@@ -115,6 +126,7 @@ namespace Azure.Storage.Queues
             _uri = conn.QueueEndpoint;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
         }
 
@@ -200,26 +212,8 @@ namespace Azure.Storage.Queues
             _uri = serviceUri;
             options ??= new QueueClientOptions();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="QueueServiceClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="serviceUri">
-        /// A <see cref="Uri"/> referencing the queue service.
-        /// This is likely to be similar to "https://{account_name}.queue.core.windows.net".
-        /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
-        /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal QueueServiceClient(Uri serviceUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
-        {
-            _uri = serviceUri;
-            _pipeline = pipeline;
-            _clientDiagnostics = clientDiagnostics;
         }
         #endregion ctors
 
@@ -236,7 +230,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="QueueClient"/> for the desired queue.
         /// </returns>
         public virtual QueueClient GetQueueClient(string queueName)
-            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, ClientDiagnostics);
+            => new QueueClient(Uri.AppendToPath(queueName), Pipeline, Version, ClientDiagnostics);
 
         #region GetQueues
         /// <summary>
@@ -351,6 +345,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         marker: marker,
                         prefix: prefix,
                         maxresults: pageSizeHint,
@@ -444,6 +439,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -541,6 +537,7 @@ namespace Azure.Storage.Queues
                         Pipeline,
                         Uri,
                         properties: properties,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -627,6 +624,7 @@ namespace Azure.Storage.Queues
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);

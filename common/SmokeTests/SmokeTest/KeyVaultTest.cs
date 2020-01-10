@@ -42,7 +42,7 @@ namespace SmokeTest
         private static async Task SetNewSecret()
         {
             Console.Write("Setting a secret...");
-            var newSecret = new Secret(SecretName, SecretValue);
+            var newSecret = new KeyVaultSecret(SecretName, SecretValue);
             await client.SetSecretAsync(newSecret);
             Console.WriteLine("\tdone");
         }
@@ -50,7 +50,7 @@ namespace SmokeTest
         private static async Task GetSecret()
         {
             Console.Write("Getting that secret...");
-            Azure.Response<Secret> secret;
+            Azure.Response<KeyVaultSecret> secret;
             secret = await client.GetSecretAsync(SecretName);
             //Verify that the secret received is the one that was set previously
             if (secret.Value.Value != SecretValue)
@@ -63,7 +63,8 @@ namespace SmokeTest
         private static async Task CleanUp()
         {
             Console.Write("Cleaning up the resource...");
-            await client.DeleteSecretAsync(SecretName);
+            var secretDeletePoller = await client.StartDeleteSecretAsync(SecretName);
+            await secretDeletePoller.WaitForCompletionAsync();
             Console.WriteLine("\tdone");
         }
     }

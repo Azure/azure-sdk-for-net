@@ -12,6 +12,7 @@ jobs:
   parameters:
     MaxParallel: 1
     ServiceDirectory: eventhub
+    TimeoutInMinutes: 120
     EnvVars:
       EVENT_HUBS_CLIENT: $(aad-azure-sdk-test-client-id)
       EVENT_HUBS_SECRET: $(aad-azure-sdk-test-client-secret)

@@ -41,7 +41,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// 'Withdrawn'</param>
         /// <param name="respondedAt">The time the recipient responded to the
         /// invitation.</param>
-        /// <param name="sender">Gets the name of the sender.</param>
         /// <param name="sentAt">Gets the time at which the invitation was
         /// sent.</param>
         /// <param name="targetActiveDirectoryId">The target Azure AD Id. Can't
@@ -54,17 +53,22 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// sending
         /// invitations to specific users or applications in an AD
         /// tenant.</param>
-        public Invitation(string id = default(string), string name = default(string), string type = default(string), string invitationId = default(string), string invitationStatus = default(string), System.DateTime? respondedAt = default(System.DateTime?), string sender = default(string), System.DateTime? sentAt = default(System.DateTime?), string targetActiveDirectoryId = default(string), string targetEmail = default(string), string targetObjectId = default(string))
+        /// <param name="userEmail">Email of the user who created the
+        /// resource</param>
+        /// <param name="userName">Name of the user who created the
+        /// resource</param>
+        public Invitation(string id = default(string), string name = default(string), string type = default(string), string invitationId = default(string), string invitationStatus = default(string), System.DateTime? respondedAt = default(System.DateTime?), System.DateTime? sentAt = default(System.DateTime?), string targetActiveDirectoryId = default(string), string targetEmail = default(string), string targetObjectId = default(string), string userEmail = default(string), string userName = default(string))
             : base(id, name, type)
         {
             InvitationId = invitationId;
             InvitationStatus = invitationStatus;
             RespondedAt = respondedAt;
-            Sender = sender;
             SentAt = sentAt;
             TargetActiveDirectoryId = targetActiveDirectoryId;
             TargetEmail = targetEmail;
             TargetObjectId = targetObjectId;
+            UserEmail = userEmail;
+            UserName = userName;
             CustomInit();
         }
 
@@ -93,12 +97,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         public System.DateTime? RespondedAt { get; private set; }
 
         /// <summary>
-        /// Gets the name of the sender.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.sender")]
-        public string Sender { get; private set; }
-
-        /// <summary>
         /// Gets the time at which the invitation was sent.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sentAt")]
@@ -125,6 +123,18 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetObjectId")]
         public string TargetObjectId { get; set; }
+
+        /// <summary>
+        /// Gets email of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userEmail")]
+        public string UserEmail { get; private set; }
+
+        /// <summary>
+        /// Gets name of the user who created the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.userName")]
+        public string UserName { get; private set; }
 
     }
 }

@@ -163,6 +163,13 @@ namespace Azure.Storage.Blobs
             {
                 scope.Start();
 
+                // Wrap progressHandler in a AggregatingProgressIncrementer to prevent
+                // progress from being reset with each stage blob operation.
+                if (progressHandler != null)
+                {
+                    progressHandler = new AggregatingProgressIncrementer(progressHandler);
+                }
+
                 // The list tracking blocks IDs we're going to commit
                 List<string> blockIds = new List<string>();
 
@@ -225,6 +232,13 @@ namespace Azure.Storage.Blobs
             try
             {
                 scope.Start();
+
+                // Wrap progressHandler in a AggregatingProgressIncrementer to prevent
+                // progress from being reset with each stage blob operation.
+                if (progressHandler != null)
+                {
+                    progressHandler = new AggregatingProgressIncrementer(progressHandler);
+                }
 
                 // The list tracking blocks IDs we're going to commit
                 List<string> blockIds = new List<string>();
