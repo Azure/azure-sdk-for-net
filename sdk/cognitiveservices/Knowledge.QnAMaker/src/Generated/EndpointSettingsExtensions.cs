@@ -15,51 +15,45 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for Runtime.
+    /// Extension methods for EndpointSettings.
     /// </summary>
-    public static partial class RuntimeExtensions
+    public static partial class EndpointSettingsExtensions
     {
             /// <summary>
-            /// GenerateAnswer call to query the knowledgebase.
+            /// Gets endpoint settings for an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='kbId'>
-            /// Knowledgebase id.
-            /// </param>
-            /// <param name='generateAnswerPayload'>
-            /// Post body of the request.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<QnASearchResultList> GenerateAnswerAsync(this IRuntime operations, string kbId, QueryDTO generateAnswerPayload, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EndpointSettingsDTO> GetSettingsAsync(this IEndpointSettings operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GenerateAnswerWithHttpMessagesAsync(kbId, generateAnswerPayload, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSettingsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Train call to add suggestions to the knowledgebase.
+            /// Updates endpoint settings for an endpoint.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='kbId'>
-            /// Knowledgebase id.
-            /// </param>
-            /// <param name='trainPayload'>
+            /// <param name='endpointSettingsPayload'>
             /// Post body of the request.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task TrainAsync(this IRuntime operations, string kbId, FeedbackRecordsDTO trainPayload, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> UpdateSettingsAsync(this IEndpointSettings operations, EndpointSettingsDTO endpointSettingsPayload, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.TrainWithHttpMessagesAsync(kbId, trainPayload, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.UpdateSettingsWithHttpMessagesAsync(endpointSettingsPayload, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

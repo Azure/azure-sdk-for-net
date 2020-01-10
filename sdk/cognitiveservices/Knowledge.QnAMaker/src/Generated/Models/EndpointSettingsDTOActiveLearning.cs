@@ -13,26 +13,27 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
     using System.Linq;
 
     /// <summary>
-    /// Context object with previous QnA's information.
+    /// Active Learning settings of the endpoint.
     /// </summary>
-    public partial class QueryDTOContext : QueryContextDTO
+    public partial class EndpointSettingsDTOActiveLearning : ActiveLearningSettingsDTO
     {
         /// <summary>
-        /// Initializes a new instance of the QueryDTOContext class.
+        /// Initializes a new instance of the EndpointSettingsDTOActiveLearning
+        /// class.
         /// </summary>
-        public QueryDTOContext()
+        public EndpointSettingsDTOActiveLearning()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the QueryDTOContext class.
+        /// Initializes a new instance of the EndpointSettingsDTOActiveLearning
+        /// class.
         /// </summary>
-        /// <param name="previousQnaId">Previous QnA Id - qnaId of the top
-        /// result.</param>
-        /// <param name="previousUserQuery">Previous user query.</param>
-        public QueryDTOContext(string previousQnaId = default(string), string previousUserQuery = default(string))
-            : base(previousQnaId, previousUserQuery)
+        /// <param name="enable">True/False string providing Active
+        /// Learning</param>
+        public EndpointSettingsDTOActiveLearning(string enable = default(string))
+            : base(enable)
         {
             CustomInit();
         }
