@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -741,6 +742,31 @@ namespace Azure.Storage.Blobs.Test
                     File.Delete(path);
                 }
             }
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            TestProgress progress = new TestProgress();
+            StorageTransferOptions options = new StorageTransferOptions
+            {
+                MaximumTransferLength = Constants.MB,
+                MaximumConcurrency = 16
+            };
+            int size = Constants.Blob.Block.MaxUploadBytes + 1; // ensure that the Parallel upload code path is hit
+            using var stream = new MemoryStream(GetRandomBuffer(size));
+
+            // Act
+            await blob.UploadAsync(content: stream, progressHandler: progress, transferOptions: options);
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
         }
         #endregion Upload
 

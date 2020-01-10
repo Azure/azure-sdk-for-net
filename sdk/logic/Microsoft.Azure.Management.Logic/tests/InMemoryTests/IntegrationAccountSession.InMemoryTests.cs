@@ -41,7 +41,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccountSessions.List(null, "IntegrationAccount"));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSessions.List(Constants.DefaultResourceGroup, "IntegrationAccount"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSessions.List(Constants.DefaultResourceGroup, "IntegrationAccount"));
         }
 
         [Fact]
@@ -77,7 +77,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccountSessions.ListNext(nextPageLink: null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSessions.ListNext(nextPageLink: Constants.NextPageLink));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSessions.ListNext(nextPageLink: Constants.NextPageLink));
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace Test.Azure.Management.Logic
                 integrationAccountName: "IntegrationAccountName",
                 sessionName: "SessionName",
                 session: null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountSessions.CreateOrUpdate(
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSessions.CreateOrUpdate(
                 resourceGroupName: Constants.DefaultResourceGroup,
                 integrationAccountName: "IntegrationAccountName",
                 sessionName: "SessionName",

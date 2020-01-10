@@ -259,7 +259,7 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for ownership claim for load balancing.
         /// </summary>
         ///
-        private PartitionLoadBalancer LoadBalancer { get; }
+        internal PartitionLoadBalancer LoadBalancer { get; }
 
         /// <summary>
         ///   The set of options to use for consumers responsible for partition processing.
@@ -411,6 +411,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -460,6 +461,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -519,6 +521,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -733,8 +736,8 @@ namespace Azure.Messaging.EventHubs
             Logger.UpdateCheckpointStart(context.PartitionId);
 
             Argument.AssertNotNull(eventData, nameof(eventData));
-            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
-            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
+            Argument.AssertInRange(eventData.Offset, long.MinValue + 1, long.MaxValue, nameof(eventData.Offset));
+            Argument.AssertInRange(eventData.SequenceNumber, long.MinValue + 1, long.MaxValue, nameof(eventData.SequenceNumber));
             Argument.AssertNotNull(context, nameof(context));
 
             // Parameter validation is done by Checkpoint constructor.
@@ -745,8 +748,8 @@ namespace Azure.Messaging.EventHubs
                 EventHubName,
                 ConsumerGroup,
                 context.PartitionId,
-                eventData.Offset.Value,
-                eventData.SequenceNumber.Value
+                eventData.Offset,
+                eventData.SequenceNumber
             );
 
             using DiagnosticScope scope =
@@ -1033,10 +1036,9 @@ namespace Azure.Messaging.EventHubs
                 if (checkpoint.PartitionId == partitionId)
                 {
                     // When resuming from a checkpoint, the intent to process the next available event in the stream which
-                    // follows the one that was used to create the checkpoint.  Because the offset is inclusive, increment
-                    // the value from the checkpoint in order to force a shift to the next available event in the stream.
+                    // follows the one that was used to create the checkpoint.  Create the position using an exclusive offset.
 
-                    startingPosition = EventPosition.FromOffset(checkpoint.Offset + 1);
+                    startingPosition = EventPosition.FromOffset(checkpoint.Offset, false);
                     break;
                 }
             }

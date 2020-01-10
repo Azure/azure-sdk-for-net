@@ -74,12 +74,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Diagnostic scope is not completing properly. Maybe the listener is being disposed of first.")]
         public async Task RunPartitionProcessingAsyncCreatesScopeForEventProcessing()
         {
             var mockStorage = new MockCheckPointStorage();
             var mockConsumer = new Mock<EventHubConsumerClient>("cg", Mock.Of<EventHubConnection>(), default);
-            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default) { CallBase = true };
+            var mockProcessor = new Mock<EventProcessorClient>(mockStorage, "cg", "ns", "eh", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
 
             using ClientDiagnosticListener listener = new ClientDiagnosticListener(DiagnosticSourceName);
             var completionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -150,12 +149,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Validate diagnostics functionality.
 
-            ClientDiagnosticListener.ProducedDiagnosticScope scope = listener.Scopes.Single();
-
-            Assert.That(scope.Name, Is.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
-            Assert.That(scope.Links, Has.One.EqualTo("id"));
-            Assert.That(scope.Links, Has.One.EqualTo("id2"));
-            Assert.That(scope.Activity.Tags, Has.One.EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
+            Assert.That(listener.Scopes.Select(s => s.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
+            Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id"));
+            Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id2"));
+            Assert.That(listener.Scopes.SelectMany(s => s.Activity.Tags), Has.Exactly(2).EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
         }
 
         private class MockConnection : EventHubConnection
@@ -175,9 +172,9 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             public MockEventData(ReadOnlyMemory<byte> eventBody,
                                  IDictionary<string, object> properties = null,
                                  IReadOnlyDictionary<string, object> systemProperties = null,
-                                 long? sequenceNumber = null,
-                                 long? offset = null,
-                                 DateTimeOffset? enqueuedTime = null,
+                                 long sequenceNumber = long.MinValue,
+                                 long offset = long.MinValue,
+                                 DateTimeOffset enqueuedTime = default,
                                  string partitionKey = null) : base(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey)
             {
             }

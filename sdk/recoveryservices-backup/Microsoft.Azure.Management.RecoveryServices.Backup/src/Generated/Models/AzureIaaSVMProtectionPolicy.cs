@@ -42,9 +42,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// policy range in days</param>
         /// <param name="timeZone">TimeZone optional input as string. For
         /// example: TimeZone = "Pacific Standard Time".</param>
-        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string))
+        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), InstantRPAdditionalDetails instantRPDetails = default(InstantRPAdditionalDetails), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string))
             : base(protectedItemsCount)
         {
+            InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
             InstantRpRetentionRangeInDays = instantRpRetentionRangeInDays;
@@ -56,6 +57,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "instantRPDetails")]
+        public InstantRPAdditionalDetails InstantRPDetails { get; set; }
 
         /// <summary>
         /// Gets or sets backup schedule specified as part of backup policy.

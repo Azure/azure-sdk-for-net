@@ -5,8 +5,6 @@ jobs:
     pool:
       vmImage: windows-2019
     steps:
-      - checkout: self
-        path: SourceDirWith49CharsLengthTestForLongPaths
       - pwsh: |
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
@@ -50,8 +48,6 @@ jobs:
     pool:
       vmImage: "windows-2019"
     steps:
-      - checkout: self
-        path: SourceDirWith49CharsLengthTestForLongPaths
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
         inputs:
@@ -136,8 +132,6 @@ jobs:
     pool:
       vmImage: "$(OSVmImage)"
     steps:
-      - checkout: self
-        path: SourceDirWith49CharsLengthTestForLongPaths
       - template: eng/pipelines/templates/scripts/verify-agent-os.yml@azure-sdk-tools
         parameters:
           OSName: $(OSName)

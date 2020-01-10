@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.Logic.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// The expression.
+    /// </summary>
     public partial class Expression
     {
         /// <summary>
@@ -28,6 +31,8 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Initializes a new instance of the Expression class.
         /// </summary>
+        /// <param name="text">The text.</param>
+        /// <param name="subexpressions">The sub expressions.</param>
         public Expression(string text = default(string), object value = default(object), IList<Expression> subexpressions = default(IList<Expression>), AzureResourceErrorInfo error = default(AzureResourceErrorInfo))
         {
             Text = text;
@@ -43,6 +48,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the text.
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
@@ -53,6 +59,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         public object Value { get; set; }
 
         /// <summary>
+        /// Gets or sets the sub expressions.
         /// </summary>
         [JsonProperty(PropertyName = "subexpressions")]
         public IList<Expression> Subexpressions { get; set; }

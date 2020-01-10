@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.Logic.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.Logic.Models
     /// <summary>
     /// The integration account.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class IntegrationAccount : Resource
     {
         /// <summary>
@@ -36,13 +39,19 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <param name="type">Gets the resource type.</param>
         /// <param name="location">The resource location.</param>
         /// <param name="tags">The resource tags.</param>
-        /// <param name="properties">The integration account
-        /// properties.</param>
+        /// <param name="properties">The integration account properties.</param>
+        /// <param name="integrationServiceEnvironment">The integration service
+        /// environment.</param>
+        /// <param name="state">The workflow state. Possible values include:
+        /// 'NotSpecified', 'Completed', 'Enabled', 'Disabled', 'Deleted',
+        /// 'Suspended'</param>
         /// <param name="sku">The sku.</param>
-        public IntegrationAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object), IntegrationAccountSku sku = default(IntegrationAccountSku))
+        public IntegrationAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object), IntegrationServiceEnvironment integrationServiceEnvironment = default(IntegrationServiceEnvironment), string state = default(string), IntegrationAccountSku sku = default(IntegrationAccountSku))
             : base(id, name, type, location, tags)
         {
+            IntegrationServiceEnvironment = integrationServiceEnvironment;
             Properties = properties;
+            State = state;
             Sku = sku;
             CustomInit();
         }
@@ -52,11 +61,26 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// </summary>
         partial void CustomInit();
 
+
         /// <summary>
         /// Gets or sets the integration account properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the integration service environment.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.integrationServiceEnvironment")]
+        public IntegrationServiceEnvironment IntegrationServiceEnvironment { get; set; }
+
+        /// <summary>
+        /// Gets or sets the workflow state. Possible values include:
+        /// 'NotSpecified', 'Completed', 'Enabled', 'Disabled', 'Deleted',
+        /// 'Suspended'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.state")]
+        public string State { get; set; }
 
         /// <summary>
         /// Gets or sets the sku.
@@ -67,7 +91,7 @@ namespace Microsoft.Azure.Management.Logic.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

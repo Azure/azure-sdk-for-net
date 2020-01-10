@@ -313,7 +313,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
-[API_reference]: https://azure.github.io/azure-sdk-for-net/keyvault.html
+[API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.keyvault.secrets
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
@@ -323,14 +323,14 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [get_secrets_sample]: samples/Sample3_GetSecrets.md
 [hello_world_sample]: samples/Sample1_HelloWorld.md
 [keys_client_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Keys
-[keyvault_docs]: https://docs.microsoft.com/en-us/azure/key-vault/
-[keyvault_rest]: https://docs.microsoft.com/en-us/rest/api/keyvault/
+[keyvault_docs]: https://docs.microsoft.com/azure/key-vault/
+[keyvault_rest]: https://docs.microsoft.com/rest/api/keyvault/
 [nuget]: https://www.nuget.org/
 [secret_client_class]: src/SecretClient.cs
 [secret_client_nuget_package]: https://www.nuget.org/packages/Azure.Security.KeyVault.Secrets/
 [secret_client_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples
 [secret_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/keyvault/Azure.Security.KeyVault.Secrets/src
-[soft_delete]: https://docs.microsoft.com/en-us/azure/key-vault/key-vault-ovw-soft-delete
+[soft_delete]: https://docs.microsoft.com/azure/key-vault/key-vault-ovw-soft-delete
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fkeyvault%2FAzure.Security.KeyVault.Secrets%2FREADME.png)

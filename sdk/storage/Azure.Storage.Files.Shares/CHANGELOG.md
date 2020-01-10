@@ -1,5 +1,10 @@
 # Release History
 
+## 12.0.1 (2020-01)
+ - Fixed issue where SAS content headers were not URL encoded when using ShareSasBuilder.
+ - Fixed bug where using SAS connection string from portal would throw an exception if it included
+   table endpoint.
+
 ## 12.0.0
 - Added check to enforce TokenCredential is used only over HTTPS
 - Support using SAS token from connection string

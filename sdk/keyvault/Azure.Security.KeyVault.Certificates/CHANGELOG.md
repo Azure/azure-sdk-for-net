@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.0 (2019-01-08)
+
+### Minor changes
+
+- Challenge-based authentication requests are only sent over HTTPS.
+
 ## 4.0.0-preview.8
 
 ### Breaking changes

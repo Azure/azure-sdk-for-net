@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
-        public virtual TimeSpan LoadBalanceInterval => TimeSpan.FromSeconds(10);
+        public virtual TimeSpan LoadBalanceInterval { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         ///   The minimum amount of time for an ownership to be considered expired without further updates.

@@ -9,9 +9,23 @@ namespace Azure.Storage
     internal static class StorageProgressExtensions
     {
         public static Stream WithProgress(this Stream stream, IProgress<long> progressHandler)
-            =>
-                progressHandler != null && stream != null
-                    ? new AggregatingProgressIncrementer(progressHandler).CreateProgressIncrementingStream(stream)
-                    : stream;
+        {
+            if (progressHandler != null && stream != null)
+            {
+                if (progressHandler is AggregatingProgressIncrementer handler)
+                {
+                    return handler.CreateProgressIncrementingStream(stream);
+                }
+                else
+                {
+                    return (new AggregatingProgressIncrementer(progressHandler))
+                        .CreateProgressIncrementingStream(stream);
+                }
+            }
+            else
+            {
+                return stream;
+            }
+        }
     }
 }

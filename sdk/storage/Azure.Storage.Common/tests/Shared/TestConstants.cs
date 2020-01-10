@@ -19,6 +19,10 @@ namespace Azure.Storage.Test
         public const string Https = "https";
         public const int HttpPort = 443;
 
+        // service cache timeout is 60s, but adding a buffer to be safe
+        public const int DataLakeRetryDelay = 70000;
+        public const int RetryDelay = 10000;
+
         public string CacheControl { get; private set; }
         public string ContentDisposition { get; private set; }
         public string ContentEncoding { get; private set; }

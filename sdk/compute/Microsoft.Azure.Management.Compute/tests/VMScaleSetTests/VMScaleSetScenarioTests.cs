@@ -240,7 +240,7 @@ namespace Compute.Tests
         public void TestVMScaleSetScenarioOperations_AutomaticRepairsPolicyTest()
         {
             string environmentVariable = "AZURE_VM_TEST_LOCATION";
-            string region = "westcentralus";
+            string region = "centraluseuap";
             string originalTestLocation = Environment.GetEnvironmentVariable(environmentVariable);
 
             try
@@ -296,8 +296,8 @@ namespace Compute.Tests
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
                         {
                             Enabled = true,
-                            GracePeriod = "PT2M",
-                            MaxInstanceRepairsPercent = 50
+
+                            GracePeriod = "PT35M"
                         };
                         UpdateVMScaleSet(rgName, vmssName, inputVMScaleSet);
 
@@ -313,8 +313,8 @@ namespace Compute.Tests
                         ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
                         Assert.NotNull(getResponse.AutomaticRepairsPolicy);
                         Assert.True(getResponse.AutomaticRepairsPolicy.Enabled == true);
-                        Assert.Equal("PT2M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
-                        Assert.Equal(50, getResponse.AutomaticRepairsPolicy.MaxInstanceRepairsPercent);
+
+                        Assert.Equal("PT35M", getResponse.AutomaticRepairsPolicy.GracePeriod, ignoreCase: true);
 
                         // Disable Automatic Repairs
                         inputVMScaleSet.AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
