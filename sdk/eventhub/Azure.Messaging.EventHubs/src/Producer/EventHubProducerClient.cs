@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -93,11 +92,10 @@ namespace Azure.Messaging.EventHubs.Producer
         private TransportProducer EventHubProducer { get; }
 
         /// <summary>
-        ///   The set of active Event Hub transport-specific producers created by this client which are specific to
-        ///   a given partition; intended to perform delegated operations.
+        ///   A <see cref="TransportProducerPool"/> used to manage a set of partition specific <see cref="TransportProducer"/>.
         /// </summary>
         ///
-        private ConcurrentDictionary<string, TransportProducer> PartitionProducers { get; } = new ConcurrentDictionary<string, TransportProducer>();
+        private TransportProducerPool PartitionProducerPool { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProducerClient"/> class.
@@ -182,6 +180,7 @@ namespace Azure.Messaging.EventHubs.Producer
             Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            PartitionProducerPool = new TransportProducerPool();
         }
 
         /// <summary>
@@ -209,6 +208,7 @@ namespace Azure.Messaging.EventHubs.Producer
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            PartitionProducerPool = new TransportProducerPool();
         }
 
         /// <summary>
@@ -228,6 +228,7 @@ namespace Azure.Messaging.EventHubs.Producer
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             EventHubProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            PartitionProducerPool = new TransportProducerPool();
         }
 
         /// <summary>
@@ -236,6 +237,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="connection">The connection to use as the basis for delegation of client-type operations.</param>
         /// <param name="transportProducer">The transport producer instance to use as the basis for service communication.</param>
+        /// <param name="partitionProducerPool">A <see cref="TransportProducerPool"/> used to manage a set of partition specific <see cref="TransportProducer"/>.</param>
         ///
         /// <remarks>
         ///   This constructor is intended to be used internally for functional
@@ -243,14 +245,22 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </remarks>
         ///
         internal EventHubProducerClient(EventHubConnection connection,
-                                        TransportProducer transportProducer)
+                                        TransportProducer transportProducer,
+                                        TransportProducerPool partitionProducerPool = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(transportProducer, nameof(transportProducer));
 
+            if (partitionProducerPool == default)
+            {
+                partitionProducerPool = new TransportProducerPool();
+            }
+
             OwnsConnection = false;
             Connection = connection;
             EventHubProducer = transportProducer;
+            PartitionProducerPool = partitionProducerPool;
+            RetryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
         }
 
         /// <summary>
@@ -396,9 +406,10 @@ namespace Azure.Messaging.EventHubs.Producer
                                               SendEventOptions options,
                                               CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(events, nameof(events));
+
             options ??= DefaultSendOptions;
 
-            Argument.AssertNotNull(events, nameof(events));
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             // Determine the transport producer to delegate the send operation to.  Because sending to a specific
@@ -410,6 +421,21 @@ namespace Azure.Messaging.EventHubs.Producer
             if (string.IsNullOrEmpty(options.PartitionId))
             {
                 activeProducer = EventHubProducer;
+
+                using DiagnosticScope scope = CreateDiagnosticScope();
+
+                events = events.ToList();
+                InstrumentMessages(events);
+
+                try
+                {
+                    await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }
             else
             {
@@ -419,22 +445,40 @@ namespace Azure.Messaging.EventHubs.Producer
                 // its idle timeout period elapses.
 
                 Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-                activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
-            }
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
+                bool isMessageSent = false;
+                int failedAttemptCount = 0;
 
-            events = events.ToList();
-            InstrumentMessages(events);
+                using DiagnosticScope scope = CreateDiagnosticScope();
 
-            try
-            {
-                await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
+                while (!isMessageSent)
+                {
+                    var pooledProducer = PartitionProducerPool.GetPartitionProducer(options.PartitionId, Connection, RetryPolicy, options.RemoveAfterDuration);
+
+                    await using var _ = pooledProducer.ConfigureAwait(false);
+
+                    activeProducer = pooledProducer.Item;
+
+                    events = events.ToList();
+                    InstrumentMessages(events);
+
+                    try
+                    {
+                        await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+
+                        isMessageSent = true;
+                    }
+                    catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
+                                                                       && ++failedAttemptCount < RetryPolicy.MaximumRetries)
+                    {
+                        isMessageSent = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
             }
         }
 
@@ -465,9 +509,21 @@ namespace Azure.Messaging.EventHubs.Producer
 
             TransportProducer activeProducer;
 
-            if (String.IsNullOrEmpty(eventBatch.SendOptions.PartitionId))
+            if (string.IsNullOrEmpty(eventBatch.SendOptions.PartitionId))
             {
                 activeProducer = EventHubProducer;
+
+                using DiagnosticScope scope = CreateDiagnosticScope();
+
+                try
+                {
+                    await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
             }
             else
             {
@@ -477,19 +533,37 @@ namespace Azure.Messaging.EventHubs.Producer
                 // its idle timeout period elapses.
 
                 Argument.AssertNotClosed(IsClosed, nameof(EventHubProducerClient));
-                activeProducer = PartitionProducers.GetOrAdd(eventBatch.SendOptions.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
-            }
 
-            using DiagnosticScope scope = CreateDiagnosticScope();
+                bool isMessageSent = false;
+                int failedAttemptCount = 0;
 
-            try
-            {
-                await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
+                using DiagnosticScope scope = CreateDiagnosticScope();
+
+                while (!isMessageSent)
+                {
+                    var pooledProducer = PartitionProducerPool.GetPartitionProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, eventBatch.SendOptions.RemoveAfterDuration);
+
+                    await using var _ = pooledProducer.ConfigureAwait(false);
+
+                    activeProducer = pooledProducer.Item;
+
+                    try
+                    {
+                        await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
+
+                        isMessageSent = true;
+                    }
+                    catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
+                                                                       && ++failedAttemptCount < RetryPolicy.MaximumRetries)
+                    {
+                        isMessageSent = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
             }
         }
 
@@ -560,16 +634,7 @@ namespace Azure.Messaging.EventHubs.Producer
             try
             {
                 await EventHubProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
-
-                var pendingCloses = new List<Task>();
-
-                foreach (var producer in PartitionProducers.Values)
-                {
-                    pendingCloses.Add(producer.CloseAsync(CancellationToken.None));
-                }
-
-                PartitionProducers.Clear();
-                await Task.WhenAll(pendingCloses).ConfigureAwait(false);
+                await PartitionProducerPool.CloseAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {

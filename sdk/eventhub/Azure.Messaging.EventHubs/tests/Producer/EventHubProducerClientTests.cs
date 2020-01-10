@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -646,6 +647,219 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that a <see cref="TransportProducer"/> is taken from a <see cref="TransportProducerPool"/>
+        ///   when a partition id is specified.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerClientShouldPickAnItemFromPool()
+        {
+            var batchOptions = new CreateBatchOptions { PartitionId = "0" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
+            var transportProducer = new ObservableTransportProducerMock();
+            var mockPooledProducer = new MockPooledProducer(transportProducer);
+            var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
+            var eventHubConnection = new MockConnection(() => transportProducer);
+            var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
+
+            await producerClient.SendAsync(batch);
+
+            Assert.IsTrue(mockTransportProducerPool.WasCalled);
+
+            var events = new EventData[0];
+            mockTransportProducerPool.WasCalled = false;
+            var options = new SendEventOptions { PartitionId = "0" };
+
+            await producerClient.SendAsync(events, options);
+
+            Assert.IsTrue(mockTransportProducerPool.WasCalled);
+        }
+
+        /// <summary>
+        ///   Verifies that a <see cref="TransportProducerPool.PooledProducer.DisposeAsync()"/> is called
+        ///   to unregister a producer from the pool.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerClientShouldCloseAProducer()
+        {
+            var batchOptions = new CreateBatchOptions { PartitionId = "0" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
+            var transportProducer = new ObservableTransportProducerMock();
+            var mockPooledProducer = new MockPooledProducer(transportProducer);
+            var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
+            var eventHubConnection = new MockConnection(() => transportProducer);
+            var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
+
+            await producerClient.SendAsync(batch);
+
+            Assert.IsTrue(mockPooledProducer.WasClosed);
+
+            var events = new EventData[0];
+            mockTransportProducerPool.WasCalled = false;
+            var options = new SendEventOptions { PartitionId = "0" };
+
+            await producerClient.SendAsync(events, options);
+
+            Assert.IsTrue(mockPooledProducer.WasClosed);
+        }
+
+        /// <summary>
+        ///   Verifies that a <see cref="EventHubProducerClient"/> retries sending an
+        ///   event if a partition producer returned by the pool was closed due to a race conditions between an
+        ///   AMQP operation and a request to close a client.
+        /// </summary>
+        ///
+        [Test]
+        public void EventHubProducerClientShouldRetrySending()
+        {
+            var batchOptions = new CreateBatchOptions { PartitionId = "0" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
+            var transportProducer = new Mock<TransportProducer>();
+            var mockPooledProducer = new MockPooledProducer(transportProducer.Object);
+            var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
+            var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
+            var retryPolicy = GetRetryPolicy(producerClient);
+
+            transportProducer
+                .Setup(transportProducerPool => transportProducerPool.SendAsync(It.IsAny<EventDataBatch>(),
+                                                                                It.IsAny<CancellationToken>()))
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
+                .Verifiable();
+
+            Assert.That(async () => await producerClient.SendAsync(batch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
+                                                      It.IsAny<CancellationToken>()),
+                                     Times.Exactly(retryPolicy.MaximumRetries));
+            Assert.That(mockTransportProducerPool.Count, Is.EqualTo(3));
+            transportProducer
+                .Setup(transportProducerPool => transportProducerPool.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                                                                                It.IsAny<SendEventOptions>(),
+                                                                                It.IsAny<CancellationToken>()))
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
+                .Verifiable();
+
+            mockTransportProducerPool.Count = 0;
+            var events = new EventData[0];
+            var options = new SendEventOptions { PartitionId = "0" };
+
+            Assert.That(async () => await producerClient.SendAsync(events, options), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                                                      It.IsAny<SendEventOptions>(),
+                                                      It.IsAny<CancellationToken>()),
+                                     Times.Exactly(retryPolicy.MaximumRetries));
+
+            Assert.That(mockTransportProducerPool.Count, Is.EqualTo(3));
+        }
+
+        /// <summary>
+        ///   Verifies that the retry logic does not loop endlessly.
+        /// </summary>
+        ///
+        [Test]
+        public async Task RetryLogicEnds()
+        {
+            var batchOptions = new CreateBatchOptions { PartitionId = "0" };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
+            var transportProducer = new Mock<TransportProducer>();
+            var mockPooledProducer = new MockPooledProducer(transportProducer.Object);
+            var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
+            var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
+            var retryPolicy = GetRetryPolicy(producerClient);
+            var numberOfCalls = 0;
+
+            transportProducer
+                .Setup(transportProducerPool => transportProducerPool.SendAsync(It.IsAny<EventDataBatch>(),
+                                                                                It.IsAny<CancellationToken>()))
+                .Callback(() =>
+                {
+                    numberOfCalls++;
+
+                    if (numberOfCalls < retryPolicy.MaximumRetries)
+                    {
+                        throw new EventHubsException(false, string.Empty, EventHubsException.FailureReason.ClientClosed);
+                    }
+                })
+                .Returns(Task.CompletedTask);
+
+            await producerClient.SendAsync(batch);
+
+            numberOfCalls = 0;
+
+            transportProducer
+                .Setup(transportProducerPool => transportProducerPool.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                                                                                It.IsAny<SendEventOptions>(),
+                                                                                It.IsAny<CancellationToken>()))
+                .Callback(() =>
+                {
+                    numberOfCalls++;
+
+                    if (numberOfCalls < retryPolicy.MaximumRetries)
+                    {
+                        throw new EventHubsException(false, string.Empty, EventHubsException.FailureReason.ClientClosed);
+                    }
+                })
+                .Returns(Task.CompletedTask);
+
+            var events = new EventData[0];
+
+            var options = new SendEventOptions { PartitionId = "0" };
+
+            await producerClient.SendAsync(events, options);
+        }
+
+        /// <summary>
+        ///   Retry logic does not kick-in for the main-stream scenario.
+        /// </summary>
+        ///
+        [Test]
+        public void RetryLogicStartsForPartitionsOnly()
+        {
+            var batchOptions = new CreateBatchOptions { };
+            var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
+            var transportProducer = new Mock<TransportProducer>();
+            var mockPooledProducer = new MockPooledProducer(transportProducer.Object);
+            var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
+            var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
+            var retryPolicy = GetRetryPolicy(producerClient);
+
+            transportProducer
+                .Setup(transportProducerPool => transportProducerPool.SendAsync(It.IsAny<EventDataBatch>(),
+                                                                                It.IsAny<CancellationToken>()))
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
+                .Verifiable();
+
+            Assert.That(async () => await producerClient.SendAsync(batch), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
+                                                      It.IsAny<CancellationToken>()),
+                                     Times.Once);
+
+            transportProducer
+                .Setup(transportProducerPool => transportProducerPool.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                                                                                It.IsAny<SendEventOptions>(),
+                                                                                It.IsAny<CancellationToken>()))
+                .Throws(new EventHubsException(false, "test", EventHubsException.FailureReason.ClientClosed))
+                .Verifiable();
+
+            var events = new EventData[0];
+
+            var options = new SendEventOptions { };
+
+            Assert.That(async () => await producerClient.SendAsync(events, options), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+
+            transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
+                                                      It.IsAny<SendEventOptions>(),
+                                                      It.IsAny<CancellationToken>()),
+                                     Times.Once);
+        }
+
+        /// <summary>
         ///   Retrieves the Connection for the producer using its private accessor.
         /// </summary>
         ///
@@ -737,7 +951,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
-                                                                        CancellationToken cancellationToken = default)
+                                                                          CancellationToken cancellationToken = default)
             {
                 GetPropertiesInvokedWith = retryPolicy;
                 return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }));
@@ -787,6 +1001,59 @@ namespace Azure.Messaging.EventHubs.Tests
             public override bool TryAdd(EventData eventData) => throw new NotImplementedException();
             public override IEnumerable<T> AsEnumerable<T>() => throw new NotImplementedException();
             public override void Dispose() => throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///   Allows for observation of operations performed by the producer for testing purposes.
+        /// </summary>
+        ///
+        private class MockPooledProducer : TransportProducerPool.PooledProducer
+        {
+            public bool WasClosed { get; set; } = false;
+
+            public MockPooledProducer(TransportProducer transportProducer) : base(transportProducer, (_) => Task.CompletedTask)
+            {
+
+            }
+
+            public override ValueTask DisposeAsync()
+            {
+                WasClosed = true;
+
+                return new ValueTask(Task.CompletedTask);
+            }
+        }
+
+        /// <summary>
+        ///   Allows for observation of operations performed by the producer for testing purposes.
+        /// </summary>
+        ///
+        private class MockTransportProducerPool: TransportProducerPool
+        {
+            public bool WasCalled { get; set; }
+
+            public int Count { get; set; }
+
+            public MockPooledProducer MockTransportProducer { get; }
+
+            public MockTransportProducerPool(MockPooledProducer mockTransportProducer,
+                                             ConcurrentDictionary<string, PoolItem> pool = default,
+                                             TimeSpan? expirationInterval = default): base(pool, expirationInterval)
+            {
+                MockTransportProducer = mockTransportProducer;
+            }
+
+            public override PooledProducer GetPartitionProducer(string partitionId,
+                                                                EventHubConnection connection,
+                                                                EventHubsRetryPolicy retryPolicy,
+                                                                TimeSpan? removeAfterDuration = default)
+            {
+                WasCalled = true;
+
+                Count++;
+
+                return MockTransportProducer;
+            }
         }
     }
 }

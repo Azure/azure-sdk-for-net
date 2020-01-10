@@ -41,6 +41,13 @@ namespace Azure.Messaging.EventHubs.Core
         public double JitterFactor { get; } = 0.08;
 
         /// <summary>
+        ///   The maximum number of retry attempts before considering the associated operation
+        ///   to have failed.
+        /// </summary>
+        ///
+        public override int MaximumRetries => Options.MaximumRetries;
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="BasicRetryPolicy"/> class.
         /// </summary>
         ///

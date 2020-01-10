@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 
 namespace Azure.Messaging.EventHubs.Producer
@@ -65,6 +66,13 @@ namespace Azure.Messaging.EventHubs.Producer
         public string PartitionId { get; set; }
 
         /// <summary>
+        ///   If a <see cref="SendEventOptions.PartitionId"/> is specified, it allows to set how long a dedicated transport producer
+        ///   would sit in memory before its pool would remove and close it.
+        /// </summary>
+        ///
+        public TimeSpan? RemoveAfterDuration { get; set; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="SendEventOptions"/> class.
         /// </summary>
         ///
@@ -80,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
         ///
         internal SendEventOptions(string partitionId,
-                             string partitionKey)
+                                  string partitionKey)
         {
             PartitionId = partitionId;
             PartitionKey = partitionKey;

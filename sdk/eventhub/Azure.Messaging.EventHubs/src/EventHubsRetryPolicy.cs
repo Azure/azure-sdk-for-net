@@ -21,6 +21,13 @@ namespace Azure.Messaging.EventHubs
     public abstract class EventHubsRetryPolicy
     {
         /// <summary>
+        ///   The maximum number of retry attempts before considering the associated operation
+        ///   to have failed.
+        /// </summary>
+        ///
+        public abstract int MaximumRetries { get; }
+
+        /// <summary>
         ///   Calculates the amount of time to allow the current attempt for an operation to
         ///   complete before considering it to be timed out.
         /// </summary>
