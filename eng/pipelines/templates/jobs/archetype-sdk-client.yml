@@ -46,7 +46,7 @@ jobs:
     dependsOn:
       - Build
     pool:
-      vmImage: "windows-2019"
+      vmImage: "ubuntu-16.04"
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
