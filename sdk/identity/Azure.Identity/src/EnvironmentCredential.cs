@@ -59,12 +59,18 @@ namespace Azure.Identity
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
             string sdkAuthLocation = EnvironmentVariables.SdkAuthLocation;
+            string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
+            var clientCertificate = new X509Certificate2(Encoding.ASCII.GetBytes(clientCertificatePath));
 
             if (tenantId != null && clientId != null)
             {
                 if (clientSecret != null)
                 {
                     _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, _pipeline);
+                }
+                else if (clientCertificate != null)
+                {
+                    _credential = new ClientCertificateCredential(tenantId, clientId, clientCertificate, _pipeline);
                 }
                 else if (username != null && password != null && tenantId != null && clientId != null)
                 {
