@@ -79,12 +79,17 @@ namespace Microsoft.Azure.Management.MixedReality
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IRemoteRenderingAccountsOperations.
+        /// </summary>
+        IRemoteRenderingAccountsOperations RemoteRenderingAccounts { get; }
+
+        /// <summary>
         /// Gets the ISpatialAnchorsAccountsOperations.
         /// </summary>
         ISpatialAnchorsAccountsOperations SpatialAnchorsAccounts { get; }
 
         /// <summary>
-        /// Check Name Availability for global uniqueness
+        /// Check Name Availability for local uniqueness
         /// </summary>
         /// <param name='location'>
         /// The location in which uniqueness will be verified.
