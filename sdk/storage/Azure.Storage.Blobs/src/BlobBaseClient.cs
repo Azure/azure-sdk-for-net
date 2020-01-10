@@ -1938,7 +1938,7 @@ namespace Azure.Storage.Blobs.Specialized
         #region Exists
         /// <summary>
         /// The <see cref="Exists"/> operation can be called on a
-        /// <see cref="BlobBaseClient"/> to see if the associated blob
+        /// <see cref="BlobClient"/> to see if the associated blob
         /// exists in the container on the storage account in the
         /// storage service.
         /// </summary>
@@ -1961,7 +1961,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="ExistsAsync"/> operation can be called on a
-        /// <see cref="BlobContainerClient"/> to see if the associated blob
+        /// <see cref="BlobClient"/> to see if the associated blob
         /// exists in the container on the storage account in the storage service.
         /// </summary>
         /// <param name="cancellationToken">
@@ -1983,7 +1983,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="ExistsInternal"/> operation can be called on a
-        /// <see cref="BlobBaseClient"/> to see if the associated blob
+        /// <see cref="BlobClient"/> to see if the associated blob
         /// exists on the storage account in the storage service.
         /// </summary>
         /// <param name="async">
