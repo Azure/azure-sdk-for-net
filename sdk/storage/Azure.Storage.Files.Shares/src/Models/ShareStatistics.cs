@@ -16,7 +16,16 @@ namespace Azure.Storage.Files.Shares.Models
         /// Warning: Share usage may exceed int.MaxValue.  Use ShareUsageInBytes instead.
         /// </summary>
         public int ShareUsageBytes {
-            get { return (int)ShareUsageInBytes; }
+            get
+            {
+                if (ShareUsageInBytes > int.MaxValue)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new OverflowException("ShareUsageInBytes exceeds int.MaxValue");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return (int)ShareUsageInBytes;
+            }
             internal set { ShareUsageInBytes = value; }
         }
     }

@@ -430,6 +430,7 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task GetStatisticsAsync()
         {
+            // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
 
@@ -458,6 +459,10 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.AreEqual(size, response.Value.ShareUsageInBytes);
+
+            TestHelper.AssertExpectedException(
+                () => { int intSize = response.Value.ShareUsageBytes; },
+                new OverflowException("ShareUsageInBytes exceeds int.MaxValue"));
         }
 
         [Test]
