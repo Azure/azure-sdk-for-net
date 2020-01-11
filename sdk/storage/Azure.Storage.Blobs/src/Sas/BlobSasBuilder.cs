@@ -361,14 +361,18 @@ namespace Azure.Storage.Sas
         /// </summary>
         private void EnsureState()
         {
-            if (ExpiresOn == default)
+            if (Identifier == default)
             {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
             }
-            if (string.IsNullOrEmpty(Permissions))
-            {
-                throw Errors.SasMissingData(nameof(Permissions));
-            }
+
             // Container
             if (String.IsNullOrEmpty(BlobName))
             {
