@@ -16,10 +16,10 @@ namespace Azure.AI.TextAnalytics
             Statistics = statistics;
         }
 
-        internal TextAnalyticsResult(string id, string errorMessage)
+        internal TextAnalyticsResult(string id, TextAnalyticsError error)
         {
             Id = id;
-            ErrorMessage = errorMessage;
+            Error = error;
         }
 
         /// <summary>
@@ -40,6 +40,6 @@ namespace Azure.AI.TextAnalytics
         /// document.  This property will have a value only when the document
         /// cannot be processed.
         /// </summary>
-        public string ErrorMessage { get; }
+        public TextAnalyticsError Error { get; }
     }
 }

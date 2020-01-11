@@ -147,10 +147,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         DetectLanguageResultCollection result = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].ErrorMessage != default)
+                        if (result[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].Error).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0], response);
                     default:
@@ -204,10 +204,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         DetectLanguageResultCollection result = CreateDetectLanguageResponse(response, map);
-                        if (result[0].ErrorMessage != default)
+                        if (result[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
+                            throw response.CreateRequestFailedException(result[0].Error);
                         }
                         return Response.FromValue(result[0], response);
                     default:
@@ -414,10 +414,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(results[0].Error).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0], response);
                     default:
@@ -472,10 +472,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw response.CreateRequestFailedException(results[0].Error);
                         }
                         return Response.FromValue(results[0], response);
                     default:
@@ -685,10 +685,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(results[0].Error).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0], response);
                     default:
@@ -740,10 +740,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw response.CreateRequestFailedException(results[0].Error);
                         }
                         return Response.FromValue(results[0], response);
                     default:
@@ -940,10 +940,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         ExtractKeyPhrasesResultCollection result = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].ErrorMessage != default)
+                        if (result[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].Error).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0], response);
                     default:
@@ -994,10 +994,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         ExtractKeyPhrasesResultCollection result = CreateKeyPhraseResponse(response, map);
-                        if (result[0].ErrorMessage != default)
+                        if (result[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
+                            throw response.CreateRequestFailedException(result[0].Error);
                         }
                         return Response.FromValue(result[0], response);
                     default:
@@ -1193,10 +1193,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizePiiEntitiesResultCollection results = await CreateRecognizePiiEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(results[0].Error).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0], response);
                     default:
@@ -1250,10 +1250,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizePiiEntitiesResultCollection results = CreateRecognizePiiEntitiesResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw response.CreateRequestFailedException(results[0].Error);
                         }
                         return Response.FromValue(results[0], response);
                     default:
@@ -1460,10 +1460,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizeLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].ErrorMessage != default)
+                        if (result[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                            throw await response.CreateRequestFailedExceptionAsync(result[0].Error).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0], response);
                     default:
@@ -1516,10 +1516,10 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizeLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].Error.Code != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw response.CreateRequestFailedException(results[0].Error);
                         }
                         return Response.FromValue(results[0], response);
                     default:

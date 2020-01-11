@@ -149,17 +149,17 @@ namespace Azure.AI.TextAnalytics.Tests
             json.WriteEndArray();
 
             json.WriteStartArray("errors");
-            if (resultCollection.FirstOrDefault(r => r.ErrorMessage != default) != default)
+            if (resultCollection.FirstOrDefault(r => r.Error != default) != default)
             {
                 foreach (var result in resultCollection)
                 {
-                    if (result.ErrorMessage != null)
+                    if (result.Error != null)
                     {
                         json.WriteStartObject();
                         json.WriteString("id", result.Id);
                         json.WriteStartObject("error");
                         json.WriteStartObject("innerError");
-                        json.WriteString("message", result.ErrorMessage);
+                        json.WriteString("message", result.Error);
                         json.WriteEndObject();
                         json.WriteEndObject();
                         json.WriteEndObject();

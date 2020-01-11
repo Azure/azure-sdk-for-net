@@ -21,8 +21,8 @@ namespace Azure.AI.TextAnalytics
             SentenceSentiments = new ReadOnlyCollection<TextSentiment>(sentenceSentiments);
         }
 
-        internal AnalyzeSentimentResult(string id, string errorMessage)
-            : base(id, errorMessage)
+        internal AnalyzeSentimentResult(string id, TextAnalyticsError error)
+            : base(id, error)
         {
             SentenceSentiments = Array.Empty<TextSentiment>();
         }
