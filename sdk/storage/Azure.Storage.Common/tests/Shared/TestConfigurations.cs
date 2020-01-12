@@ -168,6 +168,7 @@ namespace Azure.Storage.Test
         {
             // Get the live test configurations path
             TestConfigurationsPath = Environment.GetEnvironmentVariable(DefaultTestConfigPathEnvironmentVariable);
+            TestContext.Progress.WriteLine(TestConfigurationsPath);
             if (string.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
             {
                 TestConfigurationsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, DefaultTestConfigFilePath);
