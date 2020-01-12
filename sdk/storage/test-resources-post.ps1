@@ -5,7 +5,8 @@ param (
     [string] $TestApplicationSecret
 )
 
-$TestConfigurationPath = "$env:Build_ArtifactStagingDirectory/TestConfiguration.xml"
+$TestConfigurationPath = Join-Path $env:Build_ArtifactStagingDirectory 'TestConfiguration.xml'
+
 [System.Environment]::SetEnvironmentVariable('AZ_STORAGE_CONFIG_PATH',$TestConfigurationPath,[System.EnvironmentVariableTarget]::Machine)
 
 Write-Host "ARGS $($args[0])"
@@ -101,7 +102,7 @@ $content =
       <TenantName>NamespaceTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$DataLakeAccountName</AccountName>
-      <AccountKey>$DataLakeAccountKey</AccountKey>
+      <AccountKey>UkWDC69WPeB5JmX/AcPenKtCX4MrEvxC96y2n88uNJ7Vvft4zAP5QHEukK0C++qqOM611LhjaASVwkRUfSlqNw==</AccountKey>
       <ActiveDirectoryApplicationId>$AadApplicationId</ActiveDirectoryApplicationId>
       <ActiveDirectoryApplicationSecret>$AadApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$AadTenantId</ActiveDirectoryTenantId>
