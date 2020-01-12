@@ -4,12 +4,9 @@ param (
     [string] $TestApplicationId,
     [string] $TestApplicationSecret
 )
-if ($env:Build_ArtifactStagingDirectory -eq $null) {
-    $TestConfigurationPath = 'TestConfiguration.xml'
-}
-else {
-    $TestConfigurationPath = Join-Path -Path $env:Build_ArtifactStagingDirectory -ChildPath 'TestConfiguration.xml'
-}
+
+$TestConfigurationPath = Join-Path -Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ChildPath 'TestConfiguration.xml'
+
 
 [System.Environment]::SetEnvironmentVariable('AZ_STORAGE_CONFIG_PATH',$TestConfigurationPath,[System.EnvironmentVariableTarget]::Machine)
 
