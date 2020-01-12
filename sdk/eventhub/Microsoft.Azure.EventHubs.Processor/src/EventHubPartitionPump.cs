@@ -91,7 +91,8 @@ namespace Microsoft.Azure.EventHubs.Processor
                 EnableReceiverRuntimeMetric = this.Host.EventProcessorOptions.EnableReceiverRuntimeMetric,
 
                 // Use host name as the identifier for debugging purpose
-                Identifier = this.Host.HostName
+                // Shorten host name if name is longer than amx allowed lenght.
+                Identifier = this.Host.HostName.Substring(0, ClientConstants.MaxReceiverIdentifierLength)
             };
 
             // Create new receiver and set options
