@@ -6,9 +6,7 @@ param (
 )
 
 $TestConfigurationPath = Join-Path -Path $env:BUILD_ARTIFACTSTAGINGDIRECTORY -ChildPath 'TestConfiguration.xml'
-
-
-[System.Environment]::SetEnvironmentVariable('AZ_STORAGE_CONFIG_PATH',$TestConfigurationPath,[System.EnvironmentVariableTarget]::Machine)
+Write-Host "##vso[task.setvariable variable=AZ_STORAGE_CONFIG_PATH]$TestConfigurationPath"
 
 Write-Host "ARGS $($args[0])"
 # outputs from the ARM deployment

@@ -13,18 +13,3 @@ jobs:
       ServiceDirectory: storage
       BuildInParallel: false
       TimeoutInMinutes: 300
-      PreSteps:
-        - pwsh: |
-            $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
-            Write-Host "##vso[task.setvariable variable=TestConfigurationPath]$TestConfigurationPath"
-
-      EnvVars:
-        AZ_STORAGE_CONFIG_PATH: $(TestConfigurationPath)
-        PRIMARY_STORAGE_ACCOUNT_NAME: $(PRIMARY_STORAGE_ACCOUNT_NAME)
-        PRIMARY_STORAGE_ACCOUNT_KEY: $(PRIMARY_STORAGE_ACCOUNT_KEY)
-        SECONDARY_STORAGE_ACCOUNT_NAME: $(SECONDARY_STORAGE_ACCOUNT_NAME)
-        SECONDARY_STORAGE_ACCOUNT_KEY: $(SECONDARY_STORAGE_ACCOUNT_KEY)
-        PREMIUM_STORAGE_ACCOUNT_NAME: $(PREMIUM_STORAGE_ACCOUNT_NAME)
-        PREMIUM_STORAGE_ACCOUNT_KEY: $(PREMIUM_STORAGE_ACCOUNT_KEY)
-        DATALAKE_STORAGE_ACCOUNT_NAME: $(DATALAKE_STORAGE_ACCOUNT_NAME)
-        DATALAKE_STORAGE_ACCOUNT_KEY: $(DATALAKE_STORAGE_ACCOUNT_KEY)
