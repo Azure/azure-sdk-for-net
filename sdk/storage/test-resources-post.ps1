@@ -9,7 +9,6 @@ param (
 )
 
 # outputs from the ARM deployment passed in from New-TestResources
-$outputs = $PSBoundParameters['DeploymentOutputs']
 $PrimaryAccountName = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_NAME']
 $PrimaryAccountKey = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_KEY']
 $SecondaryAccountName = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_NAME']
@@ -20,9 +19,9 @@ $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
 
 # AAD parameters passed in from New-TestResources
-$AAdTenantId = $PSBoundParameters['TenantId']
-$AadApplicationId = $PSBoundParameters['TestApplicationId']
-$AadApplicationSecret = $PSBoundParameters['TestApplicationSecret']
+$AAdTenantId =$TenantId
+$AadApplicationId = $TestApplicationId
+$AadApplicationSecret = $TestApplicationSecret
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
