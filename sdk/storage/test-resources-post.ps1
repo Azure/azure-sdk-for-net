@@ -19,7 +19,7 @@ $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
 
 # AAD parameters passed in from New-TestResources
-$AAdTenantId =$TenantId
+$AAdTenantId = $TenantId
 $AadApplicationId = $TestApplicationId
 $AadApplicationSecret = $TestApplicationSecret
 
