@@ -20,10 +20,23 @@ namespace Azure.AI.TextAnalytics
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        // Top-level codes
         private const string InvalidRequestValue = "invalidRequest";
         private const string InvalidArgumentValue = "invalidArgument";
         private const string InternalServerErrorValue = "internalServerError";
         private const string ServiceUnavailableValue = "serviceUnavailable";
+
+        // Codes for inner errors
+        // TODO: reflect difference in docs
+        private const string InvalidParameterValueValue = "invalidParameterValue";
+        private const string InvalidRequestBodyFormatValue = "invalidRequestBodyFormat";
+        private const string EmptyRequestValue = "emptyRequest";
+        private const string MissingInputRecordsValue = "missingInputRecords";
+        private const string InvalidDocumentValue = "invalidDocument";
+        private const string ModelVersionIncorrectValue = "modelVersionIncorrect";
+        private const string InvalidDocumentBatchValue = "invalidDocumentBatch";
+        private const string UnsupportedLanguageCodeValue = "unsupportedLanguageCode";
+        private const string InvalidCountryHintValue = "invalidCountryHint";
 
         /// <summary>
         /// </summary>
@@ -40,6 +53,42 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// </summary>
         public static TextAnalyticsErrorCode ServiceUnavailable { get; } = new TextAnalyticsErrorCode(ServiceUnavailableValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode InvalidParameterValue { get; } = new TextAnalyticsErrorCode(InvalidParameterValueValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode InvalidRequestBodyFormat { get; } = new TextAnalyticsErrorCode(InvalidRequestBodyFormatValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode EmptyRequest { get; } = new TextAnalyticsErrorCode(EmptyRequestValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode MissingInputRecords { get; } = new TextAnalyticsErrorCode(MissingInputRecordsValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode InvalidDocument { get; } = new TextAnalyticsErrorCode(InvalidDocumentValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode ModelVersionIncorrect { get; } = new TextAnalyticsErrorCode(ModelVersionIncorrectValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode InvalidDocumentBatch { get; } = new TextAnalyticsErrorCode(InvalidDocumentBatchValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode UnsupportedLanguageCode { get; } = new TextAnalyticsErrorCode(UnsupportedLanguageCodeValue);
+
+        /// <summary>
+        /// </summary>
+        public static TextAnalyticsErrorCode InvalidCountryHint { get; } = new TextAnalyticsErrorCode(InvalidCountryHintValue);
 
         /// <summary>
         /// </summary>

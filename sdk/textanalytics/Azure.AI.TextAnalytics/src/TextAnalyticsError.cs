@@ -8,9 +8,9 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// </summary>
-    internal readonly struct TextAnalyticsError
+    public class TextAnalyticsError
     {
-        internal TextAnalyticsError(TextAnalyticsErrorCode code, string message, string target, TextAnalyticsInnerError innerError, IList<TextAnalyticsError> details)
+        internal TextAnalyticsError(TextAnalyticsErrorCode code, string message, string target = null, TextAnalyticsError innerError = null, IList<TextAnalyticsError> details = null)
         {
             Code = code;
             Message = message;
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// </summary>
-        public TextAnalyticsInnerError InnerError { get; }
+        public TextAnalyticsError InnerError { get; }
 
         /// <summary>
         /// </summary>

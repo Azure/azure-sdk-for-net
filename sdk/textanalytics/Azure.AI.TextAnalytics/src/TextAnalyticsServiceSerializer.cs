@@ -115,7 +115,7 @@ namespace Azure.AI.TextAnalytics
             TextAnalyticsErrorCode code = default;
             string message = default;
             string target = default;
-            TextAnalyticsInnerError innerError = default;
+            TextAnalyticsError innerError = default;
             List<TextAnalyticsError> details = default;
 
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.AI.TextAnalytics
                     {
                         continue;
                     }
-                    innerError = ReadTextAnalyticsInnerError(property.Value);
+                    innerError = ReadTextAnalyticsError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -164,47 +164,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             return new TextAnalyticsError(code, message, target, innerError, details);
-        }
-
-        private static TextAnalyticsInnerError ReadTextAnalyticsInnerError(JsonElement element)
-        {
-            TextAnalyticsInnerErrorCode code = default;
-            string message = default;
-            string target = default;
-            TextAnalyticsInnerError innerError = default;
-
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("code"))
-                {
-                    code = new TextAnalyticsInnerErrorCode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("message"))
-                {
-                    message = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("target"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("innererror"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    innerError = ReadTextAnalyticsInnerError(property.Value);
-                    continue;
-                }
-            }
-            return new TextAnalyticsInnerError(code, message, target, innerError);
         }
 
         private static string ReadModelVersion(JsonElement documentElement)

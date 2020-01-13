@@ -113,7 +113,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="innerError"></param>
         /// <param name="details"></param>
         /// <returns></returns>
-        private static Exception CreateInnerException(TextAnalyticsInnerError innerError, IEnumerable<TextAnalyticsError> details)
+        private static Exception CreateInnerException(TextAnalyticsError innerError, IEnumerable<TextAnalyticsError> details)
         {
             var detailCount = details.Count();
             if (detailCount > 0)
@@ -134,17 +134,6 @@ namespace Azure.AI.TextAnalytics
         }
 
         private static Exception CreateInnerException(TextAnalyticsError error)
-        {
-            var message = CreateTextAnalyticsExceptionMessage(error.Code.ToString(), error.Message, error.Target);
-            if (error.InnerError != default)
-            {
-                return new InvalidOperationException(message, CreateInnerException(error.InnerError));
-            }
-
-            return new InvalidOperationException(message);
-        }
-
-        private static Exception CreateInnerException(TextAnalyticsInnerError error)
         {
             var message = CreateTextAnalyticsExceptionMessage(error.Code.ToString(), error.Message, error.Target);
             if (error.InnerError != default)

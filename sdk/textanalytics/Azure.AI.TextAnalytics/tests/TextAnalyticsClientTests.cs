@@ -87,8 +87,8 @@ namespace Azure.AI.TextAnalytics.Tests
                     new NamedEntity("EntityText0", "EntityType0", "EntitySubType0", 0, 1, 0.5),
                     new NamedEntity("EntityText1", "EntityType1", "EntitySubType1", 0, 1, 0.5),
                 }),
-                new RecognizeEntitiesResult("4", "Document is invalid."),
-                new RecognizeEntitiesResult("5", "Document is invalid."),
+                new RecognizeEntitiesResult("4", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
+                new RecognizeEntitiesResult("5", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
             };
             var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
                 new TextDocumentBatchStatistics(2, 2, 2, 2),
@@ -159,7 +159,7 @@ namespace Azure.AI.TextAnalytics.Tests
                         json.WriteString("id", result.Id);
                         json.WriteStartObject("error");
                         json.WriteStartObject("innerError");
-                        json.WriteString("message", result.Error);
+                        json.WriteString("message", result.Error.Message);
                         json.WriteEndObject();
                         json.WriteEndObject();
                         json.WriteEndObject();
