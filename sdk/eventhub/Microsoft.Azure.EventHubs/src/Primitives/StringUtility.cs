@@ -8,9 +8,9 @@ namespace Microsoft.Azure.EventHubs
 
     static class StringUtility
     {
-        public static string GetRandomString()
+        public static string GetRandomString(int maxLength = 6)
         {
-            return Guid.NewGuid().ToString().Substring(0, 6);
+            return Guid.NewGuid().ToString().Substring(0, maxLength);
         }
 
         /// <summary>

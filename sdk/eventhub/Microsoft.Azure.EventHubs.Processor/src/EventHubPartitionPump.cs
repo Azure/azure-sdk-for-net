@@ -92,7 +92,8 @@ namespace Microsoft.Azure.EventHubs.Processor
 
                 // Use host name as the identifier for debugging purpose
                 // Shorten host name if name is longer than amx allowed lenght.
-                Identifier = this.Host.HostName.Substring(0, ClientConstants.MaxReceiverIdentifierLength)
+                Identifier = this.Host.HostName.Length > ClientConstants.MaxReceiverIdentifierLength ?
+                    this.Host.HostName.Substring(0, ClientConstants.MaxReceiverIdentifierLength) : this.Host.HostName
             };
 
             // Create new receiver and set options
