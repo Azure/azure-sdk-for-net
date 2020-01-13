@@ -85,10 +85,10 @@ namespace Azure.Storage.Sas
         /// Specifies which resources are accessible via the shared access
         /// signature.
         ///
-        /// Specify f if the shared resource is a file. This grants access
+        /// Specify "f" if the shared resource is a file. This grants access
         /// to the content and metadata of the file.
         ///
-        /// Specify s if the shared resource is a share. This grants access
+        /// Specify "s" if the shared resource is a share. This grants access
         /// to the content and metadata of any file in the share, and to the
         /// list of directories and files in the share.
         /// </summary>
