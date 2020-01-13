@@ -452,7 +452,7 @@ namespace Azure.Storage.Files.Shares.Test
             {
                 Transport = new MockTransport(mockResponse)
             };
-            ShareClient shareClient = new ShareClient(new Uri(TestConfigDefault.FileServiceEndpoint), shareClientOption);
+            ShareClient shareClient = InstrumentClient(new ShareClient(new Uri(TestConfigDefault.FileServiceEndpoint), shareClientOption));
 
             // Act
             Response<ShareStatistics> response = await shareClient.GetStatisticsAsync();
@@ -462,7 +462,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             TestHelper.AssertExpectedException(
                 () => { int intSize = response.Value.ShareUsageBytes; },
-                new OverflowException("ShareUsageInBytes exceeds int.MaxValue.  Use ShareUsageInBytes instead."));
+                new OverflowException(Constants.File.Errors.ShareUsageBytesOverflow));
         }
 
         [Test]

@@ -403,6 +403,12 @@ namespace Azure.Storage
                 public const string CreatePermissionOperationName =
                     "Azure.Storage.Files.Shares.ShareClient.CreatePermission";
             }
+
+            internal static class Errors
+            {
+                public const string ShareUsageBytesOverflow =
+                    "ShareUsageBytes exceeds int.MaxValue. Use ShareUsageInBytes instead.";
+            }
         }
 
         /// <summary>

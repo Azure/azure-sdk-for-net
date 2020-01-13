@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -17,15 +18,16 @@ namespace Azure.Storage.Files.Shares.Models
 
 
         /// <summary>
-        /// Warning: Share usage may exceed int.MaxValue.  Use ShareUsageInBytes instead.
+        /// Warning: ShareUsageBytes may exceed int.MaxValue.  Use ShareUsageInBytes instead.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public int ShareUsageBytes {
             get
             {
                 if (ShareUsageInBytes > int.MaxValue)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new OverflowException("ShareUsageInBytes exceeds int.MaxValue.  Use ShareUsageInBytes instead.");
+                    throw new OverflowException(Constants.File.Errors.ShareUsageBytesOverflow);
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 return (int)ShareUsageInBytes;
@@ -42,6 +44,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new PermissionInfo instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareStatistics ShareStatistics(int shareUsageBytes)
             => new ShareStatistics
             {
