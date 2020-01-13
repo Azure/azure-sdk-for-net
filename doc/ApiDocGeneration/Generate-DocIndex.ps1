@@ -60,7 +60,7 @@ $ServiceMapping = @{
     "storage"="Storage"; "storagecache"="Storage Cache";
     "storagesync"="Storage Sync"; "storsimple"="Stor Simple";
     "storsimple8000series"="Stor Simple 8000 series"; "streamanalytics"="Stream Analytics";
-    "subscription"="Subscription";
+    "subscription"="Subscription"; "textanalytics"="Text Analytics";
     "trafficmanager"="Traffic Manager"; "websites"="Websites";
 }
 
