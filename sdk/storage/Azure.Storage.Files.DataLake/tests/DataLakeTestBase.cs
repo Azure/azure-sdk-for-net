@@ -86,6 +86,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         public DataLakeServiceClient GetServiceClient_OAuth()
             => GetServiceClientFromOauthConfig(TestConfigHierarchicalNamespace);
 
+        public StorageSharedKeyCredential GetStorageSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
+                TestConfigHierarchicalNamespace.AccountName,
+                TestConfigHierarchicalNamespace.AccountKey);
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,

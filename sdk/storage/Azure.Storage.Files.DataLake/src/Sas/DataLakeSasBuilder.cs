@@ -90,14 +90,14 @@ namespace Azure.Storage.Sas
         /// Specifies which resources are accessible via the shared access
         /// signature.
         ///
-        /// Specify b if the shared resource is a blob. This grants access to
+        /// Specify "b" if the shared resource is a blob. This grants access to
         /// the content and metadata of the blob.
         ///
-        /// Specify c if the shared resource is a blob container. This grants
+        /// Specify "c" if the shared resource is a blob container. This grants
         /// access to the content and metadata of any blob in the container,
         /// and to the list of blobs in the container.
         ///
-        /// Beginning in version 2018-11-09, specify bs if the shared resource
+        /// Beginning in version 2018-11-09, specify "bs" if the shared resource
         /// is a blob snapshot.  This grants access to the content and
         /// metadata of the specific snapshot, but not the corresponding root
         /// blob.
