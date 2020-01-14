@@ -171,16 +171,13 @@ namespace Azure.Data.AppConfiguration
                 using Request request = CreateAddRequest(setting);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                    case 201:
-                        return CreateResponse(response);
-                    case 412:
-                        throw response.CreateRequestFailedException("Setting was already present.");
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
+                    200 => CreateResponse(response),
+                    201 => CreateResponse(response),
+                    412 => throw response.CreateRequestFailedException("Setting was already present."),
+                    _ => throw response.CreateRequestFailedException()
+                };
             }
             catch (Exception e)
             {
@@ -897,13 +894,11 @@ namespace Azure.Data.AppConfiguration
                 using Request request = CreateSetReadOnlyRequest(key, label, isReadOnly);
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                        return CreateResponse(response);
-                    default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
-                }
+                    200 => CreateResponse(response),
+                    _ => throw (await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false))
+                };
             }
             catch (Exception e)
             {
@@ -932,13 +927,11 @@ namespace Azure.Data.AppConfiguration
                 using Request request = CreateSetReadOnlyRequest(key, label, isReadOnly);
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                switch (response.Status)
+                return response.Status switch
                 {
-                    case 200:
-                        return CreateResponse(response);
-                    default:
-                        throw response.CreateRequestFailedException();
-                }
+                    200 => CreateResponse(response),
+                    _ => throw response.CreateRequestFailedException()
+                };
             }
             catch (Exception e)
             {

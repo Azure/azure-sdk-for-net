@@ -27,9 +27,11 @@
     <Compile Include="$(AzureCoreSharedSources)ConditionalRequestOptionsExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
+    <Compile Include="$(AzureCoreSharedSources)JsonPropertyExtensions.cs" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
     <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" />
   </ItemGroup>
 
 </Project>
