@@ -596,6 +596,7 @@ namespace Azure.Storage.Blobs.Test
             await UploadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
+        [LiveOnly]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
@@ -618,6 +619,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [LiveOnly]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
