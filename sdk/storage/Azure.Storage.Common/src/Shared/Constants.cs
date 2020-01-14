@@ -155,6 +155,9 @@ namespace Azure.Storage
             public const string AlreadyExists = "BlobAlreadyExists";
             public const string NotFound = "BlobNotFound";
 
+            public const string UploadOperationName =
+                "Azure.Storage.Blobs.BlobClient.Upload";
+
             internal static class Append
             {
                 public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
