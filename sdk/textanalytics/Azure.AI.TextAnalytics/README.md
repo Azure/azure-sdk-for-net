@@ -46,8 +46,9 @@ Once you have the values for endpoint and subscription key, you can create the [
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
-string subscriptionKey = "<subscriptionKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+ServiceSubscriptionKey credentials = "<credentials>";
+var credentials = new ServiceSubscriptionKey(subscriptionKey);
+var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
 ```
 
 #### Create TextAnalyticsClient with Azure Active Directory Credential
