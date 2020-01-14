@@ -1,5 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
+# This script is used to generate the Test Configuration file for Storage live tests.
+# It is invoked by the https://github.com/Azure/azure-sdk-for-net/blob/master/eng/New-TestResources.ps1
+# script after the ARM template, defined in https://github.com/Azure/azure-sdk-for-net/blob/arm-template-storage/sdk/storage/test-resources.json, 
+# is finished being deployed. The ARM template is responsible for creating the Storage accounts needed for live tests.
 
 param (
     [hashtable] $DeploymentOutputs,
@@ -17,11 +21,6 @@ $PremiumAccountName = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_NAME']
 $PremiumAccountKey = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_KEY']
 $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
-
-# AAD parameters passed in from New-TestResources
-$AAdTenantId = $TenantId
-$AadApplicationId = $TestApplicationId
-$AadApplicationSecret = $TestApplicationSecret
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -82,9 +81,9 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$PrimaryAccountName</AccountName>
       <AccountKey>$PrimaryAccountKey</AccountKey>
-      <ActiveDirectoryApplicationId>$AadApplicationId</ActiveDirectoryApplicationId>
-      <ActiveDirectoryApplicationSecret>$AadApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$AadTenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       <BlobServiceEndpoint>https://$PrimaryAccountName.blob.core.windows.net</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$PrimaryAccountName.queue.core.windows.net</QueueServiceEndpoint>
@@ -101,9 +100,9 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$DataLakeAccountName</AccountName>
       <AccountKey>$DataLakeAccountKey</AccountKey>
-      <ActiveDirectoryApplicationId>$AadApplicationId</ActiveDirectoryApplicationId>
-      <ActiveDirectoryApplicationSecret>$AadApplicationSecret</ActiveDirectoryApplicationSecret>
-      <ActiveDirectoryTenantId>$AadTenantId</ActiveDirectoryTenantId>
+      <ActiveDirectoryApplicationId>$TestApplicationId</ActiveDirectoryApplicationId>
+      <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
+      <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
       <BlobServiceEndpoint>https://$DataLakeAccountName.blob.core.windows.net</BlobServiceEndpoint>
       <QueueServiceEndpoint>https://$DataLakeAccountName.queue.core.windows.net</QueueServiceEndpoint>
@@ -124,5 +123,6 @@ Write-Verbose "Writing test configuration file to $TestConfigurationPath"
 $content | Set-Content $TestConfigurationPath
 
 Write-Verbose "Setting AZ_STORAGE_CONFIG_PATH environment variable used by Storage Tests"
+# https://github.com/microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md#logging-commands
 Write-Host "##vso[task.setvariable variable=AZ_STORAGE_CONFIG_PATH]$TestConfigurationPath"
 
