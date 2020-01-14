@@ -54,9 +54,16 @@ jobs:
           versionSpec: "3.6"
       - script: |
           pip install setuptools wheel
-          pip install doc-warden
-          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
-        displayName: "Verify Readmes"
+          pip install doc-warden==0.4.2
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml -t all
+        displayName: "Verify Readmes and changelogs"
+        condition: ne(variables['Build.Reason'],'Manual')
+      - script: |
+          pip install setuptools wheel
+          pip install doc-warden==0.4.2
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml -t all -s release
+        displayName: "Verify Readmes, changelogs and latest release notes"
+        condition: eq(variables['Build.Reason'],'Manual')
       - task: DownloadPipelineArtifact@2
         displayName: "Download Build Artifacts"
         condition: succeededOrFailed()
