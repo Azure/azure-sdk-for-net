@@ -15,6 +15,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        [Ignore ("Need to add recordings. Part of https://github.com/Azure/azure-sdk-for-net/issues/9091")]
         public async Task RotateSubscriptionKey()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
