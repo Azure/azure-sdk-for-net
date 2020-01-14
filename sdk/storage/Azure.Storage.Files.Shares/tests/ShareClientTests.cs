@@ -450,6 +450,7 @@ namespace Azure.Storage.Files.Shares.Test
         [Test]
         public async Task GetStatisticsAsync()
         {
+            // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
 
@@ -458,6 +459,30 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Assert
             Assert.IsNotNull(response);
+        }
+
+        [Test]
+        public async Task GetStatisticsAsync_LargeShare()
+        {
+            // Arrange
+            long size = 3 * (long)Constants.GB;
+            MockResponse mockResponse = new MockResponse(200);
+            mockResponse.SetContent($"﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><ShareStats><ShareUsageBytes>{size}</ShareUsageBytes></ShareStats>");
+            ShareClientOptions shareClientOption = new ShareClientOptions()
+            {
+                Transport = new MockTransport(mockResponse)
+            };
+            ShareClient shareClient = InstrumentClient(new ShareClient(new Uri(TestConfigDefault.FileServiceEndpoint), shareClientOption));
+
+            // Act
+            Response<ShareStatistics> response = await shareClient.GetStatisticsAsync();
+
+            // Assert
+            Assert.AreEqual(size, response.Value.ShareUsageInBytes);
+
+            TestHelper.AssertExpectedException(
+                () => { int intSize = response.Value.ShareUsageBytes; },
+                new OverflowException(Constants.File.Errors.ShareUsageBytesOverflow));
         }
 
         [Test]

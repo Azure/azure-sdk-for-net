@@ -383,8 +383,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created page blob.
+        /// If the page blob does not already exist, A <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created page blob. Otherwise, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -435,8 +435,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created page blob.
+        /// If the page blob does not already exist, A <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created page blob. Otherwise, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -491,8 +491,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// newly created page blob.
+        /// If the page blob does not already exist, A <see cref="Response{BlobContentInfo}"/>
+        /// describing the newly created page blob. Otherwise, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -826,15 +826,15 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    content = content.WithNoDispose().WithProgress(progressHandler);
-                    var range = new HttpRange(offset, content.Length);
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
+                    var range = new HttpRange(offset, content?.Length ?? null);
 
                     return await BlobRestClient.PageBlob.UploadPagesAsync(
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: content?.Length ?? 0,
                         version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         timeout: default,

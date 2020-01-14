@@ -17,13 +17,11 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
             #region Snippet:DetectLanguageAsync
             string input = "Este documento está en español.";
 
-            // Asynchronously detect the language the input text is written in
             DetectLanguageResult result = await client.DetectLanguageAsync(input);
             DetectedLanguage language = result.PrimaryLanguage;
 

@@ -441,6 +441,12 @@ namespace Azure.Storage
                 public const string BreakOperationName =
                     "Azure.Storage.Files.Shares.Specialized.FileLeaseClient.Break";
             }
+
+            internal static class Errors
+            {
+                public const string ShareUsageBytesOverflow =
+                    "ShareUsageBytes exceeds int.MaxValue. Use ShareUsageInBytes instead.";
+            }
         }
 
         /// <summary>

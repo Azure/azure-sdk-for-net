@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Az
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Performance", "tests\Performance\Azure.Data.AppConfiguration.Performance.csproj", "{2F3CC223-2357-4D24-BCE7-92835C62A201}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Data.AppConfiguration.Samples.Tests", "samples\Azure.Data.AppConfiguration.Samples.Tests.csproj", "{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\..\identity\Azure.Identity\src\Azure.Identity.csproj", "{042736B0-D082-4366-BD2B-02D49FEC6073}"
 EndProject
 Global
@@ -37,10 +35,6 @@ Global
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{042736B0-D082-4366-BD2B-02D49FEC6073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{042736B0-D082-4366-BD2B-02D49FEC6073}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{042736B0-D082-4366-BD2B-02D49FEC6073}.Release|Any CPU.ActiveCfg = Release|Any CPU

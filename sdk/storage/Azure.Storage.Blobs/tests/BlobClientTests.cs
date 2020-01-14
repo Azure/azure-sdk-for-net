@@ -228,6 +228,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadAsync_Stream_NullStreamFail()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = (Stream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadAsync(stream),
+                    e => Assert.AreEqual("body", e.ParamName));
+            }
+        }
+
+        [Test]
         public async Task UploadAsync_File()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

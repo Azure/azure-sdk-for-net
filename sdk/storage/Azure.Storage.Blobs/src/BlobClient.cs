@@ -981,7 +981,6 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-
             var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
 
             singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;

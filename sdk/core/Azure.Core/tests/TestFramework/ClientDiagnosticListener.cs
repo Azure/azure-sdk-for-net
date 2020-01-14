@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
                     var name = value.Key.Substring(0, value.Key.Length - stopSuffix.Length);
                     foreach (ProducedDiagnosticScope producedDiagnosticScope in Scopes)
                     {
-                        if (producedDiagnosticScope.Name == name)
+                        if (producedDiagnosticScope.Activity.Id == Activity.Current.Id)
                         {
                             producedDiagnosticScope.IsCompleted = true;
                             return;

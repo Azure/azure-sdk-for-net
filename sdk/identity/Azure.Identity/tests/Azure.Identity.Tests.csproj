@@ -18,6 +18,7 @@
     
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Identity.csproj" />
+    <None Update="Data\authfile.json" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Data\cert.pfx" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 

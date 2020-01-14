@@ -1,0 +1,14 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/QnAMaker/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\dev\sdk\sdkb\sdk
+2020-01-08 08:49:08 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      44fe2e5cffa496d6cd0fe900f648e24623549b93
+AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@2.0.4407

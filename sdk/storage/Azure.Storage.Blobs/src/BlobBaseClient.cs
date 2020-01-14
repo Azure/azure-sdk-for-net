@@ -16,7 +16,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
-    /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
+    /// The <see cref="BlobBaseClient"/> allows you to manipulate Azure Storage
     /// blobs.
     /// </summary>
     public class BlobBaseClient
@@ -138,7 +138,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         protected BlobBaseClient()
@@ -146,7 +146,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="connectionString">
@@ -168,7 +168,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="connectionString">
@@ -210,7 +210,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -230,7 +230,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -253,7 +253,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -308,7 +308,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -346,14 +346,14 @@ namespace Azure.Storage.Blobs.Specialized
         #endregion ctors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
-        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         /// <remarks>
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
@@ -361,12 +361,12 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotCore(snapshot);
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BlobClient"/> class
+        /// Creates a new instance of the <see cref="BlobBaseClient"/> class
         /// with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
-        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
@@ -394,7 +394,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///// Pass null or empty string to remove the verion ID returning a URL to the base blob.
         ///// </remarks>
         ///// <param name="versionId">The version ID to use on this blob. An empty string or null indicates to use the base blob.</param>
-        ///// <returns>The new <see cref="BlobClient"/> instance referencing the verionId.</returns>
+        ///// <returns>The new <see cref="BlobBaseClient"/> instance referencing the verionId.</returns>
         //public virtual BlobBaseClient WithVersionId(string versionId) => this.WithVersionIdImpl(versionId);
 
         //protected virtual BlobBaseClient WithVersionIdImpl(string versionId)
@@ -1985,7 +1985,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="ExistsAsync"/> operation can be called on a
-        /// <see cref="BlobContainerClient"/> to see if the associated blob
+        /// <see cref="BlobBaseClient"/> to see if the associated blob
         /// exists in the container on the storage account in the storage service.
         /// </summary>
         /// <param name="cancellationToken">
@@ -2961,20 +2961,20 @@ namespace Azure.Storage.Blobs.Specialized
 
     /// <summary>
     /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
-    /// creating <see cref="BlobClient"/> instances.
+    /// creating <see cref="BlobBaseClient"/> instances.
     /// </summary>
     public static partial class SpecializedBlobExtensions
     {
         /// <summary>
-        /// Create a new <see cref="BlobClient"/> object by concatenating
+        /// Create a new <see cref="BlobBaseClient"/> object by concatenating
         /// <paramref name="blobName"/> to the end of the
         /// <paramref name="client"/>'s <see cref="BlobContainerClient.Uri"/>.
-        /// The new <see cref="BlobClient"/> uses the same request policy
+        /// The new <see cref="BlobBaseClient"/> uses the same request policy
         /// pipeline as the <see cref="BlobContainerClient"/>.
         /// </summary>
         /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
         /// <param name="blobName">The name of the blob.</param>
-        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         public static BlobBaseClient GetBlobBaseClient(
             this BlobContainerClient client,
             string blobName) =>

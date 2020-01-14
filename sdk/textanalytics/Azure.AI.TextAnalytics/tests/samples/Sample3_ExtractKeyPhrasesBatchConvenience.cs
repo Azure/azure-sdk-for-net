@@ -19,7 +19,6 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
             var inputs = new List<string>
@@ -29,16 +28,18 @@ namespace Azure.AI.TextAnalytics.Samples
                 "My cat might need to see a veterinarian.",
             };
 
+            #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
             ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs);
+            #endregion
 
             Debug.WriteLine($"Extracted key phrases for each input are:");
             int i = 0;
-            foreach (var result in results)
+            foreach (ExtractKeyPhrasesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
                 Debug.WriteLine($"the following {result.KeyPhrases.Count()} key phrases were found: ");
 
-                foreach (var keyPhrase in result.KeyPhrases)
+                foreach (string keyPhrase in result.KeyPhrases)
                 {
                     Debug.WriteLine($"    {keyPhrase}");
                 }

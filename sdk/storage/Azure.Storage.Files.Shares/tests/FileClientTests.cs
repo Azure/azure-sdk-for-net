@@ -12,6 +12,7 @@ using Azure.Core.Testing;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Files.Shares.Tests;
+using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -530,6 +531,54 @@ namespace Azure.Storage.Files.Shares.Test
 
             // Act
             Response<ShareFileProperties> response = await sasFile.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_FileSasWithIdentifier()
+        {
+            // Arrange
+            string shareName = GetNewShareName();
+            string fileName = GetNewFileName();
+            string signedIdentifierId = GetNewString();
+            await using DisposingShare test = await GetTestShareAsync(shareName: shareName);
+            ShareFileClient fileClient = InstrumentClient(
+                test.Share.GetRootDirectoryClient().GetFileClient(fileName));
+            await fileClient.CreateAsync(Constants.KB);
+
+            ShareSignedIdentifier signedIdentifier = new ShareSignedIdentifier
+            {
+                Id = signedIdentifierId,
+                AccessPolicy = new ShareAccessPolicy
+                {
+                    StartsOn = Recording.UtcNow.AddHours(-1),
+                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    Permissions = "rw"
+                }
+            };
+
+            await test.Share.SetAccessPolicyAsync(new ShareSignedIdentifier[] { signedIdentifier });
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder
+            {
+                ShareName = shareName,
+                Identifier = signedIdentifierId
+            };
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(fileClient.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            ShareFileClient sasFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                GetOptions()));
+
+            // Act
+            Response<ShareFileProperties> response = await sasFileClient.GetPropertiesAsync();
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);

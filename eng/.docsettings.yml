@@ -69,6 +69,7 @@ known_presence_issues:
   - ['sdk/search','#5499']
   - ['sdk/keyvault','#5499']
   - ['sdk/eventhub','#5499']
+  - ['sdk/attestation/Microsoft.Azure.Attestation','#5499']
 
 # List for changelogs begins here
   - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights.Query/CHANGELOG.md','#5499']

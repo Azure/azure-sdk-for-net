@@ -18,9 +18,9 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
+            #region Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
             var inputs = new List<TextDocumentInput>
             {
                 new TextDocumentInput("1", "That was the best day of my life!")
@@ -42,14 +42,15 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            #endregion
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Sentiment Analysis\" Model, version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (var result in results)
+            foreach (AnalyzeSentimentResult result in results)
             {
-                var document = inputs[i++];
+                TextDocumentInput document = inputs[i++];
 
                 if (result.ErrorMessage != default)
                 {
@@ -64,7 +65,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
-                    foreach (var sentenceSentiment in result.SentenceSentiments)
+                    foreach (TextSentiment sentenceSentiment in result.SentenceSentiments)
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 
