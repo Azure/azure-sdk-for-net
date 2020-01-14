@@ -1430,7 +1430,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
-
         }
 
         [Test]
@@ -1455,7 +1454,52 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
 
+        [Test]
+        public async Task GetPropertiesAsync_BlobSasWithIdentifier()
+        {
+            // Arrange
+            string containerName = GetNewContainerName();
+            string blobName = GetNewBlobName();
+            string signedIdentifierId = GetNewString();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+            BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
+
+            BlobSignedIdentifier identifier = new BlobSignedIdentifier
+            {
+                Id = signedIdentifierId,
+                AccessPolicy = new BlobAccessPolicy
+                {
+                    StartsOn = Recording.UtcNow.AddHours(-1),
+                    ExpiresOn = Recording.UtcNow.AddHours(1),
+                    Permissions = "rw"
+                }
+            };
+            await test.Container.SetAccessPolicyAsync(permissions: new BlobSignedIdentifier[] { identifier });
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+                Identifier = signedIdentifierId
+            };
+            BlobSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(GetNewSharedKeyCredentials());
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Sas = sasQueryParameters
+            };
+
+            BlockBlobClient sasBlob = InstrumentClient(new BlockBlobClient(
+                uriBuilder.ToUri(),
+                GetOptions()));
+
+            // Act
+            Response<BlobProperties> response = await sasBlob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
         [Test]
