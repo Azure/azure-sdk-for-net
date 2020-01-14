@@ -2084,10 +2084,9 @@ namespace Azure.Storage.Blobs
 
         #region UploadBlob
         /// <summary>
-        /// The <see cref="UploadBlob"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// The <see cref="UploadBlobAsync"/> operation creates a new block
+        /// blob.  A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -2124,9 +2123,8 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="UploadBlobAsync"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// blob.  A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
