@@ -443,7 +443,7 @@ namespace Azure.Storage.Blobs.Test
             long singleBlockThreshold,
             StorageTransferOptions transferOptions)
         {
-            var data = GetRandomBuffer(size);
+            using Stream stream = await CreateRandomStream(size);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             var name = GetNewBlobName();
@@ -451,21 +451,87 @@ namespace Azure.Storage.Blobs.Test
             var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-            using (var stream = new MemoryStream(data))
+            await blob.StagedUploadAsync(
+                content: stream,
+                blobHttpHeaders: default,
+                metadata: default,
+                conditions: default,
+                progressHandler: default,
+                singleUploadThreshold: singleBlockThreshold,
+                transferOptions: transferOptions,
+                async: true);
+
+            await DownloadAndAssert(size, stream, blob);
+        }
+
+        private async Task<Stream> CreateRandomStream(long size)
+        {
+            Stream stream;
+            if (size < Constants.MB * 100)
             {
-                await blob.StagedUploadAsync(
-                    content: stream,
-                    blobHttpHeaders: default,
-                    metadata: default,
-                    conditions: default,
-                    progressHandler: default,
-                    singleUploadThreshold: singleBlockThreshold,
-                    transferOptions: transferOptions,
-                    async: true);
+                var data = GetRandomBuffer(size);
+                stream = new MemoryStream(data);
+            }
+            else
+            {
+                var path = Path.GetTempFileName();
+                stream = File.Create(path);
+                var bufferSize = 4 * Constants.KB;
+
+                while (stream.Position + bufferSize < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
+                }
+                if (stream.Position < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(size - stream.Position), 0, (int)(size - stream.Position));
+                }
+                // reset the stream
+                stream.Position = 0;
+            }
+            return stream;
+        }
+
+        private async Task UploadFileAndVerify(
+            long size,
+            long singleBlockThreshold,
+            StorageTransferOptions transferOptions)
+        {
+            var path = Path.GetTempFileName();
+
+            using Stream stream = await CreateRandomStream(size);
+            using (FileStream fileStream = File.OpenWrite(path))
+            {
+                await stream.CopyToAsync(fileStream);
             }
 
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+
+            await blob.StagedUploadAsync(
+                path: path,
+                blobHttpHeaders: default,
+                metadata: default,
+                conditions: default,
+                progressHandler: default,
+                singleUploadThreshold: singleBlockThreshold,
+                transferOptions: transferOptions,
+                async: true);
+
+            await DownloadAndAssert(size, stream, blob);
+        }
+
+        private static async Task DownloadAndAssert(long size, Stream stream, BlobClient blob)
+        {
             var actual = new byte[Constants.DefaultBufferSize];
-            var actualStream = new MemoryStream(actual);
+            using var actualStream = new MemoryStream(actual);
+
+            // reset the stream before validating
+            stream.Position = 0;
 
             // we are testing Upload, not download: so we download in partitions to avoid the default timeout
             for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
@@ -476,68 +542,15 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
                 actualStream.Position = 0;
                 await download.Value.Content.CopyToAsync(actualStream);
+
+                var buffer = new byte[count];
+                stream.Position = i;
+                await stream.ReadAsync(buffer, 0, count);
+
                 TestHelper.AssertSequenceEqual(
-                    data.AsSpan(startIndex, count).ToArray(),
+                    buffer.AsSpan(0, count).ToArray(),
                     actual.AsSpan(0, count).ToArray()
                     );
-            }
-        }
-
-        private async Task UploadFileAndVerify(
-            long size,
-            long singleBlockThreshold,
-            StorageTransferOptions transferOptions)
-        {
-            var data = GetRandomBuffer(size);
-            var path = Path.GetTempFileName();
-
-            try
-            {
-                File.WriteAllBytes(path, data);
-                await using DisposingContainer test = await GetTestContainerAsync();
-
-                var name = GetNewBlobName();
-                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
-                var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-                blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
-
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.StagedUploadAsync(
-                        path: path,
-                        blobHttpHeaders: default,
-                        metadata: default,
-                        conditions: default,
-                        progressHandler: default,
-                        singleUploadThreshold: singleBlockThreshold,
-                        transferOptions: transferOptions,
-                        async: true);
-                }
-
-                var actual = new byte[Constants.DefaultBufferSize];
-                var actualStream = new MemoryStream(actual);
-
-                // we are testing Upload, not download: so we download in partitions to avoid the default timeout
-                for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
-                {
-                    var startIndex = i;
-                    var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
-
-                    Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
-                    actualStream.Position = 0;
-                    await download.Value.Content.CopyToAsync(actualStream);
-                    TestHelper.AssertSequenceEqual(
-                        data.AsSpan(startIndex, count).ToArray(),
-                        actual.AsSpan(0, count).ToArray()
-                        );
-                }
-            }
-            finally
-            {
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
             }
         }
 
@@ -586,7 +599,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -610,7 +622,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9120")]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -816,7 +827,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Keep uploading a GB
                 var data = GetRandomBuffer(Constants.GB);
-                for (;;)
+                for (; ; )
                 {
                     BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
                     using var stream = new MemoryStream(data);
