@@ -37,18 +37,39 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource.</param>
-        /// <param name="type">Type of the resource.</param>
+        /// <param name="name">Name of the resource</param>
+        /// <param name="type">Type of the resource</param>
         /// <param name="tags">Tags of the resource.</param>
         /// <param name="provisioningState">Provisioning state of the topic.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>
         /// <param name="endpoint">Endpoint for the topic.</param>
-        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string endpoint = default(string))
+        /// <param name="inputSchema">This determines the format that Event
+        /// Grid should expect for incoming events published to the topic.
+        /// Possible values include: 'EventGridSchema', 'CustomEventSchema',
+        /// 'CloudEventSchemaV1_0'</param>
+        /// <param name="inputSchemaMapping">This enables publishing using
+        /// custom event schemas. An InputSchemaMapping can be specified to map
+        /// various properties of a source schema to various required
+        /// properties of the EventGridEvent schema.</param>
+        /// <param name="metricResourceId">Metric resource id for the
+        /// topic.</param>
+        /// <param name="allowTrafficFromAllIPs">This determines if IP
+        /// filtering rules ought to be evaluated or not. By default it will
+        /// not evaluate and will allow traffic from all IPs.</param>
+        /// <param name="inboundIpRules">This determines the IP filtering rules
+        /// that ought to be applied when events are received on this
+        /// topic.</param>
+        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), bool? allowTrafficFromAllIPs = default(bool?), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
+            InputSchema = inputSchema;
+            InputSchemaMapping = inputSchemaMapping;
+            MetricResourceId = metricResourceId;
+            AllowTrafficFromAllIPs = allowTrafficFromAllIPs;
+            InboundIpRules = inboundIpRules;
             CustomInit();
         }
 
@@ -70,6 +91,45 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; private set; }
+
+        /// <summary>
+        /// Gets or sets this determines the format that Event Grid should
+        /// expect for incoming events published to the topic. Possible values
+        /// include: 'EventGridSchema', 'CustomEventSchema',
+        /// 'CloudEventSchemaV1_0'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inputSchema")]
+        public string InputSchema { get; set; }
+
+        /// <summary>
+        /// Gets or sets this enables publishing using custom event schemas. An
+        /// InputSchemaMapping can be specified to map various properties of a
+        /// source schema to various required properties of the EventGridEvent
+        /// schema.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inputSchemaMapping")]
+        public InputSchemaMapping InputSchemaMapping { get; set; }
+
+        /// <summary>
+        /// Gets or sets metric resource id for the topic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metricResourceId")]
+        public string MetricResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if IP filtering rules ought to be
+        /// evaluated or not. By default it will not evaluate and will allow
+        /// traffic from all IPs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowTrafficFromAllIPs")]
+        public bool? AllowTrafficFromAllIPs { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines the IP filtering rules that ought to
+        /// be applied when events are received on this topic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.inboundIpRules")]
+        public IList<InboundIpRule> InboundIpRules { get; set; }
 
         /// <summary>
         /// Validate the object.

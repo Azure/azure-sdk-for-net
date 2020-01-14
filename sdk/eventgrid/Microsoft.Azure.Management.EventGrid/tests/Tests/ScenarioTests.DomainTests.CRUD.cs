@@ -149,6 +149,18 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Contains(replaceDomainResponse.Tags, tag => tag.Key == "replacedTag1");
                 Assert.DoesNotContain(replaceDomainResponse.Tags, tag => tag.Key == "originalTag1");
 
+                // Update the Topic with IP filtering feature
+                domain.AllowTrafficFromAllIPs = false;
+                domain.InboundIpRules = new List<InboundIpRule>();
+                domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.67.98" });
+                domain.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.90.100" });
+                var updateDomainResponseWithIpFilteringFeature = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName, domain).Result;
+                Assert.False(updateDomainResponseWithIpFilteringFeature.AllowTrafficFromAllIPs);
+                Assert.True(updateDomainResponseWithIpFilteringFeature.InboundIpRules.Count() == 2);
+
+                Assert.Contains(replaceDomainResponse.Tags, tag => tag.Key == "replacedTag1");
+                Assert.DoesNotContain(replaceDomainResponse.Tags, tag => tag.Key == "originalTag1");
+
                 // Update the domain
                 var updateDomainTagsDictionary = new Dictionary<string, string>()
                 {

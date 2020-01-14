@@ -158,6 +158,16 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Contains(updateTopicResponse.Tags, tag => tag.Key == "updatedTag1");
                 Assert.DoesNotContain(updateTopicResponse.Tags, tag => tag.Key == "replacedTag1");
 
+
+                // Update the Topic with IP filtering feature
+                topic.AllowTrafficFromAllIPs = false;
+                topic.InboundIpRules = new List<InboundIpRule>();
+                topic.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.67.98" });
+                topic.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.90.100" });
+                var updateTopicResponseWithIpFilteringFeature = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(resourceGroup, topicName, topic).Result;
+                Assert.False(updateTopicResponseWithIpFilteringFeature.AllowTrafficFromAllIPs);
+                Assert.True(updateTopicResponseWithIpFilteringFeature.InboundIpRules.Count() == 2);
+
                 // Delete topic
                 this.EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();
             }

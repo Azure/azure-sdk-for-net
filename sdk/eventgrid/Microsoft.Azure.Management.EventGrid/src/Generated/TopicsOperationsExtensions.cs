@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the topic.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the resource.
             /// </param>
             public static Topic Update(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the topic.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the topic.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the resource.
             /// </param>
             public static Topic BeginUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
@@ -636,7 +636,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the topic.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
