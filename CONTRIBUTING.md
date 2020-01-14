@@ -114,9 +114,23 @@ If for any reason there is an update to the build tools, you will then need to f
 3. Invoke `dotnet test eng\service.proj --filter TestCategory!=Live`
    <br/><br/>
 
+### Testing Against Latest Versions of Client Libraries
+In some cases, you might want to test against the latest versions of the client libraries. i.e. version not yet published to nuget. For this scenario you should make use of the `UseProjectReferenceToAzureClients` property which when set to `true` will switch all package references for client libraries present in the build to project references. This result in testing against the current version of the libraries in the repo. e.g. `dotnet test eng\service.proj /p:ServiceDirectory=eventhub --filter TestCategory!=Live /p:UseProjectReferenceToAzureClients=true`
+
 ## Public API changes
 
 If you make a public API change `eng\Export-API.ps1` script has to be run to update public API listings.
+
+## Dev Feed
+We publish nightly built packages to a dev feed which can be consumed by adding the dev feed blob storage as a package source in Visual Studio. 
+
+Follow instructions provided [here](https://docs.microsoft.com/en-us/nuget/consume-packages/install-use-packages-visual-studio#package-sources) and use `https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json` as the source.
+
+You can also achieve this from the command line.
+
+```nuget.exe sources add -Name “Azure SDK for Net Dev Feed” -Source “https://azuresdkartifacts.blob.core.windows.net/azure-sdk-for-net/index.json”```
+
+You can then consume packages from this package source, remember to check the [Include prerelease](https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages#installing-and-updating-pre-release-packages) box in Visual Studio when searching for the packages.
 
 # On-boarding New Libraries
 
@@ -171,8 +185,10 @@ sdk\eventgrid\Microsoft.Azure.Management.EventGrid\src\Microsoft.Azure.Managemen
 sdk\eventgrid\Microsoft.Azure.Management.EventGrid\tests\Microsoft.Azure.Management.EventGrid.Tests.csproj
 ```
 
-> \*Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo, that your csproj files starts with **Microsoft.Azure\***
+> Ensure that your service name is the same as it is specified in the [azure-rest-api-specs/specification](https://github.com/Azure/azure-rest-api-specs/tree/master/specification) Repo, that your csproj files starts with **Microsoft.Azure**
 > , that test files end with **.Tests** and that management plane project files contain **.Management.**
+If you are adding a new service directory, ensure that it is mapped to a friendly name at [ServiceMapping](https://github.com/Azure/azure-sdk-for-net/blob/8c1f53e9099bd5a674f9e77be7e4b1541cd6ab08/doc/ApiDocGeneration/Generate-DocIndex.ps1#L9-L64)
+
 
 7. Copy .csproj from any other .csproj and update the following information in the new .csproj
 

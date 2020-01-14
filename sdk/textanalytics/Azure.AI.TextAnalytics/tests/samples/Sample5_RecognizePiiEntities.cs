@@ -18,13 +18,13 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
+            #region Snippet:TextAnalyticsSample5CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #endregion
 
             #region Snippet:RecognizePiiEntities
             string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-            // Recognize entities containing personally identifiable information in the input text
             RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
             IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 

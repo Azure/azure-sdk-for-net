@@ -3,6 +3,8 @@
 
  This SDK allows you to build applications that consumes Microsoft Cognitive Services Language APIs.
 
+ **Note:** The new, preview version for the Cognitive Services Text Analytics Azure SDK can be found under the path: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics
+
  ### APIs
 
  For a full list of APIs under Language, please see our [list of language APIs](https://azure.microsoft.com/en-us/services/cognitive-services/?v=17.29#lang).

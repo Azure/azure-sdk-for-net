@@ -159,17 +159,22 @@ namespace Azure.Messaging.EventHubs.Amqp
             RetryPolicy = retryPolicy;
             MessageConverter = messageConverter;
 
-            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(timeout =>
-                ConnectionScope.OpenConsumerLinkAsync(
-                    consumerGroup,
-                    partitionId,
-                    CurrentEventPosition,
-                    timeout,
-                    prefetchCount ?? DefaultPrefetchCount,
-                    ownerLevel,
-                    trackLastEnqueuedEventProperties,
-                    CancellationToken.None),
-                link => link.SafeClose());
+            ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
+                timeout =>
+                    ConnectionScope.OpenConsumerLinkAsync(
+                        consumerGroup,
+                        partitionId,
+                        CurrentEventPosition,
+                        timeout,
+                        prefetchCount ?? DefaultPrefetchCount,
+                        ownerLevel,
+                        trackLastEnqueuedEventProperties,
+                        CancellationToken.None),
+                link =>
+                {
+                    link.Session?.SafeClose();
+                    link.SafeClose();
+                });
         }
 
         /// <summary>
@@ -241,9 +246,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                             {
                                 lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
-                                if (lastReceivedEvent.Offset.HasValue)
+                                if (lastReceivedEvent.Offset > long.MinValue)
                                 {
-                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset.Value);
+                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset);
                                 }
 
                                 if (TrackLastEnqueuedEventProperties)

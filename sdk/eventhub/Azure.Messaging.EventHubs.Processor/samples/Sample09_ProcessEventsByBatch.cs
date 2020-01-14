@@ -98,10 +98,6 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 try
                 {
                     // Retrieve or create the active batch for the current partition.
-                    //
-                    // NOTE:  There is a bug in the Event Hubs Processor preview 6 library causing the "Partition"
-                    //        property to be null when no event was available.  This sample will work when run against the
-                    //        referenced project but will require adjustments to work with the preview 6 package.
 
                     List<ProcessEventArgs> currentBatch = eventBatches.GetOrAdd(eventArgs.Partition.PartitionId, _ => new List<ProcessEventArgs>());
                     bool sendBatchForProcessing = false;

@@ -7,7 +7,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Recognition of Personally Identifiable Information 
 * Linked Entity Recognition
 
-[Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation]() | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
+[Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
 ## Getting started
 
@@ -15,10 +15,10 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * An [Azure subscription][azure_sub].
 * An existing [Cognitive Services][cognitive_resource] or Text Analytics resource. If you need to create the resource, you can use the [Azure Portal][azure_portal] or [Azure CLI][azure_cli].
 
-If you use the Azure CLI, replace `<your-resource-group-name>` and `<your-resource-name>` with your own unique names:
+If you use the Azure CLI, replace `<your-resource-group-name>`, `<your-resource-name>`, `<location>`, and `<sku>` with your values:
 
 ```PowerShell
-az cognitiveservices account create --kind TextAnalytics --resource-group <your-resource-group-name> --name <your-resource-name>
+az cognitiveservices account create --kind TextAnalytics --resource-group <your-resource-group-name> --name <your-resource-name> --location <location> --sku <sku>
 ```
 
 ### Install the package
@@ -108,14 +108,13 @@ Run a Text Analytics predictive model to determine the language that the passed-
 ```C# Snippet:DetectLanguage
 string input = "Este documento está en español.";
 
-// Detect the language the input text is written in
 DetectLanguageResult result = client.DetectLanguage(input);
 DetectedLanguage language = result.PrimaryLanguage;
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
 ```
 
-Please refer to the service documentation for a conceptual discussion of [language detection][langugage_detection].
+Please refer to the service documentation for a conceptual discussion of [language detection][language_detection].
 
 ### Analyze Sentiment
 Run a Text Analytics predictive model to identify the positive, negative, neutral or mixed sentiment contained in the passed-in input text or batch of input text documents.
@@ -123,7 +122,6 @@ Run a Text Analytics predictive model to identify the positive, negative, neutra
 ```C# Snippet:AnalyzeSentiment
 string input = "That was the best day of my life!";
 
-// Analyze the sentiment of the input text.
 AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
 TextSentiment sentiment = result.DocumentSentiment;
 
@@ -141,7 +139,6 @@ Run a model to identify a collection of significant phrases found in the passed-
 ```C# Snippet:ExtractKeyPhrases
 string input = "My cat might need to see a veterinarian.";
 
-// Extract key phrases from the input text.
 ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
 IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
 
@@ -152,7 +149,7 @@ foreach (string keyPhrase in keyPhrases)
 }
 ```
 
-Please refer to the service documentation for a conceptual discussion of [key_phrase_extraction][key_phrase_extraction].
+Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
 ### Recognize Entities
 Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into types such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Types](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
@@ -160,7 +157,6 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-// Recognize categorized entities in the input text
 RecognizeEntitiesResult result = client.RecognizeEntities(input);
 IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
@@ -179,7 +175,6 @@ Run a predictive model to identify a collection of entities containing personall
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-// Recognize entities containing personally identifiable information in the input text
 RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
 IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
@@ -196,7 +191,6 @@ Run a predictive model to identify a collection of entities found in the passed-
 ```C# Snippet:RecognizeLinkedEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-// Recognize entities associated with the Wikipedia knowledge base in the input text
 RecognizeLinkedEntitiesResult result = client.RecognizeLinkedEntities(input);
 
 Console.WriteLine($"Extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
@@ -218,7 +212,6 @@ Run a Text Analytics predictive model to determine the language that the passed-
 ```C# Snippet:DetectLanguageAsync
 string input = "Este documento está en español.";
 
-// Asynchronously detect the language the input text is written in
 DetectLanguageResult result = await client.DetectLanguageAsync(input);
 DetectedLanguage language = result.PrimaryLanguage;
 
@@ -231,7 +224,6 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-// Recognize categorized entities in the input text
 RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
 IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 
@@ -319,13 +311,11 @@ Samples are provided for each main functional area, and for each area, samples a
 
 ## Contributing
 
-See the [App Configuration CONTRIBUTING.md][azconfig_contrib] for details on building, testing, and contributing to this library.
-
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
 
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftextanalytics%2FAzure.AI.TextAnalytics%2FREADME.png)
 
@@ -333,12 +323,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [textanalytics_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src
 [textanalytics_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/
+[textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples
 [textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-Preview-1/operations/Languages
 [cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
 
-[language_dectection]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
+[language_detection]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
 [sentiment_analysis]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
 [key_phrase_extraction]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
 [named_entity_recognition]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-entity-linking
@@ -375,6 +366,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com
+
+[cla]: https://cla.microsoft.com
+[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
+[coc_contact]: mailto:opencode@microsoft.com

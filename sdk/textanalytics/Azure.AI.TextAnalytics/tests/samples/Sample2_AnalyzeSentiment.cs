@@ -16,13 +16,13 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
+            #region Snippet:TextAnalyticsSample2CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #endregion
 
             #region Snippet:AnalyzeSentiment
             string input = "That was the best day of my life!";
 
-            // Analyze the sentiment of the input text.
             AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
             TextSentiment sentiment = result.DocumentSentiment;
 

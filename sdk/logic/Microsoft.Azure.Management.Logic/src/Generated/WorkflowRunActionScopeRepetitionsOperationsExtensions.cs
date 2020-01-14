@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Logic
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -39,7 +41,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='actionName'>
             /// The workflow action name.
             /// </param>
-            public static WorkflowRunActionRepetitionDefinitionCollection List(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName)
+            public static IEnumerable<WorkflowRunActionRepetitionDefinition> List(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName)
             {
                 return operations.ListAsync(resourceGroupName, workflowName, runName, actionName).GetAwaiter().GetResult();
             }
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.Management.Logic
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WorkflowRunActionRepetitionDefinitionCollection> ListAsync(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<WorkflowRunActionRepetitionDefinition>> ListAsync(this IWorkflowRunActionScopeRepetitionsOperations operations, string resourceGroupName, string workflowName, string runName, string actionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workflowName, runName, actionName, null, cancellationToken).ConfigureAwait(false))
                 {

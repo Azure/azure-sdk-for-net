@@ -429,6 +429,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -477,6 +478,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -533,6 +535,7 @@ namespace Azure.Messaging.EventHubs
 
             ProcessingReadEventOptions = new ReadEventOptions
             {
+                OwnerLevel = 0,
                 MaximumWaitTime = clientOptions.MaximumWaitTime,
                 TrackLastEnqueuedEventProperties = clientOptions.TrackLastEnqueuedEventProperties
             };
@@ -748,8 +751,8 @@ namespace Azure.Messaging.EventHubs
             Logger.UpdateCheckpointStart(context.PartitionId);
 
             Argument.AssertNotNull(eventData, nameof(eventData));
-            Argument.AssertNotNull(eventData.Offset, nameof(eventData.Offset));
-            Argument.AssertNotNull(eventData.SequenceNumber, nameof(eventData.SequenceNumber));
+            Argument.AssertInRange(eventData.Offset, long.MinValue + 1, long.MaxValue, nameof(eventData.Offset));
+            Argument.AssertInRange(eventData.SequenceNumber, long.MinValue + 1, long.MaxValue, nameof(eventData.SequenceNumber));
             Argument.AssertNotNull(context, nameof(context));
 
             // Parameter validation is done by Checkpoint constructor.
@@ -760,8 +763,8 @@ namespace Azure.Messaging.EventHubs
                 EventHubName,
                 ConsumerGroup,
                 context.PartitionId,
-                eventData.Offset.Value,
-                eventData.SequenceNumber.Value
+                eventData.Offset,
+                eventData.SequenceNumber
             );
 
             using DiagnosticScope scope =

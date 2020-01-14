@@ -340,6 +340,10 @@ namespace Azure.Storage.Blobs
         private static bool TryGetLength(Stream content, out long length)
         {
             length = 0;
+            if (content == null)
+            {
+                return true;
+            }
             try
             {
                 if (content.CanSeek)

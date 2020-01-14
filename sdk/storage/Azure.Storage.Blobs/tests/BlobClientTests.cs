@@ -207,6 +207,26 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadAsync_Stream_NullStreamFail()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = (Stream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadAsync(stream),
+                    e => Assert.AreEqual("body", e.ParamName));
+            }
+        }
+
+        [Test]
         public async Task UploadAsync_File()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -757,20 +777,16 @@ namespace Azure.Storage.Blobs.Test
                 MaximumTransferLength = Constants.MB,
                 MaximumConcurrency = 16
             };
-            using var stream = new MemoryStream(GetRandomBuffer(Constants.GB));
+            int size = Constants.Blob.Block.MaxUploadBytes + 1; // ensure that the Parallel upload code path is hit
+            using var stream = new MemoryStream(GetRandomBuffer(size));
 
             // Act
-            await blob.UploadAsync(content: stream, progressHandler: progress);
+            await blob.UploadAsync(content: stream, progressHandler: progress, transferOptions: options);
 
             // Assert
             Assert.IsFalse(progress.List.Count == 0);
 
-            for ( int i = 1; i < progress.List.Count; i++)
-            {
-                Assert.IsTrue(progress.List[i] >= progress.List[i - 1]);
-            }
-
-            Assert.AreEqual(Constants.GB, progress.List[progress.List.Count - 1]);
+            Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
         }
         #endregion Upload
 
