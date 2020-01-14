@@ -358,7 +358,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -368,8 +367,11 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            var uploader = new PartitionedUploader(
-                this, default, BlockBlobMaxUploadBlobBytes);
+            PartitionedUploader uploader = new PartitionedUploader(
+                client: this,
+                transferOptions: default,
+                singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
+                operationName: Constants.Blob.Block.UploadOperationName);
 
             return uploader.Upload(
                 content,
@@ -428,7 +430,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -438,17 +439,20 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
-            var uploader = new PartitionedUploader(
-                this, default, BlockBlobMaxUploadBlobBytes);
+            PartitionedUploader uploader = new PartitionedUploader(
+                client: this,
+                transferOptions: default,
+                singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
+                operationName: Constants.Blob.Block.UploadOperationName);
 
-                return await uploader.UploadAsync(
-                    content,
-                    httpHeaders,
-                    metadata,
-                    conditions,
-                    progressHandler,
-                    accessTier,
-                    cancellationToken).ConfigureAwait(false);
+            return await uploader.UploadAsync(
+                content,
+                httpHeaders,
+                metadata,
+                conditions,
+                progressHandler,
+                accessTier,
+                cancellationToken).ConfigureAwait(false);
             }
 
         /// <summary>
@@ -486,6 +490,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -508,6 +515,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             AccessTier? accessTier,
             IProgress<long> progressHandler,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -546,7 +554,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Block.UploadOperationName,
+                        operationName: operationName ?? Constants.Blob.Block.UploadOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

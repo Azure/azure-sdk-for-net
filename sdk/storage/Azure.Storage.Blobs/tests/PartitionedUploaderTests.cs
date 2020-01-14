@@ -228,12 +228,12 @@ namespace Azure.Storage.Blobs.Tests
             if (_async)
             {
                 clientMock.Setup(
-                        c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, true, s_cancellationToken))
+                        c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, true, s_cancellationToken))
                     .ReturnsAsync(s_response);
             }
             else
             {
-                clientMock.Setup(c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, false, s_cancellationToken))
+                clientMock.Setup(c => c.UploadInternal(content, s_blobHttpHeaders, s_metadata, s_conditions, s_accessTier, s_progress, default, false, s_cancellationToken))
                     .ReturnsAsync(s_response);
             }
 

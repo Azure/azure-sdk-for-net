@@ -16,28 +16,44 @@ namespace Azure.Storage.Blobs
 {
     internal class PartitionedUploader
     {
-        // The client we use to do the actual uploading
+        /// <summary>
+        /// The client we use to do the actual uploading.
+        /// </summary>
         private readonly BlockBlobClient _client;
 
-        // The maximum number of simultaneous workers
+        /// <summary>
+        /// The maximum number of simultaneous workers.
+        /// </summary>
         private readonly int _maxWorkerCount;
 
-        // A pool of memory we use to partition the stream into blocks
+        /// <summary>
+        /// A pool of memory we use to partition the stream into blocks.
+        /// </summary>
         private readonly ArrayPool<byte> _arrayPool;
 
-        // The size we use to determine whether to upload as a single PUT BLOB
-        // request or stage as multiple blocks.
+        /// <summary>
+        /// The size we use to determine whether to upload as a single PUT BLOB
+        /// request or stage as multiple blocks.
+        /// </summary>
         private readonly long _singleUploadThreshold;
 
-        // The size of each staged block.  If null, we'll change between 4MB
-        // and 8MB depending on the size of the content.
+        /// <summary>
+        /// The size of each staged block.  If null, we'll change between 4MB
+        /// and 8MB depending on the size of the content.
+        /// </summary>
         private readonly int? _blockSize;
+
+        /// <summary>
+        /// The name of the calling operaiton.
+        /// </summary>
+        private readonly string _operationName;
 
         public PartitionedUploader(
             BlockBlobClient client,
             StorageTransferOptions transferOptions,
             long? singleUploadThreshold = null,
-            ArrayPool<byte> arrayPool = null)
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
         {
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
@@ -52,6 +68,7 @@ namespace Azure.Storage.Blobs
                     Constants.Blob.Block.MaxStageBytes,
                     transferOptions.MaximumTransferLength.Value);
             }
+            _operationName = operationName;
         }
 
         public async Task<Response<BlobContentInfo>> UploadAsync(
@@ -74,6 +91,7 @@ namespace Azure.Storage.Blobs
                     conditions,
                     accessTier,
                     progressHandler,
+                    _operationName,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -121,6 +139,7 @@ namespace Azure.Storage.Blobs
                     conditions,
                     accessTier,
                     progressHandler,
+                    _operationName,
                     false,
                     cancellationToken).EnsureCompleted();
             }
