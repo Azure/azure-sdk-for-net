@@ -118,10 +118,24 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// when creating the managed cluster.</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
-        /// <param name="availabilityZones">(PREVIEW) Availability zones for
-        /// nodes. Must use VirtualMachineScaleSets AgentPoolType.</param>
-        public ManagedClusterAgentPoolProfile(int count, string vmSize, string name, int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>))
-            : base(count, vmSize, osDiskSizeGB, vnetSubnetID, maxPods, osType, maxCount, minCount, enableAutoScaling, type, orchestratorVersion, provisioningState, availabilityZones)
+        /// <param name="availabilityZones">Availability zones for nodes. Must
+        /// use VirtualMachineScaleSets AgentPoolType.</param>
+        /// <param name="enableNodePublicIP">Enable public IP for nodes</param>
+        /// <param name="scaleSetPriority">ScaleSetPriority to be used to
+        /// specify virtual machine scale set priority. Default to regular.
+        /// Possible values include: 'Low', 'Regular'</param>
+        /// <param name="scaleSetEvictionPolicy">ScaleSetEvictionPolicy to be
+        /// used to specify eviction policy for low priority virtual machine
+        /// scale set. Default to Delete. Possible values include: 'Delete',
+        /// 'Deallocate'</param>
+        /// <param name="tags">Agent pool tags to be persisted on the agent
+        /// pool virtual machine scale set.</param>
+        /// <param name="nodeLabels">Agent pool node labels to be persisted
+        /// across all nodes in agent pool.</param>
+        /// <param name="nodeTaints">Taints added to new nodes during node pool
+        /// create and scale. For example, key=value:NoSchedule.</param>
+        public ManagedClusterAgentPoolProfile(int count, string vmSize, string name, int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?), string scaleSetPriority = default(string), string scaleSetEvictionPolicy = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, string> nodeLabels = default(IDictionary<string, string>), IList<string> nodeTaints = default(IList<string>))
+            : base(count, vmSize, osDiskSizeGB, vnetSubnetID, maxPods, osType, maxCount, minCount, enableAutoScaling, type, orchestratorVersion, provisioningState, availabilityZones, enableNodePublicIP, scaleSetPriority, scaleSetEvictionPolicy, tags, nodeLabels, nodeTaints)
         {
             Name = name;
             CustomInit();
