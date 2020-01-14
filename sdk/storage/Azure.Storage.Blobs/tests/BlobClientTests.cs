@@ -443,7 +443,7 @@ namespace Azure.Storage.Blobs.Test
             long singleBlockThreshold,
             StorageTransferOptions transferOptions)
         {
-            using Stream stream = await CreateRandomStream(size);
+            using Stream stream = await CreateStream(size);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             var name = GetNewBlobName();
@@ -464,7 +464,7 @@ namespace Azure.Storage.Blobs.Test
             await DownloadAndAssert(size, stream, blob);
         }
 
-        private async Task<Stream> CreateRandomStream(long size)
+        private async Task<Stream> CreateStream(long size)
         {
             Stream stream;
             if (size < Constants.MB * 100)
@@ -475,7 +475,7 @@ namespace Azure.Storage.Blobs.Test
             else
             {
                 var path = Path.GetTempFileName();
-                stream = File.Create(path);
+                stream = new DisposingFileStream(path);
                 var bufferSize = 4 * Constants.KB;
 
                 while (stream.Position + bufferSize < size)
@@ -499,30 +499,43 @@ namespace Azure.Storage.Blobs.Test
         {
             var path = Path.GetTempFileName();
 
-            using Stream stream = await CreateRandomStream(size);
-            using (FileStream fileStream = File.OpenWrite(path))
+            try
             {
-                await stream.CopyToAsync(fileStream);
+                using Stream stream = await CreateStream(size);
+
+                // create a new file and copy contents of stream into it, and then close the FileStream
+                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                using (FileStream fileStream = File.Create(path))
+                {
+                    await stream.CopyToAsync(fileStream);
+                }
+
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+                var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+                blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+
+                await blob.StagedUploadAsync(
+                    path: path,
+                    blobHttpHeaders: default,
+                    metadata: default,
+                    conditions: default,
+                    progressHandler: default,
+                    singleUploadThreshold: singleBlockThreshold,
+                    transferOptions: transferOptions,
+                    async: true);
+
+                await DownloadAndAssert(size, stream, blob);
             }
-
-            await using DisposingContainer test = await GetTestContainerAsync();
-
-            var name = GetNewBlobName();
-            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
-            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-            blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
-
-            await blob.StagedUploadAsync(
-                path: path,
-                blobHttpHeaders: default,
-                metadata: default,
-                conditions: default,
-                progressHandler: default,
-                singleUploadThreshold: singleBlockThreshold,
-                transferOptions: transferOptions,
-                async: true);
-
-            await DownloadAndAssert(size, stream, blob);
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
 
         private static async Task DownloadAndAssert(long size, Stream stream, BlobClient blob)
@@ -583,7 +596,6 @@ namespace Azure.Storage.Blobs.Test
             await UploadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
-        [LiveOnly]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
@@ -606,7 +618,6 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
