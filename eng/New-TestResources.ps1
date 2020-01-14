@@ -84,7 +84,7 @@ trap {
 }
 
 # Enumerate test resources to deploy. Fail if none found.
-$root = Resolve-Path -Path "$PSScriptRoot/../sdk/$ServiceDirectory"
+$root = [System.IO.Path]::Combine("$PSScriptRoot/../sdk", $ServiceDirectory) | Resolve-Path
 $templateFileName = 'test-resources.json'
 $templateFiles = @()
 
@@ -276,7 +276,7 @@ If you are not currently logged into an account in the Az PowerShell module, you
 A name to use in the resource group and passed to the ARM template as 'baseName'.
 
 .PARAMETER ServiceDirectory
-A directory under 'sdk' in the repository root - optionally with subdirectories specified - in which to discover ARM templates named 'test-resources.json'.
+A directory under 'sdk' in the repository root - optionally with subdirectories specified - in which to discover ARM templates named 'test-resources.json'. This can also be an absolute path or specify parent directories.
 
 .PARAMETER TestApplicationId
 A service principal ID to authenticate the test runner against deployed resources.

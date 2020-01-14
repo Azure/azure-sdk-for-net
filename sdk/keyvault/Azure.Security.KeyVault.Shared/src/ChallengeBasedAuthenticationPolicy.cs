@@ -37,6 +37,11 @@ namespace Azure.Security.KeyVault
 
         private async ValueTask ProcessCoreAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
+            if (message.Request.Uri.Scheme != Uri.UriSchemeHttps)
+            {
+                throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
+            }
+
             RequestContent originalContent = message.Request.Content;
 
             // if this policy doesn't have _challenge cached try to get it from the static challenge cache
@@ -128,7 +133,7 @@ namespace Azure.Security.KeyVault
                 }
 
                 // This assumes that Scopes is always non-null and of length one.
-                // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
+                // This is guaranteed by the way the AuthenticationChallenge cache is constructed.
                 if (obj is AuthenticationChallenge other)
                 {
                     return string.Equals(Scopes[0], other.Scopes[0], StringComparison.OrdinalIgnoreCase);
@@ -141,7 +146,7 @@ namespace Azure.Security.KeyVault
             {
                 // Currently the hash code is simply the hash of the first scope as this is what is used to determine equality
                 // This assumes that Scopes is always non-null and of length one.
-                // This is guaranteed by the way the AuthenticationChallenge cache is constructued.
+                // This is guaranteed by the way the AuthenticationChallenge cache is constructed.
                 return Scopes[0].GetHashCode();
             }
 

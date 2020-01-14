@@ -260,7 +260,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [configuration_store]: https://docs.microsoft.com/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store
 [label_concept]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/concept-key-value#label-keys
 [nuget]: https://www.nuget.org/
-[package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/
+[package]: https://www.nuget.org/packages/Azure.Data.AppConfiguration/
 [samples_readme]: ./samples/README.md
 [moq]: https://github.com/Moq/moq4/
 [cla]: https://cla.microsoft.com

@@ -4,6 +4,8 @@
 
 ### Fixes and improvements
 - Fix `UsernamePasswordCredential` constructor parameter mishandling
+- Add `AuthFileCredential` which allows using an auth file produced by the Azure CLI to authenticate
+- Add support for `AZURE_AUTH_LOCATION` to `EnvironmentCredential`, which uses the newly added `AuthFileCredential`
 
 ## 1.1.0
 

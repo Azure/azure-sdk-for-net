@@ -12,6 +12,7 @@ namespace Azure.Identity
         public static string TenantId => Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
         public static string ClientId => Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
         public static string ClientSecret => Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
+        public static string SdkAuthLocation => Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION");
 
         public static string MsiEndpoint => Environment.GetEnvironmentVariable("MSI_ENDPOINT");
         public static string MsiSecret => Environment.GetEnvironmentVariable("MSI_SECRET");

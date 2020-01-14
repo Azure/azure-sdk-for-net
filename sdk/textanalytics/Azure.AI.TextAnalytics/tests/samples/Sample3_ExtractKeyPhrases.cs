@@ -18,13 +18,13 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
+            #region Snippet:TextAnalyticsSample3CreateClient
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            #endregion
 
             #region Snippet:ExtractKeyPhrases
             string input = "My cat might need to see a veterinarian.";
 
-            // Extract key phrases from the input text.
             ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
             IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
 

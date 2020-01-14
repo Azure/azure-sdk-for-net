@@ -15,6 +15,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         private readonly Uri _invalidServiceUri = new Uri("https://account.file.core.windows.net");
         private readonly Uri _blobUri = new Uri("https://account.blob.core.windows.net");
         private readonly Uri _dfsUri = new Uri("https://account.dfs.core.windows.net");
+        private readonly Uri _rootDirectoryUri = new Uri("https://account.dfs.core.windows.net/filesystem/");
 
         public DataLakeUriBuilderTests(bool async)
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
@@ -267,6 +268,45 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(_dfsUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToUri_RootDirectory()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_rootDirectoryUri);
+
+            // Act
+            Uri uri = uriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual(_rootDirectoryUri, uri);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsUri_RootDirectory()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_rootDirectoryUri);
+
+            // Act
+            Uri uri = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_rootDirectoryUri, uri);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobUri_RootDirectory()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_rootDirectoryUri);
+
+            // Act
+            Uri uri = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(new Uri("https://account.blob.core.windows.net/filesystem/"), uri);
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -22,7 +21,6 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
     /// Cognitive Services Account is an Azure resource representing the
     /// provisioned account, its type, location and SKU.
     /// </summary>
-    [Rest.Serialization.JsonTransformation]
     public partial class CognitiveServicesAccount : IResource
     {
         /// <summary>
@@ -38,19 +36,11 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         /// <param name="etag">Entity Tag</param>
         /// <param name="id">The id of the created account</param>
-        /// <param name="kind">Type of cognitive service account.</param>
+        /// <param name="kind">The Kind of the resource.</param>
         /// <param name="location">The location of the resource</param>
         /// <param name="name">The name of the created account</param>
-        /// <param name="provisioningState">Gets the status of the cognitive
-        /// services account at the time the operation was called. Possible
-        /// values include: 'Creating', 'ResolvingDNS', 'Moving', 'Deleting',
-        /// 'Succeeded', 'Failed'</param>
-        /// <param name="endpoint">Endpoint of the created account.</param>
-        /// <param name="internalId">The internal identifier.</param>
-        /// <param name="customSubDomainName">Optional subdomain name used for
-        /// token-based authentication.</param>
-        /// <param name="networkAcls">A collection of rules governing the
-        /// accessibility from specific network locations.</param>
+        /// <param name="properties">Properties of Cognitive Services
+        /// account.</param>
         /// <param name="sku">The SKU of Cognitive Services account.</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used in viewing and
@@ -59,18 +49,14 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
         /// <param name="type">Resource type</param>
-        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), string provisioningState = default(string), string endpoint = default(string), string internalId = default(string), string customSubDomainName = default(string), NetworkRuleSet networkAcls = default(NetworkRuleSet), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
+        public CognitiveServicesAccount(string etag = default(string), string id = default(string), string kind = default(string), string location = default(string), string name = default(string), CognitiveServicesAccountProperties properties = default(CognitiveServicesAccountProperties), Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string type = default(string))
         {
             Etag = etag;
             Id = id;
             Kind = kind;
             Location = location;
             Name = name;
-            ProvisioningState = provisioningState;
-            Endpoint = endpoint;
-            InternalId = internalId;
-            CustomSubDomainName = customSubDomainName;
-            NetworkAcls = networkAcls;
+            Properties = properties;
             Sku = sku;
             Tags = tags;
             Type = type;
@@ -83,10 +69,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets entity Tag
+        /// Gets entity Tag
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets the id of the created account
@@ -95,7 +81,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets type of cognitive service account.
+        /// Gets or sets the Kind of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
@@ -113,38 +99,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the status of the cognitive services account at the time the
-        /// operation was called. Possible values include: 'Creating',
-        /// 'ResolvingDNS', 'Moving', 'Deleting', 'Succeeded', 'Failed'
+        /// Gets or sets properties of Cognitive Services account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets or sets endpoint of the created account.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.endpoint")]
-        public string Endpoint { get; set; }
-
-        /// <summary>
-        /// Gets or sets the internal identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.internalId")]
-        public string InternalId { get; set; }
-
-        /// <summary>
-        /// Gets or sets optional subdomain name used for token-based
-        /// authentication.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.customSubDomainName")]
-        public string CustomSubDomainName { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of rules governing the accessibility from
-        /// specific network locations.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.networkAcls")]
-        public NetworkRuleSet NetworkAcls { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public CognitiveServicesAccountProperties Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of Cognitive Services account.
@@ -176,6 +134,10 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
             if (Sku != null)
             {
                 Sku.Validate();
