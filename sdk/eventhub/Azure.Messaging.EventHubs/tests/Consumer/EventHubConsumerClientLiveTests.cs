@@ -2036,7 +2036,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     var anotherReceivedEvents = new List<EventData>();
                     var readOptions = new ReadEventOptions { MaximumWaitTime = TimeSpan.FromSeconds(1) };
 
-
                     await foreach (var consumerEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, readOptions, cancellationSource.Token))
                     {
                         if (consumerEvent.Data != null)
