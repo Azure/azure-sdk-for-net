@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    public class TextAnalyticsClientTests : ClientTestBase
+    public class TextAnalyticsClientMockTests : ClientTestBase
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
         private static readonly string s_subscriptionKey = "FakeSubscriptionKey";
 
-        public TextAnalyticsClientTests(bool isAsync) : base(isAsync)
+        public TextAnalyticsClientMockTests(bool isAsync) : base(isAsync)
         {
         }
 
