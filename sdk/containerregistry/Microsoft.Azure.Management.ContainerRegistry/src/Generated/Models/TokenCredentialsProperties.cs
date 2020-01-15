@@ -16,28 +16,26 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The definition of Azure Monitoring list.
+    /// The properties of the credentials that can be used for authenticating
+    /// the token.
     /// </summary>
-    public partial class OperationServiceSpecificationDefinition
+    public partial class TokenCredentialsProperties
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// OperationServiceSpecificationDefinition class.
+        /// Initializes a new instance of the TokenCredentialsProperties class.
         /// </summary>
-        public OperationServiceSpecificationDefinition()
+        public TokenCredentialsProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// OperationServiceSpecificationDefinition class.
+        /// Initializes a new instance of the TokenCredentialsProperties class.
         /// </summary>
-        /// <param name="metricSpecifications">A list of Azure Monitoring
-        /// metrics definition.</param>
-        public OperationServiceSpecificationDefinition(IList<OperationMetricSpecificationDefinition> metricSpecifications = default(IList<OperationMetricSpecificationDefinition>))
+        public TokenCredentialsProperties(IList<TokenCertificate> certificates = default(IList<TokenCertificate>), IList<TokenPassword> passwords = default(IList<TokenPassword>))
         {
-            MetricSpecifications = metricSpecifications;
+            Certificates = certificates;
+            Passwords = passwords;
             CustomInit();
         }
 
@@ -47,10 +45,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of Azure Monitoring metrics definition.
         /// </summary>
-        [JsonProperty(PropertyName = "metricSpecifications")]
-        public IList<OperationMetricSpecificationDefinition> MetricSpecifications { get; set; }
+        [JsonProperty(PropertyName = "certificates")]
+        public IList<TokenCertificate> Certificates { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "passwords")]
+        public IList<TokenPassword> Passwords { get; set; }
 
     }
 }
