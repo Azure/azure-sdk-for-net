@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -443,7 +444,7 @@ namespace Azure.Storage.Blobs.Test
             long singleBlockThreshold,
             StorageTransferOptions transferOptions)
         {
-            using Stream stream = await CreateStream(size);
+            using Stream stream = await CreateLimitedMemoryStream(size);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             var name = GetNewBlobName();
@@ -461,10 +462,10 @@ namespace Azure.Storage.Blobs.Test
                 transferOptions: transferOptions,
                 async: true);
 
-            await DownloadAndAssert(size, stream, blob);
+            await DownloadAndAssertAsync(stream, blob);
         }
 
-        private async Task<Stream> CreateStream(long size)
+        private async Task<Stream> CreateLimitedMemoryStream(long size)
         {
             Stream stream;
             if (size < Constants.MB * 100)
@@ -475,7 +476,7 @@ namespace Azure.Storage.Blobs.Test
             else
             {
                 var path = Path.GetTempFileName();
-                stream = new DisposingFileStream(path);
+                stream = new TemporaryFileStream(path, FileMode.Create);
                 var bufferSize = 4 * Constants.KB;
 
                 while (stream.Position + bufferSize < size)
@@ -487,7 +488,7 @@ namespace Azure.Storage.Blobs.Test
                     await stream.WriteAsync(GetRandomBuffer(size - stream.Position), 0, (int)(size - stream.Position));
                 }
                 // reset the stream
-                stream.Position = 0;
+                stream.Seek(0, SeekOrigin.Begin);
             }
             return stream;
         }
@@ -501,7 +502,7 @@ namespace Azure.Storage.Blobs.Test
 
             try
             {
-                using Stream stream = await CreateStream(size);
+                using Stream stream = await CreateLimitedMemoryStream(size);
 
                 // create a new file and copy contents of stream into it, and then close the FileStream
                 // so the StagedUploadAsync call is not prevented from reading using its FileStream.
@@ -527,7 +528,7 @@ namespace Azure.Storage.Blobs.Test
                     transferOptions: transferOptions,
                     async: true);
 
-                await DownloadAndAssert(size, stream, blob);
+                await DownloadAndAssertAsync(stream, blob);
             }
             finally
             {
@@ -538,14 +539,14 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        private static async Task DownloadAndAssert(long size, Stream stream, BlobClient blob)
+        private static async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
         {
             var actual = new byte[Constants.DefaultBufferSize];
             using var actualStream = new MemoryStream(actual);
 
             // reset the stream before validating
-            stream.Position = 0;
-
+            stream.Seek(0, SeekOrigin.Begin);
+            long size = stream.Length;
             // we are testing Upload, not download: so we download in partitions to avoid the default timeout
             for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
             {
@@ -553,17 +554,16 @@ namespace Azure.Storage.Blobs.Test
                 var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
-                actualStream.Position = 0;
+                actualStream.Seek(0, SeekOrigin.Begin);
                 await download.Value.Content.CopyToAsync(actualStream);
 
                 var buffer = new byte[count];
-                stream.Position = i;
+                stream.Seek(i, SeekOrigin.Begin);
                 await stream.ReadAsync(buffer, 0, count);
 
                 TestHelper.AssertSequenceEqual(
-                    buffer.AsSpan(0, count).ToArray(),
-                    actual.AsSpan(0, count).ToArray()
-                    );
+                    buffer,
+                    actual.AsSpan(0, count).ToArray());
             }
         }
 
