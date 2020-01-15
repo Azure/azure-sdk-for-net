@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="virtualMachine">The reference of a virtual
+        /// <param name="virtualMachine">The reference to a virtual
         /// machine.</param>
-        /// <param name="networkSecurityGroup">The reference of the
+        /// <param name="networkSecurityGroup">The reference to the
         /// NetworkSecurityGroup resource.</param>
         /// <param name="privateEndpoint">A reference to the private endpoint
         /// to which the network interface is linked.</param>
@@ -94,13 +94,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the reference of a virtual machine.
+        /// Gets the reference to a virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachine")]
         public SubResource VirtualMachine { get; private set; }
 
         /// <summary>
-        /// Gets or sets the reference of the NetworkSecurityGroup resource.
+        /// Gets or sets the reference to the NetworkSecurityGroup resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public NetworkSecurityGroup NetworkSecurityGroup { get; set; }

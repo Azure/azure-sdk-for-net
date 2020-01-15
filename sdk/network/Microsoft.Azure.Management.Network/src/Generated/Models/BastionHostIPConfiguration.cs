@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the BastionHostIPConfiguration class.
         /// </summary>
-        /// <param name="subnet">Reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">Reference of the PublicIP
+        /// <param name="subnet">Reference to the subnet resource.</param>
+        /// <param name="publicIPAddress">Reference to the PublicIP
         /// resource.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -66,13 +66,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reference of the subnet resource.
+        /// Gets or sets reference to the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets reference of the PublicIP resource.
+        /// Gets or sets reference to the PublicIP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
