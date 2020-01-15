@@ -60,7 +60,7 @@ namespace Azure.Identity
             string password = EnvironmentVariables.Password;
             string sdkAuthLocation = EnvironmentVariables.SdkAuthLocation;
             string clientCertificatePath = EnvironmentVariables.ClientCertificatePath;
-            var clientCertificate = new X509Certificate2(Encoding.ASCII.GetBytes(clientCertificatePath));
+            var clientCertificate = new X509Certificate2(clientCertificatePath);
 
             if (tenantId != null && clientId != null)
             {
