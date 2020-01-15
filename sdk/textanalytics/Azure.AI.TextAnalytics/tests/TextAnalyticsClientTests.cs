@@ -40,7 +40,6 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void DetectLanguageArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.DetectLanguageAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync(null));
         }
 
@@ -55,7 +54,6 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void RecognizeEntitiesArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeEntitiesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync((List<string>)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync(null, new TextAnalyticsRequestOptions()));
@@ -65,7 +63,6 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void AnalyzeSentimentArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.AnalyzeSentimentAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync((List<string>)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync(null, new TextAnalyticsRequestOptions()));
@@ -75,7 +72,6 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void ExtractKeyPhrasesArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.ExtractKeyPhrasesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync((List<string>)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync(null, new TextAnalyticsRequestOptions()));
@@ -85,7 +81,6 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void RecognizePiiEntitiesArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizePiiEntitiesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((List<string>)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync(null, new TextAnalyticsRequestOptions()));
@@ -95,7 +90,6 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void RecognizeLinkedEntitiesArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentException>(() => Client.RecognizeLinkedEntitiesAsync(""));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((string)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((List<string>)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync(null, new TextAnalyticsRequestOptions()));

@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResult>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
             scope.AddAttribute("inputText", inputText);
@@ -187,7 +187,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResult> DetectLanguage(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
             scope.AddAttribute("inputText", inputText);
@@ -399,7 +399,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResult>> RecognizeEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
             scope.AddAttribute("inputText", inputText);
@@ -457,7 +457,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResult> RecognizeEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
             scope.AddAttribute("inputText", inputText);
@@ -672,7 +672,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResult>> AnalyzeSentimentAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
             scope.AddAttribute("inputText", inputText);
@@ -727,7 +727,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResult> AnalyzeSentiment(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
             scope.AddAttribute("inputText", inputText);
@@ -929,7 +929,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResult>> ExtractKeyPhrasesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
             scope.AddAttribute("inputText", inputText);
@@ -983,7 +983,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResult> ExtractKeyPhrases(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
             scope.AddAttribute("inputText", inputText);
@@ -1184,7 +1184,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizePiiEntitiesResult>> RecognizePiiEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
             scope.AddAttribute("inputText", inputText);
@@ -1241,7 +1241,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizePiiEntitiesResult> RecognizePiiEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
             scope.AddAttribute("inputText", inputText);
@@ -1453,7 +1453,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResult>> RecognizeLinkedEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
             scope.AddAttribute("inputText", inputText);
@@ -1509,7 +1509,7 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResult> RecognizeLinkedEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
             scope.AddAttribute("inputText", inputText);
