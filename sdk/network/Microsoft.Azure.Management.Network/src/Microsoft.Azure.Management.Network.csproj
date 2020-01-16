@@ -11,7 +11,13 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-            - Bugfix in PrivateLinkServiceConnectionState: property "ActionRequired" renamed to "ActionsRequired"
+            - Added support for Flow Logs in Network Watcher
+            - Added support for Connection Monitor in Network Watcher
+            - Added support for IP Groups references in Azure Firewall
+            - Added support for Management IP Configurations in Azure Firewall
+            - Added support for URL Configurations in Application Gateway
+            - Added support for Protected IP flag in Public IP Address
+            - Added support for Disconnect methods in Virtual Network Gateway and Virtual WAN
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
