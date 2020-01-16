@@ -1,33 +1,54 @@
-# Migration Guide (EventHubs v4 to v5)
+# Guide for migrating to Azure.Messaging.EventHubs from Microsoft.Azure.EventHubs
 
-This document is intended for users that are familiar with v4 of the .NET SDK for Event Hubs library ([`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) & [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/)) and wish 
-to migrate their application to the newer Azure.Messaging.EventHubs and Azure.Messaging.EventHubs.Processor libraries.
+This guide is intended to assist in the migration to version 5 of the Event Hubs client library from version 4.  It will focus on side-by-side comparisons for similar operations between the v5 packages, [`Azure.Messaging.EventHubs`](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) and [`Azure.Messaging.EventHubs.Processor`](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/)  and their v4 equivalents, [`Microsoft.Azure.EventHubs`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) and [`Microsoft.Azure.EventHubs.Processor`](https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/).
 
-For users new to the .NET SDK for Event Hubs, please see the [readme file for the Azure.Messaging.EventHubs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md).
+Familiarity with the v4 client library is assumed.  For those new to the Event Hubs client library for .NET, please refer to the [README](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md), [Event Hubs samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/samples), and the [Event Processor samples](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) for the v5 library rather than this guide.
 
 ## Table of contents
 
-- [Table of contents](#table-of-contents)
+- [Migration benefits](#migration-benefits)
 - [General changes](#general-changes)
+  - [Package and namespaces](#package-and-namespaces)
+  - [Client hierarchy](#client-hierarchy)
   - [Client constructors](#client-constructors)
   - [Publish events](#publish-events)
   - [Read events](#read-events)
 - [Migration samples](#migration-samples)
   - [Migrating code from `PartitionSender` to `EventHubProducerClient` for publishing events to a partition](#migrating-code-from-partitionsender-to-eventhubproducerclient-for-publishing-events-to-a-partition)
-  - [Migrating code from `EventHubClient` to `EventHubProducerAsyncClient` for publishing events using automatic routing](#migrating-code-from-eventhubclient-to-eventhubproducerclient-for-publishing-events-using-automatic-routing)
-  - [Migrating code from `EventHubClient` to `EventHubProducerAsyncClient` for publishing events with partition key](#migrating-code-from-eventhubclient-to-eventhubproducerclient-for-publishing-events-with-partition-key)
-  - [Migrating code from `PartitionReceiver` to `EventHubConsumerAsyncClient` for reading events in batches](#migrating-code-from-partitionreceiver-to-eventhubconsumerclient-for-reading-events-in-batches)
+  - [Migrating code from `EventHubClient` to `EventHubProducerClient` for publishing events using automatic routing](#migrating-code-from-eventhubclient-to-eventhubproducerclient-for-publishing-events-using-automatic-routing)
+  - [Migrating code from `EventHubClient` to `EventHubProducerClient` for publishing events with partition key](#migrating-code-from-eventhubclient-to-eventhubproducerclient-for-publishing-events-with-partition-key)
+  - [Migrating code from `PartitionReceiver` to `EventHubConsumerClient` for reading events in batches](#migrating-code-from-partitionreceiver-to-eventhubconsumerclient-for-reading-events-in-batches)
   - [Migrating code from `EventProcessorHost` to `EventProcessorClient` for reading events](#migrating-code-from-eventprocessorhost-to-eventprocessorclient-for-reading-events)
 - [Additional samples](#additional-samples)
 
+## Migration benefits
+
+A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be.  As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
+
+Two important areas of feedback that have been expressed is that the client libraries for different Azure services have not had a consistent approach to organization, naming, and API structure.  Additionally, many developers have felt that the learning curve was difficult, and the APIs did not offer a good, approachable, and consistent onboarding story for those learning Azure or exploring a specific Azure service.
+
+To try and improve the development experience across Azure services, including Event Hubs, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services.  A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries.  Further details are available in the guidelines for those interested.
+
+For Event Hubs, the modern client library was designed to provide an approachable onboarding experience for those new to messaging and/or the Event Hubs service with the goal of enabling a quick initial feedback loop for publishing and consuming events.  A gradual step-up path follows, building on the onboarding experience and shifting from exploration to tackling real-world production scenarios.  Finally, a set of advanced clients are available for those developers with high-throughput or special needs and who are interested in working at a lower-level.  This version is under active development and will continue to receive enhancements and improvements on a regular cadence.
+
+While we believe that there is significant benefit to adopting the modern version of the Event Hubs client library, it is important to be aware that the legacy version has not been officially deprecated.  It will continue to be supported with security and bug fixes as well as receiving some minor refinements.  However, in the near future it will not be under active development and new features are unlikely to be added.  There is no guarantee of feature parity between the modern and legacy client library versions.
+
 ## General changes
 
-In the interest of simplifying the API surface we've made two distinct
-clients, rather than having a single `EventHubClient`:
+### Package and namespaces
+
+Package names and the namespace root for the modern Azure client libraries for .NET have changed.  Each will follow the pattern `Azure.[Area].[Service]` where the legacy clients followed the pattern `Microsoft.Azure.[Service]`.  This provides a quick and accessible means to help understand, at a glance, whether you are using the modern or legacy clients.
+
+In the case of Event Hubs, the modern client libraries have packages and namespaces that begin with `Azure.Messaging.EventHubs` and were released beginning with version 5.  The legacy client libraries have packages and namespaces that begin with `Microsoft.Azure.EventHubs` and a version of 4.x.x or below.
+
+### Client hierarchy
+
+In the interest of simplifying the API surface we've made two distinct
+clients, rather than having a single `EventHubClient`:
 * [EventHubProducerClient](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.eventhubs.eventhubproducerclient?view=azure-dotnet-preview)
-  for publishing messages.
-* [EventHubConsumerClient](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.eventhubs.eventhubconsumerclient?view=azure-dotnet-preview) 
-  for reading messages.
+  for publishing messages.
+* [EventHubConsumerClient](https://docs.microsoft.com/en-us/dotnet/api/azure.messaging.eventhubs.eventhubconsumerclient?view=azure-dotnet-preview) 
+  for reading messages.
 
 The producer and consumer clients operate in the context of a specific event hub and offer operations for all partitions. Unlike the v4, the clients are not bound to a specific partition, but the methods on them have overloads to handle specific partitions if needed.
 
@@ -39,7 +60,7 @@ The [EventProcessorClient](https://azuresdkdocs.blob.core.windows.net/$web/dotne
 
 | In v4                                          | Equivalent in v5                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
-| `EventHubClient.CreateFromConnectionString()`    | `new EventHubProducerClient()` or `new EventHubConsumerClient()` | [Publish Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample03_PublishAnEventBatch.cs), [Read Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample04_ReadEvents.cs) |
+| `EventHubClient.CreateFromConnectionString()`    | `new EventHubProducerClient()` or `new EventHubConsumerClient()` | [Publish Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample03_PublishAnEventBatch.cs), [Read Events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample05_ReadEvents.cs) |
 | `EventHubClient.CreateWithAzureActiveDirectory()` or `EventHubClient.CreateWithManagedIdentity()`  | `new EventHubProducerClient(..., TokenCredential)` or `new EventHubConsumerClient(..., TokenCredential)` | [Authenticate with client secret credential](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_AuthenticateWithClientSecretCredential.cs)
 | `new EventProcessorHost()`                           | `new EventProcessorClient(BlobContainerClient, ...)`               | [Basic Event Processing](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_BasicEventProcessing.cs) |
 
@@ -49,7 +70,7 @@ The v4 client allowed for sending a single event or an enumerable of events, whi
 
 | In v4                                          | Equivalent in v5                                                 | Sample |
 |------------------------------------------------|------------------------------------------------------------------|--------|
-| `PartitionSender.SendAsync()`                          | `EventHubProducerClient.SendAsync()`                               | [Publish events to a specific partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample06_PublishAnEventBatchToASpecificPartition.cs) |
+| `PartitionSender.SendAsync()`                          | `EventHubProducerClient.SendAsync()`                               | [Publish events to a specific partition](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample07_PublishAnEventBatchToASpecificPartition.cs) |
 | `EventHubClient.SendAsync()`                          | `EventHubProducerClient.SendAsync()`                               | [Publish events](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample03_PublishAnEventBatch.cs) |
 
 ### Read events 
@@ -167,7 +188,7 @@ var eventHubClient = EventHubClient.CreateFromConnectionString(connectionStringB
 try
 {
     EventData eventData = new EventData(Encoding.UTF8.GetBytes("First"));
-    await eventHubClient.SendAsync(eventBatch, "my-partition-key");
+    await eventHubClient.SendAsync(eventData, "my-partition-key");
 }
 finally
 {
@@ -264,7 +285,7 @@ private static void Main(String[] args) {
     var eventHubName = "<< NAME OF THE EVENT HUB >>";
     var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 
-    EventProcessorHost eventProcessorHost = new EventProcessorHost(eventHubName, consumerGroup, eventHubsConnectionString,                                                                            storageConnectionString, blobContainerName);
+    EventProcessorHost eventProcessorHost = new EventProcessorHost(eventHubName, consumerGroup, eventHubsConnectionString, storageConnectionString, blobContainerName);
     
     // Registers the Event Processor Host and starts receiving messages
     await eventProcessorHost.RegisterEventProcessorAsync<SimpleEventProcessor>();
