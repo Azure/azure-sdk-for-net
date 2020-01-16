@@ -788,7 +788,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         async: async,
                         operationName: Constants.Blob.Block.StageBlockOperationName,
-                        cancellationToken: cancellationToken);
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

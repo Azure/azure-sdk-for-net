@@ -842,7 +842,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
                         operationName: Constants.Blob.Page.UploadOperationName,
-                        cancellationToken: cancellationToken);
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
