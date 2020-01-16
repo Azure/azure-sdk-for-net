@@ -271,7 +271,7 @@ namespace Azure.Storage.Blobs
                 List<Task> runningTasks = new List<Task>();
 
                 // Partition the stream into individual blocks
-                await foreach (StreamPartition block in GetBlocksAsync(content, blockSize, async: true, cancellationToken))
+                await foreach (StreamPartition block in GetBlocksAsync(content, blockSize, async: true, cancellationToken).ConfigureAwait(false))
                 {
                     // Start staging the next block (but don't await the Task!)
                     string blockId = GenerateBlockId(block.AbsolutePosition);
