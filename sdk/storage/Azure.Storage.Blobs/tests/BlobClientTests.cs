@@ -579,12 +579,21 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(257 * Constants.MB, 8)]
         [TestCase(257 * Constants.MB, 16)]
         [TestCase(257 * Constants.MB, null)]
-        [TestCase(1 * Constants.GB, 1)]
-        [TestCase(1 * Constants.GB, 4)]
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
-        [TestCase(1 * Constants.GB, null)]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
+        }
+
+        [Test]
+        [LiveOnly]
+        [Explicit("These tests are particularly slow and often hit our 20 minute per test time limit.")]
+        [TestCase(1 * Constants.GB, 1)]
+        [TestCase(1 * Constants.GB, 4)]
+        [TestCase(1 * Constants.GB, null)]
+        public async Task UploadStreamAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
@@ -602,12 +611,21 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(257 * Constants.MB, 8)]
         [TestCase(257 * Constants.MB, 16)]
         [TestCase(257 * Constants.MB, null)]
-        [TestCase(1 * Constants.GB, 1)]
-        [TestCase(1 * Constants.GB, 4)]
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
-        [TestCase(1 * Constants.GB, null)]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
+        }
+
+        [Test]
+        [LiveOnly]
+        [Explicit("These tests are particularly slow and often hit our 20 minute per test time limit.")]
+        [TestCase(1 * Constants.GB, 1)]
+        [TestCase(1 * Constants.GB, 4)]
+        [TestCase(1 * Constants.GB, null)]
+        public async Task UploadFileAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
