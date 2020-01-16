@@ -1150,6 +1150,7 @@ namespace Azure.Storage.Blobs.Test
 
         [LiveOnly]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9487")]
         public async Task UploadAsync_LargeFile()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
