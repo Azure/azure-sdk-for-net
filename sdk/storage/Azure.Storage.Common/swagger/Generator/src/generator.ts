@@ -384,6 +384,19 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
         if (operation.request.body) {
             w.line(`// Create the body`);
             const bodyType = operation.request.body.model;
+            const bodyParamName = naming.parameter(operation.request.body.clientName);
+
+            // Guard serialization if the body is optional
+            const optionalBody =
+                // Ignore anything required
+                !operation.request.body.required &&
+                // Ignore sequence types where we want an enclosing XML element for empty content
+                !(operation.consumes === `xml` && isPrimitiveType(bodyType) && bodyType.itemType && isObjectType(bodyType.itemType) && bodyType.itemType.serialize);
+            if (optionalBody) {
+                w.line(`if (${bodyParamName} != null)`);
+                w.pushScope(`{`);
+            }
+
             if (bodyType.type === `string`) {
                 // Temporary Hack: Serialize string content as JSON
                 w.line(`string ${textName} = ${naming.parameter(operation.request.body.clientName)};`)
@@ -410,7 +423,6 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                         w.line(`System.Xml.Linq.XElement ${bodyName} = new System.Xml.Linq.XElement(${xname});`);
 
                         const itemType = bodyType.itemType;
-                        const bodyParamName = naming.parameter(operation.request.body.clientName);
                         w.line(`if (${bodyParamName} != null)`);
                         w.scope(`{`, `}`, () => {
                             w.line(`foreach (${types.getName(itemType)} _child in ${bodyParamName})`);
@@ -435,6 +447,10 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`${requestName}.Content = Azure.Core.RequestContent.Create(System.Text.Encoding.UTF8.GetBytes(${textName}));`);
             } else {
                 throw `Serialization format ${operation.produces} not supported (in ${name})`;
+            }
+            if (optionalBody) {
+                // Finish check for optional body content
+                w.popScope(`}`);
             }
             w.line();
         }
