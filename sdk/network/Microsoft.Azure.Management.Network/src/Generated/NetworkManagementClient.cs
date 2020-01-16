@@ -314,6 +314,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IConnectionMonitorsOperations ConnectionMonitors { get; private set; }
 
         /// <summary>
+        /// Gets the IFlowLogsOperations.
+        /// </summary>
+        public virtual IFlowLogsOperations FlowLogs { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -806,6 +811,7 @@ namespace Microsoft.Azure.Management.Network
             NetworkWatchers = new NetworkWatchersOperations(this);
             PacketCaptures = new PacketCapturesOperations(this);
             ConnectionMonitors = new ConnectionMonitorsOperations(this);
+            FlowLogs = new FlowLogsOperations(this);
             Operations = new Operations(this);
             PrivateEndpoints = new PrivateEndpointsOperations(this);
             AvailablePrivateEndpointTypes = new AvailablePrivateEndpointTypesOperations(this);
@@ -931,7 +937,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1129,7 +1135,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1363,7 +1369,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vpnClientParams");
             }
-            string apiVersion = "2019-09-01";
+            string apiVersion = "2019-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
