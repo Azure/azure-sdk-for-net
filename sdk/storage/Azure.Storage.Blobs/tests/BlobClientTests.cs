@@ -465,34 +465,6 @@ namespace Azure.Storage.Blobs.Test
             await DownloadAndAssertAsync(stream, blob);
         }
 
-        private async Task<Stream> CreateLimitedMemoryStream(long size)
-        {
-            Stream stream;
-            if (size < Constants.MB * 100)
-            {
-                var data = GetRandomBuffer(size);
-                stream = new MemoryStream(data);
-            }
-            else
-            {
-                var path = Path.GetTempFileName();
-                stream = new TemporaryFileStream(path, FileMode.Create);
-                var bufferSize = 4 * Constants.KB;
-
-                while (stream.Position + bufferSize < size)
-                {
-                    await stream.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
-                }
-                if (stream.Position < size)
-                {
-                    await stream.WriteAsync(GetRandomBuffer(size - stream.Position), 0, (int)(size - stream.Position));
-                }
-                // reset the stream
-                stream.Seek(0, SeekOrigin.Begin);
-            }
-            return stream;
-        }
-
         private async Task UploadFileAndVerify(
             long size,
             long singleBlockThreshold,
