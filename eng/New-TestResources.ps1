@@ -73,7 +73,7 @@ function Log($Message) {
 
 function Retry([scriptblock] $Action, [int] $Attempts = 5) {
     $attempt = 0
-    $sleep = 1
+    $sleep = 5
 
     while ($attempt -lt $Attempts) {
         try {
