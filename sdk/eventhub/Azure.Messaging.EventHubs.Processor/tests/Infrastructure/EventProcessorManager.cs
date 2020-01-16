@@ -332,6 +332,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
             public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
 
+            internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
+
             public ShortWaitTimeMock(PartitionManager partitionManager,
                                      string consumerGroup,
                                      string fullyQualifiedNamespace,
@@ -339,6 +341,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                                      Func<EventHubConnection> connectionFactory,
                                      EventProcessorClientOptions clientOptions) : base(partitionManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
             {
+                LoadBalancer.LoadBalanceInterval = ShortLoadBalanceUpdate;
             }
         }
     }

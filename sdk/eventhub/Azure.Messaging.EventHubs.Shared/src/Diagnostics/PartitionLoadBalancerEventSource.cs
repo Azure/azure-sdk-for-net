@@ -7,8 +7,7 @@ using System.Diagnostics.Tracing;
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
-    ///   Serves as an ETW event source for logging of information about
-    ///   Event Processor client.
+    ///   Serves as an ETW event source for logging of information about Partition Load Balancer.
     /// </summary>
     ///
     /// <remarks>
@@ -165,7 +164,8 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(9, Level = EventLevel.Error, Message = "Failed to renew ownership. (Identifier: '{0}'; ErrorMessage: '{0}')")]
-        public virtual void RenewOwnershipError(string identifier, string errorMessage)
+        public virtual void RenewOwnershipError(string identifier,
+                                                string errorMessage)
         {
             if (IsEnabled())
             {

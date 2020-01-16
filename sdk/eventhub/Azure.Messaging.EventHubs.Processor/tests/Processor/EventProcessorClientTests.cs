@@ -1012,8 +1012,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that partitions owned by an <see cref="EventProcessorClient" /> are immediately available to be claimed by another processor
-        ///   after <see cref="StopProcessingAsync" /> is called.
+        ///   Verifies that an <see cref="EventProcessorClient" /> invokes partition load balancing
+        ///   after <see cref="StartProcessingAsync" /> is called.
         /// </summary>
         ///
         [Test]
@@ -1451,7 +1451,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void ToStingReturnsStringContainingProcessorIdentifier()
+        public void ToStringReturnsStringContainingProcessorIdentifier()
         {
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<PartitionManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
             var stringContaingIdentifier = mockProcessor.Object.ToString();
@@ -1470,7 +1470,6 @@ namespace Azure.Messaging.EventHubs.Tests
             Func<EventHubConnection> connectionFactory = () => new MockConnection();
             var connection = connectionFactory();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
-            var loadBalancer = new Mock<PartitionLoadBalancer>();
             var processor1 = new MockEventProcessorClient(
                 partitionManager,
                 connectionFactory: connectionFactory,
@@ -1507,7 +1506,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Start Processor2 so that the it will steal 1 partition from processor1.
 
             await processor2.StartProcessingAsync(cancellationSource.Token);
-            await processor1.WaitStabilization();
+            await processor2.WaitStabilization();
 
             completeOwnership = await partitionManager.ListOwnershipAsync(processor1.FullyQualifiedNamespace, processor1.EventHubName, processor1.ConsumerGroup, cancellationSource.Token);
 

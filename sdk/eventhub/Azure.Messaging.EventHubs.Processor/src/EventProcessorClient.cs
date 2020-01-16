@@ -244,12 +244,6 @@ namespace Azure.Messaging.EventHubs
         internal virtual TimeSpan OwnershipExpiration => TimeSpan.FromSeconds(30);
 
         /// <summary>
-        ///   Interacts with the storage system with responsible for creation of checkpoints and for ownership claim.
-        /// </summary>
-        ///
-        private PartitionManager StorageManager { get; }
-
-        /// <summary>
         ///   The instance of <see cref="EventProcessorEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
@@ -260,6 +254,12 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         internal PartitionLoadBalancer LoadBalancer { get; }
+
+        /// <summary>
+        ///   Responsible for creation of checkpoints and for ownership claim.
+        /// </summary>
+        ///
+        private PartitionManager StorageManager { get; }
 
         /// <summary>
         ///   The set of options to use for consumers responsible for partition processing.
@@ -488,7 +488,7 @@ namespace Azure.Messaging.EventHubs
         ///   Initializes a new instance of the <see cref="EventProcessorClient"/> class.
         /// </summary>
         ///
-        /// <param name="storageManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
@@ -661,7 +661,7 @@ namespace Azure.Messaging.EventHubs
 
                     // Stop the LoadBalancer.
 
-                    await LoadBalancer.RelinquishOwnershipAsync(cancellationToken);
+                    await LoadBalancer.RelinquishOwnershipAsync(cancellationToken).ConfigureAwait(false);
 
                     // We need to wait until all tasks have stopped before making the load balancing task null.  If we did it sooner, we
                     // would have a race condition where the user could update the processing handlers while some pumps are still running.
@@ -920,14 +920,6 @@ namespace Azure.Messaging.EventHubs
             {
                 var cycleDuration = Stopwatch.StartNew();
 
-                // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
-                // the processing tasks we don't need anymore.
-
-                await Task.WhenAll(ActivePartitionProcessors.Keys
-                    .Except(LoadBalancer.OwnedPartitionIds)
-                    .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken)))
-                    .ConfigureAwait(false);
-
                 // Get a complete list of the partition ids present in the Event Hub.  This should be immutable for the time being, but
                 // it may change in the future.
 
@@ -953,7 +945,7 @@ namespace Azure.Messaging.EventHubs
 
                     try
                     {
-                        claimedOwnership = await LoadBalancer.RunLoadBalancingAsync(partitionIds, cancellationToken);
+                        claimedOwnership = await LoadBalancer.RunLoadBalancingAsync(partitionIds, cancellationToken).ConfigureAwait(false);
                     }
                     catch (EventHubsException ex)
                     {
@@ -971,6 +963,29 @@ namespace Azure.Messaging.EventHubs
                         await StartPartitionProcessingAsync(claimedOwnership.PartitionId, cancellationToken).ConfigureAwait(false);
                     }
                 }
+
+                // Some previously owned partitions might have had their ownership expired or might have been stolen, so we need to stop
+                // the processing tasks we don't need anymore.
+
+                await Task.WhenAll(ActivePartitionProcessors.Keys
+                    .Except(LoadBalancer.OwnedPartitionIds)
+                    .Select(partitionId => StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken)))
+                    .ConfigureAwait(false);
+
+                // Now that we are left with processing tasks that should be running, check their status.  If any has stopped, it
+                // means a failure has happened, so try closing it and starting a new one.  In case we don't have a task that should
+                // exist, create it.  This might happen if task creation failed in the last cycle.
+
+                await Task.WhenAll(LoadBalancer.OwnedPartitionIds
+                    .Select(async partitionId =>
+                    {
+                        if (!ActivePartitionProcessors.TryGetValue(partitionId, out var activeTaskAndTokenSource) || activeTaskAndTokenSource.Item1.IsCompleted)
+                        {
+                            await StopPartitionProcessingIfRunningAsync(partitionId, ProcessingStoppedReason.OwnershipLost, cancellationToken).ConfigureAwait(false);
+                            await StartPartitionProcessingAsync(partitionId, cancellationToken).ConfigureAwait(false);
+                        }
+                    }))
+                    .ConfigureAwait(false);
 
                 // Wait the remaining time, if any, to start the next cycle.  The total time of a cycle defaults to 10 seconds,
                 // but it may be overridden by a derived class.

@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private const string ConsumerGroup = "consumerGroup";
 
         /// <summary>
-        ///   Verifies that partitions owned by an <see cref="PartitionLoadBalancer" /> are immediately available to be claimed by another loadbalancer
+        ///   Verifies that partitions owned by a <see cref="PartitionLoadBalancer" /> are immediately available to be claimed by another loadbalancer
         ///   after StopAsync is called.
         /// </summary>
         ///
@@ -58,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // All partitions are owned by loadbalancer1.
 
-            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(loadbalancer1.Identifier)), Is.EqualTo(NumberOfPartitions));
+            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(loadbalancer1.OwnerIdentifier)), Is.EqualTo(NumberOfPartitions));
 
             // Stopping the loadbalancer should relinquish all partition ownership.
 
@@ -68,7 +68,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // No partitions are owned by loadbalancer1.
 
-            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(loadbalancer1.Identifier)), Is.EqualTo(0));
+            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(loadbalancer1.OwnerIdentifier)), Is.EqualTo(0));
 
             // Start loadbalancer2 so that the loadbalancer claims a random partition until none are left.
             // All partitions should be immediately claimable even though they were just claimed by the loadbalancer1.
@@ -82,13 +82,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // All partitions are owned by loadbalancer2.
 
-            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(loadbalancer2.Identifier)), Is.EqualTo(NumberOfPartitions));
-
-            await loadbalancer2.RelinquishOwnershipAsync(tokenSource.Token);
+            Assert.That(completeOwnership.Count(p => p.OwnerIdentifier.Equals(loadbalancer2.OwnerIdentifier)), Is.EqualTo(NumberOfPartitions));
         }
 
         /// <summary>
-        ///   Verifies that claimable partitions are claimed by an <see cref="PartitionLoadBalancer" /> after RunAsync is called.
+        ///   Verifies that claimable partitions are claimed by a <see cref="PartitionLoadBalancer" /> after RunAsync is called.
         /// </summary>
         ///
         [Test]
@@ -115,15 +113,13 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             completeOwnership = await partitionManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
 
-            // All partitions are owned by loadbalancer2.
+            // All partitions are owned by loadbalancer.
 
             Assert.That(completeOwnership.Count(), Is.EqualTo(NumberOfPartitions));
-
-            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
         /// <summary>
-        ///   Verifies that partitions ownership load balancing will direct an <see cref="PartitionLoadBalancer" /> to claim ownership of a claimable partition
+        ///   Verifies that partitions ownership load balancing will direct a <see cref="PartitionLoadBalancer" /> to claim ownership of a claimable partition
         ///   when it owns exactly the calculated MinimumOwnedPartitionsCount.
         /// </summary>
         ///
@@ -141,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Create partitions owned by this loadbalancer.
 
             var loadbalancer1PartitionIds = Enumerable.Range(1, MinimumpartitionCount);
-            var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.Identifier);
+            var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.OwnerIdentifier);
 
             // Create partitions owned by a different loadbalancer.
 
@@ -166,7 +162,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Get owned partitions.
 
             var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
-            var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.Identifier);
+            var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
 
             // Verify owned partitionIds match the owned partitions.
 
@@ -180,18 +176,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Get owned partitions.
 
             totalOwnedPartitions = await partitionManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
-            ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.Identifier);
+            ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
 
             // Verify that we took ownership of the additional partition.
 
             Assert.That(ownedByloadbalancer1.Count(), Is.GreaterThan(MinimumpartitionCount));
             Assert.That(ownedByloadbalancer1.Any(owned => claimablePartitionIds.Contains(owned.PartitionId)), Is.True);
-
-            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
         /// <summary>
-        ///   Verifies that partitions ownership load balancing will direct an <see cref="PartitionLoadBalancer" /> steal ownership of a partition
+        ///   Verifies that partitions ownership load balancing will direct a <see cref="PartitionLoadBalancer" /> steal ownership of a partition
         ///   from another <see cref="PartitionLoadBalancer" /> the other loadbalancer owns greater than the calculated MaximumOwnedPartitionsCount.
         /// </summary>
         ///
@@ -210,7 +204,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Create partitions owned by this loadbalancer.
 
             var loadbalancer1PartitionIds = Enumerable.Range(1, MinimumpartitionCount);
-            var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.Identifier);
+            var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.OwnerIdentifier);
 
             // Create partitions owned by a different loadbalancer.
 
@@ -233,7 +227,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Get owned partitions.
 
             var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
-            var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.Identifier);
+            var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             var ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
             // Verify owned partitionIds match the owned partitions.
@@ -251,7 +245,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Get owned partitions.
 
             totalOwnedPartitions = await partitionManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
-            ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.Identifier);
+            ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
             // Verify that we took ownership of the additional partition.
@@ -261,12 +255,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Verify loadbalancer 3 now does not own > MaximumPartitionCount.
 
             Assert.That(ownedByloadbalancer3.Count(), Is.EqualTo(MaximumpartitionCount));
-
-            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
         /// <summary>
-        ///   Verifies that partitions ownership load balancing will direct an <see cref="PartitionLoadBalancer" /> steal ownership of a partition
+        ///   Verifies that partitions ownership load balancing will direct a <see cref="PartitionLoadBalancer" /> steal ownership of a partition
         ///   from another <see cref="PartitionLoadBalancer" /> the other loadbalancer owns exactly the calculated MaximumOwnedPartitionsCount.
         /// </summary>
         ///
@@ -285,7 +277,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Create more partitions owned by this loadbalancer.
 
             var loadbalancer1PartitionIds = Enumerable.Range(1, MinimumpartitionCount - 1);
-            var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.Identifier);
+            var completeOwnership = CreatePartitionOwnership(loadbalancer1PartitionIds.Select(i => i.ToString()), loadbalancer.OwnerIdentifier);
 
             // Create more partitions owned by a different loadbalancer.
 
@@ -308,7 +300,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Get owned partitions.
 
             var totalOwnedPartitions = await partitionManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
-            var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.Identifier);
+            var ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             var ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
             // Verify owned partitionIds match the owned partitions.
@@ -326,7 +318,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Get owned partitions.
 
             totalOwnedPartitions = await partitionManager.ListOwnershipAsync(loadbalancer.FullyQualifiedNamespace, loadbalancer.EventHubName, loadbalancer.ConsumerGroup);
-            ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.Identifier);
+            ownedByloadbalancer1 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer.OwnerIdentifier);
             ownedByloadbalancer3 = totalOwnedPartitions.Where(p => p.OwnerIdentifier == loadbalancer3Id);
 
             // Verify that we took ownership of the additional partition.
@@ -336,8 +328,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             // Verify loadbalancer 3 now does not own > MaximumPartitionCount.
 
             Assert.That(ownedByloadbalancer3.Count(), Is.LessThan(MaximumpartitionCount));
-
-            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
         }
 
         /// <summary>
@@ -374,13 +364,13 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
 
-            mockLog.Verify(m => m.RenewOwnershipStart(loadbalancer.Identifier));
-            mockLog.Verify(m => m.RenewOwnershipComplete(loadbalancer.Identifier));
+            mockLog.Verify(m => m.RenewOwnershipStart(loadbalancer.OwnerIdentifier));
+            mockLog.Verify(m => m.RenewOwnershipComplete(loadbalancer.OwnerIdentifier));
             mockLog.Verify(m => m.ClaimOwnershipStart(It.Is<string>(p => partitionIds.Contains(p))));
             mockLog.Verify(m => m.MinimumPartitionsPerEventProcessor(MinimumpartitionCount));
-            mockLog.Verify(m => m.CurrentOwnershipCount(MinimumpartitionCount, loadbalancer.Identifier));
-            mockLog.Verify(m => m.StealPartition(loadbalancer.Identifier));
-            mockLog.Verify(m => m.ShouldStealPartition(loadbalancer.Identifier));
+            mockLog.Verify(m => m.CurrentOwnershipCount(MinimumpartitionCount, loadbalancer.OwnerIdentifier));
+            mockLog.Verify(m => m.StealPartition(loadbalancer.OwnerIdentifier));
+            mockLog.Verify(m => m.ShouldStealPartition(loadbalancer.OwnerIdentifier));
             mockLog.Verify(m => m.UnclaimedPartitions(It.Is<HashSet<string>>(p => p.Overlaps(partitionIds))));
         }
 
@@ -394,7 +384,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <returns>A collection of <see cref="PartitionOwnership" />.</returns>
         ///
         private IEnumerable<PartitionOwnership> CreatePartitionOwnership(IEnumerable<string> partitionIds,
-                                                                          string identifier)
+                                                                         string identifier)
         {
             return partitionIds
                 .Select(partitionId =>
