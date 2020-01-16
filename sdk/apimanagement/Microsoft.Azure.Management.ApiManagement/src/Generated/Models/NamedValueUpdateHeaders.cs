@@ -14,28 +14,26 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CreateOrUpdate operation.
+    /// Defines headers for Update operation.
     /// </summary>
-    public partial class PropertyCreateOrUpdateHeaders
+    public partial class NamedValueUpdateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyCreateOrUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the NamedValueUpdateHeaders class.
         /// </summary>
-        public PropertyCreateOrUpdateHeaders()
+        public NamedValueUpdateHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyCreateOrUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the NamedValueUpdateHeaders class.
         /// </summary>
-        /// <param name="eTag">Current entity state version. Should be treated
-        /// as opaque and used to make conditional HTTP requests.</param>
-        public PropertyCreateOrUpdateHeaders(string eTag = default(string))
+        /// <param name="location">The URL where the status of the long running
+        /// operation can be checked.</param>
+        public NamedValueUpdateHeaders(string location = default(string))
         {
-            ETag = eTag;
+            Location = location;
             CustomInit();
         }
 
@@ -45,11 +43,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets current entity state version. Should be treated as
-        /// opaque and used to make conditional HTTP requests.
+        /// Gets or sets the URL where the status of the long running operation
+        /// can be checked.
         /// </summary>
-        [JsonProperty(PropertyName = "ETag")]
-        public string ETag { get; set; }
+        [JsonProperty(PropertyName = "Location")]
+        public string Location { get; set; }
 
     }
 }

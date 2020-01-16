@@ -14,29 +14,28 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CreateOrUpdate operation.
+    /// Defines headers for GetEntityTag operation.
     /// </summary>
-    public partial class ApiCreateOrUpdateHeaders
+    public partial class NamedValueGetEntityTagHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the ApiCreateOrUpdateHeaders class.
+        /// Initializes a new instance of the NamedValueGetEntityTagHeaders
+        /// class.
         /// </summary>
-        public ApiCreateOrUpdateHeaders()
+        public NamedValueGetEntityTagHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiCreateOrUpdateHeaders class.
+        /// Initializes a new instance of the NamedValueGetEntityTagHeaders
+        /// class.
         /// </summary>
         /// <param name="eTag">Current entity state version. Should be treated
         /// as opaque and used to make conditional HTTP requests.</param>
-        /// <param name="location">The URL where the status of the long running
-        /// operation can be checked.</param>
-        public ApiCreateOrUpdateHeaders(string eTag = default(string), string location = default(string))
+        public NamedValueGetEntityTagHeaders(string eTag = default(string))
         {
             ETag = eTag;
-            Location = location;
             CustomInit();
         }
 
@@ -51,13 +50,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "ETag")]
         public string ETag { get; set; }
-
-        /// <summary>
-        /// Gets or sets the URL where the status of the long running operation
-        /// can be checked.
-        /// </summary>
-        [JsonProperty(PropertyName = "Location")]
-        public string Location { get; set; }
 
     }
 }

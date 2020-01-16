@@ -20,12 +20,13 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PropertyOperations operations.
+    /// NamedValueOperations operations.
     /// </summary>
-    public partial interface IPropertyOperations
+    public partial interface INamedValueOperations
     {
         /// <summary>
-        /// Lists a collection of properties defined within a service instance.
+        /// Lists a collection of NamedValues defined within a service
+        /// instance.
         /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -52,9 +53,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PropertyContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<PropertyContract> odataQuery = default(ODataQuery<PropertyContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NamedValueContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the entity state (Etag) version of the property specified by
+        /// Gets the entity state (Etag) version of the NamedValue specified by
         /// its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -63,8 +64,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='propId'>
-        /// Identifier of the property.
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,9 +79,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<PropertyGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string propId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<NamedValueGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the details of the property specified by its identifier.
+        /// Gets the details of the NamedValue specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -88,8 +89,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='propId'>
-        /// Identifier of the property.
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,9 +107,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PropertyContract,PropertyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string propId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamedValueContract,NamedValueGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a property.
+        /// Creates or updates a NamedValue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -116,8 +117,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='propId'>
-        /// Identifier of the property.
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='parameters'>
         /// Create parameters.
@@ -141,9 +142,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PropertyContract,PropertyCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string propId, PropertyContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamedValueContract,NamedValueCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the specific property.
+        /// Updates the specific NamedValue.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -151,8 +152,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='propId'>
-        /// Identifier of the property.
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='parameters'>
         /// Update parameters.
@@ -174,9 +175,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string propId, PropertyUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<NamedValueUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes specific property from the API Management service instance.
+        /// Deletes specific NamedValue from the API Management service
+        /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -184,8 +186,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='propId'>
-        /// Identifier of the property.
+        /// <param name='namedValueId'>
+        /// Identifier of the NamedValue.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. ETag should match the current entity state from
@@ -204,9 +206,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string propId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string namedValueId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists a collection of properties defined within a service instance.
+        /// Lists a collection of NamedValues defined within a service
+        /// instance.
         /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
         /// </summary>
         /// <param name='nextPageLink'>
@@ -227,6 +230,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PropertyContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<NamedValueContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
