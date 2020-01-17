@@ -29,9 +29,34 @@ namespace Azure.AI.TextAnalytics.Tests
             StringAssert.Contains("TestTarget", exception.Message);
         }
 
-        //[Test]
-        //public async Task DeserializeTextAnalyticsError()
-        //{
-        //}
+        [Test]
+        public void DeserializeTextAnalyticsError()
+        {
+            var errors = @"
+                {
+                ""errors"": [
+                    {
+                      ""id"": ""2"",
+                      ""error"": {
+                        ""code"": ""InvalidArgument"",
+                        ""innerError"": {
+                            ""code"": ""InvalidDocument"",
+                            ""message"": ""Document text is empty.""
+                            },
+                        ""message"": ""Invalid document in request.""
+                        }
+                    }
+                ]
+                }
+                ";
+
+            using JsonDocument json = JsonDocument.Parse(errors);
+            TextAnalyticsResult result = TextAnalyticsServiceSerializer.ReadDocumentErrors(json.RootElement).FirstOrDefault();
+
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Error);
+            Assert.AreEqual(result.Error.ErrorCode, "InvalidDocument");
+            Assert.AreEqual(result.Error.Message, "Document text is empty.");
+        }
     }
 }

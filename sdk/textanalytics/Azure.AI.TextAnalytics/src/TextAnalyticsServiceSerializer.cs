@@ -89,7 +89,7 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        private static IEnumerable<TextAnalyticsResult> ReadDocumentErrors(JsonElement documentElement)
+        internal static IEnumerable<TextAnalyticsResult> ReadDocumentErrors(JsonElement documentElement)
         {
             List<TextAnalyticsResult> errors = new List<TextAnalyticsResult>();
 
@@ -139,7 +139,7 @@ namespace Azure.AI.TextAnalytics
                     target = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("innererror"))
+                if (property.NameEquals("innerError"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
