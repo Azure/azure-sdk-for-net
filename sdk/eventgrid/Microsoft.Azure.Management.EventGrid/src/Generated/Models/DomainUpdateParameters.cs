@@ -32,9 +32,17 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// Initializes a new instance of the DomainUpdateParameters class.
         /// </summary>
         /// <param name="tags">Tags of the domains resource</param>
-        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="allowTrafficFromAllIPs">This determines if IP
+        /// filtering rules ought to be evaluated or not. By default it will
+        /// not evaluate and will allow traffic from all IPs.</param>
+        /// <param name="inboundIpRules">This determines the IP filtering rules
+        /// that ought be applied when events are received on this
+        /// domain.</param>
+        public DomainUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), bool? allowTrafficFromAllIPs = default(bool?), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
         {
             Tags = tags;
+            AllowTrafficFromAllIPs = allowTrafficFromAllIPs;
+            InboundIpRules = inboundIpRules;
             CustomInit();
         }
 
@@ -48,6 +56,21 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if IP filtering rules ought to be
+        /// evaluated or not. By default it will not evaluate and will allow
+        /// traffic from all IPs.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowTrafficFromAllIPs")]
+        public bool? AllowTrafficFromAllIPs { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines the IP filtering rules that ought be
+        /// applied when events are received on this domain.
+        /// </summary>
+        [JsonProperty(PropertyName = "inboundIpRules")]
+        public IList<InboundIpRule> InboundIpRules { get; set; }
 
     }
 }

@@ -157,16 +157,19 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Contains(replaceTopicResponse.Tags, tag => tag.Key == "replacedTag1");
                 Assert.DoesNotContain(replaceTopicResponse.Tags, tag => tag.Key == "originalTag1");
 
-                // Update the topic
-                var updateTopicTagsDictionary = new Dictionary<string, string>()
+                // Update the topic with tags & allow traffic from all ips
+                TopicUpdateParameters topicUpdateParameters = new TopicUpdateParameters();
+                topicUpdateParameters.Tags = new Dictionary<string, string>()
                 {
                     { "updatedTag1", "updatedValue1" },
                     { "updatedTag2", "updatedValue2" }
                 };
-
-                var updateTopicResponse = this.EventGridManagementClient.Topics.UpdateAsync(resourceGroup, topicName, updateTopicTagsDictionary).Result;
+                topic.AllowTrafficFromAllIPs = true;
+                var updateTopicResponse = this.EventGridManagementClient.Topics.UpdateAsync(resourceGroup, topicName, topicUpdateParameters).Result;
                 Assert.Contains(updateTopicResponse.Tags, tag => tag.Key == "updatedTag1");
                 Assert.DoesNotContain(updateTopicResponse.Tags, tag => tag.Key == "replacedTag1");
+                Assert.True(updateTopicResponse.AllowTrafficFromAllIPs);
+                Assert.Null(updateTopicResponse.InboundIpRules);
 
                 // Update the Topic with IP filtering feature
                 topic.AllowTrafficFromAllIPs = false;
