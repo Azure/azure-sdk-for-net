@@ -111,10 +111,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public InputSchemaMapping InputSchemaMapping { get; set; }
 
         /// <summary>
-        /// Gets or sets metric resource id for the topic.
+        /// Gets metric resource id for the topic.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricResourceId")]
-        public string MetricResourceId { get; set; }
+        public string MetricResourceId { get; private set; }
 
         /// <summary>
         /// Gets or sets this determines if IP filtering rules ought to be
