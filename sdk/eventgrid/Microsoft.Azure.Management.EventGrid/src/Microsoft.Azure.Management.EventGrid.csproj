@@ -9,7 +9,7 @@
     <Version>5.2.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.EventGrid</AssemblyName>
     <PackageTags>Microsoft Azure EventGrid Management;Event Grid;Event Grid management;</PackageTags>
-    <PackageReleaseNotes>This corresponds to the 2020-04-01-Preview API version which includes the following new functionality: Feature that supports IpFiltering when publishing events to Domains & Topics. "</PackageReleaseNotes>
+    <PackageReleaseNotes>This corresponds to the 2020-04-01-Preview API version which includes the following new functionality: Support for IP Filtering when publishing events to Domains & Topics.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
