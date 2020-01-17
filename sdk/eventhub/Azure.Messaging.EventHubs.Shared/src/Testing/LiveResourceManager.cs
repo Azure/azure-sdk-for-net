@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Tests
     public sealed class LiveResourceManager
     {
         /// <summary>The maximum number of attempts to retry a management operation.</summary>
-        private const int RetryMaximumAttemps = 15;
+        private const int RetryMaximumAttempts  = 20;
 
         /// <summary>The number of seconds to use as the basis for backing off on retry attempts.</summary>
         private const double RetryExponentialBackoffSeconds = 3.0;
@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
-        public IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttemps,
+        public IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttempts,
                                                     double exponentialBackoffSeconds = RetryExponentialBackoffSeconds,
                                                     double baseJitterSeconds = RetryBaseJitterSeconds) =>
            Policy<T>
@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The retry policy in which to execute the management operation.</returns>
         ///
-        public IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttemps,
+        public IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttempts,
                                               double exponentialBackoffSeconds = RetryExponentialBackoffSeconds,
                                               double baseJitterSeconds = RetryBaseJitterSeconds) =>
             Policy
