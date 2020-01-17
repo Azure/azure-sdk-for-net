@@ -348,6 +348,25 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task RenameAsync_FileSystem()
+        {
+            await using DisposingFileSystem sourceTest = await GetNewFileSystem();
+            await using DisposingFileSystem destTest = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeDirectoryClient sourceDirectory = await sourceTest.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+            string destDirectoryName = GetNewDirectoryName();
+
+            // Act
+            DataLakeDirectoryClient destDirectory = await sourceDirectory.RenameAsync(
+                destinationPath: destDirectoryName,
+                destinationFileSystem: destTest.FileSystem.Name);
+
+            // Assert
+            Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
+        }
+
+        [Test]
         public async Task RenameAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
