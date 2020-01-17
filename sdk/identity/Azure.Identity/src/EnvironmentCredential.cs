@@ -72,6 +72,11 @@ namespace Azure.Identity
                 }
             }
 
+            if (_credential is null && sdkAuthLocation != null)
+            {
+                _credential = new AuthFileCredential(sdkAuthLocation);
+            }
+
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
