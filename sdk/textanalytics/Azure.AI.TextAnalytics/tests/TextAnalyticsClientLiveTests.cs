@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -13,21 +12,233 @@ namespace Azure.AI.TextAnalytics.Tests
 {
     public class TextAnalyticsClientLiveTests : RecordedTestBase
     {
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
+        public const string EndpointEnvironmentVariable = "TEXT_ANALYTICS_ENDPOINT";
+        public const string SubscriptionKeyEnvironmentVariable = "TEXT_ANALYTICS_SUBSCRIPTION_KEY";
+
+        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
             Matcher = new RecordMatcher(Sanitizer);
         }
 
-        private TextAnalyticsClient GetClient()
+        public TextAnalyticsClient GetClient()
         {
-            string endpoint = Recording.GetVariableFromEnvironment("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Recording.GetVariableFromEnvironment("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string subscriptionKey = Recording.GetVariableFromEnvironment(SubscriptionKeyEnvironmentVariable);
 
-            var options = Recording.InstrumentClientOptions(new TextAnalyticsClientOptions());
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey), options);
+            return InstrumentClient
+                (new TextAnalyticsClient(
+                    new Uri(Recording.GetVariableFromEnvironment(EndpointEnvironmentVariable)),
+                    new TextAnalyticsSubscriptionKeyCredential(subscriptionKey),
+                    Recording.InstrumentClientOptions(new TextAnalyticsClientOptions())));
+        }
 
-            return InstrumentClient(client);
+        [Test]
+        public async Task DetectLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "This is written in English.";
+
+            DetectLanguageResult result = await client.DetectLanguageAsync(input);
+            DetectedLanguage language = result.PrimaryLanguage;
+
+            Assert.AreEqual("English", language.Name);
+            Assert.AreEqual("en", language.Iso6391Name);
+            Assert.AreEqual(1.0, language.Score);
+        }
+
+        [Test]
+        public async Task DetectLanguageWithCountryHintTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Este documento está en español";
+
+            DetectLanguageResult result = await client.DetectLanguageAsync(input, "CO");
+            DetectedLanguage language = result.PrimaryLanguage;
+
+            Assert.AreEqual("Spanish", language.Name);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "That was the best day of my life!";
+
+            AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input);
+            TextSentiment sentiment = result.DocumentSentiment;
+
+            Assert.AreEqual("Positive", sentiment.SentimentClass.ToString());
+            Assert.IsNotNull(sentiment.PositiveScore);
+            Assert.IsNotNull(sentiment.NeutralScore);
+            Assert.IsNotNull(sentiment.NegativeScore);
+            Assert.IsNotNull(sentiment.Offset);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentWithLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "El mejor test del mundo!";
+
+            AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input, "es");
+            TextSentiment sentiment = result.DocumentSentiment;
+
+            Assert.AreEqual("Positive", sentiment.SentimentClass.ToString());
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "My cat might need to see a veterinarian.";
+
+            ExtractKeyPhrasesResult result = await client.ExtractKeyPhrasesAsync(input);
+            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+
+            Assert.AreEqual(2, keyPhrases.Count);
+            Assert.IsTrue(keyPhrases.Contains("cat"));
+            Assert.IsTrue(keyPhrases.Contains("veterinarian"));
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesWithLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Mi perro está en el veterinario";
+
+            ExtractKeyPhrasesResult result = await client.ExtractKeyPhrasesAsync(input, "es");
+            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+
+            Assert.AreEqual(2, keyPhrases.Count);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+
+            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+
+            Assert.AreEqual(3, entities.Count);
+
+            var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
+            foreach (NamedEntity entity in entities)
+            {
+                Assert.IsTrue(entitiesList.Contains(entity.Text));
+                Assert.IsNotNull(entity.Type);
+                Assert.IsNotNull(entity.Score);
+                Assert.IsNotNull(entity.Offset);
+                Assert.IsNotNull(entity.Length);
+                Assert.Greater(entity.Length, 0);
+            }
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesWithLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Microsoft fue fundado por Bill Gates y Paul Allen.";
+
+            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input, "es");
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+
+            Assert.AreEqual(3, entities.Count);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesWithSubtypeTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "I had a wonderful trip to Seattle last week.";
+
+            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+
+            Assert.AreEqual(2, entities.Count);
+
+            foreach (NamedEntity entity in entities)
+            {
+                if (entity.Text == "last week")
+                    Assert.IsNotNull(entity.SubType);
+            }
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "A developer with SSN 555-55-5555 whose phone number is 222-222-2222 is building tools with our APIs.";
+
+            RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input);
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+
+            Assert.AreEqual(2, entities.Count);
+
+            var entitiesList = new List<string> { "555-55-5555", " 222-222-2222 " };
+            foreach (NamedEntity entity in entities)
+            {
+                Assert.IsTrue(entitiesList.Contains(entity.Text));
+                Assert.IsNotNull(entity.Type);
+                Assert.IsNotNull(entity.Score);
+                Assert.IsNotNull(entity.Offset);
+                Assert.IsNotNull(entity.Length);
+                Assert.Greater(entity.Length, 0);
+            }
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesWithLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "A developer with SSN 555-55-5555 whose phone number is 222-222-2222 is building tools with our APIs.";
+
+            RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input, "en");
+            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+
+            Assert.AreEqual(2, entities.Count);
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Microsoft was founded by Bill Gates and Paul Allen.";
+
+            RecognizeLinkedEntitiesResult result = await client.RecognizeLinkedEntitiesAsync(input);
+
+            Assert.IsNotNull(result.Id);
+            Assert.AreEqual(3, result.LinkedEntities.Count);
+            Assert.IsNotNull(result.Statistics.CharacterCount);
+            Assert.IsNotNull(result.Statistics.TransactionCount);
+
+            var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
+            foreach (LinkedEntity entity in result.LinkedEntities)
+            {
+                Assert.IsTrue(entitiesList.Contains(entity.Name));
+                Assert.IsNotNull(entity.DataSource);
+                Assert.IsNotNull(entity.Id);
+                Assert.IsNotNull(entity.Language);
+                Assert.IsNotNull(entity.Uri);
+                Assert.IsNotNull(entity.Matches);
+                Assert.IsNotNull(entity.Matches.First().Length);
+                Assert.IsNotNull(entity.Matches.First().Offset);
+                Assert.IsNotNull(entity.Matches.First().Score);
+                Assert.IsNotNull(entity.Matches.First().Text);
+            }
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesWithLanguageTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Microsoft fue fundado por Bill Gates y Paul Allen.";
+
+            RecognizeLinkedEntitiesResult result = await client.RecognizeLinkedEntitiesAsync(input, "es");
+
+            Assert.IsNotNull(result.Id);
+            Assert.AreEqual(3, result.LinkedEntities.Count);
         }
 
         [Test]
@@ -85,6 +296,17 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(NamedEntityType.Quantity, entities[14].Type);
             Assert.AreEqual(NamedEntitySubType.Temperature, entities[14].SubType);
+        }
+
+        private bool compareTextDocumentInput(TextDocumentInput tdi1, TextDocumentInput tdi2)
+        {
+            if (!tdi1.Id.Equals(tdi2.Id))
+                return false;
+            if (!tdi1.Language.Equals(tdi2.Language))
+                return false;
+            if (!tdi1.Text.Equals(tdi2.Text))
+                return false;
+            return true;
         }
     }
 }

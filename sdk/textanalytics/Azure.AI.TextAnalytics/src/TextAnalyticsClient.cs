@@ -388,7 +388,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -446,7 +446,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -504,7 +504,7 @@ namespace Azure.AI.TextAnalytics
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -533,7 +533,7 @@ namespace Azure.AI.TextAnalytics
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -662,7 +662,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing sentiment predictions for the input text
@@ -717,7 +717,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing sentiment predictions for the input text
@@ -772,7 +772,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing sentiment predictions for each of the input strings
@@ -798,7 +798,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing sentiment predictions for each of the input strings
@@ -919,7 +919,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
@@ -973,7 +973,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
@@ -1027,7 +1027,7 @@ namespace Azure.AI.TextAnalytics
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
@@ -1052,7 +1052,7 @@ namespace Azure.AI.TextAnalytics
         /// written in. If unspecified, this value will be set to the default
         /// language in <see cref="TextAnalyticsClientOptions"/> in the request
         /// sent to the service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of key phrases identified
@@ -1173,7 +1173,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -1230,7 +1230,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -1287,7 +1287,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -1315,7 +1315,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -1442,7 +1442,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of linked entities identified
@@ -1498,7 +1498,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of linked entities identified
@@ -1554,7 +1554,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -1581,7 +1581,7 @@ namespace Azure.AI.TextAnalytics
         /// If unspecified, this value will be set to the default language in
         /// <see cref="TextAnalyticsClientOptions"/> in the request sent to the
         /// service.  If set to an empty string, the service will apply a model
-        /// where the lanuage is explicitly set to "None".</param>
+        /// where the language is explicitly set to "None".</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the collection of entities identified
@@ -1714,7 +1714,7 @@ namespace Azure.AI.TextAnalytics
             return map;
         }
 
-        private TextDocumentInput ConvertToDocumentInput(string input, string language, int id = 0)
+        internal virtual TextDocumentInput ConvertToDocumentInput(string input, string language, int id = 0)
             => new TextDocumentInput($"{id}", input) { Language = language ?? _options.DefaultLanguage };
 
         private List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> inputs, string language)
