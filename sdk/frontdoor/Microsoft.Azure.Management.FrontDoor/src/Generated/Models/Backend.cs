@@ -32,6 +32,11 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         /// <param name="address">Location of the backend (IP address or
         /// FQDN)</param>
+        /// <param name="privateLinkId">If this backend is private, provide the
+        /// private link resource Id. Populating this optional field indicates
+        /// that this backend is 'Private'</param>
+        /// <param name="location">Region of the backend if it is in Azure.
+        /// Mandatory field if backend is 'Private'</param>
         /// <param name="httpPort">The HTTP TCP port number. Must be between 1
         /// and 65535.</param>
         /// <param name="httpsPort">The HTTPS TCP port number. Must be between
@@ -47,9 +52,11 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="backendHostHeader">The value to use as the host header
         /// sent to the backend. If blank or unspecified, this defaults to the
         /// incoming host.</param>
-        public Backend(string address = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string enabledState = default(string), int? priority = default(int?), int? weight = default(int?), string backendHostHeader = default(string))
+        public Backend(string address = default(string), string privateLinkId = default(string), string location = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string enabledState = default(string), int? priority = default(int?), int? weight = default(int?), string backendHostHeader = default(string))
         {
             Address = address;
+            PrivateLinkId = privateLinkId;
+            Location = location;
             HttpPort = httpPort;
             HttpsPort = httpsPort;
             EnabledState = enabledState;
@@ -69,6 +76,21 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "address")]
         public string Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets if this backend is private, provide the private link
+        /// resource Id. Populating this optional field indicates that this
+        /// backend is 'Private'
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkId")]
+        public string PrivateLinkId { get; set; }
+
+        /// <summary>
+        /// Gets or sets region of the backend if it is in Azure. Mandatory
+        /// field if backend is 'Private'
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP TCP port number. Must be between 1 and 65535.
