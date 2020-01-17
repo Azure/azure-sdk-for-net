@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Tests
             var exception = await mockResponse.CreateRequestFailedExceptionAsync(error);
 
             Assert.AreEqual("TestErrorCode", exception.ErrorCode);
-            Assert.AreEqual("TestMessage", exception.Message);
+            StringAssert.Contains("TestMessage", exception.Message);
             StringAssert.Contains("TestTarget", exception.Message);
         }
 
