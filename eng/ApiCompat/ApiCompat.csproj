@@ -26,7 +26,7 @@
             <ReferencePath Remove="$(TargetPackageDll)" />
         </ItemGroup>
 
-        <Message Text="Checking API Compat against $(TargetPackageDll)" Importance="High" />
+        <Message Text="Checking API Compat against $(TargetPackageDll) using assemblies from $(TargetOutputPath)" Importance="High" />
     </Target>
 
 </Project>
