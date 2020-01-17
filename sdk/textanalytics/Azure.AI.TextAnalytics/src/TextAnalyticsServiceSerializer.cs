@@ -4,6 +4,7 @@
 using Azure.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -112,17 +113,16 @@ namespace Azure.AI.TextAnalytics
 
         private static TextAnalyticsError ReadTextAnalyticsError(JsonElement element)
         {
-            TextAnalyticsErrorCode code = default;
+            string errorCode = default;
             string message = default;
             string target = default;
             TextAnalyticsError innerError = default;
-            List<TextAnalyticsError> details = default;
 
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
                 {
-                    code = new TextAnalyticsErrorCode(property.Value.GetString());
+                    errorCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -148,22 +148,13 @@ namespace Azure.AI.TextAnalytics
                     innerError = ReadTextAnalyticsError(property.Value);
                     continue;
                 }
-                if (property.NameEquals("details"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    details = new List<TextAnalyticsError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        details.Add(ReadTextAnalyticsError(item));
-                    }
-                    continue;
-                }
+
+                // Assumption is details isn't used in TextAnalytics
+                Debug.Assert(!property.NameEquals("details"));
             }
 
-            return new TextAnalyticsError(code, message, target, innerError, details);
+            // Return the innermost error, which should be only one level down.
+            return innerError.ErrorCode == default ? new TextAnalyticsError(errorCode, message, target) : innerError;
         }
 
         private static string ReadModelVersion(JsonElement documentElement)

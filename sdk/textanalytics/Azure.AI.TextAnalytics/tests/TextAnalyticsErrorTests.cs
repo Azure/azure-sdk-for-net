@@ -3,6 +3,7 @@
 
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,71 +13,24 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    public class TextAnalyticsErrorTests
+    public class TextAnalyticsErrorTests : SyncAsyncPolicyTestBase
     {
-        // TODO: use async?
+        public TextAnalyticsErrorTests(bool isAsync) : base(isAsync) { }
 
-        //public TextAnalyticsErrorTests()
-        //{
-        //}
+        [Test]
+        public async Task ConvertTextAnalyticsErrorToException()
+        {
+            var mockResponse = new MockResponse(200);
+            TextAnalyticsError error = new TextAnalyticsError("TestErrorCode", "TestMessage", "TestTarget");
+            var exception = await mockResponse.CreateRequestFailedExceptionAsync(error);
 
-        //[Test]
-        //public async Task ConvertTextAnalyticsErrorToException()
-        //{
-        //    using JsonDocument json = await JsonDocument.Parse();
-        //    JsonElement root = json.RootElement;
-
-        //    var mockResponse = new MockResponse(200);
-
-        //    var mockResults = new List<RecognizeEntitiesResult>()
-        //    {
-        //        new RecognizeEntitiesResult("1", new TextDocumentStatistics(), new List<NamedEntity>()
-        //        {
-        //            new NamedEntity("EntityText0", "EntityType0", "EntitySubType0", 0, 1, 0.5),
-        //            new NamedEntity("EntityText1", "EntityType1", "EntitySubType1", 0, 1, 0.5),
-        //        }),
-        //        new RecognizeEntitiesResult("2", new TextDocumentStatistics(), new List<NamedEntity>()
-        //        {
-        //            new NamedEntity("EntityText0", "EntityType0", "EntitySubType0", 0, 1, 0.5),
-        //            new NamedEntity("EntityText1", "EntityType1", "EntitySubType1", 0, 1, 0.5),
-        //        }),
-        //    };
-        //    var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
-        //        new TextDocumentBatchStatistics(2, 2, 0, 2),
-        //        "modelVersion");
-
-        //    var mockResponse = new MockResponse(200);
-        //    mockResponse.SetContent(SerializationHelpers.Serialize(mockResultCollection, SerializeRecognizeEntitiesResultCollection));
-
-        //    var mockTransport = new MockTransport(mockResponse);
-        //    TextAnalyticsClient client = CreateTestClient(mockTransport);
-
-        //    var inputs = new List<TextDocumentInput>()
-        //    {
-        //        new TextDocumentInput("1", "TextDocument1"),
-        //        new TextDocumentInput("2", "TextDocument2"),
-        //    };
-
-        //    var response = await client.RecognizeEntitiesAsync(inputs, new TextAnalyticsRequestOptions());
-        //    var resultCollection = response.Value;
-
-        //    Assert.AreEqual("1", resultCollection[0].Id);
-        //    Assert.AreEqual("2", resultCollection[1].Id);
-        //}
+            Assert.AreEqual("TestErrorCode", exception.ErrorCode);
+            Assert.AreEqual("TestMessage", exception.Message);
+            StringAssert.Contains("TestTarget", exception.Message);
+        }
 
         //[Test]
-        //public async Task ConvertTextAnalyticsErrorToException_Inner()
-        //{
-        //}
-
-        //[Test]
-        //public async Task ConvertTextAnalyticsErrorToException_InnerAndDetails()
-        //{
-        //}
-
-
-        //[Test]
-        //public async Task ConvertTextAnalyticsErrorToException_TwoInners()
+        //public async Task DeserializeTextAnalyticsError()
         //{
         //}
     }

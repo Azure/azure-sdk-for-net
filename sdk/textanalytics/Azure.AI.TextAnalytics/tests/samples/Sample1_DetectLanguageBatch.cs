@@ -54,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
 
-                if (result.Error != default)
+                if (result.Error.ErrorCode != default)
                 {
                     Debug.WriteLine($"    Document error: {result.Error}.");
                 }
