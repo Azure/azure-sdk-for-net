@@ -4,6 +4,7 @@ resources:
       type: github
       name: azure/azure-sdk-tools
       endpoint: azure
+      ref: refs/pull/337/merge
 
 jobs:
   - job: GenerateDocIndex
