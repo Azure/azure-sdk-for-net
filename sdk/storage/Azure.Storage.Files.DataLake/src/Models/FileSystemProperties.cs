@@ -12,47 +12,52 @@ namespace Azure.Storage.Files.DataLake.Models
     public class FileSystemProperties
     {
         /// <summary>
-        /// Last-Modified
+        /// Returns the <see cref="DateTimeOffset"/> the file system was last modified. Any operation that modifies the
+        /// file system, including an update of the file systems's metadata or properties, changes the last-modified
+        /// time of the file system.
         /// </summary>
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
-        /// LeaseStatus
+        /// <see cref="LeaseStatus"/> of the file system.
         /// </summary>
         public LeaseStatus? LeaseStatus { get; internal set; }
 
         /// <summary>
-        /// LeaseState
+        /// <see cref="LeaseState"/> of the file system.
         /// </summary>
         public LeaseState? LeaseState { get; internal set; }
 
         /// <summary>
-        /// LeaseDuration
+        /// <see cref="LeaseDurationType"/> of the file system.
         /// </summary>
         public LeaseDurationType? LeaseDuration { get; internal set; }
 
         /// <summary>
-        /// PublicAccess
+        /// <see cref="PublicAccessType"/> of the file system.
         /// </summary>
         public PublicAccessType? PublicAccess { get; internal set; }
 
         /// <summary>
-        /// HasImmutabilityPolicy
+        /// Version 2017-11-09 and newer. Indicates whether the file system has an immutability policy set on it.
+        /// Value is true if there is a policy set, false otherwise.
         /// </summary>
         public bool? HasImmutabilityPolicy { get; internal set; }
 
         /// <summary>
-        /// HasLegalHold
+        /// Version 2017-11-09 and newer. Indicates whether the file system has a legal hold.
+        /// Value is true if there is one or more legal hold(s), false otherwise.
         /// </summary>
         public bool? HasLegalHold { get; internal set; }
 
         /// <summary>
-        /// ETag
+        /// The ETag contains a value that you can use to perform operations conditionally on the file system.
+        /// If the request service version is 2011-08-18 or newer, the ETag value will be in quotes.
         /// </summary>
         public ETag ETag { get; internal set; }
 
         /// <summary>
-        /// Metadata
+        /// The file systems's metadata.
         /// </summary>
         public IDictionary<string, string> Metadata { get; internal set; }
 

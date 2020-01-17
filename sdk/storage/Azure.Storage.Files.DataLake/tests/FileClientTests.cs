@@ -1437,6 +1437,28 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task AppendDataAsync_NullStream_Error()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    file.AppendAsync(
+                        content: stream,
+                        offset: 0),
+                    e => Assert.AreEqual("body", e.ParamName));
+            }
+        }
+
+
+        [Test]
         public async Task FlushDataAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

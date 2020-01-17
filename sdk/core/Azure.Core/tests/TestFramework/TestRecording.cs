@@ -3,10 +3,12 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.Tests.TestFramework;
 
 namespace Azure.Core.Testing
 {
@@ -59,9 +61,9 @@ namespace Azure.Core.Testing
 
         private RecordSession _previousSession;
 
-        private Random _random;
+        private TestRandom _random;
 
-        public Random Random
+        public TestRandom Random
         {
             get
             {
@@ -70,7 +72,10 @@ namespace Azure.Core.Testing
                     switch (Mode)
                     {
                         case RecordedTestMode.Live:
-                            _random = new Random();
+                            var csp = new RNGCryptoServiceProvider();
+                            var bytes = new byte[4];
+                            csp.GetBytes(bytes);
+                            _random = new TestRandom(Mode, BitConverter.ToInt32(bytes, 0));
                             break;
                         case RecordedTestMode.Record:
                             // Try get the seed from existing session
@@ -79,14 +84,14 @@ namespace Azure.Core.Testing
                                   int.TryParse(seedString, out int seed)
                                 ))
                             {
-                                _random = new Random();
+                                _random = new TestRandom(Mode);
                                 seed = _random.Next();
                             }
                             _session.Variables[RandomSeedVariableKey] = seed.ToString();
-                            _random = new Random(seed);
+                            _random = new TestRandom(Mode, seed);
                             break;
                         case RecordedTestMode.Playback:
-                            _random = new Random(int.Parse(_session.Variables[RandomSeedVariableKey]));
+                            _random = new TestRandom(Mode, int.Parse(_session.Variables[RandomSeedVariableKey]));
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -203,9 +208,7 @@ namespace Azure.Core.Testing
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    ConnectionString s = ConnectionString.Parse(environmentVariableValue);
-                    _sanitizer.SanitizeConnectionString(s);
-                    _session.Variables[variableName] = s.ToString();
+                    _session.Variables[variableName] = _sanitizer.SanitizeConnectionString(environmentVariableValue);
                     return environmentVariableValue;
                 case RecordedTestMode.Live:
                     return environmentVariableValue;

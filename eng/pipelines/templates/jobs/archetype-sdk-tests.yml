@@ -1,16 +1,17 @@
 parameters:
   PreSteps: []
+  PostSteps: []
   EnvVars: {}
   MaxParallel: 0
+  BuildInParallel: true
+  TimeoutInMinutes: 60
 
 jobs:
   - job: "Test"
     variables:
       - template: ../variables/globals.yml
 
-    # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 35m, on average due to having two target platforms)
-    # https://github.com/Azure/azure-sdk-for-net/issues/5982
-    timeoutInMinutes: 175
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
     strategy:
       maxParallel: ${{ parameters.MaxParallel }}
@@ -53,7 +54,28 @@ jobs:
           packageType: sdk
           version: "$(DotNetCoreSDKVersion)"
 
-      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false
+      # TODO: Remove when eng/New-TestResources.ps1 bootstraps the Az module (https://github.com/Azure/azure-sdk-for-net/issues/9130).
+      - pwsh: Install-Module -Name Az -Scope CurrentUser -Force
+        displayName: "Install Azure PowerShell module"
+
+        # Chomp the string literal to more easily read and update the New-TestResources parameters.
+        # TODO: Should use separate provisioner and test runner principals.
+      - pwsh: >
+          eng/New-TestResources.ps1
+          -BaseName 'Generated'
+          -ServiceDirectory '${{ parameters.ServiceDirectory }}'
+          -TenantId '$(aad-azure-sdk-test-tenant-id)'
+          -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
+          -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
+          -TestApplicationId '$(aad-azure-sdk-test-client-id)'
+          -TestApplicationSecret '$(aad-azure-sdk-test-client-secret)'
+          -DeleteAfterHours 24
+          -CI
+          -Force
+          -Verbose
+        displayName: "Create test resources"
+
+      - script: dotnet test eng/service.proj --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal" /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:BuildInParallel=${{ parameters.BuildInParallel }}
         displayName: "Build & Test (all tests for $(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -62,11 +84,25 @@ jobs:
           AZURE_TEST_MODE: "None"
           ${{ insert }}: ${{ parameters.EnvVars }}
 
+      - pwsh: >
+          eng/Remove-TestResources.ps1
+          -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}"
+          -TenantId '$(aad-azure-sdk-test-tenant-id)'
+          -ProvisionerApplicationId '$(aad-azure-sdk-test-client-id)'
+          -ProvisionerApplicationSecret '$(aad-azure-sdk-test-client-secret)'
+          -Force
+          -Verbose
+        displayName: "Clean up test resources"
+        condition: ne(variables['AZURE_RESOURCEGROUP_NAME'], '')
+        continueOnError: true
+
       - task: PublishTestResults@2
-        condition: succeededOrFailed()
+        condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/$(TestTargetFramework)*.trx"
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+
+      - ${{ parameters.PostSteps }}

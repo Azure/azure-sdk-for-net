@@ -8,9 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -156,7 +156,14 @@ namespace Azure.Messaging.EventHubs.Amqp
                 Credential = credential;
                 MessageConverter = messageConverter ?? new AmqpMessageConverter();
                 ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, eventHubName, credential, clientOptions.TransportType, clientOptions.Proxy);
-                ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None), link => link.SafeClose());
+
+                ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
+                    timeout => ConnectionScope.OpenManagementLinkAsync(timeout, CancellationToken.None),
+                    link =>
+                    {
+                        link.Session?.SafeClose();
+                        link.SafeClose();
+                    });
             }
             finally
             {

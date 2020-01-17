@@ -233,6 +233,32 @@ namespace Azure.Storage.Blobs.Test
             Assert.Throws<ArgumentNullException>(() => blobSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
+        [Test]
+        public void ToSasQueryParameters_IdentifierTest()
+        {
+            // Arrange
+            TestConstants constants = new TestConstants(this);
+            string containerName = GetNewContainerName();
+            string resource = "c";
+            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            {
+                Identifier = constants.Sas.Identifier,
+                BlobContainerName = containerName,
+                Protocol = SasProtocol.Https,
+                Resource = resource,
+                Version = constants.Sas.Version
+            };
+
+            // Act
+            BlobSasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+
+            // Assert
+            Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
+            Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
+            Assert.AreEqual(resource, sasQueryParameters.Resource);
+            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
+        }
+
         private BlobSasBuilder BuildBlobSasBuilder(bool includeBlob, bool includeSnapshot, string containerName, string blobName, TestConstants constants)
         {
             var builder = new BlobSasBuilder

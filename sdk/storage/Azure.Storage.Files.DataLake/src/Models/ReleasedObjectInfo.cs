@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary>
-    /// Provides the version state of a succesfully released blob or container
+    /// Provides the version state of a succesfully released path or file system.
     /// object.
     /// </summary>
     public readonly struct ReleasedObjectInfo : IEquatable<ReleasedObjectInfo>
@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <summary>
         /// Returns the date and time the object was last modified. Any
-        /// operation that modifies the blob or container, including an update
+        /// operation that modifies the path or file system, including an update
         /// of the object's metadata or properties, changes the last-modified
         /// time of the object.
         /// </summary>

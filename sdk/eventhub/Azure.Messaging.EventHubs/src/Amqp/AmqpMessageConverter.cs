@@ -9,7 +9,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
-using Azure.Messaging.EventHubs.Metadata;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -367,9 +366,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                 eventBody: body,
                 properties: properties,
                 systemProperties: systemAnnotations.ServiceAnnotations,
-                sequenceNumber: systemAnnotations.SequenceNumber,
-                offset: systemAnnotations.Offset,
-                enqueuedTime: systemAnnotations.EnqueuedTime,
+                sequenceNumber: systemAnnotations.SequenceNumber ?? long.MinValue,
+                offset: systemAnnotations.Offset ?? long.MinValue,
+                enqueuedTime: systemAnnotations.EnqueuedTime ?? default,
                 partitionKey: systemAnnotations.PartitionKey,
                 lastPartitionSequenceNumber: systemAnnotations.LastSequenceNumber,
                 lastPartitionOffset: systemAnnotations.LastOffset,
@@ -669,7 +668,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     break;
 
                 default:
-                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
+                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources.FailedToSerializeUnsupportedType, amqpPropertyValue.GetType().FullName));
                     EventHubsEventSource.Log.UnexpectedException(exception.Message);
                     throw exception;
             }

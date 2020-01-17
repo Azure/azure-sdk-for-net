@@ -166,7 +166,15 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        internal DataLakeFileClient(Uri fileUri, HttpPipeline pipeline) : base(fileUri, pipeline)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeFileClient(Uri fileUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
+            : base(fileUri, pipeline, version, clientDiagnostics)
         {
         }
         #endregion ctors
@@ -209,7 +217,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -286,7 +294,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -449,8 +457,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeFileClient}"/> describing the
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -475,7 +483,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -510,8 +518,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// A <see cref="Response{DataLakeFileClient}"/> describing the
+        /// newly created file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -537,7 +545,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline),
+                    new DataLakeFileClient(response.Value.DfsUri, response.Value.Pipeline, response.Value.Version, response.Value.ClientDiagnostics),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -1226,7 +1234,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobInfo}"/> describing the updated
+        /// A <see cref="Response{PathInfo}"/> describing the updated
         /// path.
         /// </returns>
         /// <remarks>
@@ -1468,8 +1476,9 @@ namespace Azure.Storage.Files.DataLake
                         pipeline: Pipeline,
                         resourceUri: DfsUri,
                         body: content,
+                        version: Version.ToVersionString(),
                         position: offset,
-                        contentLength: content.Length,
+                        contentLength: content?.Length ?? 0,
                         transactionalContentHash: contentHash,
                         leaseId: leaseId,
                         async: async,
@@ -1728,6 +1737,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: ClientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: DfsUri,
+                        version: Version.ToVersionString(),
                         position: position,
                         retainUncommittedData: retainUncommittedData,
                         close: close,
@@ -1777,7 +1787,7 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <returns>
         /// A <see cref="Response{FileDownloadInfo}"/> describing the
-        /// downloaded blob.  <see cref="FileDownloadInfo.Content"/> contains
+        /// downloaded file.  <see cref="FileDownloadInfo.Content"/> contains
         /// the blob's data.
         /// </returns>
         /// <remarks>
@@ -1819,7 +1829,7 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <returns>
         /// A <see cref="Response{FileDownloadInfo}"/> describing the
-        /// downloaded blob.  <see cref="FileDownloadInfo.Content"/> contains
+        /// downloaded file.  <see cref="FileDownloadInfo.Content"/> contains
         /// the file's data.
         /// </returns>
         /// <remarks>
@@ -1866,7 +1876,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{FileDownloadInfo}"/> describing the
-        /// downloaded blob.  <see cref="FileDownloadInfo.Content"/> contains
+        /// downloaded file.  <see cref="FileDownloadInfo.Content"/> contains
         /// the blob's data.
         /// </returns>
         /// <remarks>
@@ -1911,7 +1921,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{FileDownloadInfo}"/> describing the
-        /// downloaded blob.  <see cref="FileDownloadInfo.Content"/> contains
+        /// downloaded file.  <see cref="FileDownloadInfo.Content"/> contains
         /// the file's data.
         /// </returns>
         /// <remarks>

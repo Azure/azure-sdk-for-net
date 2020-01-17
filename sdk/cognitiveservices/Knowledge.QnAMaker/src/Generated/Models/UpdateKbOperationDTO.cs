@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,11 +36,20 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// Operation</param>
         /// <param name="update">An instance of UpdateKbContentsDTO for Update
         /// Operation</param>
-        public UpdateKbOperationDTO(UpdateKbOperationDTOAdd add = default(UpdateKbOperationDTOAdd), UpdateKbOperationDTODelete delete = default(UpdateKbOperationDTODelete), UpdateKbOperationDTOUpdate update = default(UpdateKbOperationDTOUpdate))
+        /// <param name="enableHierarchicalExtraction">Enable hierarchical
+        /// extraction of Q-A from files and urls. The value set during KB
+        /// creation will be used if this field is not present.</param>
+        /// <param name="defaultAnswerUsedForExtraction">Text string to be used
+        /// as the answer in any Q-A which has no extracted answer from the
+        /// document but has a hierarchy. Required when
+        /// EnableHierarchicalExtraction field is set to True.</param>
+        public UpdateKbOperationDTO(UpdateKbOperationDTOAdd add = default(UpdateKbOperationDTOAdd), UpdateKbOperationDTODelete delete = default(UpdateKbOperationDTODelete), UpdateKbOperationDTOUpdate update = default(UpdateKbOperationDTOUpdate), bool? enableHierarchicalExtraction = default(bool?), string defaultAnswerUsedForExtraction = default(string))
         {
             Add = add;
             Delete = delete;
             Update = update;
+            EnableHierarchicalExtraction = enableHierarchicalExtraction;
+            DefaultAnswerUsedForExtraction = defaultAnswerUsedForExtraction;
             CustomInit();
         }
 
@@ -68,5 +78,41 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         [JsonProperty(PropertyName = "update")]
         public UpdateKbOperationDTOUpdate Update { get; set; }
 
+        /// <summary>
+        /// Gets or sets enable hierarchical extraction of Q-A from files and
+        /// urls. The value set during KB creation will be used if this field
+        /// is not present.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableHierarchicalExtraction")]
+        public bool? EnableHierarchicalExtraction { get; set; }
+
+        /// <summary>
+        /// Gets or sets text string to be used as the answer in any Q-A which
+        /// has no extracted answer from the document but has a hierarchy.
+        /// Required when EnableHierarchicalExtraction field is set to True.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultAnswerUsedForExtraction")]
+        public string DefaultAnswerUsedForExtraction { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DefaultAnswerUsedForExtraction != null)
+            {
+                if (DefaultAnswerUsedForExtraction.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DefaultAnswerUsedForExtraction", 300);
+                }
+                if (DefaultAnswerUsedForExtraction.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DefaultAnswerUsedForExtraction", 1);
+                }
+            }
+        }
     }
 }

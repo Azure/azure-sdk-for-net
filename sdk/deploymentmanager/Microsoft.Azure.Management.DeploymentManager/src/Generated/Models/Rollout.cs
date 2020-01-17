@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// rollout.</param>
         /// <param name="services">The detailed information on the services
         /// being deployed.</param>
-        public Rollout(string location, string buildVersion, string targetServiceTopologyId, IList<Step> stepGroups, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), string artifactSourceId = default(string), string status = default(string), int? totalRetryAttempts = default(int?), RolloutOperationInfo operationInfo = default(RolloutOperationInfo), IList<Service> services = default(IList<Service>))
+        public Rollout(string location, string buildVersion, string targetServiceTopologyId, IList<StepGroup> stepGroups, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), string artifactSourceId = default(string), string status = default(string), int? totalRetryAttempts = default(int?), RolloutOperationInfo operationInfo = default(RolloutOperationInfo), IList<Service> services = default(IList<Service>))
             : base(location, id, name, type, tags)
         {
             Identity = identity;
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
         /// Gets or sets the list of step groups that define the orchestration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.stepGroups")]
-        public IList<Step> StepGroups { get; set; }
+        public IList<StepGroup> StepGroups { get; set; }
 
         /// <summary>
         /// Gets the current status of the rollout.

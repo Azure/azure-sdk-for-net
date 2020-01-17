@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.EventGrid
             Topics = new TopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-01-01-preview";
+            ApiVersion = "2020-04-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

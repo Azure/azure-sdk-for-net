@@ -229,6 +229,8 @@ directive:
         delete $.ShareStats;
         $.ShareStatistics.xml = { "name": "ShareStats" };
         $.ShareStatistics.properties.ShareUsageBytes.description = "The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.";
+        $.ShareStatistics.properties.ShareUsageBytes.format = 'int64';
+        $.ShareStatistics.properties.ShareUsageBytes['x-ms-client-name'] = 'ShareUsageInBytes';
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=stats"]
@@ -758,6 +760,15 @@ directive:
   where: $.definitions
   transform: >
     $.Range["x-az-public"] = false;
+```
+
+### Treat the API version as a parameter instead of a constant
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ApiVersionParameter
+  transform: >
+    delete $.enum
 ```
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.Shares%2Fswagger%2Freadme.png)

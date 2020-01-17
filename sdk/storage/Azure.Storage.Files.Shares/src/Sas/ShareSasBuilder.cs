@@ -82,6 +82,19 @@ namespace Azure.Storage.Sas
         public string FilePath { get; set; }
 
         /// <summary>
+        /// Specifies which resources are accessible via the shared access
+        /// signature.
+        ///
+        /// Specify "f" if the shared resource is a file. This grants access
+        /// to the content and metadata of the file.
+        ///
+        /// Specify "s" if the shared resource is a share. This grants access
+        /// to the content and metadata of any file in the share, and to the
+        /// list of directories and files in the share.
+        /// </summary>
+        public string Resource { get; set; }
+
+        /// <summary>
         /// Override the value returned for Cache-Control response header.
         /// </summary>
         public string CacheControl { get; set; }
@@ -163,30 +176,8 @@ namespace Azure.Storage.Sas
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
-            if (ExpiresOn == default)
-            {
-                throw Errors.SasMissingData(nameof(ExpiresOn));
-            }
-            if (string.IsNullOrEmpty(Permissions))
-            {
-                throw Errors.SasMissingData(nameof(Permissions));
-            }
 
-            string resource;
-
-            if (string.IsNullOrEmpty(FilePath))
-            {
-                resource = Constants.Sas.Resource.Share;
-            }
-            else
-            {
-                resource = Constants.Sas.Resource.File;
-            }
-
-            if (string.IsNullOrEmpty(Version))
-            {
-                Version = SasQueryParameters.DefaultSasVersion;
-            }
+            EnsureState();
 
             var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
             var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
@@ -218,7 +209,7 @@ namespace Azure.Storage.Sas
                 expiresOn: ExpiresOn,
                 ipRange: IPRange,
                 identifier: Identifier,
-                resource: resource,
+                resource: Resource,
                 permissions: Permissions,
                 signature: signature,
                 cacheControl: CacheControl,
@@ -265,5 +256,38 @@ namespace Azure.Storage.Sas
         /// <returns>Hash code for the FileSasBuilder.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
+
+        /// <summary>
+        /// Ensure the <see cref="ShareSasBuilder"/>'s properties are in a
+        /// consistent state.
+        /// </summary>
+        private void EnsureState()
+        {
+            if (Identifier == default)
+            {
+                if (ExpiresOn == default)
+                {
+                    throw Errors.SasMissingData(nameof(ExpiresOn));
+                }
+                if (string.IsNullOrEmpty(Permissions))
+                {
+                    throw Errors.SasMissingData(nameof(Permissions));
+                }
+            }
+
+            if (string.IsNullOrEmpty(FilePath))
+            {
+                Resource = Constants.Sas.Resource.Share;
+            }
+            else
+            {
+                Resource = Constants.Sas.Resource.File;
+            }
+
+            if (string.IsNullOrEmpty(Version))
+            {
+                Version = SasQueryParameters.DefaultSasVersion;
+            }
+        }
     }
 }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
@@ -129,7 +128,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             {
                 if (IsAsync)
                 {
-                    await operation.WaitForCompletionAsync(cts.Token);
+                    await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
                 }
                 else
                 {

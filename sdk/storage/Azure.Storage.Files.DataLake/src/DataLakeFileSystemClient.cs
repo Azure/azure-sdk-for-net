@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.DataLake
         internal readonly BlobContainerClient _containerClient;
 
         /// <summary>
-        /// ContainerClient
+        /// ContainerClient.
         /// </summary>
         internal virtual BlobContainerClient ContainerClient => _containerClient;
 
@@ -65,6 +65,28 @@ namespace Azure.Storage.Files.DataLake
         protected virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly DataLakeClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual DataLakeClientOptions.ServiceVersion Version => _version;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        private readonly ClientDiagnostics _clientDiagnostics;
+
+        /// <summary>
+        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
+        /// every request.
+        /// </summary>
+        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
+
+        /// <summary>
         /// The Storage account name corresponding to the share client.
         /// </summary>
         private string _accountName;
@@ -97,18 +119,6 @@ namespace Azure.Storage.Files.DataLake
                 return _name;
             }
         }
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        private readonly ClientDiagnostics _clientDiagnostics;
-
-        /// <summary>
-        /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
-        /// every request.
-        /// </summary>
-        internal virtual ClientDiagnostics ClientDiagnostics => _clientDiagnostics;
 
         #region ctors
         /// <summary>
@@ -250,8 +260,9 @@ namespace Azure.Storage.Files.DataLake
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, _pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -265,16 +276,23 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="clientDiagnostics"></param>
-        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics)
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
+        /// <param name="clientDiagnostics">
+        /// The <see cref="ClientDiagnostics"/> instance used to create
+        /// diagnostic scopes every request.
+        /// </param>
+        internal DataLakeFileSystemClient(Uri fileSystemUri, HttpPipeline pipeline, DataLakeClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
             _uri = fileSystemUri;
             _blobUri = uriBuilder.ToBlobUri();
             _dfsUri = uriBuilder.ToDfsUri();
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
-            _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, _clientDiagnostics);
+            _containerClient = BlobContainerClientInternals.Create(_blobUri, pipeline, Version.AsBlobsVersion(), _clientDiagnostics);
         }
 
         /// <summary>
@@ -283,11 +301,11 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         private class BlobContainerClientInternals : BlobContainerClient
         {
-            public static BlobContainerClient Create(Uri uri, HttpPipeline pipeline, ClientDiagnostics diagnostics)
+            public static BlobContainerClient Create(Uri uri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics diagnostics)
             {
                 return BlobContainerClient.CreateClient(
                     uri,
-                    new BlobClientOptions()
+                    new BlobClientOptions(version)
                     {
                         Diagnostics = { IsDistributedTracingEnabled = diagnostics.IsActivityEnabled }
                     },
@@ -305,7 +323,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="directoryName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeDirectoryClient"/> instance.</returns>
         public virtual DataLakeDirectoryClient GetDirectoryClient(string directoryName)
-            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline);
+            => new DataLakeDirectoryClient(Uri.AppendToPath(directoryName), Pipeline, Version, ClientDiagnostics);
+
+        /// <summary>
+        /// Creates a new <see cref="DataLakeDirectoryClient"/> for the
+        /// root directory of the file system.
+        /// </summary>
+        /// <returns>A new <see cref="DataLakeDirectoryClient"/></returns>
+        public virtual DataLakeDirectoryClient GetRootDirectoryClient()
+        {
+            return GetDirectoryClient(string.Empty);
+        }
 
         /// <summary>
         /// Create a new <see cref="DataLakeFileClient"/> object by appending
@@ -316,7 +344,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fileName">The name of the directory.</param>
         /// <returns>A new <see cref="DataLakeFileClient"/> instance.</returns>
         public virtual DataLakeFileClient GetFileClient(string fileName)
-            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline);
+            => new DataLakeFileClient(Uri.AppendToPath(fileName), Pipeline, Version, ClientDiagnostics);
 
         /// <summary>
         /// Sets the various name fields if they are currently null.
@@ -334,21 +362,21 @@ namespace Azure.Storage.Files.DataLake
         #region Create
         /// <summary>
         /// The <see cref="Create"/> operation creates a new file system
-        /// under the specified account. If the container with the same name
+        /// under the specified account. If the file system with the same name
         /// already exists, the operation fails.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
         /// <param name="publicAccessType">
-        /// Optionally specifies whether data in the container may be accessed
+        /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for container and blob data.
-        /// Clients can enumerate blobs within the container via anonymous
-        /// request, but cannot enumerate containers within the storage
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
+        /// request, but cannot enumerate file systems within the storage
         /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this container can be
+        /// read access for paths.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate paths within the file system via anonymous
         /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -361,7 +389,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{FileSystemInfo}"/> describing the newly
-        /// created container.
+        /// created file system.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -412,13 +440,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the file system may be accessed
         /// publicly and the level of access. <see cref="Models.PublicAccessType.FileSystem"/>
-        /// specifies full public read access for file system and blob data.
-        /// Clients can enumerate blobs within the file system via anonymous
+        /// specifies full public read access for file system and path data.
+        /// Clients can enumerate paths within the file system via anonymous
         /// request, but cannot enumerate file system within the storage
         /// account.  <see cref="Models.PublicAccessType.Path"/> specifies public
-        /// read access for blobs.  Blob data within this file system can be
+        /// read access for pathss.  Path data within this file system can be
         /// read via anonymous request, but file system data is not available.
-        /// Clients cannot enumerate blobs within the file system via anonymous
+        /// Clients cannot enumerate pathss within the file system via anonymous
         /// request.  <see cref="Models.PublicAccessType.None"/> specifies that the
         /// file system data is private to the account owner.
         /// </param>
@@ -477,7 +505,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified
-        /// file system for deletion. The file system and any blobs contained
+        /// file system for deletion. The file system and any paths contained
         /// within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -525,7 +553,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified
-        /// file system for deletion. The file system and any blobs contained
+        /// file system for deletion. The file system and any paths contained
         /// within it are later deleted during garbage collection.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container" />.
@@ -577,7 +605,7 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetProperties"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// file system. The data returned does not include the file system's
-        /// list of blobs.
+        /// list of paths.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties" />.
         /// </summary>
@@ -630,7 +658,7 @@ namespace Azure.Storage.Files.DataLake
         /// The <see cref="GetPropertiesAsync"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// file system. The data returned does not include the file system's
-        /// list of blobs.
+        /// list of paths.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties" />.
         /// </summary>
@@ -643,7 +671,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerItem}"/> describing the
+        /// A <see cref="Response{FileSystemProperties}"/> describing the
         /// file system and its properties.
         /// </returns>
         /// <remarks>
@@ -700,7 +728,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerInfo}"/> if successful.
+        /// A <see cref="Response{FileSystemInfo}"/> if successful.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -829,7 +857,7 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// An <see cref="Pageable{T}"/> of <see cref="BlobItem"/>
+        /// An <see cref="Pageable{PathItem}"/>
         /// describing the paths in the file system.
         /// </returns>
         /// <remarks>
@@ -898,7 +926,7 @@ namespace Azure.Storage.Files.DataLake
         /// <paramref name="continuation"/> to start enumeration from the beginning
         /// and the <see cref="PathSegment.Continuation"/> if it's not
         /// empty to make subsequent calls to <see cref="GetPathsAsync"/>
-        /// to continue enumerating the paths segment by segment. Blobs are
+        /// to continue enumerating the paths segment by segment. Paths are
         /// ordered lexicographically by name.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/list"/>.
@@ -935,8 +963,8 @@ namespace Azure.Storage.Files.DataLake
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobsFlatSegment}"/> describing a
-        /// segment of the blobs in the container.
+        /// A <see cref="Response{PathSegment}"/> describing a
+        /// segment of the paths in the file system.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -965,6 +993,7 @@ namespace Azure.Storage.Files.DataLake
                         clientDiagnostics: _clientDiagnostics,
                         pipeline: Pipeline,
                         resourceUri: _dfsUri,
+                        version: Version.ToVersionString(),
                         continuation: continuation,
                         recursive: recursive,
                         maxResults: maxResults,
@@ -1046,7 +1075,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1132,7 +1161,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1327,7 +1356,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1413,7 +1442,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{PathInfo}"/> describing the
-        /// newly created page blob.
+        /// newly created directory.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -1562,7 +1591,6 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Delete File
 
-
         #region GetAccessPolicy
         /// <summary>
         /// The <see cref="GetAccessPolicy"/> operation gets the
@@ -1705,7 +1733,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{FileSystemInfo}"/> describing the
-        /// updated container.
+        /// updated file system.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if

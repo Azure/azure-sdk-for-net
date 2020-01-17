@@ -681,8 +681,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -702,8 +703,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -729,8 +731,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -750,8 +753,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1252,8 +1256,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1273,8 +1278,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Gets the relative latency score for internet service providers from a
-            /// specified location to Azure regions.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Gets the relative latency score for internet service providers
+            /// from a specified location to Azure regions.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1300,8 +1306,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1321,8 +1328,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists all available internet service providers for a specified Azure
-            /// region.
+            /// NOTE: This feature is currently in preview and still being tested for
+            /// stability. Lists all available internet service providers for a specified
+            /// Azure region.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -54,7 +54,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// endpoints.</param>
         /// <param name="diskEncryptionProperties">The disk encryption
         /// properties.</param>
-        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties))
+        /// <param name="minSupportedTlsVersion">The minimal supported tls
+        /// version.</param>
+        public ClusterGetProperties(ClusterDefinition clusterDefinition, string clusterVersion = default(string), OSType? osType = default(OSType?), Tier? tier = default(Tier?), KafkaRestProperties kafkaRestProperties = default(KafkaRestProperties), SecurityProfile securityProfile = default(SecurityProfile), ComputeProfile computeProfile = default(ComputeProfile), HDInsightClusterProvisioningState? provisioningState = default(HDInsightClusterProvisioningState?), string createdDate = default(string), string clusterState = default(string), QuotaInfo quotaInfo = default(QuotaInfo), IList<Errors> errors = default(IList<Errors>), IList<ConnectivityEndpoint> connectivityEndpoints = default(IList<ConnectivityEndpoint>), DiskEncryptionProperties diskEncryptionProperties = default(DiskEncryptionProperties), string minSupportedTlsVersion = default(string))
         {
             ClusterVersion = clusterVersion;
             OsType = osType;
@@ -70,6 +72,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             Errors = errors;
             ConnectivityEndpoints = connectivityEndpoints;
             DiskEncryptionProperties = diskEncryptionProperties;
+            MinSupportedTlsVersion = minSupportedTlsVersion;
             CustomInit();
         }
 
@@ -165,6 +168,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskEncryptionProperties")]
         public DiskEncryptionProperties DiskEncryptionProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimal supported tls version.
+        /// </summary>
+        [JsonProperty(PropertyName = "minSupportedTlsVersion")]
+        public string MinSupportedTlsVersion { get; set; }
 
         /// <summary>
         /// Validate the object.

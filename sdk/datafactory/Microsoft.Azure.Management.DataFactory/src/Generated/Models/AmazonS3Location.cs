@@ -31,7 +31,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the AmazonS3Location class.
         /// </summary>
-        /// <param name="type">Type of dataset storage location.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="folderPath">Specify the folder path of dataset. Type:
@@ -42,8 +41,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string)</param>
         /// <param name="version">Specify the version of amazon S3. Type:
         /// string (or Expression with resultType string).</param>
-        public AmazonS3Location(string type, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object), object bucketName = default(object), object version = default(object))
-            : base(type, additionalProperties, folderPath, fileName)
+        public AmazonS3Location(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object folderPath = default(object), object fileName = default(object), object bucketName = default(object), object version = default(object))
+            : base(additionalProperties, folderPath, fileName)
         {
             BucketName = bucketName;
             Version = version;
@@ -69,15 +68,5 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "version")]
         public object Version { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

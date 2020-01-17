@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.NetApp
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("NetApp", "Accounts", "2019-08-01"),
-                new Tuple<string, string, string>("NetApp", "MountTargets", "2019-08-01"),
-                new Tuple<string, string, string>("NetApp", "NetAppResource", "2019-08-01"),
-                new Tuple<string, string, string>("NetApp", "Operations", "2019-08-01"),
-                new Tuple<string, string, string>("NetApp", "Pools", "2019-08-01"),
-                new Tuple<string, string, string>("NetApp", "Snapshots", "2019-08-01"),
-                new Tuple<string, string, string>("NetApp", "Volumes", "2019-08-01"),
+                new Tuple<string, string, string>("NetApp", "Accounts", "2019-10-01"),
+                new Tuple<string, string, string>("NetApp", "MountTargets", "2019-10-01"),
+                new Tuple<string, string, string>("NetApp", "NetAppResource", "2019-10-01"),
+                new Tuple<string, string, string>("NetApp", "Operations", "2019-10-01"),
+                new Tuple<string, string, string>("NetApp", "Pools", "2019-10-01"),
+                new Tuple<string, string, string>("NetApp", "Snapshots", "2019-10-01"),
+                new Tuple<string, string, string>("NetApp", "Volumes", "2019-10-01"),
               }.AsEnumerable();
           }
       }
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.NetApp
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/netapp/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "0a276b37ef1d935b3a082d178ecbf9d553deef26";
+      public static readonly String GithubCommidId = "06b9412319ada8678c0ce07016cac1bf66258b1d";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

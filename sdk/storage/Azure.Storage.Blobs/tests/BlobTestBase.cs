@@ -54,7 +54,8 @@ namespace Azure.Storage.Test.Shared
                     MaxRetries = Storage.Constants.MaxReliabilityRetries,
                     Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                }
+                },
+                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
@@ -220,20 +221,20 @@ namespace Azure.Storage.Test.Shared
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
-            PublicAccessType publicAccessType = PublicAccessType.None,
+            PublicAccessType? publicAccessType = default,
             bool premium = default)
         {
 
             containerName ??= GetNewContainerName();
             service ??= GetServiceClient_SharedKey();
 
-            if (publicAccessType == PublicAccessType.None)
+            if (publicAccessType == default)
             {
                 publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
-            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType);
+            await container.CreateAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
         }
 
@@ -431,7 +432,8 @@ namespace Azure.Storage.Test.Shared
 
         internal StorageConnectionString GetConnectionString(
             SharedAccessSignatureCredentials credentials = default,
-            bool includeEndpoint = true)
+            bool includeEndpoint = true,
+            bool includeTable = false)
         {
             credentials ??= GetAccountSasCredentials();
             if (!includeEndpoint)
@@ -447,11 +449,20 @@ namespace Azure.Storage.Test.Shared
                 default,
                 default);
 
+            (Uri, Uri) tableUri = default;
+            if (includeTable)
+            {
+                tableUri = StorageConnectionString.ConstructTableEndpoint(
+                    Constants.Https,
+                    TestConfigDefault.AccountName,
+                    default,
+                    default);
+            }
+
             return new StorageConnectionString(
                     credentials,
-                    blobUri,
-                    (default, default),
-                    (default, default));
+                    blobStorageUri: blobUri,
+                    tableStorageUri: tableUri);
         }
 
         public async Task EnableSoftDelete()

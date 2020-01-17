@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine.Models
         /// <param name="sqlImageOffer">SQL image offer. Examples include
         /// SQL2016-WS2016, SQL2017-WS2016.</param>
         /// <param name="sqlServerLicenseType">SQL Server license type.
-        /// Possible values include: 'PAYG', 'AHUB'</param>
+        /// Possible values include: 'PAYG', 'AHUB', 'DR'</param>
         /// <param name="sqlManagement">SQL Server Management type. Possible
         /// values include: 'Full', 'LightWeight', 'NoAgent'</param>
         /// <param name="sqlImageSku">SQL Server edition type. Possible values
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine.Models
 
         /// <summary>
         /// Gets or sets SQL Server license type. Possible values include:
-        /// 'PAYG', 'AHUB'
+        /// 'PAYG', 'AHUB', 'DR'
         /// </summary>
         [JsonProperty(PropertyName = "properties.sqlServerLicenseType")]
         public string SqlServerLicenseType { get; set; }
