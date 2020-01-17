@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="VerifyCompat">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RunApiCompatForSrc>true</RunApiCompatForSrc>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.DotNet.ApiCompat" />
+        <PackageReference Include="Azure.Security.KeyVault.Secrets" />
+    </ItemGroup>
+
+    <Import Project="..\Packages.Data.props" />
+
+    <Target Name="VerifyCompat" DependsOnTargets="_ResolveResolvedMatchingContract;$(TargetsTriggeredByCompilation)">
+    </Target>
+
+    <Target Name="_ResolveResolvedMatchingContract" DependsOnTargets="ResolveReferences">
+        <PropertyGroup>
+            <TargetPackageDll Condition="'%(ResolvedCompileFileDefinitions.NuGetPackageId)' == '$(TargetPackageName)'" >%(ResolvedCompileFileDefinitions.Identity)</TargetPackageDll>
+        </PropertyGroup>
+        
+        <ItemGroup>
+            <ResolvedMatchingContract Include="$(TargetPackageDll)" />
+            <_DependencyDirectories Include="$(TargetOutputPath)" />
+            <ReferencePath Remove="$(TargetPackageDll)" />
+        </ItemGroup>
+
+        <Message Text="Checking API Compat against $(TargetPackageDll)" Importance="High" />
+    </Target>
+
+</Project>
