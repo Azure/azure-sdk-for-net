@@ -412,13 +412,13 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List event types.
+        /// List event types
         /// </summary>
         /// <remarks>
-        /// List event types for a topic type.
+        /// List event types for a topic type
         /// </remarks>
         /// <param name='topicTypeName'>
-        /// Name of the topic type.
+        /// Name of the topic type
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

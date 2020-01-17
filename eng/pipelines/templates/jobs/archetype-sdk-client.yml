@@ -22,7 +22,7 @@ jobs:
         inputs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
-          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceDirectory}}
+          dotnet pack eng/service.proj -o $(Build.ArtifactStagingDirectory) -warnaserror /p:ServiceDirectory=${{parameters.ServiceToBuild}}
           /p:PublicSign=false $(VersioningProperties) /p:Configuration=$(BuildConfiguration) /p:CommitSHA=$(Build.SourceVersion)
         displayName: "Build and Package"
         env:
@@ -46,7 +46,7 @@ jobs:
     dependsOn:
       - Build
     pool:
-      vmImage: "windows-2019"
+      vmImage: "ubuntu-16.04"
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -147,7 +147,7 @@ jobs:
           version: "$(DotNetCoreSDKVersion)"
       - script: >-
           dotnet test eng/service.proj --filter TestCategory!=Live --framework $(TestTargetFramework) --logger "trx;LogFileName=$(TestTargetFramework).trx"
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:ServiceDirectory=${{parameters.ServiceToBuild}} /p:IncludeSrc=false /p:IncludeSamples=false /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1

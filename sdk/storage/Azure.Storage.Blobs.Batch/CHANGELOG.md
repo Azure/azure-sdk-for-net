@@ -1,5 +1,8 @@
 # Release History
 
+## 12.1.1 (2020-01)
+- Pass Storage version to each API.
+
 ## 12.1.0
 - Removed internal dependencies
 

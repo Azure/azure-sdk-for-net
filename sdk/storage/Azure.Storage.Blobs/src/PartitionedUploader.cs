@@ -16,28 +16,44 @@ namespace Azure.Storage.Blobs
 {
     internal class PartitionedUploader
     {
-        // The client we use to do the actual uploading
+        /// <summary>
+        /// The client we use to do the actual uploading.
+        /// </summary>
         private readonly BlockBlobClient _client;
 
-        // The maximum number of simultaneous workers
+        /// <summary>
+        /// The maximum number of simultaneous workers.
+        /// </summary>
         private readonly int _maxWorkerCount;
 
-        // A pool of memory we use to partition the stream into blocks
+        /// <summary>
+        /// A pool of memory we use to partition the stream into blocks.
+        /// </summary>
         private readonly ArrayPool<byte> _arrayPool;
 
-        // The size we use to determine whether to upload as a single PUT BLOB
-        // request or stage as multiple blocks.
+        /// <summary>
+        /// The size we use to determine whether to upload as a single PUT BLOB
+        /// request or stage as multiple blocks.
+        /// </summary>
         private readonly long _singleUploadThreshold;
 
-        // The size of each staged block.  If null, we'll change between 4MB
-        // and 8MB depending on the size of the content.
+        /// <summary>
+        /// The size of each staged block.  If null, we'll change between 4MB
+        /// and 8MB depending on the size of the content.
+        /// </summary>
         private readonly int? _blockSize;
+
+        /// <summary>
+        /// The name of the calling operaiton.
+        /// </summary>
+        private readonly string _operationName;
 
         public PartitionedUploader(
             BlockBlobClient client,
             StorageTransferOptions transferOptions,
             long? singleUploadThreshold = null,
-            ArrayPool<byte> arrayPool = null)
+            ArrayPool<byte> arrayPool = null,
+            string operationName = null)
         {
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
@@ -52,6 +68,7 @@ namespace Azure.Storage.Blobs
                     Constants.Blob.Block.MaxStageBytes,
                     transferOptions.MaximumTransferLength.Value);
             }
+            _operationName = operationName;
         }
 
         public async Task<Response<BlobContentInfo>> UploadAsync(
@@ -67,13 +84,15 @@ namespace Azure.Storage.Blobs
             if (TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
-                return await _client.UploadAsync(
+                return await _client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
                     conditions,
                     accessTier,
                     progressHandler,
+                    _operationName,
+                    async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -113,14 +132,16 @@ namespace Azure.Storage.Blobs
             if (TryGetLength(content, out long length) && length < _singleUploadThreshold)
             {
                 // Upload it in a single request
-                return _client.Upload(
+                return _client.UploadInternal(
                     content,
                     blobHttpHeaders,
                     metadata,
                     conditions,
                     accessTier,
                     progressHandler,
-                    cancellationToken);
+                    _operationName,
+                    false,
+                    cancellationToken).EnsureCompleted();
             }
 
             // If the caller provided an explicit block size, we'll use it.
@@ -158,7 +179,8 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(
+                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
             try
             {
                 scope.Start();
@@ -228,7 +250,8 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(
+                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
             try
             {
                 scope.Start();
@@ -248,7 +271,7 @@ namespace Azure.Storage.Blobs
                 List<Task> runningTasks = new List<Task>();
 
                 // Partition the stream into individual blocks
-                await foreach (StreamPartition block in GetBlocksAsync(content, blockSize, async: true, cancellationToken))
+                await foreach (StreamPartition block in GetBlocksAsync(content, blockSize, async: true, cancellationToken).ConfigureAwait(false))
                 {
                     // Start staging the next block (but don't await the Task!)
                     string blockId = GenerateBlockId(block.AbsolutePosition);
@@ -338,6 +361,10 @@ namespace Azure.Storage.Blobs
         private static bool TryGetLength(Stream content, out long length)
         {
             length = 0;
+            if (content == null)
+            {
+                return true;
+            }
             try
             {
                 if (content.CanSeek)

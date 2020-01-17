@@ -10,6 +10,7 @@ using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest;
+using Microsoft.Rest.Azure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -29,10 +30,17 @@ namespace Azure.Messaging.EventHubs.Tests
         private bool _disposed = false;
 
         /// <summary>
-        ///  The name of the Event Hub that was created.
+        ///   The name of the Event Hub that was created.
         /// </summary>
         ///
         public string EventHubName { get; }
+
+        /// <summary>
+        ///   Flags whether the Event Hub was created for the current test run
+        ///   or was retrieved from environment variables.
+        /// </summary>
+        ///
+        public bool WasEventHubCreated { get; }
 
         /// <summary>
         ///   The consumer groups created and associated with the Event Hub, not including
@@ -47,12 +55,15 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="eventHubHame">The name of the Event Hub that was created.</param>
         /// <param name="consumerGroups">The set of consumer groups associated with the Event Hub; the default consumer group is not included, as it is implicitly created.</param>
+        /// <param name="wasEventHubCreated">Sets whether the Event Hub was created or read from environment variables.</param>
         ///
         private EventHubScope(string eventHubHame,
-                              IReadOnlyList<string> consumerGroups)
+                              IReadOnlyList<string> consumerGroups,
+                              bool wasEventHubCreated)
         {
             EventHubName = eventHubHame;
             ConsumerGroups = consumerGroups;
+            WasEventHubCreated = wasEventHubCreated;
         }
 
         /// <summary>
@@ -62,6 +73,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public async ValueTask DisposeAsync()
         {
+            if (!WasEventHubCreated)
+            {
+                _disposed = true;
+            }
+
             if (_disposed)
             {
                 return;
@@ -94,7 +110,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Performs the tasks needed to create a new Event Hub instance with the requested
+        ///   Performs the tasks needed to get or create a new Event Hub instance with the requested
         ///   partition count and a dynamically assigned unique name.
         /// </summary>
         ///
@@ -103,6 +119,132 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         public static Task<EventHubScope> CreateAsync(int partitionCount,
                                                       [CallerMemberName] string caller = "") => CreateAsync(partitionCount, Enumerable.Empty<string>(), caller);
+
+        /// <summary>
+        ///   Performs the tasks needed to get or create a new Event Hub instance with the requested
+        ///   partition count and a dynamically assigned unique name.
+        /// </summary>
+        ///
+        /// <param name="partitionCount">The number of partitions that the Event Hub should be configured with.</param>
+        /// <param name="consumerGroups">The set of consumer groups to create and associate with the Event Hub; the default consumer group should not be included, as it is implicitly created.</param>
+        /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
+        ///
+        public static Task<EventHubScope> CreateAsync(int partitionCount,
+                                                      IEnumerable<string> consumerGroups,
+                                                      [CallerMemberName] string caller = "") => BuildScope(partitionCount, consumerGroups, caller);
+
+        /// <summary>
+        ///   It creates an instance of <see cref="NamespaceProperties"/>, populates it from a connection string and returns it.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string from the existing Event Hubs namespace</param>
+        ///
+        /// <returns>The <see cref="NamespaceProperties" /> that will be used in a given test run.</returns>
+        ///
+        /// <exception cref="ArgumentException">Occurs when <param name="connectionString"/> holds an invalid connection string.</exception>
+        ///
+        public static NamespaceProperties PopulateNamespacePropertiesFromConnectionString(string connectionString)
+        {
+            if (IsConnectionStringValid(connectionString,
+                                        out string namespaceName))
+            {
+                return new NamespaceProperties(namespaceName, connectionString, wasNamespaceCreated: false);
+            }
+
+            throw new ArgumentException("An endpoint could not be found in the passed connection string");
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to create a new Event Hubs namespace within a resource group, intended to be used as
+        ///   an ephemeral container for the Event Hub instances used in a given test run.
+        /// </summary>
+        ///
+        /// <returns>The key attributes for identifying and accessing a dynamically created Event Hubs namespace.</returns>
+        ///
+        public static async Task<NamespaceProperties> CreateNamespaceAsync()
+        {
+            var subscription = TestEnvironment.EventHubsSubscription;
+            var resourceGroup = TestEnvironment.EventHubsResourceGroup;
+            var token = await ResourceManager.AquireManagementTokenAsync();
+
+            string CreateName() => $"net-eventhubs-{ Guid.NewGuid().ToString("D") }";
+
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            {
+                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
+
+                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: ResourceManager.GenerateTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
+                eventHubsNamespace = await ResourceManager.CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
+
+                AccessKeys accessKey = await ResourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
+                return new NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString, wasNamespaceCreated: true);
+            }
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to remove an ephemeral Event Hubs namespace used as a container for Event Hub instances
+        ///   for a specific test run.
+        /// </summary>
+        ///
+        /// <param name="namespaceName">The name of the namespace to delete.</param>
+        ///
+        public static async Task DeleteNamespaceAsync(string namespaceName)
+        {
+            var subscription = TestEnvironment.EventHubsSubscription;
+            var resourceGroup = TestEnvironment.EventHubsResourceGroup;
+            var token = await ResourceManager.AquireManagementTokenAsync();
+
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            {
+                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
+            }
+        }
+
+        /// <summary>
+        ///   It returns the eventhub that is named using <see cref="TestEnvironment.EventHubName" />.
+        ///   It creates and returns one otherwise.
+        ///
+        ///   If a hub was created, it would be disposed afterwards.
+        /// </summary>
+        ///
+        /// <param name="partitionCount">The number of partitions that the Event Hub should be configured with.</param>
+        /// <param name="consumerGroups">The set of consumer groups to create and associate with the Event Hub; the default consumer group should not be included, as it is implicitly created.</param>
+        /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
+        ///
+        /// <returns>The <see cref="EventHubScope" /> that will be used in a given test run.</returns>
+        ///
+        private static Task<EventHubScope> BuildScope(int partitionCount,
+                                                      IEnumerable<string> consumerGroups,
+                                                      [CallerMemberName] string caller = "")
+        {
+            if (!string.IsNullOrEmpty(TestEnvironment.EventHubName))
+            {
+                return BuildScopeFromExistingEventHub();
+            }
+
+            return BuildScopeWithNewEventHub(partitionCount, consumerGroups, caller);
+        }
+
+        /// <summary>
+        ///   It returns an EventHubScope after instanciating a management client
+        ///   and querying the consumer groups from the portal.
+        /// </summary>
+        ///
+        /// <returns>The <see cref="EventHubScope" /> that will be used in a given test run.</returns>
+        ///
+        private static async Task<EventHubScope> BuildScopeFromExistingEventHub()
+        {
+            var token = await ResourceManager.AquireManagementTokenAsync();
+
+            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = TestEnvironment.EventHubsSubscription })
+            {
+                IPage<ConsumerGroup> consumerGroups = client.ConsumerGroups.ListByEventHub(TestEnvironment.EventHubsResourceGroup,
+                                                                                           TestEnvironment.EventHubsNamespace,
+                                                                                           TestEnvironment.EventHubName);
+
+                return new EventHubScope(TestEnvironment.EventHubName, consumerGroups.Select(c => c.Name).ToList(), wasEventHubCreated: false);
+            }
+        }
 
         /// <summary>
         ///   Performs the tasks needed to create a new Event Hub instance with the requested
@@ -115,9 +257,9 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <returns>The <see cref="EventHubScope" /> in which the test should be executed.</returns>
         ///
-        public static async Task<EventHubScope> CreateAsync(int partitionCount,
-                                                            IEnumerable<string> consumerGroups,
-                                                            [CallerMemberName] string caller = "")
+        private static async Task<EventHubScope> BuildScopeWithNewEventHub(int partitionCount,
+                                                                           IEnumerable<string> consumerGroups,
+                                                                           [CallerMemberName] string caller = "")
         {
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
@@ -144,54 +286,47 @@ namespace Azure.Messaging.EventHubs.Tests
                     })
                 );
 
-                return new EventHubScope(eventHub.Name, groups);
+                return new EventHubScope(eventHub.Name, groups, wasEventHubCreated: true);
             }
         }
 
         /// <summary>
-        ///   Performs the tasks needed to create a new Event Hubs namespace within a resource group, intended to be used as
-        ///   an ephemeral container for the Event Hub instances used in a given test run.
+        ///   It checks if the connection string contains a valid namespace name.
         /// </summary>
         ///
-        /// <returns>The key attributes for identifying and accessing a dynamically created Event Hubs namespace.</returns>
+        /// <param name="connectionString">The connection string to be parsed.</param>
+        /// <param name="namespaceName">The namespace name taken from the connection string.</param>
         ///
-        public static async Task<NamespaceProperties> CreateNamespaceAsync()
+        /// <returns>
+        ///   <c>true</c> if the connection string is a valid connection string; otherwise, <c>false</c>.
+        /// </returns>
+        ///
+        private static bool IsConnectionStringValid(string connectionString,
+                                                    out string namespaceName)
         {
-            var subscription = TestEnvironment.EventHubsSubscription;
-            var resourceGroup = TestEnvironment.EventHubsResourceGroup;
-            var token = await ResourceManager.AquireManagementTokenAsync();
+            namespaceName = ParseNamespaceName(connectionString);
 
-            string CreateName() => $"net-eventhubs-{ Guid.NewGuid().ToString("D") }";
-
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
-            {
-                var location = await ResourceManager.QueryResourceGroupLocationAsync(token, resourceGroup, subscription);
-
-                var eventHubsNamespace = new EHNamespace(sku: new Sku("Standard", "Standard", 12), tags: ResourceManager.GenerateTags(), isAutoInflateEnabled: true, maximumThroughputUnits: 20, location: location);
-                eventHubsNamespace = await ResourceManager.CreateRetryPolicy<EHNamespace>().ExecuteAsync(() => client.Namespaces.CreateOrUpdateAsync(resourceGroup, CreateName(), eventHubsNamespace));
-
-                AccessKeys accessKey = await ResourceManager.CreateRetryPolicy<AccessKeys>().ExecuteAsync(() => client.Namespaces.ListKeysAsync(resourceGroup, eventHubsNamespace.Name, TestEnvironment.EventHubsDefaultSharedAccessKey));
-                return new NamespaceProperties(eventHubsNamespace.Name, accessKey.PrimaryConnectionString);
-            }
+            return !string.IsNullOrEmpty(namespaceName);
         }
 
         /// <summary>
-        ///   Performs the tasks needed to remove an ephemeral Event Hubs namespace used as a container for Event Hub instances
-        ///   for a specific test run.
+        ///   It returns the namespace name from a give set of connection string properties.
         /// </summary>
         ///
-        /// <param name="namespaceName">The name of the namespace to delete.</param>
+        /// <param name="connectionString">The connection string to be parsed.</param>
         ///
-        public static async Task DeleteNamespaceAsync(string namespaceName)
+        /// <returns>The namespace name for a given connection string.</returns>
+        ///
+        private static string ParseNamespaceName(string connectionString)
         {
-            var subscription = TestEnvironment.EventHubsSubscription;
-            var resourceGroup = TestEnvironment.EventHubsResourceGroup;
-            var token = await ResourceManager.AquireManagementTokenAsync();
+            string fqdn = ConnectionStringTokenParser.ParseTokenAndReturnValue(connectionString, "Endpoint");
 
-            using (var client = new EventHubManagementClient(new TokenCredentials(token)) { SubscriptionId = subscription })
+            if (!string.IsNullOrEmpty(fqdn))
             {
-                await ResourceManager.CreateRetryPolicy().ExecuteAsync(() => client.Namespaces.DeleteAsync(resourceGroup, namespaceName));
+                return ConnectionStringTokenParser.ParseNamespaceName(fqdn);
             }
+
+            return null;
         }
 
         /// <summary>
@@ -207,18 +342,24 @@ namespace Azure.Messaging.EventHubs.Tests
             /// <summary>The connection string to use for accessing the dynamically created namespace.</summary>
             public readonly string ConnectionString;
 
+            /// <summary>A flag indicating if the namespace was created or referenced from environment variables.</summary>
+            public readonly bool WasNamespaceCreated;
+
             /// <summary>
             ///   Initializes a new instance of the <see cref="NamespaceProperties"/> struct.
             /// </summary>
             ///
             /// <param name="name">The name of the namespace.</param>
             /// <param name="connectionString">The connection string to use for accessing the namespace.</param>
+            /// <param name="wasNamespaceCreated">A flag indicating if the namespace was created or referenced from environment variables.</param>
             ///
             internal NamespaceProperties(string name,
-                                         string connectionString)
+                                         string connectionString,
+                                         bool wasNamespaceCreated)
             {
                 Name = name;
                 ConnectionString = connectionString;
+                WasNamespaceCreated = wasNamespaceCreated;
             }
         }
     }

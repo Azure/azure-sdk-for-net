@@ -19,7 +19,6 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
             var inputs = new List<string>
@@ -29,11 +28,13 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Pike place market is my favorite Seattle attraction.",
             };
 
+            #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
             RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+            #endregion
 
             Debug.WriteLine($"Linked entities for each input are:\n");
             int i = 0;
-            foreach (var result in results)
+            foreach (RecognizeLinkedEntitiesResult result in results)
             {
                 Debug.Write($"For input: \"{inputs[i++]}\", ");
                 Debug.WriteLine($"extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");

@@ -5193,7 +5193,10 @@ namespace Azure.Storage.Files.Shares
                 if (contentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(contentHash)); }
 
                 // Create the body
-                _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                if (optionalbody != null)
+                {
+                    _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                }
 
                 return _message;
             }
@@ -9080,7 +9083,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.
         /// </summary>
-        public int ShareUsageBytes { get; internal set; }
+        public long ShareUsageInBytes { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of ShareStatistics instances.
@@ -9101,7 +9104,7 @@ namespace Azure.Storage.Files.Shares.Models
             _child = element.Element(System.Xml.Linq.XName.Get("ShareUsageBytes", ""));
             if (_child != null)
             {
-                _value.ShareUsageBytes = int.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
+                _value.ShareUsageInBytes = long.Parse(_child.Value, System.Globalization.CultureInfo.InvariantCulture);
             }
             CustomizeFromXml(element, _value);
             return _value;
@@ -9119,11 +9122,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// Creates a new ShareStatistics instance for mocking.
         /// </summary>
         public static ShareStatistics ShareStatistics(
-            int shareUsageBytes)
+            long shareUsageInBytes)
         {
             return new ShareStatistics()
             {
-                ShareUsageBytes = shareUsageBytes,
+                ShareUsageInBytes = shareUsageInBytes,
             };
         }
     }

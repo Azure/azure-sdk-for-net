@@ -229,6 +229,8 @@ directive:
         delete $.ShareStats;
         $.ShareStatistics.xml = { "name": "ShareStats" };
         $.ShareStatistics.properties.ShareUsageBytes.description = "The approximate size of the data stored in bytes, rounded up to the nearest gigabyte. Note that this value may not include all recently created or recently resized files.";
+        $.ShareStatistics.properties.ShareUsageBytes.format = 'int64';
+        $.ShareStatistics.properties.ShareUsageBytes['x-ms-client-name'] = 'ShareUsageInBytes';
     }
 - from: swagger-document
   where: $["x-ms-paths"]["/{shareName}?restype=share&comp=stats"]

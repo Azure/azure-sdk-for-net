@@ -155,6 +155,9 @@ namespace Azure.Storage
             public const string AlreadyExists = "BlobAlreadyExists";
             public const string NotFound = "BlobNotFound";
 
+            public const string UploadOperationName =
+                "Azure.Storage.Blobs.BlobClient.Upload";
+
             internal static class Append
             {
                 public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
@@ -402,6 +405,12 @@ namespace Azure.Storage
                     "Azure.Storage.Files.Shares.ShareClient.GetPermission";
                 public const string CreatePermissionOperationName =
                     "Azure.Storage.Files.Shares.ShareClient.CreatePermission";
+            }
+
+            internal static class Errors
+            {
+                public const string ShareUsageBytesOverflow =
+                    "ShareUsageBytes exceeds int.MaxValue. Use ShareUsageInBytes instead.";
             }
         }
 

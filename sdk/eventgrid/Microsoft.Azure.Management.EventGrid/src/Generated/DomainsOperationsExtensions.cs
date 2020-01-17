@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the domain.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// Tags of the domains resource
             /// </param>
             public static Domain Update(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the domain.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// Tags of the domains resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -559,7 +559,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the domain.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// Tags of the domains resource
             /// </param>
             public static Domain BeginUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// Name of the domain.
             /// </param>
             /// <param name='tags'>
-            /// Tags of the domains resource.
+            /// Tags of the domains resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

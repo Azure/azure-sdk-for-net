@@ -446,8 +446,8 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="CreateIfNotExists"/> operation creates a new container
-        /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// under the specified account. If the container already exists, it is
+        /// not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -472,8 +472,8 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerInfo}"/> describing the newly
-        /// created container.
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -492,8 +492,8 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new container
-        /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// under the specified account.  If the container already exists, it is
+        /// not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -518,8 +518,8 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{ContainerInfo}"/> describing the newly
-        /// created container.
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -537,9 +537,9 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new container
-        /// under the specified account. If the container with the same name
-        /// already exists, the operation fails.
+        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new container
+        /// under the specified account.  If the container already exists, it is
+        /// not changed.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/create-container"/>.
         /// </summary>
@@ -567,8 +567,8 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobContainerInfo}"/> describing the newly
-        /// created container.
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -946,7 +946,8 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use <see cref="CreateIfNotExists"/> instead.
         /// </remarks>
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default) =>
@@ -968,7 +969,8 @@ namespace Azure.Storage.Blobs
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use <see cref="CreateIfNotExistsAsync"/> instead.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default) =>
@@ -2082,10 +2084,8 @@ namespace Azure.Storage.Blobs
 
         #region UploadBlob
         /// <summary>
-        /// The <see cref="UploadBlob"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// The <see cref="UploadBlobAsync"/> operation creates a new block
+        /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -2107,8 +2107,11 @@ namespace Azure.Storage.Blobs
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To override an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> UploadBlob(
@@ -2121,10 +2124,8 @@ namespace Azure.Storage.Blobs
                     cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadBlobAsync"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// The <see cref="UploadBlob"/> operation creates a new block
+        /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -2146,8 +2147,11 @@ namespace Azure.Storage.Blobs
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To override an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(

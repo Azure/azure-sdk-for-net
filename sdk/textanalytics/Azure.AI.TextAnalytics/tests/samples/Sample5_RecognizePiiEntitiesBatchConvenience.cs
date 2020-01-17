@@ -19,7 +19,6 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
 
             var inputs = new List<string>
@@ -28,16 +27,18 @@ namespace Azure.AI.TextAnalytics.Samples
                 "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
             };
 
+            #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
             RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+            #endregion
 
             Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");
             int i = 0;
-            foreach (var result in results)
+            foreach (RecognizePiiEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
                 Debug.WriteLine($"the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies were" : "y was")} found:");
 
-                foreach (var entity in result.NamedEntities)
+                foreach (NamedEntity entity in result.NamedEntities)
                 {
                     Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
