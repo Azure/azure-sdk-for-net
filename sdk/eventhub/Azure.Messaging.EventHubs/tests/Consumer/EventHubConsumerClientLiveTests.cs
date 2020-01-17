@@ -1363,7 +1363,6 @@ namespace Azure.Messaging.EventHubs.Tests
             }
         }
 
-
         /// <summary>
         ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
         ///   connect to the Event Hubs service and perform operations.

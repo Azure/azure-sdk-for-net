@@ -772,7 +772,7 @@ namespace Azure.Messaging.EventHubs.Consumer
                 {
                     await transportConsumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
                     transportConsumer = null;
-                    throw new EventHubsException(false, EventHubName, String.Format(CultureInfo.CurrentCulture, Resources.FailedToCreateReader, EventHubName, partitionId, ConsumerGroup));
+                    throw new EventHubsException(false, EventHubName, string.Format(CultureInfo.CurrentCulture, Resources.FailedToCreateReader, EventHubName, partitionId, ConsumerGroup));
                 }
 
                 void exceptionCallback(Exception ex)
