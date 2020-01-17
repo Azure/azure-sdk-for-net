@@ -164,7 +164,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.True(ex.Message.StartsWith("Multiple accounts were found in the cache."));
+            Assert.True(ex.Message.StartsWith("Multiple local accounts were found."));
 
             Assert.True(ex.Message.Contains($"username: fakeuser@fakedomain.com tenantId: {fakeuserTenantId}"));
 
@@ -192,7 +192,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.True(ex.Message.StartsWith("No account matching the specified username: mockuser@mockdomain.com was found in the cache."));
+            Assert.True(ex.Message.StartsWith("No local account matching the specified username: mockuser@mockdomain.com was found."));
 
             Assert.True(ex.Message.Contains($"username: fakeuser@fakedomain.com tenantId: {fakeuserTenantId}"));
 
@@ -221,7 +221,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.True(ex.Message.StartsWith($"No account matching the specified tenantId: {tenantId} was found in the cache."));
+            Assert.True(ex.Message.StartsWith($"No local account matching the specified tenantId: {tenantId} was found."));
 
             Assert.True(ex.Message.Contains($"username: fakeuser@fakedomain.com tenantId: {fakeuserTenantId}"));
 
@@ -250,7 +250,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.True(ex.Message.StartsWith($"No account matching the specified username: mockuser@mockdomain.com tenantId: {tenantId} was found in the cache."));
+            Assert.True(ex.Message.StartsWith($"No local account matching the specified username: mockuser@mockdomain.com tenantId: {tenantId} was found."));
 
             Assert.True(ex.Message.Contains($"username: fakeuser@fakedomain.com tenantId: {fakeuserTenantId}"));
 
@@ -278,7 +278,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.True(ex.Message.StartsWith("Multiple accounts matching the specified username: mockuser@mockdomain.com were found in the cache"));
+            Assert.True(ex.Message.StartsWith("Multiple local accounts matching the specified username: mockuser@mockdomain.com were found"));
 
             Assert.True(ex.Message.Contains($"username: fakeuser@fakedomain.com tenantId: {fakeuserTenantId}"));
 
@@ -308,7 +308,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.True(ex.Message.StartsWith($"Multiple accounts matching the specified tenantId: {mockuserGuestTenantId} were found in the cache"));
+            Assert.True(ex.Message.StartsWith($"Multiple local accounts matching the specified tenantId: {mockuserGuestTenantId} were found"));
 
             Assert.True(ex.Message.Contains($"username: fakeuser@fakedomain.com tenantId: {fakeuserTenantId}"));
 
@@ -338,7 +338,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.True(ex.Message.StartsWith($"Multiple accounts matching the specified username: mockuser@mockdomain.com tenantId: {mockuserTenantId} were found in the cache"));
+            Assert.True(ex.Message.StartsWith($"Multiple local accounts matching the specified username: mockuser@mockdomain.com tenantId: {mockuserTenantId} were found"));
 
             Assert.True(ex.Message.Contains($"username: fakeuser@fakedomain.com tenantId: {fakeuserTenantId}"));
 
