@@ -37,9 +37,9 @@
     <PackageReference Update="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7" />
     <PackageReference Update="Microsoft.Build.Tasks.Core" Version="15.5.180" />
     <PackageReference Update="Microsoft.Build" Version="15.5.180" />
-    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.4.0" />
-    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" />
-    <PackageReference Update="Microsoft.CodeAnalysis" Version="3.4.0" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.6.1" />
+    <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
+    <PackageReference Update="Microsoft.CodeAnalysis" Version="2.3.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="1.0.2" />
@@ -104,7 +104,7 @@
 
   <!-- Track 2 specific versions -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200116.1" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200116.6" />
     <PackageReference Update="System.Memory" Version="4.5.3" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
