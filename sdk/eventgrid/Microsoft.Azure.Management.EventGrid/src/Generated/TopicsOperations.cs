@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Name of the topic.
         /// </param>
         /// <param name='tags'>
-        /// Tags of the resource
+        /// Tags of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1791,7 +1791,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Name of the topic.
         /// </param>
         /// <param name='tags'>
-        /// Tags of the resource
+        /// Tags of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

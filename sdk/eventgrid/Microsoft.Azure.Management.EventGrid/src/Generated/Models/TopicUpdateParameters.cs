@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the TopicUpdateParameters class.
         /// </summary>
-        /// <param name="tags">Tags of the resource</param>
+        /// <param name="tags">Tags of the resource.</param>
         public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Tags = tags;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the resource
+        /// Gets or sets tags of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
