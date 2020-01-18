@@ -54,7 +54,7 @@ namespace IotCentral.Tests.ScenarioTests
             var app = new App()
             {
                 Location = location,
-                Sku = new AppSkuInfo()
+                Sku = new CustomAppSkuInfo()
                 {
                     Name = "ST1"
                 },

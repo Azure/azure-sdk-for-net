@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// application. Optional; if not specified, defaults to a blank
         /// blueprint and allows the application to be defined from
         /// scratch.</param>
-        public App(string location, AppSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string))
+        public App(string location, CustomAppSkuInfo sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string applicationId = default(string), string displayName = default(string), string subdomain = default(string), string template = default(string))
             : base(location, id, name, type, tags)
         {
             ApplicationId = applicationId;
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// Gets or sets a valid instance SKU.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
-        public AppSkuInfo Sku { get; set; }
+        public CustomAppSkuInfo Sku { get; set; }
 
         /// <summary>
         /// Validate the object.

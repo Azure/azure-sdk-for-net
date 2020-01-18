@@ -133,7 +133,7 @@ namespace IotCentral.Tests.ScenarioTests
                 App app = new App()
                 {
                     Location = IotCentralTestUtilities.DefaultLocation,
-                    Sku = new AppSkuInfo(),
+                    Sku = new CustomAppSkuInfo(),
                     Subdomain = IotCentralTestUtilities.DefaultUpdateSubdomain,
                     DisplayName = IotCentralTestUtilities.DefaultUpdateResourceName
                 };
@@ -156,7 +156,7 @@ namespace IotCentral.Tests.ScenarioTests
                 App app = new App()
                 {
                     Location = IotCentralTestUtilities.DefaultLocation,
-                    Sku = new AppSkuInfo()
+                    Sku = new CustomAppSkuInfo()
                     {
                         Name = "ST1"
                     },
