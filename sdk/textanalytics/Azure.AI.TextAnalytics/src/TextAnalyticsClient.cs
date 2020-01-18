@@ -306,7 +306,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 using Request request = CreateDetectLanguageRequest(inputs, options);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -314,7 +314,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -577,7 +577,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -836,7 +836,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -1087,7 +1087,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -1352,7 +1352,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -1615,7 +1615,7 @@ namespace Azure.AI.TextAnalytics
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
