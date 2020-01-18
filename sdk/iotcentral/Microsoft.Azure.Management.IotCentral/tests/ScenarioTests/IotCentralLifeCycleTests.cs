@@ -191,6 +191,33 @@ namespace IotCentral.Tests.ScenarioTests
         }
 
         [Fact]
+        public void TestAppWhenInvalidAppSkuInfo()
+        {
+            var exceptionThrown = false;
+            try
+            {
+                App app = new App()
+                {
+                    Location = IotCentralTestUtilities.DefaultLocation,
+                    Sku = new CustomAppSkuInfo()
+                    {
+                        Name = "T1"
+                    },
+                    Subdomain = IotCentralTestUtilities.DefaultUpdateSubdomain,
+                    DisplayName = IotCentralTestUtilities.DefaultUpdateResourceName
+                };
+                app.Validate();
+            }
+            catch (Exception ex)
+            {
+                exceptionThrown = true;
+                Assert.Equal(typeof(ValidationException), ex.GetType());
+                Assert.Equal("Sku parameter invalid. It can only be S1,ST0,ST1,ST2", ex.Message);
+            }
+            Assert.True(exceptionThrown);
+        }
+
+        [Fact]
         public void TestOperationInputsWhenNullInput()
         {
             var exceptionThrown = false;
