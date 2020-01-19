@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='name'>
             /// The name of the new query API key.
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='name'>
             /// The name of the new query API key.
@@ -84,7 +84,8 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Returns the list of query API keys for the given Azure Search service.
+            /// Returns the list of query API keys for the given Azure Cognitive Search
+            /// service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -95,8 +96,64 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
+            public static IEnumerable<QueryKey> ListBySearchServiceGet(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            {
+                return operations.ListBySearchServiceGetAsync(resourceGroupName, searchServiceName, searchManagementRequestOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the list of query API keys for the given Azure Cognitive Search
+            /// service.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
+            public static async Task<IEnumerable<QueryKey>> ListBySearchServiceGetAsync(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySearchServiceGetWithHttpMessagesAsync(resourceGroupName, searchServiceName, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns the list of query API keys for the given Azure Cognitive Search
+            /// service.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
@@ -107,7 +164,8 @@ namespace Microsoft.Azure.Management.Search
             }
 
             /// <summary>
-            /// Returns the list of query API keys for the given Azure Search service.
+            /// Returns the list of query API keys for the given Azure Cognitive Search
+            /// service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -118,8 +176,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
@@ -149,8 +207,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='key'>
             /// The query key to be deleted. Query keys are identified by value, not by
@@ -178,8 +236,8 @@ namespace Microsoft.Azure.Management.Search
             /// obtain this value from the Azure Resource Manager API or the portal.
             /// </param>
             /// <param name='searchServiceName'>
-            /// The name of the Azure Search service associated with the specified resource
-            /// group.
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
             /// </param>
             /// <param name='key'>
             /// The query key to be deleted. Query keys are identified by value, not by
