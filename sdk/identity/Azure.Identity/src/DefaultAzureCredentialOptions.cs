@@ -67,7 +67,7 @@ namespace Azure.Identity
         public bool ExcludeInteractiveBrowserCredential { get; set; } = true;
 
         /// <summary>
-        /// Specifies whether the <see cref="CliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// Specifies whether the <see cref="AzureCliCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// </summary>
         public bool ExcludeCliCredential { get; set; } = false;
     }

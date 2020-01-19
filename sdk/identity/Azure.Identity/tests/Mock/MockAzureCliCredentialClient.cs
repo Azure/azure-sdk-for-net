@@ -7,16 +7,16 @@ using System.Text;
 
 namespace Azure.Identity.Tests.Mock
 {
-    internal class MockCliCredentialClient : CliCredentialClient
+    internal class MockAzureCliCredentialClient : AzureCliCredentialClient
     {
         private readonly (string, int) _resultGenerator;
 
-        public MockCliCredentialClient((string, int) resultGenerator)
+        public MockAzureCliCredentialClient((string, int) resultGenerator)
         {
             _resultGenerator = resultGenerator;
         }
 
-        public override (string, int) CreateProcess(string extendCommand)
+        public override (string, int) GetAzureCliAccesToken(string resource)
         {
             return _resultGenerator;
         }

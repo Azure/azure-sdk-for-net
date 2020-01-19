@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(SharedTokenCacheCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(CliCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[3]);
             Assert.IsNull(sources[4]);
         }
 
@@ -45,7 +45,7 @@ namespace Azure.Identity.Tests
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(SharedTokenCacheCredential), sources[2]);
-            Assert.IsInstanceOf(typeof(CliCredential), sources[3]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[3]);
 
             if (includeInteractive)
             {

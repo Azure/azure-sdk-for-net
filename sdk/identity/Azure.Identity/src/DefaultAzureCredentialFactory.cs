@@ -38,7 +38,7 @@ namespace Azure.Identity
 
         public virtual IExtendedTokenCredential CreateCliCredential()
         {
-            return new CliCredential(Pipeline);
+            return new AzureCliCredential(Pipeline);
         }
     }
 }

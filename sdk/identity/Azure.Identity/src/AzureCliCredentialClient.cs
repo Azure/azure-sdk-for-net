@@ -7,10 +7,12 @@ using System.Text;
 
 namespace Azure.Identity
 {
-    internal class CliCredentialClient
+    internal class AzureCliCredentialClient
     {
-        public virtual (string, int) CreateProcess(string extendCommand)
+        public virtual (string, int) GetAzureCliAccesToken(string resource)
         {
+            string command = $"az account get-access-token --output json --resource {resource}";
+
             string fileName = string.Empty;
             string argument = string.Empty;
             int exitCode = default;
@@ -21,17 +23,16 @@ namespace Azure.Identity
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = "cmd";
-                argument = $"/c \"{extendCommand}\"";
+                argument = $"/c \"{command}\"";
             }
             else
             {
                 fileName = "/bin/sh";
-                argument = $"-c \"{extendCommand}\"";
+                argument = $"-c \"{command}\"";
             }
 
             using (Process proc = new Process())
             {
-
                 ProcessStartInfo procStartInfo = new ProcessStartInfo()
                 {
                     FileName = fileName,

@@ -17,7 +17,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token.
     /// </summary>
-    public class CliCredential : TokenCredential, IExtendedTokenCredential
+    public class AzureCliCredential : TokenCredential, IExtendedTokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to setup account";
@@ -25,20 +25,20 @@ namespace Azure.Identity
         private const string InvalidResourceMessage = "Resource is not in expected format. Only alphanumeric characters, '.', '-', ':', and '/' are allowed";
 
         private readonly CredentialPipeline _pipeline;
-        private readonly CliCredentialClient _client;
+        private readonly AzureCliCredentialClient _client;
 
         /// <summary>
         /// Create an instance of CliCredential class.
         /// </summary>
-        public CliCredential()
-            : this(CredentialPipeline.GetInstance(null), new CliCredentialClient())
+        public AzureCliCredential()
+            : this(CredentialPipeline.GetInstance(null), new AzureCliCredentialClient())
         { }
 
-        internal CliCredential(CredentialPipeline pipeline)
-            : this(pipeline, new CliCredentialClient())
+        internal AzureCliCredential(CredentialPipeline pipeline)
+            : this(pipeline, new AzureCliCredentialClient())
         { }
 
-        internal CliCredential(CredentialPipeline pipeline, CliCredentialClient client)
+        internal AzureCliCredential(CredentialPipeline pipeline, AzureCliCredentialClient client)
         {
             _pipeline = pipeline;
 
@@ -79,7 +79,7 @@ namespace Azure.Identity
 
         private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.CliCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.AzureCliCredential.GetToken", requestContext);
 
             try
             {
@@ -92,8 +92,7 @@ namespace Azure.Identity
                     throw new Exception(InvalidResourceMessage);
                 }
 
-                string command = $"az account get-access-token --output json --resource {resource}";
-                (string output, int exitCode) = _client.CreateProcess(command);
+                (string output, int exitCode) = _client.GetAzureCliAccesToken(resource);
 
                 if (exitCode != 0)
                 {
