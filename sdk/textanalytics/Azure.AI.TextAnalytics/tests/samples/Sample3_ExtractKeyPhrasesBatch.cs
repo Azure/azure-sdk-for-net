@@ -53,8 +53,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.Error.ErrorCode != default)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
-                    // TODO: print error to console
+                    Debug.WriteLine($"    Document error: {result.Error.Message}.");
                 }
                 else
                 {

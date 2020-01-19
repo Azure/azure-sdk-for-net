@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2", "")
+                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
                 {
                      Language = "en",
                 },
@@ -53,7 +53,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.Error.ErrorCode != default)
                 {
-                    Debug.WriteLine($"    Document error: {result.Error}.");
+                    Debug.WriteLine($"    Document error: {result.Error.Message}.");
                 }
                 else
                 {
