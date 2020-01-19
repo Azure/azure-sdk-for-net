@@ -184,7 +184,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // Delete the server and confirm that it is deleted.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
 
-                // delete the server again and make sure it continues to result in a succesful code.
+                // delete the server again and make sure it continues to result in a successful code.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
 
                 // delete the server with its old name, which should also succeed.
