@@ -281,6 +281,31 @@ namespace Microsoft.Azure.Management.PowerBIDedicated
         /// </exception>
         Task<AzureOperationResponse<SkuEnumerationForExistingResourceResult>> ListSkusForCapacityWithHttpMessagesAsync(string resourceGroupName, string dedicatedCapacityName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Check the name availability in the target location.
+        /// </summary>
+        /// <param name='location'>
+        /// The region name which the operation will lookup into.
+        /// </param>
+        /// <param name='capacityParameters'>
+        /// The name of the capacity.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityWithHttpMessagesAsync(string location, CheckCapacityNameAvailabilityParameters capacityParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Provisions the specified Dedicated capacity based on the
         /// configuration specified in the request.
         /// </summary>
