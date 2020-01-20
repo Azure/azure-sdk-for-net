@@ -13,19 +13,17 @@ namespace Microsoft.Azure.Management.Search
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for QueryKeysOperations.
+    /// Extension methods for PrivateEndpointConnectionsOperations.
     /// </summary>
-    public static partial class QueryKeysOperationsExtensions
+    public static partial class PrivateEndpointConnectionsOperationsExtensions
     {
             /// <summary>
-            /// Generates a new query key for the specified Search service. You can create
-            /// up to 50 query keys per service.
+            /// Updates a Private Endpoint connection to the Search service in the given
+            /// resource group.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -39,20 +37,24 @@ namespace Microsoft.Azure.Management.Search
             /// The name of the Azure Cognitive Search service associated with the
             /// specified resource group.
             /// </param>
-            /// <param name='name'>
-            /// The name of the new query API key.
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection to the Azure Cognitive Search
+            /// service with the specified resource group.
+            /// </param>
+            /// <param name='privateEndpointConnection'>
+            /// The definition of the private endpoint connection to update.
             /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static QueryKey Create(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            public static PrivateEndpointConnection Update(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
             {
-                return operations.CreateAsync(resourceGroupName, searchServiceName, name, searchManagementRequestOptions).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, searchServiceName, privateEndpointConnectionName, privateEndpointConnection, searchManagementRequestOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Generates a new query key for the specified Search service. You can create
-            /// up to 50 query keys per service.
+            /// Updates a Private Endpoint connection to the Search service in the given
+            /// resource group.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
             /// <param name='operations'>
@@ -66,8 +68,12 @@ namespace Microsoft.Azure.Management.Search
             /// The name of the Azure Cognitive Search service associated with the
             /// specified resource group.
             /// </param>
-            /// <param name='name'>
-            /// The name of the new query API key.
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection to the Azure Cognitive Search
+            /// service with the specified resource group.
+            /// </param>
+            /// <param name='privateEndpointConnection'>
+            /// The definition of the private endpoint connection to update.
             /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
@@ -75,16 +81,78 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<QueryKey> CreateAsync(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> UpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, PrivateEndpointConnection privateEndpointConnection, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, searchServiceName, name, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, searchServiceName, privateEndpointConnectionName, privateEndpointConnection, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns the list of query API keys for the given Azure Cognitive Search
+            /// Gets the details of the private endpoint connection to the Search service
+            /// in the given resource group.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection to the Azure Cognitive Search
+            /// service with the specified resource group.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static PrivateEndpointConnection Get(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            {
+                return operations.GetAsync(resourceGroupName, searchServiceName, privateEndpointConnectionName, searchManagementRequestOptions).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the private endpoint connection to the Search service
+            /// in the given resource group.
+            /// <see href="https://aka.ms/search-manage" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription. You can
+            /// obtain this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='searchServiceName'>
+            /// The name of the Azure Cognitive Search service associated with the
+            /// specified resource group.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection to the Azure Cognitive Search
+            /// service with the specified resource group.
+            /// </param>
+            /// <param name='searchManagementRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> GetAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, searchServiceName, privateEndpointConnectionName, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Disconnects the private endpoint connection and deletes it from the Search
             /// service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
@@ -99,16 +167,20 @@ namespace Microsoft.Azure.Management.Search
             /// The name of the Azure Cognitive Search service associated with the
             /// specified resource group.
             /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection to the Azure Cognitive Search
+            /// service with the specified resource group.
+            /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IEnumerable<QueryKey> ListBySearchService(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
+            public static PrivateEndpointConnection Delete(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
             {
-                return operations.ListBySearchServiceAsync(resourceGroupName, searchServiceName, searchManagementRequestOptions).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, searchServiceName, privateEndpointConnectionName, searchManagementRequestOptions).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Returns the list of query API keys for the given Azure Cognitive Search
+            /// Disconnects the private endpoint connection and deletes it from the Search
             /// service.
             /// <see href="https://aka.ms/search-manage" />
             /// </summary>
@@ -123,79 +195,22 @@ namespace Microsoft.Azure.Management.Search
             /// The name of the Azure Cognitive Search service associated with the
             /// specified resource group.
             /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection to the Azure Cognitive Search
+            /// service with the specified resource group.
+            /// </param>
             /// <param name='searchManagementRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<QueryKey>> ListBySearchServiceAsync(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnection> DeleteAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string searchServiceName, string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySearchServiceWithHttpMessagesAsync(resourceGroupName, searchServiceName, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, searchServiceName, privateEndpointConnectionName, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the specified query key. Unlike admin keys, query keys are not
-            /// regenerated. The process for regenerating a query key is to delete and then
-            /// recreate it.
-            /// <see href="https://aka.ms/search-manage" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the current subscription. You can
-            /// obtain this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='searchServiceName'>
-            /// The name of the Azure Cognitive Search service associated with the
-            /// specified resource group.
-            /// </param>
-            /// <param name='key'>
-            /// The query key to be deleted. Query keys are identified by value, not by
-            /// name.
-            /// </param>
-            /// <param name='searchManagementRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static void Delete(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions))
-            {
-                operations.DeleteAsync(resourceGroupName, searchServiceName, key, searchManagementRequestOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified query key. Unlike admin keys, query keys are not
-            /// regenerated. The process for regenerating a query key is to delete and then
-            /// recreate it.
-            /// <see href="https://aka.ms/search-manage" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the current subscription. You can
-            /// obtain this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='searchServiceName'>
-            /// The name of the Azure Cognitive Search service associated with the
-            /// specified resource group.
-            /// </param>
-            /// <param name='key'>
-            /// The query key to be deleted. Query keys are identified by value, not by
-            /// name.
-            /// </param>
-            /// <param name='searchManagementRequestOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this IQueryKeysOperations operations, string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, searchServiceName, key, searchManagementRequestOptions, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

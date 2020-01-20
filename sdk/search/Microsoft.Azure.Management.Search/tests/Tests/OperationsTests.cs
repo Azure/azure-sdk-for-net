@@ -63,12 +63,12 @@ namespace Microsoft.Azure.Management.Search.Tests
                             operation: "Regenerate Admin Key",
                             description: "Regenerates the admin key.")),
                     new Operation(
-                        name: "Microsoft.Search/searchServices/queryKey/read",
+                        name: "Microsoft.Search/searchServices/listQueryKeys/action",
                         display: new OperationDisplay(
                             provider: "Microsoft Search",
                             resource: "API Keys",
-                            operation: "Get Query Key",
-                            description: "Reads the query keys.")),
+                            operation: "Get Query Keys",
+                            description: "Returns the list of query API keys for the given Azure Search service.")),
                     new Operation(
                         name: "Microsoft.Search/searchServices/createQueryKey/action",
                         display: new OperationDisplay(
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                             operation: "Create Query Key",
                             description: "Creates the query key.")),
                     new Operation(
-                        name: "Microsoft.Search/searchServices/queryKey/delete",
+                        name: "Microsoft.Search/searchServices/deleteQueryKey/delete",
                         display: new OperationDisplay(
                             provider: "Microsoft Search",
                             resource: "API Keys",

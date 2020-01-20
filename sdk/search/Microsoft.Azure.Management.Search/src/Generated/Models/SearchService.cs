@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes an Azure Search service and its current state.
+    /// Describes an Azure Cognitive Search service and its current state.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SearchService : Resource
@@ -72,11 +72,11 @@ namespace Microsoft.Azure.Management.Search.Models
         /// 'disabled': The Search service is disabled. In this state, the
         /// service will reject all API requests. 'error': The Search service
         /// is in an error state. If your service is in the degraded, disabled,
-        /// or error states, it means the Azure Search team is actively
-        /// investigating the underlying issue. Dedicated services in these
-        /// states are still chargeable based on the number of search units
-        /// provisioned. Possible values include: 'running', 'provisioning',
-        /// 'deleting', 'degraded', 'disabled', 'error'</param>
+        /// or error states, it means the Azure Cognitive Search team is
+        /// actively investigating the underlying issue. Dedicated services in
+        /// these states are still chargeable based on the number of search
+        /// units provisioned. Possible values include: 'running',
+        /// 'provisioning', 'deleting', 'degraded', 'disabled', 'error'</param>
         /// <param name="statusDetails">The details of the Search service
         /// status.</param>
         /// <param name="provisioningState">The state of the last provisioning
@@ -91,10 +91,14 @@ namespace Microsoft.Azure.Management.Search.Models
         /// the call to Create Search service. This is because the free service
         /// uses capacity that is already set up. Possible values include:
         /// 'succeeded', 'provisioning', 'failed'</param>
+        /// <param name="networkRuleSet">Network specific rules that determine
+        /// how the Azure Cognitive Search service may be reached.</param>
+        /// <param name="privateEndpointConnections">The list of private
+        /// endpoint connections to the Azure Cognitive Search service.</param>
         /// <param name="sku">The SKU of the Search Service, which determines
         /// price tier and capacity limits. This property is required when
         /// creating a new Search Service.</param>
-        public SearchService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), Sku sku = default(Sku))
+        public SearchService(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), int? replicaCount = default(int?), int? partitionCount = default(int?), HostingMode? hostingMode = default(HostingMode?), SearchServiceStatus? status = default(SearchServiceStatus?), string statusDetails = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), Sku sku = default(Sku))
             : base(id, name, type, location, tags, identity)
         {
             ReplicaCount = replicaCount;
@@ -103,6 +107,8 @@ namespace Microsoft.Azure.Management.Search.Models
             Status = status;
             StatusDetails = statusDetails;
             ProvisioningState = provisioningState;
+            NetworkRuleSet = networkRuleSet;
+            PrivateEndpointConnections = privateEndpointConnections;
             Sku = sku;
             CustomInit();
         }
@@ -154,11 +160,11 @@ namespace Microsoft.Azure.Management.Search.Models
         /// 'disabled': The Search service is disabled. In this state, the
         /// service will reject all API requests. 'error': The Search service
         /// is in an error state. If your service is in the degraded, disabled,
-        /// or error states, it means the Azure Search team is actively
-        /// investigating the underlying issue. Dedicated services in these
-        /// states are still chargeable based on the number of search units
-        /// provisioned. Possible values include: 'running', 'provisioning',
-        /// 'deleting', 'degraded', 'disabled', 'error'
+        /// or error states, it means the Azure Cognitive Search team is
+        /// actively investigating the underlying issue. Dedicated services in
+        /// these states are still chargeable based on the number of search
+        /// units provisioned. Possible values include: 'running',
+        /// 'provisioning', 'deleting', 'degraded', 'disabled', 'error'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public SearchServiceStatus? Status { get; private set; }
@@ -184,6 +190,20 @@ namespace Microsoft.Azure.Management.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets network specific rules that determine how the Azure
+        /// Cognitive Search service may be reached.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkRuleSet")]
+        public NetworkRuleSet NetworkRuleSet { get; set; }
+
+        /// <summary>
+        /// Gets the list of private endpoint connections to the Azure
+        /// Cognitive Search service.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Search Service, which determines price

@@ -40,12 +40,15 @@ namespace Microsoft.Azure.Management.Search.Tests
             Run(() =>
             {
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
+                var services = searchMgmt.Services.ListBySubscription();
+                int initialCount = services!= null ? services.Count(): 0;
+
                 SearchService service1 = CreateFreeService(searchMgmt);
                 SearchService service2 = CreateFreeService(searchMgmt);
+                services = searchMgmt.Services.ListBySubscription();
 
-                var services = searchMgmt.Services.ListBySubscription();
                 Assert.NotNull(services);
-                Assert.Equal(2, services.Count());
+                Assert.Equal(2, services.Count() - initialCount);
                 Assert.Contains(service1.Name, services.Select(s => s.Name));
                 Assert.Contains(service2.Name, services.Select(s => s.Name));
             });
@@ -402,6 +405,54 @@ namespace Microsoft.Azure.Management.Search.Tests
 
                 string tenantId = string.IsNullOrWhiteSpace(service.Identity.TenantId) ? null : service.Identity.TenantId;
                 Assert.NotNull(tenantId);
+
+                searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
+        [Fact]
+        public void CanCreatePrivateService()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                string serviceName = SearchTestUtilities.GenerateServiceName();
+                SearchService service = DefineServiceWithSku(SkuName.Basic);
+                service.NetworkRuleSet = new NetworkRuleSet();
+                service.NetworkRuleSet.EndpointAccess = EndpointAccess.Private;
+                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+                Assert.NotNull(service);
+                Assert.NotNull(service.NetworkRuleSet);
+                Assert.Equal(EndpointAccess.Private, service.NetworkRuleSet.EndpointAccess);
+
+                searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
+        [Fact]
+        public void CanCreateAndUpdateServiceWithIpFirewallRules()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                string serviceName = SearchTestUtilities.GenerateServiceName();
+                SearchService service = DefineServiceWithSku(SkuName.Basic);
+                service.NetworkRuleSet = new NetworkRuleSet();
+                service.NetworkRuleSet.IpRules = new List<IpRule>();
+                service.NetworkRuleSet.IpRules.Add(new IpRule("13.106.4.96"));
+                service.NetworkRuleSet.IpRules.Add(new IpRule("167.220.148.0/23"));
+
+                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+                Assert.NotNull(service);
+                Assert.NotNull(service.NetworkRuleSet);
+                Assert.Equal(2, service.NetworkRuleSet.IpRules.Count);
+                Assert.NotNull(service.NetworkRuleSet.IpRules.First(x => x.Value == "13.106.4.96"));
+                Assert.NotNull(service.NetworkRuleSet.IpRules.First(x => x.Value == "167.220.148.0/23"));
+
+                service.NetworkRuleSet.IpRules.Remove(service.NetworkRuleSet.IpRules.First(x => x.Value == "13.106.4.96"));
+                service = searchMgmt.Services.Update(Data.ResourceGroupName, serviceName, service);
+                Assert.Equal(1, service.NetworkRuleSet.IpRules.Count);
+                Assert.NotNull(service.NetworkRuleSet.IpRules.First(x => x.Value == "167.220.148.0/23"));
 
                 searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
             });
