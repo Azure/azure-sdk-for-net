@@ -832,24 +832,40 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobContainerInfo> response;
-            try
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                response = await CreateInternal(
-                    publicAccessType,
-                    metadata,
-                    encryptionScopeOptions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(BlobContainerClient)}.{nameof(CreateIfNotExists)}")
-                    .ConfigureAwait(false);
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                Response<BlobContainerInfo> response;
+                try
+                {
+                    response = await CreateInternal(
+                        publicAccessType,
+                        metadata,
+                        encryptionScopeOptions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(BlobContainerClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
+                {
+                    response = default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
+                return response;
             }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
-            {
-                response = default;
-            }
-            return response;
         }
 
         /// <summary>
@@ -1098,20 +1114,36 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
-            try
+            using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
-                Response response = await DeleteInternal(
-                    conditions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(BlobContainerClient)}.{nameof(DeleteIfExists)}")
-                    .ConfigureAwait(false);
-                return Response.FromValue(true, response);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
-            {
-                return Response.FromValue(false, default);
+                Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        conditions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(BlobContainerClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                }
             }
         }
 
