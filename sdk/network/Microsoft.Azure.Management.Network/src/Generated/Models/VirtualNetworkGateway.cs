@@ -52,19 +52,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="enableBgp">Whether BGP is enabled for this virtual
         /// network gateway or not.</param>
         /// <param name="activeActive">ActiveActive flag.</param>
-        /// <param name="gatewayDefaultSite">The reference of the
+        /// <param name="gatewayDefaultSite">The reference to the
         /// LocalNetworkGateway resource which represents local network site
         /// having default routes. Assign Null value in case of removing
         /// existing default site setting.</param>
-        /// <param name="sku">The reference of the VirtualNetworkGatewaySku
+        /// <param name="sku">The reference to the VirtualNetworkGatewaySku
         /// resource which represents the SKU selected for Virtual network
         /// gateway.</param>
-        /// <param name="vpnClientConfiguration">The reference of the
+        /// <param name="vpnClientConfiguration">The reference to the
         /// VpnClientConfiguration resource which represents the P2S VpnClient
         /// configurations.</param>
         /// <param name="bgpSettings">Virtual network gateway's BGP speaker
         /// settings.</param>
-        /// <param name="customRoutes">The reference of the address space
+        /// <param name="customRoutes">The reference to the address space
         /// resource which represents the custom routes address space specified
         /// by the customer for virtual network gateway and VpnClient.</param>
         /// <param name="resourceGuid">The resource GUID property of the
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool? ActiveActive { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the LocalNetworkGateway resource
+        /// Gets or sets the reference to the LocalNetworkGateway resource
         /// which represents local network site having default routes. Assign
         /// Null value in case of removing existing default site setting.
         /// </summary>
@@ -155,14 +155,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource GatewayDefaultSite { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the VirtualNetworkGatewaySku resource
+        /// Gets or sets the reference to the VirtualNetworkGatewaySku resource
         /// which represents the SKU selected for Virtual network gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sku")]
         public VirtualNetworkGatewaySku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the VpnClientConfiguration resource
+        /// Gets or sets the reference to the VpnClientConfiguration resource
         /// which represents the P2S VpnClient configurations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnClientConfiguration")]
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the address space resource which
+        /// Gets or sets the reference to the address space resource which
         /// represents the custom routes address space specified by the
         /// customer for virtual network gateway and VpnClient.
         /// </summary>

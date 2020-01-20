@@ -1771,7 +1771,7 @@ namespace Azure.Storage.Files.Shares
                         contentHash: transactionalContentHash,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.UploadRangeOperationName);
+                        operationName: Constants.File.UploadRangeOperationName).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

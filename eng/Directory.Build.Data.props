@@ -21,6 +21,7 @@
       CA1063; <!-- Dispose implementation -->
       CA1066; <!-- Implement IEquatable -->
       CA1815; <!-- Equality members on structs -->
+      CA2007; <!-- Do not directly await a Task without calling ConfigureAwait (replaced by AZC0012) -->
       CA2231; <!-- Override Equality operators -->
       CA2237; <!-- [Serializeable] on exceptions -->
       CA2225; <!-- Provide alternative to implicit operators -->

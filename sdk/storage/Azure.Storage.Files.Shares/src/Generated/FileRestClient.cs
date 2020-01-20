@@ -5193,7 +5193,10 @@ namespace Azure.Storage.Files.Shares
                 if (contentHash != null) { _request.Headers.SetValue("Content-MD5", System.Convert.ToBase64String(contentHash)); }
 
                 // Create the body
-                _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                if (optionalbody != null)
+                {
+                    _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                }
 
                 return _message;
             }

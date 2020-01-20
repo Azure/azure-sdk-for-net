@@ -59,7 +59,7 @@
             "type": "Microsoft.AppConfiguration/configurationStores",
             "apiVersion": "2019-02-01-preview",
             "name": "[variables('uniqueAzConfigName')]",
-            "location":"[variables('location')]",
+            "location":"[parameters('location')]",
             "properties": {
                 "endpoint":"[variables('endpointValue')]"
             }

@@ -1478,7 +1478,7 @@ namespace Azure.Storage.Files.DataLake
                         body: content,
                         version: Version.ToVersionString(),
                         position: offset,
-                        contentLength: content.Length,
+                        contentLength: content?.Length ?? 0,
                         transactionalContentHash: contentHash,
                         leaseId: leaseId,
                         async: async,
