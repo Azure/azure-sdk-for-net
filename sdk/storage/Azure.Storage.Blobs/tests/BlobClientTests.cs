@@ -872,26 +872,44 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Upload a GB
+            // Upload 100MB
             var data = GetRandomBuffer(100 * Constants.MB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
             using var stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
-            // Create a CancellationToken that times out after .01s
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
-            CancellationToken token = source.Token;
+            await AssertDownloadAsync();
+            await AssertDownloadToAsync();
 
-            // Verifying downloading will cancel
-            try
+            async Task AssertDownloadAsync()
             {
-                using BlobDownloadInfo result = await blob.DownloadAsync(cancellationToken: token);
+                // Create a CancellationToken that times out after .01s
+                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                CancellationToken token = source.Token;
+                // Delay 1s to ensure that the Download operation should be canceled since DownloadAsync doesn't
+                // buffer the response.
+                await Delay(1000);
+
+                // Verifying Download will cancel
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadAsync(cancellationToken: token));
             }
-            catch (OperationCanceledException)
+
+            async Task AssertDownloadToAsync()
             {
-                return; // Succeeded
+                // Create a CancellationToken that times out after .01s
+                // Intentionally not delaying here, as DownloadToAsync operation should always cancel
+                // since it buffers the full response.
+                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                CancellationToken token = source.Token;
+
+                // Verifying DownloadTo will cancel
+                using var downloadStream = new MemoryStream();
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadToAsync(
+                        destination: downloadStream,
+                        cancellationToken: token));
             }
-            Assert.Fail("Not canceled!");
         }
     }
 }
