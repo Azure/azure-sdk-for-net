@@ -21,8 +21,8 @@ namespace Azure.AI.TextAnalytics
             NamedEntities = new ReadOnlyCollection<NamedEntity>(entities);
         }
 
-        internal RecognizePiiEntitiesResult(string id, string errorMessage)
-            : base(id, errorMessage)
+        internal RecognizePiiEntitiesResult(string id, TextAnalyticsError error)
+            : base(id, error)
         {
             NamedEntities = Array.Empty<NamedEntity>();
         }
