@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
@@ -15,7 +16,6 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -293,6 +293,39 @@ namespace Azure.Storage.Blobs.Test
                 var accountName = new BlobUriBuilder(service.Uri).AccountName;
                 TestHelper.AssertCacheableProperty(accountName, () => container.AccountName);
                 TestHelper.AssertCacheableProperty(containerName, () => container.Name);
+            }
+            finally
+            {
+                await container.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_WithSharedKey_Retry_RequestDateShouldUpdate()
+        {
+            // Arrange
+            BlobClientOptions options = GetOptions();
+            var testExceptionPolicy = new TestExceptionPolicy(
+                numberOfFailuresToSimulate: 2,
+                trackedRequestMethods: new List<RequestMethod>(new RequestMethod[] { RequestMethod.Put }),
+                delayBetweenAttempts: 1000);
+
+            options.AddPolicy(testExceptionPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient service = GetServiceClient_SharedKey(options);
+            var containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            try
+            {
+                // Act
+                Response<BlobContainerInfo> response = await container.CreateAsync();
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+                Assert.AreEqual(3, testExceptionPolicy.DatesSetInRequests.Count);
+                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[1] > testExceptionPolicy.DatesSetInRequests[0]);
+                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[2] > testExceptionPolicy.DatesSetInRequests[1]);
             }
             finally
             {
