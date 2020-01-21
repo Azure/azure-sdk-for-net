@@ -55,6 +55,16 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateSkillsetReturnsCorrectDefinitionInlineCustomEntityLookup()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                CreateAndValidateSkillset(searchClient, CreateSkillsetWithInlineCustomEntityLookup());
+            });
+        }
+
+        [Fact]
         public void CreateSkillsetReturnsCorrectDefinitionDocumentExtraction()
         {
             Run(() =>
@@ -1483,6 +1493,105 @@ namespace Microsoft.Azure.Search.Tests
             return new Skillset("customentitylookupskillset", description: "Skillset with custom entity lookup skill", skills: skills);
         }
 
+        private static Skillset CreateSkillsetWithInlineCustomEntityLookup()
+        {
+            var skills = new List<Skill>();
+
+            var inputs = new List<InputFieldMappingEntry>()
+            {
+                new InputFieldMappingEntry
+                {
+                    Name = "text",
+                    Source = "/document/mytext"
+                }
+            };
+
+            var outputs = new List<OutputFieldMappingEntry>()
+            {
+                new OutputFieldMappingEntry
+                {
+                    Name = "entities",
+                    TargetName = "myCustomEntities"
+                }
+            };
+
+            var entity1 = new CustomEntityLookupSkillEntity(
+                                name: "entity1",
+                                description: "description passthrough",
+                                type: "type passthrough",
+                                subtype: "subtype passthrough",
+                                id: "123",
+                                caseSensitive: null,
+                                accentSensitive: null,
+                                fuzzyEditDistance: null,
+                                defaultCaseSensitive: null,
+                                defaultAccentSensitive: null,
+                                defaultFuzzyEditDistance: null,
+                                aliases: null);
+
+            var entity2Aliases = new List<CustomEntityLookupSkillAlias>();
+            var entity2 = new CustomEntityLookupSkillEntity(
+                                name: "entity2",
+                                description: "description passthrough",
+                                type: "type passthrough",
+                                subtype: "subtype passthrough",
+                                id: "456",
+                                caseSensitive: true,
+                                accentSensitive: false,
+                                fuzzyEditDistance: 1,
+                                defaultCaseSensitive: false,
+                                defaultAccentSensitive: true,
+                                defaultFuzzyEditDistance: 3,
+                                aliases: entity2Aliases);
+
+
+            var entity3Aliases = new List<CustomEntityLookupSkillAlias>();
+            var entity3Alias1 = new CustomEntityLookupSkillAlias(
+                                text: "e3a1",
+                                caseSensitive: null,
+                                accentSensitive: null,
+                                fuzzyEditDistance: null);
+            entity3Aliases.Add(entity3Alias1);
+            var entity3Alias2 = new CustomEntityLookupSkillAlias(
+                                text: "e3a2",
+                                caseSensitive: true,
+                                accentSensitive: false,
+                                fuzzyEditDistance: 2);
+            entity3Aliases.Add(entity3Alias2);
+            entity3Aliases.Add(entity3Alias2); // intentional dupe entry
+
+            var entity3 = new CustomEntityLookupSkillEntity(
+                                name: "entity2",
+                                description: "description passthrough",
+                                type: "type passthrough",
+                                subtype: "subtype passthrough",
+                                id: "456",
+                                caseSensitive: null,
+                                accentSensitive: null,
+                                fuzzyEditDistance: null,
+                                defaultCaseSensitive: true,
+                                defaultAccentSensitive: true,
+                                defaultFuzzyEditDistance: 3,
+                                aliases: entity3Aliases);
+
+            var entityArray = new List<CustomEntityLookupSkillEntity>();
+            entityArray.Add(entity1);
+            entityArray.Add(entity2);
+            entityArray.Add(entity3);
+            entityArray.Add(entity3); // intentional dupe entry
+            var entitiesDefintion = entityArray;
+
+            skills.Add(new CustomEntityLookupSkill(
+                inputs,
+                outputs,
+                name: "myCustomEntities",
+                description: "Tested Custom Entity Lookup skill",
+                inlineEntitiesDefinition: entitiesDefintion,
+                context: RootPathString));
+
+            return new Skillset("customentitylookupskillset", description: "Skillset with inline custom entity lookup skill", skills: skills);
+        }
+
         private static Skillset CreateSkillsetWithDocumentExtraction()
         {
             var skills = new List<Skill>();
@@ -1582,12 +1691,12 @@ namespace Microsoft.Azure.Search.Tests
                 },
                 context: RootPathString));
 
-            var projection1_blobSelector = new KnowledgeStoreObjectProjectionSelector(
+            var projection1BlobSelector = new KnowledgeStoreObjectProjectionSelector(
                                             storageContainer: "container1",
                                             generatedKeyName: "docKey",
                                             source: "/document/content");
 
-            var projection2_blobSelector = new KnowledgeStoreObjectProjectionSelector(
+            var projection2BlobSelector = new KnowledgeStoreObjectProjectionSelector(
                                 storageContainer: "container2",
                                 generatedKeyName: "docKey",
                                 sourceContext: "/document",
@@ -1598,12 +1707,12 @@ namespace Microsoft.Azure.Search.Tests
                                         source: "/document/keyPhrases")
                                 });
 
-            var projection1_tableSelector = new KnowledgeStoreTableProjectionSelector(
+            var projection1TableSelector = new KnowledgeStoreTableProjectionSelector(
                                 tableName: "container11",
                                 generatedKeyName: "docKey",
                                 source: "/document/tableContent");
 
-            var projection2_tableSelector = new KnowledgeStoreTableProjectionSelector(
+            var projection2TableSelector = new KnowledgeStoreTableProjectionSelector(
                                 tableName: "container12",
                                 generatedKeyName: "docKey",
                                 sourceContext: "/document/tableData",
@@ -1614,7 +1723,7 @@ namespace Microsoft.Azure.Search.Tests
                                         source: "/document/tableData/keyPhrases")
                                 });
 
-            var projection1_fileSelector = new KnowledgeStoreFileProjectionSelector(
+            var projection1FileSelector = new KnowledgeStoreFileProjectionSelector(
                                 storageContainer: "container111",
                                 generatedKeyName: "docKey",
                                 source: "/document/fileContent");
@@ -1624,13 +1733,13 @@ namespace Microsoft.Azure.Search.Tests
                 projections: new List<KnowledgeStoreProjection>());
 
             knowledgeStore.Projections.Add(new KnowledgeStoreProjection(
-                objects: new List<KnowledgeStoreObjectProjectionSelector>() { projection1_blobSelector },
-                tables: new List<KnowledgeStoreTableProjectionSelector>() { projection1_tableSelector },
-                files: new List<KnowledgeStoreFileProjectionSelector>() { projection1_fileSelector }));
+                objects: new List<KnowledgeStoreObjectProjectionSelector>() { projection1BlobSelector },
+                tables: new List<KnowledgeStoreTableProjectionSelector>() { projection1TableSelector },
+                files: new List<KnowledgeStoreFileProjectionSelector>() { projection1FileSelector }));
 
             knowledgeStore.Projections.Add(new KnowledgeStoreProjection(
-                objects: new List<KnowledgeStoreObjectProjectionSelector>() { projection2_blobSelector },
-                tables: new List<KnowledgeStoreTableProjectionSelector>() { projection2_tableSelector }));
+                objects: new List<KnowledgeStoreObjectProjectionSelector>() { projection2BlobSelector },
+                tables: new List<KnowledgeStoreTableProjectionSelector>() { projection2TableSelector }));
 
 
             var skillset = new Skillset("knowledgestoreskillset", description: "Skillset with knowledgestore", skills: skills);

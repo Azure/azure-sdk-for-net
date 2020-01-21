@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Search.Models
         /// 'sv', 'tr'</param>
         /// <param name="inlineEntitiesDefinition">An inline definition of
         /// entities to lookup.</param>
-        public CustomEntityLookupSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string name = default(string), string description = default(string), string context = default(string), string entitiesDefinitionUri = default(string), CustomEntityLookupSkillLanguage? defaultLanguageCode = default(CustomEntityLookupSkillLanguage?), CustomEntityLookupSkillEntityDefinition inlineEntitiesDefinition = default(CustomEntityLookupSkillEntityDefinition))
+        public CustomEntityLookupSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string name = default(string), string description = default(string), string context = default(string), string entitiesDefinitionUri = default(string), CustomEntityLookupSkillLanguage? defaultLanguageCode = default(CustomEntityLookupSkillLanguage?), IList<CustomEntityLookupSkillEntity> inlineEntitiesDefinition = default(IList<CustomEntityLookupSkillEntity>))
             : base(inputs, outputs, name, description, context)
         {
             EntitiesDefinitionUri = entitiesDefinitionUri;
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets an inline definition of entities to lookup.
         /// </summary>
         [JsonProperty(PropertyName = "inlineEntitiesDefinition")]
-        public CustomEntityLookupSkillEntityDefinition InlineEntitiesDefinition { get; set; }
+        public IList<CustomEntityLookupSkillEntity> InlineEntitiesDefinition { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -106,7 +106,13 @@ namespace Microsoft.Azure.Search.Models
             base.Validate();
             if (InlineEntitiesDefinition != null)
             {
-                InlineEntitiesDefinition.Validate();
+                foreach (var element in InlineEntitiesDefinition)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

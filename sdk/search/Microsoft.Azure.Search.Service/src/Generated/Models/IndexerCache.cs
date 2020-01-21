@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Search.Models
         /// updates should reprocess old documents automatically.</param>
         public IndexerCache(string storageConnectionString, string id = default(string), bool? enableReprocessing = default(bool?))
         {
-            ID = id;
+            Id = id;
             EnableReprocessing = enableReprocessing;
             StorageConnectionString = storageConnectionString;
             CustomInit();
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets server-assigned guid identifier for this cache.
         /// </summary>
-        [JsonProperty(PropertyName = "ID")]
-        public string ID { get; private set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets or sets flag as to whether skillset updates should reprocess

@@ -4,11 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/jadrefke/azure-rest-api-specs/blob/newFeatures/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --tag=track1-package-2019-05-preview --csharp-sdks-folder=C:\src\jdrefke\azure-sdk-for-net\sdk
-2019-11-25 18:15:15 UTC
+2020-01-21 23:34:56 UTC
 Azure-rest-api-specs repository information
 GitHub fork: jadrefke
 Branch:      newFeatures
-Commit:      fb6541e71dc5c4fa59cebaa0e31b3899e6d17d0d
+Commit:      28baa4bb9bc6cc17b2108fdc83a2bbffab4cdc7f
 AutoRest information
 Requested version: latest
-Bootstrapper version:    autorest@2.0.4407
+Bootstrapper version:    autorest@2.0.4413

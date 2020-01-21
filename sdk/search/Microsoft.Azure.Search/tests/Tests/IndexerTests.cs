@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Search.Tests
 
                 Skillset skillset = SkillsetsTests.CreateTestSkillsetOcrEntity(null, null);
 
-                AzureOperationResponse<Skillset> response =
+                AzureOperationResponse<Skillset> createSkillsetResponse =
                         searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
-                Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
+                Assert.Equal(HttpStatusCode.Created, createSkillsetResponse.Response.StatusCode);
 
                 Indexer indexer = Data.CreateTestIndexerWithSkillset(skillset.Name, new[]
                 {
@@ -66,9 +66,59 @@ namespace Microsoft.Azure.Search.Tests
                                             storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                                             enableReprocessing: true);
 
-                AzureOperationResponse<Indexer> response1 =
+                AzureOperationResponse<Indexer> createIndexerWithCacheResponse =
                     searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer).Result;
-                Assert.Equal(HttpStatusCode.Created, response1.Response.StatusCode);
+                Assert.Equal(HttpStatusCode.Created, createIndexerWithCacheResponse.Response.StatusCode);
+
+                // verify indexer is stord with cache
+                Indexer actualIndexer = searchClient.Indexers.Get(indexer.Name);
+                indexer.Cache = new IndexerCache(
+                                            storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
+                                            enableReprocessing: true,
+                                            id: actualIndexer.Cache.Id); // need to update the cache with server-assigned id
+                AssertIndexersEqual(indexer, actualIndexer);
+            });
+        }
+
+        [Fact]
+        public void AddCacheToIndexerReturnsCorrectDefinition()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Skillset skillset = SkillsetsTests.CreateTestSkillsetOcrEntity(null, null);
+
+                AzureOperationResponse<Skillset> createSkillsetResponse =
+                        searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
+                Assert.Equal(HttpStatusCode.Created, createSkillsetResponse.Response.StatusCode);
+
+                Indexer indexer = Data.CreateTestIndexerWithSkillset(skillset.Name, new[]
+                {
+                    new FieldMapping(sourceFieldName: "/document/myEntities", targetFieldName: "myEntities"),
+                    new FieldMapping(sourceFieldName: "/document/myText", targetFieldName: "myText")
+                });
+
+                AzureOperationResponse<Indexer> createIndexerResponse =
+                    searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer).Result;
+                Assert.Equal(HttpStatusCode.Created, createIndexerResponse.Response.StatusCode);
+
+                // add cache to existing indexer
+                indexer.Cache = new IndexerCache(
+                                            storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
+                                            enableReprocessing: true);
+
+                AzureOperationResponse<Indexer> addCacheResponse =
+                    searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer).Result;
+                Assert.Equal(HttpStatusCode.OK, addCacheResponse.Response.StatusCode);
+
+                // verify indexer is stord with cache
+                Indexer actualIndexer = searchClient.Indexers.Get(indexer.Name);
+                indexer.Cache = new IndexerCache(
+                            storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
+                            enableReprocessing: true,
+                            id: actualIndexer.Cache.Id); // need to update the cache with server-assigned id
+                AssertIndexersEqual(indexer, actualIndexer);
             });
         }
 

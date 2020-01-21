@@ -30,11 +30,11 @@ namespace Microsoft.Azure.Search
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/jadrefke/azure-rest-api-specs/blob/newFeatures/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --tag=track1-package-2019-05-preview --csharp-sdks-folder=C:\\src\\jdrefke\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "jadrefke";
       public static readonly String GithubBranchName = "newFeatures";
-      public static readonly String GithubCommidId = "fb6541e71dc5c4fa59cebaa0e31b3899e6d17d0d";
+      public static readonly String GithubCommidId = "28baa4bb9bc6cc17b2108fdc83a2bbffab4cdc7f";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
