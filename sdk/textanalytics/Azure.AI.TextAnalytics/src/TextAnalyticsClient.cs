@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         private readonly TextAnalyticsClientOptions _options;
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
 
-        private ServiceSubscriptionKey _textAnalyticsSubscriptionKey;
+        private TextAnalyticsSubscriptionKeyCredential _textAnalyticsSubscriptionKey;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -74,10 +74,10 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credentials">The subscription key used to access
+        /// <param name="credential">The subscription key used to access
         /// the service.</param>
-        public TextAnalyticsClient(Uri endpoint, ServiceSubscriptionKey credentials)
-            : this(endpoint, credentials, new TextAnalyticsClientOptions())
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential)
+            : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
         }
 
@@ -87,19 +87,19 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credentials">The subscription key used to access
+        /// <param name="credential">The subscription key used to access
         /// the service.</param>
         /// <param name="options"><see cref="TextAnalyticsClientOptions"/> that allow
         /// callers to configure how requests are sent to the service.</param>
-        public TextAnalyticsClient(Uri endpoint, ServiceSubscriptionKey credentials, TextAnalyticsClientOptions options)
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credentials, nameof(credentials));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
             _apiVersion = options.GetVersionString();
-            _textAnalyticsSubscriptionKey = credentials;
+            _textAnalyticsSubscriptionKey = credential;
             _pipeline = HttpPipelineBuilder.Build(options);
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;

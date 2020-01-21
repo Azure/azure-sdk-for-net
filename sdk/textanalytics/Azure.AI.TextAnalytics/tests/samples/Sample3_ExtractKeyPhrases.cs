@@ -19,8 +19,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
             #region Snippet:TextAnalyticsSample3CreateClient
-            var credentials = new ServiceSubscriptionKey(subscriptionKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
             #endregion
 
             #region Snippet:ExtractKeyPhrases

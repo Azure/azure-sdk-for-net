@@ -7,8 +7,7 @@ This sample demonstrates how to extract key phrases from one or more text inputs
 To create a new `TextAnalyticsClient` to extract key phrases from text input, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics subscription key.  You can set `endpoint` and `subscriptionKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample3CreateClient
-var credentials = new ServiceSubscriptionKey(subscriptionKey);
-var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
+var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
 ```
 
 ## Extracting key phrases from a single input

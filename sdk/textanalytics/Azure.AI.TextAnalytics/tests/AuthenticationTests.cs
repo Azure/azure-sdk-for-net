@@ -22,8 +22,8 @@ namespace Azure.AI.TextAnalytics.Tests
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var credentials = new ServiceSubscriptionKey(subscriptionKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
+            var credential = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
 
             string input = "Este documento está en español.";
 
@@ -31,12 +31,12 @@ namespace Azure.AI.TextAnalytics.Tests
             await client.DetectLanguageAsync(input);
 
             // Rotate the subscription key to an invalid value and make sure it fails
-            credentials.SetSubscriptionKey("Invalid");
+            credential.UpdateCredential("Invalid");
             Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.DetectLanguageAsync(input));
 
             // Re-rotate the subscription key and make sure it succeeds again
-            credentials.SetSubscriptionKey(subscriptionKey);
+            credential.UpdateCredential(subscriptionKey);
             await client.DetectLanguageAsync(input);
         }
     }

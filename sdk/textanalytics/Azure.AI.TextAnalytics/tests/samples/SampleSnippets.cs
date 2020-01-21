@@ -22,9 +22,9 @@ namespace Azure.AI.TextAnalytics.Samples
 
             #region Snippet:CreateTextAnalyticsClient
             //@@ string endpoint = "<endpoint>";
-            //@@ ServiceSubscriptionKey credentials = "<credentials>";
-            var credentials = new ServiceSubscriptionKey(subscriptionKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
+            //@@ TextAnalyticsSubscriptionKeyCredential credential = "<credential>";
+            var credential = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
             #endregion
         }
 
@@ -45,7 +45,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            var credentials = new ServiceSubscriptionKey(subscriptionKey);
+            var credentials = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
             var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
             string input = "Este documento está en español.";
 

@@ -20,8 +20,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Transport = new MockTransport(),
             };
 
-            var credentials = new ServiceSubscriptionKey(s_subscriptionKey);
-            Client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), credentials, options));
+             Client = InstrumentClient(new TextAnalyticsClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public TextAnalyticsClient Client { get; set; }

@@ -6,29 +6,29 @@ using System.Threading;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A <see cref="ServiceSubscriptionKey"/> is a subscription key use to authenticate
+    /// A <see cref="TextAnalyticsSubscriptionKeyCredential"/> is a subscription key use to authenticate
     /// against a Cognitive Service.
     /// </summary>
-    public class ServiceSubscriptionKey
+    public class TextAnalyticsSubscriptionKeyCredential
     {
         private string _subscriptionKey;
 
         /// <summary>
         /// Service subscription key.
         /// </summary>
-        public string SubscriptionKey
+        internal string SubscriptionKey
         {
             get => Volatile.Read(ref _subscriptionKey);
             private set => Volatile.Write(ref _subscriptionKey, value);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceSubscriptionKey"/> class.
+        /// Initializes a new instance of the <see cref="TextAnalyticsSubscriptionKeyCredential"/> class.
         /// </summary>
         /// <param name="subscriptionKey">Subscription key to athenticate the service against.</param>
-        public ServiceSubscriptionKey(string subscriptionKey)
+        public TextAnalyticsSubscriptionKeyCredential(string subscriptionKey)
         {
-            SetSubscriptionKey(subscriptionKey);
+            UpdateCredential(subscriptionKey);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
         /// and want to update long lived clients.
         /// </summary>
         /// <param name="subscriptionKey">Subscription key to athenticate the service against.</param>
-        public void SetSubscriptionKey(string subscriptionKey) =>
+        public void UpdateCredential(string subscriptionKey) =>
             SubscriptionKey = subscriptionKey;
     }
 }

@@ -21,8 +21,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var credentials = new ServiceSubscriptionKey(subscriptionKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
 
             #region Snippet:RecognizeEntitiesAsync
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
