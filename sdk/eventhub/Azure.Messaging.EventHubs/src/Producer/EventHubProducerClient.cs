@@ -450,20 +450,19 @@ namespace Azure.Messaging.EventHubs.Producer
                 int failedAttemptCount = 0;
 
                 using DiagnosticScope scope = CreateDiagnosticScope();
+                events = events.ToList();
+                InstrumentMessages(events);
 
                 while (!isMessageSent)
                 {
                     var pooledProducer = PartitionProducerPool.GetPartitionProducer(options.PartitionId, Connection, RetryPolicy, options.RemoveAfterDuration);
 
-                    await using var _ = pooledProducer.ConfigureAwait(false);
-
                     activeProducer = pooledProducer.Item;
-
-                    events = events.ToList();
-                    InstrumentMessages(events);
 
                     try
                     {
+                        await using var _ = pooledProducer.ConfigureAwait(false);
+
                         await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
 
                         isMessageSent = true;
@@ -543,12 +542,12 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     var pooledProducer = PartitionProducerPool.GetPartitionProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, eventBatch.SendOptions.RemoveAfterDuration);
 
-                    await using var _ = pooledProducer.ConfigureAwait(false);
-
                     activeProducer = pooledProducer.Item;
 
                     try
                     {
+                        await using var _ = pooledProducer.ConfigureAwait(false);
+
                         await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
 
                         isMessageSent = true;
