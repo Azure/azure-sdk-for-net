@@ -61,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.SendAsync(eventData);
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
-                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.EventHubProducerType),
+                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
@@ -116,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await producer.SendAsync(batch);
 
             ClientDiagnosticListener.ProducedDiagnosticScope sendScope = testListener.AssertScope(DiagnosticProperty.ProducerActivityName,
-                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.EventHubProducerType),
+                new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind),
                 new KeyValuePair<string, string>(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext),
                 new KeyValuePair<string, string>(DiagnosticProperty.EventHubAttribute, eventHubName),
                 new KeyValuePair<string, string>(DiagnosticProperty.EndpointAttribute, endpoint.ToString()));
