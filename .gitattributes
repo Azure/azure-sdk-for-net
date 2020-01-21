@@ -35,3 +35,6 @@
 *.xml text
 
 *.sln text eol=crlf merge=union
+
+# Automatically collapse Track 2 test recordings in github PRs
+**/SessionRecords/**/*.json linguist-generated=true

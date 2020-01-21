@@ -248,7 +248,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                                 if (lastReceivedEvent.Offset > long.MinValue)
                                 {
-                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset);
+                                    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
                                 }
 
                                 if (TrackLastEnqueuedEventProperties)
@@ -272,24 +272,26 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         return Enumerable.Empty<EventData>();
                     }
-                    catch (AmqpException amqpException)
-                    {
-                        throw AmqpError.CreateExceptionForError(amqpException.Error, EventHubName);
-                    }
                     catch (Exception ex)
                     {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, bubble the exception.
 
                         ++failedAttemptCount;
-                        retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
+                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
                         }
                         else
                         {

@@ -130,8 +130,8 @@ if ($ProvisionerApplicationId) {
     $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
 
-    Retry {
-        $script:provisionerAccount = Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+    $provisionerAccount = Retry {
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
     }
 
     $exitActions += {
@@ -142,7 +142,10 @@ if ($ProvisionerApplicationId) {
 
 # Get test application OID from ID if not already provided.
 if ($TestApplicationId -and !$TestApplicationOid) {
-    $testServicePrincipal = Get-AzADServicePrincipal -ApplicationId $TestApplicationId
+    $testServicePrincipal = Retry {
+        Get-AzADServicePrincipal -ApplicationId $TestApplicationId
+    }
+
     if ($testServicePrincipal -and $testServicePrincipal.Id) {
         $script:TestApplicationOid = $testServicePrincipal.Id
     }
@@ -184,7 +187,10 @@ if ($CI) {
 }
 
 Log "Creating resource group '$resourceGroupName' in location '$Location'"
-$resourceGroup = New-AzResourceGroup -Name "$resourceGroupName" -Location $Location -Tag $tags -Force:$Force
+$resourceGroup = Retry {
+    New-AzResourceGroup -Name "$resourceGroupName" -Location $Location -Tag $tags -Force:$Force
+}
+
 if ($resourceGroup.ProvisioningState -eq 'Succeeded') {
     # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
     Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
@@ -237,7 +243,10 @@ foreach ($templateFile in $templateFiles) {
     }
 
     Log "Deploying template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"
-    $deployment = New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+    $deployment = Retry {
+        New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+    }
+
     if ($deployment.ProvisioningState -eq 'Succeeded') {
         # New-AzResourceGroupDeployment would've written an error and stopped the pipeline by default anyway.
         Write-Verbose "Successfully deployed template '$templateFile' to resource group '$($resourceGroup.ResourceGroupName)'"

@@ -777,7 +777,12 @@ namespace Azure.Messaging.EventHubs.Amqp
                 catch (Exception ex)
                 {
                     EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshError(EventHubName, endpoint.AbsoluteUri, ex.Message);
-                    refreshTimer.Change(Timeout.Infinite, Timeout.Infinite);
+
+                    // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
+                    // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
+                    // At worse, another timer tick will occur and the operation will be retried.
+
+                    try { refreshTimer.Change(Timeout.Infinite, Timeout.Infinite); } catch {}
                 }
                 finally
                 {
