@@ -11,6 +11,9 @@ name: LineCounter
 description: Sample that illustrates using blob and event hub clients along with ASP.NET Core integration, distributed tracing and hosted services.
 ---
 
+# LineCounter
+This is a sample app that illustrates using blob and event hub clients along with ASP.NET Core integration, distributed tracing and hosted services.
+
 
 # Configuration
 
