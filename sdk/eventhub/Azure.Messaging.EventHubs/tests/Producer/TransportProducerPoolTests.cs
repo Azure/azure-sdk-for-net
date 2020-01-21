@@ -143,6 +143,29 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   It is possible to configure the time a <see cref="TransportProducerPool.PoolItem"/> should sit in memory.
+        /// </summary>
+        ///
+        [Test]
+        public async Task TransportProducerPoolAllowsConfiguringRemoveAfter()
+        {
+            var transportProducer = new ObservableTransportProducerMock();
+            var connection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            TransportProducerPool transportProducerPool = new TransportProducerPool();
+
+            var pooledProducer = transportProducerPool.GetPartitionProducer("0", connection, retryPolicy, TimeSpan.FromMinutes(-1));
+
+            await using (var _ = pooledProducer.ConfigureAwait(false))
+            {
+            };
+
+            GetExpirationCallBack(transportProducerPool).Invoke(null);
+
+            Assert.That(transportProducer.CloseCallCount == 1);
+        }
+
+        /// <summary>
         ///   Gets the routine responsible of finding expired producers.
         /// </summary>
         ///
