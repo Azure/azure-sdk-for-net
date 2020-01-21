@@ -70,6 +70,10 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   would sit in memory before its pool would remove and close it.
         /// </summary>
         ///
+        /// <remarks>
+        ///   If no duration is specified a default one will be used by the pool.
+        /// </remarks>
+        ///
         public TimeSpan? RemoveAfterDuration { get; set; }
 
         /// <summary>
