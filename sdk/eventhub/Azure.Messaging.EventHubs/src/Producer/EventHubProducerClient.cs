@@ -457,13 +457,14 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     var pooledProducer = PartitionProducerPool.GetPartitionProducer(options.PartitionId, Connection, RetryPolicy, options.RemoveAfterDuration);
 
-                    activeProducer = pooledProducer.Item;
-
                     try
                     {
-                        await using var _ = pooledProducer.ConfigureAwait(false);
+                        await using (var _ = pooledProducer.ConfigureAwait(false))
+                        {
+                            activeProducer = pooledProducer.Item;
 
-                        await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+                            await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+                        }
 
                         isMessageSent = true;
                     }
@@ -542,13 +543,14 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     var pooledProducer = PartitionProducerPool.GetPartitionProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, eventBatch.SendOptions.RemoveAfterDuration);
 
-                    activeProducer = pooledProducer.Item;
-
                     try
                     {
-                        await using var _ = pooledProducer.ConfigureAwait(false);
+                        await using (var _ = pooledProducer.ConfigureAwait(false))
+                        {
+                            activeProducer = pooledProducer.Item;
 
-                        await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
+                            await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
+                        }
 
                         isMessageSent = true;
                     }
