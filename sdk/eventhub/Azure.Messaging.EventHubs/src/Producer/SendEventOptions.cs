@@ -71,7 +71,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// </summary>
         ///
         /// <remarks>
-        ///   If no duration is specified a default one will be used by the pool.
+        ///   If no duration is specified a default value will be used by the pool.
         /// </remarks>
         ///
         public TimeSpan? RemoveAfterDuration { get; set; }
