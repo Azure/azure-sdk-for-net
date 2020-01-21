@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -175,10 +176,9 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotNull(eventBatch, nameof(eventBatch));
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
 
-            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromMessages(
-                eventBatch.AsEnumerable<AmqpMessage>(),
-                eventBatch.SendOptions?.PartitionKey);
+            // Make a defensive copy of the messages in the batch.
 
+            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(eventBatch.AsEnumerable<EventData>(), eventBatch.SendOptions?.PartitionKey);
             await SendAsync(messageFactory, eventBatch.SendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
         }
 
@@ -323,25 +323,27 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         return;
                     }
-                    catch (AmqpException amqpException)
-                    {
-                        throw AmqpError.CreateExceptionForError(amqpException.Error, EventHubName);
-                    }
                     catch (Exception ex)
                     {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, bubble the exception.
 
                         ++failedAttemptCount;
-                        retryDelay = RetryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
+                            EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
                             stopWatch.Reset();
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
                         }
                         else
                         {
