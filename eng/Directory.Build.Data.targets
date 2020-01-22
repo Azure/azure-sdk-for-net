@@ -66,8 +66,7 @@
   
   <!-- Enable ApiCompat  -->
   <ItemGroup>
-    <ProjectReference Include="$(RepoRoot)/eng/ApiCompat/ApiCompat.csproj" ReferenceOutputAssembly="false" 
-	AdditionalProperties="TargetPackageName=$(PackageId);TargetOutputPath=$(IntermediateOutputPath)" Condition="'$(GenerateAPIListing)' == 'true'" />
+    <ProjectReference Include="$(RepoRoot)/eng/ApiCompat/ApiCompat.csproj" ReferenceOutputAssembly="false" BuildReference="false" Condition="'$(GenerateAPIListing)' == 'true'" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -122,5 +121,12 @@
            Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
   </Target>
 
+   <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(GenerateAPIListing)' == 'true'">
+    <MSBuild
+      Projects="$(MSBuildThisFileDirectory)/ApiCompat/ApiCompat.csproj"
+      Properties="TargetPackageName=$(PackageId);TargetOutputPath=$(IntermediateOutputPath)"
+     />
+  </Target>
+  
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
 </Project>

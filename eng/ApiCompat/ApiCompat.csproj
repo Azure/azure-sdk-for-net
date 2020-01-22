@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RunApiCompatForSrc>true</RunApiCompatForSrc>
+    <IntermediateOutputPath>$(IntermediateOutputPath)/$(TargetPackageName)</IntermediateOutputPath>    
   </PropertyGroup>
 
   <ItemGroup>
