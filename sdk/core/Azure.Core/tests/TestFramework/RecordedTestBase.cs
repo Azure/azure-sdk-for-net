@@ -42,6 +42,7 @@ namespace Azure.Core.Testing
         [SetUp]
         public virtual void StartTestRecording()
         {
+            // Only create test recordings for the latest version of the service
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))

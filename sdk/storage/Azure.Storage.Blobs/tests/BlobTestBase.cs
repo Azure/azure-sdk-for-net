@@ -46,7 +46,7 @@ namespace Azure.Storage.Test.Shared
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {
-            var options = new BlobClientOptions((BlobClientOptions.ServiceVersion) _serviceVersion)
+            var options = new BlobClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
