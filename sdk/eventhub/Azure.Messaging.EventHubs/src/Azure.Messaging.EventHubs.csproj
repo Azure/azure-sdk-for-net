@@ -5,13 +5,14 @@
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+    <RunApiCompat>false</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="SharedSource\" />
     <Folder Include="Properties\" />
   </ItemGroup>
-
+ 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />

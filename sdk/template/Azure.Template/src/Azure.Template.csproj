@@ -8,5 +8,6 @@
     <Version>1.0.2-preview.4</Version>
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RunApiCompat>false</RunApiCompat>
   </PropertyGroup>
 </Project>
