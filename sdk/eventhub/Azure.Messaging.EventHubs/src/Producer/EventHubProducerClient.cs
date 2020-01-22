@@ -468,10 +468,12 @@ namespace Azure.Messaging.EventHubs.Producer
 
                         isMessageSent = true;
                     }
-                    catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                       && ++failedAttemptCount < RetryPolicy.MaximumRetries)
+                    catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed)
                     {
-                        isMessageSent = false;
+                        if (++failedAttemptCount < RetryPolicy.MaximumRetries)
+                        {
+                            isMessageSent = false;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -554,10 +556,12 @@ namespace Azure.Messaging.EventHubs.Producer
 
                         isMessageSent = true;
                     }
-                    catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                       && ++failedAttemptCount < RetryPolicy.MaximumRetries)
+                    catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed)
                     {
-                        isMessageSent = false;
+                        if (++failedAttemptCount < RetryPolicy.MaximumRetries)
+                        {
+                            isMessageSent = false;
+                        }
                     }
                     catch (Exception ex)
                     {
