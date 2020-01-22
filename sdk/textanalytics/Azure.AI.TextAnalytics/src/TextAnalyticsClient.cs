@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The client to use for interacting with the Azure Configuration Store.
+    /// The client to use for interacting with the Azure Text Analytics Service.
     /// </summary>
     public partial class TextAnalyticsClient
     {
