@@ -66,7 +66,7 @@
   
   <!-- Enable ApiCompat  -->
   <ItemGroup>
-    <ProjectReference Include="$(RepoRoot)/eng/ApiCompat/ApiCompat.csproj" ReferenceOutputAssembly="false" BuildReference="false" Condition="'$(RunApiCompat)' == 'true'" />
+    <ProjectReference Include="$(RepoRoot)/eng/ApiCompat/ApiCompat.csproj" ReferenceOutputAssembly="false" BuildReference="false" Condition="'$(EnableApiCompat)' == 'true'" />
   </ItemGroup>
 
   <PropertyGroup>
