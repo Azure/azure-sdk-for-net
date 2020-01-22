@@ -1,6 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Microsoft Azure Key Vault Cryptography Class Library</Description>
+    <Description>Microsoft Azure Key Vault Cryptography Class Library
+
+The latest libraries to interact with the KeyVault service are:
+
+* Azure.Security.KeyVault.Keys
+* Azure.Security.KeyVault.Secrets
+* Azure.Security.KeyVault.Certificates
+
+It is recommended that you move to the new packages.</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>

@@ -38,9 +38,15 @@ stages:
     ServiceDirectory: keyvault
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Security.KeyVault.Certificates
-      safeName: AzureSecurityKeyVaultCertificates
-    - name: Azure.Security.KeyVault.Keys
-      safeName: AzureSecurityKeyVaultKeys
-    - name: Azure.Security.KeyVault.Secrets
-      safeName: AzureSecurityKeyVaultSecrets
+    - name: Microsoft.Azure.KeyVault
+      safeName: MicrosoftAzureKeyVault
+    - name: Microsoft.Azure.KeyVault.Core
+      safeName: MicrosoftAzureKeyVaultCore
+    - name: Microsoft.Azure.KeyVault.Cryptography
+      safeName: MicrosoftAzureKeyVaultCryptography
+    - name: Microsoft.Azure.KeyVault.Extensions
+      safeName: MicrosoftAzureKeyVaultExtensions
+    - name: Microsoft.Azure.KeyVault.WebKey
+      safeName: MicrosoftAzureKeyVaultWebKey
+    - name: Microsoft.Azure.Management.KeyVault
+      safeName: MicrosoftAzureManagementKeyVault
