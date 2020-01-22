@@ -165,7 +165,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                 var now = DateTimeOffset.UtcNow;
 
-                foreach (var key in Pool.Keys)
+                foreach (var key in Pool.Keys.ToList())
                 {
                     if (Pool.TryGetValue(key, out var poolItem))
                     {
