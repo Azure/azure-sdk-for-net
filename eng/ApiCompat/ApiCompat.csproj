@@ -39,8 +39,9 @@
       <_DependencyDirectories Include="$(TargetOutputPath)" />
       <ReferencePath Remove="$(TargetPackageDll)" />
     </ItemGroup>
-
+    <Error Condition="'@(ResolvedMatchingContract)' == ''"
+             Text="Unable to find dll for $(TargetPackageName). Make sure it is included in list of Package References." />
     <Message Text="Checking API Compat against $(TargetPackageDll) using assemblies from $(TargetOutputPath)" Importance="High" />
-  </Target>
 
+  </Target>
 </Project>
