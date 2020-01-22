@@ -11,6 +11,11 @@ The latest libraries to interact with the KeyVault service are:
 It is recommended that you move to the new packages.</Description>
     <AssemblyTitle>Microsoft Azure Key Vault</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <PackageReleaseNotes>
+      <![CDATA[
+        Added recommendation to use new libraries listed in the package description.
+      ]]>
+    </PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.WebKey\src\Microsoft.Azure.KeyVault.WebKey.csproj" />

@@ -5,15 +5,7 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.KeyVault</PackageId>
-		<Description>Provides key vault management capabilities for Microsoft Azure.
-
-The latest libraries to interact with the KeyVault service are:
-
-* Azure.Security.KeyVault.Keys
-* Azure.Security.KeyVault.Secrets
-* Azure.Security.KeyVault.Certificates
-
-It is recommended that you move to the new packages.</Description>
+		<Description>Provides key vault management capabilities for Microsoft Azure.</Description>
 		<AssemblyTitle>Microsoft Azure Key Vault Management</AssemblyTitle>
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
 		<Version>2.4.3</Version>
@@ -22,7 +14,7 @@ It is recommended that you move to the new packages.</Description>
 			<![CDATA[
 				Republishing to sign package with correct hash.
 			]]>
-		</PackageReleaseNotes>
+	</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

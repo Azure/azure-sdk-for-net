@@ -48,5 +48,3 @@ stages:
       safeName: MicrosoftAzureKeyVaultExtensions
     - name: Microsoft.Azure.KeyVault.WebKey
       safeName: MicrosoftAzureKeyVaultWebKey
-    - name: Microsoft.Azure.Management.KeyVault
-      safeName: MicrosoftAzureManagementKeyVault
