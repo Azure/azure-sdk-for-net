@@ -72,6 +72,9 @@ _ReSharper*/
 
 *.[Rr]e[Ss]harper
 
+# Rider IDE
+.idea
+
 # NCrunch
 *.ncrunch*
 .*crunch*.local.xml
