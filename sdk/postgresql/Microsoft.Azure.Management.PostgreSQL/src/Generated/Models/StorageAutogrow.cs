@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 {
 
     /// <summary>
-    /// Defines values for ServerVersion.
+    /// Defines values for StorageAutogrow.
     /// </summary>
-    public static class ServerVersion
+    public static class StorageAutogrow
     {
-        public const string NineFullStopFive = "9.5";
-        public const string NineFullStopSix = "9.6";
-        public const string OneZero = "10";
-        public const string OneZeroFullStopZero = "10.0";
-        public const string OneZeroFullStopTwo = "10.2";
-        public const string OneOne = "11";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }
