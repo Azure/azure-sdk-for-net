@@ -44,7 +44,7 @@
     <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
-	  <RunApiCompat Condition="'$(IsShippingClientLibrary)' == 'true'">true</RunApiCompat>
+    <RunApiCompat Condition="'$(IsShippingClientLibrary)' == 'true'">true</RunApiCompat>
   </PropertyGroup>
 
   <!-- CodeAnalysis RuleSet -->

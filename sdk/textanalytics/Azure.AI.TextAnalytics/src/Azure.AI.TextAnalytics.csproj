@@ -8,6 +8,7 @@
     <GenerateAPIListing>false</GenerateAPIListing>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
+    <RunApiCompat>false</RunApiCompat>
   </PropertyGroup>
 
   <ItemGroup>

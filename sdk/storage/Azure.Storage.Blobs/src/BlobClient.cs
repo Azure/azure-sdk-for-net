@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,18 +18,15 @@ namespace Azure.Storage.Blobs
     /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
     /// blobs.
     /// </summary>
-#pragma warning disable AZC0005 // DO provide protected parameterless constructor for mocking.
     public class BlobClient : BlobBaseClient
-#pragma warning restore AZC0005 // DO provide protected parameterless constructor for mocking.
     {
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobClient"/>
         /// class for mocking.
         /// </summary>
-        protected BlobClient(int lalal)
+        protected BlobClient()
         {
-            Console.WriteLine(lalal.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>

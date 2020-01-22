@@ -12,7 +12,7 @@
     <Folder Include="SharedSource\" />
     <Folder Include="Properties\" />
   </ItemGroup>
- 
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
