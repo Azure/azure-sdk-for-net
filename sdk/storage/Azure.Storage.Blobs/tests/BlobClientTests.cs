@@ -589,6 +589,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
+        [Timeout(30 * 60 * 1000)] // increase from 20 minute timeout to 30 minutes for large uploads
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
@@ -621,6 +622,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
+        [Timeout(30 * 60 * 1000)] // increase from 20 minute timeout to 30 minutes for large uploads
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]
         [TestCase(33 * Constants.MB, 8)]
