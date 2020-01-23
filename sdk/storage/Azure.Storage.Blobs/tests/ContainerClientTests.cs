@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
@@ -15,19 +16,19 @@ using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Tests;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
     public class ContainerClientTests : BlobTestBase
     {
-        public ContainerClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ContainerClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -37,7 +38,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = "containername";
 
@@ -51,7 +52,9 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task Ctor_ConnectionString_Sas()
+        [TestCase(true)] // https://github.com/Azure/azure-sdk-for-net/issues/9110
+        [TestCase(false)]
+        public async Task Perform_Ctor_ConnectionString_Sas(bool includeTable)
         {
             // Arrange
             SharedAccessSignatureCredentials sasCred = GetAccountSasCredentials(
@@ -61,7 +64,8 @@ namespace Azure.Storage.Blobs.Test
 
             StorageConnectionString conn1 = GetConnectionString(
                 credentials: sasCred,
-                includeEndpoint: true);
+                includeEndpoint: true,
+                includeTable: includeTable);
 
             BlobContainerClient containerClient1 = GetBlobContainerClient(conn1.ToString(exportSecrets: true));
 
@@ -223,8 +227,6 @@ namespace Azure.Storage.Blobs.Test
                     GetNewContainerName(),
                     GetOptions()));
 
-
-
         [Test]
         public void Ctor_Uri()
         {
@@ -292,6 +294,39 @@ namespace Azure.Storage.Blobs.Test
                 var accountName = new BlobUriBuilder(service.Uri).AccountName;
                 TestHelper.AssertCacheableProperty(accountName, () => container.AccountName);
                 TestHelper.AssertCacheableProperty(containerName, () => container.Name);
+            }
+            finally
+            {
+                await container.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public async Task CreateAsync_WithSharedKey_Retry_RequestDateShouldUpdate()
+        {
+            // Arrange
+            BlobClientOptions options = GetOptions();
+            var testExceptionPolicy = new TestExceptionPolicy(
+                numberOfFailuresToSimulate: 2,
+                trackedRequestMethods: new List<RequestMethod>(new RequestMethod[] { RequestMethod.Put }),
+                delayBetweenAttempts: 1000);
+
+            options.AddPolicy(testExceptionPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient service = GetServiceClient_SharedKey(options);
+            var containerName = GetNewContainerName();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
+
+            try
+            {
+                // Act
+                Response<BlobContainerInfo> response = await container.CreateAsync();
+
+                // Assert
+                Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+
+                Assert.AreEqual(3, testExceptionPolicy.DatesSetInRequests.Count);
+                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[1] > testExceptionPolicy.DatesSetInRequests[0]);
+                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[2] > testExceptionPolicy.DatesSetInRequests[1]);
             }
             finally
             {
@@ -600,6 +635,50 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Exists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            await container.CreateAsync();
+
+            // Act
+            Response<bool> response = await container.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+
+            await container.DeleteAsync();
+        }
+
+        [Test]
+        public async Task ExistsAsync_NotExists()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            Response<bool> response = await container.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Error()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+            BlobContainerClient unauthorizedContainerClient = InstrumentClient(new BlobContainerClient(test.Container.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedContainerClient.ExistsAsync(),
+                e => Assert.AreEqual(BlobErrorCode.ResourceNotFound.ToString(), e.ErrorCode.Split('\n')[0]));
         }
 
         [Test]
@@ -1446,25 +1525,31 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            await EnableSoftDelete();
-            var blobName = GetNewBlobName();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
-            await blob.DeleteAsync();
-
-            // Act
-            IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
-
-            // Assert
-            if (blobs.Count == 0)
+            try
             {
-                Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
-            }
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(blobName, blobs.First().Name);
+                // Arrange
+                await EnableSoftDelete();
+                var blobName = GetNewBlobName();
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+                await blob.CreateAsync();
+                await blob.DeleteAsync();
 
-            // Cleanup
-            await DisableSoftDelete();
+                // Act
+                IList<BlobItem> blobs = await test.Container.GetBlobsAsync(states: BlobStates.Deleted).ToListAsync();
+
+                // Assert
+                if (blobs.Count == 0)
+                {
+                    Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
+                }
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Name);
+            }
+            finally
+            {
+                // Cleanup
+                await DisableSoftDelete();
+            }
         }
 
         [Test]
@@ -1641,26 +1726,31 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Arrange
-            await EnableSoftDelete();
-            var blobName = GetNewBlobName();
-            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            await blob.CreateAsync();
-            await blob.DeleteAsync();
-
-            // Act
-            IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
-
-            // Assert
-            if (blobs.Count == 0)
+            try
             {
-                Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
-            }
-            Assert.AreEqual(1, blobs.Count);
-            Assert.AreEqual(blobName, blobs.First().Blob.Name);
+                // Arrange
+                await EnableSoftDelete();
+                var blobName = GetNewBlobName();
+                AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
+                await blob.CreateAsync();
+                await blob.DeleteAsync();
 
-            // Cleanup
-            await DisableSoftDelete();
+                // Act
+                IList<BlobHierarchyItem> blobs = await test.Container.GetBlobsByHierarchyAsync(states: BlobStates.Deleted).ToListAsync();
+
+                // Assert
+                if (blobs.Count == 0)
+                {
+                    Assert.Inconclusive("Delete may have happened before soft delete was fully enabled!");
+                }
+                Assert.AreEqual(1, blobs.Count);
+                Assert.AreEqual(blobName, blobs.First().Blob.Name);
+            }
+            finally
+            {
+                // Cleanup
+                await DisableSoftDelete();
+            }
         }
 
         [Test]

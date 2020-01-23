@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0
+
+### Breaking changes
+
+- `Keys` and `Labels` properties in `SettingSelector` are replaced with `KeyFilter` and `LabelFilter` to provide full filtering support.
+
+### Major changes
+
+- Fixed multiple issues with connection string parsing in `ConfigurationClient`.
+
 ## 1.0.0-preview.6
 
 - Bugfixes: [#8920](https://github.com/Azure/azure-sdk-for-net/issues/8920)

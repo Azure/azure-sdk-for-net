@@ -157,16 +157,28 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Contains(replaceTopicResponse.Tags, tag => tag.Key == "replacedTag1");
                 Assert.DoesNotContain(replaceTopicResponse.Tags, tag => tag.Key == "originalTag1");
 
-                // Update the topic
-                var updateTopicTagsDictionary = new Dictionary<string, string>()
+                // Update the topic with tags & allow traffic from all ips
+                TopicUpdateParameters topicUpdateParameters = new TopicUpdateParameters();
+                topicUpdateParameters.Tags = new Dictionary<string, string>()
                 {
                     { "updatedTag1", "updatedValue1" },
                     { "updatedTag2", "updatedValue2" }
                 };
-
-                var updateTopicResponse = this.EventGridManagementClient.Topics.UpdateAsync(resourceGroup, topicName, updateTopicTagsDictionary).Result;
+                topic.AllowTrafficFromAllIPs = true;
+                var updateTopicResponse = this.EventGridManagementClient.Topics.UpdateAsync(resourceGroup, topicName, topicUpdateParameters).Result;
                 Assert.Contains(updateTopicResponse.Tags, tag => tag.Key == "updatedTag1");
                 Assert.DoesNotContain(updateTopicResponse.Tags, tag => tag.Key == "replacedTag1");
+                Assert.True(updateTopicResponse.AllowTrafficFromAllIPs);
+                Assert.Null(updateTopicResponse.InboundIpRules);
+
+                // Update the Topic with IP filtering feature
+                topic.AllowTrafficFromAllIPs = false;
+                topic.InboundIpRules = new List<InboundIpRule>();
+                topic.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.67.98" });
+                topic.InboundIpRules.Add(new InboundIpRule() { Action = IpActionType.Allow, IpMask = "12.35.90.100" });
+                var updateTopicResponseWithIpFilteringFeature = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(resourceGroup, topicName, topic).Result;
+                Assert.False(updateTopicResponseWithIpFilteringFeature.AllowTrafficFromAllIPs);
+                Assert.True(updateTopicResponseWithIpFilteringFeature.InboundIpRules.Count() == 2);
 
                 // Delete topic
                 this.EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();

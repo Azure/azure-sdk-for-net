@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>Microsoft Azure Attestation Library</Description>
+        <AssemblyName>Microsoft.Azure.Attestation</AssemblyName>
+        <Version>0.9.0-preview</Version>
+        <PackageId>Microsoft.Azure.Attestation</PackageId>
+        <PackageTags>Attestation;</PackageTags>
+    </PropertyGroup>
+</Project>

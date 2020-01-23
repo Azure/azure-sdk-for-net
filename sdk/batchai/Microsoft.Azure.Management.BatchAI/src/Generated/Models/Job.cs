@@ -362,7 +362,7 @@ namespace Microsoft.Azure.Management.BatchAI.Models
         /// specified on the job - it does not necessarily mean that the job
         /// command line has started executing. terminating - The job is
         /// terminated by the user, the terminate operation is in progress.
-        /// succeeded - The job has completed running succesfully and exited
+        /// succeeded - The job has completed running successfully and exited
         /// with exit code 0. failed - The job has finished unsuccessfully
         /// (failed with a non-zero exit code) and has exhausted its retry
         /// limit. A job is also marked as failed if an error occurred

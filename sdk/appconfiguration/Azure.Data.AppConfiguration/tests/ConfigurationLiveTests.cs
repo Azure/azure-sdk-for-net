@@ -30,10 +30,14 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private ConfigurationClient GetClient()
         {
-            return InstrumentClient(
-                new ConfigurationClient(
-                    Recording.GetConnectionStringFromEnvironment("APPCONFIGURATION_CONNECTION_STRING"),
-                    Recording.InstrumentClientOptions(new ConfigurationClientOptions())));
+            var connectionString = Recording.GetConnectionStringFromEnvironment("APPCONFIGURATION_CONNECTION_STRING");
+            if (Recording.Mode == RecordedTestMode.Playback)
+            {
+                connectionString = connectionString.Replace(";Secret=;", ";Secret=Kg==;");
+            }
+
+            var options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
+            return InstrumentClient(new ConfigurationClient(connectionString, options));
         }
 
         private ConfigurationClient GetAADClient()

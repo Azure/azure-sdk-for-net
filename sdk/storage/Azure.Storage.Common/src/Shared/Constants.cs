@@ -134,6 +134,13 @@ namespace Azure.Storage
             public const string ContentRange = "Content-Range";
         }
 
+        internal static class ErrorCodes
+        {
+            public const string InternalError = "InternalError";
+            public const string OperationTimedOut = "OperationTimedOut";
+            public const string ServerBusy = "ServerBusy";
+        }
+
         /// <summary>
         /// Blob constant values
         /// </summary>
@@ -147,6 +154,9 @@ namespace Azure.Storage
             /// </summary>
             public const string AlreadyExists = "BlobAlreadyExists";
             public const string NotFound = "BlobNotFound";
+
+            public const string UploadOperationName =
+                "Azure.Storage.Blobs.BlobClient.Upload";
 
             internal static class Append
             {
@@ -166,6 +176,8 @@ namespace Azure.Storage
                     "Azure.Storage.Blobs.Specialized.BlobBaseClient.DeleteIfExists";
                 public const string SetTierOperationName =
                     "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetTier";
+                public const string ExistsOperationName =
+                    "Azure.Storage.Blobs.Specialized.BlobBaseClient.Exists";
             }
 
             internal static class Block
@@ -225,6 +237,8 @@ namespace Azure.Storage
                     "Azure.Storage.Blobs.BlobContainerClient.Delete";
                 public const string DeleteIfExistsOperationName =
                     "Azure.Storage.Blobs.BlobContainerClient.DeleteIfExists";
+                public const string ExistsOperationName =
+                    "Azure.Storage.Blobs.BlobContainerClient.Exists";
                 public const string GetPropertiesOperationName =
                     "Azure.Storage.Blobs.BlobContainerClient.GetProperties";
                 public const string SetMetaDataOperationName =
@@ -392,6 +406,12 @@ namespace Azure.Storage
                 public const string CreatePermissionOperationName =
                     "Azure.Storage.Files.Shares.ShareClient.CreatePermission";
             }
+
+            internal static class Errors
+            {
+                public const string ShareUsageBytesOverflow =
+                    "ShareUsageBytes exceeds int.MaxValue. Use ShareUsageInBytes instead.";
+            }
         }
 
         /// <summary>
@@ -544,6 +564,7 @@ namespace Azure.Storage
                 public const char Blob = 'b';
                 public const char Queue = 'q';
                 public const char File = 'f';
+                public const char Table = 't';
             }
 
             internal static class AccountResources

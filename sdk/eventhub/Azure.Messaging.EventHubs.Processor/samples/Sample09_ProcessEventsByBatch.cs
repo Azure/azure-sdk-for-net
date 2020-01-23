@@ -8,7 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor.Samples.Infrastructure;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 
 namespace Azure.Messaging.EventHubs.Processor.Samples
@@ -96,10 +98,6 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 try
                 {
                     // Retrieve or create the active batch for the current partition.
-                    //
-                    // NOTE:  There is a bug in the Event Hubs Processor preview 6 library causing the "Partition"
-                    //        property to be null when no event was available.  This sample will work when run against the
-                    //        referenced project but will require adjustments to work with the preview 6 package.
 
                     List<ProcessEventArgs> currentBatch = eventBatches.GetOrAdd(eventArgs.Partition.PartitionId, _ => new List<ProcessEventArgs>());
                     bool sendBatchForProcessing = false;
@@ -180,7 +178,7 @@ namespace Azure.Messaging.EventHubs.Processor.Samples
                 await processor.StartProcessingAsync();
 
                 using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
+                cancellationSource.CancelAfter(TimeSpan.FromSeconds(90));
 
                 // We'll publish a batch of events for our processor to receive. We'll split the events into a couple of batches to
                 // increase the chance they'll be spread around to different partitions and introduce a delay between batches to

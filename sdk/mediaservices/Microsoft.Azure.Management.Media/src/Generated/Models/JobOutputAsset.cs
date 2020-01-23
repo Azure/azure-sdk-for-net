@@ -56,8 +56,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// this JobOutput within the Job. Note that this index is the same as
         /// the relative index of the corresponding TransformOutput within its
         /// Transform.</param>
-        public JobOutputAsset(string assetName, JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string))
-            : base(error, state, progress, label)
+        /// <param name="startTime">The UTC date and time at which this Job
+        /// Output began processing.</param>
+        /// <param name="endTime">The UTC date and time at which this Job
+        /// Output finished processing.</param>
+        public JobOutputAsset(string assetName, JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
+            : base(error, state, progress, label, startTime, endTime)
         {
             AssetName = assetName;
             CustomInit();

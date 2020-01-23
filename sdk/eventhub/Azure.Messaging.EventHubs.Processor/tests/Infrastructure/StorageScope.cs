@@ -112,11 +112,11 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
-        ///   Performs the tasks needed to create a new Event Hubs namespace within a resource group, intended to be used as
+        ///   Performs the tasks needed to create a new Azure storage account within a resource group, intended to be used as
         ///   an ephemeral container for the Event Hub instances used in a given test run.
         /// </summary>
         ///
-        /// <returns>The key attributes for identifying and accessing a dynamically created Event Hubs namespace.</returns>
+        /// <returns>The key attributes for identifying and accessing a dynamically created Azure storage account.</returns>
         ///
         public static async Task<StorageProperties> CreateStorageAccountAsync()
         {
@@ -134,8 +134,28 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
                 StorageAccount storageAccount = await ResourceManager.CreateRetryPolicy<StorageAccount>().ExecuteAsync(() => client.StorageAccounts.CreateAsync(resourceGroup, CreateName(), parameters));
 
                 StorageAccountListKeysResult storageKeys = await ResourceManager.CreateRetryPolicy<StorageAccountListKeysResult>().ExecuteAsync(() => client.StorageAccounts.ListKeysAsync(resourceGroup, storageAccount.Name));
-                return new StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net");
+                return new StorageProperties(storageAccount.Name, $"DefaultEndpointsProtocol=https;AccountName={ storageAccount.Name };AccountKey={ storageKeys.Keys[0].Value };EndpointSuffix=core.windows.net", wasStorageAccountCreated: true);
             }
+        }
+
+        /// <summary>
+        ///   It creates an instance of <see cref="StorageProperties"/>, populates it from a connection string and returns it.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string from the existing Azure storage account.</param>
+        ///
+        /// <returns>The <see cref="StorageProperties" /> that will be used in a given test run.</returns>
+        ///
+        /// <exception cref="ArgumentException">Occurs when <param name="connectionString"/> holds an invalid connection string.</exception>
+        ///
+        public static StorageProperties PopulateStoragePropertiesFromConnectionString(string connectionString)
+        {
+            if (IsConnectionStringValid(connectionString, out string name))
+            {
+                return new StorageProperties(name, connectionString, wasStorageAccountCreated: false);
+            }
+
+            throw new ArgumentException("An account name could not be found in the passed connection string");
         }
 
         /// <summary>
@@ -158,6 +178,24 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         }
 
         /// <summary>
+        ///   It checks if the connection string contains a valid Azure storage account name.
+        /// </summary>
+        ///
+        /// <param name="connectionString">The connection string.</param>
+        /// <param name="name">The Azure storage account name taken from the connection string.</param>
+        ///
+        /// <returns>
+        ///   <c>true</c> if the connection string is a valid connection string; otherwise, <c>false</c>.
+        /// </returns>
+        ///
+        private static bool IsConnectionStringValid(string connectionString, out string name)
+        {
+            name = ConnectionStringTokenParser.ParseTokenAndReturnValue(connectionString, "AccountName");
+
+            return !string.IsNullOrEmpty(name);
+        }
+
+        /// <summary>
         ///   The key attributes for identifying and accessing a dynamically created Azure storage account,
         ///   intended to serve as an ephemeral container for the checkpoints created during a test run.
         /// </summary>
@@ -167,21 +205,27 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             /// <summary>The name of the Azure storage account that was dynamically created.</summary>
             public readonly string Name;
 
-            /// <summary>The connection string to use for accessing the dynamically created namespace.</summary>
+            /// <summary>The connection string to use for accessing the Azure storage account.</summary>
             public readonly string ConnectionString;
+
+            /// <summary>Flags whether the storage account was created for the current test run or was retrieved from environment variables.</summary>
+            public readonly bool WasStorageAccountCreated;
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="StorageProperties"/> struct.
             /// </summary>
             ///
             /// <param name="name">The name of the storage account.</param>
-            /// <param name="connectionString">The connection string to use for accessing the namespace.</param>
+            /// <param name="connectionString">The connection string to use for accessing the Azure storage account.</param>
+            /// <param name="wasStorageAccountCreated">Sets whether the storage account was created or read from environment variables.</param>
             ///
             internal StorageProperties(string name,
-                                       string connectionString)
+                                       string connectionString,
+                                       bool wasStorageAccountCreated)
             {
                 Name = name;
                 ConnectionString = connectionString;
+                WasStorageAccountCreated = wasStorageAccountCreated;
             }
         }
     }

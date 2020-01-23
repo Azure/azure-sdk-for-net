@@ -16,7 +16,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
-    /// The <see cref="BlobClient"/> allows you to manipulate Azure Storage
+    /// The <see cref="BlobBaseClient"/> allows you to manipulate Azure Storage
     /// blobs.
     /// </summary>
     public class BlobBaseClient
@@ -42,6 +42,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        private readonly BlobClientOptions.ServiceVersion _version;
+
+        /// <summary>
+        /// The version of the service to use when sending requests.
+        /// </summary>
+        internal virtual BlobClientOptions.ServiceVersion Version => _version;
 
         /// <summary>
         /// The <see cref="ClientDiagnostics"/> instance used to create diagnostic scopes
@@ -118,7 +128,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region ctors
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         protected BlobBaseClient()
@@ -126,7 +136,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="connectionString">
@@ -148,7 +158,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="connectionString">
@@ -181,13 +191,14 @@ namespace Azure.Storage.Blobs.Specialized
                 };
             _uri = builder.ToUri();
             _pipeline = options.Build(conn.Credentials);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -207,7 +218,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -230,7 +241,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -254,7 +265,7 @@ namespace Azure.Storage.Blobs.Specialized
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -276,13 +287,14 @@ namespace Azure.Storage.Blobs.Specialized
             options ??= new BlobClientOptions();
             _uri = blobUri;
             _pipeline = options.Build(authentication);
+            _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class.
         /// </summary>
         /// <param name="blobUri">
@@ -294,12 +306,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
         {
             _uri = blobUri;
             _pipeline = pipeline;
+            _version = version;
             _clientDiagnostics = clientDiagnostics;
             _customerProvidedKey = customerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
@@ -307,14 +323,14 @@ namespace Azure.Storage.Blobs.Specialized
         #endregion ctors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlobClient"/>
+        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
         /// class with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob" />.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
-        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         /// <remarks>
         /// Pass null or empty string to remove the snapshot returning a URL
         /// to the base blob.
@@ -322,16 +338,16 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual BlobBaseClient WithSnapshot(string snapshot) => WithSnapshotCore(snapshot);
 
         /// <summary>
-        /// Creates a new instance of the <see cref="BlobClient"/> class
+        /// Creates a new instance of the <see cref="BlobBaseClient"/> class
         /// with an identical <see cref="Uri"/> source but the specified
         /// <paramref name="snapshot"/> timestamp.
         /// </summary>
         /// <param name="snapshot">The snapshot identifier.</param>
-        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
         }
 
         /// <summary>
@@ -355,7 +371,7 @@ namespace Azure.Storage.Blobs.Specialized
         ///// Pass null or empty string to remove the verion ID returning a URL to the base blob.
         ///// </remarks>
         ///// <param name="versionId">The version ID to use on this blob. An empty string or null indicates to use the base blob.</param>
-        ///// <returns>The new <see cref="BlobClient"/> instance referencing the verionId.</returns>
+        ///// <returns>The new <see cref="BlobBaseClient"/> instance referencing the verionId.</returns>
         //public virtual BlobBaseClient WithVersionId(string versionId) => this.WithVersionIdImpl(versionId);
 
         //protected virtual BlobBaseClient WithVersionIdImpl(string versionId)
@@ -729,6 +745,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ClientDiagnostics,
                     Pipeline,
                     Uri,
+                    version: Version.ToVersionString(),
                     range: pageRange.ToString(),
                     leaseId: conditions?.LeaseId,
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
@@ -1186,7 +1203,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Debug.Assert(initialTransferLength <= Constants.Blob.Block.MaxDownloadBytes);
 
-            var client = new BlobBaseClient(Uri, Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, initialTransferLength);
 
             if (async)
@@ -1447,6 +1464,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         copySource: source,
+                        version: Version.ToVersionString(),
                         rehydratePriority: rehydratePriority,
                         tier: accessTier,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -1599,6 +1617,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         copyId: copyId,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.AbortCopyFromUri",
@@ -1891,6 +1910,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
@@ -1914,6 +1934,114 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion Delete
+
+        #region Exists
+        /// <summary>
+        /// The <see cref="Exists"/> operation can be called on a
+        /// <see cref="BlobBaseClient"/> to see if the associated blob
+        /// exists in the container on the storage account in the
+        /// storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the blob exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// <see cref="BlobBaseClient"/> to see if the associated blob
+        /// exists in the container on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the blob exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsInternal"/> operation can be called on a
+        /// <see cref="BlobBaseClient"/> to see if the associated blob
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the blob exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<bool>> ExistsInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+
+                try
+                {
+                    Response<BlobProperties> response = await BlobRestClient.Blob.GetPropertiesAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        version: Version.ToVersionString(),
+                        async: async,
+                        operationName: Constants.Blob.Base.ExistsOperationName,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(true, response.GetRawResponse());
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                }
+            }
+        }
+        #endregion Exists
 
         #region Undelete
         /// <summary>
@@ -2000,6 +2128,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
                         operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Undelete")
@@ -2130,6 +2259,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
@@ -2278,6 +2408,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             blobCacheControl: httpHeaders?.CacheControl,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentHash: httpHeaders?.ContentHash,
@@ -2435,6 +2566,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ClientDiagnostics,
                             Pipeline,
                             Uri,
+                            version: Version.ToVersionString(),
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -2588,6 +2720,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ClientDiagnostics,
                         Pipeline,
                         Uri,
+                        version: Version.ToVersionString(),
                         metadata: metadata,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
@@ -2778,6 +2911,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         tier: accessTier,
+                        version: Version.ToVersionString(),
                         rehydratePriority: rehydratePriority,
                         leaseId: conditions?.LeaseId,
                         async: async,
@@ -2801,26 +2935,27 @@ namespace Azure.Storage.Blobs.Specialized
 
     /// <summary>
     /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
-    /// creating <see cref="BlobClient"/> instances.
+    /// creating <see cref="BlobBaseClient"/> instances.
     /// </summary>
     public static partial class SpecializedBlobExtensions
     {
         /// <summary>
-        /// Create a new <see cref="BlobClient"/> object by concatenating
+        /// Create a new <see cref="BlobBaseClient"/> object by concatenating
         /// <paramref name="blobName"/> to the end of the
         /// <paramref name="client"/>'s <see cref="BlobContainerClient.Uri"/>.
-        /// The new <see cref="BlobClient"/> uses the same request policy
+        /// The new <see cref="BlobBaseClient"/> uses the same request policy
         /// pipeline as the <see cref="BlobContainerClient"/>.
         /// </summary>
         /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
         /// <param name="blobName">The name of the blob.</param>
-        /// <returns>A new <see cref="BlobClient"/> instance.</returns>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         public static BlobBaseClient GetBlobBaseClient(
             this BlobContainerClient client,
             string blobName) =>
             new BlobBaseClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
+                client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey);
     }

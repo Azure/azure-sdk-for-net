@@ -3,12 +3,14 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 
 namespace Azure.Messaging.EventHubs.Diagnostics
 {
     /// <summary>
     ///   Serves as an ETW event source for logging of information about
-    ///   Event Hubs client
+    ///   Event Hubs client.
     /// </summary>
     ///
     /// <remarks>

@@ -14,7 +14,7 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2019_02_02;
+        internal const ServiceVersion LatestVersion = StorageVersionExtensions.LatestVersion;
 
         /// <summary>
         /// The versions of Azure File Storage supported by this client

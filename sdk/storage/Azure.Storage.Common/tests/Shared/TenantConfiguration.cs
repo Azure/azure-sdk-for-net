@@ -54,6 +54,7 @@ namespace Azure.Storage.Test
                 storageCredentials: new StorageSharedKeyCredential(AccountName, AccountKey),
                 blobStorageUri: (AsUri(BlobServiceEndpoint), AsUri(BlobServiceSecondaryEndpoint)),
                 fileStorageUri: (AsUri(FileServiceEndpoint), AsUri(FileServiceSecondaryEndpoint)),
+                tableStorageUri: (AsUri(TableServiceEndpoint), AsUri(TableServiceSecondaryEndpoint)),
                 queueStorageUri: (AsUri(QueueServiceEndpoint), AsUri(QueueServiceSecondaryEndpoint)));
             return connection.ToString(exportSecrets: !sanitize);
             Uri AsUri(string text) => !string.IsNullOrWhiteSpace(text) ? new Uri(text) : default;

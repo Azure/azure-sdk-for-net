@@ -102,7 +102,7 @@ namespace Azure.Storage
             string endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix,
             bool useHttps = true)
         {
-            var conn = new StorageConnectionString(storageCredentials, default, default, default);
+            var conn = new StorageConnectionString(storageCredentials);
             if (storageCredentials == null)
             {
                 throw Errors.ArgumentNull(nameof(storageCredentials));

@@ -78,7 +78,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.List(null, "wfName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.List("rgName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowRuns.List("rgName", "wfName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowRuns.List("rgName", "wfName"));
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.ListNext(null));
-            Assert.Throws<CloudException>(() => client.WorkflowRuns.ListNext("http://management.azure.com/runNext"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowRuns.ListNext("http://management.azure.com/runNext"));
         }
 
         [Fact]
@@ -164,7 +164,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Get(null, "wfName", "rName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Get("rgName", null, "rName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Get("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowRuns.Get("rgName", "wfName", "rName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowRuns.Get("rgName", "wfName", "rName"));
         }
 
         [Fact]
@@ -208,7 +208,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Cancel(null, "wfName", "rName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Cancel("rgName", null, "rName"));
             Assert.Throws<ValidationException>(() => client.WorkflowRuns.Cancel("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowRuns.Cancel("rgName", "wfName", "rName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowRuns.Cancel("rgName", "wfName", "rName"));
         }
 
         [Fact]
