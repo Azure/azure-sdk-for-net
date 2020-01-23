@@ -458,7 +458,7 @@ namespace ResourceGroups.Tests
                 string groupId = "tag-mg1";
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
-                var parameters = new Deployment
+                var parameters = new ScopedDeployment
                 {
                     Properties = new DeploymentProperties()
                     {
@@ -496,7 +496,7 @@ namespace ResourceGroups.Tests
                 var client = GetResourceManagementClient(context, handler);
                 string deploymentName = TestUtilities.GenerateName("csharpsdktest");
 
-                var parameters = new Deployment
+                var parameters = new ScopedDeployment
                 {
                     Properties = new DeploymentProperties()
                     {

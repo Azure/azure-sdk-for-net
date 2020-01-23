@@ -12,35 +12,30 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Tags for the resource.
+    /// Deployment operation parameters.
     /// </summary>
-    public partial class TagsResource : Resource
+    public partial class ScopedDeployment
     {
         /// <summary>
-        /// Initializes a new instance of the TagsResource class.
+        /// Initializes a new instance of the ScopedDeployment class.
         /// </summary>
-        public TagsResource()
+        public ScopedDeployment()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagsResource class.
+        /// Initializes a new instance of the ScopedDeployment class.
         /// </summary>
-        /// <param name="properties">tags property.</param>
-        /// <param name="id">Resource ID</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
-        public TagsResource(Tags properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type, location, tags)
+        /// <param name="location">The location to store the deployment
+        /// data.</param>
+        /// <param name="properties">The deployment properties.</param>
+        public ScopedDeployment(string location, DeploymentProperties properties)
         {
+            Location = location;
             Properties = properties;
             CustomInit();
         }
@@ -51,10 +46,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags property.
+        /// Gets or sets the location to store the deployment data.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the deployment properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public Tags Properties { get; set; }
+        public DeploymentProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -64,9 +65,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
             if (Properties == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
             }
         }
     }
