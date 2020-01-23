@@ -5,6 +5,7 @@
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableFxCopAnalyzers>false</EnableFxCopAnalyzers>
+    <EnableApiCompat>false</EnableApiCompat>
   </PropertyGroup>
 
   <ItemGroup>
