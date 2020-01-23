@@ -102,7 +102,6 @@ namespace Azure.Messaging.EventHubs
     public abstract partial class EventHubsRetryPolicy
     {
         protected EventHubsRetryPolicy() { }
-        public abstract int MaximumRetries { get; }
         public abstract System.TimeSpan? CalculateRetryDelay(System.Exception lastException, int attemptCount);
         public abstract System.TimeSpan CalculateTryTimeout(int attemptCount);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
