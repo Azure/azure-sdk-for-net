@@ -183,6 +183,7 @@ namespace Azure.Core.Testing
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
+            clientOptions.Retry.Delay = TimeSpan.Zero;
             return clientOptions;
         }
 

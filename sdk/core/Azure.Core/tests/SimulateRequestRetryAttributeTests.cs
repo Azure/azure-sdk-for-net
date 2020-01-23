@@ -36,7 +36,6 @@ namespace Azure.Core.Tests
                 Assert.AreEqual(200, response.Status);
                 Assert.AreEqual(1, perCallPolicy.CallCount);
                 Assert.AreEqual(2, perRetryPolicy.CallCount);
-
             }
             finally
             {

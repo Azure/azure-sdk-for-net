@@ -33,7 +33,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var connectionString = Recording.GetConnectionStringFromEnvironment("APPCONFIGURATION_CONNECTION_STRING");
             if (Recording.Mode == RecordedTestMode.Playback)
             {
-                connectionString = connectionString.Replace(";Secret=;", ";Secret=Kg==;");
+                connectionString = connectionString.Replace(";Secret=", ";Secret=Kg==");
             }
 
             var options = Recording.InstrumentClientOptions(new ConfigurationClientOptions());
