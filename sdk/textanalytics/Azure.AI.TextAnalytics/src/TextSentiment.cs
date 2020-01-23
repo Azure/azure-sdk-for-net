@@ -11,9 +11,9 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct TextSentiment
     {
-        internal TextSentiment(TextSentimentClass sentimentClass, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal TextSentiment(TextSentimentClass predictedSentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
-            SentimentClass = sentimentClass;
+            PredictedSentiment = predictedSentiment;
             PositiveScore = positiveScore;
             NeutralScore = neutralScore;
             NegativeScore = negativeScore;
@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for the analyzed input document
         /// or substring.
         /// </summary>
-        public TextSentimentClass SentimentClass { get; }
+        public TextSentimentClass PredictedSentiment { get; }
 
         /// <summary>
         /// Gets a score between 0 and 1, indicating the confidence that the

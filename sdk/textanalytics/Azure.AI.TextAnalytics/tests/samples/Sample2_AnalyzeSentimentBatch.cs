@@ -60,7 +60,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
+                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.PredictedSentiment.ToString()}, with scores: ");
                     Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
                     Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
                     Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
@@ -71,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Samples
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 
-                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
+                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.PredictedSentiment.ToString()}, with scores: ");
                         Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
                         Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
                         Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
