@@ -15,24 +15,28 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// Quota change requests information.
+    /// </summary>
+    public partial class CreateGenericQuotaRequestParameters
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// CreateGenericQuotaRequestParameters class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public CreateGenericQuotaRequestParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the
+        /// CreateGenericQuotaRequestParameters class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="value">Quota change requests.</param>
+        public CreateGenericQuotaRequestParameters(IList<CurrentQuotaLimitBase> value = default(IList<CurrentQuotaLimitBase>))
         {
-            Scopes = scopes;
+            Value = value;
             CustomInit();
         }
 
@@ -42,9 +46,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets quota change requests.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<CurrentQuotaLimitBase> Value { get; set; }
 
     }
 }
