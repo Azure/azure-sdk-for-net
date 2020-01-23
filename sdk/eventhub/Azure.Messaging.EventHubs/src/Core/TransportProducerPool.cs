@@ -132,7 +132,8 @@ namespace Azure.Messaging.EventHubs.Core
         public async ValueTask DisposeAsync() => await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
-        ///   It cleans the resources that are hold by the <see cref="TransportProducerPool" />.
+        ///   Closes the producers in the pool and performs any cleanup necessary
+        ///   for resources used by the <see cref="TransportProducerPool" />.
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
