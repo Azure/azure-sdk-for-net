@@ -33,15 +33,40 @@ namespace Azure.Core.Pipeline
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessAsync(message, pipeline, false).EnsureCompleted();
+            int attempt = 0;
+            List<Exception>? exceptions = null;
+            while (true)
+            {
+                Exception? lastException = null;
+
+                try
+                {
+                    ProcessNext(message, pipeline);
+                }
+                catch (Exception ex)
+                {
+                    exceptions ??= new List<Exception>();
+                    exceptions.Add(ex);
+                    lastException = ex;
+                }
+
+                attempt++;
+
+                if (!ShouldRetry(attempt, message, exceptions, lastException, out TimeSpan delay))
+                {
+                    return;
+                }
+
+                if (delay > TimeSpan.Zero)
+                {
+                    Wait(delay, message.CancellationToken);
+                }
+
+                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt);
+            }
         }
 
-        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            return ProcessAsync(message, pipeline, true);
-        }
-
-        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             int attempt = 0;
             List<Exception>? exceptions = null;
@@ -51,76 +76,24 @@ namespace Azure.Core.Pipeline
 
                 try
                 {
-                    if (async)
-                    {
-                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        ProcessNext(message, pipeline);
-                    }
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
-                    if (exceptions == null)
-                    {
-                        exceptions = new List<Exception>();
-                    }
-
+                    exceptions ??= new List<Exception>();
                     exceptions.Add(ex);
-
                     lastException = ex;
                 }
 
-                TimeSpan delay;
-
                 attempt++;
-
-                var shouldRetry = attempt <= _maxRetries;
-
-                if (lastException != null)
-                {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriableException(lastException))
-                    {
-                        GetDelay(attempt, out delay);
-                    }
-                    else
-                    {
-                        // Rethrow a singular exception
-                        if (exceptions?.Count == 1)
-                        {
-                            ExceptionDispatchInfo.Capture(lastException).Throw();
-                        }
-
-                        throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
-                    }
-                }
-                else if (message.ResponseClassifier.IsErrorResponse(message))
-                {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message))
-                    {
-                        GetDelay(message, attempt, out delay);
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-                else
+                if (!ShouldRetry(attempt, message, exceptions, lastException, out TimeSpan delay))
                 {
                     return;
                 }
 
                 if (delay > TimeSpan.Zero)
                 {
-                    if (async)
-                    {
-                        await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        Wait(delay, message.CancellationToken);
-                    }
+                    await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
                 }
 
                 AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, attempt);
@@ -166,6 +139,36 @@ namespace Azure.Core.Pipeline
             }
 
             return TimeSpan.Zero;
+        }
+
+        private bool ShouldRetry(int attempt, HttpMessage message, List<Exception>? exceptions, Exception? lastException, out TimeSpan delay)
+        {
+            var shouldRetry = attempt <= _maxRetries;
+
+            if (lastException != null)
+            {
+                if (shouldRetry && message.ResponseClassifier.IsRetriableException(lastException))
+                {
+                    GetDelay(attempt, out delay);
+                    return true;
+                }
+
+                // Rethrow a singular exception
+                if (exceptions?.Count == 1)
+                {
+                    ExceptionDispatchInfo.Capture(lastException).Throw();
+                }
+
+                throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
+            }
+
+            if (shouldRetry && message.ResponseClassifier.IsErrorResponse(message) && message.ResponseClassifier.IsRetriableResponse(message))
+            {
+                GetDelay(message, attempt, out delay);
+                return true;
+            }
+
+            return false;
         }
 
         private void GetDelay(HttpMessage message, int attempted, out TimeSpan delay)

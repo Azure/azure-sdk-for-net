@@ -190,8 +190,8 @@ namespace Azure.Core.Testing
         {
             return Mode switch
             {
-                RecordedTestMode.Live => currentTransport,
-                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random),
+                RecordedTestMode.Live => (HttpPipelineTransport)new RetryTransport(currentTransport),
+                RecordedTestMode.Record => new RecordTransport(_session, new RetryTransport(currentTransport), entry => !_disableRecording.Value, Random),
                 RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, Random),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
