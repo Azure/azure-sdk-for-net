@@ -23,7 +23,7 @@ TextSentiment sentiment = result.DocumentSentiment;
 Console.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
 Console.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
 Console.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
-Console.WriteLine($"    Negative score: {sentiment.NeutralScore:0.00}.");
+Console.WriteLine($"    Negative score: {sentiment.NegativeScore:0.00}.");
 ```
 
 ## Analyzing the sentiment of multipile text inputs
