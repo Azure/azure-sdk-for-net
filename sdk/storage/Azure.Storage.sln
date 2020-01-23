@@ -12,9 +12,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs", "Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{3B14B995-1D5B-42C4-AD7F-5C9B91481039}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Tests", "Azure.Storage.Blobs\tests\Azure.Storage.Blobs.Tests.csproj", "{BCA1EC4A-8B3E-4F22-A3E5-8AA405978BDB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FC1F45F6-F103-48AE-8E21-D858F4689370} = {FC1F45F6-F103-48AE-8E21-D858F4689370}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares", "Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj", "{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}"
 EndProject
@@ -97,13 +94,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptograph
 		Azure.Storage.Blobs.Cryptography\README.md = Azure.Storage.Blobs.Cryptography\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptography", "{9260EB26-0D9A-4D71-B588-7106999C745B}"
-	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Queues.Cryptography\BreakingChanges.txt = Azure.Storage.Queues.Cryptography\BreakingChanges.txt
-		Azure.Storage.Queues.Cryptography\Changelog.txt = Azure.Storage.Queues.Cryptography\Changelog.txt
-		Azure.Storage.Queues.Cryptography\README.md = Azure.Storage.Queues.Cryptography\README.md
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLake", "Azure.Storage.Files.DataLake\src\Azure.Storage.Files.DataLake.csproj", "{DE6EC5B8-5DBA-4D21-931E-3B042010B3C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLake.Tests", "Azure.Storage.Files.DataLake\tests\Azure.Storage.Files.DataLake.Tests.csproj", "{EDBF4B6B-5D28-47AF-A9BE-B70568067407}"
@@ -112,7 +102,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLak
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{FC1F45F6-F103-48AE-8E21-D858F4689370}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching", "Azure.Storage.Blobs.Batching\src\Azure.Storage.Blobs.Batching.csproj", "{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch", "Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj", "{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batch", "Batch", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
@@ -202,10 +191,6 @@ Global
 		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E53736D7-EAF8-417C-9ADA-7ED931916502}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC1F45F6-F103-48AE-8E21-D858F4689370}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}.Release|Any CPU.ActiveCfg = Release|Any CPU
