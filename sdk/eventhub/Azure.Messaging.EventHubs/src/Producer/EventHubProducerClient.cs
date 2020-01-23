@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Producer
     public class EventHubProducerClient : IAsyncDisposable
     {
         /// <summary>The maximum number of attempts that may be made to get a <see cref="TransportProducer"/> from the pool.</summary>
-        private const int MaximumCreateProducerAttempts = 3;
+        internal const int MaximumCreateProducerAttempts = 3;
 
         /// <summary>The minimum allowable size, in bytes, for a batch to be sent.</summary>
         internal const int MinimumBatchSizeLimit = 24;

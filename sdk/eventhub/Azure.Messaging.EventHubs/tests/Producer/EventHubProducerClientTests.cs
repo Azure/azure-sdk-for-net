@@ -745,7 +745,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var retryPolicy = GetRetryPolicy(producerClient);
             var events = new EventData[0];
             var options = new SendEventOptions { PartitionId = "0" };
 
@@ -761,7 +760,7 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer.Verify(t => t.SendAsync(It.IsAny<IEnumerable<EventData>>(),
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
-                                     Times.Exactly(retryPolicy.MaximumRetries));
+                                     Times.Exactly(EventHubProducerClient.MaximumCreateProducerAttempts));
 
             Assert.That(mockTransportProducerPool.Count, Is.EqualTo(3));
         }
@@ -782,7 +781,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var retryPolicy = GetRetryPolicy(producerClient);
 
             transportProducer
                 .Setup(transportProducerPool => transportProducerPool.SendAsync(It.IsAny<EventDataBatch>(),
@@ -794,7 +792,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
                                                       It.IsAny<CancellationToken>()),
-                                     Times.Exactly(retryPolicy.MaximumRetries));
+                                     Times.Exactly(EventHubProducerClient.MaximumCreateProducerAttempts));
 
             Assert.That(mockTransportProducerPool.Count, Is.EqualTo(3));
         }
@@ -811,7 +809,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var retryPolicy = GetRetryPolicy(producerClient);
             var numberOfCalls = 0;
             var events = new EventData[0];
             var options = new SendEventOptions { PartitionId = "0" };
@@ -822,7 +819,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                 It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
-                    if (++numberOfCalls < retryPolicy.MaximumRetries)
+                    if (++numberOfCalls < EventHubProducerClient.MaximumCreateProducerAttempts)
                     {
                         throw new EventHubsException(false, string.Empty, EventHubsException.FailureReason.ClientClosed);
                     }
@@ -846,7 +843,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockTransportProducerPool = new MockTransportProducerPool(mockPooledProducer);
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var retryPolicy = GetRetryPolicy(producerClient);
             var numberOfCalls = 0;
 
             transportProducer
@@ -854,7 +850,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                                 It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
-                    if (++numberOfCalls < retryPolicy.MaximumRetries)
+                    if (++numberOfCalls < EventHubProducerClient.MaximumCreateProducerAttempts)
                     {
                         throw new EventHubsException(false, string.Empty, EventHubsException.FailureReason.ClientClosed);
                     }
