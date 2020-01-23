@@ -7,7 +7,7 @@ namespace Azure.AI.TextAnalytics
     /// The predicted sentiment for a given span of text.  This may correspond
     /// to a full text document input or a substring such as a sentence of that
     /// input.  For more information regarding text sentiment, see
-    /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis.
+    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.
     /// </summary>
     public readonly struct TextSentiment
     {
