@@ -39,14 +39,16 @@ namespace Azure.Core.Testing
             return Path.Combine(TestContext.CurrentContext.TestDirectory, "SessionRecords", className, fileName);
         }
 
-        public TestRecording StartRecording(string name)
-        {
-            return new TestRecording(Mode, GetSessionFilePath(name), Sanitizer, Matcher);
-        }
-
         [SetUp]
         public virtual void StartTestRecording()
         {
+            // Only create test recordings for the latest version of the service
+            TestContext.TestAdapter test = TestContext.CurrentContext.Test;
+            if (Mode != RecordedTestMode.Live &&
+                test.Properties.ContainsKey("SkipRecordings"))
+            {
+                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+            }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
         }
 

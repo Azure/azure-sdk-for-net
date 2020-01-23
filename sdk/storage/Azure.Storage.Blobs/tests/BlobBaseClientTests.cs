@@ -26,8 +26,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class BlobBaseClientTests : BlobTestBase
     {
-        public BlobBaseClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

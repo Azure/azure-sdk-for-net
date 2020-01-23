@@ -27,8 +27,8 @@ namespace Azure.Storage.Blobs.Test
         private readonly Func<RequestFailedException, bool> _retryStageBlockFromUri =
             ex => ex.Status == 500 && ex.ErrorCode == BlobErrorCode.CannotVerifyCopySource.ToString();
 
-        public BlockBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlockBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

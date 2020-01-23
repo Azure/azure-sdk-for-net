@@ -22,12 +22,13 @@ namespace Azure.Storage.Blobs.Test
 {
     public class ContainerClientTests : BlobTestBase
     {
-        public ContainerClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ContainerClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_02_02)]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
