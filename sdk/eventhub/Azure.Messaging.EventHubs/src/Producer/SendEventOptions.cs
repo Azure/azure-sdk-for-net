@@ -66,17 +66,6 @@ namespace Azure.Messaging.EventHubs.Producer
         public string PartitionId { get; set; }
 
         /// <summary>
-        ///   If a <see cref="SendEventOptions.PartitionId"/> is specified, it allows to set how long a dedicated transport producer
-        ///   would sit in memory before its pool would remove and close it.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   If no duration is specified a default value will be used by the pool.
-        /// </remarks>
-        ///
-        public TimeSpan? RemoveAfterDuration { get; set; }
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="SendEventOptions"/> class.
         /// </summary>
         ///

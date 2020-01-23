@@ -43,6 +43,9 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
         private static readonly SendEventOptions DefaultSendOptions = new SendEventOptions();
 
+        /// <summary>Sets how long a dedicated <see cref="TransportProducer"/> would sit in memory before its <see cref="TransportProducerPool"/> would remove and close it.</summary>
+        private static readonly TimeSpan PartitionProducerLifespan = TimeSpan.FromMinutes(5);
+
         /// <summary>
         ///   The fully qualified Event Hubs namespace that the producer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -458,7 +461,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 while (!isMessageSent)
                 {
-                    var pooledProducer = PartitionProducerPool.GetPartitionProducer(options.PartitionId, Connection, RetryPolicy, options.RemoveAfterDuration);
+                    var pooledProducer = PartitionProducerPool.GetPartitionProducer(options.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
 
                     try
                     {
@@ -548,7 +551,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 while (!isMessageSent)
                 {
-                    var pooledProducer = PartitionProducerPool.GetPartitionProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, eventBatch.SendOptions.RemoveAfterDuration);
+                    var pooledProducer = PartitionProducerPool.GetPartitionProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
 
                     try
                     {
