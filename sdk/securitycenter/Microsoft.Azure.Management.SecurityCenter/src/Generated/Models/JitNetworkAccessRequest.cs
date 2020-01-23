@@ -33,11 +33,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// UTC</param>
         /// <param name="requestor">The identity of the person who made the
         /// request</param>
-        public JitNetworkAccessRequest(IList<JitNetworkAccessRequestVirtualMachine> virtualMachines, System.DateTime startTimeUtc, string requestor)
+        /// <param name="justification">The justification for making the
+        /// initiate request</param>
+        public JitNetworkAccessRequest(IList<JitNetworkAccessRequestVirtualMachine> virtualMachines, System.DateTime startTimeUtc, string requestor, string justification = default(string))
         {
             VirtualMachines = virtualMachines;
             StartTimeUtc = startTimeUtc;
             Requestor = requestor;
+            Justification = justification;
             CustomInit();
         }
 
@@ -62,6 +65,12 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "requestor")]
         public string Requestor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the justification for making the initiate request
+        /// </summary>
+        [JsonProperty(PropertyName = "justification")]
+        public string Justification { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,11 +39,14 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="action">Describes the override action to be applied
         /// when rule matches. Possible values include: 'Allow', 'Block',
         /// 'Log', 'Redirect'</param>
-        public ManagedRuleOverride(string ruleId, string enabledState = default(string), string action = default(string))
+        /// <param name="exclusions">Describes the exclusions that are applied
+        /// to this specific rule.</param>
+        public ManagedRuleOverride(string ruleId, string enabledState = default(string), string action = default(string), IList<ManagedRuleExclusion> exclusions = default(IList<ManagedRuleExclusion>))
         {
             RuleId = ruleId;
             EnabledState = enabledState;
             Action = action;
+            Exclusions = exclusions;
             CustomInit();
         }
 
@@ -73,6 +78,13 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string Action { get; set; }
 
         /// <summary>
+        /// Gets or sets describes the exclusions that are applied to this
+        /// specific rule.
+        /// </summary>
+        [JsonProperty(PropertyName = "exclusions")]
+        public IList<ManagedRuleExclusion> Exclusions { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -83,6 +95,16 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
             if (RuleId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RuleId");
+            }
+            if (Exclusions != null)
+            {
+                foreach (var element in Exclusions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

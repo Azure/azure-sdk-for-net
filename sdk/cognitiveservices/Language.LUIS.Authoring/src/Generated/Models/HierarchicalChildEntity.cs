@@ -10,7 +10,8 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 {
-    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,18 +32,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         /// <param name="id">The ID (GUID) belonging to a child entity.</param>
         /// <param name="name">The name of a child entity.</param>
+        /// <param name="instanceOf">Instance of Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
         /// <param name="readableType">Possible values include: 'Entity
-        /// Extractor', 'Hierarchical Entity Extractor', 'Hierarchical Child
-        /// Entity Extractor', 'Composite Entity Extractor', 'List Entity
-        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
-        /// 'Pattern.Any Entity Extractor', 'Regular Expression Entity
-        /// Extractor'</param>
-        public HierarchicalChildEntity(System.Guid id, string name = default(string), int? typeId = default(int?), string readableType = default(string))
-            : base(id, name)
+        /// Extractor', 'Child Entity Extractor', 'Hierarchical Entity
+        /// Extractor', 'Hierarchical Child Entity Extractor', 'Composite
+        /// Entity Extractor', 'List Entity Extractor', 'Prebuilt Entity
+        /// Extractor', 'Intent Classifier', 'Pattern.Any Entity Extractor',
+        /// 'Closed List Entity Extractor', 'Regex Entity Extractor'</param>
+        /// <param name="children">List of children</param>
+        public HierarchicalChildEntity(System.Guid id, string name = default(string), string instanceOf = default(string), int? typeId = default(int?), string readableType = default(string), IList<ChildEntity> children = default(IList<ChildEntity>))
+            : base(id, name, instanceOf, typeId, readableType, children)
         {
-            TypeId = typeId;
-            ReadableType = readableType;
             CustomInit();
         }
 
@@ -50,22 +51,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the type ID of the Entity Model.
-        /// </summary>
-        [JsonProperty(PropertyName = "typeId")]
-        public int? TypeId { get; set; }
-
-        /// <summary>
-        /// Gets or sets possible values include: 'Entity Extractor',
-        /// 'Hierarchical Entity Extractor', 'Hierarchical Child Entity
-        /// Extractor', 'Composite Entity Extractor', 'List Entity Extractor',
-        /// 'Prebuilt Entity Extractor', 'Intent Classifier', 'Pattern.Any
-        /// Entity Extractor', 'Regular Expression Entity Extractor'
-        /// </summary>
-        [JsonProperty(PropertyName = "readableType")]
-        public string ReadableType { get; set; }
 
         /// <summary>
         /// Validate the object.

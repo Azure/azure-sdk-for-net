@@ -206,6 +206,11 @@ namespace Microsoft.Azure.Management.Network
         IFirewallPolicyRuleGroupsOperations FirewallPolicyRuleGroups { get; }
 
         /// <summary>
+        /// Gets the IIpGroupsOperations.
+        /// </summary>
+        IIpGroupsOperations IpGroups { get; }
+
+        /// <summary>
         /// Gets the ILoadBalancersOperations.
         /// </summary>
         ILoadBalancersOperations LoadBalancers { get; }
@@ -304,6 +309,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IConnectionMonitorsOperations.
         /// </summary>
         IConnectionMonitorsOperations ConnectionMonitors { get; }
+
+        /// <summary>
+        /// Gets the IFlowLogsOperations.
+        /// </summary>
+        IFlowLogsOperations FlowLogs { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -499,6 +509,11 @@ namespace Microsoft.Azure.Management.Network
         /// Gets the IVpnServerConfigurationsAssociatedWithVirtualWanOperations.
         /// </summary>
         IVpnServerConfigurationsAssociatedWithVirtualWanOperations VpnServerConfigurationsAssociatedWithVirtualWan { get; }
+
+        /// <summary>
+        /// Gets the IVirtualHubRouteTableV2sOperations.
+        /// </summary>
+        IVirtualHubRouteTableV2sOperations VirtualHubRouteTableV2s { get; }
 
         /// <summary>
         /// Gets the IWebApplicationFirewallPoliciesOperations.

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -25,11 +26,27 @@ namespace Microsoft.Azure.Management.DataBox.Models
             CustomInit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the JobSecrets class.
+        /// </summary>
+        /// <param name="dcAccessSecurityCode">Dc Access Security Code for
+        /// Customer Managed Shipping</param>
+        public JobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode))
+        {
+            DcAccessSecurityCode = dcAccessSecurityCode;
+            CustomInit();
+        }
 
         /// <summary>
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets dc Access Security Code for Customer Managed Shipping
+        /// </summary>
+        [JsonProperty(PropertyName = "dcAccessSecurityCode")]
+        public DcAccessSecurityCode DcAccessSecurityCode { get; set; }
 
     }
 }

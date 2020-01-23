@@ -303,52 +303,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates a VirtualWAN tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VirtualWan.
-            /// </param>
-            /// <param name='virtualWANName'>
-            /// The name of the VirtualWAN being updated.
-            /// </param>
-            /// <param name='wANParameters'>
-            /// Parameters supplied to Update VirtualWAN tags.
-            /// </param>
-            public static VirtualWAN BeginUpdateTags(this IVirtualWansOperations operations, string resourceGroupName, string virtualWANName, TagsObject wANParameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, virtualWANName, wANParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates a VirtualWAN tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name of the VirtualWan.
-            /// </param>
-            /// <param name='virtualWANName'>
-            /// The name of the VirtualWAN being updated.
-            /// </param>
-            /// <param name='wANParameters'>
-            /// Parameters supplied to Update VirtualWAN tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VirtualWAN> BeginUpdateTagsAsync(this IVirtualWansOperations operations, string resourceGroupName, string virtualWANName, TagsObject wANParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, virtualWANName, wANParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes a VirtualWAN.
             /// </summary>
             /// <param name='operations'>

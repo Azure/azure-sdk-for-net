@@ -31,13 +31,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// </summary>
         /// <param name="datetimeReference">The reference DateTime used for
         /// predicting datetime entities.</param>
-        /// <param name="overridePredictions">Whether to make the external
+        /// <param name="preferExternalEntities">Whether to make the external
         /// entities resolution override the predictions if an overlap
         /// occurs.</param>
-        public PredictionRequestOptions(System.DateTime? datetimeReference = default(System.DateTime?), bool? overridePredictions = default(bool?))
+        public PredictionRequestOptions(System.DateTime? datetimeReference = default(System.DateTime?), bool? preferExternalEntities = default(bool?))
         {
             DatetimeReference = datetimeReference;
-            OverridePredictions = overridePredictions;
+            PreferExternalEntities = preferExternalEntities;
             CustomInit();
         }
 
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// Gets or sets whether to make the external entities resolution
         /// override the predictions if an overlap occurs.
         /// </summary>
-        [JsonProperty(PropertyName = "overridePredictions")]
-        public bool? OverridePredictions { get; set; }
+        [JsonProperty(PropertyName = "preferExternalEntities")]
+        public bool? PreferExternalEntities { get; set; }
 
     }
 }

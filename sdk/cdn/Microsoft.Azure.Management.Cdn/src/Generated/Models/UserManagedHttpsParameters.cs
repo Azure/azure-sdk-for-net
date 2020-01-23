@@ -39,8 +39,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="certificateSourceParameters">Defines the certificate
         /// source parameters using user's keyvault certificate for enabling
         /// SSL.</param>
-        public UserManagedHttpsParameters(string protocolType, KeyVaultCertificateSourceParameters certificateSourceParameters)
-            : base(protocolType)
+        /// <param name="minimumTlsVersion">TLS protocol version that will be
+        /// used for Https. Possible values include: 'None', 'TLS10',
+        /// 'TLS12'</param>
+        public UserManagedHttpsParameters(string protocolType, KeyVaultCertificateSourceParameters certificateSourceParameters, MinimumTlsVersion? minimumTlsVersion = default(MinimumTlsVersion?))
+            : base(protocolType, minimumTlsVersion)
         {
             CertificateSourceParameters = certificateSourceParameters;
             CustomInit();

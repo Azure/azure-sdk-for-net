@@ -95,6 +95,16 @@ namespace Microsoft.Azure.Management.Storage
         IManagementPoliciesOperations ManagementPolicies { get; }
 
         /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
         /// Gets the IBlobServicesOperations.
         /// </summary>
         IBlobServicesOperations BlobServices { get; }

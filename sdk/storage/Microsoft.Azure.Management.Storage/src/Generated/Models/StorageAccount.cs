@@ -100,7 +100,11 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="largeFileSharesState">Allow large file shares if sets
         /// to Enabled. It cannot be disabled once it is enabled. Possible
         /// values include: 'Disabled', 'Enabled'</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string))
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connection associated with the specified storage account</param>
+        /// <param name="routingPreference">Maintains information about the
+        /// network routing choice opted by the user for data transfer</param>
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -125,6 +129,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             GeoReplicationStats = geoReplicationStats;
             FailoverInProgress = failoverInProgress;
             LargeFileSharesState = largeFileSharesState;
+            PrivateEndpointConnections = privateEndpointConnections;
+            RoutingPreference = routingPreference;
             CustomInit();
         }
 
@@ -293,6 +299,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string LargeFileSharesState { get; set; }
 
         /// <summary>
+        /// Gets list of private endpoint connection associated with the
+        /// specified storage account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets or sets maintains information about the network routing choice
+        /// opted by the user for data transfer
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routingPreference")]
+        public RoutingPreference RoutingPreference { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -320,6 +340,16 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (NetworkRuleSet != null)
             {
                 NetworkRuleSet.Validate();
+            }
+            if (PrivateEndpointConnections != null)
+            {
+                foreach (var element in PrivateEndpointConnections)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

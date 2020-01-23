@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Azure.Messaging.EventHubs.Processor.Samples</AssemblyName>
+    <VersionPrefix>5.0.0</VersionPrefix>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Messaging.EventHubs.Processor.csproj" />
+  </ItemGroup>
+</Project>

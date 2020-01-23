@@ -1,0 +1,99 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "baseName": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().name]",
+            "metadata": {
+                "description": "The base resource name."
+            }
+        },
+        "tenantId": {
+            "type": "string",
+            "metadata": {
+                "description": "The tenant ID to which the application and resources belong."
+            }
+        },
+        "testApplicationId": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client ID used to run tests."
+            }
+        },
+        "testApplicationSecret": {
+            "type": "string",
+            "metadata": {
+                "description": "The application client secret used to run tests."
+            }
+        },
+        "testApplicationOid": {
+            "type": "string",
+            "metadata": {
+                "description": "The client OID to grant access to test resources."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "The location of the resource. By default, this is the same as the resource group."
+            }
+        },
+        "azConfigPrefix": {
+            "defaultValue": "azconfig-net",
+            "type": "string"
+        },
+        "endpointSuffix": {
+            "defaultValue": ".azconfig.io",
+            "type": "string"
+        }
+    },
+    "variables": {
+        "roleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b', subscription().subscriptionId)]",
+        "uniqueAzConfigName": "[format('{0}-{1}', parameters('baseName'), parameters('azConfigPrefix'))]",
+        "endpointValue": "[format('https://{0}-{1}.azconfig.io', parameters('baseName'), parameters('azConfigPrefix'))]"        
+    },
+    "resources": [
+        {
+            "type": "Microsoft.AppConfiguration/configurationStores",
+            "apiVersion": "2019-02-01-preview",
+            "name": "[variables('uniqueAzConfigName')]",
+            "location":"[parameters('location')]",
+            "properties": {
+                "endpoint":"[variables('endpointValue')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[variables('roleDefinitionId')]",
+                "principalId": "[parameters('testApplicationOid')]"
+            }
+        }
+    ],
+    "outputs": {
+        "AZURE_TENANT_ID": {
+            "type": "string",
+            "value": "[parameters('tenantId')]"
+        },
+        "AZURE_CLIENT_ID": {
+            "type": "string",
+            "value": "[parameters('testApplicationId')]"
+        },
+        "AZURE_CLIENT_SECRET": {
+            "type": "string",
+            "value": "[parameters('testApplicationSecret')]"
+        },
+        "APPCONFIGURATION_CONNECTION_STRING": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores',variables('uniqueAzConfigName')), '2019-02-01-preview').value[0].connectionString]"
+        },
+        "APPCONFIGURATION_ENDPOINT_STRING": {
+            "type": "string",
+            "value": "[variables('endpointValue')]"
+        }
+    }
+}

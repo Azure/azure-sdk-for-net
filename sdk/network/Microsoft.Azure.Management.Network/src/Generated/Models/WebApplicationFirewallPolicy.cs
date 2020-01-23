@@ -37,15 +37,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="managedRules">Describes the managedRules
-        /// structure</param>
+        /// structure.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="policySettings">Describes policySettings for
-        /// policy.</param>
-        /// <param name="customRules">Describes custom rules inside the
+        /// <param name="policySettings">The PolicySettings for policy.</param>
+        /// <param name="customRules">The custom rules inside the
         /// policy.</param>
         /// <param name="applicationGateways">A collection of references to
         /// application gateways.</param>
@@ -53,9 +52,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// application firewall policy resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="resourceState">Resource status of the policy.</param>
+        /// <param name="httpListeners">A collection of references to
+        /// application gateway http listeners.</param>
+        /// <param name="pathBasedRules">A collection of references to
+        /// application gateway path rules.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public WebApplicationFirewallPolicy(ManagedRulesDefinition managedRules, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), IList<WebApplicationFirewallCustomRule> customRules = default(IList<WebApplicationFirewallCustomRule>), IList<ApplicationGateway> applicationGateways = default(IList<ApplicationGateway>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+        public WebApplicationFirewallPolicy(ManagedRulesDefinition managedRules, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), IList<WebApplicationFirewallCustomRule> customRules = default(IList<WebApplicationFirewallCustomRule>), IList<ApplicationGateway> applicationGateways = default(IList<ApplicationGateway>), string provisioningState = default(string), string resourceState = default(string), IList<SubResource> httpListeners = default(IList<SubResource>), IList<SubResource> pathBasedRules = default(IList<SubResource>), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             PolicySettings = policySettings;
@@ -64,6 +67,8 @@ namespace Microsoft.Azure.Management.Network.Models
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             ManagedRules = managedRules;
+            HttpListeners = httpListeners;
+            PathBasedRules = pathBasedRules;
             Etag = etag;
             CustomInit();
         }
@@ -74,13 +79,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes policySettings for policy.
+        /// Gets or sets the PolicySettings for policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policySettings")]
         public PolicySettings PolicySettings { get; set; }
 
         /// <summary>
-        /// Gets or sets describes custom rules inside the policy.
+        /// Gets or sets the custom rules inside the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customRules")]
         public IList<WebApplicationFirewallCustomRule> CustomRules { get; set; }
@@ -110,17 +115,30 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets or sets describes the managedRules structure
+        /// Gets or sets describes the managedRules structure.
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedRules")]
         public ManagedRulesDefinition ManagedRules { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a collection of references to application gateway http
+        /// listeners.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.httpListeners")]
+        public IList<SubResource> HttpListeners { get; private set; }
+
+        /// <summary>
+        /// Gets a collection of references to application gateway path rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.pathBasedRules")]
+        public IList<SubResource> PathBasedRules { get; private set; }
+
+        /// <summary>
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Validate the object.

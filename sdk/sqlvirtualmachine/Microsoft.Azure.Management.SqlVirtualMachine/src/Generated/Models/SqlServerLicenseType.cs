@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.SqlVirtualMachine.Models
     {
         public const string PAYG = "PAYG";
         public const string AHUB = "AHUB";
+        public const string DR = "DR";
     }
 }

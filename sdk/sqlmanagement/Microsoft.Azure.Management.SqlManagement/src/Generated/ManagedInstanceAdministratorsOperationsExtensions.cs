@@ -76,12 +76,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The administrator name.
-            /// </param>
-            public static ManagedInstanceAdministrator Get(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName)
+            public static ManagedInstanceAdministrator Get(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName)
             {
-                return operations.GetAsync(resourceGroupName, managedInstanceName, administratorName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, managedInstanceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -97,15 +94,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The administrator name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagedInstanceAdministrator> GetAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagedInstanceAdministrator> GetAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, managedInstanceName, administratorName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, managedInstanceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -124,15 +118,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The requested administrator name.
-            /// </param>
             /// <param name='parameters'>
             /// The requested administrator parameters.
             /// </param>
-            public static ManagedInstanceAdministrator CreateOrUpdate(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters)
+            public static ManagedInstanceAdministrator CreateOrUpdate(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, managedInstanceName, administratorName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, managedInstanceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,18 +139,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The requested administrator name.
-            /// </param>
             /// <param name='parameters'>
             /// The requested administrator parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagedInstanceAdministrator> CreateOrUpdateAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagedInstanceAdministrator> CreateOrUpdateAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedInstanceName, administratorName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -178,12 +166,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The administrator name.
-            /// </param>
-            public static void Delete(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName)
+            public static void Delete(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName)
             {
-                operations.DeleteAsync(resourceGroupName, managedInstanceName, administratorName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, managedInstanceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -199,15 +184,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The administrator name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, managedInstanceName, administratorName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, managedInstanceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -223,15 +205,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The requested administrator name.
-            /// </param>
             /// <param name='parameters'>
             /// The requested administrator parameters.
             /// </param>
-            public static ManagedInstanceAdministrator BeginCreateOrUpdate(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters)
+            public static ManagedInstanceAdministrator BeginCreateOrUpdate(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, managedInstanceName, administratorName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, managedInstanceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -247,18 +226,15 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The requested administrator name.
-            /// </param>
             /// <param name='parameters'>
             /// The requested administrator parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ManagedInstanceAdministrator> BeginCreateOrUpdateAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ManagedInstanceAdministrator> BeginCreateOrUpdateAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, ManagedInstanceAdministrator parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedInstanceName, administratorName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, managedInstanceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -277,12 +253,9 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The administrator name.
-            /// </param>
-            public static void BeginDelete(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName)
+            public static void BeginDelete(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, managedInstanceName, administratorName).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, managedInstanceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -298,15 +271,12 @@ namespace Microsoft.Azure.Management.Sql
             /// <param name='managedInstanceName'>
             /// The name of the managed instance.
             /// </param>
-            /// <param name='administratorName'>
-            /// The administrator name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, string administratorName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IManagedInstanceAdministratorsOperations operations, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, managedInstanceName, administratorName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, managedInstanceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the IPConfigurationProfile class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="subnet">The reference of the subnet resource to create
+        /// <param name="subnet">The reference to the subnet resource to create
         /// a container network interface ip configuration.</param>
         /// <param name="provisioningState">The provisioning state of the IP
         /// configuration profile resource. Possible values include:
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource to create a
+        /// Gets or sets the reference to the subnet resource to create a
         /// container network interface ip configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

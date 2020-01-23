@@ -26,26 +26,28 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Protected constructor for mocking
+        /// Initializes a new instance of the <see cref="KeyResolver"/> class for mocking.
         /// </summary>
         protected KeyResolver()
         {
         }
 
         /// <summary>
-        /// Creates a new KeyResolver instance
+        /// Initializes a new instance of the <see cref="KeyResolver"/> class.
         /// </summary>
-        /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token used to authenticate to Key Vault.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="credential"/> is null.</exception>
         public KeyResolver(TokenCredential credential)
             : this(credential, null)
         {
         }
 
         /// <summary>
-        /// Creates a new KeyResolver instance
+        /// Initializes a new instance of the <see cref="KeyResolver"/> class.
         /// </summary>
-        /// <param name="credential">A <see cref="TokenCredential"/> capable of providing an OAuth token used to authenticate to Key Vault.</param>
-        /// <param name="options">Options to configure the management of the requests sent to Key Vault for both the KeyResolver instance as well as all created instances of <see cref="CryptographyClient"/>.</param>
+        /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
+        /// <param name="options">Options to configure the management of the requests sent to Key Vault for both the <see cref="KeyResolver"/> instance as well as all created instances of <see cref="CryptographyClient"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="credential"/> is null.</exception>
         public KeyResolver(TokenCredential credential, CryptographyClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -61,11 +63,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied keyId.
+        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyId">The key idenitifier of the key used by the created <see cref="CryptographyClient"/> </param>
+        /// <param name="keyId">The key idenitifier of the key used by the created <see cref="CryptographyClient"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied keyId</returns>
+        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual CryptographyClient Resolve(Uri keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
@@ -78,7 +81,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Argument.AssertNotNull(keyId, nameof(keyId));
 
-                Key key = GetKey(keyId, cancellationToken);
+                KeyVaultKey key = GetKey(keyId, cancellationToken);
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
@@ -92,11 +95,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied keyId.
+        /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyId">The key idenitifier of the key used by the created <see cref="CryptographyClient"/> </param>
+        /// <param name="keyId">The key idenitifier of the key used by the created <see cref="CryptographyClient"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied keyId</returns>
+        /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specfiied <paramref name="keyId"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
         public virtual async Task<CryptographyClient> ResolveAsync(Uri keyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
@@ -109,7 +113,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             {
                 Argument.AssertNotNull(keyId, nameof(keyId));
 
-                Key key = await GetKeyAsync(keyId, cancellationToken).ConfigureAwait(false);
+                KeyVaultKey key = await GetKeyAsync(keyId, cancellationToken).ConfigureAwait(false);
 
                 KeyVaultPipeline pipeline = new KeyVaultPipeline(keyId, _apiVersion, _pipeline, _clientDiagnostics);
 
@@ -135,22 +139,22 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return await ((KeyResolver)this).ResolveAsync(new Uri(keyId), cancellationToken).ConfigureAwait(false);
         }
 
-        private Key GetKey(Uri keyId, CancellationToken cancellationToken)
+        private KeyVaultKey GetKey(Uri keyId, CancellationToken cancellationToken)
         {
             using Request request = CreateGetRequest(keyId);
 
             Response response = _pipeline.SendRequest(request, cancellationToken);
 
-            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (Key)ParseResponse(response, new SecretKey()) : ParseResponse(response, new Key());
+            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (KeyVaultKey)ParseResponse(response, new SecretKey()) : ParseResponse(response, new KeyVaultKey());
         }
 
-        private async Task<Key> GetKeyAsync(Uri keyId, CancellationToken cancellationToken)
+        private async Task<KeyVaultKey> GetKeyAsync(Uri keyId, CancellationToken cancellationToken)
         {
             using Request request = CreateGetRequest(keyId);
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (Key)ParseResponse(response, new SecretKey()) : ParseResponse(response, new Key());
+            return KeyVaultIdentifier.Parse(keyId).Collection == KeyVaultIdentifier.SecretsCollection ? (KeyVaultKey)ParseResponse(response, new SecretKey()) : ParseResponse(response, new KeyVaultKey());
         }
 
         private Response<T> ParseResponse<T>(Response response, T result)

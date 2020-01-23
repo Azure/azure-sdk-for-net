@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// <param name="installedDriver">Information about the installed
         /// driver if found and valid.</param>
         /// <param name="validationErrors">Validation errors</param>
-        public CheckOCIDriverTaskOutput(IDictionary<string, IList<OracleOCIDriverInfo>> installedDriver = default(IDictionary<string, IList<OracleOCIDriverInfo>>), IList<ReportableException> validationErrors = default(IList<ReportableException>))
+        public CheckOCIDriverTaskOutput(OracleOCIDriverInfo installedDriver = default(OracleOCIDriverInfo), IList<ReportableException> validationErrors = default(IList<ReportableException>))
         {
             InstalledDriver = installedDriver;
             ValidationErrors = validationErrors;
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets information about the installed driver if found and valid.
+        /// Gets or sets information about the installed driver if found and valid.
         /// </summary>
         [JsonProperty(PropertyName = "installedDriver")]
-        public IDictionary<string, IList<OracleOCIDriverInfo>> InstalledDriver { get; private set; }
+        public OracleOCIDriverInfo InstalledDriver { get; set; }
 
         /// <summary>
         /// Gets validation errors

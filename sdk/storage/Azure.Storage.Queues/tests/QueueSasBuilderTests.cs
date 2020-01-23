@@ -5,7 +5,7 @@ using System;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using NUnit.Framework;
-using TestConstants = Azure.Storage.Test.Constants;
+using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -32,11 +32,11 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
-            Assert.AreEqual(string.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(string.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
-            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(string.Empty, sasQueryParameters.Resource);
@@ -58,11 +58,11 @@ namespace Azure.Storage.Queues.Test
 
             // Assert
             Assert.AreEqual(SasQueryParameters.DefaultSasVersion, sasQueryParameters.Version);
-            Assert.AreEqual(string.Empty, sasQueryParameters.Services);
-            Assert.AreEqual(string.Empty, sasQueryParameters.ResourceTypes);
+            Assert.IsNull(sasQueryParameters.Services);
+            Assert.IsNull(sasQueryParameters.ResourceTypes);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
-            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartTime);
-            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiryTime);
+            Assert.AreEqual(constants.Sas.StartTime, sasQueryParameters.StartsOn);
+            Assert.AreEqual(constants.Sas.ExpiryTime, sasQueryParameters.ExpiresOn);
             Assert.AreEqual(constants.Sas.IPRange, sasQueryParameters.IPRange);
             Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
             Assert.AreEqual(string.Empty, sasQueryParameters.Resource);
@@ -82,19 +82,43 @@ namespace Azure.Storage.Queues.Test
             Assert.Throws<ArgumentNullException>(() => queueSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
+        [Test]
+        public void ToSasQueryParameters_IdentifierTest()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var queueName = GetNewQueueName();
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder
+            {
+                Identifier = constants.Sas.Identifier,
+                QueueName = queueName,
+                Protocol = SasProtocol.Https,
+                Version = constants.Sas.Version
+            };
+
+            // Act
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+
+            // Assert
+            Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
+            Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
+            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
+        }
+
         private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName, bool includeVersion)
         {
             var queueSasBuilder = new QueueSasBuilder
             {
                 Version = null,
                 Protocol = constants.Sas.Protocol,
-                StartTime = constants.Sas.StartTime,
-                ExpiryTime = constants.Sas.ExpiryTime,
-                Permissions = Permissions,
+                StartsOn = constants.Sas.StartTime,
+                ExpiresOn = constants.Sas.ExpiryTime,
                 IPRange = constants.Sas.IPRange,
                 Identifier = constants.Sas.Identifier,
                 QueueName = queueName,
             };
+            queueSasBuilder.SetPermissions(Permissions);
 
             if (includeVersion)
             {
@@ -108,15 +132,15 @@ namespace Azure.Storage.Queues.Test
         {
             var stringToSign = string.Join("\n",
                 Permissions,
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.StartTime),
-                SasQueryParameters.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.StartTime),
+                SasExtensions.FormatTimesForSasSigning(constants.Sas.ExpiryTime),
                 "/queue/" + constants.Sas.Account + "/" + queueName,
                 constants.Sas.Identifier,
                 constants.Sas.IPRange.ToString(),
-                SasProtocol.Https.ToString(),
+                SasExtensions.ToProtocolString(SasProtocol.Https),
                 includeVersion ? constants.Sas.Version : SasQueryParameters.DefaultSasVersion);
 
-            return constants.Sas.SharedKeyCredential.ComputeHMACSHA256(stringToSign);
+            return StorageSharedKeyCredentialInternals.ComputeSasSignature(constants.Sas.SharedKeyCredential, stringToSign);
         }
     }
 }

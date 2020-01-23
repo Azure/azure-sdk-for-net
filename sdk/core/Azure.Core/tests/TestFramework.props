@@ -7,6 +7,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)\TestFramework\*.cs" Link="TestFramework\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\src\Shared\ContentTypeUtilities.cs" Link="TestFramework\ContentTypeUtilities.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\src\Shared\EventSourceEventFormatting.cs" Link="TestFramework\EventSourceEventFormatting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\src\Shared\NullableAttributes.cs" Link="TestFramework\NullableAttributes.cs" Condition="'$(UseAzureCoreNullableAttributes)'!='true'" />
     <None Update="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
@@ -15,6 +16,7 @@
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\LiveOnlyAttribute.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\PlaybackTransport.cs" />
     <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\*Record*.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\TestFramework\TestRandom.cs" />
   </ItemGroup>
 
   <Target Name="UpdateSessionRecords">

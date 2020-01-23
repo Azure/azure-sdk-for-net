@@ -2,23 +2,13 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <Version>1.1.0-preview.1</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      Added console and trace logger listener.
-      Added additional content and header logging options.
-      Moved commonly used types to Azure namespace.
-      ]]>
-    </PackageReleaseNotes>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
-
-    <!-- Disable warning for missing xml doc comments until we can add all the missing ones -->
-    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

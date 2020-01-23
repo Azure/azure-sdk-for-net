@@ -25,10 +25,10 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     /// Personalizer Service is an Azure Cognitive Service that makes it easy
     /// to target content and experiences without complex pre-analysis or
     /// cleanup of past data. Given a context and featurized content, the
-    /// Personalizer Service returns your content in a ranked list. As rewards
-    /// are sent in response to the ranked list, the reinforcement learning
-    /// algorithm will improve the model and improve performance of future rank
-    /// calls.
+    /// Personalizer Service returns which content item to show to users in
+    /// rewardActionId. As rewards are sent in response to the use of
+    /// rewardActionId, the reinforcement learning algorithm will improve the
+    /// model and improve performance of future rank calls.
     /// </summary>
     public partial class PersonalizerClient : ServiceClient<PersonalizerClient>, IPersonalizerClient
     {
@@ -58,9 +58,34 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Gets the IServiceConfigurationOperations.
+        /// </summary>
+        public virtual IServiceConfigurationOperations ServiceConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets the IPolicy.
+        /// </summary>
+        public virtual IPolicy Policy { get; private set; }
+
+        /// <summary>
+        /// Gets the IEvaluations.
+        /// </summary>
+        public virtual IEvaluations Evaluations { get; private set; }
+
+        /// <summary>
         /// Gets the IEvents.
         /// </summary>
         public virtual IEvents Events { get; private set; }
+
+        /// <summary>
+        /// Gets the ILog.
+        /// </summary>
+        public virtual ILog Log { get; private set; }
+
+        /// <summary>
+        /// Gets the IModel.
+        /// </summary>
+        public virtual IModel Model { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PersonalizerClient class.
@@ -189,7 +214,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// </summary>
         private void Initialize()
         {
+            ServiceConfiguration = new ServiceConfigurationOperations(this);
+            Policy = new Policy(this);
+            Evaluations = new Evaluations(this);
             Events = new Events(this);
+            Log = new Log(this);
+            Model = new Model(this);
             BaseUri = "{Endpoint}/personalizer/v1.0";
             SerializationSettings = new JsonSerializerSettings
             {
@@ -219,8 +249,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             CustomInitialize();
         }
         /// <summary>
-        /// A Personalizer rank request.
+        /// Post Rank.
         /// </summary>
+        /// <remarks>
+        /// Submit a Personalizer rank request, to get which of the provided actions
+        /// should be used in the provided context.
+        /// </remarks>
         /// <param name='rankRequest'>
         /// A Personalizer request.
         /// </param>
@@ -249,7 +283,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         {
             if (Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (rankRequest == null)
             {

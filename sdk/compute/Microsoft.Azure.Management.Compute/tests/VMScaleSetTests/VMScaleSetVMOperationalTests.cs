@@ -99,6 +99,10 @@ namespace Compute.Tests
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId);
 
+                var imageReference = getResponse.StorageProfile.ImageReference;
+                Assert.NotNull(imageReference?.ExactVersion);
+                Assert.Equal(imageReference.Version, imageReference.ExactVersion);
+
                 VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId, hasManagedDisks);
                 ValidateVMScaleSetVM(vmScaleSetVMModel, vmScaleSet.Sku.Name, getResponse, hasManagedDisks);
 
@@ -120,7 +124,7 @@ namespace Compute.Tests
                 Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
 
                 m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
-                m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId, tempDisk: true);
+                m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId, tempDisk: null);
 
                 if (hasManagedDisks)
                 {

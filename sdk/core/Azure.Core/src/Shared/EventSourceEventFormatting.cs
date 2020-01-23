@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Azure.Core.Shared
 {
-    internal class EventSourceEventFormatting
+    internal static class EventSourceEventFormatting
     {
         public static string Format(EventWrittenEventArgs eventData)
         {

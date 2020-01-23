@@ -35,9 +35,6 @@ namespace Microsoft.Azure.Management.Storage
         /// group. Storage account names must be between 3 and 24 characters in
         /// length and use numbers and lower-case letters only.
         /// </param>
-        /// <param name='skipToken'>
-        /// Optional. Continuation token for the list operation.
-        /// </param>
         /// <param name='maxpagesize'>
         /// Optional. Specified maximum number of shares that can be included
         /// in the list.
@@ -61,7 +58,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new share under the specified account as described by
         /// request body. The share resource includes metadata and properties
@@ -89,7 +86,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than
-        /// 0, and less than or equal to 5TB (5120).
+        /// 0, and less than or equal to 5TB (5120). For Large File Shares, the
+        /// maximum size is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -133,7 +131,8 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='shareQuota'>
         /// The maximum size of the share, in gigabytes. Must be greater than
-        /// 0, and less than or equal to 5TB (5120).
+        /// 0, and less than or equal to 5TB (5120). For Large File Shares, the
+        /// maximum size is 102400.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

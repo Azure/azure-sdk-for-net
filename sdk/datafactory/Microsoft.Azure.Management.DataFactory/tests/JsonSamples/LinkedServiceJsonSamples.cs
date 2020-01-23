@@ -878,6 +878,60 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string DynamicsLinkedService_S2S_Key = @"
+{
+    name: ""Test-Dynamics-LinkedService-S2S-Key"",
+    properties:
+    {
+        type : ""Dynamics"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalKey"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                  value: ""fakepassword"",
+                  type: ""SecureString""
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsLinkedService_S2S_Cert = @"
+{
+    name: ""Test-Dynamics-LinkedService-S2S-Cert"",
+    properties:
+    {
+        type : ""Dynamics"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalCert"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeCertName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
         public const string DynamicsLinkedService = @"
 {
     name: ""LinkedService-Dynamics"",
@@ -919,6 +973,114 @@ namespace DataFactory.Tests.JsonSamples
                 type : ""SecureString""
             },
             encryptedCredential : ""fake credential""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsCrmLinkedService_S2S_Key = @"
+{
+    name: ""LinkedService-DynamicsCrm-S2S-Key"",
+    properties:
+    {
+        type : ""DynamicsCrm"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalKey"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                  value: ""fakepassword"",
+                  type: ""SecureString""
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string DynamicsCrmLinkedService_S2S_Cert = @"
+{
+    name: ""LinkedService-DynamicsCrm-S2S-Cert"",
+    properties:
+    {
+        type : ""DynamicsCrm"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalCert"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeCertName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CommonDataServiceForAppsLinkedService_S2S_Key = @"
+{
+    name: ""LinkedService-CommonDataServiceForApps-S2S-Key"",
+    properties:
+    {
+        type : ""CommonDataServiceForApps"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalKey"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                  value: ""fakepassword"",
+                  type: ""SecureString""
+            } 
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CommonDataServiceForAppsLinkedService_S2S_Cert = @"
+{
+    name: ""LinkedService-CommonDataServiceForApps-S2S-Cert"",
+    properties:
+    {
+        type : ""CommonDataServiceForApps"",
+        connectVia : {
+            referenceName : ""Connection1"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties :
+        {
+            deploymentType : ""Online"", 
+            authenticationType : ""AadServicePrincipal"", 
+            servicePrincipalCredentialType: ""ServicePrincipalCert"",
+            servicePrincipalId : ""9bf5d9fd-5dcd-46a5-b99b-77d69adb2567"",
+            servicePrincipalCredential : { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeCertName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            } 
         }
     }
 }";
@@ -1511,10 +1673,7 @@ namespace DataFactory.Tests.JsonSamples
                 type: ""SecureString"",
                 value: ""some secret""
             },
-            clientId : {
-                type: ""SecureString"",
-                value: ""some secret""
-            },
+            clientId : ""myclientId"",
             clientSecret : {
                 type: ""SecureString"",
                 value: ""some secret""
@@ -1524,6 +1683,38 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string GoogleAdWordsLinkedService = @"
+{
+    name: ""GoogleAdWordsLinkedService"",
+    properties: {
+        type: ""GoogleAdWords"",
+        typeProperties: {
+            clientCustomerID : ""myclientCustomerID"",
+            developerToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            authenticationType : ""ServiceAuthentication"",
+            refreshToken : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            clientId : ""myclientId"",
+            clientSecret : {
+                type: ""SecureString"",
+                value: ""some secret""
+            },
+            email : ""myemail"",
+            keyFilePath : ""mykeyFilePath"",
+            trustedCertPath : ""mytrustedCertPath"",
+            useSystemTrustStore : true
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string GreenplumLinkedService = @"
 {
@@ -2140,8 +2331,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                value : ""fakeConnString"",
+                type : ""SecureString""
             }
         }
     }
@@ -2155,8 +2346,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""MySql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -2178,8 +2369,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             }
         }
     }
@@ -2193,8 +2384,8 @@ namespace DataFactory.Tests.JsonSamples
         type: ""PostgreSql"",
         typeProperties: {
             connectionString: {
-                type : ""SecureString"",
-                value : ""some connection string""
+                type : ""fakeConnString"",
+                value : ""SecureString""
             },
             password: { 
                 type: ""AzureKeyVaultSecret"", 
@@ -2227,7 +2418,9 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 type : ""SecureString"",
                 value : ""some password""
-            }
+            },
+            packageCollection : ""fakepackageCollection"",
+            certificateCommonName : ""fakecertificateCommonName""
         }
     }
 }";

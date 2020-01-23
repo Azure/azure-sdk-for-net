@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -12,7 +13,7 @@ namespace Azure.Storage.Blobs
     internal class BlobErrors : Errors
     {
         public static ArgumentOutOfRangeException BlobConditionsMustBeDefault(params string[] conditions) =>
-            new ArgumentOutOfRangeException($"The {String.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");
+            new ArgumentOutOfRangeException($"The {string.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");
 
         public static InvalidOperationException BlobOrContainerMissing(string leaseClient,
             string blobBaseClient,
@@ -24,10 +25,13 @@ namespace Azure.Storage.Blobs
 
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {
-            if (customerProvidedKey.HasValue && !String.Equals(uri.Scheme, Constants.Blob.Https, StringComparison.OrdinalIgnoreCase))
+            if (customerProvidedKey.HasValue && !string.Equals(uri.Scheme, Constants.Https, StringComparison.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("Cannot use client-provided key without HTTPS.");
             }
         }
+
+        public static ArgumentException ParsingFullHttpRangeFailed(string range)
+            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
     }
 }

@@ -209,7 +209,7 @@ namespace Storage.Tests
                     }
 
                     //List container with next link
-                    containerList = storageMgmtClient.BlobContainers.List(rgName, accountName, null, "2");
+                    containerList = storageMgmtClient.BlobContainers.List(rgName, accountName, "2");
                     Assert.NotNull(containerList.NextPageLink);
                     Assert.Equal(2, containerList.Count());
                     containerList = storageMgmtClient.BlobContainers.ListNext(containerList.NextPageLink);
@@ -658,6 +658,7 @@ namespace Storage.Tests
                     Assert.Null(properties1.DeleteRetentionPolicy.Days);
                     Assert.Null(properties1.DefaultServiceVersion);
                     Assert.Equal(0, properties1.Cors.CorsRulesProperty.Count);
+                    Assert.Equal(parameters.Sku.Name, properties1.Sku.Name);
                     //Assert.Null(properties1.AutomaticSnapshotPolicyEnabled);
                     BlobServiceProperties properties2 = properties1;
                     properties2.DeleteRetentionPolicy = new DeleteRetentionPolicy();

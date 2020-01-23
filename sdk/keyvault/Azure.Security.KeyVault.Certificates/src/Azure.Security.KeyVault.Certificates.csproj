@@ -3,20 +3,8 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Certificates client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Certificates client library</AssemblyTitle>
-    <VersionPrefix>4.0.0</VersionPrefix>
-    <PackageTags>Microsoft Azure Key Vault Certificates</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      Refactored several classes based on feedback, including:
-      * CertificateBase is now CertificateProperties.
-      * Certificate contains a Properties property of type CertificateProperties.
-      * IssuerBase is now IssuerProperties.
-      * Issuer contains a Properties property of type IssuerProperties.
-
-      See https://github.com/Azure/azure-sdk-for-net/tree/Azure.Security.KeyVault.Certificates_4.0.0-preview.5/sdk/keyvault/Azure.Security.KeyVault.Certificates/ChangeLog.md for more details.
-      ]]>
-    </PackageReleaseNotes>
-
+    <Version>4.0.0</Version>
+    <PackageTags>Microsoft Azure Key Vault Certificates;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -28,7 +16,7 @@
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
-  <Import Project="..\..\Azure.Security.KeyVault.Shared\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
+  <Import Project="..\..\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems" Label="Shared" />
 
   <ItemGroup>
     <PackageReference Include="System.Memory" />

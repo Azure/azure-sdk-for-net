@@ -336,52 +336,6 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Updates an VirtualNetworkTap tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='tapName'>
-            /// The name of the tap.
-            /// </param>
-            /// <param name='tapParameters'>
-            /// Parameters supplied to update VirtualNetworkTap tags.
-            /// </param>
-            public static VirtualNetworkTap BeginUpdateTags(this IVirtualNetworkTapsOperations operations, string resourceGroupName, string tapName, TagsObject tapParameters)
-            {
-                return operations.BeginUpdateTagsAsync(resourceGroupName, tapName, tapParameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an VirtualNetworkTap tags.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='tapName'>
-            /// The name of the tap.
-            /// </param>
-            /// <param name='tapParameters'>
-            /// Parameters supplied to update VirtualNetworkTap tags.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<VirtualNetworkTap> BeginUpdateTagsAsync(this IVirtualNetworkTapsOperations operations, string resourceGroupName, string tapName, TagsObject tapParameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, tapName, tapParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets all the VirtualNetworkTaps in a subscription.
             /// </summary>
             /// <param name='operations'>

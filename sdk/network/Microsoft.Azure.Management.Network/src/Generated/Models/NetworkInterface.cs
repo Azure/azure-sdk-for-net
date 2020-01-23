@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="virtualMachine">The reference of a virtual
+        /// <param name="virtualMachine">The reference to a virtual
         /// machine.</param>
-        /// <param name="networkSecurityGroup">The reference of the
+        /// <param name="networkSecurityGroup">The reference to the
         /// NetworkSecurityGroup resource.</param>
         /// <param name="privateEndpoint">A reference to the private endpoint
         /// to which the network interface is linked.</param>
@@ -94,13 +94,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the reference of a virtual machine.
+        /// Gets the reference to a virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualMachine")]
         public SubResource VirtualMachine { get; private set; }
 
         /// <summary>
-        /// Gets or sets the reference of the NetworkSecurityGroup resource.
+        /// Gets or sets the reference to the NetworkSecurityGroup resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public NetworkSecurityGroup NetworkSecurityGroup { get; set; }
@@ -119,10 +119,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of TapConfigurations of the network interface.
+        /// Gets a list of TapConfigurations of the network interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.tapConfigurations")]
-        public IList<NetworkInterfaceTapConfiguration> TapConfigurations { get; set; }
+        public IList<NetworkInterfaceTapConfiguration> TapConfigurations { get; private set; }
 
         /// <summary>
         /// Gets or sets the DNS settings in network interface.
@@ -131,17 +131,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public NetworkInterfaceDnsSettings DnsSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the MAC address of the network interface.
+        /// Gets the MAC address of the network interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.macAddress")]
-        public string MacAddress { get; set; }
+        public string MacAddress { get; private set; }
 
         /// <summary>
-        /// Gets or sets whether this is a primary network interface on a
-        /// virtual machine.
+        /// Gets whether this is a primary network interface on a virtual
+        /// machine.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
-        public bool? Primary { get; set; }
+        public bool? Primary { get; private set; }
 
         /// <summary>
         /// Gets or sets if the network interface is accelerated networking
@@ -164,26 +164,25 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> HostedWorkloads { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the network interface
-        /// resource.
+        /// Gets the resource GUID property of the network interface resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the network interface
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the network interface resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }

@@ -7,17 +7,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs.Specialized;
 
-#pragma warning disable SA1402  // File may only contain a single type
-
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// An <see cref="Operation{Int64}"/> for tracking the status of a
-    /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobAccessConditions?, BlobAccessConditions?, RehydratePriority?, CancellationToken)"/>
-    /// request.  Its <see cref="Operation{Int64}.Value"/> upon succesful
+    /// <see cref="BlobBaseClient.StartCopyFromUriAsync(Uri, System.Collections.Generic.IDictionary{String, String}, AccessTier?, BlobRequestConditions, BlobRequestConditions, RehydratePriority?, CancellationToken)"/>
+    /// request.  Its <see cref="Operation{Int64}.Value"/> upon successful
     /// completion will be the number of bytes copied.
     /// </summary>
-    internal class CopyFromUriOperation : Operation<long>
+    public class CopyFromUriOperation : Operation<long>
     {
         /// <summary>
         /// The client used to check for completion.
@@ -48,7 +46,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Gets a value indicating whether the operation completed and
-        /// succesfully produced a value.  The <see cref="Operation{Int64}.Value"/>
+        /// successfully produced a value.  The <see cref="Operation{Int64}.Value"/>
         /// property is the number of bytes copied by the operation.
         /// </summary>
         public override bool HasValue => _value.HasValue;
@@ -76,16 +74,20 @@ namespace Azure.Storage.Blobs.Models
         /// Initializes a new <see cref="CopyFromUriOperation"/> instance for
         /// mocking.
         /// </summary>
-        public CopyFromUriOperation(
-            string copyId,
-            bool hasCompleted,
-            long? value = default,
-            Response rawResponse = default)
+        protected CopyFromUriOperation()
         {
-            Id = copyId;
-            _hasCompleted = hasCompleted;
-            _value = value;
-            _rawResponse = rawResponse;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="CopyFromUriOperation"/> instance
+        /// </summary>
+        /// <param name="client">
+        /// The client used to check for completion.
+        /// </param>
+        /// <param name="id">The ID of this operation.</param>
+        public CopyFromUriOperation(string id, BlobBaseClient client):
+            this(client, id, null, CancellationToken.None)
+        {
         }
 
         /// <summary>
@@ -103,13 +105,15 @@ namespace Azure.Storage.Blobs.Models
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        public CopyFromUriOperation(
+        internal CopyFromUriOperation(
             BlobBaseClient client,
             string copyId,
             Response initialResponse,
             CancellationToken cancellationToken)
-            : this(copyId, false, null, initialResponse)
         {
+            Id = copyId;
+            _value = null;
+            _rawResponse = initialResponse;
             _client = client;
             _cancellationToken = cancellationToken;
         }
@@ -134,7 +138,7 @@ namespace Azure.Storage.Blobs.Models
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public async override ValueTask<Response> UpdateStatusAsync(
+        public override async ValueTask<Response> UpdateStatusAsync(
             CancellationToken cancellationToken = default) =>
             await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
@@ -188,22 +192,5 @@ namespace Azure.Storage.Blobs.Models
             _rawResponse = response;
             return response;
         }
-    }
-
-    /// <summary>
-    /// BlobsModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class BlobsModelFactory
-    {
-        /// <summary>
-        /// Creates a new Operation{long} instance for mocking long running
-        /// Copy From URI operations.
-        /// </summary>
-        public static Operation<long> CopyFromUriOperation(
-            string copyId,
-            bool hasCompleted,
-            long? value = default,
-            Response rawResponse = default) =>
-            new CopyFromUriOperation(copyId, hasCompleted, value, rawResponse);
     }
 }

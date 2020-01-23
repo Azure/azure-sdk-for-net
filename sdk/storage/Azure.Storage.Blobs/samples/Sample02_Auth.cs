@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Samples
             // Create a client that can authenticate with a connection string
             BlobServiceClient service = new BlobServiceClient(connectionString);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Samples
                 Uri endpoint = blob.Uri;
                 BlobClient anonymous = new BlobClient(endpoint);
 
-                // Make a service request to verify we've succesfully authenticated
+                // Make a service request to verify we've successfully authenticated
                 await anonymous.GetPropertiesAsync();
             }
             finally
@@ -117,7 +117,7 @@ namespace Azure.Storage.Blobs.Samples
             // Create a client that can authenticate with a connection string
             BlobServiceClient service = new BlobServiceClient(serviceUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
 
@@ -141,17 +141,16 @@ namespace Azure.Storage.Blobs.Samples
             AccountSasBuilder sas = new AccountSasBuilder
             {
                 // Allow access to blobs
-                Services = new AccountSasServices() { Blobs = true }.ToString(),
+                Services = AccountSasServices.Blobs,
 
                 // Allow access to the service level APIs
-                ResourceTypes = new AccountSasResourceTypes() { Service = true }.ToString(),
-
-                // Allow read access
-                Permissions = new AccountSasPermissions() { Read = true }.ToString(),
+                ResourceTypes = AccountSasResourceTypes.Service,
 
                 // Access expires in 1 hour!
-                ExpiryTime = DateTimeOffset.UtcNow.AddHours(1)
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
             };
+            // Allow read access
+            sas.SetPermissions(AccountSasPermissions.Read);
 
             // Create a SharedKeyCredential that we can use to sign the SAS token
             StorageSharedKeyCredential credential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
@@ -163,13 +162,13 @@ namespace Azure.Storage.Blobs.Samples
             // Create a client that can authenticate with the SAS URI
             BlobServiceClient service = new BlobServiceClient(sasUri.Uri);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
 
             // Try to create a new container (which is beyond our
             // delegated permission)
-            StorageRequestFailedException ex =
-                Assert.ThrowsAsync<StorageRequestFailedException>(
+            RequestFailedException ex =
+                Assert.ThrowsAsync<RequestFailedException>(
                     async () => await service.CreateBlobContainerAsync(Randomize("sample-container")));
             Assert.AreEqual(403, ex.Status);
         }
@@ -198,12 +197,12 @@ namespace Azure.Storage.Blobs.Samples
                     ActiveDirectoryTenantId,
                     ActiveDirectoryApplicationId,
                     ActiveDirectoryApplicationSecret,
-                    new AzureCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
+                    new TokenCredentialOptions() { AuthorityHost = ActiveDirectoryAuthEndpoint });
 
             // Create a client that can authenticate using our token credential
             BlobServiceClient service = new BlobServiceClient(ActiveDirectoryBlobUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetPropertiesAsync();
         }
     }

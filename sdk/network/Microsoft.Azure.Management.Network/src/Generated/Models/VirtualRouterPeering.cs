@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Virtual Router Peering resource
+    /// Virtual Router Peering resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class VirtualRouterPeering : SubResource
@@ -38,11 +38,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
-        /// <param name="name">Gets name of the peering unique to
-        /// VirtualRouter. This name can be used to access the
-        /// resource.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="name">Name of the virtual router peering that is
+        /// unique within a virtual router.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         /// <param name="type">Peering type.</param>
         public VirtualRouterPeering(string id = default(string), long? peerAsn = default(long?), string peerIp = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
@@ -81,8 +80,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets name of the peering unique to VirtualRouter. This name can be
-        /// used to access the resource.
+        /// Gets or sets name of the virtual router peering that is unique
+        /// within a virtual router.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -112,9 +111,9 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "PeerAsn", 4294967295);
             }
-            if (PeerAsn < 1)
+            if (PeerAsn < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "PeerAsn", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PeerAsn", 0);
             }
         }
     }

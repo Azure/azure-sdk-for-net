@@ -34,15 +34,11 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="retryAfter">The amount of delay to use while the
         /// status of the operation is checked. The value is expressed in
         /// seconds.</param>
-        /// <param name="azureAsyncOperation">To get the progress of the
-        /// operation, call GET operation on the URL in Azure-AsyncOperation
-        /// header field.</param>
         /// <param name="oDataEntityId">The operation entity Id GUID.</param>
-        public PriceSheetDownloadHeaders(string location = default(string), string retryAfter = default(string), string azureAsyncOperation = default(string), string oDataEntityId = default(string))
+        public PriceSheetDownloadHeaders(string location = default(string), string retryAfter = default(string), string oDataEntityId = default(string))
         {
             Location = location;
             RetryAfter = retryAfter;
-            AzureAsyncOperation = azureAsyncOperation;
             ODataEntityId = oDataEntityId;
             CustomInit();
         }
@@ -65,13 +61,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "Retry-After")]
         public string RetryAfter { get; set; }
-
-        /// <summary>
-        /// Gets or sets to get the progress of the operation, call GET
-        /// operation on the URL in Azure-AsyncOperation header field.
-        /// </summary>
-        [JsonProperty(PropertyName = "Azure-AsyncOperation")]
-        public string AzureAsyncOperation { get; set; }
 
         /// <summary>
         /// Gets or sets the operation entity Id GUID.

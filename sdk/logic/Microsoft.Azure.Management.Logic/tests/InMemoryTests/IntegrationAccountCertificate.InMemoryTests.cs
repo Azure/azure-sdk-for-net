@@ -42,7 +42,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.List(null, "IntegrationAccount",null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.List(Constants.DefaultResourceGroup, "IntegrationAccount"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountCertificates.List(Constants.DefaultResourceGroup, "IntegrationAccount"));
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.ListNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.ListNext(Constants.NextPageLink));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountCertificates.ListNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup, null, "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", null, new IntegrationAccountCertificate()));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", "IntegrationAccountCertificate", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountCertificates.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", "IntegrationAccountCertificate", new IntegrationAccountCertificate()));
         }
 
         [Fact]
@@ -183,7 +183,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Delete(null, "IntegrationAccountName", "IntegrationAccountCertificate"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, null, "IntegrationAccountCertificate"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName", "IntegrationAccountCertificate"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountCertificates.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName", "IntegrationAccountCertificate"));
         }
 
         [Fact]
@@ -237,7 +237,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Get(null, "IntegrationAccountName", "IntegrationAccountCertificate"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, null, "IntegrationAccountCertificate"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, "IntegrationAccountName", "IntegrationAccountCertificate"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountCertificates.Get(Constants.DefaultResourceGroup, "IntegrationAccountName", "IntegrationAccountCertificate"));
         }
 
         [Fact]

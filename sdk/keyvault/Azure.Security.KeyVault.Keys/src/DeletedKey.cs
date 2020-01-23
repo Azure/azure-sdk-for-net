@@ -7,17 +7,17 @@ using System.Text.Json;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// Represents a KeyVault key that has been deleted, allowing it to be recovered, if needed.
+    /// Represents a Key Vault key that has been deleted, allowing it to be recovered, if needed.
     /// </summary>
-    public class DeletedKey : Key
+    public class DeletedKey : KeyVaultKey
     {
         private const string RecoveryIdPropertyName = "recoveryId";
-        private const string DeletedDatePropertyName = "deletedDate";
+        private const string DeletedOnPropertyName = "deletedDate";
         private const string ScheduledPurgeDatePropertyName = "scheduledPurgeDate";
 
         private string _recoveryId;
 
-        internal DeletedKey()
+        internal DeletedKey(KeyProperties properties = null) : base(properties)
         {
         }
 
@@ -26,19 +26,23 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// The identifier of the deleted key. This is used to recover the key.
+        /// Gets a <see cref="Uri"/> of the deleted key that can be used to recover it.
         /// </summary>
-        public Uri RecoveryId => new Uri(_recoveryId);
+        public Uri RecoveryId
+        {
+            get => _recoveryId is null ? null : new Uri(_recoveryId);
+            internal set => _recoveryId = value?.ToString();
+        }
 
         /// <summary>
-        /// The time when the key was deleted, in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the key was deleted.
         /// </summary>
-        public DateTimeOffset? DeletedDate { get; private set; }
+        public DateTimeOffset? DeletedOn { get; internal set; }
 
         /// <summary>
-        /// The time when the key is scheduled to be purged, in UTC
+        /// Gets a <see cref="DateTimeOffset"/> for when the deleted key will be purged.
         /// </summary>
-        public DateTimeOffset? ScheduledPurgeDate { get; private set; }
+        public DateTimeOffset? ScheduledPurgeDate { get; internal set; }
 
         internal override void ReadProperty(JsonProperty prop)
         {
@@ -48,8 +52,8 @@ namespace Azure.Security.KeyVault.Keys
                     _recoveryId = prop.Value.GetString();
                     break;
 
-                case DeletedDatePropertyName:
-                    DeletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                case DeletedOnPropertyName:
+                    DeletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     break;
 
                 case ScheduledPurgeDatePropertyName:

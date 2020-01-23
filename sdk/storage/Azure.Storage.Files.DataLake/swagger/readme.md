@@ -27,7 +27,7 @@ directive:
     $.namespace = "Azure.Storage.Files.DataLake";
     $["client-name"] = "DataLakeRestClient";
     $["client-extensions-name"] = "FilesDataLakeExtensions";
-    $["client-model-factory-name"] = "FilesDataLakeModelFactory";
+    $["client-model-factory-name"] = "DataLakeModelFactory";
     $["x-az-skip-path-components"] = true;
     $["x-az-include-sync-methods"] = true;
     $["x-az-public"] = false;
@@ -67,10 +67,10 @@ directive:
 - from: swagger-document
   where: $["x-ms-paths"]..responses.default
   transform: >
+    delete $.headers;
     $["x-az-response-name"] = "StorageErrorResult";
     $["x-az-create-exception"] = true;
     $["x-az-public"] = false;
-    $.headers["x-ms-error-code"]["x-az-demote-header"] = true;
 ```
 
 ### ApiVersionParameter
@@ -95,7 +95,16 @@ directive:
   transform: return "rangeGetContentHash";
 ```
 
-### StorageError
+### ErrorCode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions.ErrorCode
+  transform: >
+    $["x-ms-enum"].name = "DataLakeErrorCode";
+```
+
+### Hide StorageError
 ``` yaml
 directive:
 - from: swagger-document
@@ -103,4 +112,125 @@ directive:
   transform: >
     $["x-az-public"] = false;
     $.properties.Code = { "type": "string" };
+- from: swagger-document
+  where: $.definitions.DataLakeStorageError
+  transform: >
+    $["x-az-public"] = false;
 ```
+
+### Remove extra consumes/produces values
+To avoid an arbitrary limitation in our generator
+``` yaml
+directive:
+- from: swagger-document
+  where: $.consumes
+  transform: >
+    return ["application/xml"];
+- from: swagger-document
+  where: $.produces
+  transform: >
+    return ["application/xml"];
+```
+
+### Temporarily work around proper JSON support for file permissions
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}?resource=filesystem"]
+  transform: >
+    delete $.get.responses["200"].schema;
+    $.get.responses["200"].schema = {
+        "type": "object",
+        "format": "file"
+    };
+    $.get.responses["200"]["x-az-public"] = false;
+- from: swagger-document
+  where: $.definitions.StorageError
+  transform: >
+    $.type = "string";
+    delete $.properties;
+```
+
+### /{filesystem}
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+    $.head.responses["200"]["x-az-public"] = false;
+    $.patch.responses["200"]["x-az-public"] = false;
+```
+
+### /{filesystem}?resource=filesystem
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/"]
+  transform: >
+    $.get.responses["200"]["x-az-public"] = false;
+```
+
+### /{filesystem}/{path}
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}"]
+  transform: >
+    $.put.responses["201"]["x-az-public"] = false;
+    $.delete.responses["200"]["x-az-public"] = false;
+    $.head.responses["200"]["x-az-public"] = false;
+    $.post.responses["200"]["x-az-public"] = false;
+    $.get.responses["200"]["x-az-public"] = false;
+    $.patch.responses["200"]["x-az-public"] = false;
+```
+
+### /{filesystem}/{path}?action=append"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=append"]
+  transform: >
+    $.patch.responses["202"]["x-az-public"] = false;
+```
+
+### /{filesystem}/{path}?action=flush"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=flush"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+```
+
+### /{filesystem}/{path}?action=setAccessControl"
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{filesystem}/{path}?action=setAccessControl"]
+  transform: >
+    $.patch.responses["200"]["x-az-public"] = false;
+```
+
+### Hide FileSystemList/FileSystem/PathList/Path/
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.FileSystem["x-az-public"] = false;
+    $.FileSystemList["x-az-public"] = false;
+    $.PathList["x-az-public"] = false;
+    $.Path["x-az-public"] = false;
+```
+
+### Treat the API version as a parameter instead of a constant
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.ApiVersionParameter
+  transform: >
+    delete $.enum
+```
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Files.DataLake%2Fswagger%2Freadme.png)

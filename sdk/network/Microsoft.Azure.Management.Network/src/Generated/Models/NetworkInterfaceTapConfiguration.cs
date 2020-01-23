@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="virtualNetworkTap">The reference of the Virtual
+        /// <param name="virtualNetworkTap">The reference to the Virtual
         /// Network Tap resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// network interface tap configuration resource. Possible values
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of the Virtual Network Tap resource.
+        /// Gets or sets the reference to the Virtual Network Tap resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualNetworkTap")]
         public VirtualNetworkTap VirtualNetworkTap { get; set; }
@@ -84,11 +84,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets sub Resource type.

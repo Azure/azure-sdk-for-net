@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Azure.Messaging.EventHubs.Core;
 using NUnit.Framework;
@@ -72,6 +73,17 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Validates functionality of the <see cref="ClientLibraryInformation.Current" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void UserAgentCanBeAccessed()
+        {
+            Assert.That(() => ClientLibraryInformation.Current.UserAgent, Throws.Nothing);
+        }
+
+        /// <summary>
         ///   Validates functionality of the <see cref="ClientLibraryInformation.EnumerateProperties" />
         ///   property.
         /// </summary>
@@ -79,12 +91,54 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void PropertiesCanBeEnumerated()
         {
+            Dictionary<string, string> expectedNames = typeof(ClientLibraryInformation)
+                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .ToDictionary(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant(), property => property.Name);
+
             foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
             {
-                PropertyInfo matchingProperty = typeof(ClientLibraryInformation).GetProperty(property.Key, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                Assert.That(expectedNames.ContainsKey(property.Key), Is.True, $"The property, { property.Key }, was not expected.");
+
+                PropertyInfo matchingProperty = typeof(ClientLibraryInformation)
+                    .GetProperty(expectedNames[property.Key], BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
 
                 Assert.That(matchingProperty, Is.Not.Null, $"The property, { property.Key }, was not found.");
                 Assert.That((string)matchingProperty.GetValue(ClientLibraryInformation.Current, null), Is.EqualTo(property.Value), $"The value for { property.Key } should match.");
+            }
+        }
+
+        /// <summary>
+        ///   Validates functionality of the <see cref="ClientLibraryInformation.EnumerateProperties" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void EnumeratedPropertiesUseDescriptionsWhenPresent()
+        {
+            ClientLibraryInformation instance = ClientLibraryInformation.Current;
+
+            HashSet<string> expectedNames = new HashSet<string>(
+                typeof(ClientLibraryInformation)
+                    .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                    .Select(property => (property.GetCustomAttribute<System.ComponentModel.DescriptionAttribute>(false)?.Description ?? property.Name).ToLowerInvariant()));
+
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
+            {
+                Assert.That(expectedNames.Contains(property.Key), Is.True, $"The property, { property.Key }, was not found.");
+            }
+        }
+
+        /// <summary>
+        ///   Validates functionality of the <see cref="ClientLibraryInformation.EnumerateProperties" />
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void PropertiesArePopulated()
+        {
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
+            {
+                Assert.That(property.Value, Is.Not.Null.And.Not.Empty, $"The property, { property.Key }, was not populated.");
             }
         }
     }

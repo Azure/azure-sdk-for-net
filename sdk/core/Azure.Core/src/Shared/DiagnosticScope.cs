@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
         {
             _name = name;
             _source = source;
-            _activity = _source.IsEnabled() ? new DiagnosticActivity(_name) : null;
+            _activity = _source.IsEnabled(_name) ? new DiagnosticActivity(_name) : null;
             _activity?.SetW3CFormat();
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Core.Pipeline
 
         public void Start()
         {
-            if (_activity != null && _source.IsEnabled(_name))
+            if (_activity != null)
             {
                 _source.StartActivity(_activity, _activity);
             }
@@ -117,7 +117,7 @@ namespace Azure.Core.Pipeline
 
     /// <summary>
     /// HACK HACK HACK. Some runtime environments like Azure.Functions downgrade System.Diagnostic.DiagnosticSource package version causing method not found exceptions in customer apps
-    /// This type is a temporary workaround to avoid the issue
+    /// This type is a temporary workaround to avoid the issue.
     /// </summary>
     internal static class ActivityExtensions
     {

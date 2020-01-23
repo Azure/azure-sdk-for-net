@@ -31,9 +31,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="targetResourceGroupName">The name of the target
         /// resource group to perform topology on.</param>
-        /// <param name="targetVirtualNetwork">The reference of the Virtual
+        /// <param name="targetVirtualNetwork">The reference to the Virtual
         /// Network resource.</param>
-        /// <param name="targetSubnet">The reference of the Subnet
+        /// <param name="targetSubnet">The reference to the Subnet
         /// resource.</param>
         public TopologyParameters(string targetResourceGroupName = default(string), SubResource targetVirtualNetwork = default(SubResource), SubResource targetSubnet = default(SubResource))
         {
@@ -56,13 +56,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string TargetResourceGroupName { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the Virtual Network resource.
+        /// Gets or sets the reference to the Virtual Network resource.
         /// </summary>
         [JsonProperty(PropertyName = "targetVirtualNetwork")]
         public SubResource TargetVirtualNetwork { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the Subnet resource.
+        /// Gets or sets the reference to the Subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "targetSubnet")]
         public SubResource TargetSubnet { get; set; }

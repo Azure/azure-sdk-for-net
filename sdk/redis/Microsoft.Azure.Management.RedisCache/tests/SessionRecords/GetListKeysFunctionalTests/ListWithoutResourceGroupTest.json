@@ -1,67 +1,72 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/providers/Microsoft.Cache/Redis/?api-version=2017-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTkyY2M5ZGUtYTNjZC00ZDcwLTliYzEtYzFhMjhhMzYyNWI1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXMvP2FwaS12ZXJzaW9uPTIwMTctMTAtMDE=",
+      "RequestUri": "/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/providers/Microsoft.Cache/Redis?api-version=2019-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmMxMzA4OTQtYzViMy00YWRjLWEwNzctMGI1MWYzNzE0YWJlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FjaGUvUmVkaXM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0ec0db0c-e734-4f42-b80e-2f5e4287baf9"
+          "beff58e7-9ad1-4466-9f00-fcde1b945f05"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/4.3.0.0"
+          "FxVersion/4.6.28008.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/5.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/SiddharthsSub/providers/Microsoft.Cache/Redis/sunny\",\r\n      \"location\": \"Central US\",\r\n      \"name\": \"sunny\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"3.2.7\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": true,\r\n        \"tenantSettings\": {\r\n          \"InternalDependencyList\": \"[\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://cus1411937841.blob.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageQueue\\\",\\r\\n    \\\"Value\\\": \\\"https://cus1411937841.queue.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://cusscaleunit2580560042.blob.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageQueue\\\",\\r\\n    \\\"Value\\\": \\\"https://cusscaleunit2580560042.queue.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://cusgenevasa4605726365125.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"cusgenevasb4605730279516.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://cusgenevasa5456295043133.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"cusgenevasb5450399573005.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://cusgenevasa4764071425661.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"cusgenevasb4769756945238.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://cusgenevasa1031577822169.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"cusgenevasb1035553553564.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://cusgenevasa5683815977174.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"cusgenevasb5681083642259.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://prod.warmpath.msftcloudes.com\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdWUSc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdCUSc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdEUSc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdWEURc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdEASc1.cloudapp.net\\\"\\r\\n  }\\r\\n]\"\r\n        },\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"255\",\r\n          \"maxmemory-policy\": \"volatile-lru\",\r\n          \"aof-backup-enabled\": \"false\",\r\n          \"rdb-backup-enabled\": \"false\",\r\n          \"rdb-backup-frequency\": \"60\",\r\n          \"rdb-backup-max-snapshot-count\": \"1\",\r\n          \"maxmemory-delta\": \"255\",\r\n          \"rdb-storage-connection-string\": \"DefaultEndpointsProtocol=https;BlobEndpoint=https://sunnycus.blob.core.windows.net/;AccountName=sunnycus;AccountKey=[key hidden]\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"sunny.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      },\r\n      \"zones\": null\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/592cc9de-a3cd-4d70-9bc1-c1a28a3625b5/resourceGroups/RedisGetList5965/providers/Microsoft.Cache/Redis/RedisGetList3946\",\r\n      \"location\": \"West Central US\",\r\n      \"name\": \"RedisGetList3946\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"3.2.7\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"tenantSettings\": {\r\n          \"InternalDependencyList\": \"[\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://wcus4765031795.blob.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageQueue\\\",\\r\\n    \\\"Value\\\": \\\"https://wcus4765031795.queue.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://wcusscaleunit5435222359.blob.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageQueue\\\",\\r\\n    \\\"Value\\\": \\\"https://wcusscaleunit5435222359.queue.core.windows.net/\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://wcusgenevasa834343247016.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"wcusgenevasb832359349008.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://wcusgenevasa923230976597.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"wcusgenevasb929002419042.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://wcusgenevasa056552918724.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"wcusgenevasb058229963395.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://wcusgenevasa951612516970.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"wcusgenevasb952816101216.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"StorageBlob\\\",\\r\\n    \\\"Value\\\": \\\"https://wcusgenevasa394407896818.blob.core.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"ServiceBus\\\",\\r\\n    \\\"Value\\\": \\\"wcusgenevasb398857595686.servicebus.windows.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://prod.warmpath.msftcloudes.com\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdWUSc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdCUSc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdEUSc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdWEURc1.cloudapp.net\\\"\\r\\n  },\\r\\n  {\\r\\n    \\\"Type\\\": \\\"MetricsConfigurationService\\\",\\r\\n    \\\"Value\\\": \\\"https://WarmPathFEProdEASc1.cloudapp.net\\\"\\r\\n  }\\r\\n]\"\r\n        },\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"2\",\r\n          \"maxfragmentationmemory-reserved\": \"12\",\r\n          \"maxmemory-delta\": \"2\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGetList3946.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-original-request-ids": [
+          "f4168163-d7b9-4b53-aa88-b3d90e822b4c",
+          "75245ba9-6fac-4525-9f6b-82b285c96d7f"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "cfb8b704-9663-40c5-9f30-87428ac788cd"
+        ],
+        "x-ms-correlation-request-id": [
+          "cfb8b704-9663-40c5-9f30-87428ac788cd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20191125T012437Z:cfb8b704-9663-40c5-9f30-87428ac788cd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Mon, 25 Nov 2019 01:24:37 GMT"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Dec 2017 23:58:16 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-original-request-ids": [
-          "8b478d7f-24ae-4d01-aa0c-cb075b4001b8",
-          "c52eeaf5-a78f-4fce-b900-d60218ef2fc0"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
-        ],
-        "x-ms-request-id": [
-          "85b5fd62-22e1-4b71-a8f3-de1bc3a8644b"
-        ],
-        "x-ms-correlation-request-id": [
-          "85b5fd62-22e1-4b71-a8f3-de1bc3a8644b"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20171205T235816Z:85b5fd62-22e1-4b71-a8f3-de1bc3a8644b"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
+        "Content-Length": [
+          "1323"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/RedisGetList5011/providers/Microsoft.Cache/Redis/RedisGetList8041\",\r\n      \"location\": \"West Central US\",\r\n      \"name\": \"RedisGetList8041\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Basic\",\r\n          \"family\": \"C\",\r\n          \"capacity\": 0\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000\r\n          }\r\n        ],\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"256\",\r\n          \"maxmemory-reserved\": \"2\",\r\n          \"maxfragmentationmemory-reserved\": \"12\",\r\n          \"maxmemory-delta\": \"2\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"RedisGetList8041.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/bc130894-c5b3-4adc-a077-0b51f3714abe/resourceGroups/mechandr/providers/Microsoft.Cache/Redis/geoself\",\r\n      \"location\": \"East US 2 EUAP\",\r\n      \"name\": \"geoself\",\r\n      \"type\": \"Microsoft.Cache/Redis\",\r\n      \"tags\": {},\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"redisVersion\": \"4.0.14\",\r\n        \"sku\": {\r\n          \"name\": \"Premium\",\r\n          \"family\": \"P\",\r\n          \"capacity\": 1\r\n        },\r\n        \"enableNonSslPort\": false,\r\n        \"instances\": [\r\n          {\r\n            \"sslPort\": 15000\r\n          },\r\n          {\r\n            \"sslPort\": 15001\r\n          }\r\n        ],\r\n        \"redisConfiguration\": {\r\n          \"maxclients\": \"7500\",\r\n          \"maxmemory-reserved\": \"200\",\r\n          \"maxfragmentationmemory-reserved\": \"300\",\r\n          \"maxmemory-delta\": \"200\"\r\n        },\r\n        \"accessKeys\": null,\r\n        \"hostName\": \"geoself.redis.cache.windows.net\",\r\n        \"port\": 6379,\r\n        \"sslPort\": 6380,\r\n        \"linkedServers\": []\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "592cc9de-a3cd-4d70-9bc1-c1a28a3625b5"
+    "SubscriptionId": "bc130894-c5b3-4adc-a077-0b51f3714abe"
   }
 }

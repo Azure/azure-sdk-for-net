@@ -43,7 +43,7 @@ namespace DataBox.Tests.Tests
             }
             catch (Exception e)
             {
-                Assert.Null(e);
+                Assert.NotNull(e);
             }
         }
 

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="gatewayManagerEtag">The GatewayManager Etag.</param>
         /// <param name="lastModifiedBy">Who was the last to modify the
         /// peering.</param>
-        /// <param name="routeFilter">The reference of the RouteFilter
+        /// <param name="routeFilter">The reference to the RouteFilter
         /// resource.</param>
         /// <param name="ipv6PeeringConfig">The IPv6 peering
         /// configuration.</param>
@@ -186,12 +186,12 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteCircuitStats Stats { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the express route circuit
-        /// peering resource. Possible values include: 'Succeeded', 'Updating',
+        /// Gets the provisioning state of the express route circuit peering
+        /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the GatewayManager Etag.
@@ -200,13 +200,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string GatewayManagerEtag { get; set; }
 
         /// <summary>
-        /// Gets or sets who was the last to modify the peering.
+        /// Gets who was the last to modify the peering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastModifiedBy")]
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy { get; private set; }
 
         /// <summary>
-        /// Gets or sets the reference of the RouteFilter resource.
+        /// Gets or sets the reference to the RouteFilter resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.routeFilter")]
         public SubResource RouteFilter { get; set; }

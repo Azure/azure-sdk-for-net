@@ -160,6 +160,37 @@ namespace Microsoft.Azure.Management.DataShare
         /// </exception>
         Task<AzureOperationResponse<IPage<DataSet>>> ListByShareWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete DataSet in a share.
+        /// </summary>
+        /// <remarks>
+        /// Delete a DataSet in a share
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the share account.
+        /// </param>
+        /// <param name='shareName'>
+        /// The name of the share.
+        /// </param>
+        /// <param name='dataSetName'>
+        /// The name of the dataSet.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="DataShareErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string dataSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List DataSets in a share.
         /// </summary>
         /// <remarks>

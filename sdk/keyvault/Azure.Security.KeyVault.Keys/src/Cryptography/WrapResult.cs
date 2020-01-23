@@ -1,31 +1,34 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Represents information about a wrap operation
+    /// Represents information about a wrap operation.
     /// </summary>
     public class WrapResult : IJsonDeserializable
     {
         private const string KeyIdPropertyName = "kid";
         private const string EncryptedKeyPropertyName = "value";
 
+        internal WrapResult()
+        {
+        }
+
         /// <summary>
-        /// The <see cref="KeyProperties.Id"/> of the <see cref="Key"/> used to wrap the <see cref="EncryptedKey"/>. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.
+        /// Gets the <see cref="KeyProperties.Id"/> of the <see cref="KeyVaultKey"/> used to wrap the <see cref="EncryptedKey"/>. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.
         /// </summary>
         public string KeyId { get; internal set; }
 
         /// <summary>
-        /// The wrapped key
+        /// Gets the wrapped key.
         /// </summary>
         public byte[] EncryptedKey { get; internal set; }
 
         /// <summary>
-        /// The algorithm used. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.
+        /// Gets the <see cref="KeyWrapAlgorithm"/> used. This must be stored alongside the <see cref="EncryptedKey"/> as the same key must be used to unwrap it.
         /// </summary>
         public KeyWrapAlgorithm Algorithm { get; internal set; }
 

@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DeploymentManager
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -150,6 +152,40 @@ namespace Microsoft.Azure.Management.DeploymentManager
             public static async Task DeleteAsync(this IServiceTopologiesOperations operations, string resourceGroupName, string serviceTopologyName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceTopologyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists the service topologies in the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            public static IList<ServiceTopologyResource> List(this IServiceTopologiesOperations operations, string resourceGroupName)
+            {
+                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists the service topologies in the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<ServiceTopologyResource>> ListAsync(this IServiceTopologiesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

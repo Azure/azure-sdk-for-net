@@ -7,8 +7,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Microsoft Azure Storage Management Library")]
 [assembly: AssemblyDescription("Provides Microsoft Azure Storage management functions for managing the Microsoft Azure Storage service.")]
 
-[assembly: AssemblyVersion("13.0.0.0")]
-[assembly: AssemblyFileVersion("13.2.0.0")]
+[assembly: AssemblyVersion("14.0.0.0")]
+[assembly: AssemblyFileVersion("14.3.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

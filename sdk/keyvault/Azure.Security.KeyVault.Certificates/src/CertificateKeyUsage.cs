@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Certificates
 {
     /// <summary>
-    /// Supported usages of a certificate key
+    /// Supported usages of a certificate key.
     /// </summary>
     public readonly struct CertificateKeyUsage : IEquatable<CertificateKeyUsage>
     {
@@ -33,49 +33,49 @@ namespace Azure.Security.KeyVault.Certificates
         }
 
         /// <summary>
-        /// The certificate key can be used as a digital signatures
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used as a digital signatures.
         /// </summary>
-        public static readonly CertificateKeyUsage DigitalSignature = new CertificateKeyUsage(DigitalSignatureValue);
+        public static CertificateKeyUsage DigitalSignature { get; } = new CertificateKeyUsage(DigitalSignatureValue);
 
         /// <summary>
-        /// The certificate key can be used for authentication
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used for authentication.
         /// </summary>
-        public static readonly CertificateKeyUsage NonRepudiation = new CertificateKeyUsage(NonRepudiationValue);
+        public static CertificateKeyUsage NonRepudiation { get; } = new CertificateKeyUsage(NonRepudiationValue);
 
         /// <summary>
-        /// The certificate key can be used for key encryption
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used for key encryption.
         /// </summary>
-        public static readonly CertificateKeyUsage KeyEncipherment = new CertificateKeyUsage(KeyEnciphermentValue);
+        public static CertificateKeyUsage KeyEncipherment { get; } = new CertificateKeyUsage(KeyEnciphermentValue);
 
         /// <summary>
-        /// The certificate key can be used for data encryption
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used for data encryption.
         /// </summary>
-        public static readonly CertificateKeyUsage DataEncipherment = new CertificateKeyUsage(DataEnciphermentValue);
+        public static CertificateKeyUsage DataEncipherment { get; } = new CertificateKeyUsage(DataEnciphermentValue);
 
         /// <summary>
-        /// The certificate key can be used to determine key agreement, such as a key created using the Diffie-Hellman key agreement algorithm.
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used to determine key agreement, such as a key created using the Diffie-Hellman key agreement algorithm.
         /// </summary>
-        public static readonly CertificateKeyUsage KeyAgreement = new CertificateKeyUsage(KeyAgreementValue);
+        public static CertificateKeyUsage KeyAgreement { get; } = new CertificateKeyUsage(KeyAgreementValue);
 
         /// <summary>
-        /// The certificate key can be used to sign certificates
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used to sign certificates.
         /// </summary>
-        public static readonly CertificateKeyUsage KeyCertSign = new CertificateKeyUsage(KeyCertSignValue);
+        public static CertificateKeyUsage KeyCertSign { get; } = new CertificateKeyUsage(KeyCertSignValue);
 
         /// <summary>
-        /// The certificate key can be used to sign a certificate revocation list
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used to sign a certificate revocation list.
         /// </summary>
-        public static readonly CertificateKeyUsage CrlSign = new CertificateKeyUsage(CrlSignValue);
+        public static CertificateKeyUsage CrlSign { get; } = new CertificateKeyUsage(CrlSignValue);
 
         /// <summary>
-        /// The certificate key can be used for encryption only
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used for encryption only.
         /// </summary>
-        public static readonly CertificateKeyUsage EncipherOnly = new CertificateKeyUsage(EncipherOnlyValue);
+        public static CertificateKeyUsage EncipherOnly { get; } = new CertificateKeyUsage(EncipherOnlyValue);
 
         /// <summary>
-        /// The certificate key can be used for decryption only
+        /// Gets a <see cref="CertificateKeyUsage"/> indicating that the certificate key can be used for decryption only.
         /// </summary>
-        public static readonly CertificateKeyUsage DecipherOnly = new CertificateKeyUsage(DecipherOnlyValue);
+        public static CertificateKeyUsage DecipherOnly { get; } = new CertificateKeyUsage(DecipherOnlyValue);
 
         /// <summary>
         /// Determines if two <see cref="CertificateKeyUsage"/> values are the same.

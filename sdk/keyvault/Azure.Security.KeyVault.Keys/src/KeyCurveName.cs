@@ -34,28 +34,28 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// The NIST P-256 elliptic curve, AKA SECG curve SECP256R1
+        /// Gets the NIST P-256 elliptic curve, AKA SECG curve SECP256R1
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
-        public static readonly KeyCurveName P256 = new KeyCurveName(P256Value);
+        public static KeyCurveName P256 { get; } = new KeyCurveName(P256Value);
 
         /// <summary>
-        /// The SECG SECP256K1 elliptic curve.
+        /// Gets the SECG SECP256K1 elliptic curve.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
-        public static readonly KeyCurveName P256K = new KeyCurveName(P256KValue);
+        public static KeyCurveName P256K { get; } = new KeyCurveName(P256KValue);
 
         /// <summary>
-        /// The NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
+        /// Gets the NIST P-384 elliptic curve, AKA SECG curve SECP384R1.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
-        public static readonly KeyCurveName P384 = new KeyCurveName(P384Value);
+        public static KeyCurveName P384 { get; } = new KeyCurveName(P384Value);
 
         /// <summary>
-        /// The NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
+        /// Gets the NIST P-521 elliptic curve, AKA SECG curve SECP521R1.
         /// For more information, see <see href="https://docs.microsoft.com/en-us/azure/key-vault/about-keys-secrets-and-certificates#curve-types"/>.
         /// </summary>
-        public static readonly KeyCurveName P521 = new KeyCurveName(P521Value);
+        public static KeyCurveName P521 { get; } = new KeyCurveName(P521Value);
 
         internal static readonly KeyCurveName s_default = default;
 
@@ -95,28 +95,28 @@ namespace Azure.Security.KeyVault.Keys
         /// <inheritdoc/>
         public override string ToString() => _value;
 
-        internal static ref readonly KeyCurveName FromOid(Oid oid, int keySize = 0)
+        internal static KeyCurveName FromOid(Oid oid, int keySize = 0)
         {
             if (!string.IsNullOrEmpty(oid?.Value))
             {
                 if (string.Equals(oid.Value, P521OidValue, StringComparison.Ordinal))
                 {
-                    return ref P521;
+                    return P521;
                 }
 
                 if (string.Equals(oid.Value, P384OidValue, StringComparison.Ordinal))
                 {
-                    return ref P384;
+                    return P384;
                 }
 
                 if (string.Equals(oid.Value, P256KOidValue, StringComparison.Ordinal))
                 {
-                    return ref P256K;
+                    return P256K;
                 }
 
                 if (string.Equals(oid.Value, P256OidValue, StringComparison.Ordinal))
                 {
-                    return ref P256;
+                    return P256;
                 }
             }
 
@@ -127,24 +127,24 @@ namespace Azure.Security.KeyVault.Keys
                     case 521 when string.Equals(oid.FriendlyName, "nistP521", StringComparison.OrdinalIgnoreCase)
                                || string.Equals(oid.FriendlyName, "secp521r1", StringComparison.OrdinalIgnoreCase)
                                || string.Equals(oid.FriendlyName, "ECDSA_P521", StringComparison.OrdinalIgnoreCase):
-                        return ref P521;
+                        return P521;
 
                     case 384 when string.Equals(oid.FriendlyName, "nistP384", StringComparison.OrdinalIgnoreCase)
                                || string.Equals(oid.FriendlyName, "secp384r1", StringComparison.OrdinalIgnoreCase)
                                || string.Equals(oid.FriendlyName, "ECDSA_P384", StringComparison.OrdinalIgnoreCase):
-                        return ref P384;
+                        return P384;
 
                     case 256 when string.Equals(oid.FriendlyName, "secp256k1", StringComparison.OrdinalIgnoreCase):
-                        return ref P256K;
+                        return P256K;
 
                     case 256 when string.Equals(oid.FriendlyName, "nistP256", StringComparison.OrdinalIgnoreCase)
                                || string.Equals(oid.FriendlyName, "secp256r1", StringComparison.OrdinalIgnoreCase)
                                || string.Equals(oid.FriendlyName, "ECDSA_P256", StringComparison.OrdinalIgnoreCase):
-                        return ref P256;
+                        return P256;
                 }
             }
 
-            return ref s_default;
+            return s_default;
         }
 
         internal bool IsSupported

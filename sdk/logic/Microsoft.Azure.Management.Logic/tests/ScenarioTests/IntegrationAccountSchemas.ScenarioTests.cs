@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
@@ -21,7 +21,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void IntegrationAccountSchemas_Create_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -46,7 +46,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void IntegrationAccountSchemas_Get_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -75,7 +75,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void IntegrationAccountSchemas_List_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -119,7 +119,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void IntegrationAccountSchemas_Update_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -150,7 +150,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void IntegrationAccountSchemas_Delete_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -167,7 +167,7 @@ namespace Test.Azure.Management.Logic
                     schema);
 
                 client.IntegrationAccountSchemas.Delete(Constants.DefaultResourceGroup, integrationAccountName, schemaName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
             }
@@ -176,7 +176,7 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void IntegrationAccountSchemas_DeleteWhenDeleteIntegrationAccount_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);
@@ -193,14 +193,14 @@ namespace Test.Azure.Management.Logic
                     schema);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);
-                Assert.Throws<CloudException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
+                Assert.Throws<ErrorResponseException>(() => client.IntegrationAccountSchemas.Get(Constants.DefaultResourceGroup, integrationAccountName, schemaName));
             }
         }
 
         [Fact]
         public void IntegrationAccountSchemas_ListContentCallbackUrl_OK()
         {
-            using (var context = MockContext.Start(this.TestClassType))
+            using (var context = MockContext.Start(this.TestClassName))
             {
                 var client = this.GetClient(context);
                 this.CleanResourceGroup(client);

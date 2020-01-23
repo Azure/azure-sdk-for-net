@@ -42,26 +42,23 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="address">Billing address.</param>
         /// <param name="invoiceEmailOptIn">If the billing profile is opted in
         /// to receive invoices via email.</param>
-        /// <param name="isClassic">Is OMS bootstrapped billing
-        /// profile.</param>
         /// <param name="invoiceDay">Invoice day.</param>
         /// <param name="currency">The currency associated with the billing
         /// profile.</param>
-        /// <param name="enabledAzureSKUs">Information about the
-        /// product.</param>
+        /// <param name="enabledAzurePlans">Information about the enabled azure
+        /// plans.</param>
         /// <param name="invoiceSections">The invoice sections associated to
         /// the billing profile.</param>
-        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), Address address = default(Address), bool? invoiceEmailOptIn = default(bool?), bool? isClassic = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<EnabledAzureSKUs> enabledAzureSKUs = default(IList<EnabledAzureSKUs>), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>))
+        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), AddressDetails address = default(AddressDetails), bool? invoiceEmailOptIn = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<AzurePlan> enabledAzurePlans = default(IList<AzurePlan>), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>))
             : base(id, name, type)
         {
             DisplayName = displayName;
             PoNumber = poNumber;
             Address = address;
             InvoiceEmailOptIn = invoiceEmailOptIn;
-            IsClassic = isClassic;
             InvoiceDay = invoiceDay;
             Currency = currency;
-            EnabledAzureSKUs = enabledAzureSKUs;
+            EnabledAzurePlans = enabledAzurePlans;
             InvoiceSections = invoiceSections;
             CustomInit();
         }
@@ -87,20 +84,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Gets or sets billing address.
         /// </summary>
         [JsonProperty(PropertyName = "properties.address")]
-        public Address Address { get; set; }
+        public AddressDetails Address { get; set; }
 
         /// <summary>
-        /// Gets if the billing profile is opted in to receive invoices via
-        /// email.
+        /// Gets or sets if the billing profile is opted in to receive invoices
+        /// via email.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceEmailOptIn")]
-        public bool? InvoiceEmailOptIn { get; private set; }
-
-        /// <summary>
-        /// Gets is OMS bootstrapped billing profile.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isClassic")]
-        public bool? IsClassic { get; private set; }
+        public bool? InvoiceEmailOptIn { get; set; }
 
         /// <summary>
         /// Gets invoice day.
@@ -115,10 +106,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Currency { get; private set; }
 
         /// <summary>
-        /// Gets or sets information about the product.
+        /// Gets or sets information about the enabled azure plans.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabledAzureSKUs")]
-        public IList<EnabledAzureSKUs> EnabledAzureSKUs { get; set; }
+        [JsonProperty(PropertyName = "properties.enabledAzurePlans")]
+        public IList<AzurePlan> EnabledAzurePlans { get; set; }
 
         /// <summary>
         /// Gets or sets the invoice sections associated to the billing

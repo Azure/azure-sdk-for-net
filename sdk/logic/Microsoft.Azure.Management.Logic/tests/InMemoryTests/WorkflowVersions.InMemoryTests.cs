@@ -118,7 +118,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowVersions.Get(null, "wfName", "version"));
             Assert.Throws<ValidationException>(() => client.WorkflowVersions.Get("rgName", null, "version"));
             Assert.Throws<ValidationException>(() => client.WorkflowVersions.Get("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowVersions.Get("rgName", "wfName", "version"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowVersions.Get("rgName", "wfName", "version"));
         }
 
         [Fact]
@@ -163,7 +163,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", null, "version", "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", null, "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", "version", null));
-            Assert.Throws<CloudException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", "version", "triggerName"));
+            Assert.Throws<ErrorResponseException>(() => client.WorkflowVersionTriggers.ListCallbackUrl("rgName", "wfName", "version", "triggerName"));
         }
 
         [Fact]

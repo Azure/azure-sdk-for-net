@@ -22,7 +22,7 @@ namespace Azure.Data.AppConfiguration.Tests {
                     return false;
                 if (x.LastModified != y.LastModified)
                     return false;
-                if (x.ReadOnly != y.ReadOnly)
+                if (x.IsReadOnly != y.IsReadOnly)
                     return false;
             }
             if (!string.Equals(x.Key, y.Key, StringComparison.Ordinal))
@@ -48,7 +48,7 @@ namespace Azure.Data.AppConfiguration.Tests {
             hashCode.Add(setting.ContentType, StringComparer.Ordinal);
             hashCode.Add(setting.LastModified);
             hashCode.Add(setting.ETag);
-            hashCode.Add(setting.ReadOnly);
+            hashCode.Add(setting.IsReadOnly);
             hashCode.Add(setting.Tags);
             return hashCode.ToHashCode();
         }

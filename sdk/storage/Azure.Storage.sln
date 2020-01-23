@@ -16,9 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Tests",
 		{FC1F45F6-F103-48AE-8E21-D858F4689370} = {FC1F45F6-F103-48AE-8E21-D858F4689370}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files", "Azure.Storage.Files\src\Azure.Storage.Files.csproj", "{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares", "Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj", "{F0CDCE0B-0C2E-45F6-91AB-73F2E7F54B81}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Tests", "Azure.Storage.Files\tests\Azure.Storage.Files.Tests.csproj", "{05EBD54A-0437-46C3-A6FF-E49EC89EA22C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares.Tests", "Azure.Storage.Files.Shares\tests\Azure.Storage.Files.Shares.Tests.csproj", "{05EBD54A-0437-46C3-A6FF-E49EC89EA22C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{2864E202-6DF1-47A7-AD91-496FB1B37F6F}"
 EndProject
@@ -38,28 +38,28 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blobs", "Blobs", "{B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}"
 	ProjectSection(SolutionItems) = preProject
 		Azure.Storage.Blobs\BreakingChanges.txt = Azure.Storage.Blobs\BreakingChanges.txt
-		Azure.Storage.Blobs\Changelog.txt = Azure.Storage.Blobs\Changelog.txt
+		Azure.Storage.Blobs\CHANGELOG.md = Azure.Storage.Blobs\CHANGELOG.md
 		Azure.Storage.Blobs\README.md = Azure.Storage.Blobs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Queues", "Queues", "{F4218B06-A246-4762-984D-5BC852B62889}"
 	ProjectSection(SolutionItems) = preProject
 		Azure.Storage.Queues\BreakingChanges.txt = Azure.Storage.Queues\BreakingChanges.txt
-		Azure.Storage.Queues\Changelog.txt = Azure.Storage.Queues\Changelog.txt
+		Azure.Storage.Queues\CHANGELOG.md = Azure.Storage.Queues\CHANGELOG.md
 		Azure.Storage.Queues\README.md = Azure.Storage.Queues\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shares", "Shares", "{9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}"
 	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Files\BreakingChanges.txt = Azure.Storage.Files\BreakingChanges.txt
-		Azure.Storage.Files\Changelog.txt = Azure.Storage.Files\Changelog.txt
-		Azure.Storage.Files\README.md = Azure.Storage.Files\README.md
+		Azure.Storage.Files.Shares\BreakingChanges.txt = Azure.Storage.Files.Shares\BreakingChanges.txt
+		Azure.Storage.Files.Shares\CHANGELOG.md = Azure.Storage.Files.Shares\CHANGELOG.md
+		Azure.Storage.Files.Shares\README.md = Azure.Storage.Files.Shares\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{794500AE-0D91-414D-8C8C-08577C65AA7A}"
 	ProjectSection(SolutionItems) = preProject
 		Azure.Storage.Common\BreakingChanges.txt = Azure.Storage.Common\BreakingChanges.txt
-		Azure.Storage.Common\Changelog.txt = Azure.Storage.Common\Changelog.txt
+		Azure.Storage.Common\CHANGELOG.md = Azure.Storage.Common\CHANGELOG.md
 		Azure.Storage.Common\README.md = Azure.Storage.Common\README.md
 	EndProjectSection
 EndProject
@@ -70,7 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{69A8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{AD85524A-FB82-475C-9907-27DBC2BE2945}"
 	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Files\swagger\readme.md = Azure.Storage.Files\swagger\readme.md
+		Azure.Storage.Files.Shares\swagger\readme.md = Azure.Storage.Files.Shares\swagger\readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{6EEF892F-E4EE-4610-9C94-4B206D9E7152}"
@@ -84,7 +84,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Samples
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Samples.Tests", "Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{1CDEBFBF-280D-4618-B52A-238EE6751A33}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Samples.Tests", "Azure.Storage.Files\samples\Azure.Storage.Files.Samples.Tests.csproj", "{6C62BFA4-DB03-4701-934D-915AB28B9761}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.Shares.Samples.Tests", "Azure.Storage.Files.Shares\samples\Azure.Storage.Files.Shares.Samples.Tests.csproj", "{6C62BFA4-DB03-4701-934D-915AB28B9761}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Common.Samples.Tests", "Azure.Storage.Common\samples\Azure.Storage.Common.Samples.Tests.csproj", "{9EBEFBC5-A5F4-41B5-946E-67F2DCF5E5B5}"
 EndProject
@@ -113,15 +113,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{FC1F45F6-F103-48AE-8E21-D858F4689370}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching", "Azure.Storage.Blobs.Batching\src\Azure.Storage.Blobs.Batching.csproj", "{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch", "Azure.Storage.Blobs.Batch\src\Azure.Storage.Blobs.Batch.csproj", "{4E5FCA87-0AF9-4AB9-8D73-D679604C465D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batching", "Batching", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batch", "Batch", "{610DBA57-60FD-4115-8D74-F13A8428973E}"
 	ProjectSection(SolutionItems) = preProject
-		Azure.Storage.Blobs.Batching\BreakingChanges.txt = Azure.Storage.Blobs.Batching\BreakingChanges.txt
-		Azure.Storage.Blobs.Batching\Changelog.txt = Azure.Storage.Blobs.Batching\Changelog.txt
-		Azure.Storage.Blobs.Batching\README.md = Azure.Storage.Blobs.Batching\README.md
+		Azure.Storage.Blobs.Batch\BreakingChanges.txt = Azure.Storage.Blobs.Batch\BreakingChanges.txt
+		Azure.Storage.Blobs.Batch\CHANGELOG.md = Azure.Storage.Blobs.Batch\CHANGELOG.md
+		Azure.Storage.Blobs.Batch\README.md = Azure.Storage.Blobs.Batch\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batching.Tests", "Azure.Storage.Blobs.Batching\tests\Azure.Storage.Blobs.Batching.Tests.csproj", "{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.Tests", "Azure.Storage.Blobs.Batch\tests\Azure.Storage.Blobs.Batch.Tests.csproj", "{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -222,7 +223,6 @@ Global
 		{AD85524A-FB82-475C-9907-27DBC2BE2945} = {9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}
 		{6EEF892F-E4EE-4610-9C94-4B206D9E7152} = {F4218B06-A246-4762-984D-5BC852B62889}
 		{9B235463-7D89-471E-87CA-A392661255E4} = {B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}
-		{9260EB26-0D9A-4D71-B588-7106999C745B} = {F4218B06-A246-4762-984D-5BC852B62889}
 		{610DBA57-60FD-4115-8D74-F13A8428973E} = {B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

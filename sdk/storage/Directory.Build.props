@@ -6,13 +6,6 @@
 
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <!--
-    We're currently on 12.0.0-preview.X and we'll share this version number
-    across all Storage projects until the need to version independently arises.
-    See /eng/Versioning.props for more details.
-    -->
-    <VersionPrefix>12.0.0</VersionPrefix>
-
-    <!--
     These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
      -->
     <NoWarn>
@@ -62,4 +55,9 @@
 
   <!-- Pull in Azure.Core helpers for TEST projects -->
   <Import Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\tests\TestFramework.props" />
+  
+  <!--Add shared storage properties-->
+  <PropertyGroup>
+    <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
+  </PropertyGroup>
 </Project>

@@ -80,7 +80,7 @@ namespace Azure.Core.Testing
             {
                 foreach (RecordEntry entry in Entries)
                 {
-                    entry.Sanitize(sanitizer);
+                    sanitizer.Sanitize(entry);
                 }
             }
         }

@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Search
     public partial interface ISynonymMapsOperations
     {
         /// <summary>
-        /// Creates a new Azure Search synonym map or updates a synonym map if
-        /// it already exists.
+        /// Creates a new synonym map or updates a synonym map if it already
+        /// exists.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Update-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMapName'>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<SynonymMap>> CreateOrUpdateWithHttpMessagesAsync(string synonymMapName, SynonymMap synonymMap, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an Azure Search synonym map.
+        /// Deletes a synonym map.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Delete-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMapName'>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string synonymMapName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Retrieves a synonym map definition from Azure Search.
+        /// Retrieves a synonym map definition.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Get-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMapName'>
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<SynonymMap>> GetWithHttpMessagesAsync(string synonymMapName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all synonym maps available for an Azure Search service.
+        /// Lists all synonym maps available for a search service.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/List-Synonym-Maps" />
         /// </summary>
         /// <param name='searchRequestOptions'>
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Search
         /// </exception>
         Task<AzureOperationResponse<SynonymMapListResult>> ListWithHttpMessagesAsync(SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a new Azure Search synonym map.
+        /// Creates a new synonym map.
         /// <see href="https://docs.microsoft.com/rest/api/searchservice/Create-Synonym-Map" />
         /// </summary>
         /// <param name='synonymMap'>

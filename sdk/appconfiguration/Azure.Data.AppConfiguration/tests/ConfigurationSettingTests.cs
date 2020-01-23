@@ -4,6 +4,8 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration.Tests
@@ -12,11 +14,14 @@ namespace Azure.Data.AppConfiguration.Tests
     {
         private static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting(
             string.Concat("key-", Guid.NewGuid().ToString("N")),
-            "test_value"
+            "test_value",
+            "test_label"
         )
         {
-            Label = "test_label",
             ContentType = "test_content_type",
+            ETag = new ETag("test_etag"),
+            LastModified = new DateTimeOffset(DateTime.Today).AddHours(5).AddMinutes(15).AddSeconds(32),
+            IsReadOnly = true,
             Tags = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
@@ -27,10 +32,10 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterReservedCharacter()
         {
-            var selector = new SettingSelector()
+            var selector = new SettingSelector
             {
-                Keys = new List<string>() { "my_key", "key,key" },
-                Labels = new List<string>() { "my_label", "label,label" },
+                KeyFilter = @"my_key,key\,key",
+                LabelFilter = @"my_label,label\,label"
             };
 
             var builder = new RequestUriBuilder();
@@ -45,12 +50,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterContains()
         {
-            var selector = new SettingSelector()
-            {
-                Keys = new List<string>() { "*key*" },
-                Labels = new List<string>() { "*label*" },
-            };
-
+            var selector = new SettingSelector{ KeyFilter = "*key*", LabelFilter = "*label*" };
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
@@ -62,25 +62,21 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void FilterNullLabel()
         {
-            var selector = new SettingSelector()
-            {
-                Labels = new List<string>() { "" },
-            };
+            var selector = new SettingSelector { LabelFilter = "\0" };
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual("http://localhost/?key=%2A&label=%00", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual("http://localhost/?label=%00", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
         public void FilterOnlyKey()
         {
             var key = "my-key";
-            var selector = new SettingSelector(key);
-
+            var selector = new SettingSelector { KeyFilter = key };
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
@@ -94,22 +90,25 @@ namespace Azure.Data.AppConfiguration.Tests
         public void FilterOnlyLabel()
         {
             var label = "my-label";
-            var selector = new SettingSelector(null, label);
-
+            var selector = new SettingSelector
+            {
+                LabelFilter = label
+            };
 
             var builder = new RequestUriBuilder();
             builder.Reset(new Uri("http://localhost/"));
 
             ConfigurationClient.BuildBatchQuery(builder, selector, null);
 
-            Assert.AreEqual($"http://localhost/?key=%2A&label={label}", builder.ToUri().AbsoluteUri);
+            Assert.AreEqual($"http://localhost/?label={label}", builder.ToUri().AbsoluteUri);
         }
 
         [Test]
         public void SettingSomeFields()
         {
-            var selector = new SettingSelector("key")
+            var selector = new SettingSelector
             {
+                KeyFilter = "key",
                 Fields = SettingFields.Key | SettingFields.Value
             };
 
@@ -124,8 +123,9 @@ namespace Azure.Data.AppConfiguration.Tests
         [Test]
         public void SettingAllFields()
         {
-            var selector = new SettingSelector("key")
+            var selector = new SettingSelector
             {
+                KeyFilter = "key",
                 Fields = SettingFields.All
             };
 
@@ -163,6 +163,33 @@ namespace Azure.Data.AppConfiguration.Tests
             ConfigurationSetting testSettingDiffTags = s_testSetting.Clone();
             testSettingDiffTags.Tags.Add("tag3", "test_value3");
             Assert.IsFalse(comparer.Equals(s_testSetting, testSettingDiffTags));
+        }
+
+        [Test]
+        public void ConfigurationSettingSerialization()
+        {
+            var comparer = ConfigurationSettingEqualityComparer.Instance;
+            var serialized = JsonSerializer.Serialize(s_testSetting);
+            var deserialized = JsonSerializer.Deserialize<ConfigurationSetting>(serialized);
+            Assert.IsTrue(comparer.Equals(s_testSetting, deserialized));
+        }
+
+        [Test]
+        public void ConfigurationSettingDictionarySerialization()
+        {
+            var comparer = ConfigurationSettingEqualityComparer.Instance;
+            IDictionary<string, ConfigurationSetting> dict = new Dictionary<string, ConfigurationSetting>
+            {
+                { s_testSetting.Key, s_testSetting },
+                { "null_key", null }
+            };
+
+            var serialized = JsonSerializer.Serialize(dict);
+            var deserialized = JsonSerializer.Deserialize<IDictionary<string, ConfigurationSetting>>(serialized);
+            CollectionAssert.IsNotEmpty(deserialized);
+
+            Assert.IsTrue(comparer.Equals(s_testSetting, deserialized[s_testSetting.Key]));
+            Assert.IsNull(deserialized["null_key"]);
         }
     }
 }

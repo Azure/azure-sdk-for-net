@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Azure.Messaging.EventHubs.Errors;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -55,7 +54,7 @@ namespace Azure.Messaging.EventHubs
         private static Regex NotFoundExpression { get; } = new Regex("The messaging entity .* could not be found", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         /// <summary>The set of mappings from AMQP error conditions to response status codes.</summary>
-        private static readonly IReadOnlyDictionary<AmqpResponseStatusCode, AmqpSymbol> s_statusCodeMap = new Dictionary<AmqpResponseStatusCode, AmqpSymbol>()
+        private static readonly IReadOnlyDictionary<AmqpResponseStatusCode, AmqpSymbol> StatusCodeMap = new Dictionary<AmqpResponseStatusCode, AmqpSymbol>()
         {
             { AmqpResponseStatusCode.NotFound, AmqpErrorCode.NotFound },
             { AmqpResponseStatusCode.NotImplemented, AmqpErrorCode.NotImplemented},
@@ -82,7 +81,7 @@ namespace Azure.Messaging.EventHubs
         {
             if (response == null)
             {
-                return new EventHubsException(true, eventHubsResource, Resources.UnknownCommunicationException);
+                return new EventHubsException(eventHubsResource, Resources.UnknownCommunicationException, EventHubsException.FailureReason.ServiceCommunicationProblem);
             }
 
             if (!response.ApplicationProperties.Map.TryGetValue<string>(AmqpResponse.StatusDescription, out var description))
@@ -151,14 +150,14 @@ namespace Azure.Messaging.EventHubs
 
             if (string.Equals(condition, TimeoutError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new EventHubsTimeoutException(eventHubsResource, description);
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ServiceTimeout);
             }
 
             // The Event Hubs service was busy.
 
             if (string.Equals(condition, ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ServiceBusyException(eventHubsResource, description);
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ServiceBusy);
             }
 
             // An argument was rejected by the Event Hubs service.
@@ -177,7 +176,7 @@ namespace Azure.Messaging.EventHubs
 
             if (string.Equals(condition, AmqpErrorCode.Stolen.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ConsumerDisconnectedException(eventHubsResource, description);
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ConsumerDisconnected);
             }
 
             // Authorization was denied.
@@ -191,7 +190,7 @@ namespace Azure.Messaging.EventHubs
 
             if (string.Equals(condition, AmqpErrorCode.ResourceLimitExceeded.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new QuotaExceededException(eventHubsResource, description);
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.QuotaExceeded);
             }
 
             // The service does not understand how to process the request.
@@ -213,16 +212,15 @@ namespace Azure.Messaging.EventHubs
                 if (NotFoundExpression.IsMatch(description)
                     || (description.IndexOf(NotFoundStatusText, StringComparison.InvariantCultureIgnoreCase) >= 0))
                 {
-                    return new EventHubsResourceNotFoundException(eventHubsResource, description);
+                    return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ResourceNotFound);
                 }
 
-
-                return new EventHubsCommunicationException(eventHubsResource, description);
+                return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ServiceCommunicationProblem);
             }
 
             // There was no specific exception that could be determined; fall back to a generic one.
 
-            return new EventHubsException(true, eventHubsResource, description);
+            return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.ServiceCommunicationProblem);
         }
 
         /// <summary>
@@ -247,7 +245,7 @@ namespace Azure.Messaging.EventHubs
             // condition from the response status code.
 
             if ((response.ApplicationProperties.Map.TryGetValue<int>(AmqpResponse.StatusCode, out var statusCode))
-                && (s_statusCodeMap.TryGetValue((AmqpResponseStatusCode)statusCode, out condition)))
+                && (StatusCodeMap.TryGetValue((AmqpResponseStatusCode)statusCode, out condition)))
             {
                 return condition;
             }

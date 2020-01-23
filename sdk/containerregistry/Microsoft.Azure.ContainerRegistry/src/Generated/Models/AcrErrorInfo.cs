@@ -32,7 +32,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// <param name="code">Error code</param>
         /// <param name="message">Error message</param>
         /// <param name="detail">Error details</param>
-        public AcrErrorInfo(string code = default(string), string message = default(string), string detail = default(string))
+        public AcrErrorInfo(string code = default(string), string message = default(string), object detail = default(object))
         {
             Code = code;
             Message = message;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ContainerRegistry.Models
         /// Gets or sets error details
         /// </summary>
         [JsonProperty(PropertyName = "detail")]
-        public string Detail { get; set; }
+        public object Detail { get; set; }
 
     }
 }

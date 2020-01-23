@@ -2,23 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Identity;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
     public class BlobClientTests : BlobTestBase
     {
-        public BlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -32,7 +35,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -53,49 +56,91 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder2.AccountName);
         }
 
+        [Test]
+        public void Ctor_Uri()
+        {
+            var accountName = "accountName";
+            var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
+            BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
+            BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
+
+            var builder1 = new BlobUriBuilder(blob1.Uri);
+            var builder2 = new BlobUriBuilder(blob2.Uri);
+
+            Assert.AreEqual(accountName, builder1.AccountName);
+            Assert.AreEqual(accountName, builder2.AccountName);
+        }
+
+        [Test]
+        public void Ctor_TokenAuth_Http()
+        {
+            // Arrange
+            Uri httpUri = new Uri(TestConfigOAuth.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, GetOAuthCredential()),
+                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
+        }
+
+        [Test]
+        public void Ctor_CPK_Http()
+        {
+            // Arrange
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            BlobClientOptions blobClientOptions = new BlobClientOptions()
+            {
+                CustomerProvidedKey = customerProvidedKey
+            };
+            Uri httpUri = new Uri(TestConfigDefault.BlobServiceEndpoint).ToHttp();
+
+            // Act
+            TestHelper.AssertExpectedException(
+                () => new BlobClient(httpUri, blobClientOptions),
+                new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
         #region Upload
 
         [Test]
         public async Task UploadAsync_Stream()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                var name = GetNewBlobName();
-                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
-                var data = GetRandomBuffer(Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadAsync(stream);
-                }
-
-                System.Collections.Generic.IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(name, blobs.First().Name);
-
-                Response<BlobDownloadInfo> download = await blob.DownloadAsync();
-                using var actual = new MemoryStream();
-                await download.Value.Content.CopyToAsync(actual);
-                TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                await blob.UploadAsync(stream);
             }
+
+            System.Collections.Generic.IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(name, blobs.First().Name);
+
+            Response<BlobDownloadInfo> download = await blob.DownloadAsync();
+            using var actual = new MemoryStream();
+            await download.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
         [Test]
         public async Task UploadAsync_Stream_UploadsBlock()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-                var data = GetRandomBuffer(Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadAsync(stream);
-                }
-
-                Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
+                await blob.UploadAsync(stream);
             }
+
+            Response<BlobProperties> properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
         [Test]
@@ -104,50 +149,18 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(8)]
         [TestCase(16)]
         [TestCase(null)]
-        public async Task UploadAsync_Stream_ParallelTransferOptions(int? maximumThreadCount)
+        public async Task UploadAsync_Stream_StorageTransferOptions(int? maximumThreadCount)
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-                var data = GetRandomBuffer(Constants.KB);
+                var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
-                using (var stream = new MemoryStream(data))
-                {
-                    var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
-
-                    await Verify(stream => blob.UploadAsync(stream, parallelTransferOptions: options));
-
-                    async Task Verify(Func<Stream, Task<Response<BlobContentInfo>>> upload)
-                    {
-                        using (var stream = new MemoryStream(data))
-                        {
-                            await upload(stream);
-                        }
-
-                        Response<BlobDownloadInfo> download = await blob.DownloadAsync();
-                        using var actual = new MemoryStream();
-                        await download.Value.Content.CopyToAsync(actual);
-                        TestHelper.AssertSequenceEqual(data, actual.ToArray());
-                    }
-                }
-
-                Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
-            }
-        }
-
-        [Test]
-        public async Task UploadAsync_Stream_Overloads()
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                var name = GetNewBlobName();
-                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
-                var data = GetRandomBuffer(Constants.KB);
-
-                await Verify(stream => blob.UploadAsync(stream));
-                await Verify(stream => blob.UploadAsync(stream, CancellationToken.None));
-                await Verify(stream => blob.UploadAsync(stream, metadata: default));
+                await Verify(stream => blob.UploadAsync(stream, transferOptions: options));
 
                 async Task Verify(Func<Stream, Task<Response<BlobContentInfo>>> upload)
                 {
@@ -162,41 +175,30 @@ namespace Azure.Storage.Blobs.Test
                     TestHelper.AssertSequenceEqual(data, actual.ToArray());
                 }
             }
+
+            Response<BlobProperties> properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
         [Test]
-        public async Task UploadAsync_File()
+        public async Task UploadAsync_Stream_Overloads()
         {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                var name = GetNewBlobName();
-                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
-                var data = GetRandomBuffer(Constants.KB);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            await Verify(stream => blob.UploadAsync(stream));
+            await Verify(stream => blob.UploadAsync(stream, true, CancellationToken.None));
+            await Verify(stream => blob.UploadAsync(stream, metadata: default));
+
+            async Task Verify(Func<Stream, Task<Response<BlobContentInfo>>> upload)
+            {
                 using (var stream = new MemoryStream(data))
                 {
-                    var path = Path.GetTempFileName();
-
-                    try
-                    {
-                        File.WriteAllBytes(path, data);
-
-                        var file = new FileInfo(path);
-
-                        await blob.UploadAsync(file);
-                    }
-                    finally
-                    {
-                        if (File.Exists(path))
-                        {
-                            File.Delete(path);
-                        }
-                    }
+                    await upload(stream);
                 }
-
-                System.Collections.Generic.IList<BlobItem> blobs = await container.GetBlobsAsync().ToListAsync();
-                Assert.AreEqual(1, blobs.Count);
-                Assert.AreEqual(name, blobs.First().Name);
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync();
                 using var actual = new MemoryStream();
@@ -206,37 +208,92 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task UploadAsync_File_UploadsBlock()
+        public async Task UploadAsync_Stream_NullStreamFail()
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = (Stream)null)
             {
-                BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-                var data = GetRandomBuffer(Constants.KB);
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadAsync(stream),
+                    e => Assert.AreEqual("body", e.ParamName));
+            }
+        }
 
-                using (var stream = new MemoryStream(data))
+        [Test]
+        public async Task UploadAsync_File()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = Path.GetTempFileName();
+
+                try
                 {
-                    var path = Path.GetTempFileName();
+                    File.WriteAllBytes(path, data);
 
-                    try
+                    await blob.UploadAsync(path);
+                }
+                finally
+                {
+                    if (File.Exists(path))
                     {
-                        File.WriteAllBytes(path, data);
-
-                        var file = new FileInfo(path);
-
-                        await blob.UploadAsync(file);
-                    }
-                    finally
-                    {
-                        if (File.Exists(path))
-                        {
-                            File.Delete(path);
-                        }
+                        File.Delete(path);
                     }
                 }
-
-                Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
             }
+
+            System.Collections.Generic.IList<BlobItem> blobs = await test.Container.GetBlobsAsync().ToListAsync();
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(name, blobs.First().Name);
+
+            Response<BlobDownloadInfo> download = await blob.DownloadAsync();
+            using var actual = new MemoryStream();
+            await download.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_File_UploadsBlock()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    await blob.UploadAsync(path);
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+            }
+
+            Response<BlobProperties> properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
         [Test]
@@ -245,152 +302,24 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(8)]
         [TestCase(16)]
         [TestCase(null)]
-        public async Task UploadAsync_File_ParallelTransferOptions(int? maximumThreadCount)
+        public async Task UploadAsync_File_StorageTransferOptions(int? maximumThreadCount)
         {
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-                var data = GetRandomBuffer(Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    var path = Path.GetTempFileName();
-
-                    try
-                    {
-                        File.WriteAllBytes(path, data);
-
-                        var file = new FileInfo(path);
-
-                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
-
-                        await Verify(blob.UploadAsync(file, parallelTransferOptions: options));
-
-                        async Task Verify(Task<Response<BlobContentInfo>> upload)
-                        {
-                            using (var stream = new MemoryStream(data))
-                            {
-                                await upload;
-                            }
-
-                            Response<BlobDownloadInfo> download = await blob.DownloadAsync();
-                            using var actual = new MemoryStream();
-                            await download.Value.Content.CopyToAsync(actual);
-                            TestHelper.AssertSequenceEqual(data, actual.ToArray());
-                        }
-                    }
-                    finally
-                    {
-                        if (File.Exists(path))
-                        {
-                            File.Delete(path);
-                        }
-                    }
-                }
-
-                Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
-            }
-        }
-
-        [Test]
-        [TestCase(1)]
-        public async Task UploadAsync_File_AccessTier(int? maximumThreadCount)
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-                var data = GetRandomBuffer(Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    var path = Path.GetTempFileName();
-
-                    try
-                    {
-                        File.WriteAllBytes(path, data);
-
-                        var file = new FileInfo(path);
-
-                        await blob.UploadAsync(
-                            file,
-                            accessTier: AccessTier.Cool);
-                    }
-                    finally
-                    {
-                        if (File.Exists(path))
-                        {
-                            File.Delete(path);
-                        }
-                    }
-                }
-
-                Response<BlobProperties> properties = await blob.GetPropertiesAsync();
-                Assert.AreEqual(AccessTier.Cool.ToString(), properties.Value.AccessTier);
-            }
-        }
-
-        [Test]
-        [TestCase(1)]
-        public async Task UploadAsync_File_AccessTierFail(int? maximumThreadCount)
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                BlobClient blob = InstrumentClient(container.GetBlobClient(GetNewBlobName()));
-                var data = GetRandomBuffer(Constants.KB);
-
-                using (var stream = new MemoryStream(data))
-                {
-                    var path = Path.GetTempFileName();
-
-                    try
-                    {
-                        File.WriteAllBytes(path, data);
-
-                        var file = new FileInfo(path);
-
-                        var options = new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount };
-
-                        // Assert
-                        await TestHelper.AssertExpectedExceptionAsync<StorageRequestFailedException>(
-                            blob.UploadAsync(
-                            file,
-                            parallelTransferOptions: options,
-                            accessTier: AccessTier.P10),
-                            e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
-
-                    }
-                    finally
-                    {
-                        if (File.Exists(path))
-                        {
-                            File.Delete(path);
-                        }
-                    }
-                }
-            }
-        }
-
-        [Test]
-        public async Task UploadAsync_File_Overloads()
-        {
-            using (GetNewContainer(out BlobContainerClient container))
-            {
-                var name = GetNewBlobName();
-                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
-                var data = GetRandomBuffer(Constants.KB);
-
                 var path = Path.GetTempFileName();
 
                 try
                 {
                     File.WriteAllBytes(path, data);
 
-                    var file = new FileInfo(path);
+                    var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
 
-                    await Verify(blob.UploadAsync(file));
-                    await Verify(blob.UploadAsync(file, CancellationToken.None));
-                    await Verify(blob.UploadAsync(file, metadata: default));
+                    await Verify(blob.UploadAsync(path, transferOptions: options));
 
                     async Task Verify(Task<Response<BlobContentInfo>> upload)
                     {
@@ -413,103 +342,112 @@ namespace Azure.Storage.Blobs.Test
                     }
                 }
             }
+
+            Response<BlobProperties> properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
-        private async Task UploadStreamAndVerify(
-            long size,
-            long singleBlockThreshold,
-            ParallelTransferOptions parallelTransferOptions)
+        [Test]
+        [TestCase(1)]
+        public async Task UploadAsync_File_AccessTier(int? maximumThreadCount)
         {
-            var data = GetRandomBuffer(size);
-            using (GetNewContainer(out BlobContainerClient container))
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
             {
-                var name = GetNewBlobName();
-                BlobClient blob = InstrumentClient(container.GetBlobClient(name));
-                var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-                blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+                var path = Path.GetTempFileName();
 
-                using (var stream = new MemoryStream(data))
+                try
                 {
-                    await blob.StagedUploadAsync(
-                        content: stream,
-                        blobHttpHeaders: default,
-                        metadata: default,
-                        blobAccessConditions: default,
-                        progressHandler: default,
-                        singleBlockThreshold: singleBlockThreshold,
-                        parallelTransferOptions: parallelTransferOptions,
-                        async: true);
+                    File.WriteAllBytes(path, data);
+
+                    await blob.UploadAsync(
+                        path,
+                        accessTier: AccessTier.Cool);
                 }
-
-                var actual = new byte[Constants.DefaultBufferSize];
-                var actualStream = new MemoryStream(actual);
-
-                // we are testing Upload, not download: so we download in partitions to avoid the default timeout
-                for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
+                finally
                 {
-                    var startIndex = i;
-                    var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+            }
 
-                    Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
-                    actualStream.Position = 0;
-                    await download.Value.Content.CopyToAsync(actualStream);
-                    TestHelper.AssertSequenceEqual(
-                        data.AsSpan(startIndex, count).ToArray(),
-                        actual.AsSpan(0, count).ToArray()
-                        );
+            Response<BlobProperties> properties = await blob.GetPropertiesAsync();
+            Assert.AreEqual(AccessTier.Cool.ToString(), properties.Value.AccessTier);
+        }
+
+        [Test]
+        [TestCase(1)]
+        public async Task UploadAsync_File_AccessTierFail(int? maximumThreadCount)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            var data = GetRandomBuffer(Constants.KB);
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    var options = new StorageTransferOptions { MaximumConcurrency = maximumThreadCount };
+
+                    // Assert
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        blob.UploadAsync(
+                        path,
+                        transferOptions: options,
+                        accessTier: AccessTier.P10),
+                        e => Assert.AreEqual(BlobErrorCode.InvalidHeaderValue.ToString(), e.ErrorCode));
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
                 }
             }
         }
 
-        private async Task UploadFileAndVerify(
-            long size,
-            long singleBlockThreshold,
-            ParallelTransferOptions parallelTransferOptions)
+        [Test]
+        public async Task UploadAsync_File_Overloads()
         {
-            var data = GetRandomBuffer(size);
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
             var path = Path.GetTempFileName();
 
             try
             {
                 File.WriteAllBytes(path, data);
 
-                using (GetNewContainer(out BlobContainerClient container))
-                {
-                    var name = GetNewBlobName();
-                    BlobClient blob = InstrumentClient(container.GetBlobClient(name));
-                    var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
-                    blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+                await Verify(blob.UploadAsync(path));
+                await Verify(blob.UploadAsync(path, true, CancellationToken.None));
+                await Verify(blob.UploadAsync(path, metadata: default));
 
+                async Task Verify(Task<Response<BlobContentInfo>> upload)
+                {
                     using (var stream = new MemoryStream(data))
                     {
-                        await blob.StagedUploadAsync(
-                            file: new FileInfo(path),
-                            blobHttpHeaders: default,
-                            metadata: default,
-                            blobAccessConditions: default,
-                            progressHandler: default,
-                            singleBlockThreshold: singleBlockThreshold,
-                            parallelTransferOptions: parallelTransferOptions,
-                            async: true);
+                        await upload;
                     }
 
-                    var actual = new byte[Constants.DefaultBufferSize];
-                    var actualStream = new MemoryStream(actual);
-
-                    // we are testing Upload, not download: so we download in partitions to avoid the default timeout
-                    for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
-                    {
-                        var startIndex = i;
-                        var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
-
-                        Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
-                        actualStream.Position = 0;
-                        await download.Value.Content.CopyToAsync(actualStream);
-                        TestHelper.AssertSequenceEqual(
-                            data.AsSpan(startIndex, count).ToArray(),
-                            actual.AsSpan(0, count).ToArray()
-                            );
-                    }
+                    Response<BlobDownloadInfo> download = await blob.DownloadAsync();
+                    using var actual = new MemoryStream();
+                    await download.Value.Content.CopyToAsync(actual);
+                    TestHelper.AssertSequenceEqual(data, actual.ToArray());
                 }
             }
             finally
@@ -518,6 +456,106 @@ namespace Azure.Storage.Blobs.Test
                 {
                     File.Delete(path);
                 }
+            }
+        }
+
+        private async Task UploadStreamAndVerify(
+            long size,
+            long singleBlockThreshold,
+            StorageTransferOptions transferOptions)
+        {
+            using Stream stream = await CreateLimitedMemoryStream(size);
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+            blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+
+            await blob.StagedUploadAsync(
+                content: stream,
+                blobHttpHeaders: default,
+                metadata: default,
+                conditions: default,
+                progressHandler: default,
+                singleUploadThreshold: singleBlockThreshold,
+                transferOptions: transferOptions,
+                async: true);
+
+            await DownloadAndAssertAsync(stream, blob);
+        }
+
+        private async Task UploadFileAndVerify(
+            long size,
+            long singleBlockThreshold,
+            StorageTransferOptions transferOptions)
+        {
+            var path = Path.GetTempFileName();
+
+            try
+            {
+                using Stream stream = await CreateLimitedMemoryStream(size);
+
+                // create a new file and copy contents of stream into it, and then close the FileStream
+                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                using (FileStream fileStream = File.Create(path))
+                {
+                    await stream.CopyToAsync(fileStream);
+                }
+
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+                var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+                blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+
+                await blob.StagedUploadAsync(
+                    path: path,
+                    blobHttpHeaders: default,
+                    metadata: default,
+                    conditions: default,
+                    progressHandler: default,
+                    singleUploadThreshold: singleBlockThreshold,
+                    transferOptions: transferOptions,
+                    async: true);
+
+                await DownloadAndAssertAsync(stream, blob);
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        private static async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
+        {
+            var actual = new byte[Constants.DefaultBufferSize];
+            using var actualStream = new MemoryStream(actual);
+
+            // reset the stream before validating
+            stream.Seek(0, SeekOrigin.Begin);
+            long size = stream.Length;
+            // we are testing Upload, not download: so we download in partitions to avoid the default timeout
+            for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
+            {
+                var startIndex = i;
+                var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
+
+                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
+                actualStream.Seek(0, SeekOrigin.Begin);
+                await download.Value.Content.CopyToAsync(actualStream);
+
+                var buffer = new byte[count];
+                stream.Seek(i, SeekOrigin.Begin);
+                await stream.ReadAsync(buffer, 0, count);
+
+                TestHelper.AssertSequenceEqual(
+                    buffer,
+                    actual.AsSpan(0, count).ToArray());
             }
         }
 
@@ -533,7 +571,7 @@ namespace Azure.Storage.Blobs.Test
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadStreamAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await UploadStreamAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
+            await UploadStreamAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
         [TestCase(512)]
@@ -547,7 +585,7 @@ namespace Azure.Storage.Blobs.Test
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadFileAsync_SmallBlobs(long size) =>
             // Use a 1KB threshold so we get a lot of individual blocks
-            await UploadFileAndVerify(size, Constants.KB, new ParallelTransferOptions { MaximumTransferLength = Constants.KB });
+            await UploadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Test]
         [LiveOnly]
@@ -561,15 +599,24 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(257 * Constants.MB, 8)]
         [TestCase(257 * Constants.MB, 16)]
         [TestCase(257 * Constants.MB, null)]
-        [TestCase(1 * Constants.GB, 1)]
-        [TestCase(1 * Constants.GB, 4)]
-        [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
-        [TestCase(1 * Constants.GB, null)]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadStreamAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
+            await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
+        }
+
+        [Test]
+        [LiveOnly]
+        [Explicit("These tests are particularly slow and often hit our 20 minute per test time limit.")]
+        [TestCase(1 * Constants.GB, 1)]
+        [TestCase(1 * Constants.GB, 4)]
+        [TestCase(1 * Constants.GB, 8)]
+        [TestCase(1 * Constants.GB, null)]
+        public async Task UploadStreamAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
         [Test]
@@ -584,17 +631,281 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(257 * Constants.MB, 8)]
         [TestCase(257 * Constants.MB, 16)]
         [TestCase(257 * Constants.MB, null)]
-        [TestCase(1 * Constants.GB, 1)]
-        [TestCase(1 * Constants.GB, 4)]
-        [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, 16)]
-        [TestCase(1 * Constants.GB, null)]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
-            await UploadFileAndVerify(size, 16 * Constants.MB, new ParallelTransferOptions { MaximumThreadCount = maximumThreadCount });
+            await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
+        [Test]
+        [LiveOnly]
+        [Explicit("These tests are particularly slow and often hit our 20 minute per test time limit.")]
+        [TestCase(1 * Constants.GB, 1)]
+        [TestCase(1 * Constants.GB, 4)]
+        [TestCase(1 * Constants.GB, 8)]
+        [TestCase(1 * Constants.GB, null)]
+        public async Task UploadFileAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
+        }
+
+        [Test]
+        public async Task UploadAsync_DoesNotOverwriteDefault_Stream()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream);
+
+            // Overwriting fails
+            using var stream2 = new MemoryStream(GetRandomBuffer(Constants.KB));
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.UploadAsync(stream2));
+        }
+
+        [Test]
+        public async Task UploadAsync_DoesNotOverwrite_Stream()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream);
+
+            // Overwriting fails
+            using var stream2 = new MemoryStream(GetRandomBuffer(Constants.KB));
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await blob.UploadAsync(stream2, overwrite: false));
+        }
+
+        [Test]
+        public async Task UploadAsync_OverwritesDeliberately_Stream()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream);
+
+            // Overwriting works if allowed
+            using var stream2 = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream2, overwrite: true);
+        }
+
+        [Test]
+        public async Task UploadAsync_DoesNotOverwriteDefault_Path()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var path = Path.GetTempFileName();
+            try
+            {
+                // Upload one blob
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+                File.WriteAllBytes(path, GetRandomBuffer(Constants.KB));
+                await blob.UploadAsync(path);
+
+                // Overwriting fails
+                Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await blob.UploadAsync(path));
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_DoesNotOverwrite_Path()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var path = Path.GetTempFileName();
+            try
+            {
+                // Upload one blob
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+                File.WriteAllBytes(path, GetRandomBuffer(Constants.KB));
+                await blob.UploadAsync(path);
+
+                // Overwriting fails
+                Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await blob.UploadAsync(path, overwrite: false));
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_OverwritesDeliberately_Path()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            var path = Path.GetTempFileName();
+            try
+            {
+                // Upload one blob
+                var name = GetNewBlobName();
+                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+                File.WriteAllBytes(path, GetRandomBuffer(Constants.KB));
+                await blob.UploadAsync(path);
+
+                // Overwriting works if allowed
+                await blob.UploadAsync(path, overwrite: true);
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            TestProgress progress = new TestProgress();
+            StorageTransferOptions options = new StorageTransferOptions
+            {
+                MaximumTransferLength = Constants.MB,
+                MaximumConcurrency = 16
+            };
+            int size = Constants.Blob.Block.MaxUploadBytes + 1; // ensure that the Parallel upload code path is hit
+            using var stream = new MemoryStream(GetRandomBuffer(size));
+
+            // Act
+            await blob.UploadAsync(content: stream, progressHandler: progress, transferOptions: options);
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
+        }
         #endregion Upload
+
+        [Test]
+        [Explicit]
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
+        public async Task Perf_SmallBlobs()
+        {
+            // Turn off logging and diagnostics
+            TestDiagnostics = false;
+            BlobClientOptions options = new BlobClientOptions();
+            options.Diagnostics.IsDistributedTracingEnabled = false;
+            options.Diagnostics.IsLoggingEnabled = false;
+
+            BlobServiceClient service = new BlobServiceClient(
+                new Uri(TestConfigDefault.BlobServiceEndpoint),
+                GetNewSharedKeyCredentials(),
+                options);
+
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            var data = GetRandomBuffer(Constants.KB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            } // Add breakpoint here to start collecting traces
+
+            for (int trial = 0; trial < 1000; trial++)
+            {
+                BlobClient b = test.Container.GetBlobClient(blob.Name);
+                using BlobDownloadInfo download = await b.DownloadAsync();
+            }
+        } // Add breakpoint here to stop collecting traces
+
+        [Test]
+        [Explicit] // This runs for a full minute and uploads a ton of data.  Don't want this on every run.
+        [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
+        public async Task Upload_Stress()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+            try
+            {
+                // Create a CancellationToken that times out after 60s
+                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+                CancellationToken token = source.Token;
+
+                // Keep uploading a GB
+                var data = GetRandomBuffer(Constants.GB);
+                for (; ; )
+                {
+                    BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+                    using var stream = new MemoryStream(data);
+                    await blob.UploadAsync(
+                        stream,
+                        transferOptions: new StorageTransferOptions { MaximumConcurrency = 8 },
+                        cancellationToken: token);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                return; // Succeeded
+            }
+        }
+
+        [Test]
+        [LiveOnly] // Don't want a 100MB recording
+        public async Task ChecksForCancelation()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload 100MB
+            var data = GetRandomBuffer(100 * Constants.MB);
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using var stream = new MemoryStream(data);
+            await blob.UploadAsync(stream);
+
+            await AssertDownloadAsync();
+            await AssertDownloadToAsync();
+
+            async Task AssertDownloadAsync()
+            {
+                // Create a CancellationToken that is already cancelled
+                CancellationToken token = new CancellationToken(canceled: true);
+
+                // Verifying Download will cancel
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadAsync(cancellationToken: token));
+            }
+
+            async Task AssertDownloadToAsync()
+            {
+                // Create a CancellationToken that times out after .01s
+                // Intentionally not delaying here, as DownloadToAsync operation should always cancel
+                // since it buffers the full response.
+                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                CancellationToken token = source.Token;
+
+                // Verifying DownloadTo will cancel
+                using var downloadStream = new MemoryStream();
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadToAsync(
+                        destination: downloadStream,
+                        cancellationToken: token));
+            }
+        }
     }
 }

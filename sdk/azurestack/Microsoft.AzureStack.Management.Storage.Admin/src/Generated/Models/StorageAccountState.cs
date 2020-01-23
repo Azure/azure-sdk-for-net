@@ -18,6 +18,5 @@ namespace Microsoft.AzureStack.Management.Storage.Admin.Models
     {
         public const string Creating = "Creating";
         public const string Succeeded = "Succeeded";
-        public const string Suspended = "Suspended";
     }
 }

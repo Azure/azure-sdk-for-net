@@ -84,7 +84,7 @@ namespace Azure.Core.Testing
                     score++;
                 }
 
-                score += CompareHeaderDictionaries(headers, entry.RequestHeaders, ExcludeHeaders);
+                score += CompareHeaderDictionaries(headers, entry.Request.Headers, ExcludeHeaders);
 
                 if (score == 0)
                 {
@@ -108,7 +108,7 @@ namespace Azure.Core.Testing
         protected virtual bool IsEquivalentRequest(RecordEntry entry, RecordEntry otherEntry) =>
             entry.RequestMethod == otherEntry.RequestMethod &&
             IsEquivalentUri(entry.RequestUri, otherEntry.RequestUri) &&
-            CompareHeaderDictionaries(entry.RequestHeaders, otherEntry.RequestHeaders, VolatileHeaders) == 0;
+            CompareHeaderDictionaries(entry.Request.Headers, otherEntry.Request.Headers, VolatileHeaders) == 0;
 
         private static bool AreUrisSame(string entryUri, string otherEntryUri) =>
             // Some versions of .NET behave differently when calling new Uri("...")
@@ -121,8 +121,8 @@ namespace Azure.Core.Testing
 
         protected virtual bool IsEquivalentResponse(RecordEntry entry, RecordEntry otherEntry)
         {
-            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.ResponseHeaders.Where(h => !VolatileResponseHeaders.Contains(h.Key));
-            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.ResponseHeaders.Where(h => !VolatileResponseHeaders.Contains(h.Key));
+            IEnumerable<KeyValuePair<string, string[]>> entryHeaders = entry.Response.Headers.Where(h => !VolatileResponseHeaders.Contains(h.Key));
+            IEnumerable<KeyValuePair<string, string[]>> otherEntryHeaders = otherEntry.Response.Headers.Where(h => !VolatileResponseHeaders.Contains(h.Key));
 
             return
                 entry.StatusCode == otherEntry.StatusCode &&
@@ -132,8 +132,8 @@ namespace Azure.Core.Testing
 
         protected virtual bool IsBodyEquivalent(RecordEntry record, RecordEntry otherRecord)
         {
-            return (record.ResponseBody ?? Array.Empty<byte>()).AsSpan()
-                .SequenceEqual((otherRecord.ResponseBody ?? Array.Empty<byte>()));
+            return (record.Response.Body ?? Array.Empty<byte>()).AsSpan()
+                .SequenceEqual((otherRecord.Response.Body ?? Array.Empty<byte>()));
         }
 
         private string GenerateException(RequestMethod requestMethod, string uri, SortedDictionary<string, string[]> headers, RecordEntry bestScoreEntry)
@@ -161,7 +161,7 @@ namespace Azure.Core.Testing
 
             builder.AppendLine("Header differences:");
 
-            CompareHeaderDictionaries(headers, bestScoreEntry.RequestHeaders, ExcludeHeaders, builder);
+            CompareHeaderDictionaries(headers, bestScoreEntry.Request.Headers, ExcludeHeaders, builder);
 
             return builder.ToString();
         }

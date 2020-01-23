@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Azure.Storage;
 using Azure.Storage.Blobs;
@@ -23,66 +25,74 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public void BatchDelete()
         {
-            // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            #region Snippet:SampleSnippetsBatch_DeleteBatch
+
+            // Get a connection string to our Azure Storage account.
+            //@@ string connectionString = "<connection_string>";
+            //@@ string containerName = "sample-container";
 
             // Get a reference to a container named "sample-container" and then create it
             BlobServiceClient service = new BlobServiceClient(connectionString);
-            BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
             container.Create();
-            try
-            {
-                // Create three blobs named "foo", "bar", and "baz"
-                BlobClient foo = container.GetBlobClient("foo");
-                BlobClient bar = container.GetBlobClient("bar");
-                BlobClient baz = container.GetBlobClient("baz");
-                foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-                bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-                baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
 
-                // Delete all three blobs at once
-                BlobBatchClient batch = service.GetBlobBatchClient();
-                batch.DeleteBlobs(new Uri[] { foo.Uri, bar.Uri, baz.Uri });
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                container.Delete();
-            }
+            // Create three blobs named "foo", "bar", and "baz"
+            BlobClient foo = container.GetBlobClient("foo");
+            BlobClient bar = container.GetBlobClient("bar");
+            BlobClient baz = container.GetBlobClient("baz");
+            foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+            bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+            baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+
+            // Delete all three blobs at once
+            BlobBatchClient batch = service.GetBlobBatchClient();
+            batch.DeleteBlobs(new Uri[] { foo.Uri, bar.Uri, baz.Uri });
+            #endregion
+
+            Assert.AreEqual(0, container.GetBlobs().ToList().Count);
+            // Clean up after we're finished
+            container.Delete();
         }
 
         /// <summary>
         /// Set several blob access tiers in one request.
         /// </summary>
         [Test]
-        public void BatchSetAccessTier()
+        public void BatchSetAccessTierCool()
         {
-            // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            #region Snippet:SampleSnippetsBatch_AccessTier
+            // Get a connection string to our Azure Storage account.
+            //@@ string connectionString = "<connection_string>";
+            //@@ string containerName = "sample-container";
 
             // Get a reference to a container named "sample-container" and then create it
             BlobServiceClient service = new BlobServiceClient(connectionString);
-            BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
             container.Create();
-            try
-            {
-                // Create three blobs named "foo", "bar", and "baz"
-                BlobClient foo = container.GetBlobClient("foo");
-                BlobClient bar = container.GetBlobClient("bar");
-                BlobClient baz = container.GetBlobClient("baz");
-                foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-                bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-                baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
+            // Create three blobs named "foo", "bar", and "baz"
+            BlobClient foo = container.GetBlobClient("foo");
+            BlobClient bar = container.GetBlobClient("bar");
+            BlobClient baz = container.GetBlobClient("baz");
+            foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+            bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+            baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
 
-                // Set the access tier for all three blobs at once
-                BlobBatchClient batch = service.GetBlobBatchClient();
-                batch.SetBlobsAccessTier(new Uri[] { foo.Uri, bar.Uri, baz.Uri }, AccessTier.Cool);
-            }
-            finally
+            // Set the access tier for all three blobs at once
+            BlobBatchClient batch = service.GetBlobBatchClient();
+            batch.SetBlobsAccessTier(new Uri[] { foo.Uri, bar.Uri, baz.Uri }, AccessTier.Cool);
+            #endregion
+
+            foreach (BlobItem blob in container.GetBlobs())
             {
-                // Clean up after the test when we're finished
-                container.Delete();
+                Assert.AreEqual(AccessTier.Cool, blob.Properties.AccessTier);
             }
+            // Clean up after the test when we're finished
         }
 
         /// <summary>
@@ -92,43 +102,45 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public void FineGrainedBatching()
         {
-            // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            #region Snippet:SampleSnippetsBatch_FineGrainedBatching
+            // Get a connection string to our Azure Storage account.
+            //@@ string connectionString = "<connection_string>";
+            //@@ string containerName = "sample-container";
 
             // Get a reference to a container named "sample-container" and then create it
             BlobServiceClient service = new BlobServiceClient(connectionString);
-            BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
             container.Create();
-            try
-            {
-                // Create three blobs named "foo", "bar", and "baz"
-                BlobClient foo = container.GetBlobClient("foo");
-                BlobClient bar = container.GetBlobClient("bar");
-                BlobClient baz = container.GetBlobClient("baz");
-                foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
-                bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
-                baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
 
-                // Create a batch with three deletes
-                BlobBatchClient batchClient = service.GetBlobBatchClient();
-                BlobBatch batch = batchClient.CreateBatch();
-                Response fooResponse = batch.DeleteBlob(foo.Uri, DeleteSnapshotsOption.Include);
-                Response barResponse = batch.DeleteBlob(bar.Uri);
-                Response bazResponse = batch.DeleteBlob(baz.Uri);
+            // Create three blobs named "foo", "bar", and "baz"
+            BlobClient foo = container.GetBlobClient("foo");
+            BlobClient bar = container.GetBlobClient("bar");
+            BlobClient baz = container.GetBlobClient("baz");
+            foo.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Foo!")));
+            foo.CreateSnapshot();
+            bar.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Bar!")));
+            bar.CreateSnapshot();
+            baz.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Baz!")));
 
-                // Submit the batch
-                batchClient.SubmitBatch(batch);
+            // Create a batch with three deletes
+            BlobBatchClient batchClient = service.GetBlobBatchClient();
+            BlobBatch batch = batchClient.CreateBatch();
+            batch.DeleteBlob(foo.Uri, DeleteSnapshotsOption.IncludeSnapshots);
+            batch.DeleteBlob(bar.Uri, DeleteSnapshotsOption.OnlySnapshots);
+            batch.DeleteBlob(baz.Uri);
 
-                // Verify the results
-                Assert.AreEqual(202, fooResponse.Status);
-                Assert.AreEqual(202, barResponse.Status);
-                Assert.AreEqual(202, bazResponse.Status);
-            }
-            finally
-            {
-                // Clean up after the test when we're finished
-                container.Delete();
-            }
+            // Submit the batch
+            batchClient.SubmitBatch(batch);
+            #endregion
+
+            Pageable<BlobItem> blobs = container.GetBlobs(states: BlobStates.Snapshots);
+            Assert.AreEqual(1, blobs.Count());
+            Assert.AreEqual("bar", blobs.FirstOrDefault().Name);
+            // Clean up after the test when we're finished
+            container.Delete();
         }
 
         /// <summary>
@@ -137,38 +149,38 @@ namespace Azure.Storage.Blobs.Samples
         [Test]
         public void BatchErrors()
         {
-            // Get a connection string to our Azure Storage account.
             string connectionString = ConnectionString;
+            string containerName = Randomize("sample-container");
+
+            #region Snippet:SampleSnippetsBatch_Troubleshooting
+            // Get a connection string to our Azure Storage account.
+            //@@ string connectionString = "<connection_string>";
+            //@@ string containerName = "sample-container";
 
             // Get a reference to a container named "sample-container" and then create it
             BlobServiceClient service = new BlobServiceClient(connectionString);
-            BlobContainerClient container = service.GetBlobContainerClient(Randomize("sample-container"));
+            BlobContainerClient container = service.GetBlobContainerClient(containerName);
             container.Create();
+
+            // Create a blob named "valid"
+            BlobClient valid = container.GetBlobClient("valid");
+            valid.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Valid!")));
+
+            // Get a reference to a blob named "invalid", but never create it
+            BlobClient invalid = container.GetBlobClient("invalid");
+
+            // Delete both blobs at the same time
+            BlobBatchClient batch = service.GetBlobBatchClient();
             try
             {
-                // Create a blob named "valid"
-                BlobClient valid = container.GetBlobClient("valid");
-                valid.Upload(new MemoryStream(Encoding.UTF8.GetBytes("Valid!")));
-
-                // Get a reference to a blob named "invalid", but never create it
-                BlobClient invalid = container.GetBlobClient("invalid");
-
-                // Delete both blobs at the same time
-                BlobBatchClient batch = service.GetBlobBatchClient();
                 batch.DeleteBlobs(new Uri[] { valid.Uri, invalid.Uri });
             }
-            catch (AggregateException ex)
+            catch (AggregateException)
             {
-                // An aggregate exception is thrown for all the indivudal failures
-                Assert.AreEqual(1, ex.InnerExceptions.Count);
-                StorageRequestFailedException failure = ex.InnerException as StorageRequestFailedException;
-                Assert.IsTrue(BlobErrorCode.BlobNotFound == failure.ErrorCode);
+                // An aggregate exception is thrown for all the individual failures
+                // Check ex.InnerExceptions for RequestFailedException instances
             }
-            finally
-            {
-                // Clean up after the test when we're finished
-                container.Delete();
-            }
+            #endregion
         }
     }
 }

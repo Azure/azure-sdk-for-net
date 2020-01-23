@@ -11,6 +11,7 @@ namespace Microsoft.Azure.EventHubs.Amqp
     {
         static readonly TimeSpan SendTokenTimeout = TimeSpan.FromMinutes(1);
         static readonly TimeSpan TokenRefreshBuffer = TimeSpan.FromSeconds(10);
+        static readonly TimeSpan MaxValidityInterval = TimeSpan.FromMilliseconds(UInt32.MaxValue - 1);
 
         readonly Timer validityTimer;
         readonly AmqpEventHubClient eventHubClient;
@@ -99,6 +100,9 @@ namespace Microsoft.Azure.EventHubs.Amqp
             TimeSpan interval = this.activeClientLink.AuthorizationValidToUtc.Subtract(DateTime.UtcNow);
             interval += TokenRefreshBuffer;   // Avoid getting a token that expires right away
             interval = interval < AmqpClientConstants.ClientMinimumTokenRefreshInterval ? AmqpClientConstants.ClientMinimumTokenRefreshInterval : interval;
+
+            // Thows ArgumentOutOfRangeException when dueTime parameter is greater than 4294967294.
+            interval = interval <= MaxValidityInterval ? interval : MaxValidityInterval;
 
             this.validityTimer.Change(interval, Timeout.InfiniteTimeSpan);
 

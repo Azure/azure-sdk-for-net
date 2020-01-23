@@ -515,28 +515,5 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SummarizeResults>> SummarizeForResourceGroupLevelPolicyAssignmentWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets OData metadata XML document.
-        /// </summary>
-        /// <param name='scope'>
-        /// A valid scope, i.e. management group, subscription, resource group,
-        /// or resource ID. Scope used has no effect on metadata returned.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="QueryFailureException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<string>> GetMetadataWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

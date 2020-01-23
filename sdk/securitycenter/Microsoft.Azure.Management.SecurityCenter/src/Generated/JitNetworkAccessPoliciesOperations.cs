@@ -1521,6 +1521,9 @@ namespace Microsoft.Azure.Management.Security
         /// <param name='virtualMachines'>
         /// A list of virtual machines &amp; ports to open access for
         /// </param>
+        /// <param name='justification'>
+        /// The justification for making the initiate request
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1542,7 +1545,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<JitNetworkAccessRequest>> InitiateWithHttpMessagesAsync(string resourceGroupName, string jitNetworkAccessPolicyName, IList<JitNetworkAccessPolicyInitiateVirtualMachine> virtualMachines, string justification = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1599,9 +1602,10 @@ namespace Microsoft.Azure.Management.Security
             string jitNetworkAccessPolicyInitiateType = "initiate";
             string apiVersion = "2015-06-01-preview";
             JitNetworkAccessPolicyInitiateRequest body = new JitNetworkAccessPolicyInitiateRequest();
-            if (virtualMachines != null)
+            if (virtualMachines != null || justification != null)
             {
                 body.VirtualMachines = virtualMachines;
+                body.Justification = justification;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

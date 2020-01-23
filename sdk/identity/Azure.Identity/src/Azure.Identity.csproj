@@ -3,15 +3,8 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <PackageTags>Microsoft Azure Identity</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      * Updated InteractiveBrowserCredential and DeviceCodeCredential to optionally accept a tenantId.
-      * Added DefaultAzureCredentialOptions for configuring DefaultAzureCredential authentication.
-      * Added AuthenticationCodeCredential to enable the authentication code authentication flow.
-      ]]>
-    </PackageReleaseNotes>
+    <Version>1.2.0-preview.1</Version>
+    <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>

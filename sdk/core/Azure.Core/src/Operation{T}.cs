@@ -11,22 +11,22 @@ using System.Threading.Tasks;
 namespace Azure
 {
     /// <summary>
-    /// Represents a long running operation (LRO).
+    /// Represents a long-running operation.
     /// </summary>
-    /// <typeparam name="T">The final result of the LRO.</typeparam>
+    /// <typeparam name="T">The final result of the long-running operation.</typeparam>
     public abstract class Operation<T> where T : notnull
     {
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
-        /// the status of the LRO.
+        /// the status of the long-running operation.
         /// </summary>
         public abstract string Id { get; }
 
         /// <summary>
-        /// Final result of the LRO.
+        /// Final result of the long-running operation.
         /// </summary>
         /// <remarks>
-        /// This property can be accessed only after the operation completes succesfully (HasValue is true).
+        /// This property can be accessed only after the operation completes successfully (HasValue is true).
         /// </remarks>
         public abstract T Value { get; }
 
@@ -41,17 +41,17 @@ namespace Azure
         public abstract Response GetRawResponse();
 
         /// <summary>
-        /// Returns true if the LRO completed.
+        /// Returns true if the long-running operation completed.
         /// </summary>
         public abstract bool HasCompleted { get; }
 
         /// <summary>
-        /// Returns true if the LRO completed succesfully and has produced final result (accessible by Value property).
+        /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
         public abstract bool HasValue { get; }
 
         /// <summary>
-        /// Periodically calls the server till the LRO completes.
+        /// Periodically calls the server till the long-running operation completes.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace Azure
         public abstract ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Periodically calls the server till the LRO completes.
+        /// Periodically calls the server till the long-running operation completes.
         /// </summary>
         /// <param name="pollingInterval">
         /// The interval between status requests to the server.
@@ -76,7 +76,7 @@ namespace Azure
         public abstract ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Calls the server to get updated status of the LRO.
+        /// Calls the server to get updated status of the long-running operation.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -86,7 +86,7 @@ namespace Azure
         public abstract ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Calls the server to get updated status of the LRO.
+        /// Calls the server to get updated status of the long-running operation.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -95,12 +95,15 @@ namespace Azure
         /// </remarks>
         public abstract Response UpdateStatus(CancellationToken cancellationToken = default);
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
     }

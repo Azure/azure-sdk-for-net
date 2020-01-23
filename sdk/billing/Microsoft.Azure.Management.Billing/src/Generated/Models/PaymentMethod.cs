@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="paymentMethodType">Payment method type. Possible
         /// values include: 'Credits', 'ChequeWire'</param>
         /// <param name="details">Details about the payment method.</param>
-        /// <param name="expiration">Expiration date.</param>
+        /// <param name="expiration">Expiration month and year.</param>
         /// <param name="currency">The currency associated with the payment
         /// method.</param>
-        public PaymentMethod(string id = default(string), string name = default(string), string type = default(string), string paymentMethodType = default(string), string details = default(string), System.DateTime? expiration = default(System.DateTime?), string currency = default(string))
+        public PaymentMethod(string id = default(string), string name = default(string), string type = default(string), string paymentMethodType = default(string), string details = default(string), string expiration = default(string), string currency = default(string))
             : base(id, name, type)
         {
             PaymentMethodType = paymentMethodType;
@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string Details { get; private set; }
 
         /// <summary>
-        /// Gets expiration date.
+        /// Gets expiration month and year.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expiration")]
-        public System.DateTime? Expiration { get; private set; }
+        public string Expiration { get; private set; }
 
         /// <summary>
         /// Gets the currency associated with the payment method.

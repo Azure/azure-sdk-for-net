@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Map of destination location to service location
+    /// Map of destination location to service location.
     /// </summary>
     public partial class DestinationToServiceLocationMap
     {

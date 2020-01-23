@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the P2SVpnConnectionHealth class.
         /// </summary>
         /// <param name="sasUrl">Returned sas url of the blob to which the p2s
-        /// vpn connection detailed health will be written. </param>
+        /// vpn connection detailed health will be written.</param>
         public P2SVpnConnectionHealth(string sasUrl = default(string))
         {
             SasUrl = sasUrl;

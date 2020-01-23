@@ -31,9 +31,14 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the Preferences class.
         /// </summary>
-        public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>))
+        /// <param name="preferredDataCenterRegion">Preferred Data Center
+        /// Region.</param>
+        /// <param name="transportPreferences">Preferences related to the
+        /// shipment logistics of the sku.</param>
+        public Preferences(IList<string> preferredDataCenterRegion = default(IList<string>), TransportPreferences transportPreferences = default(TransportPreferences))
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
+            TransportPreferences = transportPreferences;
             CustomInit();
         }
 
@@ -43,9 +48,30 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets preferred Data Center Region.
         /// </summary>
         [JsonProperty(PropertyName = "preferredDataCenterRegion")]
         public IList<string> PreferredDataCenterRegion { get; set; }
 
+        /// <summary>
+        /// Gets or sets preferences related to the shipment logistics of the
+        /// sku.
+        /// </summary>
+        [JsonProperty(PropertyName = "transportPreferences")]
+        public TransportPreferences TransportPreferences { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TransportPreferences != null)
+            {
+                TransportPreferences.Validate();
+            }
+        }
     }
 }

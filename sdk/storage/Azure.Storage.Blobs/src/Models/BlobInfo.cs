@@ -142,7 +142,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List.
         /// </summary>
-        public DateTimeOffset CopyCompletionTime => _flattened.CopyCompletionTime;
+        public DateTimeOffset CopyCompletedOn => _flattened.CopyCompletionTime;
 
         /// <summary>
         /// Only appears when x-ms-copy-status is failed or pending. Describes the cause of the last fatal or non-fatal copy operation failure. This header does not appear if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List

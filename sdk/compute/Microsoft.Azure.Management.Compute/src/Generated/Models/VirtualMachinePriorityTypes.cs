@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     {
         public const string Regular = "Regular";
         public const string Low = "Low";
+        public const string Spot = "Spot";
     }
 }

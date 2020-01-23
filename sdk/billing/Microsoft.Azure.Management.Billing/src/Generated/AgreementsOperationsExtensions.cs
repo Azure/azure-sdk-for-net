@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='expand'>
             /// May be used to expand the participants.
             /// </param>
-            public static AgreementListResult ListByBillingAccountName(this IAgreementsOperations operations, string billingAccountName, string expand = default(string))
+            public static AgreementListResult ListByBillingAccount(this IAgreementsOperations operations, string billingAccountName, string expand = default(string))
             {
-                return operations.ListByBillingAccountNameAsync(billingAccountName, expand).GetAwaiter().GetResult();
+                return operations.ListByBillingAccountAsync(billingAccountName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AgreementListResult> ListByBillingAccountNameAsync(this IAgreementsOperations operations, string billingAccountName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AgreementListResult> ListByBillingAccountAsync(this IAgreementsOperations operations, string billingAccountName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByBillingAccountNameWithHttpMessagesAsync(billingAccountName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingAccountWithHttpMessagesAsync(billingAccountName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

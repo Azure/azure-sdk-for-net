@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).</param>
         /// <param name="webApplicationFirewallConfiguration">Web application
         /// firewall configuration.</param>
-        /// <param name="firewallPolicy">Reference of the FirewallPolicy
+        /// <param name="firewallPolicy">Reference to the FirewallPolicy
         /// resource.</param>
         /// <param name="enableHttp2">Whether HTTP2 is enabled on the
         /// application gateway resource.</param>
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayWebApplicationFirewallConfiguration WebApplicationFirewallConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets reference of the FirewallPolicy resource.
+        /// Gets or sets reference to the FirewallPolicy resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.firewallPolicy")]
         public SubResource FirewallPolicy { get; set; }
@@ -312,19 +312,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public ApplicationGatewayAutoscaleConfiguration AutoscaleConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource GUID property of the application gateway
+        /// Gets the resource GUID property of the application gateway
         /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
-        public string ResourceGuid { get; set; }
+        public string ResourceGuid { get; private set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the application gateway
-        /// resource. Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the application gateway resource.
+        /// Possible values include: 'Succeeded', 'Updating', 'Deleting',
+        /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets custom error configurations of the application gateway
@@ -334,11 +334,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<ApplicationGatewayCustomError> CustomErrorConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// Gets or sets a list of availability zones denoting where the

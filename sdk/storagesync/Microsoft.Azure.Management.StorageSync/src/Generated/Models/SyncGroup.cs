@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unique Id
+        /// Gets unique Id
         /// </summary>
         [JsonProperty(PropertyName = "properties.uniqueId")]
-        public string UniqueId { get; set; }
+        public string UniqueId { get; private set; }
 
         /// <summary>
         /// Gets sync group status

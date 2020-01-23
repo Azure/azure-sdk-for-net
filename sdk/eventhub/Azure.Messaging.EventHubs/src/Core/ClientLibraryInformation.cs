@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Versioning;
@@ -48,6 +48,14 @@ namespace Azure.Messaging.EventHubs.Core
         public string Platform { get; }
 
         /// <summary>
+        ///  The client library information, formatted in the standard form used by SDK
+        ///  user agents when interacting with Azure services.
+        /// </summary>
+        ///
+        [Description("user-agent")]
+        public string UserAgent => $"azsdk-net-{ Product }/{ Version } ({ Framework }; { Platform })";
+
+        /// <summary>
         ///   Prevents a default instance of the <see cref="ClientLibraryInformation"/> class from being created.
         /// </summary>
         ///
@@ -55,7 +63,7 @@ namespace Azure.Messaging.EventHubs.Core
         {
             Assembly assembly = typeof(ClientLibraryInformation).Assembly;
 
-            Product = assembly.GetCustomAttribute<AssemblyProductAttribute>()?.Product;
+            Product = $"{ nameof(Messaging) }.{ nameof(EventHubs) }";
             Version = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             Framework = assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
 
@@ -75,7 +83,21 @@ namespace Azure.Messaging.EventHubs.Core
         public IEnumerable<KeyValuePair<string, string>> EnumerateProperties() =>
             typeof(ClientLibraryInformation)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Select(property => new KeyValuePair<string, string>(property.Name.ToLower(CultureInfo.InvariantCulture), (string)property.GetValue(this, null)));
+                .Select(property => new KeyValuePair<string, string>(GetTelemetryName(property), (string)property.GetValue(this, null)));
 
+        /// <summary>
+        ///   Gets the name of the property, as it should appear in telemetry
+        ///   information.
+        /// </summary>
+        ///
+        /// <param name="property">The property to consider.</param>
+        ///
+        /// <returns>The name of the property for use as telemetry for the client library.</returns>
+        ///
+        private static string GetTelemetryName(PropertyInfo property)
+        {
+            string name = property.GetCustomAttribute<DescriptionAttribute>(false)?.Description;
+            return ((string.IsNullOrEmpty(name)) ? property.Name : name).ToLowerInvariant();
+        }
     }
 }

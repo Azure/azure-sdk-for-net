@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Xml.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Test
 {
@@ -55,8 +54,8 @@ namespace Azure.Storage.Test
                 storageCredentials: new StorageSharedKeyCredential(AccountName, AccountKey),
                 blobStorageUri: (AsUri(BlobServiceEndpoint), AsUri(BlobServiceSecondaryEndpoint)),
                 fileStorageUri: (AsUri(FileServiceEndpoint), AsUri(FileServiceSecondaryEndpoint)),
-                queueStorageUri: (AsUri(QueueServiceEndpoint), AsUri(QueueServiceSecondaryEndpoint)),
-                tableStorageUri: (AsUri(TableServiceEndpoint), AsUri(TableServiceSecondaryEndpoint)));
+                tableStorageUri: (AsUri(TableServiceEndpoint), AsUri(TableServiceSecondaryEndpoint)),
+                queueStorageUri: (AsUri(QueueServiceEndpoint), AsUri(QueueServiceSecondaryEndpoint)));
             return connection.ToString(exportSecrets: !sanitize);
             Uri AsUri(string text) => !string.IsNullOrWhiteSpace(text) ? new Uri(text) : default;
         }

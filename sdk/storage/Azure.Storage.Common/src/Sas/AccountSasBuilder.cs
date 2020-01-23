@@ -12,7 +12,7 @@ namespace Azure.Storage.Sas
     /// For more information, see
     /// <see href="https://docs.microsoft.com/rest/api/storageservices/constructing-an-account-sas" />.
     /// </summary>
-    public struct AccountSasBuilder : IEquatable<AccountSasBuilder>
+    public class AccountSasBuilder
     {
         /// <summary>
         /// The storage service version to use to authenticate requests made
@@ -36,14 +36,14 @@ namespace Azure.Storage.Sas
         /// start time for this call is assumed to be the time when the
         /// storage service receives the request.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// The time at which the shared access signature becomes invalid.
         /// This field must be omitted if it has been specified in an
         /// associated stored access policy.
         /// </summary>
-        public DateTimeOffset ExpiryTime { get; set; }
+        public DateTimeOffset ExpiresOn { get; set; }
 
         /// <summary>
         /// The permissions associated with the shared access signature. The
@@ -51,7 +51,7 @@ namespace Azure.Storage.Sas
         /// <see cref="AccountSasPermissions"/> type can be used to create the
         /// permissions string.
         /// </summary>
-        public string Permissions { get; set; }
+        public string Permissions { get; private set; }
 
         /// <summary>
         /// Specifies an IP address or a range of IP addresses from which to
@@ -61,23 +61,39 @@ namespace Azure.Storage.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public IPRange IPRange { get; set; }
+        public SasIPRange IPRange { get; set; }
 
         /// <summary>
         /// The services associated with the shared access signature. The
-        /// user is restricted to operations with the specified services. The
-        /// <see cref="AccountSasServices"/> type can be used to create the
-        /// services string.
+        /// user is restricted to operations with the specified services.
         /// </summary>
-        public string Services { get; set; }
+        public AccountSasServices Services { get; set; }
 
         /// <summary>
         /// The resource types associated with the shared access signature. The
-        /// user is restricted to operations on the specified resources. The
-        /// <see cref="AccountSasResourceTypes"/> type can be used to create
-        /// the resource types string.
+        /// user is restricted to operations on the specified resources.
         /// </summary>
-        public string ResourceTypes { get; set; }
+        public AccountSasResourceTypes ResourceTypes { get; set; }
+
+        /// <summary>
+        /// Sets the permissions for an account SAS.
+        /// </summary>
+        /// <param name="permissions">
+        /// <see cref="AccountSasPermissions"/> containing the allowed permissions.
+        /// </param>
+        public void SetPermissions(AccountSasPermissions permissions)
+        {
+            Permissions = permissions.ToPermissionsString();
+        }
+
+        /// <summary>
+        /// Sets the permissions for the SAS using a raw permissions string.
+        /// </summary>
+        /// <param name="rawPermissions">Raw permissions string for the SAS.</param>
+        public void SetPermissions(string rawPermissions)
+        {
+            Permissions = rawPermissions;
+        }
 
         /// <summary>
         /// Use an account's <see cref="StorageSharedKeyCredential"/> to sign this
@@ -96,7 +112,7 @@ namespace Azure.Storage.Sas
             // https://docs.microsoft.com/en-us/rest/api/storageservices/Constructing-an-Account-SAS
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
 
-            if (ExpiryTime == default || string.IsNullOrEmpty(Permissions) || string.IsNullOrEmpty(ResourceTypes) || string.IsNullOrEmpty(Services))
+            if (ExpiresOn == default || string.IsNullOrEmpty(Permissions) || ResourceTypes == default || Services == default)
             {
                 throw Errors.AccountSasMissingData();
             }
@@ -104,32 +120,30 @@ namespace Azure.Storage.Sas
             {
                 Version = SasQueryParameters.DefaultSasVersion;
             }
-            // Make sure the permission characters are in the correct order
-            Permissions = AccountSasPermissions.Parse(Permissions).ToString();
-            var startTime = SasQueryParameters.FormatTimesForSasSigning(StartTime);
-            var expiryTime = SasQueryParameters.FormatTimesForSasSigning(ExpiryTime);
+            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
                 sharedKeyCredential.AccountName,
                 Permissions,
-                Services,
-                ResourceTypes,
+                Services.ToPermissionsString(),
+                ResourceTypes.ToPermissionsString(),
                 startTime,
                 expiryTime,
                 IPRange.ToString(),
-                Protocol.ToString(),
+                Protocol.ToProtocolString(),
                 Version,
                 "");  // That's right, the account SAS requires a terminating extra newline
 
             var signature = sharedKeyCredential.ComputeHMACSHA256(stringToSign);
-            var p = new SasQueryParameters(
+            var p = SasQueryParametersInternals.Create(
                 Version,
                 Services,
                 ResourceTypes,
                 Protocol,
-                StartTime,
-                ExpiryTime,
+                StartsOn,
+                ExpiresOn,
                 IPRange,
                 null, // Identifier
                 null, // Resource
@@ -143,8 +157,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() =>
-            base.ToString();
+        public override string ToString() => base.ToString();
 
         /// <summary>
         /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
@@ -152,57 +165,13 @@ namespace Azure.Storage.Sas
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) =>
-            obj is AccountSasBuilder other &&
-            Equals(other);
+        public override bool Equals(object obj) => base.Equals(obj);
 
         /// <summary>
         /// Get a hash code for the <see cref="AccountSasBuilder"/>.
         /// </summary>
         /// <returns>Hash code for the <see cref="AccountSasBuilder"/>.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() =>
-            ExpiryTime.GetHashCode() ^
-            IPRange.GetHashCode() ^
-            (Permissions?.GetHashCode() ?? 0) ^
-            Protocol.GetHashCode() ^
-            (ResourceTypes?.GetHashCode() ?? 0) ^
-            (Services?.GetHashCode() ?? 0) ^
-            StartTime.GetHashCode() ^
-            (Version?.GetHashCode() ?? 0);
-
-        /// <summary>
-        /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public static bool operator ==(AccountSasBuilder left, AccountSasBuilder right) =>
-            left.Equals(right);
-
-        /// <summary>
-        /// Check if two <see cref="AccountSasBuilder"/> instances are not
-        /// equal.
-        /// </summary>
-        /// <param name="left">The first instance to compare.</param>
-        /// <param name="right">The second instance to compare.</param>
-        /// <returns>True if they're not equal, false otherwise.</returns>
-        public static bool operator !=(AccountSasBuilder left, AccountSasBuilder right) =>
-            !(left == right);
-
-        /// <summary>
-        /// Check if two <see cref="AccountSasBuilder"/> instances are equal.
-        /// </summary>
-        /// <param name="other">The instance to compare to.</param>
-        /// <returns>True if they're equal, false otherwise.</returns>
-        public bool Equals(AccountSasBuilder other) =>
-            ExpiryTime == other.ExpiryTime &&
-            IPRange == other.IPRange &&
-            Permissions == other.Permissions &&
-            Protocol == other.Protocol &&
-            ResourceTypes == other.ResourceTypes &&
-            Services == other.Services &&
-            StartTime == other.StartTime &&
-            Version == other.Version;
+        public override int GetHashCode() => base.GetHashCode();
     }
 }

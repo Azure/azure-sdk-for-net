@@ -5,17 +5,46 @@ using System;
 
 namespace Azure.Core
 {
+    /// <summary>
+    /// Represents HTTP methods sent as part of a <see cref="Request"/>.
+    /// </summary>
     public readonly struct RequestMethod : IEquatable<RequestMethod>
     {
+        /// <summary>
+        /// Gets the HTTP method.
+        /// </summary>
         public string Method { get; }
 
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for GET method.
+        /// </summary>
         public static RequestMethod Get { get; } = new RequestMethod("GET");
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for POST method.
+        /// </summary>
         public static RequestMethod Post { get; } = new RequestMethod("POST");
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for PUT method.
+        /// </summary>
         public static RequestMethod Put { get; } = new RequestMethod("PUT");
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for PATCH method.
+        /// </summary>
         public static RequestMethod Patch { get; } = new RequestMethod("PATCH");
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for DELETE method.
+        /// </summary>
         public static RequestMethod Delete { get; } = new RequestMethod("DELETE");
+        /// <summary>
+        /// Gets <see cref="RequestMethod"/> instance for HEAD method.
+        /// </summary>
         public static RequestMethod Head { get; } = new RequestMethod("HEAD");
 
+        /// <summary>
+        /// Creates an instance of <see cref="RequestMethod"/> with provided method. Method must be all uppercase.
+        /// Prefer <see cref="Parse"/> if <paramref name="method"/> can be one of predefined method names.
+        /// </summary>
+        /// <param name="method">The method to use.</param>
         public RequestMethod(string method)
         {
             Argument.AssertNotNull(method, nameof(method));
@@ -23,6 +52,10 @@ namespace Azure.Core
             Method = method.ToUpperInvariant();
         }
 
+        /// <summary>
+        /// Parses string to it's <see cref="RequestMethod"/> representation.
+        /// </summary>
+        /// <param name="method">The method string to parse.</param>
         public static RequestMethod Parse(string method)
         {
             Argument.AssertNotNull(method, nameof(method));
@@ -66,31 +99,47 @@ namespace Azure.Core
             return new RequestMethod(method);
         }
 
+        /// <inheritdoc />
         public bool Equals(RequestMethod other)
         {
             return string.Equals(Method, other.Method, StringComparison.Ordinal);
         }
 
+        /// <inheritdoc />
         public override bool Equals(object? obj)
         {
             return obj is RequestMethod other && Equals(other);
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             return Method?.GetHashCode() ?? 0;
         }
 
+        /// <summary>
+        /// Compares equality of two <see cref="RequestMethod"/> instances.
+        /// </summary>
+        /// <param name="left">The method to compare.</param>
+        /// <param name="right">The method to compare against.</param>
+        /// <returns><c>true</c> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator ==(RequestMethod left, RequestMethod right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Compares inequality of two <see cref="RequestMethod"/> instances.
+        /// </summary>
+        /// <param name="left">The method to compare.</param>
+        /// <param name="right">The method to compare against.</param>
+        /// <returns><c>true</c> if <see cref="Method"/> values are equal for <paramref name="left"/> and <paramref name="right"/>, otherwise <c>false</c>.</returns>
         public static bool operator !=(RequestMethod left, RequestMethod right)
         {
             return !left.Equals(right);
         }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return Method ?? "<null>";

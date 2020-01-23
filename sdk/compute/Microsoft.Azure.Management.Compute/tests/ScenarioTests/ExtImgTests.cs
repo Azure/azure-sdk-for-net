@@ -159,7 +159,7 @@ namespace Compute.Tests
                     parameters.Type,
                     query);
                 Assert.True(vmextimg.Count > 0);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name != "1.0") != 0);
 
                 // Filter: startswith - Negative Test
                 query.SetFilter(f => f.Name.StartsWith("1.0"));
@@ -169,7 +169,7 @@ namespace Compute.Tests
                     parameters.PublisherName,
                     parameters.Type,
                     query);
-                Assert.True(vmextimg.Count == 0);
+                Assert.True(vmextimg.Count > 0);
                 Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") == 0);
 
                 // Filter: top - Positive Test
@@ -182,7 +182,7 @@ namespace Compute.Tests
                     parameters.Type,
                     query);
                 Assert.True(vmextimg.Count == 1);
-                Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
+                Assert.True(vmextimg.Count(vmi => vmi.Name == "1.0") != 0);
 
                 // Filter: top - Negative Test
                 query.Top = 0;

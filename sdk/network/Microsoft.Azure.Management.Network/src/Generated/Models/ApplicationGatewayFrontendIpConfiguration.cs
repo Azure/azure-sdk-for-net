@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
-        /// <param name="subnet">Reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">Reference of the PublicIP
+        /// <param name="subnet">Reference to the subnet resource.</param>
+        /// <param name="publicIPAddress">Reference to the PublicIP
         /// resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// frontend IP configuration resource. Possible values include:
@@ -85,24 +85,24 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets reference of the subnet resource.
+        /// Gets or sets reference to the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets reference of the PublicIP resource.
+        /// Gets or sets reference to the PublicIP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state of the frontend IP
-        /// configuration resource. Possible values include: 'Succeeded',
-        /// 'Updating', 'Deleting', 'Failed'
+        /// Gets the provisioning state of the frontend IP configuration
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets name of the frontend IP configuration that is unique
@@ -112,17 +112,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a unique read-only string that changes whenever the
-        /// resource is updated.
+        /// Gets a unique read-only string that changes whenever the resource
+        /// is updated.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets type of the resource.
+        /// Gets type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public string Type { get; private set; }
 
     }
 }

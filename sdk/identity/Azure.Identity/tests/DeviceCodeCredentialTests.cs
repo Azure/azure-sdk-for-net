@@ -68,7 +68,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new AzureCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             var cred = InstrumentClient(new DeviceCodeCredential((code, cancelToken) => VerifyDeviceCode(code, expectedCode), ClientId, options: options));
 
@@ -86,7 +86,7 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new AzureCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             var cred = InstrumentClient(new DeviceCodeCredential((code, cancelToken) => VerifyDeviceCode(code, expectedCode), ClientId, options: options));
 
@@ -96,7 +96,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AuthenticateWithDeviceCodeMockVerifyMsalCancellationAsync()
+        public async Task AuthenticateWithDeviceCodeMockVerifyMsalCancellationAsync()
         {
             var expectedCode = Guid.NewGuid().ToString();
 
@@ -106,11 +106,13 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new AzureCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-            var cred = InstrumentClient(new DeviceCodeCredential((code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), ClientId, options: options));
+            var cred = InstrumentClient(new DeviceCodeCredential((code, cancelToken) => VerifyDeviceCodeAndCancel(code, expectedCode, cancelSource), null, ClientId, options: options));
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+            var ex = Assert.CatchAsync<OperationCanceledException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+
+            await Task.CompletedTask;
         }
 
         [Test]
@@ -122,24 +124,17 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new AzureCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             var cancelSource = new CancellationTokenSource(1000);
 
             var cred = InstrumentClient(new DeviceCodeCredential(VerifyDeviceCodeCallbackCancellationToken, ClientId, options: options));
 
-            Task<AccessToken> getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
+            var getTokenTask = cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token);
 
-            try
-            {
-                AccessToken token = await getTokenTask;
+            var ex = Assert.CatchAsync<OperationCanceledException>(async () => await getTokenTask);
 
-                Assert.Fail();
-            }
-            catch (TaskCanceledException)
-            {
-
-            }
+            await Task.CompletedTask;
         }
 
         [Test]
@@ -153,11 +148,13 @@ namespace Azure.Identity.Tests
 
             var mockTransport = new MockTransport(request => ProcessMockRequest(request, expectedCode, expectedToken));
 
-            var options = new AzureCredentialOptions() { Transport = mockTransport };
+            var options = new TokenCredentialOptions() { Transport = mockTransport };
 
             var cred = InstrumentClient(new DeviceCodeCredential(ThrowingDeviceCodeCallback, ClientId, options: options));
 
-            Assert.ThrowsAsync<MockException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" }), cancelSource.Token));
+
+            Assert.IsInstanceOf(typeof(MockException), ex.InnerException);
         }
 
         private MockResponse ProcessMockRequest(MockRequest mockRequest, string code, string token)
@@ -169,7 +166,7 @@ namespace Azure.Identity.Tests
                 return DiscoveryInstanceResponse;
             }
 
-            if (requestUrl.StartsWith("https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration"))
+            if (requestUrl.StartsWith("https://login.microsoftonline.com/organizations/v2.0/.well-known/openid-configuration"))
             {
                 return OpenIdConfigurationResponse;
             }

@@ -44,9 +44,9 @@ namespace Azure.Storage.Blobs.Models
         /// Create an exception corresponding to the StorageError.
         /// </summary>
         /// <param name="response">The failed response.</param>
-        /// <returns>A StorageRequestFailedException.</returns>
+        /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, Message, null, Code, AdditionalInformation);
+            => StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
     }
 
     /// <summary>
@@ -58,9 +58,9 @@ namespace Azure.Storage.Blobs.Models
         /// Create an exception corresponding to the ConditionNotMetError.
         /// </summary>
         /// <param name="response">The failed response.</param>
-        /// <returns>A StorageRequestFailedException.</returns>
+        /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, null, null, ErrorCode);
+            => StorageExceptionExtensions.CreateException(response, null, null, ErrorCode);
     }
 
     /// <summary>
@@ -72,8 +72,8 @@ namespace Azure.Storage.Blobs.Models
         /// Create an exception corresponding to the DataLakeStorageError.
         /// </summary>
         /// <param name="response">The failed response.</param>
-        /// <returns>A StorageRequestFailedException.</returns>
+        /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(Azure.Response response)
-            => new StorageRequestFailedException(response, Error.Message, null, Error.Code);
+            => StorageExceptionExtensions.CreateException(response, Error.Message, null, Error.Code);
     }
 }

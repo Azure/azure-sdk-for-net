@@ -26,8 +26,9 @@ namespace Azure.Security.KeyVault.Secrets
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
 
         private ObjectId _identifier;
-        private VaultAttributes _attributes;
+        private SecretAttributes _attributes;
         private Dictionary<string, string> _tags;
+        private string _keyId;
 
         internal SecretProperties()
         {
@@ -49,7 +50,7 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary>
         /// Initializes a new instance of the <see cref="SecretProperties"/> class.
         /// </summary>
-        /// <param name="id">The Id of the secret.</param>
+        /// <param name="id">The identifier of the secret.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> is null.</exception>
         public SecretProperties(Uri id)
         {
@@ -59,80 +60,80 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Secret identifier.
+        /// Gets the secret identifier.
         /// </summary>
-        public Uri Id => _identifier.Id;
+        public Uri Id { get => _identifier.Id; internal set => _identifier.Id = value; }
 
         /// <summary>
-        /// Vault base URL.
+        /// Gets the Key Vault base <see cref="Uri"/>.
         /// </summary>
-        public Uri VaultUri => _identifier.VaultUri;
+        public Uri VaultUri { get => _identifier.VaultUri; internal set => _identifier.VaultUri = value; }
 
         /// <summary>
-        /// Name of the secret.
+        /// Gets the name of the secret.
         /// </summary>
-        public string Name => _identifier.Name;
+        public string Name { get => _identifier.Name; internal set => _identifier.Name = value; }
 
         /// <summary>
-        /// Version of the secret.
+        /// Gets the version of the secret.
         /// </summary>
-        public string Version => _identifier.Version;
+        public string Version { get => _identifier.Version; internal set => _identifier.Version = value; }
 
         /// <summary>
-        /// Content type of the secret value such as a password.
+        /// Gets or sets the content type of the secret value such as "text/plain" for a password.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Set to true if the secret's lifetime is managed by key vault. If this
-        /// is a secret backing a KV certificate, then managed will be true.
+        /// Gets a value indicating whether the secret's lifetime is managed by Key Vault.
+        /// If this secret is backing a Key Vault certificate, the value will be true.
         /// </summary>
-        public bool? Managed { get; private set; }
+        public bool Managed { get; internal set; }
 
         /// <summary>
-        /// If this is a secret backing a KV certificate, then this field specifies
-        /// the corresponding key backing the KV certificate.
+        /// Gets the key identifier of a key backing a Key Vault certificate if this secret is backing a Key Vault certifcate.
         /// </summary>
-        public string KeyId { get; private set; }
+        public Uri KeyId
+        {
+            get => _keyId is null ? null : new Uri(_keyId);
+            internal set => _keyId = value?.ToString();
+        }
 
         /// <summary>
-        /// Specifies whether the secret is enabled and useable.
+        /// Gets or sets a value indicating whether the secret is enabled and useable.
         /// </summary>
         public bool? Enabled { get => _attributes.Enabled; set => _attributes.Enabled = value; }
 
         /// <summary>
-        /// Identifies the time (in UTC) before which the secret data should not be retrieved.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the secret will be valid and can be used.
         /// </summary>
         public DateTimeOffset? NotBefore { get => _attributes.NotBefore; set => _attributes.NotBefore = value; }
 
         /// <summary>
-        /// Identifies the expiration time (in UTC) on or after which the secret data should not be retrieved.
+        /// Gets or sets a <see cref="DateTimeOffset"/> indicating when the secret will expire and cannot be used.
         /// </summary>
-        public DateTimeOffset? Expires { get => _attributes.Expires; set => _attributes.Expires = value; }
+        public DateTimeOffset? ExpiresOn { get => _attributes.ExpiresOn; set => _attributes.ExpiresOn = value; }
 
         /// <summary>
-        /// Creation time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the secret was created.
         /// </summary>
-        public DateTimeOffset? Created => _attributes.Created;
+        public DateTimeOffset? CreatedOn { get => _attributes.CreatedOn; internal set => _attributes.CreatedOn = value; }
 
         /// <summary>
-        /// Last updated time in UTC.
+        /// Gets a <see cref="DateTimeOffset"/> indicating when the secret was updated.
         /// </summary>
-        public DateTimeOffset? Updated => _attributes.Updated;
+        public DateTimeOffset? UpdatedOn { get => _attributes.UpdatedOn; internal set => _attributes.UpdatedOn = value; }
 
         /// <summary>
-        /// Reflects the deletion recovery level currently in effect for
-        /// secrets in the current vault. If it contains 'Purgeable', the
-        /// secret can be permanently deleted by a privileged user; otherwise,
-        /// only the system can purge the secret, at the end of the retention
-        /// interval. Possible values include: 'Purgeable',
-        /// 'Recoverable+Purgeable', 'Recoverable',
-        /// 'Recoverable+ProtectedSubscription'
+        /// Gets the recovery level currently in effect for secrets in the Key Vault.
+        /// If <c>Purgeable</c>, the secret can be permanently deleted by an authorized user;
+        /// otherwise, only the service can purge the secrets at the end of the retention interval.
         /// </summary>
-        public string RecoveryLevel => _attributes.RecoveryLevel;
+        /// <value>Possible values include <c>Purgeable</c>, <c>Recoverable+Purgeable</c>, <c>Recoverable</c>, and <c>Recoverable+ProtectedSubscription</c>.</value>
+        public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>
-        /// A dictionary of tags with specific metadata about the secret.
+        /// Gets a dictionary of tags with specific metadata about the secret.
         /// </summary>
         public IDictionary<string, string> Tags => LazyInitializer.EnsureInitialized(ref _tags);
 
@@ -157,7 +158,7 @@ namespace Azure.Security.KeyVault.Secrets
                     break;
 
                 case KidPropertyName:
-                    KeyId = prop.Value.GetString();
+                    _keyId = prop.Value.GetString();
                     break;
 
                 case ManagedPropertyName:
@@ -184,7 +185,7 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteString(s_contentTypePropertyNameBytes, ContentType);
             }
 
-            if (_attributes.Enabled.HasValue || _attributes.NotBefore.HasValue || _attributes.Expires.HasValue)
+            if (_attributes.Enabled.HasValue || _attributes.NotBefore.HasValue || _attributes.ExpiresOn.HasValue)
             {
                 json.WriteStartObject(s_attributesPropertyNameBytes);
 
@@ -193,7 +194,7 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteEndObject();
             }
 
-            if (_tags != null && _tags.Count > 0)
+            if (!_tags.IsNullOrEmpty())
             {
                 json.WriteStartObject(s_tagsPropertyNameBytes);
 

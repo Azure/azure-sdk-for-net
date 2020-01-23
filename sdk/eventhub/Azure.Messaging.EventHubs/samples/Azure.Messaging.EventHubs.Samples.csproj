@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <ProjectReference Include="..\src\Azure.Messaging.EventHubs.csproj" />
   </ItemGroup>
 </Project>

@@ -48,11 +48,6 @@ namespace Compute.Tests
                 try
                 {
                     EnsureClientsInitialized(context);
-
-                    // This test's session record was recorded using the following parameters
-                    m_location = "EastUS2EUAP";
-                    m_subId = "5393f919-a68a-43d0-9063-4b2bda6bffdf";
-
                     ImageReference imageRef = GetPlatformVMImage(useWindowsImage: false);
                     VirtualMachineScaleSetExtensionProfile vmssExtProfile = GetTestVmssExtensionProfile();
 
@@ -174,7 +169,7 @@ namespace Compute.Tests
 
                 // Perform a List operation on vmss extensions
                 var listVmssExtsResponse = m_CrpClient.VirtualMachineScaleSetExtensions.List(rgName, vmssName);
-                ValidateVmssExtension(vmssExtension, listVmssExtsResponse.FirstOrDefault());
+                ValidateVmssExtension(vmssExtension, listVmssExtsResponse.FirstOrDefault(c => c.ForceUpdateTag == "RerunExtension"));
 
                 // Validate the extension delete API
                 m_CrpClient.VirtualMachineScaleSetExtensions.Delete(rgName, vmssName, vmssExtension.Name);
@@ -197,7 +192,7 @@ namespace Compute.Tests
             Assert.True(!string.IsNullOrEmpty(vmssExtensionOut.ProvisioningState));
 
             Assert.True(vmssExtension.Publisher == vmssExtensionOut.Publisher);
-            Assert.True(vmssExtension.Type == vmssExtensionOut.Type);
+            Assert.True(vmssExtension.Type1 == vmssExtensionOut.Type1);
             Assert.True(vmssExtension.AutoUpgradeMinorVersion == vmssExtensionOut.AutoUpgradeMinorVersion);
             Assert.True(vmssExtension.TypeHandlerVersion == vmssExtensionOut.TypeHandlerVersion);
             Assert.True(vmssExtension.Settings.ToString() == vmssExtensionOut.Settings.ToString());

@@ -33,11 +33,16 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Initializes a new instance of the AppWhitelistingPutGroupData
         /// class.
         /// </summary>
-        /// <param name="enforcementMode">Possible values include: 'Audit',
-        /// 'Enforce'</param>
-        public AppWhitelistingPutGroupData(string enforcementMode = default(string), IList<VmRecommendation> vmRecommendations = default(IList<VmRecommendation>), IList<PathRecommendation> pathRecommendations = default(IList<PathRecommendation>))
+        /// <param name="enforcementMode">The enforcement mode of the group.
+        /// Can also be defined per collection type by using ProtectionMode.
+        /// Possible values include: 'Audit', 'Enforce', 'None'</param>
+        /// <param name="protectionMode">The protection mode of the group per
+        /// collection type. Can also be defined for all collection types by
+        /// using EnforcementMode</param>
+        public AppWhitelistingPutGroupData(string enforcementMode = default(string), ProtectionMode protectionMode = default(ProtectionMode), IList<VmRecommendation> vmRecommendations = default(IList<VmRecommendation>), IList<PathRecommendation> pathRecommendations = default(IList<PathRecommendation>))
         {
             EnforcementMode = enforcementMode;
+            ProtectionMode = protectionMode;
             VmRecommendations = vmRecommendations;
             PathRecommendations = pathRecommendations;
             CustomInit();
@@ -49,10 +54,20 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'Audit', 'Enforce'
+        /// Gets or sets the enforcement mode of the group. Can also be defined
+        /// per collection type by using ProtectionMode. Possible values
+        /// include: 'Audit', 'Enforce', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "enforcementMode")]
         public string EnforcementMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the protection mode of the group per collection type.
+        /// Can also be defined for all collection types by using
+        /// EnforcementMode
+        /// </summary>
+        [JsonProperty(PropertyName = "protectionMode")]
+        public ProtectionMode ProtectionMode { get; set; }
 
         /// <summary>
         /// </summary>

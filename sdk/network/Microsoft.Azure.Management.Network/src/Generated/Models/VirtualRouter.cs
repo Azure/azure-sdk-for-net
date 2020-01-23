@@ -40,18 +40,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualRouterAsn">VirtualRouter ASN.</param>
-        /// <param name="virtualRouterIps">VirtualRouter IPs</param>
+        /// <param name="virtualRouterIps">VirtualRouter IPs.</param>
         /// <param name="hostedSubnet">The Subnet on which VirtualRouter is
         /// hosted.</param>
         /// <param name="hostedGateway">The Gateway on which VirtualRouter is
         /// hosted.</param>
         /// <param name="peerings">List of references to
-        /// VirtualRouterPeerings</param>
+        /// VirtualRouterPeerings.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated.</param>
         public VirtualRouter(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), SubResource hostedSubnet = default(SubResource), SubResource hostedGateway = default(SubResource), IList<SubResource> peerings = default(IList<SubResource>), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public long? VirtualRouterAsn { get; set; }
 
         /// <summary>
-        /// Gets or sets virtualRouter IPs
+        /// Gets or sets virtualRouter IPs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualRouterIps")]
         public IList<string> VirtualRouterIps { get; set; }
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource HostedGateway { get; set; }
 
         /// <summary>
-        /// Gets list of references to VirtualRouterPeerings
+        /// Gets list of references to VirtualRouterPeerings.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peerings")]
         public IList<SubResource> Peerings { get; private set; }
@@ -126,9 +126,9 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "VirtualRouterAsn", 4294967295);
             }
-            if (VirtualRouterAsn < 1)
+            if (VirtualRouterAsn < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualRouterAsn", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "VirtualRouterAsn", 0);
             }
         }
     }
