@@ -883,12 +883,8 @@ namespace Azure.Storage.Blobs.Test
 
             async Task AssertDownloadAsync()
             {
-                // Create a CancellationToken that times out after .01s
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
-                CancellationToken token = source.Token;
-                // Delay 1s to ensure that the Download operation should be canceled since DownloadAsync doesn't
-                // buffer the response.
-                await Delay(1000);
+                // Create a CancellationToken that is already cancelled
+                CancellationToken token = new CancellationToken(canceled: true);
 
                 // Verifying Download will cancel
                 await TestHelper.CatchAsync<OperationCanceledException>(
