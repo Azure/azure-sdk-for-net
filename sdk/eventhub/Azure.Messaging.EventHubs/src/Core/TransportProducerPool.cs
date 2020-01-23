@@ -55,8 +55,8 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   It returns a <see cref="PooledProducer"/> corresponding to a given partition
-        ///   and it extends its sliding expiration.
+        ///   Retrieves a <see cref="PooledProducer" /> for the requested partition,
+        ///   creating one if needed or extending the expiration for an existing instance.
         /// </summary>
         ///
         /// <param name="partitionId">The zero-based unique identifier of a partition associated with the Event Hub.</param>
