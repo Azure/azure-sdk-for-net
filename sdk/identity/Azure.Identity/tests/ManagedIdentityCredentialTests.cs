@@ -18,13 +18,6 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialTests : ClientTestBase
     {
-        [SetUp]
-        public void ResetManagedIdenityClient()
-        {
-            typeof(ManagedIdentityClient).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
-            typeof(ManagedIdentityClient).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
-        }
-
         public ManagedIdentityCredentialTests(bool isAsync) : base(isAsync)
         {
         }

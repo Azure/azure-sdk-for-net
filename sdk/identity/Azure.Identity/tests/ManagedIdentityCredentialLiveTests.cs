@@ -17,13 +17,6 @@ namespace Azure.Identity.Tests
         {
         }
 
-        [SetUp]
-        public void ResetManagedIdenityClient()
-        {
-            typeof(ManagedIdentityClient).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
-            typeof(ManagedIdentityClient).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
-        }
-
         [Test]
         [Ignore("This test can only be run from an environment where managed identity is enabled")]
         public async Task GetSystemTokenLiveAsync()
