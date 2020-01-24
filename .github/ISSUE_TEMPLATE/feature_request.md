@@ -14,4 +14,4 @@ What library or service is this request related to? [e.g. Azure.Storage.Blobs]
 What feature would you like to get added? What problem is it solving?
 
 **Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+What alternatives did you consider?
