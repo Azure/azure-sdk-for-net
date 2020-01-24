@@ -10,7 +10,7 @@ assignees: ''
 **Query/Question**
 How can we help?
 
-**Setup (please complete the following information if applicable):**
+**Environment:**
  - Name and version of the Library package used: [e.g. Azure.Storage.Blobs 12.2.0] 
- - OS and .NET runtime version (`dotnet --info` output for .NET Core projects): [e.g. Windows 10 .NET Framework 4.8]
+ - Hosting platform or OS and .NET runtime version (`dotnet --info` output for .NET Core projects): [e.g. Azure AppService or Windows 10 .NET Framework 4.8]
  - IDE and version : [e.g. Visual Studio 16.3]
