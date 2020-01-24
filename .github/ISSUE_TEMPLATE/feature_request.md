@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+**Library or service name.**
+What library or service is this request related to? [e.g. Azure.Storage.Blobs] 
+ 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
