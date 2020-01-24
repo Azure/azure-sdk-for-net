@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the P2SConnectionConfiguration class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="vpnClientAddressPool">The reference of the address
+        /// <param name="vpnClientAddressPool">The reference to the address
         /// space resource which represents Address space for P2S
         /// VpnClient.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the reference of the address space resource which
+        /// Gets or sets the reference to the address space resource which
         /// represents Address space for P2S VpnClient.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnClientAddressPool")]

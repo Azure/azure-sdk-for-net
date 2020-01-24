@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="gatewayManagerEtag">The GatewayManager Etag.</param>
         /// <param name="lastModifiedBy">Who was the last to modify the
         /// peering.</param>
-        /// <param name="routeFilter">The reference of the RouteFilter
+        /// <param name="routeFilter">The reference to the RouteFilter
         /// resource.</param>
         /// <param name="ipv6PeeringConfig">The IPv6 peering
         /// configuration.</param>
@@ -126,10 +126,10 @@ namespace Microsoft.Azure.Management.Network.Models
         public string State { get; set; }
 
         /// <summary>
-        /// Gets the Azure ASN.
+        /// Gets or sets the Azure ASN.
         /// </summary>
         [JsonProperty(PropertyName = "properties.azureASN")]
-        public int? AzureASN { get; private set; }
+        public int? AzureASN { get; set; }
 
         /// <summary>
         /// Gets or sets the peer ASN.
@@ -150,16 +150,16 @@ namespace Microsoft.Azure.Management.Network.Models
         public string SecondaryPeerAddressPrefix { get; set; }
 
         /// <summary>
-        /// Gets the primary port.
+        /// Gets or sets the primary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryAzurePort")]
-        public string PrimaryAzurePort { get; private set; }
+        public string PrimaryAzurePort { get; set; }
 
         /// <summary>
-        /// Gets the secondary port.
+        /// Gets or sets the secondary port.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryAzurePort")]
-        public string SecondaryAzurePort { get; private set; }
+        public string SecondaryAzurePort { get; set; }
 
         /// <summary>
         /// Gets or sets the shared key.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string LastModifiedBy { get; private set; }
 
         /// <summary>
-        /// Gets or sets the reference of the RouteFilter resource.
+        /// Gets or sets the reference to the RouteFilter resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.routeFilter")]
         public SubResource RouteFilter { get; set; }
@@ -224,11 +224,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public ExpressRouteConnectionId ExpressRouteConnection { get; set; }
 
         /// <summary>
-        /// Gets the list of circuit connections associated with Azure Private
-        /// Peering for this circuit.
+        /// Gets or sets the list of circuit connections associated with Azure
+        /// Private Peering for this circuit.
         /// </summary>
         [JsonProperty(PropertyName = "properties.connections")]
-        public IList<ExpressRouteCircuitConnection> Connections { get; private set; }
+        public IList<ExpressRouteCircuitConnection> Connections { get; set; }
 
         /// <summary>
         /// Gets the list of peered circuit connections associated with Azure

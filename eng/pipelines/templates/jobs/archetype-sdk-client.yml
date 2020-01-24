@@ -9,14 +9,17 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
+      - template: tools/daily-dev-build-variable/daily-dev-build-variable.yml@azure-sdk-tools
       - pwsh: |
           $skipDevBuildNumber = "false"
-          if ('$(Build.Reason)' -eq 'Manual') {
+          # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
+          # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
+          if ('$(Build.Reason)' -eq 'Manual' -and '$(SetDevVersion)' -ne 'true') {
             $skipDevBuildNumber = "true"
           }
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
-        displayName: "Setup Versioning Properties"
+        displayName: "Setup .NET specific versioning properties"
       - task: DotNetCoreInstaller@2
         displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
         inputs:
@@ -54,9 +57,18 @@ jobs:
           versionSpec: "3.6"
       - script: |
           pip install setuptools wheel
-          pip install doc-warden
+          pip install doc-warden==$(DocWardenVersion)
           ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
         displayName: "Verify Readmes"
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          version: "$(DotNetCoreSDKVersion)"
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
+        inputs:
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
       - task: DownloadPipelineArtifact@2
         displayName: "Download Build Artifacts"
         condition: succeededOrFailed()

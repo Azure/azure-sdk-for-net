@@ -27,8 +27,8 @@ namespace Azure.Storage.Blobs.Test
         private readonly Func<RequestFailedException, bool> _retryStageBlockFromUri =
             ex => ex.Status == 500 && ex.ErrorCode == BlobErrorCode.CannotVerifyCopySource.ToString();
 
-        public BlockBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlockBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -1148,6 +1148,32 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [LiveOnly]
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9487")]
+        public async Task UploadAsync_LargeFile()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            var data = GetRandomBuffer(Constants.GB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(
+                    content: stream);
+            }
+
+            // Assert
+            Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
         [Test]
         public async Task UploadAsync_Metadata()
         {
@@ -1309,6 +1335,24 @@ namespace Azure.Storage.Blobs.Test
                         content: stream,
                         conditions: new BlobRequestConditions { LeaseId = garbageLeaseId }),
                     e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode.Split('\n')[0]));
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_NullStream_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadAsync(content: stream),
+                    e => Assert.AreEqual("body", e.ParamName));
             }
         }
 

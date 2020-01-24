@@ -17,8 +17,8 @@ namespace Azure.Storage.Blobs.Test
         private const string Permissions = "rwd";
         private static readonly string Snapshot = "snapshot";
 
-        public BlobSasBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobSasBuilderTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
