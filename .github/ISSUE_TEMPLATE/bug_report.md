@@ -6,7 +6,6 @@ labels: ''
 assignees: ''
 
 ---
-
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -26,9 +25,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Setup (please complete the following information):**
- - OS: [e.g. iOS]
- - IDE : [e.g. IntelliJ]
- - Version of the Library used
+ - Name and Version of the Library package used: [e.g. Azure.Storage.Blobs 12.2.0] 
+ - OS and .NET runtime version: [e.g. Linux dotnet core 3.1]
+ - IDE and version : [e.g. Visual Studio 16.3]
 
 **Additional context**
 Add any other context about the problem here.
