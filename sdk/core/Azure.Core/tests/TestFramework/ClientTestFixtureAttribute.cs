@@ -13,13 +13,15 @@ namespace Azure.Core.Testing
 {
     public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
     {
-        private readonly int[] _serviceVersions;
+        private readonly object[] _serviceVersions;
+        private readonly int[] _serviceVersionNumbers;
         private readonly int? _maxServiceVersion;
 
         public ClientTestFixtureAttribute(params object[] serviceVersions)
         {
-            _serviceVersions = serviceVersions.Select(Convert.ToInt32).ToArray();
-            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max() : (int?)null;
+            _serviceVersions = serviceVersions;
+            _serviceVersionNumbers = serviceVersions.Select(Convert.ToInt32).ToArray();
+            _maxServiceVersion = _serviceVersionNumbers.Any() ? _serviceVersionNumbers.Max() : (int?)null;
         }
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo)
@@ -31,20 +33,22 @@ namespace Azure.Core.Testing
         {
             if (_serviceVersions.Any())
             {
-                foreach (int serviceVersion in _serviceVersions)
+                for (var i = 0; i < _serviceVersions.Length; i++)
                 {
+                    object serviceVersion = _serviceVersions[i];
+                    int serviceVersionNumber = _serviceVersionNumbers[i];
                     var syncFixture = new TestFixtureAttribute(false, serviceVersion);
                     var asyncFixture = new TestFixtureAttribute(true, serviceVersion);
 
                     foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
                     {
-                        Process(testSuite, serviceVersion, true);
+                        Process(testSuite, serviceVersion, serviceVersionNumber, true);
                         yield return testSuite;
                     }
 
                     foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
                     {
-                        Process(testSuite, serviceVersion, false);
+                        Process(testSuite, serviceVersion, serviceVersionNumber, false);
                         yield return testSuite;
                     }
                 }
@@ -57,19 +61,19 @@ namespace Azure.Core.Testing
 
                 foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
                 {
-                    Process(testSuite, null, true);
+                    Process(testSuite, null, null, true);
                     yield return testSuite;
                 }
 
                 foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
                 {
-                    Process(testSuite, null, false);
+                    Process(testSuite, null, null, false);
                     yield return testSuite;
                 }
             }
         }
 
-        private void Process(TestSuite testSuite, int? serviceVersion, bool isAsync)
+        private void Process(TestSuite testSuite, object serviceVersion, int? serviceVersionNumber, bool isAsync)
         {
             foreach (Test test in testSuite.Tests)
             {
@@ -77,12 +81,12 @@ namespace Azure.Core.Testing
                 {
                     foreach (Test parameterizedTest in parameterizedMethodSuite.Tests)
                     {
-                        ProcessTest(serviceVersion, isAsync, serviceVersion, parameterizedTest);
+                        ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameterizedTest);
                     }
                 }
                 else
                 {
-                    ProcessTest(serviceVersion, isAsync, serviceVersion, test);
+                    ProcessTest(serviceVersion, isAsync, serviceVersionNumber, test);
                 }
             }
         }

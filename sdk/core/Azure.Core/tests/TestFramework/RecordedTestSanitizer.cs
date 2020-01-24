@@ -39,7 +39,6 @@ namespace Azure.Core.Testing
             return body;
         }
 
-        public virtual string SanitizeConnectionString(string connectionString) => connectionString;
         public virtual string SanitizeVariable(string variableName, string environmentVariableValue) => environmentVariableValue;
         public virtual void SanitizeBody(RecordEntryMessage message)
         {
