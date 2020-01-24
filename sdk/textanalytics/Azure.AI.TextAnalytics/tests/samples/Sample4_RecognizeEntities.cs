@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Recognized {entities.Count()} entities:");
             foreach (NamedEntity entity in entities)
             {
-                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Category}, SubType: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
             }
             #endregion
         }

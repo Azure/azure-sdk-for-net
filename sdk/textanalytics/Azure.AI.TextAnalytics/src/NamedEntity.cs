@@ -14,8 +14,8 @@ namespace Azure.AI.TextAnalytics
         internal NamedEntity(string text, string type, string subType, int offset, int length, double score)
         {
             Text = text;
-            Type = type;
-            SubType = subType;
+            Category = type;
+            SubCategory = subType;
             Offset = offset;
             Length = length;
             Score = score;
@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         /// described at
         /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
         /// </summary>
-        public string Type { get; }
+        public NamedEntityCategory Category { get; }
 
         /// <summary>
         /// Gets the sub type of the entity inferred by the text analytics service's
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics
         /// subtypes is described at
         /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
         /// </summary>
-        public string SubType { get; }
+        public NamedEntitySubCategory SubCategory { get; }
 
         /// <summary>
         /// Gets the start position for the matching text in the input document.

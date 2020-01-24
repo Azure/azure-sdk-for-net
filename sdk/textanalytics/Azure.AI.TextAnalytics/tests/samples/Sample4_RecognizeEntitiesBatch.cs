@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (NamedEntity entity in result.NamedEntities)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Category}, SubType: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");
