@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -9,10 +10,11 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Gets the entity sub-type inferred by the text analytics service's named entity recognition model. The list of available types is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+    /// Gets the entity sub-type inferred by the text analytics service's named entity recognition model.
+    /// The list of available types is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
     /// </summary>
     [JsonConverter(typeof(NamedEntitySubTypeJsonConverter))]
-    public readonly struct NamedEntitySubType
+    public readonly struct NamedEntitySubType : IEquatable<NamedEntitySubType>
     {
         /// <summary>
         /// Specifies that named entity has no specific sub-type.
@@ -107,6 +109,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="other">The NamedEntitySubType with which to compare.</param>
         /// <returns><c>true</c> if the NamedEntitySubType objects are equal; otherwise, <c>false</c>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(NamedEntitySubType other) => _value == other._value;
 
         /// <summary>
@@ -120,6 +123,7 @@ namespace Azure.AI.TextAnalytics
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
 
         /// <summary>

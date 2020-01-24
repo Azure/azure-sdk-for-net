@@ -15,6 +15,8 @@ namespace Azure.Core.Testing
             {
                 headers[key] = new[] { SanitizeValue };
             }
+
+            base.SanitizeHeaders(headers);
         }
     }
 }

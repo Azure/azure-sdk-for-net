@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -9,10 +10,11 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Gets the entity type inferred by the text analytics service's named entity recognition model. The list of available types is described at https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+    /// Gets the entity type inferred by the text analytics service's named entity recognition model.
+    /// The list of available types is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
     /// </summary>
     [JsonConverter(typeof(NamedEntityTypeJsonConverter))]
-    public readonly struct NamedEntityType
+    public readonly struct NamedEntityType : IEquatable<NamedEntityType>
     {
         /// <summary>
         /// Specifies that named entity contains recognized name.
@@ -104,12 +106,14 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NamedEntityType type && Equals(type);
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value.GetHashCode();
 
         /// <summary>
