@@ -9,15 +9,35 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Gets the entity sub-type inferred by the text analytics service's named entity recognition model. The list of available types is  described at https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+    /// Gets the entity sub-type inferred by the text analytics service's named entity recognition model. The list of available types is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
     /// </summary>
     [JsonConverter(typeof(NamedEntitySubTypeJsonConverter))]
     public readonly struct NamedEntitySubType
     {
         /// <summary>
-        /// Specifies that numeric type named entity has no specific sub-type.
+        /// Specifies that named entity has no specific sub-type.
         /// </summary>
         public static readonly NamedEntitySubType None = default;
+
+        /// <summary>
+        /// Specifies that DateTime named entity represents date (e.g.: March 1, 1999).
+        /// </summary>
+        public static readonly NamedEntitySubType Date = new NamedEntitySubType("Date");
+
+        /// <summary>
+        /// Specifies that DateTime named entity represents time (e.g.: 12:34).
+        /// </summary>
+        public static readonly NamedEntitySubType Time = new NamedEntitySubType("Time");
+
+        /// <summary>
+        /// Specifies that DateTime named entity represents duration (e.g.: 2 minutes).
+        /// </summary>
+        public static readonly NamedEntitySubType Duration = new NamedEntitySubType("Duration");
+
+        /// <summary>
+        /// Specifies that numeric type named entity is number (e.g.: 5, six).
+        /// </summary>
+        public static readonly NamedEntitySubType Number = new NamedEntitySubType("Number");
 
         /// <summary>
         /// Specifies that numeric type named entity is Percentage (e.g.: 50%, fifty percent).
@@ -106,7 +126,7 @@ namespace Azure.AI.TextAnalytics
         /// Returns a string representation of the NamedEntitySubType.
         /// </summary>
         /// <returns>The NamedEntitySubType as a string.</returns>
-        public override string ToString() => _value;
+        public override string ToString() => _value ?? "N/A";
     }
 
     internal class NamedEntitySubTypeJsonConverter : JsonConverter<NamedEntitySubType>

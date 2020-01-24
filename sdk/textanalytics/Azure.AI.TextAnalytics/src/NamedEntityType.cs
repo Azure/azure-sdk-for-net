@@ -30,9 +30,14 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType Organization = new NamedEntityType("Organization");
 
         /// <summary>
+        /// Specifies that named entity contains date, time or duration.
+        /// </summary>
+        public static readonly NamedEntityType DateTime = new NamedEntityType("DateTime");
+
+        /// <summary>
         /// Specifies that named entity contains phone number (US Phone numbers only).
         /// </summary>
-        public static readonly NamedEntityType PhoneNumber = new NamedEntityType("Phone Number");
+        public static readonly NamedEntityType PhoneNumber = new NamedEntityType("PhoneNumber");
 
         /// <summary>
         /// Specifies that named entity contains Internet URL.
@@ -47,7 +52,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Specifies that named entity contains number or numeric quantity.
         /// </summary>
-        public static readonly NamedEntityType Number = new NamedEntityType("Number");
+        public static readonly NamedEntityType Quantity = new NamedEntityType("Quantity");
 
         private readonly string _value;
 

@@ -4,7 +4,7 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// A word or phrase identified as an entity that can be categorized as known type in a given taxonomy. The set of types recognized by the text analytics service and is described at https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+    /// A word or phrase identified as an entity that can be categorized as known type in a given taxonomy. The set of types recognized by the text analytics service and is described at <see href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
     /// </summary>
     public readonly struct NamedEntity
     {

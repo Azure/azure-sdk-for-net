@@ -13,14 +13,13 @@ namespace Azure.Core.Testing
 {
     public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
     {
-        private readonly object[] _serviceVersions;
+        private readonly int[] _serviceVersions;
         private readonly int? _maxServiceVersion;
 
         public ClientTestFixtureAttribute(params object[] serviceVersions)
         {
-            _serviceVersions = serviceVersions;
-
-            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
+            _serviceVersions = serviceVersions.Select(Convert.ToInt32).ToArray();
+            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max() : (int?)null;
         }
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo)
@@ -32,7 +31,7 @@ namespace Azure.Core.Testing
         {
             if (_serviceVersions.Any())
             {
-                foreach (object serviceVersion in _serviceVersions)
+                foreach (int serviceVersion in _serviceVersions)
                 {
                     var syncFixture = new TestFixtureAttribute(false, serviceVersion);
                     var asyncFixture = new TestFixtureAttribute(true, serviceVersion);
@@ -70,26 +69,25 @@ namespace Azure.Core.Testing
             }
         }
 
-        private void Process(TestSuite testSuite, object serviceVersion, bool isAsync)
+        private void Process(TestSuite testSuite, int? serviceVersion, bool isAsync)
         {
-            var serviceVersionNumber = Convert.ToInt32(serviceVersion);
             foreach (Test test in testSuite.Tests)
             {
                 if (test is ParameterizedMethodSuite parameterizedMethodSuite)
                 {
                     foreach (Test parameterizedTest in parameterizedMethodSuite.Tests)
                     {
-                        ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameterizedTest);
+                        ProcessTest(serviceVersion, isAsync, serviceVersion, parameterizedTest);
                     }
                 }
                 else
                 {
-                    ProcessTest(serviceVersion, isAsync, serviceVersionNumber, test);
+                    ProcessTest(serviceVersion, isAsync, serviceVersion, test);
                 }
             }
         }
 
-        private void ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, Test test)
+        private void ProcessTest(object serviceVersion, bool isAsync, int? serviceVersionNumber, Test test)
         {
             if (serviceVersionNumber != _maxServiceVersion)
             {
