@@ -26,8 +26,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Setup (please complete the following information):**
- - Name and Version of the Library package used: [e.g. Azure.Storage.Blobs 12.2.0] 
- - OS and .NET runtime version: [e.g. Linux dotnet core 3.1]
+ - Name and version of the Library package used: [e.g. Azure.Storage.Blobs 12.2.0] 
+ - OS and .NET runtime version (`dotnet --info` output for .NET Core): [e.g. Windows 10 .NET Framework 4.8]
  - IDE and version : [e.g. Visual Studio 16.3]
 
 **Additional context**
