@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://annelo-textanalytics-01.cognitiveservices.azure.com/text/analytics/v3.0-preview.1/entities/recognition/general",
+      "RequestUri": "https://test.cognitiveservices.azure.com/text/analytics/v3.0-preview.1/entities/recognition/general",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Content-Length": "233",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4ad9b9434dd8c6438e6fd110b4de50a9-01d0eb9739e12748-00",
+        "traceparent": "00-44ebeeb4b2907745a6fd4d0e920239f7-c4b8f5d2f4172a41-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200123.1\u002Bd463405a2e6a98b809bedbcbe61d83fd5ba50766",
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200124.1\u002B9e8372ddd5d159bdc4e805ad67e2681487d2104e",
           "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18362 )"
         ],
         "x-ms-client-request-id": "1c87f3e8a942856047cc7c3ef2dc261d",
@@ -26,14 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "bb5aa9aa-e562-4771-940b-858c36dcb84f",
+        "apim-request-id": "3dd20025-e5b1-4684-8030-b599497b6e72",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Fri, 24 Jan 2020 06:08:10 GMT",
+        "Date": "Fri, 24 Jan 2020 06:21:36 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "24"
+        "x-envoy-upstream-service-time": "37"
       },
       "ResponseBody": {
         "documents": [
