@@ -14,9 +14,9 @@ A clear and concise ask/query.
 A clear explanation of why is this not a bug or a feature request?
 
 **Setup (please complete the following information if applicable):**
- - OS: [e.g. iOS]
- - IDE : [e.g. IntelliJ]
- - Version of the Library used
+ - Name and Version of the Library package used: [e.g. Azure.Storage.Blobs 12.2.0] 
+ - OS and .NET runtime version: [e.g. Linux dotnet core 3.1]
+ - IDE and version : [e.g. Visual Studio 16.3]
  
  **Information Checklist**
  Kindly make sure that you have added all the following information above and checkoff the required fields otherwise we will treat the issuer as an incomplete report
