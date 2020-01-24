@@ -268,6 +268,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.Pattern, "FileSystemId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
                 }
             }
+            if (CreationToken != null)
+            {
+                if (CreationToken.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "CreationToken", 80);
+                }
+                if (CreationToken.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "CreationToken", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(CreationToken, "^[a-zA-Z][a-zA-Z0-9\\-]{0,79}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "CreationToken", "^[a-zA-Z][a-zA-Z0-9\\-]{0,79}$");
+                }
+            }
             if (UsageThreshold > 109951162777600)
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "UsageThreshold", 109951162777600);
