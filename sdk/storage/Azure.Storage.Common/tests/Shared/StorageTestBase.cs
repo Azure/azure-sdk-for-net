@@ -474,7 +474,7 @@ namespace Azure.Storage.Test.Shared
         /// If the size is greater than maxMemory, a TemporaryFileStream will be used that
         /// will delete the file in its Dispose method.
         /// </summary>
-        protected async Task<Stream> CreateLimitedMemoryStream(long size, long maxMemory = Constants.MB * 100)
+        protected async Task<Stream> CreateLimitedMemoryStream(long size, long maxMemory = Constants.MB * 300)
         {
             Stream stream;
             if (size < maxMemory)
