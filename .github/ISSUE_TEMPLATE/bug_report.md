@@ -13,7 +13,7 @@ Please provide the description of issue you're seeing.
 **Expected behavior**
 What is the expected behavior?
 
-***Actual behavior (include Exception or Stack Trace)***
+**Actual behavior (include Exception or Stack Trace)**
 What is the actual behavior?
 
 **To Reproduce**
