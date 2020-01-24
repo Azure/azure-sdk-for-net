@@ -75,7 +75,8 @@ namespace Azure.AI.TextAnalytics
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
         /// <param name="credential">The subscription key used to access
-        /// the service.</param>
+        /// the service. This will allow you to update the subscription key
+        /// without creating a new client.</param>
         public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
@@ -88,7 +89,8 @@ namespace Azure.AI.TextAnalytics
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
         /// <param name="credential">The subscription key used to access
-        /// the service.</param>
+        /// the service. This will allow you to update the subscription key
+        /// without creating a new client.</param>
         /// <param name="options"><see cref="TextAnalyticsClientOptions"/> that allow
         /// callers to configure how requests are sent to the service.</param>
         public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential, TextAnalyticsClientOptions options)

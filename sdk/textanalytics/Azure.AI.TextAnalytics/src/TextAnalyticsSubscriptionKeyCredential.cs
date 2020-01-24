@@ -7,7 +7,9 @@ namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// A <see cref="TextAnalyticsSubscriptionKeyCredential"/> is a subscription key use to authenticate
-    /// against a Cognitive Service.
+    /// against the Text Analytics service.
+    /// It provides the ability to update the subscription key
+    /// without creating a new client.
     /// </summary>
     public class TextAnalyticsSubscriptionKeyCredential
     {
@@ -25,7 +27,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAnalyticsSubscriptionKeyCredential"/> class.
         /// </summary>
-        /// <param name="subscriptionKey">Subscription key to athenticate the service against.</param>
+        /// <param name="subscriptionKey">Subscription key to use to authenticate with the service.</param>
         public TextAnalyticsSubscriptionKeyCredential(string subscriptionKey)
         {
             UpdateCredential(subscriptionKey);

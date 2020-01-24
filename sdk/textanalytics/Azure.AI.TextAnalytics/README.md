@@ -41,8 +41,11 @@ az cognitiveservices account keys list --resource-group <your-resource-group-nam
 
 Alternatively, you can get the endpoint and subscription key from the resource information in the [Azure Portal][azure_portal].
 
-#### Create TextAnalyticsClient with Subscription Key
-Once you have the values for endpoint and subscription key, you can create the [TextAnalyticsClient][textanalytics_client_class]:
+#### Create TextAnalyticsClient with Subscription Key Credential
+Once you have the value for the subscription key, create a `TextAnalyticsSubscriptionKeyCredential`. This will allow you to
+update the subscription key by using the `UpdateCredential` method without creating a new client.
+
+With the value of the endpoint and a `TextAnalyticsSubscriptionKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
