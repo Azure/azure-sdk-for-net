@@ -27,7 +27,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Setup (please complete the following information):**
  - Name and version of the Library package used: [e.g. Azure.Storage.Blobs 12.2.0] 
- - OS and .NET runtime version (`dotnet --info` output for .NET Core): [e.g. Windows 10 .NET Framework 4.8]
+ - OS and .NET runtime version (`dotnet --info` output for .NET Core projects): [e.g. Windows 10 .NET Framework 4.8]
  - IDE and version : [e.g. Visual Studio 16.3]
 
 **Additional context**
