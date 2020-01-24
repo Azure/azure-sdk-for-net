@@ -49,7 +49,7 @@ With the value of the endpoint and a `TextAnalyticsSubscriptionKeyCredential`, y
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
-TextAnalyticsSubscriptionKeyCredential credential = "<credential>";
+string subscriptionKey = "<subscriptionKey>";
 var credential = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
 var client = new TextAnalyticsClient(new Uri(endpoint), credential);
 ```
