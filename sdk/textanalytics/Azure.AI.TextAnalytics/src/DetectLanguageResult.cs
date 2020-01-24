@@ -14,27 +14,35 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DetectLanguageResult : TextAnalyticsResult
     {
+        // TODO: clean this up.
+        private DetectedLanguage _predictedLanguage;
+
         internal DetectLanguageResult(string id, TextDocumentStatistics statistics, IList<DetectedLanguage> detectedLanguages)
             : base(id, statistics)
         {
-            DetectedLanguages = new ReadOnlyCollection<DetectedLanguage>(detectedLanguages);
+            _predictedLanguage = detectedLanguages.OrderBy(l => l.Score).FirstOrDefault();
         }
 
         internal DetectLanguageResult(string id, TextAnalyticsError error)
             : base(id, error)
         {
-            DetectedLanguages = Array.Empty<DetectedLanguage>();
         }
-
-        /// <summary>
-        /// Gets a collection of languages detected in the document.  This value
-        /// contains a single language.
-        /// </summary>
-        public IReadOnlyCollection<DetectedLanguage> DetectedLanguages { get; }
 
         /// <summary>
         /// The primary language detected in the document.
         /// </summary>
-        public DetectedLanguage PrimaryLanguage => DetectedLanguages.OrderBy(l => l.Score).FirstOrDefault();
+        public DetectedLanguage PredictedLanguage
+        {
+            get
+            {
+                if (Error.ErrorCode != default)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for this document, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _predictedLanguage;
+            }
+        }
     }
 }

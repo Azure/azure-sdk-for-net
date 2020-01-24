@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -14,9 +16,7 @@ namespace Azure.AI.TextAnalytics
         internal TextSentiment(TextSentimentClass predictedSentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             PredictedSentiment = predictedSentiment;
-            PositiveScore = positiveScore;
-            NeutralScore = neutralScore;
-            NegativeScore = negativeScore;
+            Scores = new TextSentimentScores(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;
         }
@@ -28,22 +28,9 @@ namespace Azure.AI.TextAnalytics
         public TextSentimentClass PredictedSentiment { get; }
 
         /// <summary>
-        /// Gets a score between 0 and 1, indicating the confidence that the
-        /// sentiment of the analyzed text is positive.
+        /// The confidence scores for the sentiment, for each sentiment class label, Positive, Neutrual, and Negative.
         /// </summary>
-        public double PositiveScore { get; }
-
-        /// <summary>
-        /// Gets a score between 0 and 1, indicating the confidence that the
-        /// sentiment of the analyzed text is neutral.
-        /// </summary>
-        public double NeutralScore { get; }
-
-        /// <summary>
-        /// Gets a score between 0 and 1, indicating the confidence that the
-        /// sentiment of the analyzed text is negative.
-        /// </summary>
-        public double NegativeScore { get; }
+        public TextSentimentScores Scores { get; }
 
         /// <summary>
         /// Gets the start position for the matching text in the input document.

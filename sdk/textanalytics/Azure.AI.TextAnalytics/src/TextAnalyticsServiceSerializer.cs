@@ -399,24 +399,51 @@ namespace Azure.AI.TextAnalytics
 
         private static AnalyzeSentimentResult ReadDocumentSentimentResult(JsonElement documentElement)
         {
-            var documentSentiment = ReadSentiment(documentElement, "documentScores");
+            var documentSentiment = ReadDocumentSentiment(documentElement, "documentScores");
+            return new AnalyzeSentimentResult(
+                    ReadDocumentId(documentElement),
+                    ReadDocumentStatistics(documentElement),
+                    documentSentiment);
+        }
+
+
+        private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName)
+        {
+            TextSentimentClass sentimentClass = default;
+            double positiveScore = default;
+            double neutralScore = default;
+            double negativeScore = default;
+
+            if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
+            {
+                sentimentClass = (TextSentimentClass)Enum.Parse(typeof(TextSentimentClass), sentimentValue.ToString(), ignoreCase: true);
+            }
+
+            if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
+            {
+                if (scoreValues.TryGetProperty("positive", out JsonElement positiveValue))
+                    positiveValue.TryGetDouble(out positiveScore);
+
+                if (scoreValues.TryGetProperty("neutral", out JsonElement neutralValue))
+                    neutralValue.TryGetDouble(out neutralScore);
+
+                if (scoreValues.TryGetProperty("negative", out JsonElement negativeValue))
+                    negativeValue.TryGetDouble(out negativeScore);
+            }
+
             var sentenceSentiments = new List<TextSentiment>();
             if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
             {
                 foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
                 {
-                    sentenceSentiments.Add(ReadSentiment(sentenceElement, "sentenceScores"));
+                    sentenceSentiments.Add(ReadTextSentiment(sentenceElement, "sentenceScores"));
                 }
             }
 
-            return new AnalyzeSentimentResult(
-                ReadDocumentId(documentElement),
-                ReadDocumentStatistics(documentElement),
-                documentSentiment,
-                sentenceSentiments);
+            return new DocumentSentiment(sentimentClass, positiveScore, neutralScore, negativeScore, sentenceSentiments);
         }
 
-        private static TextSentiment ReadSentiment(JsonElement documentElement, string scoresElementName)
+        private static TextSentiment ReadTextSentiment(JsonElement documentElement, string scoresElementName)
         {
             TextSentimentClass sentimentClass = default;
             double positiveScore = default;

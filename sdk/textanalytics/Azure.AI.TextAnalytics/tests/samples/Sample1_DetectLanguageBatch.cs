@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                      CountryHint = "us",
                 },
-                new DetectLanguageInput("2", "Bonjour tout le monde")
+                new DetectLanguageInput("2", "")
                 {
                      CountryHint = "fr",
                 },
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            DetectLanguageResultCollection results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            DetectLanguageResultCollection results = client.DetectLanguage(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -54,13 +54,13 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\", Text=\"{document.Text}\"):");
 
-                if (result.Error.ErrorCode != default)
+                if (result.HasError)
                 {
                     Debug.WriteLine($"    Document error: {result.Error.Message}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Detected language {result.PrimaryLanguage.Name} with confidence {result.PrimaryLanguage.Score:0.00}.");
+                    Debug.WriteLine($"    Detected language {result.PredictedLanguage.Name} with confidence {result.PredictedLanguage.Score:0.00}.");
 
                     Debug.WriteLine($"    Document statistics:");
                     Debug.WriteLine($"        Character count: {result.Statistics.CharacterCount}");

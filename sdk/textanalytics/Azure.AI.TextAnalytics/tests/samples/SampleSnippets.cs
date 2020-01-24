@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:BadRequest
             try
             {
-                DetectLanguageResult result = client.DetectLanguage(input);
+                DetectedLanguage result = client.DetectLanguage(input);
             }
             catch (RequestFailedException e)
             {

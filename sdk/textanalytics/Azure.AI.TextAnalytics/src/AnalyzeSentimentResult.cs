@@ -14,29 +14,35 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class AnalyzeSentimentResult : TextAnalyticsResult
     {
-        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, TextSentiment documentSentiment, IList<TextSentiment> sentenceSentiments)
+        private DocumentSentiment _documentSentiment;
+
+        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
             : base(id, statistics)
         {
-            DocumentSentiment = documentSentiment;
-            SentenceSentiments = new ReadOnlyCollection<TextSentiment>(sentenceSentiments);
+            _documentSentiment = documentSentiment;
         }
 
         internal AnalyzeSentimentResult(string id, TextAnalyticsError error)
             : base(id, error)
         {
-            SentenceSentiments = Array.Empty<TextSentiment>();
         }
 
-        // TODO: set DocumentSentiment.Length
         /// <summary>
         /// Gets the predicted sentiment for the full document.
         /// </summary>
-        public TextSentiment DocumentSentiment { get; }
+        public DocumentSentiment DocumentSentiment
+        {
+            get
+            {
+                if (Error.ErrorCode != default)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for this document, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _documentSentiment;
+            }
+        }
 
-        /// <summary>
-        /// Gets the predicted sentiment for each sentence in the corresponding
-        /// document.
-        /// </summary>
-        public IReadOnlyCollection<TextSentiment> SentenceSentiments { get; }
     }
 }

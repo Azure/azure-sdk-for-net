@@ -14,21 +14,34 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizeEntitiesResult : TextAnalyticsResult
     {
+        private IReadOnlyCollection<NamedEntity> _namedEntities;
+
         internal RecognizeEntitiesResult(string id, TextDocumentStatistics statistics, IList<NamedEntity> entities)
             : base(id, statistics)
         {
-            NamedEntities = new ReadOnlyCollection<NamedEntity>(entities);
+            _namedEntities = new ReadOnlyCollection<NamedEntity>(entities);
         }
 
         internal RecognizeEntitiesResult(string id, TextAnalyticsError error)
             : base(id, error)
         {
-            NamedEntities = Array.Empty<NamedEntity>();
         }
 
         /// <summary>
         /// Gets the collection of named entities identified in the input document.
         /// </summary>
-        public IReadOnlyCollection<NamedEntity> NamedEntities { get; }
+        public IReadOnlyCollection<NamedEntity> NamedEntities
+        {
+            get
+            {
+                if (Error.ErrorCode != default)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for this document, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _namedEntities;
+            }
+        }
     }
 }

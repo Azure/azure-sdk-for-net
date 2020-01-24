@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net.Http.Headers;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -41,5 +43,10 @@ namespace Azure.AI.TextAnalytics
         /// cannot be processed.
         /// </summary>
         public TextAnalyticsError Error { get; }
+
+        /// <summary>
+        /// Indicates that the input text was not successfully processed and an error was returned for this document.
+        /// </summary>
+        public bool HasError => Error.ErrorCode != default;
     }
 }

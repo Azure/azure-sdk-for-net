@@ -13,21 +13,34 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class ExtractKeyPhrasesResult : TextAnalyticsResult
     {
+        private ReadOnlyCollection<string> _keyPhrases;
+
         internal ExtractKeyPhrasesResult(string id, TextDocumentStatistics statistics, IList<string> keyPhrases)
             : base(id, statistics)
         {
-            KeyPhrases = new ReadOnlyCollection<string>(keyPhrases);
+            _keyPhrases = new ReadOnlyCollection<string>(keyPhrases);
         }
 
         internal ExtractKeyPhrasesResult(string id, TextAnalyticsError error)
             : base(id, error)
         {
-            KeyPhrases = Array.Empty<string>();
         }
 
         /// <summary>
         /// Gets the collection of key phrases identified in the input document.
         /// </summary>
-        public IReadOnlyCollection<string> KeyPhrases { get; }
+        public IReadOnlyCollection<string> KeyPhrases
+        {
+            get
+            {
+                if (Error.ErrorCode != default)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for this document, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _keyPhrases;
+            }
+        }
     }
 }

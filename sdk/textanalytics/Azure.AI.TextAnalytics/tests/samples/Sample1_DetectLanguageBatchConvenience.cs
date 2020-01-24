@@ -35,13 +35,13 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             #region Snippet:TextAnalyticsSample1DetectLanguagesConvenience
-            DetectLanguageResultCollection results = client.DetectLanguages(inputs);
+            DetectLanguageResultCollection results = client.DetectLanguage(inputs);
             #endregion
 
             Debug.WriteLine($"Detected languages are:");
             foreach (DetectLanguageResult result in results)
             {
-                Debug.WriteLine($"    {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score:0.00}.");
+                Debug.WriteLine($"    {result.PredictedLanguage.Name}, with confidence {result.PredictedLanguage.Score:0.00}.");
             }
         }
     }

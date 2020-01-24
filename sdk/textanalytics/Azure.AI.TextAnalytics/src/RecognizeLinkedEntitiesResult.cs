@@ -14,21 +14,34 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class RecognizeLinkedEntitiesResult : TextAnalyticsResult
     {
+        private IReadOnlyCollection<LinkedEntity> _linkedEntities;
+
         internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, IList<LinkedEntity> linkedEntities)
             : base(id, statistics)
         {
-            LinkedEntities = new ReadOnlyCollection<LinkedEntity>(linkedEntities);
+            _linkedEntities = new ReadOnlyCollection<LinkedEntity>(linkedEntities);
         }
 
         internal RecognizeLinkedEntitiesResult(string id, TextAnalyticsError error)
             : base(id, error)
         {
-            LinkedEntities = Array.Empty<LinkedEntity>();
         }
 
         /// <summary>
         /// Gets the collection of linked entities identified in the input document.
         /// </summary>
-        public IReadOnlyCollection<LinkedEntity> LinkedEntities { get; }
+        public IReadOnlyCollection<LinkedEntity> LinkedEntities
+        {
+            get
+            {
+                if (Error.ErrorCode != default)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for this document, due to error {Error.ErrorCode}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _linkedEntities;
+            }
+        }
     }
 }
