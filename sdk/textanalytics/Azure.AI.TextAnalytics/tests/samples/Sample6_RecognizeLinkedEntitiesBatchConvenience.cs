@@ -29,12 +29,12 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+            InferEntityLinksResultCollection results = client.InferEntityLinks(inputs);
             #endregion
 
             Debug.WriteLine($"Linked entities for each input are:\n");
             int i = 0;
-            foreach (RecognizeLinkedEntitiesResult result in results)
+            foreach (InferEntityLinksResult result in results)
             {
                 Debug.Write($"For input: \"{inputs[i++]}\", ");
                 Debug.WriteLine($"extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");

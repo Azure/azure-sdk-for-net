@@ -38,14 +38,14 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            InferEntityLinksResultCollection results = client.InferEntityLinks(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
             Debug.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{results.ModelVersion}\"");
             Debug.WriteLine("");
 
-            foreach (RecognizeLinkedEntitiesResult result in results)
+            foreach (InferEntityLinksResult result in results)
             {
                 TextDocumentInput document = inputs[i++];
 

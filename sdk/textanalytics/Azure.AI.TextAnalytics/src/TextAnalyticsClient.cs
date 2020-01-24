@@ -1443,11 +1443,11 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<IEnumerable<LinkedEntity>>> RecognizeLinkedEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IEnumerable<LinkedEntity>>> InferEntityLinksAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.InferEntityLinks");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1461,7 +1461,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        RecognizeLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        InferEntityLinksResultCollection result = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                         if (result[0].Error.ErrorCode != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1499,11 +1499,11 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<IEnumerable<LinkedEntity>> RecognizeLinkedEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<IEnumerable<LinkedEntity>> InferEntityLinks(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.InferEntityLinks");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1517,7 +1517,7 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        RecognizeLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
+                        InferEntityLinksResultCollection results = CreateLinkedEntityResponse(response, map);
                         if (results[0].Error.ErrorCode != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
@@ -1555,11 +1555,11 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InferEntityLinksResultCollection>> InferEntityLinksAsync(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return await RecognizeLinkedEntitiesAsync(documentInputs, new TextAnalyticsRequestOptions(), cancellationToken).ConfigureAwait(false);
+            return await InferEntityLinksAsync(documentInputs, new TextAnalyticsRequestOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1582,11 +1582,11 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntities(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<InferEntityLinksResultCollection> InferEntityLinks(IEnumerable<string> inputs, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<TextDocumentInput> documentInputs = ConvertToDocumentInputs(inputs, language);
-            return RecognizeLinkedEntities(documentInputs, new TextAnalyticsRequestOptions(), cancellationToken);
+            return InferEntityLinks(documentInputs, new TextAnalyticsRequestOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -1607,11 +1607,11 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InferEntityLinksResultCollection>> InferEntityLinksAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.InferEntityLinks");
             scope.Start();
 
             try
@@ -1653,11 +1653,11 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<InferEntityLinksResultCollection> InferEntityLinks(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.InferEntityLinks");
             scope.Start();
 
             try

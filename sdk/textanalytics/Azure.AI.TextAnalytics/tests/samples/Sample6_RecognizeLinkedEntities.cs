@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizeLinkedEntities
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            IEnumerable<LinkedEntity> entities = client.RecognizeLinkedEntities(input).Value;
+            IEnumerable<LinkedEntity> entities = client.InferEntityLinks(input).Value;
 
             Console.WriteLine($"Extracted {entities.Count()} linked entit{(entities.Count() > 1 ? "ies" : "y")}:");
             foreach (LinkedEntity linkedEntity in entities)

@@ -12,17 +12,17 @@ namespace Azure.AI.TextAnalytics
     /// document, containing a collection of the <see cref="LinkedEntity"/>
     /// objects identified in that document.
     /// </summary>
-    public class RecognizeLinkedEntitiesResult : TextAnalyticsResult
+    public class InferEntityLinksResult : TextAnalyticsResult
     {
         private IReadOnlyCollection<LinkedEntity> _linkedEntities;
 
-        internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, IList<LinkedEntity> linkedEntities)
+        internal InferEntityLinksResult(string id, TextDocumentStatistics statistics, IList<LinkedEntity> linkedEntities)
             : base(id, statistics)
         {
             _linkedEntities = new ReadOnlyCollection<LinkedEntity>(linkedEntities);
         }
 
-        internal RecognizeLinkedEntitiesResult(string id, TextAnalyticsError error)
+        internal InferEntityLinksResult(string id, TextAnalyticsError error)
             : base(id, error)
         {
         }

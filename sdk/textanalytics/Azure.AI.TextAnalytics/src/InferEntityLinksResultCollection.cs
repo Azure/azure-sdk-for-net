@@ -7,13 +7,13 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// Collection of <see cref="RecognizeLinkedEntitiesResult"/> objects corresponding
+    /// Collection of <see cref="InferEntityLinksResult"/> objects corresponding
     /// to a batch of input documents, and annotated with information about the
     /// batch operation.
     /// </summary>
-    public class RecognizeLinkedEntitiesResultCollection : ReadOnlyCollection<RecognizeLinkedEntitiesResult>
+    public class InferEntityLinksResultCollection : ReadOnlyCollection<InferEntityLinksResult>
     {
-        internal RecognizeLinkedEntitiesResultCollection(IList<RecognizeLinkedEntitiesResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
+        internal InferEntityLinksResultCollection(IList<InferEntityLinksResult> list, TextDocumentBatchStatistics statistics, string modelVersion) : base(list)
         {
             Statistics = statistics;
             ModelVersion = modelVersion;

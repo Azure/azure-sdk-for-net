@@ -541,23 +541,23 @@ namespace Azure.AI.TextAnalytics
 
         #region Linked Entities
 
-        public static async Task<RecognizeLinkedEntitiesResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        public static async Task<InferEntityLinksResultCollection> DeserializeLinkedEntityResponseAsync(Stream content, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
             using JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false);
             JsonElement root = json.RootElement;
             return ReadLinkedEntityResultCollection(root, idToIndexMap);
         }
 
-        public static RecognizeLinkedEntitiesResultCollection DeserializeLinkedEntityResponse(Stream content, IDictionary<string, int> idToIndexMap)
+        public static InferEntityLinksResultCollection DeserializeLinkedEntityResponse(Stream content, IDictionary<string, int> idToIndexMap)
         {
             using JsonDocument json = JsonDocument.Parse(content, default);
             JsonElement root = json.RootElement;
             return ReadLinkedEntityResultCollection(root, idToIndexMap);
         }
 
-        private static RecognizeLinkedEntitiesResultCollection ReadLinkedEntityResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
+        private static InferEntityLinksResultCollection ReadLinkedEntityResultCollection(JsonElement root, IDictionary<string, int> idToIndexMap)
         {
-            var collection = new List<RecognizeLinkedEntitiesResult>();
+            var collection = new List<InferEntityLinksResult>();
             if (root.TryGetProperty("documents", out JsonElement documentsValue))
             {
                 foreach (JsonElement documentElement in documentsValue.EnumerateArray())
@@ -568,7 +568,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
+                collection.Add(new InferEntityLinksResult(error.Id, error.Error));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
@@ -576,10 +576,10 @@ namespace Azure.AI.TextAnalytics
             TextDocumentBatchStatistics statistics = ReadDocumentBatchStatistics(root);
             string modelVersion = ReadModelVersion(root);
 
-            return new RecognizeLinkedEntitiesResultCollection(collection, statistics, modelVersion);
+            return new InferEntityLinksResultCollection(collection, statistics, modelVersion);
         }
 
-        private static RecognizeLinkedEntitiesResult ReadLinkedEntityResult(JsonElement documentElement)
+        private static InferEntityLinksResult ReadLinkedEntityResult(JsonElement documentElement)
         {
             List<LinkedEntity> entities = new List<LinkedEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
@@ -590,7 +590,7 @@ namespace Azure.AI.TextAnalytics
                 }
             }
 
-            return new RecognizeLinkedEntitiesResult(
+            return new InferEntityLinksResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
                 entities);

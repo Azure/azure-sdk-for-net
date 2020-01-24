@@ -72,13 +72,13 @@ namespace Azure.AI.TextAnalytics
         #endregion Extract KeyPhrases
 
         #region Linked Entities
-        private static async Task<Response<RecognizeLinkedEntitiesResultCollection>> CreateLinkedEntityResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
+        private static async Task<Response<InferEntityLinksResultCollection>> CreateLinkedEntityResponseAsync(Response response, IDictionary<string, int> idToIndexMap, CancellationToken cancellation)
         {
-            RecognizeLinkedEntitiesResultCollection result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
+            InferEntityLinksResultCollection result = await TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponseAsync(response.ContentStream, idToIndexMap, cancellation).ConfigureAwait(false);
             return Response.FromValue(result, response);
         }
 
-        private static Response<RecognizeLinkedEntitiesResultCollection> CreateLinkedEntityResponse(Response response, IDictionary<string, int> idToIndexMap) =>
+        private static Response<InferEntityLinksResultCollection> CreateLinkedEntityResponse(Response response, IDictionary<string, int> idToIndexMap) =>
             Response.FromValue(TextAnalyticsServiceSerializer.DeserializeLinkedEntityResponse(response.ContentStream, idToIndexMap), response);
 
         #endregion
