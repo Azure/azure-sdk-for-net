@@ -109,7 +109,6 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="other">The NamedEntitySubType with which to compare.</param>
         /// <returns><c>true</c> if the NamedEntitySubType objects are equal; otherwise, <c>false</c>.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(NamedEntitySubType other) => _value == other._value;
 
         /// <summary>
@@ -117,6 +116,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NamedEntitySubType type && Equals(type);
 
         /// <summary>
