@@ -40,6 +40,7 @@ namespace Azure.Core.Testing
         }
 
         public virtual string SanitizeConnectionString(string connectionString) => connectionString;
+        public virtual string SanitizeVariable(string variableName, string environmentVariableValue) => environmentVariableValue;
         public virtual void SanitizeBody(RecordEntryMessage message)
         {
             if (message.Body != null)
@@ -97,6 +98,5 @@ namespace Azure.Core.Testing
                 headers["Content-Length"] = new string[] { sanitizedLength.ToString() };
             }
         }
-
     }
 }

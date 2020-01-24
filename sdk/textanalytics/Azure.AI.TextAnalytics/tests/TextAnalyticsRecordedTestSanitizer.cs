@@ -18,5 +18,15 @@ namespace Azure.Core.Testing
 
             base.SanitizeHeaders(headers);
         }
+
+        public override string SanitizeVariable(string variableName, string environmentVariableValue)
+        {
+            return variableName switch
+            {
+                "TEXT_ANALYTICS_ENDPOINT" => "https://test.cognitiveservices.azure.com/",
+                "TEXT_ANALYTICS_SUBSCRIPTION_KEY" => SanitizeValue,
+                _ => base.SanitizeVariable(variableName, environmentVariableValue)
+            };
+        }
     }
 }

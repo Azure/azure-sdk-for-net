@@ -21,8 +21,8 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private TextAnalyticsClient GetClient()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string endpoint = Recording.GetVariableFromEnvironment("TEXT_ANALYTICS_ENDPOINT");
+            string subscriptionKey = Recording.GetVariableFromEnvironment("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
             var options = Recording.InstrumentClientOptions(new TextAnalyticsClientOptions());
             var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey, options);
