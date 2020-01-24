@@ -19,11 +19,11 @@ namespace Azure.AI.TextAnalytics
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _subscriptionKey;
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
-
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
+
+        private TextAnalyticsSubscriptionKeyCredential _textAnalyticsSubscriptionKey;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -74,10 +74,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="subscriptionKey">The subscription key used to access
-        /// the service.</param>
-        public TextAnalyticsClient(Uri endpoint, string subscriptionKey)
-            : this(endpoint, subscriptionKey, new TextAnalyticsClientOptions())
+        /// <param name="credential">The subscription key used to access
+        /// the service. This will allow you to update the subscription key
+        /// without creating a new client.</param>
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential)
+            : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
         }
 
@@ -87,19 +88,20 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="subscriptionKey">The subscription key used to access
-        /// the service.</param>
+        /// <param name="credential">The subscription key used to access
+        /// the service. This will allow you to update the subscription key
+        /// without creating a new client.</param>
         /// <param name="options"><see cref="TextAnalyticsClientOptions"/> that allow
         /// callers to configure how requests are sent to the service.</param>
-        public TextAnalyticsClient(Uri endpoint, string subscriptionKey, TextAnalyticsClientOptions options)
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(subscriptionKey, nameof(subscriptionKey));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _subscriptionKey = subscriptionKey;
             _apiVersion = options.GetVersionString();
+            _textAnalyticsSubscriptionKey = credential;
             _pipeline = HttpPipelineBuilder.Build(options);
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
@@ -1739,7 +1741,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
 
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _textAnalyticsSubscriptionKey.SubscriptionKey);
 
             return request;
         }
@@ -1756,7 +1758,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
 
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
+            request.Headers.Add("Ocp-Apim-Subscription-Key", _textAnalyticsSubscriptionKey.SubscriptionKey);
 
             return request;
         }
