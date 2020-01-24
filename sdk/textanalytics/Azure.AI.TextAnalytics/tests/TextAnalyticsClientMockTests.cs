@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Transport = transport
             };
 
-            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), s_subscriptionKey, options));
+            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), new TextAnalyticsSubscriptionKeyCredential(s_subscriptionKey), options));
 
             return client;
         }

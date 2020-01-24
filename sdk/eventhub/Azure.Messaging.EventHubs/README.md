@@ -37,7 +37,7 @@ If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs -Version 5.0.0
+Install-Package Azure.Messaging.EventHubs
 ```
 
 ### Obtain a connection string

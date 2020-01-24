@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Transport = new MockTransport(),
             };
 
-            Client = InstrumentClient(new TextAnalyticsClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
+             Client = InstrumentClient(new TextAnalyticsClient(new Uri("http://localhost"), new DefaultAzureCredential(), options));
         }
 
         public TextAnalyticsClient Client { get; set; }
@@ -30,9 +30,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var uri = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, "subscriptionKey"));
-            Assert.Throws<ArgumentException>(() => new TextAnalyticsClient(uri, ""));
-            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (string)null));
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new TextAnalyticsSubscriptionKeyCredential("subscriptionKey")));
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (TextAnalyticsSubscriptionKeyCredential)null));
             Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (TokenCredential)null));
             Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new DefaultAzureCredential()));
         }
