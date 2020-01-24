@@ -9,7 +9,7 @@
 /sdk/ @AlexGhiondea
 
 # Core
-/sdk/core/ @pakrym
+/sdk/core/ @pakrym @KrzysztofCwalina
 
 # Service teams
 /sdk/appconfiguration/ @annelo-msft @AlexanderSher
