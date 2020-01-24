@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string subscriptionKey = Recording.GetVariableFromEnvironment("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
             var options = Recording.InstrumentClientOptions(new TextAnalyticsClientOptions());
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey, options);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey), options);
 
             return InstrumentClient(client);
         }
