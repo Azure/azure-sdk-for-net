@@ -17,7 +17,7 @@ What is the expected behavior?
 What is the actual behavior?
 
 **To Reproduce**
-Steps to reproduce the behavior (include code snippet, screenshot, or any additional information that might help us reproduce the issue)
+Steps to reproduce the behavior (include a code snippet, screenshot, or any additional information that might help us reproduce the issue)
 
 1.
 2.
