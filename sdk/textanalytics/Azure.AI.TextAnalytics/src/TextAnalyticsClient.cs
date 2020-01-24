@@ -380,9 +380,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in input text, and categorize those entities into types
         /// such as person, location, or organization.  For more information on
         /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -438,9 +438,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in input text, and categorize those entities into types
         /// such as person, location, or organization.  For more information on
         /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -656,7 +656,7 @@ namespace Azure.AI.TextAnalytics
         /// or mixed sentiment contained in the input text, as well as a score
         /// indicating the model's confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -711,7 +711,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the input text, as well as a score indicating the model's
         /// confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -913,7 +913,7 @@ namespace Azure.AI.TextAnalytics
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -967,7 +967,7 @@ namespace Azure.AI.TextAnalytics
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1167,7 +1167,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1224,7 +1224,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1436,7 +1436,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input text, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1492,7 +1492,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input text, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1548,7 +1548,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input strings, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1575,7 +1575,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input strings, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1602,7 +1602,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1649,7 +1649,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
