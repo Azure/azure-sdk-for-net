@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
@@ -2035,6 +2036,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
         /// <summary>
         /// The <see cref="ReadAsync(HttpRange, DataLakeRequestConditions?, Boolean, CancellationToken)"/>
         /// operation downloads a file from the service, including its metadata
@@ -2105,5 +2107,249 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Read Data
+
+        #region Download Data
+        /// <summary>
+        /// The <see cref="DownloadTo(Stream, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads an entire file using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// the download of this file.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            Stream destination,
+            DataLakeRequestConditions conditions = default,
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobRequestConditions blobRequestConditions = conditions.ToBlobRequestConditions();
+
+                return _blockBlobClient.DownloadTo(
+                    destination,
+                    blobRequestConditions,
+                    //progressHandler, // TODO: #8506
+                    transferOptions: transferOptions,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadTo(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads an entire file using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// the download of this file.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            string path,
+            DataLakeRequestConditions conditions = default,
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobRequestConditions blobRequestConditions = conditions.ToBlobRequestConditions();
+
+                return DownloadTo(
+                    path,
+                    conditions,
+                    //progressHandler, // TODO: #8506
+                    transferOptions: transferOptions,
+                    cancellationToken: cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(Stream, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads an entire file using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// the download of this file.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(
+            Stream destination,
+            DataLakeRequestConditions conditions = default,
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobRequestConditions blobRequestConditions = conditions.ToBlobRequestConditions();
+
+                return await _blockBlobClient.DownloadToAsync(
+                    destination,
+                    blobRequestConditions,
+                    //progressHandler, // TODO: #8506
+                    transferOptions: transferOptions,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// operation downloads an entire file using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// the download of this file.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DownloadToAsync(
+            string path,
+            DataLakeRequestConditions conditions = default,
+            //IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+
+            try
+            {
+                scope.Start();
+
+                BlobRequestConditions blobRequestConditions = conditions.ToBlobRequestConditions();
+
+                return await _blockBlobClient.DownloadToAsync(
+                    path,
+                    blobRequestConditions,
+                    //progressHandler, // TODO: #8506
+                    transferOptions: transferOptions,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Download Data
     }
 }
