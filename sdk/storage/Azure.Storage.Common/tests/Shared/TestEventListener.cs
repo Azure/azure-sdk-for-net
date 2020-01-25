@@ -47,7 +47,9 @@ namespace Azure.Storage.Test
         /// </summary>
         public void OutputEventsForTest()
         {
-            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed ||
+                TestContext.CurrentContext.Test.Name.Contains("UploadStreamAsync_LargeBlobs") ||
+                TestContext.CurrentContext.Test.Name.Contains("UploadFileAsync_LargeBlobs"))
             {
                 TestContext.Out.WriteLine(_eventBuffer.ToString());
             }
