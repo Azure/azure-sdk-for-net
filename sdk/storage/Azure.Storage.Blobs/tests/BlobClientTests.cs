@@ -560,7 +560,7 @@ namespace Azure.Storage.Blobs.Test
                 TestContext.Progress.WriteLine($"Start DownloadAsync: {GetThreads()}");
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count)).ConfigureAwait(false);
-                TestContext.Progress.WriteLine($"Start EndAsync: {GetThreads()}");
+                TestContext.Progress.WriteLine($"End DownloadAsync: {GetThreads()}");
 
 
                 actualStream.Seek(0, SeekOrigin.Begin);

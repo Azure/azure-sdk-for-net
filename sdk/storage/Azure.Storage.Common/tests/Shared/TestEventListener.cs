@@ -51,7 +51,7 @@ namespace Azure.Storage.Test
                 TestContext.CurrentContext.Test.Name.Contains("UploadStreamAsync_LargeBlobs") ||
                 TestContext.CurrentContext.Test.Name.Contains("UploadFileAsync_LargeBlobs"))
             {
-                TestContext.Out.WriteLine(_eventBuffer.ToString());
+                TestContext.Progress.WriteLine(_eventBuffer.ToString());
             }
         }
 
