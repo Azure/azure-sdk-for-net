@@ -482,7 +482,7 @@ namespace Azure.Storage.Blobs.Test
                 progressHandler: default,
                 singleUploadThreshold: singleBlockThreshold,
                 transferOptions: transferOptions,
-                async: true);
+                async: true).ConfigureAwait(false);
             TestContext.Progress.WriteLine($"End UploadAsync: {GetThreads()}");
 
             await DownloadAndAssertAsync(stream, blob);
@@ -522,7 +522,7 @@ namespace Azure.Storage.Blobs.Test
                     progressHandler: default,
                     singleUploadThreshold: singleBlockThreshold,
                     transferOptions: transferOptions,
-                    async: true);
+                    async: true).ConfigureAwait(false);
                 TestContext.Progress.WriteLine($"End UploadAsync: {GetThreads()}");
 
 
@@ -543,7 +543,7 @@ namespace Azure.Storage.Blobs.Test
             return $"Worker: {worker}, Completion: {comp}, Process: {Process.GetCurrentProcess().Threads.Count}";
         }
 
-        private static async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
+        private async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
         {
             var actual = new byte[Constants.DefaultBufferSize];
             using var actualStream = new MemoryStream(actual);
@@ -564,6 +564,7 @@ namespace Azure.Storage.Blobs.Test
                 actualStream.Seek(0, SeekOrigin.Begin);
 
                 TestContext.Progress.WriteLine($"Start CopyToAsync: {GetThreads()}");
+                OutputEventsForTest();
                 await download.Content.CopyToAsync(actualStream).ConfigureAwait(false);
                 TestContext.Progress.WriteLine($"End CopyToAsync: {GetThreads()}");
 

@@ -52,6 +52,7 @@ namespace Azure.Storage.Test
                 TestContext.CurrentContext.Test.Name.Contains("UploadFileAsync_LargeBlobs"))
             {
                 TestContext.Progress.WriteLine(_eventBuffer.ToString());
+                _eventBuffer = new StringBuilder();
             }
         }
 
