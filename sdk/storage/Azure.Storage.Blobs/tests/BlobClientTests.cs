@@ -547,12 +547,14 @@ namespace Azure.Storage.Blobs.Test
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
                 actualStream.Seek(0, SeekOrigin.Begin);
+
                 TestContext.Progress.WriteLine("Start CopyToAsync");
-                await download.Value.Content.CopyToAsync(actualStream);
+                await download.Value.Content.CopyToAsync(actualStream).ConfigureAwait(false);
                 TestContext.Progress.WriteLine("End CopyToAsync");
 
                 var buffer = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
+
                 TestContext.Progress.WriteLine("Start read into buffer");
                 await stream.ReadAsync(buffer, 0, count);
                 TestContext.Progress.WriteLine("End read into buffer");
@@ -608,6 +610,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            TestContext.Progress.WriteLine(IsAsync ? "Async" : "Sync");
             await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
 
@@ -639,6 +642,7 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(257 * Constants.MB, null)]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
+            TestContext.Progress.WriteLine(IsAsync ? "Async" : "Sync");
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
         }
