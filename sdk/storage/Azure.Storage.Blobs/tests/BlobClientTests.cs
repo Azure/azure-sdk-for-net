@@ -558,15 +558,13 @@ namespace Azure.Storage.Blobs.Test
                 var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
 
                 TestContext.Progress.WriteLine($"Start DownloadAsync: {GetThreads()}");
-
-                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count)).ConfigureAwait(false);
+                using BlobDownloadInfo download = await blob.DownloadAsync(new HttpRange(startIndex, count)).ConfigureAwait(false);
                 TestContext.Progress.WriteLine($"End DownloadAsync: {GetThreads()}");
-
 
                 actualStream.Seek(0, SeekOrigin.Begin);
 
                 TestContext.Progress.WriteLine($"Start CopyToAsync: {GetThreads()}");
-                await download.Value.Content.CopyToAsync(actualStream).ConfigureAwait(false);
+                await download.Content.CopyToAsync(actualStream).ConfigureAwait(false);
                 TestContext.Progress.WriteLine($"End CopyToAsync: {GetThreads()}");
 
                 var buffer = new byte[count];
