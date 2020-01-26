@@ -10,6 +10,7 @@ using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.Core.Pipeline
 {
@@ -84,12 +85,15 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
+                        TestContext.Progress.Write($"RetriableStream:StartReadAsync:{offset}");
                         var result = await _currentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+                        TestContext.Progress.Write($"RetriableStream:EndReadAsync:{offset}");
                         _position += result;
                         return result;
                     }
                     catch (Exception e)
                     {
+                        TestContext.Progress.Write($"RetriableStream:Exception:{e}");
                         await RetryAsync(e, true).ConfigureAwait(false);
                     }
                 }
@@ -97,8 +101,10 @@ namespace Azure.Core.Pipeline
 
             private async Task RetryAsync(Exception exception, bool async)
             {
+                TestContext.Progress.Write($"RetriableStream:RetryAsync:{exception}");
                 if (!_responseClassifier.IsRetriableException(exception))
                 {
+                    TestContext.Progress.Write($"RetriableStream:NotRetriable:{exception}");
                     ExceptionDispatchInfo.Capture(exception).Throw();
                 }
 
@@ -115,8 +121,9 @@ namespace Azure.Core.Pipeline
                 {
                     throw new AggregateException($"Retry failed after {_retryCount} tries", _exceptions);
                 }
-
+                TestContext.Progress.Write($"RetriableStream:StartEnsureStream");
                 _currentStream = EnsureStream(async ? (await _asyncStreamFactory(_position).ConfigureAwait(false)) : _streamFactory(_position));
+                TestContext.Progress.Write($"RetriableStream:EndEnsureStream");
             }
 
             public override int Read(byte[] buffer, int offset, int count)
@@ -125,13 +132,16 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
+                        TestContext.Progress.Write($"RetriableStream:StartRead:{offset}");
                         var result = _currentStream.Read(buffer, offset, count);
+                        TestContext.Progress.Write($"RetriableStream:EndRead:{offset}");
                         _position += result;
                         return result;
 
                     }
                     catch (Exception e)
                     {
+                        TestContext.Progress.Write($"RetriableStream:Exception:{e}");
                         Task task = RetryAsync(e, false);
                         Debug.Assert(task.IsCompleted);
                         task.GetAwaiter().GetResult();
