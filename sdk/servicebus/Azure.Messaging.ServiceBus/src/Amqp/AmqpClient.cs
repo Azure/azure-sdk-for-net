@@ -285,10 +285,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
+                //var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+                //using AmqpMessage request = MessageConverterEH.CreateEventHubPropertiesRequest(EntityName, token);
+                //request.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = token;
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.PeekMessageOperation,
                         TimeSpan.FromSeconds(100),
                         null);
+                var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = token;
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[AmqpManagement.ResourceNameKey] = EntityName;
+                //amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[AmqpManagement.ResourceTypeKey] = AmqpManagement.EventHubResourceTypeValue;
+
+
                 await consumer.ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, TimeSpan.FromSeconds(10))).ConfigureAwait(false);
 
                 if (consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
@@ -306,9 +315,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var messages = new List<ServiceBusMessage>();
 
-
-                var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-
                 //using AmqpMessage request = AmqpMessage.Create();
                     //MessageConverterEH.CreatePartitionPropertiesRequest(EntityName, partitionId, token);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -321,18 +327,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Send the request and wait for the response.
 
-                using AmqpMessage responseAmqpMessage = await link.RequestAsync(
-                    amqpRequestMessage.AmqpMessage,
-                    TimeSpan.FromSeconds(60))//tryTimeout.CalculateRemaining(stopWatch.Elapsed))
-                    .ConfigureAwait(false);
-
-                //var responseAmqpMessage = await Task.Factory.FromAsync(
-                //(c, s) => link.BeginRequest(
+                //using AmqpMessage responseAmqpMessage = await link.RequestAsync(
                 //    amqpRequestMessage.AmqpMessage,
-                //    TimeSpan.FromSeconds(30),
-                //    c, s),
-                //(a) => link.EndRequest(a),
-                //this).ConfigureAwait(false);
+                //    TimeSpan.FromSeconds(60))//tryTimeout.CalculateRemaining(stopWatch.Elapsed))
+                //    .ConfigureAwait(false);
+                ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+
+                var responseAmqpMessage = await Task.Factory.FromAsync(
+                (c, s) => link.BeginRequest(
+                    amqpRequestMessage.AmqpMessage,
+                    transactionId,
+                    TimeSpan.FromSeconds(30),
+                    c, s),
+                (a) => link.EndRequest(a),
+                this).ConfigureAwait(false);
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 //stopWatch.Stop();
