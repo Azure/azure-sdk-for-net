@@ -545,7 +545,7 @@ namespace Azure.Storage.Blobs.Test
                 var startIndex = i;
                 var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
 
-                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
+                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count)).ConfigureAwait(false);
                 actualStream.Seek(0, SeekOrigin.Begin);
 
                 TestContext.Progress.WriteLine("Start CopyToAsync");
