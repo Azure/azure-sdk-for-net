@@ -547,15 +547,22 @@ namespace Azure.Storage.Blobs.Test
 
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
                 actualStream.Seek(0, SeekOrigin.Begin);
+                TestContext.Progress.WriteLine("Start CopyToAsync");
                 await download.Value.Content.CopyToAsync(actualStream);
+                TestContext.Progress.WriteLine("End CopyToAsync");
 
                 var buffer = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
+                TestContext.Progress.WriteLine("Start read into buffer");
                 await stream.ReadAsync(buffer, 0, count);
+                TestContext.Progress.WriteLine("End read into buffer");
 
+                TestContext.Progress.WriteLine("Start AssertSequenceEqual");
                 TestHelper.AssertSequenceEqual(
                     buffer,
                     actual.AsSpan(0, count).ToArray());
+                TestContext.Progress.WriteLine("End AssertSequenceEqual");
+
             }
         }
 
