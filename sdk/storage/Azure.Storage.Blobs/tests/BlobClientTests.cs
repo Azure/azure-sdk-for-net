@@ -472,6 +472,7 @@ namespace Azure.Storage.Blobs.Test
             var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
+            TestContext.Progress.WriteLine($"Start UploadAsync: {GetThreads()}");
             await blob.StagedUploadAsync(
                 content: stream,
                 blobHttpHeaders: default,
@@ -481,6 +482,7 @@ namespace Azure.Storage.Blobs.Test
                 singleUploadThreshold: singleBlockThreshold,
                 transferOptions: transferOptions,
                 async: true);
+            TestContext.Progress.WriteLine($"End UploadAsync: {GetThreads()}");
 
             await DownloadAndAssertAsync(stream, blob);
         }
@@ -510,6 +512,7 @@ namespace Azure.Storage.Blobs.Test
                 var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
                 blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
+                TestContext.Progress.WriteLine($"Start UploadAsync: {GetThreads()}");
                 await blob.StagedUploadAsync(
                     path: path,
                     blobHttpHeaders: default,
@@ -519,6 +522,8 @@ namespace Azure.Storage.Blobs.Test
                     singleUploadThreshold: singleBlockThreshold,
                     transferOptions: transferOptions,
                     async: true);
+                TestContext.Progress.WriteLine($"End UploadAsync: {GetThreads()}");
+
 
                 await DownloadAndAssertAsync(stream, blob);
             }
@@ -529,6 +534,12 @@ namespace Azure.Storage.Blobs.Test
                     File.Delete(path);
                 }
             }
+        }
+
+        private static string GetThreads()
+        {
+            ThreadPool.GetAvailableThreads(out var worker, out var comp);
+            return $"Worker: {worker}, Completion: {comp}";
         }
 
         private static async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
@@ -545,26 +556,30 @@ namespace Azure.Storage.Blobs.Test
                 var startIndex = i;
                 var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
 
+                TestContext.Progress.WriteLine($"Start DownloadAsync: {GetThreads()}");
+
                 Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count)).ConfigureAwait(false);
+                TestContext.Progress.WriteLine($"Start EndAsync: {GetThreads()}");
+
+
                 actualStream.Seek(0, SeekOrigin.Begin);
 
-                TestContext.Progress.WriteLine("Start CopyToAsync");
+                TestContext.Progress.WriteLine($"Start CopyToAsync: {GetThreads()}");
                 await download.Value.Content.CopyToAsync(actualStream).ConfigureAwait(false);
-                TestContext.Progress.WriteLine("End CopyToAsync");
+                TestContext.Progress.WriteLine($"End CopyToAsync: {GetThreads()}");
 
                 var buffer = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
 
-                TestContext.Progress.WriteLine("Start read into buffer");
+                TestContext.Progress.WriteLine($"Start read into buffer: {GetThreads()}");
                 await stream.ReadAsync(buffer, 0, count);
-                TestContext.Progress.WriteLine("End read into buffer");
+                TestContext.Progress.WriteLine($"End read into buffer: {GetThreads()}");
 
-                TestContext.Progress.WriteLine("Start AssertSequenceEqual");
+                TestContext.Progress.WriteLine($"Start AssertSequenceEqual: {GetThreads()}");
                 TestHelper.AssertSequenceEqual(
                     buffer,
                     actual.AsSpan(0, count).ToArray());
-                TestContext.Progress.WriteLine("End AssertSequenceEqual");
-
+                TestContext.Progress.WriteLine($"End AssertSequenceEqual: {GetThreads()}");
             }
         }
 
