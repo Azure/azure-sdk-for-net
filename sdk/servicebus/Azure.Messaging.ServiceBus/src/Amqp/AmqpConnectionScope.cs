@@ -123,7 +123,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The name of the Event Hub to which the scope is associated.
         /// </summary>
         ///
-        private string EventHubName { get; }
+        private string EntityName { get; }
 
         /// <summary>
         ///   The provider to use for obtaining a token for authorization with the Event Hubs service.
@@ -173,7 +173,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ValidateTransport(transport);
 
             ServiceEndpoint = serviceEndpoint;
-            EventHubName = eventHubName;
+            EntityName = eventHubName;
             Transport = transport;
             Proxy = proxy;
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential, serviceEndpoint.ToString()), OperationCancellationSource.Token);
@@ -228,8 +228,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Opens an AMQP link for use with consumer operations.
         /// </summary>
         ///
-        /// <param name="consumerGroup">The name of the consumer group in the context of which events should be received.</param>
-        /// <param name="partitionId">The identifier of the Event Hub partition from which events should be received.</param>
         /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
@@ -239,8 +237,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A link for use with consumer operations.</returns>
         ///
-        public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(string consumerGroup,
-                                                                           string partitionId,
+        public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(
+            //string consumerGroup,
+                                                                           //string partitionId,
                                                                            EventPosition eventPosition,
                                                                            TimeSpan timeout,
                                                                            uint prefetchCount,
@@ -248,13 +247,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                                                            bool trackLastEnqueuedEventProperties,
                                                                            CancellationToken cancellationToken)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            //Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var consumerEndpoint = new Uri(ServiceEndpoint, string.Format(ConsumerPathSuffixMask, EventHubName, consumerGroup, partitionId));
+            var consumerEndpoint = new Uri(ServiceEndpoint, EntityName);
+
+//consumerGroup, partitionId));
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -296,7 +297,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var path = (string.IsNullOrEmpty(partitionId)) ? EventHubName : string.Format(PartitionProducerPathSuffixMask, EventHubName, partitionId);
+            var path = (string.IsNullOrEmpty(partitionId)) ? EntityName : string.Format(PartitionProducerPathSuffixMask, EntityName, partitionId);
             var producerEndpoint = new Uri(ServiceEndpoint, path);
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
@@ -496,8 +497,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the link.
 
-                var filters = new FilterSet();
-                filters.Add(AmqpFilter.ConsumerFilterName, AmqpFilter.CreateConsumerFilter(AmqpFilter.BuildFilterExpression(eventPosition)));
+                //var filters = new FilterSet();
+                //filters.Add(AmqpFilter.ConsumerFilterName, AmqpFilter.CreateConsumerFilter(AmqpFilter.BuildFilterExpression(eventPosition)));
 
                 var linkSettings = new AmqpLinkSettings
                 {
@@ -505,11 +506,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     TotalLinkCredit = prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = SettleMode.SettleOnSend,
-                    Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
+                    Source = new Source { Address = endpoint.AbsolutePath, /*FilterSet = filters */},
                     Target = new Target { Address = Guid.NewGuid().ToString() }
                 };
 
-                linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.ConsumerGroup);
+                linkSettings.AddProperty(AmqpProperty.EntityType, 0);//(int)AmqpProperty.Entity.ConsumerGroup);
 
                 if (ownerLevel.HasValue)
                 {
@@ -677,7 +678,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (!ActiveLinks.TryAdd(link, authorizationRefreshTimer))
             {
-                throw new ServiceBusException(true, EventHubName, Resources1.CouldNotCreateLink);
+                throw new ServiceBusException(true, EntityName, Resources1.CouldNotCreateLink);
             }
 
             // When the link is closed, stop refreshing authorization and remove it from the
@@ -750,7 +751,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             return async _ =>
             {
-                EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshStart(EventHubName, endpoint.AbsoluteUri);
+                EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshStart(EntityName, endpoint.AbsoluteUri);
                 var refreshTimer = refreshTimerFactory();
 
                 try
@@ -777,7 +778,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 catch (Exception ex)
                 {
-                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshError(EventHubName, endpoint.AbsoluteUri, ex.Message);
+                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshError(EntityName, endpoint.AbsoluteUri, ex.Message);
 
                     // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
                     // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
@@ -787,7 +788,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 finally
                 {
-                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshComplete(EventHubName, endpoint.AbsoluteUri);
+                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshComplete(EntityName, endpoint.AbsoluteUri);
                 }
             };
         }

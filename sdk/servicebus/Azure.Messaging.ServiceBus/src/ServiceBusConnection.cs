@@ -371,8 +371,6 @@ namespace Azure.Messaging.ServiceBus
         ///   When <c>null</c>, consumers are created as non-exclusive.
         /// </summary>
         ///
-        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
-        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
@@ -381,8 +379,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
-        internal virtual TransportConsumer CreateTransportConsumer(string consumerGroup,
-                                                                   string partitionId,
+        internal virtual TransportConsumer CreateTransportConsumer(
+            //string consumerGroup,
+            //                                                       string partitionId,
                                                                    EventPosition eventPosition,
                                                                    ServiceBusRetryPolicy retryPolicy,
                                                                    bool trackLastEnqueuedEventProperties = true,
@@ -390,10 +389,10 @@ namespace Azure.Messaging.ServiceBus
                                                                    uint? prefetchCount = default)
         {
             //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+            //Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(consumerGroup, partitionId, eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+            return InnerClient.CreateConsumer(eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
         }
 
         /// <summary>

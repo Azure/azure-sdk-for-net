@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -560,6 +561,24 @@ namespace Azure.Messaging.ServiceBus.Consumer
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
+            long fromSequenceNumber,
+            int messageCount = 1,
+            CancellationToken cancellationToken = default)
+        {
+            var consumer = Connection.CreateTransportConsumer(
+                EventPosition.Latest,
+                RetryPolicy);
+            return await consumer.ReceiveAsync(messageCount, TimeSpan.FromSeconds(100), cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         ///   Closes the consumer.
         /// </summary>
         ///
@@ -752,7 +771,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
 
             try
             {
-                transportConsumer = Connection.CreateTransportConsumer(ConsumerGroup, partitionId, startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, ownerLevel);
+                transportConsumer = Connection.CreateTransportConsumer(startingPosition, RetryPolicy, trackLastEnqueuedEventProperties, ownerLevel);
 
                 if (!ActiveConsumers.TryAdd(publisherId, transportConsumer))
                 {

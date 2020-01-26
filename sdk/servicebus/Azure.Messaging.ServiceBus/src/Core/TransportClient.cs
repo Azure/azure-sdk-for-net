@@ -91,8 +91,6 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   When <c>null</c>, consumers are created as non-exclusive.
         /// </summary>
         ///
-        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
-        /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
@@ -101,8 +99,9 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
-        public abstract TransportConsumer CreateConsumer(string consumerGroup,
-                                                         string partitionId,
+        public abstract TransportConsumer CreateConsumer(
+            //string consumerGroup,
+            //                                             string partitionId,
                                                          EventPosition eventPosition,
                                                          ServiceBusRetryPolicy retryPolicy,
                                                          bool trackLastEnqueuedEventProperties,
