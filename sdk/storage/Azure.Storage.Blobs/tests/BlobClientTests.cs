@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -539,7 +540,7 @@ namespace Azure.Storage.Blobs.Test
         private static string GetThreads()
         {
             ThreadPool.GetAvailableThreads(out var worker, out var comp);
-            return $"Worker: {worker}, Completion: {comp}";
+            return $"Worker: {worker}, Completion: {comp}, Process: {Process.GetCurrentProcess().Threads.Count}";
         }
 
         private static async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
