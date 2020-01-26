@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Consumer;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -27,6 +28,8 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </value>
         ///
         public virtual bool IsClosed { get; }
+
+        public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
 
         /// <summary>
         ///   The most recent event received from the Event Hubs service by this consumer instance.

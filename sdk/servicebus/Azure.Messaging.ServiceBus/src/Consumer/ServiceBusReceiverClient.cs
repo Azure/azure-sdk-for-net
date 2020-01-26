@@ -579,6 +579,27 @@ namespace Azure.Messaging.ServiceBus.Consumer
         }
 
         /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+            long fromSequenceNumber,
+            int messageCount = 1,
+            string sessionId = null,
+            CancellationToken cancellationToken = default)
+        {
+            var consumer = Connection.CreateTransportConsumer(
+                EventPosition.Latest,
+                RetryPolicy);
+            return await Connection.PeekAsync(consumer, fromSequenceNumber, messageCount, sessionId, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        /// <summary>
         ///   Closes the consumer.
         /// </summary>
         ///

@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   types.
         /// </summary>
         ///
-        private AmqpMessageConverterNew MessageConverter { get; }
+        private AmqpMessageConverterNew MessageConverterEH { get; }
 
         /// <summary>
         ///   The AMQP connection scope responsible for managing transport constructs for this instance.
@@ -156,7 +156,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 EntityName = entityName;
                 Credential = credential;
-                MessageConverter = messageConverter ?? new AmqpMessageConverterNew();
+                MessageConverterEH = messageConverter ?? new AmqpMessageConverterNew();
                 ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, entityName, credential, clientOptions.TransportType, clientOptions.Proxy);
 
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -207,7 +207,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // Create the request message and the management link.
 
                         var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                        using AmqpMessage request = MessageConverter.CreateEventHubPropertiesRequest(EntityName, token);
+                        using AmqpMessage request = MessageConverterEH.CreateEventHubPropertiesRequest(EntityName, token);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.Elapsed))).ConfigureAwait(false);
@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // Process the response.
 
                         AmqpError.ThrowIfErrorResponse(response, EntityName);
-                        return MessageConverter.CreateEventHubPropertiesFromResponse(response);
+                        return MessageConverterEH.CreateEventHubPropertiesFromResponse(response);
                     }
                     catch (Exception ex)
                     {
@@ -270,6 +270,110 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="consumer"></param>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+            TransportConsumer consumer,
+            long fromSequenceNumber, int messageCount = 1, string sessionId = null, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                        ManagementConstants.Operations.PeekMessageOperation,
+                        TimeSpan.FromSeconds(100),
+                        null);
+                await consumer.ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, TimeSpan.FromSeconds(10))).ConfigureAwait(false);
+
+                if (consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+                {
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                }
+
+                amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber;
+                amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+
+                if (!string.IsNullOrWhiteSpace(sessionId))
+                {
+                    amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
+                }
+
+                var messages = new List<ServiceBusMessage>();
+
+
+                var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+
+                //using AmqpMessage request = AmqpMessage.Create();
+                    //MessageConverterEH.CreatePartitionPropertiesRequest(EntityName, partitionId, token);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                var link = await ManagementLink.GetOrCreateAsync(
+                    UseMinimum(ConnectionScope.SessionTimeout,
+                    TimeSpan.FromSeconds(60)))//tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
+                    .ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                // Send the request and wait for the response.
+
+                using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+                    amqpRequestMessage.AmqpMessage,
+                    TimeSpan.FromSeconds(60))//tryTimeout.CalculateRemaining(stopWatch.Elapsed))
+                    .ConfigureAwait(false);
+
+                //var responseAmqpMessage = await Task.Factory.FromAsync(
+                //(c, s) => link.BeginRequest(
+                //    amqpRequestMessage.AmqpMessage,
+                //    TimeSpan.FromSeconds(30),
+                //    c, s),
+                //(a) => link.EndRequest(a),
+                //this).ConfigureAwait(false);
+
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                //stopWatch.Stop();
+                var amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+                // Process the response.
+
+                AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
+                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                {
+                    ServiceBusMessage message = null;
+                    var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                    foreach (AmqpMap entry in messageList)
+                    {
+                        var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
+                        var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                        message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                        messages.Add(message);
+                    }
+
+                    if (message != null)
+                    {
+                        //this.LastPeekedSequenceNumber = message.SystemProperties.SequenceNumber;
+                    }
+
+                    return messages;
+                }
+
+                if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
+                    (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+                {
+                    return messages;
+                }
+                throw new Exception();
+                //throw amqpResponseMessage.ToMessagingContractException();
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+                //throw AmqpExceptionHelper.GetClientException(exception);
+            }
+        }
 
 
         /// <summary>
@@ -311,7 +415,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // Create the request message and the management link.
 
                         token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                        using AmqpMessage request = MessageConverter.CreatePartitionPropertiesRequest(EntityName, partitionId, token);
+                        using AmqpMessage request = MessageConverterEH.CreatePartitionPropertiesRequest(EntityName, partitionId, token);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.Elapsed))).ConfigureAwait(false);
@@ -326,7 +430,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // Process the response.
 
                         AmqpError.ThrowIfErrorResponse(response, EntityName);
-                        return MessageConverter.CreatePartitionPropertiesFromResponse(response);
+                        return MessageConverterEH.CreatePartitionPropertiesFromResponse(response);
                     }
                     catch (Exception ex)
                     {
@@ -394,7 +498,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 EntityName,
                 partitionId,
                 ConnectionScope,
-                MessageConverter,
+                MessageConverterEH,
                 retryPolicy
             );
         }

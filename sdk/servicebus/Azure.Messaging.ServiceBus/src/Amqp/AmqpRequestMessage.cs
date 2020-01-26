@@ -17,6 +17,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             this.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.Operation] = operation;
             this.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Properties.ServerTimeout] = (uint)timeout.TotalMilliseconds;
             this.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Properties.TrackingId] = trackingId ?? Guid.NewGuid().ToString();
+
+            //var request = AmqpMessage.Create();
+            //request.ApplicationProperties = new ApplicationProperties();
+            //request.ApplicationProperties.Map[AmqpManagement.ResourceNameKey] = eventHubName;
+            //request.ApplicationProperties.Map[AmqpManagement.OperationKey] = AmqpManagement.ReadOperationValue;
+            //request.ApplicationProperties.Map[AmqpManagement.ResourceTypeKey] = AmqpManagement.EventHubResourceTypeValue;
+            //request.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = managementAuthorizationToken;
         }
 
         public AmqpMessage AmqpMessage { get; }

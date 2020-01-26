@@ -92,6 +92,22 @@ namespace Microsoft.Azure.Template.Tests
             }
         }
 
+        [Test]
+        public async Task Peek()
+        {
+            var sender = new ServiceBusSenderClient(connString, "josh");
+            await sender.SendAsync(GetMessages(10));
+
+            var receiver = new ServiceBusReceiverClient(connString, "josh");
+            var msgs = await receiver.PeekAsync(1, 10);
+            int ct = 0;
+            foreach (ServiceBusMessage msg in msgs)
+            {
+                var text = Encoding.Default.GetString(msg.Body);
+                TestContext.Progress.WriteLine($"#{++ct} - {msg.Label}: {text}");
+            }
+        }
+
 
         private ServiceBusMessage GetMessage()
         {

@@ -101,11 +101,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private AmqpConnectionScope ConnectionScope { get; }
 
-        /// <summary>
-        ///   The AMQP link intended for use with receiving operations.
-        /// </summary>
-        ///
-        private FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; }
+        ///// <summary>
+        /////   The AMQP link intended for use with receiving operations.
+        ///// </summary>
+        /////
+        //internal FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
@@ -233,7 +233,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             {
                                 //link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                                 receivedEvents.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
-                                //message.Dispose();
+                                message.Dispose();
                             }
 
                             receivedEventCount = receivedEvents.Count;

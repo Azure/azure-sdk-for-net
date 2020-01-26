@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
@@ -12,6 +13,7 @@ using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Consumer;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -336,6 +338,21 @@ namespace Azure.Messaging.ServiceBus
         internal virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                                ServiceBusRetryPolicy retryPolicy,
                                                                                CancellationToken cancellationToken = default) => InnerClient.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationToken);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="consumer"></param>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+            TransportConsumer consumer,
+            long fromSequenceNumber, int messageCount = 1, string sessionId = null, CancellationToken cancellationToken = default) =>
+            await InnerClient.PeekAsync(consumer, fromSequenceNumber, messageCount, sessionId, cancellationToken)
+            .ConfigureAwait(false);
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Consumer;
@@ -60,6 +61,19 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
                                                                               ServiceBusRetryPolicy retryPolicy,
                                                                               CancellationToken cancellationToken);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="consumer"></param>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+            TransportConsumer consumer,
+            long fromSequenceNumber, int messageCount = 1, string sessionId = null, CancellationToken cancellationToken = default);
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,

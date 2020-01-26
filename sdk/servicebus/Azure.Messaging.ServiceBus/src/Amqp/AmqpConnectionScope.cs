@@ -430,8 +430,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var linkSettings = new AmqpLinkSettings();
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.Elapsed).TotalMilliseconds);
+                var entityPath = EntityName + '/' + AmqpClientConstants.ManagementAddress;
 
-                var link = new RequestResponseAmqpLink(AmqpManagement.LinkType, session, AmqpManagement.Address, linkSettings.Properties);
+                var link = new RequestResponseAmqpLink(/*AmqpManagement.LinkType*/"entity-mgmt", session, entityPath, linkSettings.Properties);
                 stopWatch.Stop();
 
                 // Track the link before returning it, so that it can be managed with the scope.
@@ -510,7 +511,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Target = new Target { Address = Guid.NewGuid().ToString() }
                 };
 
-                linkSettings.AddProperty(AmqpProperty.EntityType, 0);//(int)AmqpProperty.Entity.ConsumerGroup);
+                linkSettings.AddProperty(AmqpProperty.EntityType, "0,1,2,3");//(int)AmqpProperty.Entity.ConsumerGroup);
 
                 if (ownerLevel.HasValue)
                 {
