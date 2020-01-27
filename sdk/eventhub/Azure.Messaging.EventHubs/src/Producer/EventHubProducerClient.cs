@@ -511,10 +511,11 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   It checks if the <see cref="TransportProducer"/> returned by the <see cref="TransportProducerPool"/> is still open.
+        ///   Checks if the <see cref="TransportProducer"/> returned by the <see cref="TransportProducerPool"/> is still open.
         /// </summary>
+        ///
         /// <param name="producer">The <see cref="TransportProducer"/> that has being checked.</param>
-        /// <param name="partitionId">The partition to which the producer is bound to.</param>
+        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
         ///
         /// <returns><c>true</c> if the specified <see cref="TransportProducer" /> is closed; otherwise, <c>false</c>.</returns>
         ///

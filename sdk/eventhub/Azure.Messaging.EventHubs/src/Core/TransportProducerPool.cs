@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Core
             // the returned PoolItem if it had expired. The probability is very low and
             // possible exceptions should be handled by the invoking methods.
 
-            if (item.PartitionProducer != null && item.PartitionProducer.IsClosed || !item.ActiveInstances.TryAdd(identifier, 0))
+            if (item.PartitionProducer?.IsClosed == true || !item.ActiveInstances.TryAdd(identifier, 0))
             {
                 identifier = Guid.NewGuid().ToString();
                 item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId));
@@ -122,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                 if (!Pool.TryGetValue(partitionId, out _) && !item.ActiveInstances.Any())
                 {
-                    return item.PartitionProducer.CloseAsync(CancellationToken.None);
+                    return item.PartitionProducer?.CloseAsync(CancellationToken.None);
                 }
 
                 return Task.CompletedTask;
@@ -175,9 +175,9 @@ namespace Azure.Messaging.EventHubs.Core
         {
             var pendingCloses = new List<Task>();
 
-            foreach (var producer in Pool.Values)
+            foreach (var poolItem in Pool.Values)
             {
-                pendingCloses.Add(producer.PartitionProducer.CloseAsync(CancellationToken.None));
+                pendingCloses.Add(poolItem.PartitionProducer?.CloseAsync(CancellationToken.None));
             }
 
             Pool.Clear();
