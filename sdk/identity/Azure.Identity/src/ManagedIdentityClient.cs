@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -17,6 +18,8 @@ namespace Azure.Identity
     {
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
+        internal const string MsiUnavailableError = "No managed identity endpoint found.";
+        internal const string IdentityUnavailableError = "The requested identity has not been assigned to this resource.";
 
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
@@ -38,14 +41,26 @@ namespace Azure.Identity
         {
         }
 
-        public ManagedIdentityClient(CredentialPipeline pipeline)
+        public ManagedIdentityClient(CredentialPipeline pipeline, string clientId = null)
         {
             _pipeline = pipeline;
+
+            ClientId = clientId;
         }
 
-        public virtual AccessToken Authenticate(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        protected string ClientId { get; }
+
+        public virtual ExtendedAccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
         {
-            using Request request = CreateAuthRequest(msiType, scopes, clientId);
+            MsiType msiType = GetMsiType(cancellationToken);
+
+            // if msi is unavailable or we were unable to determine the type return CredentialUnavailable exception that no endpoint was found
+            if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
+            {
+                return new ExtendedAccessToken(new CredentialUnavailableException(MsiUnavailableError));
+            }
+
+            using Request request = CreateAuthRequest(msiType, scopes);
 
             Response response = _pipeline.HttpPipeline.SendRequest(request, cancellationToken);
 
@@ -53,15 +68,37 @@ namespace Azure.Identity
             {
                 AccessToken result = Deserialize(response.ContentStream);
 
-                return result;
+                return new ExtendedAccessToken(result);
+            }
+
+            if (response.Status == 400 && msiType == MsiType.Imds)
+            {
+                _msiType = MsiType.Unavailable;
+
+                ValueTask<string> messageTask = ResponseExceptionExtensions.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, false);
+
+                // TODO: this should use TaskExtensions EnsureCompleted from Azure.Core shared source when it gets move into shared source.
+                Debug.Assert(messageTask.IsCompleted);
+
+                string message = messageTask.GetAwaiter().GetResult();
+
+                return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }
 
             throw response.CreateRequestFailedException();
         }
 
-        public async virtual Task<AccessToken> AuthenticateAsync(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        public async virtual Task<ExtendedAccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
         {
-            using Request request = CreateAuthRequest(msiType, scopes, clientId);
+            MsiType msiType = await GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
+
+            // if msi is unavailable or we were unable to determine the type return CredentialUnavailable exception that no endpoint was found
+            if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
+            {
+                return new ExtendedAccessToken(new CredentialUnavailableException(MsiUnavailableError));
+            }
+
+            using Request request = CreateAuthRequest(msiType, scopes);
 
             Response response = await _pipeline.HttpPipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -69,13 +106,22 @@ namespace Azure.Identity
             {
                 AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                return result;
+                return new ExtendedAccessToken(result);
+            }
+
+            if (response.Status == 400 && msiType == MsiType.Imds)
+            {
+                _msiType = MsiType.Unavailable;
+
+                string message = await ResponseExceptionExtensions.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, true).ConfigureAwait(false);
+
+                return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }
 
             throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
         }
 
-        public virtual MsiType GetMsiType(CancellationToken cancellationToken)
+        protected virtual MsiType GetMsiType(CancellationToken cancellationToken)
         {
             // if we haven't already determined the msi type
             if (_msiType == MsiType.Unknown)
@@ -137,7 +183,7 @@ namespace Azure.Identity
             return _msiType;
         }
 
-        public virtual async Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
+        protected virtual async Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
         {
             // if we haven't already determined the msi type
             if (_msiType == MsiType.Unknown)
@@ -198,18 +244,8 @@ namespace Azure.Identity
 
             return _msiType;
         }
-        private Request CreateAuthRequest(MsiType msiType, string[] scopes, string clientId)
-        {
-            return msiType switch
-            {
-                MsiType.Imds => CreateImdsAuthRequest(scopes, clientId),
-                MsiType.AppService => CreateAppServiceAuthRequest(scopes, clientId),
-                MsiType.CloudShell => CreateCloudShellAuthRequest(scopes, clientId),
-                _ => default,
-            };
-        }
 
-        public virtual bool ImdsAvailable(CancellationToken cancellationToken)
+        protected virtual bool ImdsAvailable(CancellationToken cancellationToken)
         {
             // try to create a TCP connection to the IMDS IP address. If the connection can be established
             // we assume that IMDS is available. If connecting times out or fails to connect assume that
@@ -231,7 +267,7 @@ namespace Azure.Identity
             }
         }
 
-        public virtual async Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
+        protected virtual async Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
         {
             // try to create a TCP connection to the IMDS IP address. If the connection can be established
             // we assume that IMDS is available. If connecting times out or fails to connect assume that
@@ -253,7 +289,18 @@ namespace Azure.Identity
             }
         }
 
-        private Request CreateImdsAuthRequest(string[] scopes, string clientId)
+        private Request CreateAuthRequest(MsiType msiType, string[] scopes)
+        {
+            return msiType switch
+            {
+                MsiType.Imds => CreateImdsAuthRequest(scopes),
+                MsiType.AppService => CreateAppServiceAuthRequest(scopes),
+                MsiType.CloudShell => CreateCloudShellAuthRequest(scopes),
+                _ => default,
+            };
+        }
+
+        private Request CreateImdsAuthRequest(string[] scopes)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
@@ -270,15 +317,15 @@ namespace Azure.Identity
 
             request.Uri.AppendQuery("resource", resource);
 
-            if (!string.IsNullOrEmpty(clientId))
+            if (!string.IsNullOrEmpty(ClientId))
             {
-                request.Uri.AppendQuery("client_id", clientId);
+                request.Uri.AppendQuery("client_id", ClientId);
             }
 
             return request;
         }
 
-        private Request CreateAppServiceAuthRequest(string[] scopes, string clientId)
+        private Request CreateAppServiceAuthRequest(string[] scopes)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
@@ -295,15 +342,15 @@ namespace Azure.Identity
 
             request.Uri.AppendQuery("resource", resource);
 
-            if (!string.IsNullOrEmpty(clientId))
+            if (!string.IsNullOrEmpty(ClientId))
             {
-                request.Uri.AppendQuery("clientid", clientId);
+                request.Uri.AppendQuery("clientid", ClientId);
             }
 
             return request;
         }
 
-        private Request CreateCloudShellAuthRequest(string[] scopes, string clientId)
+        private Request CreateCloudShellAuthRequest(string[] scopes)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
@@ -320,9 +367,9 @@ namespace Azure.Identity
 
             var bodyStr = $"resource={Uri.EscapeDataString(resource)}";
 
-            if (!string.IsNullOrEmpty(clientId))
+            if (!string.IsNullOrEmpty(ClientId))
             {
-                bodyStr += $"&client_id={Uri.EscapeDataString(clientId)}";
+                bodyStr += $"&client_id={Uri.EscapeDataString(ClientId)}";
             }
 
             ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
@@ -396,6 +443,13 @@ namespace Azure.Identity
             }
 
             return new AccessToken(accessToken, expiresOn);
+        }
+
+        private struct Error
+        {
+            public string Code { get; set; }
+
+            public string Message { get; set; }
         }
     }
 }

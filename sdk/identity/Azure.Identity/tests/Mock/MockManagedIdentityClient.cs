@@ -17,38 +17,43 @@ namespace Azure.Identity.Tests.Mock
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline)
-            : base(pipeline)
+            : this(pipeline, null)
         {
 
         }
 
+        public MockManagedIdentityClient(CredentialPipeline pipeline, string clientId)
+            : base(pipeline, clientId)
+        {
+
+        }
         public Func<MsiType> MsiTypeFactory { get; set; }
 
-        public Func<AccessToken> TokenFactory { get; set; }
+        public Func<ExtendedAccessToken> TokenFactory { get; set; }
 
         public Func<CancellationToken, bool> ImdsAvailableFunc { get; set; }
 
-        public override AccessToken Authenticate(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        public override ExtendedAccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
         {
             if (TokenFactory != null)
             {
                 return TokenFactory();
             }
 
-            return base.Authenticate(msiType, scopes, clientId, cancellationToken);
+            return base.Authenticate(scopes, cancellationToken);
         }
 
-        public override Task<AccessToken> AuthenticateAsync(MsiType msiType, string[] scopes, string clientId, CancellationToken cancellationToken)
+        public override Task<ExtendedAccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
         {
             if (TokenFactory != null)
             {
                 return Task.FromResult(TokenFactory());
             }
 
-            return base.AuthenticateAsync(msiType, scopes, clientId, cancellationToken);
+            return base.AuthenticateAsync(scopes, cancellationToken);
         }
 
-        public override MsiType GetMsiType(CancellationToken cancellationToken)
+        protected override MsiType GetMsiType(CancellationToken cancellationToken)
         {
             if (MsiTypeFactory != null)
             {
@@ -58,7 +63,7 @@ namespace Azure.Identity.Tests.Mock
             return base.GetMsiType(cancellationToken);
         }
 
-        public override Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
+        protected override Task<MsiType> GetMsiTypeAsync(CancellationToken cancellationToken)
         {
             if (MsiTypeFactory != null)
             {
@@ -68,7 +73,7 @@ namespace Azure.Identity.Tests.Mock
             return base.GetMsiTypeAsync(cancellationToken);
         }
 
-        public override bool ImdsAvailable(CancellationToken cancellationToken)
+        protected override bool ImdsAvailable(CancellationToken cancellationToken)
         {
             if (ImdsAvailableFunc != null)
             {
@@ -78,7 +83,7 @@ namespace Azure.Identity.Tests.Mock
             return base.ImdsAvailable(cancellationToken);
         }
 
-        public override Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
+        protected override Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
         {
             if (ImdsAvailableFunc != null)
             {

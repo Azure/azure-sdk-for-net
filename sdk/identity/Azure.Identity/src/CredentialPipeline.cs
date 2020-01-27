@@ -70,7 +70,7 @@ namespace Azure.Identity
         {
             return new CredentialPipeline(authorityHost, HttpPipeline, Diagnostics);
         }
-		
+
         private class CredentialResponseClassifier : ResponseClassifier
         {
             public override bool IsRetriableResponse(HttpMessage message)
