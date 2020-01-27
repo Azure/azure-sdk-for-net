@@ -19,7 +19,7 @@ namespace Kusto.Tests.ScenarioTests
 {
     public class KustoOperationsTests : TestBase
     {
-        
+
         [Fact]
         public void OperationsTest()
         {
@@ -163,7 +163,7 @@ namespace Kusto.Tests.ScenarioTests
 
                 // get event hub connection
                 var eventHubConnection = testBase.client.DataConnections.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.eventHubConnectionName);
-                VerifyEventHub(eventHubConnection as EventHubDataConnection, 
+                VerifyEventHub(eventHubConnection as EventHubDataConnection,
                     testBase.eventHubConnectionName,
                     testBase.eventHubResourceId,
                     testBase.consumerGroupName,
@@ -305,6 +305,48 @@ namespace Kusto.Tests.ScenarioTests
                 Assert.False(updatedCluster.EnableDiskEncryption);
 
                 //Delete cluster
+                testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
+            }
+        }
+
+        [Fact]
+        public void KustoPrincipalAssignmentsTests()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var testBase = new KustoTestBase(context);
+
+                //create cluster
+                var createdCluster = testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.cluster);
+
+                var principalName = "principal1";
+                //create cluster principal assignment
+                var clusterPrincipalAssignment = new ClusterPrincipalAssignment(testBase.clientIdForPrincipal, "AllDatabasesAdmin","App");
+                testBase.client.ClusterPrincipalAssignments.CreateOrUpdate(testBase.rgName, testBase.clusterName, principalName, clusterPrincipalAssignment);
+                testBase.client.ClusterPrincipalAssignments.Get(testBase.rgName, testBase.clusterName, principalName);
+                testBase.client.ClusterPrincipalAssignments.Delete(testBase.rgName, testBase.clusterName, principalName);
+                Assert.Throws<CloudException>(() =>
+                {
+                    testBase.client.ClusterPrincipalAssignments.Get(testBase.rgName, testBase.clusterName, principalName);
+                });
+
+                //create database
+                var createdDb = testBase.client.Databases.CreateOrUpdate(testBase.rgName, createdCluster.Name, testBase.databaseName, testBase.database);
+
+                //create database principal assignment
+                var databasePrincipalAssignment = new DatabasePrincipalAssignment(testBase.clientIdForPrincipal, "Viewer", "App");
+                testBase.client.DatabasePrincipalAssignments.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName, databasePrincipalAssignment);
+                testBase.client.DatabasePrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName);
+                testBase.client.DatabasePrincipalAssignments.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName);
+                Assert.Throws<CloudException>(() =>
+                {
+                    testBase.client.DatabasePrincipalAssignments.Get(testBase.rgName, testBase.clusterName, testBase.databaseName, principalName);
+                });
+
+                //delete database
+                testBase.client.Databases.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName);
+
+                //delete cluster
                 testBase.client.Clusters.Delete(testBase.rgName, testBase.clusterName);
             }
         }
@@ -524,7 +566,7 @@ namespace Kusto.Tests.ScenarioTests
             {
                 var equalExternalTenants = trustedExternalTenants.Where((extrenalTenant) =>
                 {
-                    return otherExtrenalTenants.Value == extrenalTenant.Value ;
+                    return otherExtrenalTenants.Value == extrenalTenant.Value;
                 });
                 Assert.Single(equalExternalTenants);
             }
