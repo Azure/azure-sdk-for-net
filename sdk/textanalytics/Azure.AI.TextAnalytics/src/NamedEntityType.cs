@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType Email = new NamedEntityType("Email");
 
         /// <summary>
-        /// Specifies that named entity contains Internet URL.
+        /// Specifies that the named entity contains an Internet URL.
         /// </summary>
         public static readonly NamedEntityType Url = new NamedEntityType("URL");
 
