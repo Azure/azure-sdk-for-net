@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventHubs.Core
     internal class TransportProducerPool : IAsyncDisposable
     {
         /// <summary>The period in minutes after which <see cref="PerformExpiration"/> is run.</summary>
-        private static readonly TimeSpan PerformExpirationPeriodAsMinutes = TimeSpan.FromMinutes(10);
+        private static readonly TimeSpan DefaultPerformExpirationPeriod = TimeSpan.FromMinutes(10);
 
         /// <summary>
         ///   The set of active Event Hub transport-specific producers specific to a given partition;
@@ -35,8 +35,8 @@ namespace Azure.Messaging.EventHubs.Core
         public TransportProducer EventHubProducer { get; }
 
         /// <summary>
-        ///   A reference to a <see cref="Timer"/> periodically checking the <see cref="TransportProducer"/> that
-        ///   are in use and those that can be closed.
+        ///   A reference to a <see cref="Timer"/> periodically checking every <see cref="DefaultPerformExpirationPeriod"/>
+        ///   the <see cref="TransportProducer"/> that are in use and those that can be closed.
         /// </summary>
         ///
         private Timer ExpirationTimer { get; }
@@ -46,20 +46,20 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="eventHubProducer">An abstracted Event Hub transport-specific producer that is associated with the Event Hub gateway rather than a specific partition.</param>
-        /// <param name="pool">The pool of <see cref="PoolItem"/> that is going to be used to store the partition specific <see cref="TransportProducer"/>. Intended to be used in tests.</param>
-        /// <param name="expirationInterval">The period after which <see cref="PerformExpiration"/> is run. Intended to be used in tests.</param>
+        /// <param name="pool">The pool of <see cref="PoolItem"/> that is going to be used to store the partition specific <see cref="TransportProducer"/>.</param>
+        /// <param name="performExpirationPeriod">The period after which <see cref="PerformExpiration"/> is run. Overrides <see cref="DefaultPerformExpirationPeriod"/>.</param>
         ///
         public TransportProducerPool(TransportProducer eventHubProducer,
                                      ConcurrentDictionary<string, PoolItem> pool = default,
-                                     TimeSpan? expirationInterval = default)
+                                     TimeSpan? performExpirationPeriod = default)
         {
-            expirationInterval ??= PerformExpirationPeriodAsMinutes;
+            performExpirationPeriod ??= DefaultPerformExpirationPeriod;
             Pool = pool ?? new ConcurrentDictionary<string, PoolItem>();
 
             ExpirationTimer = new Timer(PerformExpiration(),
                                         null,
-                                        expirationInterval.Value,
-                                        expirationInterval.Value);
+                                        performExpirationPeriod.Value,
+                                        performExpirationPeriod.Value);
 
             EventHubProducer = eventHubProducer;
         }
@@ -70,9 +70,9 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="removeAfterDuration">The <see cref="TimeSpan"/> to use as the basis for retrieving the information.</param>
+        /// <param name="removeAfterDuration">The period of inactivity after which a <see cref="PoolItem"/> will become eligible for eviction. Overrides <see cref="PoolItem.DefaultRemoveAfterDuration"/>.</param>
         ///
-        /// <returns>A <see cref="PooledProducer"/> corresponding to the partition id passed in as parameter.</returns>
+        /// <returns>A <see cref="PooledProducer"/> mapping to the partition id passed in as parameter.</returns>
         ///
         /// <remarks>
         ///   There is a slight probability that the returned producer may be closed at any time
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             var identifier = Guid.NewGuid().ToString();
-            var item = Pool.GetOrAdd(partitionId, id => new PoolItem());
+            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId));
 
             // A race condition at this point may end with an CloseAsync called on
             // the returned PoolItem if it had expired. The probability is very low and
@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Core
             if (!item.ActiveInstances.TryAdd(identifier, 0) || (item.PartitionProducer != null && item.PartitionProducer.IsClosed))
             {
                 identifier = Guid.NewGuid().ToString();
-                item = Pool.GetOrAdd(partitionId, id => new PoolItem());
+                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId));
                 item.ActiveInstances.TryAdd(identifier, 0);
             }
 
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventHubs.Core
 
             if (Pool.TryGetValue(partitionId, out var poolItem))
             {
-                return poolItem.GetTransportProducer(partitionId, connection, retryPolicy);
+                return poolItem.GetTransportProducer(connection, retryPolicy);
             }
 
             return null;
@@ -187,9 +187,11 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   It returns a <see cref="TimerCallback" /> that will search for all the expired <see cref="PoolItem"/>
+        ///   Returns a <see cref="TimerCallback"/> that will search for all the expired <see cref="PoolItem"/>
         ///   in the <see cref="Pool"/> and will try to close those that have expired.
         /// </summary>
+        ///
+        /// <returns>A <see cref="TimerCallback"/> that is periodically run every <see cref="DefaultPerformExpirationPeriod"/>.</returns>
         ///
         internal TimerCallback PerformExpiration()
         {
@@ -234,6 +236,12 @@ namespace Azure.Messaging.EventHubs.Core
             public TransportProducer PartitionProducer { get; private set; }
 
             /// <summary>
+            ///   The unique identifier of a partition associated with the Event Hub.
+            /// </summary>
+            ///
+            public string PartitionId { get; private set; }
+
+            /// <summary>
             ///   A set of unique identifiers used to track which instances of a <see cref="PoolItem"/> are active.
             /// </summary>
             ///
@@ -246,23 +254,31 @@ namespace Azure.Messaging.EventHubs.Core
             public DateTimeOffset RemoveAfter { get; set; }
 
             /// <summary>
-            ///   It allows to extend the time a <see cref="PoolItem"/> will sit in the pool.
+            ///   Extends the UTC date and time when <see cref="PoolItem"/> will become eligible for eviction.
             /// </summary>
             ///
-            /// <param name="removeAfterDuration">How long a dedicated transport producer would sit in memory before the <see cref="TransportProducerPool"/> would remove and close it.</param>
+            /// <param name="removeAfterDuration">The period of inactivity after which a <see cref="PoolItem"/> will become eligible for eviction.</param>
             ///
             public void ExtendRemoveAfter(TimeSpan? removeAfterDuration)
             {
                 RemoveAfter = DateTimeOffset.UtcNow.Add(removeAfterDuration ?? DefaultRemoveAfterDuration);
             }
 
-            public TransportProducer GetTransportProducer(string partitionId,
-                                                          EventHubConnection connection,
+            /// <summary>
+            ///   Creates a <see cref="TransportProducer"/> matching the <see cref="PartitionId"/>.
+            /// </summary>
+            ///
+            /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
+            /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
+            ///
+            /// <returns>A <see cref="TransportProducer"/> matching the <see cref="PartitionId"/>.</returns>
+            ///
+            public TransportProducer GetTransportProducer(EventHubConnection connection,
                                                           EventHubsRetryPolicy retryPolicy)
             {
-                if (!string.IsNullOrEmpty(partitionId) && (PartitionProducer == null || PartitionProducer.IsClosed))
+                if (PartitionProducer == null || PartitionProducer.IsClosed)
                 {
-                    PartitionProducer = connection.CreateTransportProducer(partitionId, retryPolicy);
+                    PartitionProducer = connection.CreateTransportProducer(PartitionId, retryPolicy);
                 }
 
                 return PartitionProducer;
@@ -272,15 +288,20 @@ namespace Azure.Messaging.EventHubs.Core
             ///   Initializes a new instance of the <see cref="PoolItem"/> class with a default timespan of one minute.
             /// </summary>
             ///
+            /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
             /// <param name="partitionProducer">An Event Hub transport-specific producer specific to a given partition.</param>
-            /// <param name="removeAfterDuration">How long a dedicated transport producer would sit in memory before its pool would remove and close it.</param>
+            /// <param name="removeAfterDuration">The interval after which a <see cref="PoolItem"/> will become eligible for eviction. Overrides <see cref="DefaultRemoveAfterDuration"/>.</param>
             /// <param name="removeAfter">The UTC date and time when a <see cref="PoolItem"/> will become eligible for eviction.</param>
             ///
-            public PoolItem(TransportProducer partitionProducer = default,
+            public PoolItem(string partitionId,
+                            TransportProducer partitionProducer = default,
                             TimeSpan? removeAfterDuration = default,
                             DateTimeOffset? removeAfter = default)
             {
+                Argument.AssertNotNull(partitionId, nameof(partitionId));
+
                 PartitionProducer = partitionProducer;
+                PartitionId = partitionId;
 
                 if (removeAfter == default)
                 {
