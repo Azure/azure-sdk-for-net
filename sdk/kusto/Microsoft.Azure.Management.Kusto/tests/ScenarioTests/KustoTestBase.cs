@@ -23,6 +23,7 @@ namespace Kusto.Tests.ScenarioTests
         public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest";
         public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Devices/IotHubs/ofertestiot";
         public string clientIdForPrincipal = "713c3475-5021-4f3b-a650-eaa9a83f25a4";
+        public string dBprincipalMail = "oflipman@microsoft.com";
         public string consumerGroupName = "$Default";
         public readonly string tableName = "MyTest";
         public readonly string resourceGroupForTest = "ofertestgroup";
@@ -64,6 +65,8 @@ namespace Kusto.Tests.ScenarioTests
         public IotHubDataConnection iotHubDataConnection { get; set; }
         public List<TrustedExternalTenant> trustedExternalTenants { get; set; }
         public string dataFormat { get; set; }
+        public List<DatabasePrincipal> databasePrincipals { get; set; }
+        public DatabasePrincipal databasePrincipal { get; set; }
         public KeyVaultProperties keyVaultProperties { get; set; }
 
         public KustoTestBase(MockContext context)
@@ -135,10 +138,27 @@ namespace Kusto.Tests.ScenarioTests
             eventGridDataConnection = new EventGridDataConnection(storageAccountForEventGridResourceId, eventHubResourceId, consumerGroupName, tableName, dataFormat, location: location);
             iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
 
+            databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
+            databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};
+
             var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
             attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(location: this.location, databaseName: databaseName, clusterResourceId: leaderClusterResourceId, defaultPrincipalsModificationKind: defaultPrincipalsModificationKind);
 
             keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest);
         }
+
+        private DatabasePrincipal GetDatabasePrincipalList(string userEmail, string role)
+        {
+            return new DatabasePrincipal()
+            {
+                Name = "User1",
+                Email = userEmail,
+                Fqn = $"aaduser={userEmail}",
+                Role = role,
+                Type = "User",
+                AppId = ""
+            };
+        }
+
     }
 }
