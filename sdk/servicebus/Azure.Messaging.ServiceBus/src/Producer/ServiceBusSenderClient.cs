@@ -90,14 +90,14 @@ namespace Azure.Messaging.ServiceBus.Producer
         ///   Event Hub gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
         ///
-        private TransportProducer ServiceBusProducer { get; }
+        private TransportSender ServiceBusSender { get; }
 
         /// <summary>
         ///   The set of active Event Hub transport-specific producers created by this client which are specific to
         ///   a given partition; intended to perform delegated operations.
         /// </summary>
         ///
-        private ConcurrentDictionary<string, TransportProducer> PartitionProducers { get; } = new ConcurrentDictionary<string, TransportProducer>();
+        private ConcurrentDictionary<string, TransportSender> PartitionProducers { get; } = new ConcurrentDictionary<string, TransportSender>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
@@ -181,7 +181,7 @@ namespace Azure.Messaging.ServiceBus.Producer
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            ServiceBusProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            ServiceBusSender = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.Messaging.ServiceBus.Producer
             OwnsConnection = true;
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            ServiceBusProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            ServiceBusSender = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.Messaging.ServiceBus.Producer
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            ServiceBusProducer = Connection.CreateTransportProducer(null, RetryPolicy);
+            ServiceBusSender = Connection.CreateTransportProducer(null, RetryPolicy);
         }
 
         /// <summary>
@@ -243,14 +243,14 @@ namespace Azure.Messaging.ServiceBus.Producer
         /// </remarks>
         ///
         internal ServiceBusSenderClient(ServiceBusConnection connection,
-                                        TransportProducer transportProducer)
+                                        TransportSender transportProducer)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(transportProducer, nameof(transportProducer));
 
             OwnsConnection = false;
             Connection = connection;
-            ServiceBusProducer = transportProducer;
+            ServiceBusSender = transportProducer;
         }
 
         /// <summary>
@@ -371,8 +371,10 @@ namespace Azure.Messaging.ServiceBus.Producer
         ///
         /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, SendEventOptions, CancellationToken)"/>
         ///
-        internal virtual Task SendAsync(IEnumerable<ServiceBusMessage> messages,
-                                        CancellationToken cancellationToken = default) => SendAsync(messages, null, cancellationToken);
+        public virtual Task SendAsync(
+            IEnumerable<ServiceBusMessage> messages,
+            CancellationToken cancellationToken = default) =>
+            SendAsync(messages, null, cancellationToken);
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
@@ -402,11 +404,11 @@ namespace Azure.Messaging.ServiceBus.Producer
             // partition requires a dedicated client, use (or create) that client if a partition was specified.  Otherwise
             // the default gateway producer can be used to request automatic routing from the Event Hubs service gateway.
 
-            TransportProducer activeProducer;
+            TransportSender activeSender;
 
             if (string.IsNullOrEmpty(options.PartitionId))
             {
-                activeProducer = ServiceBusProducer;
+                activeSender = ServiceBusSender;
             }
             else
             {
@@ -416,7 +418,7 @@ namespace Azure.Messaging.ServiceBus.Producer
                 // its idle timeout period elapses.
 
                 Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
-                activeProducer = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
+                activeSender = PartitionProducers.GetOrAdd(options.PartitionId, id => Connection.CreateTransportProducer(id, RetryPolicy));
             }
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -426,7 +428,7 @@ namespace Azure.Messaging.ServiceBus.Producer
 
             try
             {
-                await activeProducer.SendAsync(messages, options, cancellationToken).ConfigureAwait(false);
+                await activeSender.SendAsync(messages, options, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -529,7 +531,7 @@ namespace Azure.Messaging.ServiceBus.Producer
             options = options?.Clone() ?? new CreateBatchOptions();
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            TransportEventBatch transportBatch = await ServiceBusProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            TransportEventBatch transportBatch = await ServiceBusSender.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, options.ToSendOptions());
         }
 
@@ -556,7 +558,7 @@ namespace Azure.Messaging.ServiceBus.Producer
 
             try
             {
-                await ServiceBusProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
+                await ServiceBusSender.CloseAsync(cancellationToken).ConfigureAwait(false);
 
                 var pendingCloses = new List<Task>();
 

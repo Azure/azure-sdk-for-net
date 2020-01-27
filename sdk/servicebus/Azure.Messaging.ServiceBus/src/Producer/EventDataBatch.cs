@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Producer
 
         /// <summary>
         ///   The transport-specific batch responsible for performing the batch operations
-        ///   in a manner compatible with the associated <see cref="TransportProducer" />.
+        ///   in a manner compatible with the associated <see cref="TransportSender" />.
         /// </summary>
         ///
         private TransportEventBatch InnerBatch { get; }

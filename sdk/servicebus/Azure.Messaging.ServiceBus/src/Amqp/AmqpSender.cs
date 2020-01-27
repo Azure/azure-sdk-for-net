@@ -22,9 +22,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
-    /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportProducer" />
+    /// <seealso cref="Azure.Messaging.ServiceBus.Core.TransportSender" />
     ///
-    internal class AmqpProducer : TransportProducer
+    internal class AmqpSender : TransportSender
     {
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private long? MaximumMessageSize { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="AmqpProducer"/> class.
+        ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
         /// </summary>
         ///
         /// <param name="eventHubName">The name of the Event Hub to which events will be published.</param>
@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   caller.
         /// </remarks>
         ///
-        public AmqpProducer(string eventHubName,
+        public AmqpSender(string eventHubName,
                             string partitionId,
                             AmqpConnectionScope connectionScope,
                             AmqpMessageConverterNew messageConverter,
@@ -150,9 +150,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                              CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(messages, nameof(messages));
-            Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
+            Argument.AssertNotClosed(_closed, nameof(AmqpSender));
 
-            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(messages, sendOptions?.PartitionKey);
+            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromMessages(messages, sendOptions?.PartitionKey);
             await SendAsync(messageFactory, sendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
         }
 

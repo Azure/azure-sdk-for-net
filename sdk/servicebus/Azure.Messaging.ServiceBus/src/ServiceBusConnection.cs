@@ -343,6 +343,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         /// <param name="consumer"></param>
+        /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
@@ -350,8 +351,12 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         internal virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
             TransportConsumer consumer,
-            long fromSequenceNumber, int messageCount = 1, string sessionId = null, CancellationToken cancellationToken = default) =>
-            await InnerClient.PeekAsync(consumer, fromSequenceNumber, messageCount, sessionId, cancellationToken)
+            ServiceBusRetryPolicy retryPolicy,
+            long fromSequenceNumber,
+            int messageCount = 1,
+            string sessionId = null,
+            CancellationToken cancellationToken = default) =>
+            await InnerClient.PeekAsync(consumer, retryPolicy, fromSequenceNumber, messageCount, sessionId, cancellationToken)
             .ConfigureAwait(false);
 
         /// <summary>
@@ -362,13 +367,13 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
-        /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
+        /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        internal virtual TransportProducer CreateTransportProducer(string partitionId,
+        internal virtual TransportSender CreateTransportProducer(string partitionId,
                                                                    ServiceBusRetryPolicy retryPolicy)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateProducer(partitionId, retryPolicy);
+            return InnerClient.CreateSender(partitionId, retryPolicy);
         }
 
         /// <summary>
@@ -393,6 +398,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="sessionId"></param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
@@ -403,13 +409,14 @@ namespace Azure.Messaging.ServiceBus
                                                                    ServiceBusRetryPolicy retryPolicy,
                                                                    bool trackLastEnqueuedEventProperties = true,
                                                                    long? ownerLevel = default,
-                                                                   uint? prefetchCount = default)
+                                                                   uint? prefetchCount = default,
+                                                                   string sessionId = default)
         {
             //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
             //Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount);
+            return InnerClient.CreateConsumer(eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount, sessionId);
         }
 
         /// <summary>

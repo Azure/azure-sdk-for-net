@@ -592,10 +592,17 @@ namespace Azure.Messaging.ServiceBus.Consumer
             string sessionId = null,
             CancellationToken cancellationToken = default)
         {
-            var consumer = Connection.CreateTransportConsumer(
+            TransportConsumer consumer = Connection.CreateTransportConsumer(
                 EventPosition.Latest,
-                RetryPolicy);
-            return await Connection.PeekAsync(consumer, fromSequenceNumber, messageCount, sessionId, cancellationToken)
+                RetryPolicy,
+                sessionId: sessionId);
+            return await Connection.PeekAsync(
+                consumer,
+                RetryPolicy,
+                fromSequenceNumber,
+                messageCount,
+                sessionId,
+                cancellationToken)
                 .ConfigureAwait(false);
         }
 

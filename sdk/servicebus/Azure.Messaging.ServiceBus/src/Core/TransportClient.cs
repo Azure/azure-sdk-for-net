@@ -66,6 +66,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// </summary>
         /// <param name="consumer"></param>
+        /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
@@ -73,7 +74,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns></returns>
         public abstract Task<IEnumerable<ServiceBusMessage>> PeekAsync(
             TransportConsumer consumer,
-            long fromSequenceNumber, int messageCount = 1, string sessionId = null, CancellationToken cancellationToken = default);
+            ServiceBusRetryPolicy retryPolicy,
+            long fromSequenceNumber,
+            int messageCount = 1,
+            string sessionId = null,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
@@ -83,9 +88,9 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
-        /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
+        /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportProducer CreateProducer(string partitionId,
+        public abstract TransportSender CreateSender(string partitionId,
                                                          ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>
@@ -110,6 +115,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="sessionId"></param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
@@ -120,7 +126,8 @@ namespace Azure.Messaging.ServiceBus.Core
                                                          ServiceBusRetryPolicy retryPolicy,
                                                          bool trackLastEnqueuedEventProperties,
                                                          long? ownerLevel,
-                                                         uint? prefetchCount);
+                                                         uint? prefetchCount,
+                                                         string sessionId);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

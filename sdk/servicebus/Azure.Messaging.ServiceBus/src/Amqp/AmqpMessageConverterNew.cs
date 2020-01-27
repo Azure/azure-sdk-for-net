@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   ensuring proper disposal.
         /// </remarks>
         ///
-        public virtual AmqpMessage CreateBatchFromEvents(IEnumerable<ServiceBusMessage> source,
+        public virtual AmqpMessage CreateBatchFromMessages(IEnumerable<ServiceBusMessage> source,
                                                          string partitionKey = null)
         {
             Argument.AssertNotNull(source, nameof(source));

@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     internal class AmqpConsumer : TransportConsumer
     {
         /// <summary>The default prefetch count to use for the consumer.</summary>
-        private const uint DefaultPrefetchCount = 300;
+        private const uint DefaultPrefetchCount = 0;
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
         private bool _closed = false;
@@ -118,6 +118,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
+        /// <param name="sessionId"></param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -137,7 +138,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             uint? prefetchCount,
                             AmqpConnectionScope connectionScope,
                             //AmqpMessageConverter messageConverter,
-                            ServiceBusRetryPolicy retryPolicy)
+                            ServiceBusRetryPolicy retryPolicy,
+                            string sessionId)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -165,6 +167,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         prefetchCount ?? DefaultPrefetchCount,
                         ownerLevel,
                         trackLastEnqueuedEventProperties,
+                        sessionId,
                         CancellationToken.None),
                 link =>
                 {

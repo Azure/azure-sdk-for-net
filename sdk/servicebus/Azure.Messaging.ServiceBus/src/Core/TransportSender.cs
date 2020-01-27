@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Core
     ///   for different transports.
     /// </summary>
     ///
-    internal abstract class TransportProducer
+    internal abstract class TransportSender
     {
         /// <summary>
         ///   Indicates whether or not this producer has been closed.

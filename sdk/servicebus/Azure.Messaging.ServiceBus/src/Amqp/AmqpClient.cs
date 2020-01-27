@@ -274,6 +274,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// </summary>
         /// <param name="consumer"></param>
+        /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
@@ -281,26 +282,31 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns></returns>
         public override async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
             TransportConsumer consumer,
-            long fromSequenceNumber, int messageCount = 1, string sessionId = null, CancellationToken cancellationToken = default)
+            ServiceBusRetryPolicy retryPolicy,
+            long fromSequenceNumber,
+            int messageCount = 1,
+            string sessionId = null,
+            CancellationToken cancellationToken = default)
         {
             try
             {
-                //var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                //using AmqpMessage request = MessageConverterEH.CreateEventHubPropertiesRequest(EntityName, token);
-                //request.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = token;
+                var stopWatch = Stopwatch.StartNew();
+                var tryTimeout = retryPolicy.CalculateTryTimeout(0);
+
                 var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.PeekMessageOperation,
                         TimeSpan.FromSeconds(100),
                         null);
                 var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = token;
-                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[AmqpManagement.ResourceNameKey] = EntityName;
-                //amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[AmqpManagement.ResourceTypeKey] = AmqpManagement.EventHubResourceTypeValue;
+                consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink);
 
+                if (sessionId != null && receiveLink == null)
+                {
+                    // a session receive link is required for peeking by session 
+                    receiveLink = await consumer.ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
+                }
 
-                await consumer.ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, TimeSpan.FromSeconds(10))).ConfigureAwait(false);
-
-                if (consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+                if (receiveLink != null)
                 {
                     amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
                 }
@@ -314,40 +320,42 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
 
                 var messages = new List<ServiceBusMessage>();
-
-                //using AmqpMessage request = AmqpMessage.Create();
-                    //MessageConverterEH.CreatePartitionPropertiesRequest(EntityName, partitionId, token);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 var link = await ManagementLink.GetOrCreateAsync(
                     UseMinimum(ConnectionScope.SessionTimeout,
-                    TimeSpan.FromSeconds(60)))//tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
+                    TimeSpan.FromSeconds(120)))//tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
                     .ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                // Send the request and wait for the response.
-
-                //using AmqpMessage responseAmqpMessage = await link.RequestAsync(
-                //    amqpRequestMessage.AmqpMessage,
-                //    TimeSpan.FromSeconds(60))//tryTimeout.CalculateRemaining(stopWatch.Elapsed))
-                //    .ConfigureAwait(false);
                 ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
 
-                var responseAmqpMessage = await Task.Factory.FromAsync(
-                (c, s) => link.BeginRequest(
+                // This is how Track 1 makes the request
+                //var responseAmqpMessage = await Task.Factory.FromAsync(
+                //(c, s) => link.BeginRequest(
+                //    amqpRequestMessage.AmqpMessage,
+                //    transactionId,
+                //    TimeSpan.FromSeconds(30),
+                //    c, s),
+                //(a) => link.EndRequest(a),
+                //this).ConfigureAwait(false);
+
+                using AmqpMessage responseAmqpMessage = await link.RequestAsync(
                     amqpRequestMessage.AmqpMessage,
-                    transactionId,
-                    TimeSpan.FromSeconds(30),
-                    c, s),
-                (a) => link.EndRequest(a),
-                this).ConfigureAwait(false);
+                    tryTimeout.CalculateRemaining(stopWatch.Elapsed))
+                    .ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                stopWatch.Stop();
+
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                //stopWatch.Stop();
 
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 //stopWatch.Stop();
                 var amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
                 // Process the response.
 
-                AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
+                //AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     ServiceBusMessage message = null;
@@ -364,7 +372,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         //this.LastPeekedSequenceNumber = message.SystemProperties.SequenceNumber;
                     }
-
                     return messages;
                 }
 
@@ -494,14 +501,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
-        /// <returns>A <see cref="TransportProducer"/> configured in the requested manner.</returns>
+        /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public override TransportProducer CreateProducer(string partitionId,
+        public override TransportSender CreateSender(string partitionId,
                                                          ServiceBusRetryPolicy retryPolicy)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
-            return new AmqpProducer
+            return new AmqpSender
             (
                 EntityName,
                 partitionId,
@@ -533,6 +540,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="sessionId"></param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
@@ -543,7 +551,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                                          ServiceBusRetryPolicy retryPolicy,
                                                          bool trackLastEnqueuedEventProperties,
                                                          long? ownerLevel,
-                                                         uint? prefetchCount)
+                                                         uint? prefetchCount,
+                                                         string sessionId = default)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpClient));
 
@@ -558,7 +567,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 prefetchCount,
                 ConnectionScope,
                 //MessageConverter,
-                retryPolicy
+                retryPolicy,
+                sessionId
             );
         }
 

@@ -154,30 +154,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="serviceEndpoint">Endpoint for the Event Hubs service to which the scope is associated.</param>
-        /// <param name="eventHubName"> The name of the Event Hub to which the scope is associated</param>
+        /// <param name="entityName"> The name of the Event Hub to which the scope is associated</param>
         /// <param name="credential">The credential to use for authorization with the Event Hubs service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="identifier">The identifier to assign this scope; if not provided, one will be generated.</param>
         ///
         public AmqpConnectionScope(Uri serviceEndpoint,
-                                   string eventHubName,
+                                   string entityName,
                                    ServiceBusTokenCredential credential,
                                    ServiceBusTransportType transport,
                                    IWebProxy proxy,
                                    string identifier = default)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(credential, nameof(credential));
             ValidateTransport(transport);
 
             ServiceEndpoint = serviceEndpoint;
-            EntityName = eventHubName;
+            EntityName = entityName;
             Transport = transport;
             Proxy = proxy;
             TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential, serviceEndpoint.ToString()), OperationCancellationSource.Token);
-            Id = identifier ?? $"{ eventHubName }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
+            Id = identifier ?? $"{ entityName }-{ Guid.NewGuid().ToString("D").Substring(0, 8) }";
 
             Task<AmqpConnection> connectionFactory(TimeSpan timeout) => CreateAndOpenConnectionAsync(AmqpVersion, ServiceEndpoint, Transport, Proxy, Id, timeout);
             ActiveConnection = new FaultTolerantAmqpObject<AmqpConnection>(connectionFactory, CloseConnection);
@@ -232,6 +232,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="sessionId"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -245,6 +246,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                                                            uint prefetchCount,
                                                                            long? ownerLevel,
                                                                            bool trackLastEnqueuedEventProperties,
+                                                                           string sessionId,
                                                                            CancellationToken cancellationToken)
         {
             //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
@@ -268,6 +270,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 prefetchCount,
                 ownerLevel,
                 trackLastEnqueuedEventProperties,
+                sessionId,
                 cancellationToken
             ).ConfigureAwait(false);
 
@@ -432,14 +435,36 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.Elapsed).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
                 var entityPath = EntityName + '/' + AmqpClientConstants.ManagementAddress;
+                string[] claims = { ClaimConstants.Manage, ClaimConstants.Listen };
+                var endpointUri = new Uri(ServiceEndpoint, entityPath);
+
+                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, ServiceEndpoint, endpointUri.AbsoluteUri, endpointUri.AbsoluteUri, claims, timeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
 
                 var link = new RequestResponseAmqpLink(/*AmqpManagement.LinkType*/"entity-mgmt", session, entityPath, linkSettings.Properties);
                 linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:111";
                 stopWatch.Stop();
 
                 // Track the link before returning it, so that it can be managed with the scope.
+                var refreshTimer = default(Timer);
 
-                BeginTrackingLinkAsActive(link);
+                var refreshHandler = CreateAuthorizationRefreshHandler
+                (
+                    connection,
+                    link,
+                    TokenProvider,
+                    ServiceEndpoint,
+                    ServiceEndpoint.AbsoluteUri,
+                    ServiceEndpoint.AbsoluteUri,
+                    claims,
+                    AuthorizationRefreshTimeout,
+                    () => (ActiveLinks.ContainsKey(link) ? refreshTimer : null)
+                );
+
+                refreshTimer = new Timer(refreshHandler, null, CalculateLinkAuthorizationRefreshInterval(authExpirationUtc), Timeout.InfiniteTimeSpan);
+
+                // Track the link before returning it, so that it can be managed with the scope.
+
+                BeginTrackingLinkAsActive(link, refreshTimer);
                 return link;
             }
             catch
@@ -462,6 +487,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
+        /// <param name="sessionId"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -474,6 +500,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                                                                  uint prefetchCount,
                                                                                  long? ownerLevel,
                                                                                  bool trackLastEnqueuedEventProperties,
+                                                                                 string sessionId,
                                                                                  CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
@@ -499,9 +526,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the link.
-
-                //var filters = new FilterSet();
-                //filters.Add(AmqpFilter.ConsumerFilterName, AmqpFilter.CreateConsumerFilter(AmqpFilter.BuildFilterExpression(eventPosition)));
+                var filters = new FilterSet();
+                if (sessionId != null)
+                {
+                    filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
+                }
 
                 var linkSettings = new AmqpLinkSettings
                 {
@@ -509,7 +538,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     TotalLinkCredit = prefetchCount,
                     AutoSendFlow = prefetchCount > 0,
                     SettleType = SettleMode.SettleOnSend,
-                    Source = new Source { Address = endpoint.AbsolutePath, /*FilterSet = filters */},
+                    Source = new Source { Address = endpoint.AbsolutePath, FilterSet = filters },
                     Target = new Target { Address = Guid.NewGuid().ToString() }
                 };
 
@@ -529,7 +558,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
 
                 var link = new ReceivingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
+                linkSettings.LinkName = $"{connection.Settings.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}:{linkSettings.Source.ToString()}:test";
+
+                //linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
                 link.AttachTo(session);
 
                 stopWatch.Stop();

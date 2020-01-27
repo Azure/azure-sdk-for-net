@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // Initialize the size by reserving space for the batch envelope.
 
-            using AmqpMessage envelope = messageConverter.CreateBatchFromEvents(Enumerable.Empty<ServiceBusMessage>(), options.PartitionKey);
+            using AmqpMessage envelope = messageConverter.CreateBatchFromMessages(Enumerable.Empty<ServiceBusMessage>(), options.PartitionKey);
             _sizeBytes = envelope.SerializedMessageSize;
         }
 
