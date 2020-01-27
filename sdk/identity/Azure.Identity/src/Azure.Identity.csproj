@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />

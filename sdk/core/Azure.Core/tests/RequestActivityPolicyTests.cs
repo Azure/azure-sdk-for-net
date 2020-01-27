@@ -67,6 +67,38 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
+        public void ActivityShouldBeStoppedWhenTransportThrows()
+        {
+            Activity activity = null;
+            (string Key, object Value, DiagnosticListener) startEvent = default;
+            using var testListener = new TestDiagnosticListener("Azure.Core");
+
+            MockTransport mockTransport = CreateMockTransport(_ =>
+            {
+                activity = Activity.Current;
+                startEvent = testListener.Events.Dequeue();
+                throw new Exception();
+            });
+
+            string clientRequestId = null;
+            Assert.ThrowsAsync<Exception>(async () => await SendRequestAsync(mockTransport, request =>
+            {
+                request.Method = RequestMethod.Get;
+                request.Uri.Reset(new Uri("http://example.com"));
+                request.Headers.Add("User-Agent", "agent");
+                clientRequestId = request.ClientRequestId;
+            }, s_enabledPolicy));
+
+            (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
+
+            Assert.AreEqual("Azure.Core.Http.Request.Start", startEvent.Key);
+            Assert.AreEqual("Azure.Core.Http.Request.Stop", stopEvent.Key);
+
+            Assert.AreEqual("Azure.Core.Http.Request", activity.OperationName);
+        }
+
+        [Test]
+        [NonParallelizable]
         public async Task ActivityIdIsStampedOnRequest()
         {
             using var testListener = new TestDiagnosticListener("Azure.Core");

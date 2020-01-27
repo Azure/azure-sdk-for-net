@@ -85,26 +85,30 @@ namespace Azure.Core.Pipeline
                 activity.Start();
             }
 
+            try
+            {
+                if (isAsync)
+                {
+                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                }
 
-            if (isAsync)
-            {
-                await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
+                activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
+                activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
             }
-            else
+            finally
             {
-                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
-            }
-
-            activity.AddTag("http.status_code", message.Response.Status.ToString(CultureInfo.InvariantCulture));
-            activity.AddTag("serviceRequestId", message.Response.Headers.RequestId);
-
-            if (diagnosticSourceActivityEnabled)
-            {
-                s_diagnosticSource.StopActivity(activity, message);
-            }
-            else
-            {
-                activity.Stop();
+                if (diagnosticSourceActivityEnabled)
+                {
+                    s_diagnosticSource.StopActivity(activity, message);
+                }
+                else
+                {
+                    activity.Stop();
+                }
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.NoScopeAsync());
-            StringAssert.Contains("Expected some diagnostic event to fire", ex.Message);
+            StringAssert.Contains("Expected some diagnostic scopes to be created, found none", ex.Message);
         }
 
         [Test]
