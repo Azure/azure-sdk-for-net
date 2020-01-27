@@ -16,6 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
+    [Ignore("testing")]
     public class FileClientTests : PathTestBase
     {
         private const long Size = 4 * Constants.KB;

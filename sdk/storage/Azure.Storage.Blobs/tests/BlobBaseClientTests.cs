@@ -24,6 +24,7 @@ using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Blobs.Test
 {
+    [Ignore("testing")]
     public class BlobBaseClientTests : BlobTestBase
     {
         public BlobBaseClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)

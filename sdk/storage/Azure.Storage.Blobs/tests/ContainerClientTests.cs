@@ -20,6 +20,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
+    [Ignore("testing")]
     public class ContainerClientTests : BlobTestBase
     {
         public ContainerClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)

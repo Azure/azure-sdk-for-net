@@ -14,6 +14,7 @@ using TestConstants = Azure.Storage.Test.TestConstants;
 
 namespace Azure.Storage.Files.DataLake.Tests
 {
+    [Ignore("testing")]
     public class DirectoryClientTests : PathTestBase
     {
         public DirectoryClientTests(bool async)
