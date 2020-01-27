@@ -563,8 +563,8 @@ namespace Azure.Storage.Blobs.Test
 
                 actualStream.Seek(0, SeekOrigin.Begin);
 
-                TestContext.Progress.WriteLine($"Start CopyToAsync: {GetThreads()}");
                 OutputEventsForTest();
+                TestContext.Progress.WriteLine($"Start CopyToAsync: {GetThreads()}");
                 await download.Content.CopyToAsync(actualStream).ConfigureAwait(false);
                 TestContext.Progress.WriteLine($"End CopyToAsync: {GetThreads()}");
 

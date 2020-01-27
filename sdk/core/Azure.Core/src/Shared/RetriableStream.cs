@@ -85,10 +85,10 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
-                        TestContext.Progress.Write($"RetriableStream:StartReadAsync:{offset}");
+                        TestContext.Progress.Write($"RetriableStream:StartReadAsync:{_position}");
                         var result = await _currentStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
-                        TestContext.Progress.Write($"RetriableStream:EndReadAsync:{offset}");
                         _position += result;
+                        TestContext.Progress.Write($"RetriableStream:EndReadAsync:{_position}");
                         return result;
                     }
                     catch (Exception e)
@@ -132,10 +132,10 @@ namespace Azure.Core.Pipeline
                 {
                     try
                     {
-                        TestContext.Progress.Write($"RetriableStream:StartRead:{offset}");
+                        TestContext.Progress.Write($"RetriableStream:StartRead:{_position}");
                         var result = _currentStream.Read(buffer, offset, count);
-                        TestContext.Progress.Write($"RetriableStream:EndRead:{offset}");
                         _position += result;
+                        TestContext.Progress.Write($"RetriableStream:EndRead:{_position}");
                         return result;
 
                     }
