@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntitySubType Number = new NamedEntitySubType("Number");
 
         /// <summary>
-        /// Specifies that numeric type named entity is Percentage (e.g.: 50%, fifty percent).
+        /// Specifies that a named entity of a Numeric type is a Percentage (e.g.: 50%, fifty percent).
         /// </summary>
         public static readonly NamedEntitySubType Percentage = new NamedEntitySubType("Percentage");
 
