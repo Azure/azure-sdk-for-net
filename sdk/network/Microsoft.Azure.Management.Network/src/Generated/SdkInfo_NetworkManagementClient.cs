@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "DdosCustomPolicies", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "DdosProtectionPlans", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "DefaultSecurityRules", "2019-11-01"),
+                new Tuple<string, string, string>("Network", "DeleteBastionShareableLink", "2019-11-01"),
+                new Tuple<string, string, string>("Network", "DisconnectActiveSessions", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCircuitAuthorizations", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCircuitConnections", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "ExpressRouteCircuitPeerings", "2019-11-01"),
@@ -52,6 +54,8 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "FirewallPolicies", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "FirewallPolicyRuleGroups", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "FlowLogs", "2019-11-01"),
+                new Tuple<string, string, string>("Network", "GetActiveSessions", "2019-11-01"),
+                new Tuple<string, string, string>("Network", "GetBastionShareableLink", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "HubVirtualNetworkConnections", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "InboundNatRules", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "IpGroups", "2019-11-01"),
@@ -79,6 +83,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "PrivateLinkServices", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "PublicIPAddresses", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "PublicIPPrefixes", "2019-11-01"),
+                new Tuple<string, string, string>("Network", "PutBastionShareableLink", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "ResourceNavigationLinks", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "RouteFilterRules", "2019-11-01"),
                 new Tuple<string, string, string>("Network", "RouteFilters", "2019-11-01"),
@@ -116,16 +121,5 @@ namespace Microsoft.Azure.Management.Network
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\git\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "5f997529a6ea1a8c16715ea51bb15dd2d1dca0e7";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
