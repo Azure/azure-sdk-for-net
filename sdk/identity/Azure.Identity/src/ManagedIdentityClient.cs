@@ -171,7 +171,7 @@ namespace Azure.Identity
                         {
                             _msiType = MsiType.Unavailable;
 
-                            AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(request.Uri);
+                            AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
                         }
                     }
                 }
@@ -235,7 +235,6 @@ namespace Azure.Identity
                         {
                             _msiType = MsiType.Unavailable;
 
-                            AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(request.Uri);
                         }
                     }
                 }
@@ -251,6 +250,9 @@ namespace Azure.Identity
 
         protected virtual bool ImdsAvailable(CancellationToken cancellationToken)
         {
+            AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
+
+            bool available;
             // try to create a TCP connection to the IMDS IP address. If the connection can be established
             // we assume that IMDS is available. If connecting times out or fails to connect assume that
             // IMDS is not available in this environment.
@@ -262,17 +264,31 @@ namespace Azure.Identity
 
                     var success = result.AsyncWaitHandle.WaitOne(ImdsAvailableTimeoutMs);
 
-                    return success && client.Connected;
+                    available = success && client.Connected;
                 }
             }
             catch
             {
-                return false;
+                available = false;
             }
+
+            if (available)
+            {
+                AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
+            }
+            else
+            {
+                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
+            }
+
+            return available;
         }
 
         protected virtual async Task<bool> ImdsAvailableAsync(CancellationToken cancellationToken)
         {
+            AzureIdentityEventSource.Singleton.ProbeImdsEndpoint(s_imdsEndpoint);
+
+            bool available;
             // try to create a TCP connection to the IMDS IP address. If the connection can be established
             // we assume that IMDS is available. If connecting times out or fails to connect assume that
             // IMDS is not available in this environment.
@@ -284,13 +300,24 @@ namespace Azure.Identity
 
                     var success = await Task.Run<bool>(() => result.AsyncWaitHandle.WaitOne(ImdsAvailableTimeoutMs), cancellationToken).ConfigureAwait(false);
 
-                    return success && client.Connected;
+                    available = success && client.Connected;
                 }
             }
-            catch (Exception e) when (!(e is OperationCanceledException))
+            catch
             {
-                return false;
+                available = false;
             }
+
+            if (available)
+            {
+                AzureIdentityEventSource.Singleton.ImdsEndpointFound(s_imdsEndpoint);
+            }
+            else
+            {
+                AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
+            }
+
+            return available;
         }
 
         private Request CreateAuthRequest(MsiType msiType, string[] scopes)
