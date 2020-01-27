@@ -5947,7 +5947,10 @@ namespace Azure.Storage.Files.Shares
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 // Create the body
-                _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                if (optionalbody != null)
+                {
+                    _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                }
 
                 return _message;
             }

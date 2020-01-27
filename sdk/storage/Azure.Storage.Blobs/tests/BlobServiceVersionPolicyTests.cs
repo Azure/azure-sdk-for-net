@@ -17,8 +17,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class BlobServiceVersionPolicyTests : BlobTestBase
     {
-        public BlobServiceVersionPolicyTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobServiceVersionPolicyTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

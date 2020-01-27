@@ -28,8 +28,8 @@ namespace Azure.Storage.Blobs.Test
         private const string ContentLanguage = "language";
         private const string ContentType = "type";
 
-        public PageBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public PageBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

@@ -2806,7 +2806,7 @@ namespace Azure.Storage.Files.Shares
                         leaseId: conditions?.LeaseId,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.UploadRangeOperationName);
+                        operationName: Constants.File.UploadRangeOperationName).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

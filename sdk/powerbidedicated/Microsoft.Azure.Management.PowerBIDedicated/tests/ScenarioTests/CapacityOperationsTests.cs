@@ -149,7 +149,7 @@ namespace PowerBIDedicated.Tests.ScenarioTests
                 // Delete the servcapacityer and confirm that it is deleted.
                 client.Capacities.Delete(PowerBIDedicatedTestUtilities.DefaultResourceGroup, secondCapacity);
 
-                // delete the capacity again and make sure it continues to result in a succesful code.
+                // delete the capacity again and make sure it continues to result in a successful code.
                 client.Capacities.Delete(PowerBIDedicatedTestUtilities.DefaultResourceGroup, secondCapacity);
 
                 // delete the capacity with its old name, which should also succeed.

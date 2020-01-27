@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource.</param>
-        /// <param name="type">Type of the resource.</param>
+        /// <param name="name">Name of the resource</param>
+        /// <param name="type">Type of the resource</param>
         /// <param name="topic">Name of the topic of the event
         /// subscription.</param>
         /// <param name="provisioningState">Provisioning state of the event
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// subscription.</param>
         /// <param name="eventDeliverySchema">The event delivery schema for the
         /// event subscription. Possible values include: 'EventGridSchema',
-        /// 'CustomInputSchema', 'CloudEventSchemaV1_0'.</param>
+        /// 'CustomInputSchema', 'CloudEventSchemaV1_0'</param>
         /// <param name="retryPolicy">The retry policy for events. This can be
         /// used to configure maximum number of delivery attempts and time to
         /// live for events.</param>
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Gets or sets the event delivery schema for the event subscription.
         /// Possible values include: 'EventGridSchema', 'CustomInputSchema',
-        /// 'CloudEventSchemaV1_0'.
+        /// 'CloudEventSchemaV1_0'
         /// </summary>
         [JsonProperty(PropertyName = "properties.eventDeliverySchema")]
         public string EventDeliverySchema { get; set; }

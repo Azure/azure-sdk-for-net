@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// subnet.</param>
         /// <param name="addressPrefixes">List of address prefixes for the
         /// subnet.</param>
-        /// <param name="networkSecurityGroup">The reference of the
+        /// <param name="networkSecurityGroup">The reference to the
         /// NetworkSecurityGroup resource.</param>
-        /// <param name="routeTable">The reference of the RouteTable
+        /// <param name="routeTable">The reference to the RouteTable
         /// resource.</param>
         /// <param name="natGateway">Nat gateway associated with this
         /// subnet.</param>
@@ -120,13 +120,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> AddressPrefixes { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the NetworkSecurityGroup resource.
+        /// Gets or sets the reference to the NetworkSecurityGroup resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public NetworkSecurityGroup NetworkSecurityGroup { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the RouteTable resource.
+        /// Gets or sets the reference to the RouteTable resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.routeTable")]
         public RouteTable RouteTable { get; set; }

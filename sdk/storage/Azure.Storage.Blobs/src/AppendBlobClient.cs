@@ -730,7 +730,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
                         operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.AppendBlock",
-                        cancellationToken: cancellationToken);
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

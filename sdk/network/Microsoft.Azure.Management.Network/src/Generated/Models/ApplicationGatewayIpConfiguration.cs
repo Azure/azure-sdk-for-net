@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="subnet">Reference of the subnet resource. A subnet
+        /// <param name="subnet">Reference to the subnet resource. A subnet
         /// from where application gateway gets its private address.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// application gateway IP configuration resource. Possible values
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reference of the subnet resource. A subnet from where
+        /// Gets or sets reference to the subnet resource. A subnet from where
         /// application gateway gets its private address.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]

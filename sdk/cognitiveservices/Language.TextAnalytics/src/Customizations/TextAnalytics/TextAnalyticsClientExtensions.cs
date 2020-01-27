@@ -167,7 +167,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         public static async Task<LanguageResult> DetectLanguageAsync(
             this ITextAnalyticsClient operations,
             string inputText = default,
-            string countryHint = "en",
+            string countryHint = "US",
             bool? showStats = default,
             CancellationToken cancellationToken = default)
         {
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         public static LanguageResult DetectLanguage(
             this ITextAnalyticsClient operations,
             string inputText = default,
-            string countryHint = "en",
+            string countryHint = "US",
             bool? showStats = default,
             CancellationToken cancellationToken = default)
         {

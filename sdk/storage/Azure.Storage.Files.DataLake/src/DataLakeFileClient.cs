@@ -444,6 +444,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
+        /// <param name="destinationFileSystem">
+        /// Optional destination file system.  If null, path will be renamed within the
+        /// current file system.
+        /// </param>
         /// <param name="sourceConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the source on the creation of this file or directory.
@@ -466,6 +470,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public new virtual Response<DataLakeFileClient> Rename(
             string destinationPath,
+            string destinationFileSystem = default,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
@@ -477,6 +482,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = base.Rename(
+                    destinationFileSystem,
                     destinationPath,
                     sourceConditions,
                     destinationConditions,
@@ -505,6 +511,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="destinationPath">
         /// The destination path to rename the path to.
         /// </param>
+        /// <param name="destinationFileSystem">
+        /// Optional destination file system.  If null, path will be renamed within the
+        /// current file system.
+        /// </param>
         /// <param name="destinationConditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory.
@@ -527,6 +537,7 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public new virtual async Task<Response<DataLakeFileClient>> RenameAsync(
             string destinationPath,
+            string destinationFileSystem = default,
             DataLakeRequestConditions sourceConditions = default,
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
@@ -538,6 +549,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = await base.RenameAsync(
+                    destinationFileSystem,
                     destinationPath,
                     sourceConditions,
                     destinationConditions,
