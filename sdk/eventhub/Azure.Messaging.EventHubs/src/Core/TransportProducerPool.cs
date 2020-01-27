@@ -315,7 +315,7 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   A class wrapping a <see cref="TransportProducer"/>, triggering a clean-up when the object is disposed.
+        ///   A class wrapping a <see cref="Core.TransportProducerPool"/>, triggering a clean-up when the object is disposed.
         /// </summary>
         ///
         internal class PooledProducer: IAsyncDisposable
@@ -327,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Core
             private Func<Task> CleanUp { get; }
 
             /// <summary>
-            ///   The <see cref="TransportProducerPool"/> that is associated with the current <see cref="PooledProducer"/>.
+            ///   The <see cref="Core.TransportProducerPool"/> that is associated with the current <see cref="PooledProducer"/>.
             /// </summary>
             ///
             public TransportProducerPool TransportProducerPool { get; }
