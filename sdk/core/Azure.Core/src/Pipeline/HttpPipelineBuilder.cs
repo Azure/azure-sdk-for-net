@@ -75,7 +75,7 @@ namespace Azure.Core.Pipeline
 
             policies.Add(BufferResponsePolicy.Shared);
 
-            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled));
+            policies.Add(new RequestActivityPolicy(isDistributedTracingEnabled, ClientDiagnostics.GetResourceProviderNamespace(options.GetType().Assembly)));
 
             policies.RemoveAll(policy => policy == null);
 

@@ -11,6 +11,7 @@ namespace Azure.Core.Pipeline
     internal class RequestActivityPolicy : HttpPipelinePolicy
     {
         private readonly bool _isDistributedTracingEnabled;
+        private readonly string? _resourceProviderNamespace;
 
         private const string TraceParentHeaderName = "traceparent";
         private const string TraceStateHeaderName = "tracestate";
@@ -18,9 +19,10 @@ namespace Azure.Core.Pipeline
 
         private static readonly DiagnosticListener s_diagnosticSource = new DiagnosticListener("Azure.Core");
 
-        public RequestActivityPolicy(bool isDistributedTracingEnabled)
+        public RequestActivityPolicy(bool isDistributedTracingEnabled, string? resourceProviderNamespace)
         {
             _isDistributedTracingEnabled = isDistributedTracingEnabled;
+            _resourceProviderNamespace = resourceProviderNamespace;
         }
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -61,6 +63,11 @@ namespace Azure.Core.Pipeline
             activity.AddTag("http.url", message.Request.Uri.ToString());
             activity.AddTag("requestId", message.Request.ClientRequestId);
             activity.AddTag("kind", "client");
+
+            if (_resourceProviderNamespace != null)
+            {
+                activity.AddTag("az.namespace", _resourceProviderNamespace);
+            }
 
             if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
