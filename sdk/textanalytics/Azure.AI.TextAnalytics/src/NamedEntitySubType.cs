@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntitySubType Duration = new NamedEntitySubType("Duration");
 
         /// <summary>
-        /// Specifies that numeric type named entity is number (e.g.: 5, six).
+        /// Specifies that a numeric type named entity is a number (e.g.: 5, six).
         /// </summary>
         public static readonly NamedEntitySubType Number = new NamedEntitySubType("Number");
 
