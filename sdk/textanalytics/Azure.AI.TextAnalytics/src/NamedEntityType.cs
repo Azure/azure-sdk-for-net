@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType Location = new NamedEntityType("Location");
 
         /// <summary>
-        /// Specifies that named entity contains recognized name of organization, corporation, agency, or other group of people.
+        /// Specifies that the named entity contains the name of an organization, corporation, agency, or other group of people.
         /// </summary>
         public static readonly NamedEntityType Organization = new NamedEntityType("Organization");
 
