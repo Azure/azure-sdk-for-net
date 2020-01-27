@@ -53,9 +53,10 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 TextDocumentInput document = inputs[i++];
 
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
                     Debug.WriteLine($"Document error: {result.ErrorMessage}.");
                 }
                 else
