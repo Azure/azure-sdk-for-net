@@ -6,12 +6,12 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.TextAnalytics
 {
-    internal class AuthenticationPolicy : HttpPipelineSynchronousPolicy
+    internal class SubscriptionKeyAuthenticationPolicy : HttpPipelineSynchronousPolicy
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private TextAnalyticsSubscriptionKeyCredential _credential;
 
-        public AuthenticationPolicy(TextAnalyticsSubscriptionKeyCredential credential)
+        public SubscriptionKeyAuthenticationPolicy(TextAnalyticsSubscriptionKeyCredential credential)
         {
             _credential = credential;
         }
