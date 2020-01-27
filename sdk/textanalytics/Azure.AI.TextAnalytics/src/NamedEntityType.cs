@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType DateTime = new NamedEntityType("DateTime");
 
         /// <summary>
-        /// Specifies that named entity contains phone number (US Phone numbers only).
+        /// Specifies that the named entity contains a phone number (US phone numbers only).
         /// </summary>
         public static readonly NamedEntityType PhoneNumber = new NamedEntityType("PhoneNumber");
 
