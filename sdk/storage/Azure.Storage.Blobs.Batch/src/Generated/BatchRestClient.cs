@@ -50,7 +50,7 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Blobs.ServiceClient.SubmitBatch",
+                string operationName = "ServiceClient.SubmitBatch",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -232,7 +232,7 @@ namespace Azure.Storage.Blobs
                 string requestId = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Blobs.BlobClient.SetAccessTier",
+                string operationName = "BlobClient.SetAccessTier",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -396,7 +396,7 @@ namespace Azure.Storage.Blobs
                 Azure.ETag? ifNoneMatch = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Blobs.BlobClient.Delete",
+                string operationName = "BlobClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);

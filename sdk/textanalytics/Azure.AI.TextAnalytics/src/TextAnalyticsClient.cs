@@ -134,7 +134,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.DetectLanguage");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -191,7 +191,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.DetectLanguage");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -303,7 +303,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.DetectLanguages");
             scope.Start();
 
             try
@@ -349,7 +349,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.DetectLanguages");
             scope.Start();
 
             try
@@ -403,7 +403,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeEntities");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -461,7 +461,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeEntities");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -576,7 +576,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeEntities");
             scope.Start();
 
             try
@@ -625,7 +625,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeEntities");
             scope.Start();
 
             try
@@ -676,7 +676,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.AnalyzeSentiment");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -731,7 +731,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.AnalyzeSentiment");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -837,7 +837,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.AnalyzeSentiment");
             scope.Start();
 
             try
@@ -883,7 +883,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.AnalyzeSentiment");
             scope.Start();
 
             try
@@ -933,7 +933,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.ExtractKeyPhrases");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -987,7 +987,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.ExtractKeyPhrases");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1090,7 +1090,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.ExtractKeyPhrases");
             scope.Start();
 
             try
@@ -1135,7 +1135,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.ExtractKeyPhrases");
             scope.Start();
 
             try
@@ -1188,7 +1188,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizePiiEntities");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1245,7 +1245,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizePiiEntities");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1357,7 +1357,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizePiiEntities");
             scope.Start();
 
             try
@@ -1405,7 +1405,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizePiiEntities");
             scope.Start();
 
             try
@@ -1457,7 +1457,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeLinkedEntities");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1513,7 +1513,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeLinkedEntities");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1622,7 +1622,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeLinkedEntities");
             scope.Start();
 
             try
@@ -1669,7 +1669,7 @@ namespace Azure.AI.TextAnalytics
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("TextAnalyticsClient.RecognizeLinkedEntities");
             scope.Start();
 
             try

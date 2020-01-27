@@ -46,24 +46,24 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   The activity name associated with events.
         /// </summary>
         ///
-        public static string EventActivityName { get; } = $"{ BaseActivityName }.Message";
+        public static string EventActivityName { get; } = "EventHubs.Message";
 
         /// <summary>
         ///   The activity name associated with Event Hub producers.
         /// </summary>
         ///
-        public static string ProducerActivityName { get; } = $"{ BaseActivityName }.EventHubProducerClient.Send";
+        public static string ProducerActivityName { get; } = "EventHubProducerClient.Send";
 
         /// <summary>
         ///   The activity name associated with EventProcessor processing a list of events.
         /// </summary>
         ///
-        public static string EventProcessorProcessingActivityName { get; } = $"{ BaseActivityName }.EventProcessorClient.Process";
+        public static string EventProcessorProcessingActivityName { get; } = "EventProcessorClient.Process";
 
         /// <summary>
         ///   The activity name associated with EventProcessor creating a checkpoint.
         /// </summary>
         ///
-        public static string EventProcessorCheckpointActivityName { get; } = $"{ BaseActivityName }.EventProcessorClient.Checkpoint";
+        public static string EventProcessorCheckpointActivityName { get; } = "EventProcessorClient.Checkpoint";
     }
 }

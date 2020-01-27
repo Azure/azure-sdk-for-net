@@ -719,7 +719,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.AppendBlock",
+                        operationName: "AppendBlobClient.AppendBlock",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -972,7 +972,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.AppendBlobClient.AppendBlockFromUri",
+                        operationName: "AppendBlobClient.AppendBlockFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
