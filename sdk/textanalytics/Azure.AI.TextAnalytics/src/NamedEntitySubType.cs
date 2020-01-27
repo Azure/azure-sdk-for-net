@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntitySubType None = default;
 
         /// <summary>
-        /// Specifies that DateTime named entity represents date (e.g.: March 1, 1999).
+        /// Specifies that a DateTime named entity represents a date (e.g.: March 1, 1999).
         /// </summary>
         public static readonly NamedEntitySubType Date = new NamedEntitySubType("Date");
 
