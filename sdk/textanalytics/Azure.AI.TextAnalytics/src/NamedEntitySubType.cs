@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntitySubType Time = new NamedEntitySubType("Time");
 
         /// <summary>
-        /// Specifies that DateTime named entity represents duration (e.g.: 2 minutes).
+        /// Specifies that a DateTime named entity represents a duration (e.g.: 2 minutes).
         /// </summary>
         public static readonly NamedEntitySubType Duration = new NamedEntitySubType("Duration");
 
