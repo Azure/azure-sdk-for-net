@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Core
             var identifier = Guid.NewGuid().ToString();
             var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId));
 
-            // A race condition at this point may end with an CloseAsync called on
+            // A race condition at this point may end with CloseAsync called on
             // the returned PoolItem if it had expired. The probability is very low and
             // possible exceptions should be handled by the invoking methods.
 
