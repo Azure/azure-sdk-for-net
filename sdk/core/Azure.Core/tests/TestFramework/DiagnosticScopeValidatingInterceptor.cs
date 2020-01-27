@@ -84,9 +84,9 @@ namespace Azure.Core.Testing
                                 throw new InvalidOperationException($"All diagnostic scopes should have 'az.namespace' attribute, make sure the assembly containing **ClientOptions type is marked with AzureResourceProviderNamespaceAttribute");
                             }
 
-                            if (expectFailure != e.IsFailed)
+                            if (expectFailure && !e.IsFailed)
                             {
-                                throw new InvalidOperationException($"Expected scope {expectedName} to be have Failed == {expectFailure} but was {e.IsFailed}");
+                                throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded");
                             }
                         }
                         else
