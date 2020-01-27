@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType PhoneNumber = new NamedEntityType("PhoneNumber");
 
         /// <summary>
-        /// Specifies that named entity contains Internet URL.
+        /// Specifies that the named entity contains an email address.
         /// </summary>
         public static readonly NamedEntityType Email = new NamedEntityType("Email");
 
