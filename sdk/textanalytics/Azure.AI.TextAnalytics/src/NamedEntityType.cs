@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType Person = new NamedEntityType("Person");
 
         /// <summary>
-        /// Specifies that named entity contains natural or human-made landmarks, structures, or geographical features.JsonConvert.SerializeObject(model)
+        /// Specifies that named entity contains natural or human-made landmarks, structures, or geographical features.
         /// </summary>
         public static readonly NamedEntityType Location = new NamedEntityType("Location");
 
