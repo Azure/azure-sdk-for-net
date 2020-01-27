@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
     public readonly struct NamedEntityType : IEquatable<NamedEntityType>
     {
         /// <summary>
-        /// Specifies that named entity contains recognized name.
+        /// Specifies that the named entity corresponds to a Person.
         /// </summary>
         public static readonly NamedEntityType Person = new NamedEntityType("Person");
 
