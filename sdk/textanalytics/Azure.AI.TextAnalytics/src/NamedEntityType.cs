@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType Organization = new NamedEntityType("Organization");
 
         /// <summary>
-        /// Specifies that named entity contains date, time or duration.
+        /// Specifies that the named entity contains a date, time or duration.
         /// </summary>
         public static readonly NamedEntityType DateTime = new NamedEntityType("DateTime");
 
