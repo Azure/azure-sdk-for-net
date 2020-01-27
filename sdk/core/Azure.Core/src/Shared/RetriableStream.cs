@@ -98,10 +98,10 @@ namespace Azure.Core.Pipeline
 
             private async Task RetryAsync(Exception exception, bool async)
             {
-                if (!_responseClassifier.IsRetriableException(exception))
-                {
-                    ExceptionDispatchInfo.Capture(exception).Throw();
-                }
+                //if (!_responseClassifier.IsRetriableException(exception))
+                //{
+                //    ExceptionDispatchInfo.Capture(exception).Throw();
+                //}
 
                 if (_exceptions == null)
                 {
