@@ -91,15 +91,20 @@ namespace Azure.Core.Testing
 
         private void ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, Test test)
         {
-            if (serviceVersionNumber != _maxServiceVersion)
-            {
-                test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not the latest.");
-            }
-
             if (!isAsync && test.GetCustomAttributes<AsyncOnlyAttribute>(true).Any())
             {
                 test.RunState = RunState.Ignored;
                 test.Properties.Set("_SKIPREASON", $"Test ignored in sync run because it's marked with {nameof(AsyncOnlyAttribute)}");
+            }
+
+            if (serviceVersion == null)
+            {
+                return;
+            }
+
+            if (serviceVersionNumber != _maxServiceVersion)
+            {
+                test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not the latest.");
             }
 
             var minServiceVersion = test.GetCustomAttributes<ServiceVersionAttribute>(true);

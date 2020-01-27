@@ -829,6 +829,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             Task.Run(async () =>
             {
                 var failedAttemptCount = 0;
+                var writtenItems = 0;
                 var receivedItems = default(IEnumerable<EventData>);
                 var retryDelay = default(TimeSpan?);
                 var activeException = default(Exception);
@@ -840,13 +841,20 @@ namespace Azure.Messaging.EventHubs.Consumer
                         // Receive items in batches and then write them to the subscribed channels.  The channels will naturally
                         // block if they reach their maximum queue size, so there is no need to throttle publishing.
 
-                        receivedItems = await transportConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
+                        if (receivedItems == default)
+                        {
+                            receivedItems = await transportConsumer.ReceiveAsync(BackgroundPublishReceiveBatchSize, BackgroundPublishingWaitTime, cancellationToken).ConfigureAwait(false);
+                            receivedItems = (receivedItems as IList<EventData>) ?? receivedItems.ToList();
+                        }
 
                         foreach (EventData item in receivedItems)
                         {
                             await channel.Writer.WriteAsync(new PartitionEvent(partitionContext, item), cancellationToken).ConfigureAwait(false);
+                            ++writtenItems;
                         }
 
+                        receivedItems = default;
+                        writtenItems = 0;
                         failedAttemptCount = 0;
                     }
                     catch (TaskCanceledException ex)
@@ -891,6 +899,15 @@ namespace Azure.Messaging.EventHubs.Consumer
 
                         if (retryDelay.HasValue)
                         {
+                            // If items were being emitted at the time of the exception, skip to the
+                            // last active item that was published to the channel so that publishing
+                            // resumes at the next event in sequence and duplicates are not written.
+
+                            if ((receivedItems != default) && (writtenItems > 0))
+                            {
+                                receivedItems = receivedItems.Skip(writtenItems);
+                            }
+
                             await Task.Delay(retryDelay.Value).ConfigureAwait(false);
                             activeException = null;
                         }

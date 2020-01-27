@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="ApiCompatVerification">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <!--This project is used to enforce API compatibility between the GA'ed libraries and the most recent version available on Nuget. The most recent
   version is restored from Nuget via the package references below. The ApiCompatVerification target, specified below, is referenced in the
   eng/Directory.Build.Data.targets file which causes this target to be executed for each csproj that has the EnableApiCompat parameter set to true.
