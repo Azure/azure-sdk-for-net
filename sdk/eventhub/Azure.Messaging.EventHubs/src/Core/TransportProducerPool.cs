@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Core
             // the returned PoolItem if it had expired. The probability is very low and
             // possible exceptions should be handled by the invoking methods.
 
-            if (!item.ActiveInstances.TryAdd(identifier, 0) || (item.PartitionProducer != null && item.PartitionProducer.IsClosed))
+            if (item.PartitionProducer != null && item.PartitionProducer.IsClosed || !item.ActiveInstances.TryAdd(identifier, 0))
             {
                 identifier = Guid.NewGuid().ToString();
                 item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId));

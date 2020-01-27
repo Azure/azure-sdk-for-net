@@ -35,9 +35,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
             {
                 // An expired item in the pool
-                ["0"] = new TransportProducerPool.PoolItem(transportProducer, removeAfter: oneMinuteAgo),
-                ["1"] = new TransportProducerPool.PoolItem(transportProducer),
-                ["2"] = new TransportProducerPool.PoolItem(transportProducer),
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo),
+                ["1"] = new TransportProducerPool.PoolItem("0", transportProducer),
+                ["2"] = new TransportProducerPool.PoolItem("0", transportProducer),
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
 
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
             {
                 // An expired item in the pool
-                ["0"] = new TransportProducerPool.PoolItem(transportProducer, removeAfter: oneMinuteAgo)
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
 
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportProducer = new ObservableTransportProducerMock();
             var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
             {
-                ["0"] = new TransportProducerPool.PoolItem(transportProducer)
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer)
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer);
             var expectedTime = DateTimeOffset.UtcNow.AddMinutes(10);
@@ -114,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
             {
                 // An expired item in the pool
-                ["0"] = new TransportProducerPool.PoolItem(transportProducer, removeAfter: oneMinuteAgo)
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
 
