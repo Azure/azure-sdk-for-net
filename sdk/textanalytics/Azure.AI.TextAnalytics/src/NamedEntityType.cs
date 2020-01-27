@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntityType Url = new NamedEntityType("URL");
 
         /// <summary>
-        /// Specifies that named entity contains number or numeric quantity.
+        /// Specifies that the named entity contains a number or numeric quantity.
         /// </summary>
         public static readonly NamedEntityType Quantity = new NamedEntityType("Quantity");
 
