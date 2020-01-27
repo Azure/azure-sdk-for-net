@@ -511,21 +511,6 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Checks if the <see cref="TransportProducer"/> returned by the <see cref="TransportProducerPool"/> is still open.
-        /// </summary>
-        ///
-        /// <param name="producer">The <see cref="TransportProducer"/> that has being checked.</param>
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        ///
-        /// <returns><c>true</c> if the specified <see cref="TransportProducer" /> is closed; otherwise, <c>false</c>.</returns>
-        ///
-        private bool ShouldRecreateProducer(TransportProducer producer,
-                                            string partitionId) => !string.IsNullOrEmpty(partitionId)
-                                                                   && producer.IsClosed
-                                                                   && !IsClosed
-                                                                   && !Connection.IsClosed;
-
-        /// <summary>
         ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
         ///   exceed the maximum allowable size of the batch, the batch will not allow adding the event and signal that scenario using its
         ///   return value.
@@ -720,5 +705,20 @@ namespace Azure.Messaging.EventHubs.Producer
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotSendWithPartitionIdAndPartitionKey, partitionId));
             }
         }
+
+        /// <summary>
+        ///   Checks if the <see cref="TransportProducer"/> returned by the <see cref="TransportProducerPool"/> is still open.
+        /// </summary>
+        ///
+        /// <param name="producer">The <see cref="TransportProducer"/> that has being checked.</param>
+        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        ///
+        /// <returns><c>true</c> if the specified <see cref="TransportProducer" /> is closed; otherwise, <c>false</c>.</returns>
+        ///
+        private bool ShouldRecreateProducer(TransportProducer producer,
+                                            string partitionId) => !string.IsNullOrEmpty(partitionId)
+                                                                   && producer.IsClosed
+                                                                   && !IsClosed
+                                                                   && !Connection.IsClosed;
     }
 }
