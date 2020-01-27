@@ -565,7 +565,9 @@ namespace Azure.Storage.Blobs.Test
 
                 OutputEventsForTest();
                 TestContext.Progress.WriteLine($"Start CopyToAsync: {GetThreads()}");
-                await download.Content.CopyToAsync(actualStream).ConfigureAwait(false);
+                var source = new CancellationTokenSource();
+                source.CancelAfter(60000);
+                await download.Content.CopyToAsync(actualStream, source.Token).ConfigureAwait(false);
                 TestContext.Progress.WriteLine($"End CopyToAsync: {GetThreads()}");
 
                 var buffer = new byte[count];
