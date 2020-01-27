@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics
         public static readonly NamedEntitySubType Date = new NamedEntitySubType("Date");
 
         /// <summary>
-        /// Specifies that DateTime named entity represents time (e.g.: 12:34).
+        /// Specifies that a DateTime named entity represents a time (e.g.: 12:34).
         /// </summary>
         public static readonly NamedEntitySubType Time = new NamedEntitySubType("Time");
 
