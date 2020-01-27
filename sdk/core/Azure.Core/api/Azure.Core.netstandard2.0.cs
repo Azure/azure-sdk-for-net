@@ -328,6 +328,7 @@ namespace Azure.Core
     {
         public ResponseClassifier() { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
+        public virtual bool IsRetriableException(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }
         public virtual bool IsRetriableResponse(Azure.Core.HttpMessage message) { throw null; }
     }
