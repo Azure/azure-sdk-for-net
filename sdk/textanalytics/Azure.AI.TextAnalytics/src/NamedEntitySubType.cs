@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics
         /// Returns a string representation of the NamedEntitySubType.
         /// </summary>
         /// <returns>The NamedEntitySubType as a string.</returns>
-        public override string ToString() => _value ?? "N/A";
+        public override string ToString() => _value ?? "None";
     }
 
     internal class NamedEntitySubTypeJsonConverter : JsonConverter<NamedEntitySubType>
