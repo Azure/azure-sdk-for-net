@@ -422,7 +422,7 @@ namespace Azure.Storage.Blobs.Test
             ContainerEncryptionScopeOptions encryptionScopeOptions = new ContainerEncryptionScopeOptions
             {
                 DefaultEncryptionScope = TestConfigDefault.EncryptionScope,
-                DenyEncryptionScopeOverride = true
+                PreventEncryptionScopeOverride  = true
             };
 
             // Act
@@ -704,7 +704,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.HasImmutabilityPolicy);
             Assert.IsNotNull(response.Value.HasLegalHold);
             Assert.IsNotNull(response.Value.DefaultEncryptionScope);
-            Assert.IsNotNull(response.Value.DenyEncryptionScopeOverride);
+            Assert.IsNotNull(response.Value.PreventEncryptionScopeOverride);
             Assert.IsNotNull(response.Value.ETag);
             Assert.IsNotNull(response.Value.Metadata);
         }

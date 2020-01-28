@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             encryptionScopeOptions.DefaultEncryptionScope = null;
-            encryptionScopeOptions.DenyEncryptionScopeOverride = true;
+            encryptionScopeOptions.PreventEncryptionScopeOverride  = true;
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
