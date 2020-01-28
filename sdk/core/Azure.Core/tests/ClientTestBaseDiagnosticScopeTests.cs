@@ -23,7 +23,7 @@ namespace Azure.Core.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.NoScopeAsync());
-            StringAssert.Contains("Expected some diagnostic event to fire", ex.Message);
+            StringAssert.Contains("Expected some diagnostic scopes to be created, found none", ex.Message);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
         {
             private void FireScope(string method)
             {
-                ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Core.Tests", true);
+                ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Core.Tests", "random", true);
                 string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).Name}.{method}";
                 DiagnosticScope scope = clientDiagnostics.CreateScope(activityName);
                 scope.Start();
