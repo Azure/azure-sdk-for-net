@@ -98,7 +98,7 @@ namespace Azure.Core.Testing
             }
 
 #if !EXCLUDE_RECORDING
-            var simulateFailure = test.GetCustomAttributes<SimulateFailureAttribute>(true).FirstOrDefault();
+            var simulateFailure = GetAllTestAttributes<SimulateFailureAttribute>(test).FirstOrDefault();
             if (simulateFailure != null)
             {
                 test.Properties.Set(nameof(SimulateFailureAttribute), simulateFailure);
@@ -137,5 +137,34 @@ namespace Azure.Core.Testing
         bool IPreFilter.IsMatch(Type type) => true;
 
         bool IPreFilter.IsMatch(Type type, MethodInfo method)  => true;
+
+        private static IEnumerable<T> GetAllTestAttributes<T>(Test test) where T : Attribute
+        {
+            if (test.Method != null)
+            {
+                foreach (T attribute in test.Method.GetCustomAttributes<T>(true))
+                {
+                    yield return attribute;
+                }
+            }
+
+            if (test.TypeInfo == null)
+            {
+                yield break;
+            }
+
+            foreach (T attribute in test.TypeInfo.GetCustomAttributes<T>(true))
+            {
+                yield return attribute;
+            }
+
+            if (test.TypeInfo.Assembly != null)
+            {
+                foreach (var attribute in test.TypeInfo.Assembly.GetCustomAttributes(typeof(T), true))
+                {
+                    yield return (T)attribute;
+                }
+            }
+        }
     }
 }
