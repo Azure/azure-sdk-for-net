@@ -14173,7 +14173,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// DenyEncryptionScopeOverride
         /// </summary>
-        public bool? DenyEncryptionScopeOverride { get; internal set; }
+        public bool? PreventEncryptionScopeOverride { get; internal set; }
 
         /// <summary>
         /// ETag
@@ -14258,7 +14258,7 @@ namespace Azure.Storage.Blobs.Models
             _child = element.Element(System.Xml.Linq.XName.Get("DenyEncryptionScopeOverride", ""));
             if (_child != null)
             {
-                _value.DenyEncryptionScopeOverride = bool.Parse(_child.Value);
+                _value.PreventEncryptionScopeOverride = bool.Parse(_child.Value);
             }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
@@ -14298,7 +14298,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             bool? hasLegalHold = default,
             string defaultEncryptionScope = default,
-            bool? denyEncryptionScopeOverride = default,
+            bool? preventEncryptionScopeOverride = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
             bool? hasImmutabilityPolicy = default)
         {
@@ -14312,7 +14312,7 @@ namespace Azure.Storage.Blobs.Models
                 LeaseStatus = leaseStatus,
                 HasLegalHold = hasLegalHold,
                 DefaultEncryptionScope = defaultEncryptionScope,
-                DenyEncryptionScopeOverride = denyEncryptionScopeOverride,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
                 Metadata = metadata,
                 HasImmutabilityPolicy = hasImmutabilityPolicy,
             };
