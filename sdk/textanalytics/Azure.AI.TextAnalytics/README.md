@@ -167,7 +167,7 @@ IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (NamedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType.ToString()}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
@@ -185,7 +185,7 @@ IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (NamedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType.ToString()}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
@@ -234,7 +234,7 @@ IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (NamedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType.ToString()}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
