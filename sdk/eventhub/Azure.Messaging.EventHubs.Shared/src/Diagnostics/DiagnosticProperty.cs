@@ -9,9 +9,6 @@ namespace Azure.Messaging.EventHubs.Diagnostics
     ///
     internal static class DiagnosticProperty
     {
-        /// <summary>The common root for activity names in the Event Hubs context.</summary>
-        public const string BaseActivityName = "Azure.Messaging.EventHubs";
-
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
         public const string DiagnosticIdAttribute = "Diagnostic-Id";
 
