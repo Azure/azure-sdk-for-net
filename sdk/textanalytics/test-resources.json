@@ -51,7 +51,7 @@
     },
     "variables": {
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{endpointSuffix}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]" 
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]" 
     },
     "resources": [
         {
