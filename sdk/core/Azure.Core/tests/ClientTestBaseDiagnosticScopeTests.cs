@@ -58,7 +58,7 @@ namespace Azure.Core.Tests
             private void FireScope(string method)
             {
                 ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Core.Tests", true);
-                string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).FullName}.{method}";
+                string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).Name}.{method}";
                 DiagnosticScope scope = clientDiagnostics.CreateScope(activityName);
                 scope.Start();
                 scope.Dispose();
