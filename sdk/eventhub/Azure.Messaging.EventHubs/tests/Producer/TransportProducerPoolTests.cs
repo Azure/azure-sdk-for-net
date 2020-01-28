@@ -124,18 +124,9 @@ namespace Azure.Messaging.EventHubs.Tests
             await using (pooledProducer)
             {
                 Assert.IsTrue(poolItem.ActiveInstances.Count == 1, "The usage of a transport producer should be tracked.");
-
-                // Expire the producer
-                poolItem.RemoveAfter = oneMinuteAgo;
-
-                // It removes the producer from the pool but it would not close it yet
-                // and delegates the task to cleanup once out of the critical area
-                GetExpirationCallBack(transportProducerPool).Invoke(null);
             }
 
             Assert.IsTrue(poolItem.ActiveInstances.Count == 0, "After usage an active instance should be removed from the pool.");
-            Assert.IsFalse(startingPool.TryGetValue("0", out _), "A transport producer pool should remove an expired transport producer.");
-            Assert.AreEqual(transportProducer.CloseCallCount, 1, "A transport producer pool should close an expired transport producer.");
         }
 
         /// <summary>
@@ -148,7 +139,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var transportProducer = new ObservableTransportProducerMock();
             var connection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
-            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer);
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", transportProducer)
+            };
+            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
 
             var pooledProducer = transportProducerPool.GetPooledProducer("0", TimeSpan.FromMinutes(-1));
 
@@ -160,6 +155,31 @@ namespace Azure.Messaging.EventHubs.Tests
             GetExpirationCallBack(transportProducerPool).Invoke(null);
 
             Assert.That(transportProducer.CloseCallCount == 1);
+        }
+
+        /// <summary>
+        ///   The <see cref="TransportProducerPool"/> returns the right <see cref="TransportProducer"/>
+        ///   matching the righ partition id.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("0")]
+        public void TransportProducerPoolAllowsTakingTheRightTransportProducer(string partitionId)
+        {
+            var transportProducer = new ObservableTransportProducerMock(partitionId);
+            var partitionProducer = new ObservableTransportProducerMock(partitionId);
+            var connection = new MockConnection(() => partitionProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
+            {
+                ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer)
+            };
+            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
+
+            var returnedProducer = transportProducerPool.GetTransportProducer(partitionId) as ObservableTransportProducerMock;
+
+            Assert.That(returnedProducer.PartitionId == partitionId);
         }
 
         /// <summary>
@@ -266,6 +286,12 @@ namespace Azure.Messaging.EventHubs.Tests
             public (IEnumerable<EventData>, SendEventOptions) SendCalledWith;
             public EventDataBatch SendBatchCalledWith;
             public CreateBatchOptions CreateBatchCalledWith;
+            public string PartitionId { get; set; }
+
+            public ObservableTransportProducerMock(string partitionId = default)
+            {
+                PartitionId = partitionId;
+            }
 
             public override Task SendAsync(IEnumerable<EventData> events,
                                            SendEventOptions sendOptions,
