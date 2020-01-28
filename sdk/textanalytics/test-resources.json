@@ -43,10 +43,15 @@
         "endpointPrefix": {
             "defaultValue": "textanalytics",
             "type": "string"
+        },
+        "endpointSuffix": {
+            "defaultValue": ".cognitiveservices.azure.com",
+            "type": "string"
         }
     },
     "variables": {
-        "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]"    
+        "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
+        "endpointValue": "[format('https://{0}-{1}{endpointSuffix}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]" 
     },
     "resources": [
         {
@@ -78,7 +83,7 @@
         },
         "TEXT_ANALYTICS_SUBSCRIPTION_KEY": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').value[0].key1]"
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
         },
         "TEXT_ANALYTICS_ENDPOINT": {
             "type": "string",
