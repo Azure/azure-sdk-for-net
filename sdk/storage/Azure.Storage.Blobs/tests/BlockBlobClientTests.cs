@@ -27,8 +27,8 @@ namespace Azure.Storage.Blobs.Test
         private readonly Func<RequestFailedException, bool> _retryStageBlockFromUri =
             ex => ex.Status == 500 && ex.ErrorCode == BlobErrorCode.CannotVerifyCopySource.ToString();
 
-        public BlockBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlockBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -1305,6 +1305,32 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, blobs.Count);
             Assert.AreEqual(blockBlobName, blobs.First().Name);
 
+            Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
+            var actual = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [LiveOnly]
+        [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9487")]
+        public async Task UploadAsync_LargeFile()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            var blockBlobName = GetNewBlobName();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blockBlobName));
+            var data = GetRandomBuffer(Constants.GB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(
+                    content: stream);
+            }
+
+            // Assert
             Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
             var actual = new MemoryStream();
             await downloadResponse.Value.Content.CopyToAsync(actual);

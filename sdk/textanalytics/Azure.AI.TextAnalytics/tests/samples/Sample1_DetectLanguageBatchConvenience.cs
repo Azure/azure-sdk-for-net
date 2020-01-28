@@ -18,7 +18,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            // Instantiate a client that will be used to call the service.
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
 
             var inputs = new List<string>
             {
@@ -38,10 +39,11 @@ namespace Azure.AI.TextAnalytics.Samples
             DetectLanguageResultCollection results = client.DetectLanguages(inputs);
             #endregion
 
-            Debug.WriteLine($"Detected languages are:");
+            int i = 0;
             foreach (DetectLanguageResult result in results)
             {
-                Debug.WriteLine($"    {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score:0.00}.");
+                Debug.WriteLine($"On document {inputs[i++]}:");
+                Debug.WriteLine($"Detected language: {result.PrimaryLanguage.Name}, with confidence {result.PrimaryLanguage.Score:0.00}.");
             }
         }
     }

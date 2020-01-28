@@ -18,7 +18,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            // Instantiate a client that will be used to call the service.
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
             var inputs = new List<TextDocumentInput>
@@ -52,9 +53,11 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 TextDocumentInput document = inputs[i++];
 
+                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
                 }
                 else
                 {

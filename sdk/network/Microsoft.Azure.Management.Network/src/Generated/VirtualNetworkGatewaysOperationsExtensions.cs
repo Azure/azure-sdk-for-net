@@ -962,6 +962,51 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            public static void DisconnectVirtualNetworkGatewayVpnConnections(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request)
+            {
+                operations.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(resourceGroupName, virtualNetworkGatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisconnectVirtualNetworkGatewayVpnConnectionsAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisconnectVirtualNetworkGatewayVpnConnectionsWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates or updates a virtual network gateway in the specified resource
             /// group.
             /// </summary>
@@ -1697,6 +1742,51 @@ namespace Microsoft.Azure.Management.Network
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            public static void BeginDisconnectVirtualNetworkGatewayVpnConnections(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request)
+            {
+                operations.BeginDisconnectVirtualNetworkGatewayVpnConnectionsAsync(resourceGroupName, virtualNetworkGatewayName, request).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disconnect vpn connections of virtual network gateway in the specified
+            /// resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkGatewayName'>
+            /// The name of the virtual network gateway.
+            /// </param>
+            /// <param name='request'>
+            /// The parameters are supplied to disconnect vpn connections.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDisconnectVirtualNetworkGatewayVpnConnectionsAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, P2SVpnConnectionRequest request, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDisconnectVirtualNetworkGatewayVpnConnectionsWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, request, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
