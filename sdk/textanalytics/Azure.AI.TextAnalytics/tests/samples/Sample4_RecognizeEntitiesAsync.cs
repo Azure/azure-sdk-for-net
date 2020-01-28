@@ -20,7 +20,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            // Instantiate a client that will be used to call the service.
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
 
             #region Snippet:RecognizeEntitiesAsync
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
@@ -31,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"Recognized {entities.Count()} entities:");
             foreach (NamedEntity entity in entities)
             {
-                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
             }
             #endregion
         }

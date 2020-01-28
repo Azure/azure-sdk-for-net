@@ -315,8 +315,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='domainName'>
         /// Name of the domain.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the domains resource.
+        /// <param name='domainUpdateParameters'>
+        /// Domain update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -324,10 +324,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Domain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Domain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Domain> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, domainName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Domain> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, domainName, domainUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1575,8 +1575,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='domainName'>
         /// Name of the domain.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the domains resource.
+        /// <param name='domainUpdateParameters'>
+        /// Domain update information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1599,7 +1599,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Domain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Domain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, DomainUpdateParameters domainUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1613,14 +1613,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "domainName");
             }
+            if (domainUpdateParameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "domainUpdateParameters");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            DomainUpdateParameters domainUpdateParameters = new DomainUpdateParameters();
-            if (tags != null)
-            {
-                domainUpdateParameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

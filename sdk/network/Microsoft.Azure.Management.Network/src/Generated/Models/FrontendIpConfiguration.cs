@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAddressVersion">Whether the specific
         /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
         /// values include: 'IPv4', 'IPv6'</param>
-        /// <param name="subnet">The reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">The reference of the Public IP
+        /// <param name="subnet">The reference to the subnet resource.</param>
+        /// <param name="publicIPAddress">The reference to the Public IP
         /// resource.</param>
-        /// <param name="publicIPPrefix">The reference of the Public IP Prefix
+        /// <param name="publicIPPrefix">The reference to the Public IP Prefix
         /// resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// frontend IP configuration resource. Possible values include:
@@ -141,19 +141,19 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAddressVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource.
+        /// Gets or sets the reference to the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public Subnet Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the Public IP resource.
+        /// Gets or sets the reference to the Public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public PublicIPAddress PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the Public IP Prefix resource.
+        /// Gets or sets the reference to the Public IP Prefix resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPPrefix")]
         public SubResource PublicIPPrefix { get; set; }

@@ -3,10 +3,12 @@ This sample demonstrates how to recognize entities in one or more text inputs us
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to recognize entities in an input text, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics subscription key.  You can set `endpoint` and `subscriptionKey` based on an environment variable, a configuration setting, or any way that works for your application.
+To create a new `TextAnalyticsClient` to recognize entities in an input text, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics subscription key credential by creating a `TextAnalyticsSubscriptionKeyCredential` object, that if neded, will allow you to update the subscription key without creating a new client.
+
+You can set `endpoint` and `subscriptionKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample4CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
 ```
 
 ## Recognizing entities in a single input
@@ -22,7 +24,7 @@ IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (NamedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 

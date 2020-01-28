@@ -311,6 +311,11 @@ namespace Microsoft.Azure.Management.Network
         IConnectionMonitorsOperations ConnectionMonitors { get; }
 
         /// <summary>
+        /// Gets the IFlowLogsOperations.
+        /// </summary>
+        IFlowLogsOperations FlowLogs { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

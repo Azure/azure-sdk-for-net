@@ -367,6 +367,25 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task RenameAsync_FileSystem()
+        {
+            await using DisposingFileSystem sourceTest = await GetNewFileSystem();
+            await using DisposingFileSystem destTest = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = await sourceTest.FileSystem.CreateFileAsync(GetNewFileName());
+            string destFileName = GetNewDirectoryName();
+
+            // Act
+            DataLakeFileClient destFile = await sourceFile.RenameAsync(
+                destinationPath: destFileName,
+                destinationFileSystem: destTest.FileSystem.Name);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [Test]
         public async Task RenameAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1329,6 +1348,30 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await file.AppendAsync(stream, 0);
             }
+        }
+
+        [Test]
+        public async Task AppendDataAsync_ProgressReporting()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            var data = GetRandomBuffer(Size);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.AppendAsync(stream, 0, progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(Size, progress.List[progress.List.Count - 1]);
+
         }
 
         [Test]

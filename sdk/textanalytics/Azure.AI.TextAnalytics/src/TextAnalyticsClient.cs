@@ -12,17 +12,15 @@ using System.Threading.Tasks;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The client to use for interacting with the Azure Configuration Store.
+    /// The client to use for interacting with the Azure Cognitive Service, Text Analytics.
     /// </summary>
     public partial class TextAnalyticsClient
     {
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly string _subscriptionKey;
         private readonly string _apiVersion;
         private readonly TextAnalyticsClientOptions _options;
-
         private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace Azure.AI.TextAnalytics
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new TextAnalyticsClientOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
             _apiVersion = options.GetVersionString();
@@ -74,10 +72,11 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="subscriptionKey">The subscription key used to access
-        /// the service.</param>
-        public TextAnalyticsClient(Uri endpoint, string subscriptionKey)
-            : this(endpoint, subscriptionKey, new TextAnalyticsClientOptions())
+        /// <param name="credential">The subscription key used to access
+        /// the service. This will allow you to update the subscription key
+        /// without creating a new client.</param>
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential)
+            : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
         }
 
@@ -87,20 +86,20 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="subscriptionKey">The subscription key used to access
-        /// the service.</param>
+        /// <param name="credential">The subscription key used to access
+        /// the service. This will allow you to update the subscription key
+        /// without creating a new client.</param>
         /// <param name="options"><see cref="TextAnalyticsClientOptions"/> that allow
         /// callers to configure how requests are sent to the service.</param>
-        public TextAnalyticsClient(Uri endpoint, string subscriptionKey, TextAnalyticsClientOptions options)
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(subscriptionKey, nameof(subscriptionKey));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
             _baseUri = endpoint;
-            _subscriptionKey = subscriptionKey;
             _apiVersion = options.GetVersionString();
-            _pipeline = HttpPipelineBuilder.Build(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new SubscriptionKeyAuthenticationPolicy(credential));
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
         }
@@ -130,9 +129,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<DetectLanguageResult>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -187,9 +186,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<DetectLanguageResult> DetectLanguage(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -296,17 +295,18 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguages)}");
             scope.Start();
 
             try
             {
                 using Request request = CreateDetectLanguageRequest(inputs, options);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -314,7 +314,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync();
+                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -341,11 +341,12 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.DetectLanguages");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguages)}");
             scope.Start();
 
             try
@@ -378,9 +379,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in input text, and categorize those entities into types
         /// such as person, location, or organization.  For more information on
         /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -397,9 +398,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeEntitiesResult>> RecognizeEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -436,9 +437,9 @@ namespace Azure.AI.TextAnalytics
         /// in the passed-in input text, and categorize those entities into types
         /// such as person, location, or organization.  For more information on
         /// available categories, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -455,9 +456,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeEntitiesResult> RecognizeEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -567,17 +568,18 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeEntitiesResultCollection>> RecognizeEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.Start();
 
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, EntitiesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -615,11 +617,12 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeEntitiesResultCollection> RecognizeEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeEntities)}");
             scope.Start();
 
             try
@@ -652,7 +655,7 @@ namespace Azure.AI.TextAnalytics
         /// or mixed sentiment contained in the input text, as well as a score
         /// indicating the model's confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -668,9 +671,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<AnalyzeSentimentResult>> AnalyzeSentimentAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -707,7 +710,7 @@ namespace Azure.AI.TextAnalytics
         /// sentiment contained in the input text, as well as a score indicating the model's
         /// confidence in the predicted sentiment.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -723,9 +726,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<AnalyzeSentimentResult> AnalyzeSentiment(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -826,17 +829,18 @@ namespace Azure.AI.TextAnalytics
         /// and predictions for each of the sentences each input contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeSentimentResultCollection>> AnalyzeSentimentAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.Start();
 
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, SentimentRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -871,11 +875,12 @@ namespace Azure.AI.TextAnalytics
         /// and predictions for each of the sentences each input contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeSentimentResultCollection> AnalyzeSentiment(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.AnalyzeSentiment");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(AnalyzeSentiment)}");
             scope.Start();
 
             try
@@ -907,7 +912,7 @@ namespace Azure.AI.TextAnalytics
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -923,9 +928,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<ExtractKeyPhrasesResult>> ExtractKeyPhrasesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -961,7 +966,7 @@ namespace Azure.AI.TextAnalytics
         /// Runs a model to identify a collection of significant phrases
         /// found in the passed-in input text.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -977,9 +982,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<ExtractKeyPhrasesResult> ExtractKeyPhrases(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1077,17 +1082,18 @@ namespace Azure.AI.TextAnalytics
         /// in each of the input documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtractKeyPhrasesResultCollection>> ExtractKeyPhrasesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.Start();
 
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, KeyPhrasesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -1121,11 +1127,12 @@ namespace Azure.AI.TextAnalytics
         /// in each of the input documents.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ExtractKeyPhrasesResultCollection> ExtractKeyPhrases(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.ExtractKeyPhrases");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(ExtractKeyPhrases)}");
             scope.Start();
 
             try
@@ -1159,7 +1166,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1176,9 +1183,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizePiiEntitiesResult>> RecognizePiiEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1216,7 +1223,7 @@ namespace Azure.AI.TextAnalytics
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1233,9 +1240,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizePiiEntitiesResult> RecognizePiiEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1342,17 +1349,18 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizePiiEntitiesResultCollection>> RecognizePiiEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.Start();
 
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, PiiEntitiesRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -1389,11 +1397,12 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizePiiEntitiesResultCollection> RecognizePiiEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizePiiEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizePiiEntities)}");
             scope.Start();
 
             try
@@ -1426,7 +1435,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input text, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1443,9 +1452,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual async Task<Response<RecognizeLinkedEntitiesResult>> RecognizeLinkedEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1482,7 +1491,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input text, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputText">The text to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1499,9 +1508,9 @@ namespace Azure.AI.TextAnalytics
         /// status code.</exception>
         public virtual Response<RecognizeLinkedEntitiesResult> RecognizeLinkedEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inputText, nameof(inputText));
+            Argument.AssertNotNull(inputText, nameof(inputText));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.AddAttribute("inputText", inputText);
             scope.Start();
 
@@ -1538,7 +1547,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input strings, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1565,7 +1574,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input strings, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input strings to analyze.</param>
         /// <param name="language">The language that the input text is written in.
@@ -1592,7 +1601,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1605,17 +1614,18 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RecognizeLinkedEntitiesResultCollection>> RecognizeLinkedEntitiesAsync(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.Start();
 
             try
             {
                 using Request request = CreateDocumentInputRequest(inputs, options, EntityLinkingRoute);
-                Response response = await _pipeline.SendRequestAsync(request, cancellationToken);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -1638,7 +1648,7 @@ namespace Azure.AI.TextAnalytics
         /// found in the passed-in input documents, and include information linking the
         /// entities to their corresponding entries in a well-known knowledge base.
         /// For a list of languages supported by this operation, see
-        /// https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support.
+        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/language-support"/>.
         /// </summary>
         /// <param name="inputs">The input documents to analyze.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
@@ -1651,11 +1661,12 @@ namespace Azure.AI.TextAnalytics
         /// that a given entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<RecognizeLinkedEntitiesResultCollection> RecognizeLinkedEntities(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
+            options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.AI.TextAnalytics.TextAnalyticsClient.RecognizeLinkedEntities");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(RecognizeLinkedEntities)}");
             scope.Start();
 
             try
@@ -1727,8 +1738,6 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
 
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
-
             return request;
         }
 
@@ -1743,8 +1752,6 @@ namespace Azure.AI.TextAnalytics
 
             request.Headers.Add(HttpHeader.Common.JsonContentType);
             request.Content = RequestContent.Create(content);
-
-            request.Headers.Add("Ocp-Apim-Subscription-Key", _subscriptionKey);
 
             return request;
         }

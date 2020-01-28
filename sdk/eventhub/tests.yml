@@ -10,7 +10,7 @@ resources:
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
   parameters:
-    MaxParallel: 1
+    MaxParallel: 4
     ServiceDirectory: eventhub
     TimeoutInMinutes: 120
     EnvVars:

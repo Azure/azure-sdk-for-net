@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ServiceClient.SetProperties",
+                string operationName = "ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -187,7 +187,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ServiceClient.GetProperties",
+                string operationName = "ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -333,7 +333,7 @@ namespace Azure.Storage.Files.Shares
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ListSharesIncludeType> include = default,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ServiceClient.ListSharesSegment",
+                string operationName = "ServiceClient.ListSharesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -498,7 +498,7 @@ namespace Azure.Storage.Files.Shares
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 int? quotaInGB = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.Create",
+                string operationName = "ShareClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -656,7 +656,7 @@ namespace Azure.Storage.Files.Shares
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.GetProperties",
+                string operationName = "ShareClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -839,7 +839,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 Azure.Storage.Files.Shares.Models.DeleteSnapshotsOptionType? deleteSnapshots = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.Delete",
+                string operationName = "ShareClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -977,7 +977,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.CreateSnapshot",
+                string operationName = "ShareClient.CreateSnapshot",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1136,7 +1136,7 @@ namespace Azure.Storage.Files.Shares
                 string sharePermissionJson,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.CreatePermission",
+                string operationName = "ShareClient.CreatePermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1291,7 +1291,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.GetPermission",
+                string operationName = "ShareClient.GetPermission",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1442,7 +1442,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 int? quotaInGB = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.SetQuota",
+                string operationName = "ShareClient.SetQuota",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1592,7 +1592,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.SetMetadata",
+                string operationName = "ShareClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1745,7 +1745,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.GetAccessPolicy",
+                string operationName = "ShareClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1889,7 +1889,7 @@ namespace Azure.Storage.Files.Shares
                 System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier> permissions = default,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.SetAccessPolicy",
+                string operationName = "ShareClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2050,7 +2050,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.ShareClient.GetStatistics",
+                string operationName = "ShareClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2208,7 +2208,7 @@ namespace Azure.Storage.Files.Shares
                 string filePermission = default,
                 string filePermissionKey = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.Create",
+                string operationName = "DirectoryClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2422,7 +2422,7 @@ namespace Azure.Storage.Files.Shares
                 string sharesnapshot = default,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.GetProperties",
+                string operationName = "DirectoryClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2613,7 +2613,7 @@ namespace Azure.Storage.Files.Shares
                 string version,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.Delete",
+                string operationName = "DirectoryClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2751,7 +2751,7 @@ namespace Azure.Storage.Files.Shares
                 string filePermission = default,
                 string filePermissionKey = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.SetProperties",
+                string operationName = "DirectoryClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2957,7 +2957,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.SetMetadata",
+                string operationName = "DirectoryClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -3118,7 +3118,7 @@ namespace Azure.Storage.Files.Shares
                 int? maxresults = default,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.ListFilesAndDirectoriesSegment",
+                string operationName = "DirectoryClient.ListFilesAndDirectoriesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -3280,7 +3280,7 @@ namespace Azure.Storage.Files.Shares
                 string sharesnapshot = default,
                 bool? recursive = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.ListHandles",
+                string operationName = "DirectoryClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -3445,7 +3445,7 @@ namespace Azure.Storage.Files.Shares
                 string sharesnapshot = default,
                 bool? recursive = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.DirectoryClient.ForceCloseHandles",
+                string operationName = "DirectoryClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -3652,7 +3652,7 @@ namespace Azure.Storage.Files.Shares
                 string filePermissionKey = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.Create",
+                string operationName = "FileClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -3916,7 +3916,7 @@ namespace Azure.Storage.Files.Shares
                 bool? rangeGetContentHash = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.Download",
+                string operationName = "FileClient.Download",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -4337,7 +4337,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.GetProperties",
+                string operationName = "FileClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -4603,7 +4603,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.Delete",
+                string operationName = "FileClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -4760,7 +4760,7 @@ namespace Azure.Storage.Files.Shares
                 string filePermissionKey = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.SetProperties",
+                string operationName = "FileClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -5013,7 +5013,7 @@ namespace Azure.Storage.Files.Shares
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.SetMetadata",
+                string operationName = "FileClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -5179,7 +5179,7 @@ namespace Azure.Storage.Files.Shares
                 string proposedLeaseId = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.AcquireLease",
+                string operationName = "FileClient.AcquireLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -5343,7 +5343,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.ReleaseLease",
+                string operationName = "FileClient.ReleaseLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -5505,7 +5505,7 @@ namespace Azure.Storage.Files.Shares
                 string proposedLeaseId = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.ChangeLease",
+                string operationName = "FileClient.ChangeLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -5673,7 +5673,7 @@ namespace Azure.Storage.Files.Shares
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.BreakLease",
+                string operationName = "FileClient.BreakLease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -5841,7 +5841,7 @@ namespace Azure.Storage.Files.Shares
                 byte[] contentHash = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.UploadRange",
+                string operationName = "FileClient.UploadRange",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -5947,7 +5947,10 @@ namespace Azure.Storage.Files.Shares
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
 
                 // Create the body
-                _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                if (optionalbody != null)
+                {
+                    _request.Content = Azure.Core.RequestContent.Create(optionalbody);
+                }
 
                 return _message;
             }
@@ -6038,7 +6041,7 @@ namespace Azure.Storage.Files.Shares
                 byte[] sourceIfNoneMatchCrc64 = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.UploadRangeFromURL",
+                string operationName = "FileClient.UploadRangeFromURL",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -6236,7 +6239,7 @@ namespace Azure.Storage.Files.Shares
                 string range = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.GetRangeList",
+                string operationName = "FileClient.GetRangeList",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -6427,7 +6430,7 @@ namespace Azure.Storage.Files.Shares
                 bool? setArchiveAttribute = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.StartCopy",
+                string operationName = "FileClient.StartCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -6642,7 +6645,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 string leaseId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.AbortCopy",
+                string operationName = "FileClient.AbortCopy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -6789,7 +6792,7 @@ namespace Azure.Storage.Files.Shares
                 int? timeout = default,
                 string sharesnapshot = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.ListHandles",
+                string operationName = "FileClient.ListHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -6944,7 +6947,7 @@ namespace Azure.Storage.Files.Shares
                 string marker = default,
                 string sharesnapshot = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.Shares.FileClient.ForceCloseHandles",
+                string operationName = "FileClient.ForceCloseHandles",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);

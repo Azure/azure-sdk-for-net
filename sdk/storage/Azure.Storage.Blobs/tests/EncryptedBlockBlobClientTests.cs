@@ -13,8 +13,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class EncryptedBlockBlobClientTests : BlobTestBase
     {
-        public EncryptedBlockBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public EncryptedBlockBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

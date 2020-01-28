@@ -312,7 +312,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(0);
 
             var batch = new AmqpEventBatch(mockConverter, options);
-            Assert.That(() => batch.AsEnumerable<EventData>(), Throws.InstanceOf<FormatException>());
+            Assert.That(() => batch.AsEnumerable<AmqpMessage>(), Throws.InstanceOf<FormatException>());
         }
 
         /// <summary>
@@ -321,12 +321,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableReturnsTheMessages()
+        public void AsEnumerableReturnsTheEvents()
         {
             var currentIndex = -1;
             var maximumSize = 5000;
             var options = new CreateBatchOptions { MaximumSizeInBytes = maximumSize };
             var eventMessages = new AmqpMessage[5];
+            var batchEvents = new EventData[5];
             var mockEnvelope = new Mock<AmqpMessage>();
             var mockConverter = new InjectableMockConverter
             {
@@ -349,18 +350,19 @@ namespace Azure.Messaging.EventHubs.Tests
 
             for (var index = 0; index < eventMessages.Length; ++index)
             {
-                batch.TryAdd(new EventData(new byte[0]));
+                batchEvents[index] = new EventData(new byte[0]);
+                batch.TryAdd(batchEvents[index]);
             }
 
-            IEnumerable<AmqpMessage> batchEnumerable = batch.AsEnumerable<AmqpMessage>();
+            IEnumerable<EventData> batchEnumerable = batch.AsEnumerable<EventData>();
             Assert.That(batchEnumerable, Is.Not.Null, "The batch enumerable should have been populated.");
 
             var batchEnumerableList = batchEnumerable.ToList();
-            Assert.That(batchEnumerableList.Count, Is.EqualTo(batch.Count), "The wrong number of messages was in the enumerable.");
+            Assert.That(batchEnumerableList.Count, Is.EqualTo(batch.Count), "The wrong number of events was in the enumerable.");
 
-            for (var index = 0; index < eventMessages.Length; ++index)
+            for (var index = 0; index < batchEvents.Length; ++index)
             {
-                Assert.That(batchEnumerableList.Contains(eventMessages[index]), $"The event message at index: { index } was not in the enumerable.");
+                Assert.That(batchEnumerableList.Contains(batchEvents[index]), $"The event at index: { index } was not in the enumerable.");
             }
         }
 

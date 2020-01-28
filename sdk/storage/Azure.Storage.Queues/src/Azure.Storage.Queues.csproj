@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />

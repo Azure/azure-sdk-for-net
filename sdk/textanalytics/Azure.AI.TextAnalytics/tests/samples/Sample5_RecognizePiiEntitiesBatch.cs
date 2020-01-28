@@ -19,7 +19,8 @@ namespace Azure.AI.TextAnalytics.Samples
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
             string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            // Instantiate a client that will be used to call the service.
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
             var inputs = new List<TextDocumentInput>
@@ -49,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
                 }
                 else
                 {
@@ -57,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (NamedEntity entity in result.NamedEntities)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

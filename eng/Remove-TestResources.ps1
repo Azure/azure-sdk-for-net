@@ -47,6 +47,27 @@ function Log($Message) {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
+function Retry([scriptblock] $Action, [int] $Attempts = 5) {
+    $attempt = 0
+    $sleep = 5
+
+    while ($attempt -lt $Attempts) {
+        try {
+            $attempt++
+            return $Action.Invoke()
+        } catch {
+            if ($attempt -lt $Attempts) {
+                $sleep *= 2
+
+                Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
+                Start-Sleep -Seconds $sleep
+            } else {
+                Write-Error -ErrorRecord $_
+            }
+        }
+    }
+}
+
 # Support actions to invoke on exit.
 $exitActions = @({
     if ($exitActions.Count -gt 1) {
@@ -65,7 +86,9 @@ if ($ProvisionerApplicationId) {
     Log "Logging into service principal '$ProvisionerApplicationId'"
     $provisionerSecret = ConvertTo-SecureString -String $ProvisionerApplicationSecret -AsPlainText -Force
     $provisionerCredential = [System.Management.Automation.PSCredential]::new($ProvisionerApplicationId, $provisionerSecret)
-    $provisionerAccount = Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+    $provisionerAccount = Retry {
+        Connect-AzAccount -Tenant $TenantId -Credential $provisionerCredential -ServicePrincipal
+    }
 
     $exitActions += {
         Write-Verbose "Logging out of service principal '$($provisionerAccount.Context.Account)'"
@@ -79,7 +102,7 @@ if (!$ResourceGroupName) {
 }
 
 Log "Deleting resource group '$ResourceGroupName'"
-if (Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force) {
+if (Retry { Remove-AzResourceGroup -Name "$ResourceGroupName" -Force:$Force }) {
     Write-Verbose "Successfully deleted resource group '$ResourceGroupName'"
 }
 

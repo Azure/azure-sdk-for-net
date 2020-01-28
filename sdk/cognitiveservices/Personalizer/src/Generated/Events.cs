@@ -12,6 +12,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
 {
     using Microsoft.Rest;
     using Models;
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
@@ -50,13 +51,17 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         public PersonalizerClient Client { get; private set; }
 
         /// <summary>
-        /// Report reward to allocate to the top ranked action for the specified event.
+        /// Post Reward.
         /// </summary>
+        /// <remarks>
+        /// Report reward that resulted from using the action specified in
+        /// rewardActionId for the specified event.
+        /// </remarks>
         /// <param name='eventId'>
         /// The event id this reward applies to.
         /// </param>
         /// <param name='reward'>
-        /// The reward should be a floating point number.
+        /// The reward should be a floating point number, typically between 0 and 1.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -64,7 +69,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -168,12 +173,19 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -200,9 +212,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         }
 
         /// <summary>
-        /// Report that the specified event was actually displayed to the user and a
-        /// reward should be expected for it.
+        /// Activate Event.
         /// </summary>
+        /// <remarks>
+        /// Report that the specified event was actually displayed to the user and a
+        /// reward should be expected for it
+        /// </remarks>
         /// <param name='eventId'>
         /// The event ID this activation applies to.
         /// </param>
@@ -212,7 +227,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -301,12 +316,19 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);

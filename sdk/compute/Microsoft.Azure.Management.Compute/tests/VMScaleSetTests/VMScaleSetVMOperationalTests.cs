@@ -99,6 +99,10 @@ namespace Compute.Tests
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId);
 
+                var imageReference = getResponse.StorageProfile.ImageReference;
+                Assert.NotNull(imageReference?.ExactVersion);
+                Assert.Equal(imageReference.Version, imageReference.ExactVersion);
+
                 VirtualMachineScaleSetVM vmScaleSetVMModel = GenerateVMScaleSetVMModel(vmScaleSet, instanceId, hasManagedDisks);
                 ValidateVMScaleSetVM(vmScaleSetVMModel, vmScaleSet.Sku.Name, getResponse, hasManagedDisks);
 

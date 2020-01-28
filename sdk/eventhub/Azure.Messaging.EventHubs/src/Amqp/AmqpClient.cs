@@ -224,19 +224,25 @@ namespace Azure.Messaging.EventHubs.Amqp
                     }
                     catch (Exception ex)
                     {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, mark the exception as active and break out of the loop.
 
                         ++failedAttemptCount;
-                        retryDelay = retryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+                        retryDelay = retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.GetPropertiesError(EventHubName, ex.Message);
+                            EventHubsEventSource.Log.GetPropertiesError(EventHubName, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
                             stopWatch.Reset();
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
                         }
                         else
                         {
@@ -320,19 +326,25 @@ namespace Azure.Messaging.EventHubs.Amqp
                     }
                     catch (Exception ex)
                     {
+                        Exception activeEx = ex.TranslateServiceException(EventHubName);
+
                         // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
                         // Otherwise, mark the exception as active and break out of the loop.
 
                         ++failedAttemptCount;
-                        retryDelay = retryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
+                        retryDelay = retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.GetPartitionPropertiesError(EventHubName, partitionId, ex.Message);
+                            EventHubsEventSource.Log.GetPartitionPropertiesError(EventHubName, partitionId, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
                             stopWatch.Reset();
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
                         }
                         else
                         {

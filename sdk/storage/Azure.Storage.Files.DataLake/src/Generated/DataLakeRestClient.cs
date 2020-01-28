@@ -51,7 +51,7 @@ namespace Azure.Storage.Files.DataLake
                 string requestId = default,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.ServiceClient.ListFileSystems",
+                string operationName = "ServiceClient.ListFileSystems",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -231,7 +231,7 @@ namespace Azure.Storage.Files.DataLake
                 int? timeout = default,
                 string properties = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.Create",
+                string operationName = "FileSystemClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -397,7 +397,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.SetProperties",
+                string operationName = "FileSystemClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -561,7 +561,7 @@ namespace Azure.Storage.Files.DataLake
                 string requestId = default,
                 int? timeout = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.GetProperties",
+                string operationName = "FileSystemClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -729,7 +729,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.Delete",
+                string operationName = "FileSystemClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -884,7 +884,7 @@ namespace Azure.Storage.Files.DataLake
                 int? maxResults = default,
                 bool? upn = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.FileSystemClient.ListPaths",
+                string operationName = "FileSystemClient.ListPaths",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1125,7 +1125,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.Create",
+                string operationName = "PathClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1416,7 +1416,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.Update",
+                string operationName = "PathClient.Update",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1742,7 +1742,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.Lease",
+                string operationName = "PathClient.Lease",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1993,7 +1993,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.Read",
+                string operationName = "PathClient.Read",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2331,7 +2331,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.GetProperties",
+                string operationName = "PathClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2604,7 +2604,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.Delete",
+                string operationName = "PathClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2801,7 +2801,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.SetAccessControl",
+                string operationName = "PathClient.SetAccessControl",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -3023,7 +3023,7 @@ namespace Azure.Storage.Files.DataLake
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.FlushData",
+                string operationName = "PathClient.FlushData",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -3261,7 +3261,7 @@ namespace Azure.Storage.Files.DataLake
                 string leaseId = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Files.DataLake.PathClient.AppendData",
+                string operationName = "PathClient.AppendData",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
