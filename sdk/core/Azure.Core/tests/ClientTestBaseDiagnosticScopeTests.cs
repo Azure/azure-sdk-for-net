@@ -31,7 +31,7 @@ namespace Azure.Core.Tests
         {
             InvalidDiagnosticScopeTestClient client = InstrumentClient(new InvalidDiagnosticScopeTestClient());
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await client.WrongScopeAsync());
-            StringAssert.Contains($"{typeof(InvalidDiagnosticScopeTestClient).FullName}.{nameof(client.WrongScope)}", ex.Message);
+            StringAssert.Contains($"{typeof(InvalidDiagnosticScopeTestClient).Name}.{nameof(client.WrongScope)}", ex.Message);
 
             // Make the error message more helpful
             StringAssert.Contains("ForwardsClientCalls", ex.Message);
