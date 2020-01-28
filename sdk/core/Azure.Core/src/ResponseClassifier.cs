@@ -31,7 +31,7 @@ namespace Azure.Core
         /// <summary>
         /// Specifies if the operation that caused the exception should be retried taking the <see cref="HttpMessage"/> into consideration.
         /// </summary>
-        public virtual bool IsRetriableException(HttpMessage message, Exception exception)
+        public virtual bool IsRetriable(HttpMessage message, Exception exception)
         {
             return IsRetriableException(exception) ||
                    // Retry non-user initiated cancellations

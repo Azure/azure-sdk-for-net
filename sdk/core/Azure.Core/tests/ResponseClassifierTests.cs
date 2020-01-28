@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
         {
             var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
 
-            Assert.True(httpMessage.ResponseClassifier.IsRetriableException(httpMessage, new OperationCanceledException()));
+            Assert.True(httpMessage.ResponseClassifier.IsRetriable(httpMessage, new OperationCanceledException()));
         }
 
         [Test]

@@ -80,7 +80,7 @@ namespace Azure.Core.Pipeline
 
                 if (lastException != null)
                 {
-                    if (shouldRetry && message.ResponseClassifier.IsRetriableException(message, lastException))
+                    if (shouldRetry && message.ResponseClassifier.IsRetriable(message, lastException))
                     {
                         GetDelay(attempt, out delay);
                     }
