@@ -1310,6 +1310,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseId">
         /// Optional lease id.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1327,6 +1331,7 @@ namespace Azure.Storage.Files.DataLake
             long offset,
             byte[] contentHash = default,
             string leaseId = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
@@ -1340,6 +1345,7 @@ namespace Azure.Storage.Files.DataLake
                     offset,
                     contentHash,
                     leaseId,
+                    progressHandler,
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
@@ -1380,6 +1386,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseId">
         /// Optional lease id.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1397,6 +1407,7 @@ namespace Azure.Storage.Files.DataLake
             long offset,
             byte[] contentHash = default,
             string leaseId = default,
+            IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(Append)}");
@@ -1410,6 +1421,7 @@ namespace Azure.Storage.Files.DataLake
                     offset,
                     contentHash,
                     leaseId,
+                    progressHandler,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -1450,6 +1462,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="leaseId">
         /// Optional lease id.
         /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1470,11 +1486,13 @@ namespace Azure.Storage.Files.DataLake
             long? offset,
             byte[] contentHash,
             string leaseId,
+            IProgress<long> progressHandler,
             bool async,
             CancellationToken cancellationToken)
         {
             using (Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
+                content = content?.WithNoDispose().WithProgress(progressHandler);
                 Pipeline.LogMethodEnter(
                     nameof(DataLakeFileClient),
                     message:
