@@ -187,7 +187,7 @@ namespace Azure.Identity.Tests
 
                 Assert.AreEqual(expectedToken, actualToken.Token);
 
-                MockRequest request = mockTransport.Requests[0];
+                MockRequest request = mockTransport.SingleRequest;
 
                 Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
 

@@ -4,10 +4,7 @@
 using Azure.Core.Testing;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using System.Reflection;
 using Azure.Core;
-using System;
-using Azure.Security.KeyVault.Secrets;
 
 namespace Azure.Identity.Tests
 {

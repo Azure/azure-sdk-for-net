@@ -170,8 +170,6 @@ namespace Azure.Identity
                         else
                         {
                             _msiType = MsiType.Unavailable;
-
-                            AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(s_imdsEndpoint);
                         }
                     }
                 }
@@ -234,7 +232,6 @@ namespace Azure.Identity
                         else
                         {
                             _msiType = MsiType.Unavailable;
-
                         }
                     }
                 }
