@@ -405,10 +405,6 @@ namespace Azure.Messaging.EventHubs.Producer
             bool isMessageSent = false;
             int attempts = 0;
 
-            // Determine the transport producer to delegate the send operation to.  Because sending to a specific
-            // partition requires a dedicated client, use (or create) that client if a partition was specified.  Otherwise
-            // the default gateway producer can be used to request automatic routing from the Event Hubs service gateway.
-
             using DiagnosticScope scope = CreateDiagnosticScope();
             events = events.ToList();
             InstrumentMessages(events);
