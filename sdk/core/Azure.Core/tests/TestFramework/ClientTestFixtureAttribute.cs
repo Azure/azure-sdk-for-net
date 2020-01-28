@@ -11,7 +11,7 @@ using NUnit.Framework.Internal;
 
 namespace Azure.Core.Testing
 {
-    public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter
+    public class ClientTestFixtureAttribute : NUnitAttribute, IFixtureBuilder2, IPreFilter, ITestAttribute
     {
         private readonly object[] _serviceVersions;
         private readonly int? _maxServiceVersion;
@@ -19,8 +19,7 @@ namespace Azure.Core.Testing
         public ClientTestFixtureAttribute(params object[] serviceVersions)
         {
             _serviceVersions = serviceVersions;
-
-            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(s => Convert.ToInt32(s)) : (int?)null;
+            _maxServiceVersion = _serviceVersions.Any() ? _serviceVersions.Max(Convert.ToInt32) : (int?)null;
         }
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo)
@@ -29,107 +28,72 @@ namespace Azure.Core.Testing
         }
 
         public IEnumerable<TestSuite> BuildFrom(ITypeInfo typeInfo, IPreFilter filter)
-        {
-            if (_serviceVersions.Any())
-            {
-                foreach (object serviceVersion in _serviceVersions)
-                {
-                    var syncFixture = new TestFixtureAttribute(false, serviceVersion);
-                    var asyncFixture = new TestFixtureAttribute(true, serviceVersion);
+            => BuildTestSuites(typeInfo, filter, true).Concat(BuildTestSuites(typeInfo, filter, false));
 
-                    foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
-                    {
-                        Process(testSuite, serviceVersion, true);
-                        yield return testSuite;
-                    }
-
-                    foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
-                    {
-                        Process(testSuite, serviceVersion, false);
-                        yield return testSuite;
-                    }
-                }
-            }
-            else
-            {
+        public IEnumerable<TestSuite> BuildTestSuites(ITypeInfo typeInfo, IPreFilter filter, bool isAsync)
+            => _serviceVersions.Any()
+                ? _serviceVersions.SelectMany(v => BuildTestSuites(new TestFixtureAttribute(isAsync, v), typeInfo, filter, new TestProperties(isAsync, v)))
                 // No service versions defined
-                var syncFixture = new TestFixtureAttribute(false);
-                var asyncFixture = new TestFixtureAttribute(true);
+                : BuildTestSuites(new TestFixtureAttribute(isAsync), typeInfo, filter, new TestProperties(isAsync, null));
 
-                foreach (TestSuite testSuite in asyncFixture.BuildFrom(typeInfo, filter))
-                {
-                    Process(testSuite, null, true);
-                    yield return testSuite;
-                }
-
-                foreach (TestSuite testSuite in syncFixture.BuildFrom(typeInfo, filter))
-                {
-                    Process(testSuite, null, false);
-                    yield return testSuite;
-                }
+        private IEnumerable<TestSuite> BuildTestSuites(TestFixtureAttribute fixture, ITypeInfo typeInfo, IPreFilter filter, TestProperties testProperties)
+        {
+            foreach (TestSuite testSuite in fixture.BuildFrom(typeInfo, filter))
+            {
+                Process(testSuite, testProperties);
+                yield return testSuite;
             }
         }
 
-        private void Process(TestSuite testSuite, object serviceVersion, bool isAsync)
+        private void Process(TestSuite testSuite, TestProperties testProperties)
         {
-            var serviceVersionNumber = Convert.ToInt32(serviceVersion);
-            foreach (Test test in testSuite.Tests)
+            foreach (Test test in testSuite.Tests.OfType<Test>())
             {
                 if (test is ParameterizedMethodSuite parameterizedMethodSuite)
                 {
-                    foreach (Test parameterizedTest in parameterizedMethodSuite.Tests)
+                    foreach (Test parameterizedTest in parameterizedMethodSuite.Tests.OfType<Test>())
                     {
-                        ProcessTest(serviceVersion, isAsync, serviceVersionNumber, parameterizedTest);
+                        ProcessTest(parameterizedTest, testProperties);
                     }
                 }
                 else
                 {
-                    ProcessTest(serviceVersion, isAsync, serviceVersionNumber, test);
+                    ProcessTest(test, testProperties);
                 }
             }
         }
 
-        private void ProcessTest(object serviceVersion, bool isAsync, int serviceVersionNumber, Test test)
+        private void ProcessTest(Test test, TestProperties testProperties)
         {
-            if (!isAsync && test.GetCustomAttributes<AsyncOnlyAttribute>(true).Any())
+            foreach (ITestAttribute testAttribute in GetAllTestAttributes(test))
             {
-                test.RunState = RunState.Ignored;
-                test.Properties.Set("_SKIPREASON", $"Test ignored in sync run because it's marked with {nameof(AsyncOnlyAttribute)}");
+                testAttribute.Apply(test, testProperties);
             }
+        }
 
-#if !EXCLUDE_RECORDING
-            var simulateFailure = GetAllTestAttributes<SimulateFailureAttribute>(test).FirstOrDefault();
-            if (simulateFailure != null)
+        private static IEnumerable<ITestAttribute> GetAllTestAttributes(Test test)
+        {
+            if (test.TypeInfo != null)
             {
-                test.Properties.Set(nameof(SimulateFailureAttribute), simulateFailure);
-            }
-#endif
-
-            if (serviceVersion == null)
-            {
-                return;
-            }
-
-            if (serviceVersionNumber != _maxServiceVersion)
-            {
-                test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {serviceVersion} is not the latest.");
-            }
-
-            var minServiceVersion = test.GetCustomAttributes<ServiceVersionAttribute>(true);
-            foreach (ServiceVersionAttribute serviceVersionAttribute in minServiceVersion)
-            {
-                if (serviceVersionAttribute.Min != null &&
-                    Convert.ToInt32(serviceVersionAttribute.Min) > serviceVersionNumber)
+                if (test.TypeInfo.Assembly != null)
                 {
-                    test.RunState = RunState.Ignored;
-                    test.Properties.Set("_SKIPREASON", $"Test ignored because it's minimum service version is set to {serviceVersionAttribute.Min}");
+                    foreach (ITestAttribute attribute in test.TypeInfo.Assembly.GetCustomAttributes(true).OfType<ITestAttribute>())
+                    {
+                        yield return attribute;
+                    }
                 }
 
-                if (serviceVersionAttribute.Max != null &&
-                    Convert.ToInt32(serviceVersionAttribute.Max) < serviceVersionNumber)
+                foreach (ITestAttribute attribute in test.TypeInfo.Type.GetCustomAttributes(true).OfType<ITestAttribute>())
                 {
-                    test.RunState = RunState.Ignored;
-                    test.Properties.Set("_SKIPREASON", $"Test ignored because it's maximum service version is set to {serviceVersionAttribute.Max}");
+                    yield return attribute;
+                }
+            }
+
+            if (test.Method != null)
+            {
+                foreach (ITestAttribute attribute in test.Method.MethodInfo.GetCustomAttributes(true).OfType<ITestAttribute>())
+                {
+                    yield return attribute;
                 }
             }
         }
@@ -138,32 +102,16 @@ namespace Azure.Core.Testing
 
         bool IPreFilter.IsMatch(Type type, MethodInfo method)  => true;
 
-        private static IEnumerable<T> GetAllTestAttributes<T>(Test test) where T : Attribute
+        void ITestAttribute.Apply(Test test, TestProperties testProperties)
         {
-            if (test.Method != null)
+            if (testProperties.ServiceVersion == null)
             {
-                foreach (T attribute in test.Method.GetCustomAttributes<T>(true))
-                {
-                    yield return attribute;
-                }
+                return;
             }
 
-            if (test.TypeInfo == null)
+            if (Convert.ToInt32(testProperties.ServiceVersion) != _maxServiceVersion)
             {
-                yield break;
-            }
-
-            foreach (T attribute in test.TypeInfo.GetCustomAttributes<T>(true))
-            {
-                yield return attribute;
-            }
-
-            if (test.TypeInfo.Assembly != null)
-            {
-                foreach (var attribute in test.TypeInfo.Assembly.GetCustomAttributes(typeof(T), true))
-                {
-                    yield return (T)attribute;
-                }
+                test.Properties.Add("SkipRecordings", $"Test is ignored when not running live because the service version {testProperties.ServiceVersion} is not the latest.");
             }
         }
     }

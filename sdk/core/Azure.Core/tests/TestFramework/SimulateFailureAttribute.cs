@@ -4,11 +4,12 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.Testing
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Assembly, Inherited = false)]
-    public class SimulateFailureAttribute : NUnitAttribute
+    public class SimulateFailureAttribute : Attribute, ITestAttribute
     {
         public int DelayInMs { get; set; }
 
@@ -20,5 +21,10 @@ namespace Azure.Core.Testing
 
         public static SimulateFailureAttribute Current
             => (SimulateFailureAttribute)TestContext.CurrentContext.Test.Properties[nameof(SimulateFailureAttribute)].FirstOrDefault();
+
+        public void Apply(Test test, TestProperties testProperties)
+        {
+            test.Properties.Set(nameof(SimulateFailureAttribute), this);
+        }
     }
 }
