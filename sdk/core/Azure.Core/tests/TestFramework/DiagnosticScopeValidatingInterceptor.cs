@@ -21,7 +21,7 @@ namespace Azure.Core.Testing
             {
                 Type declaringType = invocation.Method.DeclaringType;
                 var ns = declaringType.Namespace;
-                var expectedEventPrefix = declaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
+                var expectedEventPrefix = declaringType.Name + "." + methodName.Substring(0, methodName.Length - 5);
                 var expectedEvents = new List<string>
                 {
                     expectedEventPrefix + ".Start"

@@ -46,7 +46,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.ServiceClient.SetProperties",
+                string operationName = "ServiceClient.SetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -195,7 +195,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.ServiceClient.GetProperties",
+                string operationName = "ServiceClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -339,7 +339,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.ServiceClient.GetStatistics",
+                string operationName = "ServiceClient.GetStatistics",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -491,7 +491,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.ServiceClient.ListQueuesSegment",
+                string operationName = "ServiceClient.ListQueuesSegment",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -660,7 +660,7 @@ namespace Azure.Storage.Queues
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.QueueClient.Create",
+                string operationName = "QueueClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -806,7 +806,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.QueueClient.Delete",
+                string operationName = "QueueClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -939,7 +939,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.QueueClient.GetProperties",
+                string operationName = "QueueClient.GetProperties",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1098,7 +1098,7 @@ namespace Azure.Storage.Queues
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.QueueClient.SetMetadata",
+                string operationName = "QueueClient.SetMetadata",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1241,7 +1241,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.QueueClient.GetAccessPolicy",
+                string operationName = "QueueClient.GetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1390,7 +1390,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.QueueClient.SetAccessPolicy",
+                string operationName = "QueueClient.SetAccessPolicy",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1553,7 +1553,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.MessagesClient.Dequeue",
+                string operationName = "MessagesClient.Dequeue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1707,7 +1707,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.MessagesClient.Clear",
+                string operationName = "MessagesClient.Clear",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -1846,7 +1846,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.MessagesClient.Enqueue",
+                string operationName = "MessagesClient.Enqueue",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2012,7 +2012,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.MessagesClient.Peek",
+                string operationName = "MessagesClient.Peek",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2177,7 +2177,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.MessageIdClient.Update",
+                string operationName = "MessageIdClient.Update",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
@@ -2353,7 +2353,7 @@ namespace Azure.Storage.Queues
                 int? timeout = default,
                 string requestId = default,
                 bool async = true,
-                string operationName = "Azure.Storage.Queues.MessageIdClient.Delete",
+                string operationName = "MessageIdClient.Delete",
                 System.Threading.CancellationToken cancellationToken = default)
             {
                 Azure.Core.Pipeline.DiagnosticScope _scope = clientDiagnostics.CreateScope(operationName);
