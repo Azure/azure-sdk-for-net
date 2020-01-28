@@ -92,7 +92,7 @@ namespace Azure.Identity
 
         private async Task<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.DefaultAzureCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DefaultAzureCredential.GetToken", requestContext);
 
             List<Exception> exceptions = new List<Exception>();
 

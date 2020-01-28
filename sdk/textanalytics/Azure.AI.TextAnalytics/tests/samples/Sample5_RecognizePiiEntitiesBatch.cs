@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 if (result.ErrorMessage != default)
                 {
-                    Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     foreach (NamedEntity entity in result.NamedEntities)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

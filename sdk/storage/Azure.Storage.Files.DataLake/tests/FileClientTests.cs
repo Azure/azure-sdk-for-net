@@ -1352,6 +1352,30 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task AppendDataAsync_ProgressReporting()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            var data = GetRandomBuffer(Size);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.AppendAsync(stream, 0, progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(Size, progress.List[progress.List.Count - 1]);
+
+        }
+
+        [Test]
         public async Task AppendDataAsync_ContentHash()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

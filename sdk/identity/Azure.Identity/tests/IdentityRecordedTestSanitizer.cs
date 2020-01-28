@@ -14,7 +14,7 @@ namespace Azure.Identity.Tests
     {
         public override void Sanitize(RecordEntry entry)
         {
-            if (entry.RequestUri.EndsWith("/token"))
+            if (entry.RequestUri.Split('?')[0].EndsWith("/token"))
             {
                 SanitizeTokenRequest(entry);
                 SanitizeTokenResponse(entry);

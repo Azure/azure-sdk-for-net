@@ -53,7 +53,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();
@@ -177,7 +177,7 @@ namespace Azure.Storage.Blobs
         {
             // Wrap the download range calls in a Download span for distributed
             // tracing
-            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(Specialized)}.{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
+            DiagnosticScope scope = _client.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadTo)}");
             try
             {
                 scope.Start();

@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -134,6 +136,10 @@ namespace Azure.Messaging.EventHubs.Tests
            Policy<T>
                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+               .Or<TaskCanceledException>()
+               .Or<OperationCanceledException>()
+               .Or<SocketException>()
+               .Or<IOException>()
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         /// <summary>
@@ -152,6 +158,10 @@ namespace Azure.Messaging.EventHubs.Tests
             Policy
                 .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                 .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+                .Or<TaskCanceledException>()
+                .Or<OperationCanceledException>()
+                .Or<SocketException>()
+                .Or<IOException>()
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         /// <summary>

@@ -125,6 +125,7 @@
     <MSBuild
       Projects="$(MSBuildThisFileDirectory)/ApiCompat/ApiCompat.csproj"
       Properties="TargetPackageName=$(PackageId);TargetOutputPath=$(IntermediateOutputPath)"
+      Targets="ApiCompatVerification"
      />
   </Target>
   
