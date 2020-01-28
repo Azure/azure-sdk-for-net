@@ -35,7 +35,7 @@ namespace Azure.Identity.Tests
 
             var kvoptions = Recording.InstrumentClientOptions(new SecretClientOptions());
 
-            var kvclient = InstrumentClient(new SecretClient(vaultUri, cred, kvoptions));
+            var kvclient = new SecretClient(vaultUri, cred, kvoptions);
 
             KeyVaultSecret secret = await kvclient.GetSecretAsync("identitytestsecret");
 
