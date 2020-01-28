@@ -185,7 +185,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
             w.write(`bool async = true`);
         }
         if (separateParams()) { w.line(`,`); }
-        w.write(`string ${operationName} = "${naming.namespace(serviceModel.info.namespace)}.${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
+        w.write(`string ${operationName} = "${operation.group ? operation.group + "Client" : naming.type(service.name)}.${operation.name}"`);
         w.line(`,`);
         w.write(`System.Threading.CancellationToken ${cancellationName} = default`);
         w.write(')')

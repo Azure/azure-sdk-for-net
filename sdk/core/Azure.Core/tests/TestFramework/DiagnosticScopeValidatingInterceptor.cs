@@ -21,7 +21,7 @@ namespace Azure.Core.Testing
             {
                 Type declaringType = invocation.Method.DeclaringType;
                 var ns = declaringType.Namespace;
-                var expectedName = declaringType.FullName + "." + methodName.Substring(0, methodName.Length - 5);
+                var expectedName = declaringType.Name + "." + methodName.Substring(0, methodName.Length - 5);
                 using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
                 invocation.Proceed();
 
