@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
+    // These tests are intended to be only run live on an azure VM with managed identity enabled.
     public class ManagedIdentityCredentialImdsLiveTests : RecordedTestBase
     {
         public ManagedIdentityCredentialImdsLiveTests(bool isAsync) : base(isAsync)
