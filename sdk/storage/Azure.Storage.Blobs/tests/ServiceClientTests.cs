@@ -140,7 +140,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(containers[0].Name);
             Assert.IsNotNull(containers[0].Properties);
             Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
-            Assert.IsNotNull(containers[0].Properties.DenyEncryptionScopeOverride);
+            Assert.IsNotNull(containers[0].Properties.PreventEncryptionScopeOverride);
             Assert.IsNotNull(containers[0].Properties.ETag);
             Assert.IsNotNull(containers[0].Properties.HasImmutabilityPolicy);
             Assert.IsNotNull(containers[0].Properties.HasLegalHold);

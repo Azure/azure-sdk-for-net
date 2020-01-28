@@ -919,7 +919,7 @@ namespace Azure.Storage.Blobs
                         Uri,
                         access: publicAccessType,
                         defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
-                        denyEncryptionScopeOverride: encryptionScopeOptions?.DenyEncryptionScopeOverride,
+                        denyEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride,
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
@@ -1438,7 +1438,7 @@ namespace Azure.Storage.Blobs
                                 HasImmutabilityPolicy = response.Value.HasImmutabilityPolicy,
                                 HasLegalHold = response.Value.HasLegalHold,
                                 DefaultEncryptionScope = response.Value.DefaultEncryptionScope,
-                                DenyEncryptionScopeOverride = response.Value.DenyEncryptionScopeOverride
+                                PreventEncryptionScopeOverride = response.Value.DenyEncryptionScopeOverride
                         },
                         response.GetRawResponse());
                 }
