@@ -289,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             /// <summary>
-            ///   Initializes a new instance of the <see cref="PoolItem"/> class with a default timespan of one minute.
+            ///   Initializes a new instance of the <see cref="PoolItem"/> class with a default timespan of <see cref="DefaultRemoveAfterDuration"/>.
             /// </summary>
             ///
             /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
