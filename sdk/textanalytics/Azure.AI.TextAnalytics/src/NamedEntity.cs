@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         /// described at
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
-        public string Type { get; }
+        public NamedEntityType Type { get; }
 
         /// <summary>
         /// Gets the sub type of the entity inferred by the text analytics service's
@@ -41,7 +41,7 @@ namespace Azure.AI.TextAnalytics
         /// subtypes is described at
         /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
-        public string SubType { get; }
+        public NamedEntitySubType SubType { get; }
 
         /// <summary>
         /// Gets the start position for the matching text in the input document.

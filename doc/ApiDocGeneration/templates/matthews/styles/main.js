@@ -7,6 +7,8 @@ WINDOW_CONTENTS = window.location.href.split('/')
 SELECTED_LANGUAGE = 'dotnet'
 BLOB_URI_PREFIX = 'https://azuresdkdocs.blob.core.windows.net/$web?restype=container&comp=list&prefix=dotnet/'
 
+ATTR1 = '[<span class="hljs-meta">System.ComponentModel.EditorBrowsable</span>]\n<'
+
 // Navbar Hamburger
 $(function () {
     $(".navbar-toggle").click(function () {
@@ -65,7 +67,8 @@ $(function () {
     // Inject line breaks and spaces into the code sections
     $(".lang-csharp").each(function () {
         var text = $(this).html();
-        text = text.replace(/, /g, ",</br>&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;");
+        text = text.replace(/, /g, ",</br>&#09;&#09");
+        text = text.replace(ATTR1, '<');
         $(this).html(text);
     });
 

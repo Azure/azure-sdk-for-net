@@ -101,7 +101,7 @@ namespace Azure.Identity
 
         private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.InteractiveBrowserCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("InteractiveBrowserCredential.GetToken", requestContext);
 
             try
             {
