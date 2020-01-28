@@ -183,6 +183,7 @@ namespace Azure.Core.Testing
         public T InstrumentClientOptions<T>(T clientOptions) where T : ClientOptions
         {
             clientOptions.Transport = CreateTransport(clientOptions.Transport);
+            clientOptions.Retry.Delay = TimeSpan.Zero;
             return clientOptions;
         }
 
@@ -190,9 +191,9 @@ namespace Azure.Core.Testing
         {
             return Mode switch
             {
-                RecordedTestMode.Live => currentTransport,
-                RecordedTestMode.Record => new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random),
-                RecordedTestMode.Playback => new PlaybackTransport(_session, _matcher, Random),
+                RecordedTestMode.Live => (HttpPipelineTransport)new FailureSimulationTransport(currentTransport),
+                RecordedTestMode.Record => new FailureSimulationTransport(new RecordTransport(_session, currentTransport, entry => !_disableRecording.Value, Random)),
+                RecordedTestMode.Playback => new FailureSimulationTransport(new PlaybackTransport(_session, _matcher, Random)),
                 _ => throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null),
             };
         }

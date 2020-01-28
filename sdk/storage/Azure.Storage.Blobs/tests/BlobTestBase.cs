@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,9 +84,9 @@ namespace Azure.Storage.Test.Shared
                     new StorageSharedKeyCredential(config.AccountName, config.AccountKey),
                     options ?? GetOptions()));
 
-        private BlobServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        private BlobServiceClient GetSecondaryReadServiceClient(TenantConfiguration config)
         {
-            BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            BlobClientOptions options = GetSecondaryStorageOptions(config);
             return InstrumentClient(
                  new BlobServiceClient(
                     new Uri(config.BlobServiceEndpoint),
@@ -93,9 +94,9 @@ namespace Azure.Storage.Test.Shared
                     options));
         }
 
-        private BlobBaseClient GetSecondaryReadBlobBaseClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        private BlobBaseClient GetSecondaryReadBlobBaseClient(TenantConfiguration config)
         {
-            BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            BlobClientOptions options = GetSecondaryStorageOptions(config);
             return InstrumentClient(
                  new BlobBaseClient(
                     new Uri(config.BlobServiceEndpoint),
@@ -103,9 +104,9 @@ namespace Azure.Storage.Test.Shared
                     options));
         }
 
-        private BlobContainerClient GetSecondaryReadBlobContainerClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        private BlobContainerClient GetSecondaryReadBlobContainerClient(TenantConfiguration config)
         {
-            BlobClientOptions options = GetSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            BlobClientOptions options = GetSecondaryStorageOptions(config);
             Uri uri = new Uri(config.BlobServiceEndpoint);
             string containerName = GetNewContainerName();
             return InstrumentClient(
@@ -115,18 +116,12 @@ namespace Azure.Storage.Test.Shared
                     options));
         }
 
-        private BlobClientOptions GetSecondaryStorageOptions(
-            TenantConfiguration config,
-            out TestExceptionPolicy testExceptionPolicy,
-            int numberOfReadFailuresToSimulate = 1,
-            bool simulate404 = false,
-            List<RequestMethod> trackedRequestMethods = null)
+        private BlobClientOptions GetSecondaryStorageOptions(TenantConfiguration config)
         {
             BlobClientOptions options = GetOptions();
             options.GeoRedundantSecondaryUri = new Uri(config.BlobServiceSecondaryEndpoint);
             options.Retry.MaxRetries = 4;
-            testExceptionPolicy = new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404, trackedRequestMethods);
-            options.AddPolicy(testExceptionPolicy, HttpPipelinePosition.PerRetry);
+            SimulatedFailures.SecondaryUri = options.GeoRedundantSecondaryUri;
             return options;
         }
 
@@ -140,14 +135,11 @@ namespace Azure.Storage.Test.Shared
         public BlobServiceClient GetServiceClient_SharedKey(BlobClientOptions options = default)
             => GetServiceClientFromSharedKeyConfig(TestConfigDefault, options);
 
-        public BlobServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
-            => GetSecondaryReadServiceClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
+        public BlobServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry()
+            => GetSecondaryReadServiceClient(TestConfigSecondary);
 
-        public BlobBaseClient GetBlobBaseClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
-    => GetSecondaryReadBlobBaseClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
-
-        public BlobContainerClient GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
-    => GetSecondaryReadBlobContainerClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404, enabledRequestMethods);
+        public BlobContainerClient GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry()
+            => GetSecondaryReadBlobContainerClient(TestConfigSecondary);
 
         public BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey()
             => GetServiceClientFromSharedKeyConfig(TestConfigSecondary);

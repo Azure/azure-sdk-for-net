@@ -43,15 +43,6 @@ namespace Azure.Core.Testing
             Record(message);
         }
 
-        private void Record(HttpMessage message)
-        {
-            RecordEntry recordEntry = CreateEntry(message.Request, message.Response);
-            if (_filter(recordEntry))
-            {
-                _session.Record(recordEntry);
-            }
-        }
-
         public override Request CreateRequest()
         {
             Request request = _innerTransport.CreateRequest();
@@ -65,7 +56,16 @@ namespace Azure.Core.Testing
             return request;
         }
 
-        public RecordEntry CreateEntry(Request request, Response response)
+        private void Record(HttpMessage message)
+        {
+            RecordEntry recordEntry = CreateEntry(message.Request, message.Response);
+            if (_filter(recordEntry))
+            {
+                _session.Record(recordEntry);
+            }
+        }
+
+        private RecordEntry CreateEntry(Request request, Response response)
         {
             var entry = new RecordEntry
             {

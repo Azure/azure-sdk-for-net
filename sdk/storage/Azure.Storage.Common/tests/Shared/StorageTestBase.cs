@@ -380,33 +380,36 @@ namespace Azure.Storage.Test.Shared
             Assert.Warn("Progress notifications never completed!");
         }
 
-        protected void AssertSecondaryStorageFirstRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        protected SimulateStorageRequestFailureAttribute SimulatedFailures
+            => SimulateFailureAttribute.Current as SimulateStorageRequestFailureAttribute;
+
+        protected void AssertSecondaryStorageFirstRetrySuccessful(string primaryHost, string secondaryHost)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, SimulatedFailures.HostsSetInRequests[1]);
         }
 
-        protected void AssertSecondaryStorageSecondRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        protected void AssertSecondaryStorageSecondRetrySuccessful(string primaryHost, string secondaryHost)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, SimulatedFailures.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[2]);
         }
 
-        protected void AssertSecondaryStorageThirdRetrySuccessful(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        protected void AssertSecondaryStorageThirdRetrySuccessful(string primaryHost, string secondaryHost)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, SimulatedFailures.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[2]);
+            Assert.AreEqual(secondaryHost, SimulatedFailures.HostsSetInRequests[3]);
         }
 
-        protected void AssertSecondaryStorage404OnSecondary(string primaryHost, string secondaryHost, TestExceptionPolicy testExceptionPolicy)
+        protected void AssertSecondaryStorage404OnSecondary(string primaryHost, string secondaryHost)
         {
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(secondaryHost, testExceptionPolicy.HostsSetInRequests[1]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[2]);
-            Assert.AreEqual(primaryHost, testExceptionPolicy.HostsSetInRequests[3]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[0]);
+            Assert.AreEqual(secondaryHost, SimulatedFailures.HostsSetInRequests[1]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[2]);
+            Assert.AreEqual(primaryHost, SimulatedFailures.HostsSetInRequests[3]);
         }
 
         protected async Task<T> EnsurePropagatedAsync<T>(

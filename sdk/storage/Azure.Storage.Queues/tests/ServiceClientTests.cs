@@ -166,43 +166,45 @@ namespace Azure.Storage.Queues.Test
 
         #region Secondary Storage
         [Test]
+        [SimulateStorageRequestFailure]
         public async Task GetQueuesAsync_SecondaryStorageFirstRetrySuccessful()
         {
-            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
-            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            await PerformSecondaryStorageTest(); // one GET failure means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost());
         }
 
         [Test]
+        [SimulateStorageRequestFailure(FailuresCount = 2)]
         public async Task GetQueuesAsync_SecondaryStorageSecondRetrySuccessful()
         {
-            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
-            AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            await PerformSecondaryStorageTest(); // two GET failures means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost());
         }
 
         [Test]
+        [SimulateStorageRequestFailure(FailuresCount = 3)]
         public async Task GetQueuesAsync_SecondaryStorageThirdRetrySuccessful()
         {
-            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
-            AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            await PerformSecondaryStorageTest(); // three GET failures means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost());
         }
 
         [Test]
+        [SimulateStorageRequestFailure(FailuresCount = 3, Simulate404 = true)]
         public async Task GetQueuesAsync_SecondaryStorage404OnSecondary()
         {
-            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
-            AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            await PerformSecondaryStorageTest();  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
+            AssertSecondaryStorage404OnSecondary(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost());
         }
 
-        private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
+        private async Task PerformSecondaryStorageTest()
         {
-            QueueServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, retryOn404);
+            QueueServiceClient service = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
             IList<QueueItem> queues = await EnsurePropagatedAsync(
                 async () => await service.GetQueuesAsync().ToListAsync(),
                 queues => queues.Count > 0);
-
-            return testExceptionPolicy;
         }
         #endregion
     }

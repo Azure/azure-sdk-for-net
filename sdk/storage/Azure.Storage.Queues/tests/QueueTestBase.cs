@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
@@ -76,18 +75,17 @@ namespace Azure.Storage.Queues.Tests
                     new Uri($"{TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
-        public QueueServiceClient GetServiceClient_OauthAccount() =>
-            GetServiceClientFromOauthConfig(TestConfigOAuth);
+        public QueueServiceClient GetServiceClient_OauthAccount() => GetServiceClientFromOauthConfig(TestConfigOAuth);
 
-        public QueueServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
-=> GetSecondaryReadServiceClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
+        public QueueServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry()
+            => GetSecondaryReadServiceClient(TestConfigSecondary);
 
-        public QueueClient GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
-=> GetSecondaryReadQueueClient(TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);
+        public QueueClient GetQueueClient_SecondaryAccount_ReadEnabledOnRetry()
+            => GetSecondaryReadQueueClient(TestConfigSecondary);
 
-        private QueueServiceClient GetSecondaryReadServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        private QueueServiceClient GetSecondaryReadServiceClient(TenantConfiguration config)
         {
-            QueueClientOptions options = getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            QueueClientOptions options = GetSecondaryStorageOptions(config);
 
             return InstrumentClient(
                  new QueueServiceClient(
@@ -96,9 +94,9 @@ namespace Azure.Storage.Queues.Tests
                     options));
         }
 
-        private QueueClient GetSecondaryReadQueueClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        private QueueClient GetSecondaryReadQueueClient(TenantConfiguration config)
         {
-            QueueClientOptions options = getSecondaryStorageOptions(config, out testExceptionPolicy, numberOfReadFailuresToSimulate, simulate404, enabledRequestMethods);
+            QueueClientOptions options = GetSecondaryStorageOptions(config);
 
             return InstrumentClient(
                  new QueueClient(
@@ -107,13 +105,12 @@ namespace Azure.Storage.Queues.Tests
                     options));
         }
 
-        private QueueClientOptions getSecondaryStorageOptions(TenantConfiguration config, out TestExceptionPolicy testExceptionPolicy, int numberOfReadFailuresToSimulate = 1, bool simulate404 = false, List<RequestMethod> enabledRequestMethods = null)
+        private QueueClientOptions GetSecondaryStorageOptions(TenantConfiguration config)
         {
             QueueClientOptions options = GetOptions();
             options.GeoRedundantSecondaryUri = new Uri(config.QueueServiceSecondaryEndpoint);
             options.Retry.MaxRetries = 4;
-            testExceptionPolicy = new TestExceptionPolicy(numberOfReadFailuresToSimulate, options.GeoRedundantSecondaryUri, simulate404, enabledRequestMethods);
-            options.AddPolicy(testExceptionPolicy, HttpPipelinePosition.PerRetry);
+            SimulatedFailures.SecondaryUri = options.GeoRedundantSecondaryUri;
             return options;
         }
 

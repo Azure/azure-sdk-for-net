@@ -292,9 +292,10 @@ namespace Azure.Storage.Queues.Test
         #region Secondary Storage
 
         [Test]
+        [SimulateStorageRequestFailure]
         public async Task GetPropertiesAsync_SecondaryStorage()
         {
-            QueueClient queueClient = GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy);
+            QueueClient queueClient = GetQueueClient_SecondaryAccount_ReadEnabledOnRetry();
             await queueClient.CreateAsync();
             Response<QueueProperties> properties = await EnsurePropagatedAsync(
                 async () => await queueClient.GetPropertiesAsync(),
@@ -304,7 +305,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 
             await queueClient.DeleteAsync();
-            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost());
         }
         #endregion
 

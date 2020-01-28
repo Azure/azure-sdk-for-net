@@ -128,9 +128,10 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
+        [SimulateStorageRequestFailure]
         public async Task DownloadAsync_ReadFromSecondaryStorage()
         {
-            await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy));
+            await using DisposingContainer test = await GetTestContainerAsync(GetServiceClient_SecondaryAccount_ReadEnabledOnRetry());
 
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
@@ -150,18 +151,15 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
-            Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[0]);
-            Assert.AreEqual(SecondaryStorageTenantSecondaryHost(), testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), SimulatedFailures.HostsSetInRequests[0]);
+            Assert.AreEqual(SecondaryStorageTenantSecondaryHost(), SimulatedFailures.HostsSetInRequests[1]);
         }
 
         [Test]
+        [SimulateStorageRequestFailure(new[] { "PUT" })]
         public async Task DownloadAsync_ReadFromSecondaryStorageShouldNotPut()
         {
-            BlobServiceClient serviceClient = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(
-                1,
-                out TestExceptionPolicy testExceptionPolicy,
-                false,
-                new List<RequestMethod>(new RequestMethod[] { RequestMethod.Put }));
+            BlobServiceClient serviceClient = GetServiceClient_SecondaryAccount_ReadEnabledOnRetry();
             await using DisposingContainer test = await GetTestContainerAsync(serviceClient);
 
             // Arrange
@@ -180,9 +178,9 @@ namespace Azure.Storage.Blobs.Test
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
-            Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[0]);
+            Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), SimulatedFailures.HostsSetInRequests[0]);
             // should not toggle to secondary host on put request failure
-            Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), testExceptionPolicy.HostsSetInRequests[1]);
+            Assert.AreEqual(SecondaryStorageTenantPrimaryHost(), SimulatedFailures.HostsSetInRequests[1]);
         }
         #endregion
 

@@ -97,6 +97,14 @@ namespace Azure.Core.Testing
                 test.Properties.Set("_SKIPREASON", $"Test ignored in sync run because it's marked with {nameof(AsyncOnlyAttribute)}");
             }
 
+#if !EXCLUDE_RECORDING
+            var simulateFailure = test.GetCustomAttributes<SimulateFailureAttribute>(true).FirstOrDefault();
+            if (simulateFailure != null)
+            {
+                test.Properties.Set(nameof(SimulateFailureAttribute), simulateFailure);
+            }
+#endif
+
             if (serviceVersion == null)
             {
                 return;

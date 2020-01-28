@@ -302,16 +302,12 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [SimulateStorageRequestFailure(new[]{ "PUT" }, FailuresCount = 2, DelayInMs = 1000)]
         public async Task CreateAsync_WithSharedKey_Retry_RequestDateShouldUpdate()
         {
             // Arrange
             BlobClientOptions options = GetOptions();
-            var testExceptionPolicy = new TestExceptionPolicy(
-                numberOfFailuresToSimulate: 2,
-                trackedRequestMethods: new List<RequestMethod>(new RequestMethod[] { RequestMethod.Put }),
-                delayBetweenAttempts: 1000);
 
-            options.AddPolicy(testExceptionPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient service = GetServiceClient_SharedKey(options);
             var containerName = GetNewContainerName();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));
@@ -324,9 +320,9 @@ namespace Azure.Storage.Blobs.Test
                 // Assert
                 Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
 
-                Assert.AreEqual(3, testExceptionPolicy.DatesSetInRequests.Count);
-                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[1] > testExceptionPolicy.DatesSetInRequests[0]);
-                Assert.IsTrue(testExceptionPolicy.DatesSetInRequests[2] > testExceptionPolicy.DatesSetInRequests[1]);
+                Assert.AreEqual(3, SimulatedFailures.DatesSetInRequests.Count);
+                Assert.IsTrue(SimulatedFailures.DatesSetInRequests[1] > SimulatedFailures.DatesSetInRequests[0]);
+                Assert.IsTrue(SimulatedFailures.DatesSetInRequests[2] > SimulatedFailures.DatesSetInRequests[1]);
             }
             finally
             {
@@ -1916,16 +1912,16 @@ namespace Azure.Storage.Blobs.Test
 
         #region Secondary Storage
         [Test]
+        [SimulateStorageRequestFailure]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
         {
-            TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
-            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
+            await PerformSecondaryStorageTest(); // one GET failure means the GET request should end up using the SECONDARY host
+            AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost());
         }
 
-
-        private async Task<TestExceptionPolicy> PerformSecondaryStorageTest(int numberOfReadFailuresToSimulate, bool retryOn404 = false)
+        private async Task PerformSecondaryStorageTest()
         {
-            BlobContainerClient containerClient = GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry(numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, retryOn404);
+            BlobContainerClient containerClient = GetBlobContainerClient_SecondaryAccount_ReadEnabledOnRetry();
             await containerClient.CreateAsync();
 
             Response<BlobContainerProperties> properties = await EnsurePropagatedAsync(
@@ -1936,7 +1932,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(200, properties.GetRawResponse().Status);
 
             await containerClient.DeleteAsync();
-            return testExceptionPolicy;
         }
         #endregion
 
