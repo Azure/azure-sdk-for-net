@@ -21,14 +21,14 @@ namespace Azure.AI.TextAnalytics.Tests
             Matcher = new RecordMatcher(Sanitizer);
         }
 
-        public TextAnalyticsClient GetClient()
+        public TextAnalyticsClient GetClient(TextAnalyticsSubscriptionKeyCredential credential = default)
         {
             string subscriptionKey = Recording.GetVariableFromEnvironment(SubscriptionKeyEnvironmentVariable);
-
+            credential ??= new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
             return InstrumentClient (
                 new TextAnalyticsClient(
                     new Uri(Recording.GetVariableFromEnvironment(EndpointEnvironmentVariable)),
-                    new TextAnalyticsSubscriptionKeyCredential(subscriptionKey),
+                    credential,
                     Recording.InstrumentClientOptions(new TextAnalyticsClientOptions()))
             );
         }
@@ -298,15 +298,12 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        [Ignore("figure out recording")]
         public async Task RotateSubscriptionKey()
         {
-            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
-
             // Instantiate a client that will be used to call the service.
+            string subscriptionKey = Recording.GetVariableFromEnvironment(SubscriptionKeyEnvironmentVariable);
             var credential = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
-            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
+            TextAnalyticsClient client = GetClient(credential);
 
             string input = "Este documento está en español.";
 
