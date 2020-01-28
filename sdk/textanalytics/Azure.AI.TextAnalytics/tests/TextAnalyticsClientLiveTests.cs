@@ -298,15 +298,29 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(NamedEntitySubType.Temperature, entities[14].SubType);
         }
 
-        private bool compareTextDocumentInput(TextDocumentInput tdi1, TextDocumentInput tdi2)
+        [Test]
+        public async Task RotateSubscriptionKey()
         {
-            if (!tdi1.Id.Equals(tdi2.Id))
-                return false;
-            if (!tdi1.Language.Equals(tdi2.Language))
-                return false;
-            if (!tdi1.Text.Equals(tdi2.Text))
-                return false;
-            return true;
+            string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
+            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+
+            // Instantiate a client that will be used to call the service.
+            var credential = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
+
+            string input = "Este documento está en español.";
+
+            // Verify the credential works (i.e., doesn't throw)
+            await client.DetectLanguageAsync(input);
+
+            // Rotate the subscription key to an invalid value and make sure it fails
+            credential.UpdateCredential("Invalid");
+            Assert.ThrowsAsync<RequestFailedException>(
+                   async () => await client.DetectLanguageAsync(input));
+
+            // Re-rotate the subscription key and make sure it succeeds again
+            credential.UpdateCredential(subscriptionKey);
+            await client.DetectLanguageAsync(input);
         }
     }
 }
