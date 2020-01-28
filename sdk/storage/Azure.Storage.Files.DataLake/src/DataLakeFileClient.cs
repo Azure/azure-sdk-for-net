@@ -2161,7 +2161,7 @@ namespace Azure.Storage.Files.DataLake
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
 
             try
             {
@@ -2221,7 +2221,7 @@ namespace Azure.Storage.Files.DataLake
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
 
             try
             {
@@ -2229,9 +2229,9 @@ namespace Azure.Storage.Files.DataLake
 
                 BlobRequestConditions blobRequestConditions = conditions.ToBlobRequestConditions();
 
-                return DownloadTo(
+                return _blockBlobClient.DownloadTo(
                     path,
-                    conditions,
+                    blobRequestConditions,
                     //progressHandler, // TODO: #8506
                     transferOptions: transferOptions,
                     cancellationToken: cancellationToken);
@@ -2281,7 +2281,7 @@ namespace Azure.Storage.Files.DataLake
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
 
             try
             {
@@ -2342,7 +2342,7 @@ namespace Azure.Storage.Files.DataLake
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($".{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
 
             try
             {
