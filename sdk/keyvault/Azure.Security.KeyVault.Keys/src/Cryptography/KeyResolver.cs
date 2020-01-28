@@ -73,7 +73,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("KeyResolver.Resolve");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
             scope.AddAttribute("key", keyId);
             scope.Start();
 
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Argument.AssertNotNull(keyId, nameof(keyId));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("KeyResolver.Resolve");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
             scope.AddAttribute("key", keyId);
             scope.Start();
 

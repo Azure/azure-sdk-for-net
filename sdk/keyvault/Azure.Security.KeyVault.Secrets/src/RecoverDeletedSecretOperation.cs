@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("RecoverDeletedSecretOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(RecoverDeletedSecretOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
@@ -78,7 +78,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("RecoverDeletedSecretOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(RecoverDeletedSecretOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 

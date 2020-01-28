@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("DeleteKeyOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(DeleteKeyOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("DeleteKeyOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(DeleteKeyOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 

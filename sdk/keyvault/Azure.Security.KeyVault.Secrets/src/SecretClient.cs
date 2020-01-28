@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.GetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -116,7 +116,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.GetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -229,7 +229,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.UpdateSecretProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute("secret", properties.Name);
             scope.Start();
 
@@ -262,7 +262,7 @@ namespace Azure.Security.KeyVault.Secrets
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.UpdateSecretProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute("secret", properties.Name);
             scope.Start();
 
@@ -293,7 +293,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(secret, nameof(secret));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.SetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
             scope.AddAttribute("secret", secret.Name);
             scope.Start();
 
@@ -324,7 +324,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(secret, nameof(secret));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.SetSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(SetSecret)}");
             scope.AddAttribute("secret", secret.Name);
             scope.Start();
 
@@ -399,7 +399,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.StartDeleteSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -437,7 +437,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.StartDeleteSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartDeleteSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -469,7 +469,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.GetDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -500,7 +500,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.GetDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(GetDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -567,7 +567,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.StartRecoverDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -601,7 +601,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.StartRecoverDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(StartRecoverDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -635,7 +635,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.PurgeDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -668,7 +668,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.PurgeDeletedSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(PurgeDeletedSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -700,7 +700,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.BackupSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -734,7 +734,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.BackupSecret");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(BackupSecret)}");
             scope.AddAttribute("secret", name);
             scope.Start();
 
@@ -766,7 +766,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.RestoreSecretBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(RestoreSecretBackup)}");
             scope.Start();
 
             try
@@ -795,7 +795,7 @@ namespace Azure.Security.KeyVault.Secrets
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("SecretClient.RestoreSecretBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(SecretClient)}.{nameof(RestoreSecretBackup)}");
             scope.Start();
 
             try

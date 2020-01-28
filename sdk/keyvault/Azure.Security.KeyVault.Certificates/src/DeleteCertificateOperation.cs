@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("DeleteCertificateOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(DeleteCertificateOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 
@@ -84,7 +84,7 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (!_completed)
             {
-                using DiagnosticScope scope = _pipeline.CreateScope("DeleteCertificateOperation.UpdateStatus");
+                using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(DeleteCertificateOperation)}.{nameof(UpdateStatus)}");
                 scope.AddAttribute("secret", _value.Name);
                 scope.Start();
 

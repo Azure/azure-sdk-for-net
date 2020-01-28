@@ -127,7 +127,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual async Task<Response<ConfigurationSetting>> AddConfigurationSettingAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.AddConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -162,7 +162,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns>A response containing the added <see cref="ConfigurationSetting"/>.</returns>
         public virtual Response<ConfigurationSetting> AddConfigurationSetting(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.AddConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -253,7 +253,7 @@ namespace Azure.Data.AppConfiguration
         public virtual async Task<Response<ConfigurationSetting>> SetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -291,7 +291,7 @@ namespace Azure.Data.AppConfiguration
         public virtual Response<ConfigurationSetting> SetConfigurationSetting(ConfigurationSetting setting, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(setting, nameof(setting));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetConfigurationSetting)}");
             scope.AddAttribute("key", setting?.Key);
             scope.Start();
 
@@ -400,7 +400,7 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> DeleteConfigurationSettingAsync(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
@@ -428,7 +428,7 @@ namespace Azure.Data.AppConfiguration
 
         private Response DeleteConfigurationSetting(string key, string label, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteConfigurationSetting)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
@@ -556,7 +556,7 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
@@ -581,7 +581,7 @@ namespace Azure.Data.AppConfiguration
 
         private Response<ConfigurationSetting> GetConfigurationSetting(string key, string label, DateTimeOffset acceptDateTime, MatchConditions requestOptions, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
             scope.AddAttribute(nameof(key), key);
             scope.Start();
 
@@ -705,7 +705,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<Page<ConfigurationSetting>> GetConfigurationSettingsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSettingsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettingsPage)}");
             scope.Start();
 
             try
@@ -738,7 +738,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private Page<ConfigurationSetting> GetConfigurationSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSettingsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSettingsPage)}");
             scope.Start();
 
             try
@@ -787,7 +787,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private async Task<Page<ConfigurationSetting>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetRevisionsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisionsPage)}");
             scope.Start();
 
             try
@@ -820,7 +820,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         private Page<ConfigurationSetting> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.GetRevisionsPage");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetRevisionsPage)}");
             scope.Start();
 
             try
@@ -888,7 +888,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.SetReadOnly");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
             scope.AddAttribute("key", key);
             scope.Start();
 
@@ -923,7 +923,7 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("ConfigurationClient.SetReadOnly");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");
             scope.AddAttribute("key", key);
             scope.Start();
 

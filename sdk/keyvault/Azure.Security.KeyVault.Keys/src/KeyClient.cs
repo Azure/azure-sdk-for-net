@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.CreateKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -120,7 +120,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(keyType, keyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.CreateKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -149,7 +149,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.CreateEcKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateEcKey)}");
             scope.AddAttribute("key", ecKeyOptions.Name);
             scope.Start();
 
@@ -178,7 +178,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(ecKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.CreateEcKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateEcKey)}");
             scope.AddAttribute("key", ecKeyOptions.Name);
             scope.Start();
 
@@ -207,7 +207,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.CreateRsaKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateRsaKey)}");
             scope.AddAttribute("key", rsaKeyOptions.Name);
             scope.Start();
 
@@ -236,7 +236,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(rsaKeyOptions);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.CreateRsaKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateRsaKey)}");
             scope.AddAttribute("key", rsaKeyOptions.Name);
             scope.Start();
 
@@ -272,7 +272,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.UpdateKeyProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
             scope.Start();
 
@@ -308,7 +308,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var parameters = new KeyRequestParameters(properties, keyOperations);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.UpdateKeyProperties");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(UpdateKeyProperties)}");
             scope.AddAttribute("key", properties.Name);
             scope.Start();
 
@@ -341,7 +341,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.GetKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -374,7 +374,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.GetKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -486,7 +486,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.GetDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -519,7 +519,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.GetDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(GetDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -558,7 +558,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.StartDeleteKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -598,7 +598,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.StartDeleteKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartDeleteKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -672,7 +672,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.PurgeDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -705,7 +705,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.PurgeDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(PurgeDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -740,7 +740,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.StartRecoverDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -776,7 +776,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.StartRecoverDeletedKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(StartRecoverDeletedKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -819,7 +819,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.BackupKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -863,7 +863,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.BackupKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(BackupKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -907,7 +907,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.RestoreKeyBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RestoreKeyBackup)}");
             scope.Start();
 
             try
@@ -948,7 +948,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(backup, nameof(backup));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.RestoreKeyBackup");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(RestoreKeyBackup)}");
             scope.Start();
 
             try
@@ -984,7 +984,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -1021,7 +1021,7 @@ namespace Azure.Security.KeyVault.Keys
 
             var importKeyOptions = new ImportKeyOptions(name, keyMaterial);
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", name);
             scope.Start();
 
@@ -1053,7 +1053,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", importKeyOptions.Name);
             scope.Start();
 
@@ -1086,7 +1086,7 @@ namespace Azure.Security.KeyVault.Keys
         {
             Argument.AssertNotNull(importKeyOptions, nameof(importKeyOptions));
 
-            using DiagnosticScope scope = _pipeline.CreateScope("KeyClient.ImportKey");
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(ImportKey)}");
             scope.AddAttribute("key", importKeyOptions.Name);
             scope.Start();
 
