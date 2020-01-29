@@ -23,7 +23,7 @@ namespace Azure.Core
                 case 500: // Internal Server Error
                 case 502: // Bad Gateway
                 case 503: // Service Unavailable
-                case 504: // 504 Gateway Timeout
+                case 504: // Gateway Timeout
                     return true;
                 default:
                     return false;
