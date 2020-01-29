@@ -397,10 +397,10 @@ namespace Azure.Messaging.EventHubs.Producer
                                               SendEventOptions options,
                                               CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(events, nameof(events));
-            AssertSinglePartitionReference(options?.PartitionId, options?.PartitionKey);
-
             options ??= DefaultSendOptions;
+
+            Argument.AssertNotNull(events, nameof(events));
+            AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
             bool isMessageSent = false;
             int attempts = 0;
