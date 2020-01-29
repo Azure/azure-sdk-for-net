@@ -16,14 +16,18 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
         {
-            var responseStatus = message.Response.Status;
-
-            return responseStatus == 408 ||
-                   responseStatus == 429 ||
-                   responseStatus == 500 ||
-                   responseStatus == 502 ||
-                   responseStatus == 503 ||
-                   responseStatus == 504;
+            switch (message.Response.Status)
+            {
+                case 408: // Request Timeout
+                case 429: // Too Many Requests
+                case 500: // Internal Server Error
+                case 502: // Bad Gateway
+                case 503: // Service Unavailable
+                case 504: // 504 Gateway Timeout
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
