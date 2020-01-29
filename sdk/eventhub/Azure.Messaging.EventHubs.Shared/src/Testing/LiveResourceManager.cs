@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const double RetryExponentialBackoffSeconds = 3.0;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
-        private const double RetryBaseJitterSeconds = 30.0;
+        private const double RetryBaseJitterSeconds = 60.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
@@ -175,9 +175,10 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
             ((statusCode == HttpStatusCode.Unauthorized)
+                || (statusCode == HttpStatusCode.Conflict)
+                || (statusCode == ((HttpStatusCode)429))
                 || (statusCode == HttpStatusCode.InternalServerError)
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
-                || (statusCode == HttpStatusCode.Conflict)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
 
         /// <summary>

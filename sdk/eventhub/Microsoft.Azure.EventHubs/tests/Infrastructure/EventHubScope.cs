@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading;
@@ -24,9 +26,9 @@ namespace Microsoft.Azure.EventHubs.Tests
 {
     internal sealed class EventHubScope : IAsyncDisposable
     {
-        private const int RetryMaximumAttempts = 15;
+        private const int RetryMaximumAttempts = 20;
         private const double RetryExponentialBackoffSeconds = 3.0;
-        private const double RetryBaseJitterSeconds = 20.0;
+        private const double RetryBaseJitterSeconds = 60.0;
 
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -210,12 +212,20 @@ namespace Microsoft.Azure.EventHubs.Tests
            Policy<T>
                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+               .Or<TaskCanceledException>()
+               .Or<OperationCanceledException>()
+               .Or<SocketException>()
+               .Or<IOException>()
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttempts, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
             Policy
                 .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                 .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+                .Or<TaskCanceledException>()
+                .Or<OperationCanceledException>()
+                .Or<SocketException>()
+                .Or<IOException>()
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
@@ -223,6 +233,7 @@ namespace Microsoft.Azure.EventHubs.Tests
                 || (statusCode == HttpStatusCode.InternalServerError)
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
                 || (statusCode == HttpStatusCode.Conflict)
+                || (statusCode == ((HttpStatusCode)429))
                 || (statusCode == HttpStatusCode.GatewayTimeout));
 
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
