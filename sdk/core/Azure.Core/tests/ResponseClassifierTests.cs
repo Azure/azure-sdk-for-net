@@ -10,8 +10,12 @@ namespace Azure.Core.Tests
     public class ResponseClassifierTests
     {
         [Theory]
+        [TestCase(500)]
         [TestCase(429)]
+        [TestCase(408)]
+        [TestCase(502)]
         [TestCase(503)]
+        [TestCase(504)]
         public void RetriesStatusCodes(int code)
         {
             var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
