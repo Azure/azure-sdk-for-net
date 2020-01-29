@@ -28,7 +28,10 @@ namespace Azure.Storage.Tests
         [Test]
         [TestCase(500)]
         [TestCase(429)]
+        [TestCase(408)]
+        [TestCase(502)]
         [TestCase(503)]
+        [TestCase(504)]
         public void IsRetriableResponse_OtherStatusCodeOnSecondary_ShouldMatchBase(int statusCode)
         {
             HttpMessage message = BuildMessage(new MockResponse(statusCode), MockSecondaryUri);

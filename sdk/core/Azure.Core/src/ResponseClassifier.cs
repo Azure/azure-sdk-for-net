@@ -16,7 +16,14 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
         {
-            return message.Response.Status == 429 || message.Response.Status == 503;
+            var responseStatus = message.Response.Status;
+
+            return responseStatus == 408 ||
+                   responseStatus == 429 ||
+                   responseStatus == 500 ||
+                   responseStatus == 502 ||
+                   responseStatus == 503 ||
+                   responseStatus == 504;
         }
 
         /// <summary>
