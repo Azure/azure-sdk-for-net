@@ -1,6 +1,6 @@
 # Release History
 
-## 5.0.0
+## 5.0.1
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
@@ -32,7 +32,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ## 5.0.0-preview.6
 
-### Acknowledgments 
+### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
