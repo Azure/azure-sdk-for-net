@@ -30,8 +30,8 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             var uri = new Uri("http://localhost");
 
-            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new TextAnalyticsSubscriptionKeyCredential("subscriptionKey")));
-            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (TextAnalyticsSubscriptionKeyCredential)null));
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new TextAnalyticsApiKeyCredential("apiKey")));
+            Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (TextAnalyticsApiKeyCredential)null));
             Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(uri, (TokenCredential)null));
             Assert.Throws<ArgumentNullException>(() => new TextAnalyticsClient(null, new DefaultAzureCredential()));
         }

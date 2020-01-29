@@ -4,12 +4,12 @@ This sample demonstrates how to detect the language that one or more text inputs
 
 ## Creating a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to detect the language a text input is written in, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics subscription key credential by creating a `TextAnalyticsSubscriptionKeyCredential` object, that if neded, will allow you to update the subscription key without creating a new client.
+To create a new `TextAnalyticsClient` to detect the language a text input is written in, you need a Text Analytics endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Text Analytics API key credential by creating a `TextAnalyticsApiKeyCredential` object, that if neded, will allow you to update the API key without creating a new client.
 
-You can set `endpoint` and `subscriptionKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:TextAnalyticsSample1CreateClient
-var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
+var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 ```
 
 ## Detecting a language for a single text input
