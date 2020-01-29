@@ -44,8 +44,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// administrator, * expired – the subscription reached its expiration
         /// date and was deactivated. Possible values include: 'suspended',
         /// 'active', 'expired', 'submitted', 'rejected', 'cancelled'</param>
-        /// <param name="primaryKey">Subscription primary key.</param>
-        /// <param name="secondaryKey">Subscription secondary key.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
@@ -84,11 +82,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// notification date. The date conforms to the following format:
         /// `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         /// </param>
+        /// <param name="primaryKey">Subscription primary key. This property
+        /// will not be filled on 'GET' operations! Use '/listSecrets' POST
+        /// request to get the value.</param>
+        /// <param name="secondaryKey">Subscription secondary key. This
+        /// property will not be filled on 'GET' operations! Use '/listSecrets'
+        /// POST request to get the value.</param>
         /// <param name="stateComment">Optional subscription comment added by
         /// an administrator.</param>
         /// <param name="allowTracing">Determines whether tracing is
         /// enabled</param>
-        public SubscriptionContract(string scope, SubscriptionState state, string primaryKey, string secondaryKey, string id = default(string), string name = default(string), string type = default(string), string ownerId = default(string), string displayName = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), System.DateTime? notificationDate = default(System.DateTime?), string stateComment = default(string), bool? allowTracing = default(bool?))
+        public SubscriptionContract(string scope, SubscriptionState state, string id = default(string), string name = default(string), string type = default(string), string ownerId = default(string), string displayName = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), System.DateTime? notificationDate = default(System.DateTime?), string primaryKey = default(string), string secondaryKey = default(string), string stateComment = default(string), bool? allowTracing = default(bool?))
             : base(id, name, type)
         {
             OwnerId = ownerId;
@@ -202,13 +206,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.DateTime? NotificationDate { get; set; }
 
         /// <summary>
-        /// Gets or sets subscription primary key.
+        /// Gets or sets subscription primary key. This property will not be
+        /// filled on 'GET' operations! Use '/listSecrets' POST request to get
+        /// the value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.primaryKey")]
         public string PrimaryKey { get; set; }
 
         /// <summary>
-        /// Gets or sets subscription secondary key.
+        /// Gets or sets subscription secondary key. This property will not be
+        /// filled on 'GET' operations! Use '/listSecrets' POST request to get
+        /// the value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryKey")]
         public string SecondaryKey { get; set; }
@@ -237,14 +245,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             if (Scope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Scope");
-            }
-            if (PrimaryKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PrimaryKey");
-            }
-            if (SecondaryKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SecondaryKey");
             }
             if (DisplayName != null)
             {

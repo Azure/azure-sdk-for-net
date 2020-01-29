@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicySnippetOperations operations.
+    /// PolicyDescriptionOperations operations.
     /// </summary>
-    internal partial class PolicySnippetOperations : IServiceOperations<ApiManagementClient>, IPolicySnippetOperations
+    internal partial class PolicyDescriptionOperations : IServiceOperations<ApiManagementClient>, IPolicyDescriptionOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PolicySnippetOperations class.
+        /// Initializes a new instance of the PolicyDescriptionOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PolicySnippetOperations(ApiManagementClient client)
+        internal PolicyDescriptionOperations(ApiManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all policy snippets.
+        /// Lists all policy descriptions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicySnippetsCollection>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PolicyDescriptionCollection>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policySnippets").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyDescriptions").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicySnippetsCollection>();
+            var _result = new AzureOperationResponse<PolicyDescriptionCollection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicySnippetsCollection>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<PolicyDescriptionCollection>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
