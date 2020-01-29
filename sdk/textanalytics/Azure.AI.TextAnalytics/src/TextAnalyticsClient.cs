@@ -1717,13 +1717,13 @@ namespace Azure.AI.TextAnalytics
         internal virtual TextDocumentInput ConvertToDocumentInput(string input, string language, int id = 0)
             => new TextDocumentInput($"{id}", input) { Language = language ?? _options.DefaultLanguage };
 
-        private List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> inputs, string language)
+        internal virtual List<TextDocumentInput> ConvertToDocumentInputs(IEnumerable<string> inputs, string language)
             => inputs.Select((input, i) => ConvertToDocumentInput(input, language, i)).ToList();
 
-        private DetectLanguageInput ConvertToDetectLanguageInput(string input, string countryHint, int id = 0)
+        internal virtual DetectLanguageInput ConvertToDetectLanguageInput(string input, string countryHint, int id = 0)
             => new DetectLanguageInput($"{id}", input) { CountryHint = countryHint ?? _options.DefaultCountryHint };
 
-        private List<DetectLanguageInput> ConvertToDetectLanguageInputs(IEnumerable<string> inputs, string countryHint)
+        internal virtual List<DetectLanguageInput> ConvertToDetectLanguageInputs(IEnumerable<string> inputs, string countryHint)
             => inputs.Select((input, i) => ConvertToDetectLanguageInput(input, countryHint, i)).ToList();
 
         private Request CreateDocumentInputRequest(IEnumerable<TextDocumentInput> inputs, TextAnalyticsRequestOptions options, string route)
