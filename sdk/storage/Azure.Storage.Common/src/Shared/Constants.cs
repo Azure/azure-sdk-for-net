@@ -449,6 +449,16 @@ namespace Azure.Storage
             /// The Azure Storage error codes for Datalake Client.
             /// </summary>
             public const string AlreadyExists = "ContainerAlreadyExists";
+
+            /// <summary>
+            /// Default concurrent transfers count.
+            /// </summary>
+            public const int DefaultConcurrentTransfersCount = 5;
+
+            /// <summary>
+            /// Max upload bytes.
+            /// </summary>
+            public const int MaxUploadBytes = 100 * Constants.MB; // 100 MB
         }
 
         /// <summary>

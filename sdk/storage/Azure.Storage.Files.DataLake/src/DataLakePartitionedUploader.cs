@@ -6,21 +6,21 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Shared;
 
-namespace Azure.Storage.Blobs
+namespace Azure.Storage.Files.DataLake
 {
-    internal class PartitionedUploader
+    internal class DataLakePartitionedUploader
     {
         /// <summary>
         /// The client we use to do the actual uploading.
         /// </summary>
-        private readonly BlockBlobClient _client;
+        private readonly DataLakeFileClient _client;
 
         /// <summary>
         /// The maximum number of simultaneous workers.
@@ -49,8 +49,8 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private readonly string _operationName;
 
-        public PartitionedUploader(
-            BlockBlobClient client,
+        public DataLakePartitionedUploader(
+            DataLakeFileClient client,
             StorageTransferOptions transferOptions,
             long? singleUploadThreshold = null,
             ArrayPool<byte> arrayPool = null,
@@ -60,41 +60,48 @@ namespace Azure.Storage.Blobs
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
             _maxWorkerCount =
                 transferOptions.MaximumConcurrency ??
-                Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            _singleUploadThreshold = singleUploadThreshold ?? Constants.Blob.Block.MaxUploadBytes;
+                Constants.DataLake.DefaultConcurrentTransfersCount;
+            _singleUploadThreshold = singleUploadThreshold ?? Constants.DataLake.MaxUploadBytes;
             _blockSize = null;
+
             if (transferOptions.MaximumTransferLength != null)
             {
                 _blockSize = Math.Min(
-                    Constants.Blob.Block.MaxStageBytes,
+                    Constants.DataLake.MaxUploadBytes,
                     transferOptions.MaximumTransferLength.Value);
             }
+
             _operationName = operationName;
         }
 
-        public async Task<Response<BlobContentInfo>> UploadAsync(
+        public async Task<Response<PathInfo>> UploadAsync(
             Stream content,
-            BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
-            BlobRequestConditions conditions,
+            long offset,
+            PathHttpHeaders httpHeaders,
+            DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            AccessTier? accessTier = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             // If we can compute the size and it's small enough
-            if (PartitionedUploadExtensions.TryGetLength(content, out long length) && length < _singleUploadThreshold)
+            if (PartitionedUploadExtensions.TryGetLength(content, out long contentLength)
+                && contentLength < _singleUploadThreshold)
             {
-                // Upload it in a single request
-                return await _client.UploadInternal(
+                // Append data
+                await _client.AppendAsync(
                     content,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    accessTier,
-                    progressHandler,
-                    _operationName,
-                    async: true,
-                    cancellationToken)
+                    offset,
+                    leaseId: conditions?.LeaseId,
+                    progressHandler: progressHandler,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                // Calculate flush position
+                long flushPosition = offset + contentLength;
+
+                // Flush data
+                return await _client.FlushAsync(
+                    position: flushPosition,
+                    httpHeaders: httpHeaders,
+                    conditions: conditions)
                     .ConfigureAwait(false);
             }
 
@@ -103,7 +110,7 @@ namespace Azure.Storage.Blobs
             // content.
             int blockSize =
                 _blockSize != null ? _blockSize.Value :
-                length < Constants.LargeUploadThreshold ?
+                contentLength < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
                     Constants.LargeBufferSize;
 
@@ -111,38 +118,39 @@ namespace Azure.Storage.Blobs
             return await UploadInParallelAsync(
                 content,
                 blockSize,
-                blobHttpHeaders,
-                metadata,
+                offset,
+                httpHeaders,
                 conditions,
                 progressHandler,
-                accessTier,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
         }
 
-        public Response<BlobContentInfo> Upload(
+        public Response<PathInfo> Upload(
             Stream content,
-            BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
-            BlobRequestConditions conditions,
+            long offset,
+            PathHttpHeaders httpHeaders,
+            DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            AccessTier? accessTier = default,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             // If we can compute the size and it's small enough
-            if (PartitionedUploadExtensions.TryGetLength(content, out long length) && length < _singleUploadThreshold)
+            if (PartitionedUploadExtensions.TryGetLength(content, out long contentLength)
+                && contentLength < _singleUploadThreshold)
             {
                 // Upload it in a single request
-                return _client.UploadInternal(
+                _client.Append(
                     content,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    accessTier,
-                    progressHandler,
-                    _operationName,
-                    false,
-                    cancellationToken).EnsureCompleted();
+                    offset,
+                    leaseId: conditions?.LeaseId,
+                    progressHandler: progressHandler,
+                    cancellationToken: cancellationToken);
+
+                // Calculate flush position
+                long flushPosition = offset + contentLength;
+
+                return _client.Flush(
+                    position: flushPosition,
+                    httpHeaders: httpHeaders);
             }
 
             // If the caller provided an explicit block size, we'll use it.
@@ -150,7 +158,7 @@ namespace Azure.Storage.Blobs
             // content.
             int blockSize =
                 _blockSize != null ? _blockSize.Value :
-                length < Constants.LargeUploadThreshold ?
+                contentLength < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
                     Constants.LargeBufferSize;
 
@@ -160,73 +168,73 @@ namespace Azure.Storage.Blobs
             return UploadInSequence(
                 content,
                 blockSize,
-                blobHttpHeaders,
-                metadata,
+                offset,
+                httpHeaders,
                 conditions,
                 progressHandler,
-                accessTier,
                 cancellationToken);
         }
 
-        private Response<BlobContentInfo> UploadInSequence(
+        private Response<PathInfo> UploadInSequence(
             Stream content,
             int blockSize,
-            BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
-            BlobRequestConditions conditions,
+            long offset,
+            PathHttpHeaders httpHeaders,
+            DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            AccessTier? accessTier,
             CancellationToken cancellationToken)
         {
-            // Wrap the staging and commit calls in an Upload span for
+            // Wrap the append and flush calls in an Upload span for
             // distributed tracing
             DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(
-                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DataLakeFileClient.Upload)}");
+
             try
             {
                 scope.Start();
 
                 // Wrap progressHandler in a AggregatingProgressIncrementer to prevent
-                // progress from being reset with each stage blob operation.
+                // progress from being reset with each append file operation.
                 if (progressHandler != null)
                 {
                     progressHandler = new AggregatingProgressIncrementer(progressHandler);
                 }
 
-                // The list tracking blocks IDs we're going to commit
-                List<string> blockIds = new List<string>();
-
                 // Partition the stream into individual blocks and stage them
                 IAsyncEnumerator<ChunkedStream> enumerator =
-                    PartitionedUploadExtensions.GetBlocksAsync(content, blockSize, async: false, _arrayPool, cancellationToken)
+                    PartitionedUploadExtensions.GetBlocksAsync(
+                        content, blockSize, async: false, _arrayPool, cancellationToken)
                     .GetAsyncEnumerator(cancellationToken);
+
+                // We need to keep track of how much data we have appended to
+                // calculate offsets for the next appends, and the final
+                // position to flush
+                long appendedBytes = 0;
+
                 while (enumerator.MoveNextAsync().EnsureCompleted())
                 {
                     // Dispose the block after the loop iterates and return its
                     // memory to our ArrayPool
                     using ChunkedStream block = enumerator.Current;
 
-                    // Stage the next block
-                    string blockId = GenerateBlockId(block.AbsolutePosition);
-                    _client.StageBlock(
-                        blockId,
+                    // Append the next block
+                    _client.Append(
                         new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        conditions: conditions,
+                        offset: offset + appendedBytes,
+                        leaseId: conditions?.LeaseId,
                         progressHandler: progressHandler,
                         cancellationToken: cancellationToken);
 
-                    blockIds.Add(blockId);
+                    appendedBytes += block.Length;
                 }
 
                 // Commit the block list after everything has been staged to
                 // complete the upload
-                return _client.CommitBlockList(
-                    blockIds,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    accessTier,
-                    cancellationToken);
+                return _client.Flush(
+                    position: offset + appendedBytes,
+                    httpHeaders: httpHeaders,
+                    conditions: conditions,
+                    cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -239,20 +247,21 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task<Response<BlobContentInfo>> UploadInParallelAsync(
+        private async Task<Response<PathInfo>> UploadInParallelAsync(
             Stream content,
             int blockSize,
-            BlobHttpHeaders blobHttpHeaders,
-            IDictionary<string, string> metadata,
-            BlobRequestConditions conditions,
+            long offset,
+            PathHttpHeaders httpHeaders,
+            DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            AccessTier? accessTier,
             CancellationToken cancellationToken)
+
         {
             // Wrap the staging and commit calls in an Upload span for
             // distributed tracing
             DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(
-                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}");
+                _operationName ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeFileClient)}.{nameof(DataLakeFileClient.Upload)}");
+
             try
             {
                 scope.Start();
@@ -264,33 +273,31 @@ namespace Azure.Storage.Blobs
                     progressHandler = new AggregatingProgressIncrementer(progressHandler);
                 }
 
-                // The list tracking blocks IDs we're going to commit
-                List<string> blockIds = new List<string>();
-
                 // A list of tasks that are currently executing which will
                 // always be smaller than _maxWorkerCount
                 List<Task> runningTasks = new List<Task>();
 
+                // We need to keep track of how much data we have appended to
+                // calculate offsets for the next appends, and the final
+                // position to flush
+                long appendedBytes = 0;
+
                 // Partition the stream into individual blocks
                 await foreach (ChunkedStream block in PartitionedUploadExtensions.GetBlocksAsync(
-                    content,
-                    blockSize,
-                    async: true,
-                    _arrayPool,
-                    cancellationToken).ConfigureAwait(false))
+                    content, blockSize, async: true, _arrayPool, cancellationToken).ConfigureAwait(false))
                 {
-                    // Start staging the next block (but don't await the Task!)
-                    string blockId = GenerateBlockId(block.AbsolutePosition);
-                    Task task = StageBlockAsync(
+                    // Start appending the next block (but don't await the Task!)
+                    Task task = AppendBlockAsync(
                         block,
-                        blockId,
-                        conditions,
+                        offset + appendedBytes,
+                        conditions?.LeaseId,
                         progressHandler,
                         cancellationToken);
 
                     // Add the block to our task and commit lists
                     runningTasks.Add(task);
-                    blockIds.Add(blockId);
+
+                    appendedBytes += block.Length;
 
                     // If we run out of workers
                     if (runningTasks.Count >= _maxWorkerCount)
@@ -317,13 +324,11 @@ namespace Azure.Storage.Blobs
                 // Wait for all the remaining blocks to finish staging and then
                 // commit the block list to complete the upload
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
-                return await _client.CommitBlockListAsync(
-                    blockIds,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    accessTier,
-                    cancellationToken)
+                return await _client.FlushAsync(
+                    position: offset + appendedBytes,
+                    httpHeaders: httpHeaders,
+                    conditions: conditions,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -337,19 +342,19 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task StageBlockAsync(
+        private async Task AppendBlockAsync(
             ChunkedStream block,
-            string blockId,
-            BlobRequestConditions conditions,
+            long offset,
+            string leaseId,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
             try
             {
-                await _client.StageBlockAsync(
-                    blockId,
+                await _client.AppendAsync(
                     new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                    conditions: conditions,
+                    offset: offset,
+                    leaseId: leaseId,
                     progressHandler: progressHandler,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -360,18 +365,6 @@ namespace Azure.Storage.Blobs
                 // as we've staged it
                 block.Dispose();
             }
-        }
-
-        // Block IDs must be 64 byte Base64 encoded strings
-        private static string GenerateBlockId(long offset)
-        {
-            // TODO #8162 - Add in a random GUID so multiple simultaneous
-            // uploads won't stomp on each other and the first to commit wins.
-            // This will require some changes to our test framework's
-            // RecordedClientRequestIdPolicy.
-            byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
-            BitConverter.GetBytes(offset).CopyTo(id, 0);
-            return Convert.ToBase64String(id);
         }
     }
 }

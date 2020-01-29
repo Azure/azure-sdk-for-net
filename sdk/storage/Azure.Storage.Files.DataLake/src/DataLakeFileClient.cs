@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,6 +20,12 @@ namespace Azure.Storage.Files.DataLake
     /// </summary>
     public class DataLakeFileClient : DataLakePathClient
     {
+        /// <summary>
+        /// Gets the maximum number of bytes that can be sent in a call
+        /// to <see cref="UploadAsync(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// </summary>
+        public virtual int BlockBlobMaxUploadBlobBytes => Constants.DataLake.MaxUploadBytes;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
@@ -2369,5 +2376,411 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Download Data
+
+        #region Upload
+        /// <summary>
+        /// The <see cref="Upload(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// operation updates the content of anexisting file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="offset">
+        /// Optional offset within the file to upload the data to.
+        /// If not provided, the data will be written at the beginning of
+        /// the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> Upload(
+            Stream content,
+            long offset = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            StagedUploadAsync(
+                content,
+                offset,
+                httpHeaders,
+                conditions,
+                progressHandler,
+                transferOptions: transferOptions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// operation updates the content of anexisting file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="offset">
+        /// Optional offset within the file to upload the data to.
+        /// If not provided, the data will be written at the beginning of
+        /// the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        ///</param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Task<Response<PathInfo>> UploadAsync(
+            Stream content,
+            long offset = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default) =>
+            StagedUploadAsync(
+                content,
+                offset,
+                httpHeaders,
+                conditions,
+                progressHandler,
+                transferOptions: transferOptions,
+                async: true,
+                cancellationToken: cancellationToken);
+
+        /// <summary>
+        /// The <see cref="Upload(string, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// operation updates the content of anexisting file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param> of this new block blob.
+        /// <param name="offset">
+        /// Optional offset within the file to upload the data to.
+        /// If not provided, the data will be written at the beginning of
+        /// the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        ///</param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> Upload(
+            string path,
+            long offset = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open))
+            {
+                return StagedUploadAsync(
+                    stream,
+                    offset,
+                    httpHeaders,
+                    conditions,
+                    progressHandler,
+                    transferOptions: transferOptions,
+                    async: false,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(string, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// operation updates the content of anexisting file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param>
+        /// <param name="offset">
+        /// Optional offset within the file to upload the data to.
+        /// If not provided, the data will be written at the beginning of
+        /// the file.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        ///</param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PathInfo>> UploadAsync(
+            string path,
+            long offset = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            StorageTransferOptions transferOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open))
+            {
+                return await StagedUploadAsync(
+                    stream,
+                    offset,
+                    httpHeaders,
+                    conditions,
+                    progressHandler,
+                    transferOptions: transferOptions,
+                    async: true,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// This operation will upload data as indiviually staged
+        /// blocks if it's larger than the
+        /// <paramref name="singleUploadThreshold"/>.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="offset">
+        /// The offset within the file to upload the data to.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="singleUploadThreshold">
+        /// The maximum size stream that we'll upload as a single block.  The
+        /// default value is 100MB.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="async">
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// state of the updated file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<PathInfo>> StagedUploadAsync(
+            Stream content,
+            long offset = default,
+            PathHttpHeaders httpHeaders = default,
+            DataLakeRequestConditions conditions = default,
+            IProgress<long> progressHandler = default,
+            long? singleUploadThreshold = default,
+            StorageTransferOptions transferOptions = default,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            DataLakeFileClient client = new DataLakeFileClient(Uri, Pipeline, Version, ClientDiagnostics);
+            singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
+            Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
+
+            DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
+                client,
+                transferOptions,
+                singleUploadThreshold,
+                operationName: Constants.Blob.UploadOperationName);
+
+            if (async)
+            {
+                return await uploader.UploadAsync(
+                    content,
+                    offset,
+                    httpHeaders,
+                    conditions,
+                    progressHandler,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                return uploader.Upload(
+                    content,
+                    offset,
+                    httpHeaders,
+                    conditions,
+                    progressHandler,
+                    cancellationToken);
+            }
+        }
+
+        /// <summary>
+        /// This operation will upload data it as indiviually staged
+        /// blocks if it's larger than the
+        /// <paramref name="singleUploadThreshold"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path of the file to upload.
+        /// </param>
+        /// <param name="offset">
+        /// The offset within the file to upload the data to.
+        /// </param>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the file.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to apply to the request.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="singleUploadThreshold">
+        /// The maximum size stream that we'll upload as a single block.  The
+        /// default value is 100MB.
+        /// </param>
+        /// <param name="transferOptions">
+        /// Optional <see cref="StorageTransferOptions"/> to configure
+        /// parallel transfer behavior.
+        /// </param>
+        /// <param name="async">
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal async Task<Response<PathInfo>> StagedUploadAsync(
+            string path,
+            long offset,
+            PathHttpHeaders httpHeaders,
+            DataLakeRequestConditions conditions,
+            IProgress<long> progressHandler,
+            long? singleUploadThreshold = default,
+            StorageTransferOptions transferOptions = default,
+            bool async = true,
+            CancellationToken cancellationToken = default)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open))
+            {
+                return await StagedUploadAsync(
+                    stream,
+                    offset,
+                    httpHeaders,
+                    conditions,
+                    progressHandler,
+                    singleUploadThreshold: singleUploadThreshold,
+                    transferOptions: transferOptions,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+        }
+        #endregion
     }
 }
