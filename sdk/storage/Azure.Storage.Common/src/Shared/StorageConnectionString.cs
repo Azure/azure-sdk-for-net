@@ -67,6 +67,11 @@ namespace Azure.Storage
         private static readonly AccountSetting s_fileEndpointSetting = Setting(Constants.ConnectionStrings.FileEndpointSetting, IsValidUri);
 
         /// <summary>
+        /// Validator for the TableEndpoint setting. Must be a valid Uri.
+        /// </summary>
+        private static readonly AccountSetting s_tableEndpointSetting = Setting(Constants.ConnectionStrings.TableEndpointSetting, IsValidUri);
+
+        /// <summary>
         /// Validator for the BlobSecondaryEndpoint setting. Must be a valid Uri.
         /// </summary>
         private static readonly AccountSetting s_blobSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.BlobSecondaryEndpointSetting, IsValidUri);
@@ -80,6 +85,11 @@ namespace Azure.Storage
         /// Validator for the FileSecondaryEndpoint setting. Must be a valid Uri.
         /// </summary>
         private static readonly AccountSetting s_fileSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.FileSecondaryEndpointSetting, IsValidUri);
+
+        /// <summary>
+        /// Validator for the TableSecondaryEndpoint setting. Must be a valid Uri.
+        /// </summary>
+        private static readonly AccountSetting s_tableSecondaryEndpointSetting = Setting(Constants.ConnectionStrings.TableSecondaryEndpointSetting, IsValidUri);
 
         /// <summary>
         /// Validator for the EndpointSuffix setting. Must be a valid Uri.
@@ -103,12 +113,19 @@ namespace Azure.Storage
         /// <param name="storageCredentials">A StorageCredentials object.</param>
         /// <param name="blobStorageUri">A <see cref="System.Uri"/> specifying the Blob service endpoint or endpoints.</param>
         /// <param name="queueStorageUri">A <see cref="System.Uri"/> specifying the Queue service endpoint or endpoints.</param>
+        /// <param name="tableStorageUri">A <see cref="System.Uri"/> specifying the Table service endpoint or endpoints.</param>
         /// <param name="fileStorageUri">A <see cref="System.Uri"/> specifying the File service endpoint or endpoints.</param>
-        public StorageConnectionString(object storageCredentials, (Uri, Uri) blobStorageUri, (Uri, Uri) queueStorageUri, (Uri, Uri) fileStorageUri)
+        public StorageConnectionString(
+            object storageCredentials,
+            (Uri, Uri) blobStorageUri = default,
+            (Uri, Uri) queueStorageUri = default,
+            (Uri, Uri) tableStorageUri = default,
+            (Uri, Uri) fileStorageUri = default)
         {
             Credentials = storageCredentials;
             BlobStorageUri = blobStorageUri;
             QueueStorageUri = queueStorageUri;
+            TableStorageUri = tableStorageUri;
             FileStorageUri = fileStorageUri;
             DefaultEndpoints = false;
         }
@@ -164,6 +181,12 @@ namespace Azure.Storage
         public Uri QueueEndpoint => QueueStorageUri.PrimaryUri;
 
         /// <summary>
+        /// Gets the primary endpoint for the Table service, as configured for the storage account.
+        /// </summary>
+        /// <value>A <see cref="System.Uri"/> containing the primary Table service endpoint.</value>
+        public Uri TableEndpoint => TableStorageUri.PrimaryUri;
+
+        /// <summary>
         /// Gets the primary endpoint for the File service, as configured for the storage account.
         /// </summary>
         /// <value>A <see cref="System.Uri"/> containing the primary File service endpoint.</value>
@@ -180,6 +203,12 @@ namespace Azure.Storage
         /// </summary>
         /// <value>A <see cref="System.Uri"/> containing the Queue service endpoints.</value>
         public (Uri PrimaryUri, Uri SecondaryUri) QueueStorageUri { get; set; }
+
+        /// <summary>
+        /// Gets the endpoints for the Table service at the primary and secondary location, as configured for the storage account.
+        /// </summary>
+        /// <value>A <see cref="System.Uri"/> containing the Table service endpoints.</value>
+        public (Uri PrimaryUri, Uri SecondaryUri) TableStorageUri { get; set; }
 
         /// <summary>
         /// Gets the endpoints for the File service at the primary and secondary location, as configured for the storage account.
@@ -286,6 +315,9 @@ namespace Azure.Storage
             builder.Port = Constants.ConnectionStrings.BlobEndpointPortNumber;
             Uri blobEndpoint = builder.Uri;
 
+            builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
+            Uri tableEndpoint = builder.Uri;
+
             builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
             Uri queueEndpoint = builder.Uri;
 
@@ -297,13 +329,17 @@ namespace Azure.Storage
             builder.Port = Constants.ConnectionStrings.QueueEndpointPortNumber;
             Uri queueSecondaryEndpoint = builder.Uri;
 
+            builder.Port = Constants.ConnectionStrings.TableEndpointPortNumber;
+            Uri tableSecondaryEndpoint = builder.Uri;
+
             var credentials = new StorageSharedKeyCredential(Constants.ConnectionStrings.DevStoreAccountName, Constants.ConnectionStrings.DevStoreAccountKey);
 #pragma warning disable IDE0017 // Simplify object initialization
             var account = new StorageConnectionString(
                 credentials,
-                (blobEndpoint, blobSecondaryEndpoint),
-                (queueEndpoint, queueSecondaryEndpoint),
-                (default, default) /* fileStorageUri */);
+                blobStorageUri: (blobEndpoint, blobSecondaryEndpoint),
+                queueStorageUri: (queueEndpoint, queueSecondaryEndpoint),
+                tableStorageUri: (tableEndpoint, tableSecondaryEndpoint),
+                fileStorageUri: (default, default) /* fileStorageUri */);
 #pragma warning restore IDE0017 // Simplify object initialization
 
 #pragma warning disable IDE0028 // Simplify collection initialization
@@ -373,21 +409,24 @@ namespace Azure.Storage
                 Optional(
                     s_blobEndpointSetting, s_blobSecondaryEndpointSetting,
                     s_queueEndpointSetting, s_queueSecondaryEndpointSetting,
-                    s_fileEndpointSetting, s_fileSecondaryEndpointSetting
+                    s_fileEndpointSetting, s_fileSecondaryEndpointSetting,
+                    s_tableEndpointSetting, s_tableSecondaryEndpointSetting // not supported but we don't want default connection string from portal to fail
                     );
 
             ConnectionStringFilter primaryEndpointRequired =
                 AtLeastOne(
                     s_blobEndpointSetting,
                     s_queueEndpointSetting,
-                    s_fileEndpointSetting
+                    s_fileEndpointSetting,
+                    s_tableEndpointSetting
                     );
 
             ConnectionStringFilter secondaryEndpointsOptional =
                 Optional(
                     s_blobSecondaryEndpointSetting,
                     s_queueSecondaryEndpointSetting,
-                    s_fileSecondaryEndpointSetting
+                    s_fileSecondaryEndpointSetting,
+                    s_tableSecondaryEndpointSetting
                     );
 
             ConnectionStringFilter automaticEndpointsMatchSpec =
@@ -420,9 +459,11 @@ namespace Azure.Storage
 
                 var blobEndpoint = settingOrDefault(Constants.ConnectionStrings.BlobEndpointSetting);
                 var queueEndpoint = settingOrDefault(Constants.ConnectionStrings.QueueEndpointSetting);
+                var tableEndpoint = settingOrDefault(Constants.ConnectionStrings.TableEndpointSetting);
                 var fileEndpoint = settingOrDefault(Constants.ConnectionStrings.FileEndpointSetting);
                 var blobSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.BlobSecondaryEndpointSetting);
                 var queueSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.QueueSecondaryEndpointSetting);
+                var tableSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.TableSecondaryEndpointSetting);
                 var fileSecondaryEndpoint = settingOrDefault(Constants.ConnectionStrings.FileSecondaryEndpointSetting);
                 var sasToken = settingOrDefault(Constants.ConnectionStrings.SharedAccessSignatureSetting);
 
@@ -461,15 +502,17 @@ namespace Azure.Storage
                 if (
                     s_isValidEndpointPair(blobEndpoint, blobSecondaryEndpoint)
                     && s_isValidEndpointPair(queueEndpoint, queueSecondaryEndpoint)
+                    && s_isValidEndpointPair(tableEndpoint, tableSecondaryEndpoint)
                     && s_isValidEndpointPair(fileEndpoint, fileSecondaryEndpoint)
                     )
                 {
                     accountInformation =
                         new StorageConnectionString(
                             GetCredentials(settings),
-                            createStorageUri(blobEndpoint, blobSecondaryEndpoint, sasToken, ConstructBlobEndpoint),
-                            createStorageUri(queueEndpoint, queueSecondaryEndpoint, sasToken, ConstructQueueEndpoint),
-                            createStorageUri(fileEndpoint, fileSecondaryEndpoint, sasToken, ConstructFileEndpoint)
+                            blobStorageUri: createStorageUri(blobEndpoint, blobSecondaryEndpoint, sasToken, ConstructBlobEndpoint),
+                            queueStorageUri: createStorageUri(queueEndpoint, queueSecondaryEndpoint, sasToken, ConstructQueueEndpoint),
+                            tableStorageUri: createStorageUri(tableEndpoint, tableSecondaryEndpoint, sasToken, ConstructTableEndpoint),
+                            fileStorageUri: createStorageUri(fileEndpoint, fileSecondaryEndpoint, sasToken, ConstructFileEndpoint)
                             )
                         {
                             EndpointSuffix = settingOrDefault(Constants.ConnectionStrings.EndpointSuffixSetting),
@@ -903,6 +946,45 @@ namespace Azure.Storage
             }
 
             return ConstructUris(scheme, accountName, Constants.ConnectionStrings.DefaultQueueHostnamePrefix, endpointSuffix, sasToken);
+        }
+
+        /// <summary>
+        /// Gets the default table endpoint using the specified settings.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// <returns>The default table endpoint.</returns>
+        private static (Uri, Uri) ConstructTableEndpoint(IDictionary<string, string> settings) => ConstructTableEndpoint(
+                settings[Constants.ConnectionStrings.DefaultEndpointsProtocolSetting],
+                settings[Constants.ConnectionStrings.AccountNameSetting],
+                settings.ContainsKey(Constants.ConnectionStrings.EndpointSuffixSetting) ? settings[Constants.ConnectionStrings.EndpointSuffixSetting] : null,
+                settings.ContainsKey(Constants.ConnectionStrings.SharedAccessSignatureSetting) ? settings[Constants.ConnectionStrings.SharedAccessSignatureSetting] : null);
+
+        /// <summary>
+        /// Gets the default queue endpoint using the specified protocol and account name.
+        /// </summary>
+        /// <param name="scheme">The protocol to use.</param>
+        /// <param name="accountName">The name of the storage account.</param>
+        /// <param name="endpointSuffix">The Endpoint DNS suffix; use <c>null</c> for default.</param>
+        /// <param name="sasToken">The sas token; use <c>null</c> for default.</param>
+        /// <returns>The default table endpoint.</returns>
+        internal static (Uri, Uri) ConstructTableEndpoint(string scheme, string accountName, string endpointSuffix, string sasToken)
+        {
+            if (string.IsNullOrEmpty(scheme))
+            {
+                throw Errors.ArgumentNull(nameof(scheme));
+            }
+
+            if (string.IsNullOrEmpty(accountName))
+            {
+                throw Errors.ArgumentNull(nameof(accountName));
+            }
+
+            if (string.IsNullOrEmpty(endpointSuffix))
+            {
+                endpointSuffix = Constants.ConnectionStrings.DefaultEndpointSuffix;
+            }
+
+            return ConstructUris(scheme, accountName, Constants.ConnectionStrings.DefaultTableHostnamePrefix, endpointSuffix, sasToken);
         }
 
         /// <summary>

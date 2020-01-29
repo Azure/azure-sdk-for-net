@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 

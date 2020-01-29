@@ -10,7 +10,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - Managing checkpoints and state for processing in a durable manner using Azure Storage blobs as the underlying data store.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventhub.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-processor-docs) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
 
 ## Getting started
 
@@ -35,7 +35,7 @@ To quickly create the needed resources in Azure and to receive connection string
 Install the Azure Event Hubs Event Processor client library for .NET using [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs.Processor -Version 5.0.0-preview.6
+Install-Package Azure.Messaging.EventHubs.Processor -Version 5.0.0
 ```
 
 ### Obtain an Event Hubs connection string
@@ -62,9 +62,9 @@ For more concepts and deeper discussion, see: [Event Hubs Features](https://docs
 
 ## Examples
 
-### Creating an Event Processor Client
+### Creating an Event Processor client
 
-Since the `EventProcessorClient` as a dependency on Azure Storage blobs for persistence of its state, you'll need to provide a `BlobContainerClient` for the processor, which has been configured for the storage account and container that should be used.
+Since the `EventProcessorClient` has a dependency on Azure Storage blobs for persistence of its state, you'll need to provide a `BlobContainerClient` for the processor, which has been configured for the storage account and container that should be used.
 
 ```csharp
 string storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
@@ -85,7 +85,7 @@ EventProcessorClient processor = new EventProcessorClient
 );
 ```
 
-### Configure the Event and Error Handlers
+### Configure the event and error handlers
 
 In order to use the `EventProcessorClient`, handlers for event processing and errors must be provided.  These handlers are considered self-contained and developers are responsible for ensuring that exceptions within the handler code are accounted for.
 
@@ -129,7 +129,7 @@ processor.ProcessEventAsync += processEventHandler;
 processor.ProcessErrorAsync += processErrorHandler;
 ```
 
-### Start and Stop Procesing
+### Start and stop processing
 
 The `EventProcessorClient` will perform its processing in the background once it has been explicitly started and continue doing so until it has been explicitly stopped.  While this allows the application code to perform other tasks, it also places the responsibility of ensuring that the process does not terminate during processing if there are no other tasks being performed.
 
@@ -171,21 +171,57 @@ private async Task ProcessUntilCanceled(CancellationToken cancellationToken)
 }
 ```
 
+### Using an Active Directory principal with the Event Processor client
+
+The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md) provides Azure Active Directory authentication support which can be used for the Azure client libraries, including Event Hubs and Azure Storage.
+
+To make use of an Active Directory principal, one of the available identity tokens from the `Azure.Identity` library is also provided when creating the Event Processor client.  In addition, the fully qualified Event Hubs namespace and the name of the desired Event Hub are supplied in lieu of the Event Hubs connection string.
+
+To make use of an Active Directory principal with Azure Storage blob containers, the fully qualified URL to the container must be provided when creating the storage client.  Details about the valid URI formats for accessing Blob storage may be found in [Naming and Referencing Containers, Blobs, and Metadata](https://docs.microsoft.com/en-us/rest/api/storageservices/Naming-and-Referencing-Containers--Blobs--and-Metadata#resource-uri-syntax).  
+
+```csharp
+Uri blobStorageUrl = new Uri("<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>");
+
+string fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
+string eventHubName = "<< NAME OF THE EVENT HUB >>";
+string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+TokenCredential credential = new DefaultAzureIdentity();
+BlobContainerClient storageClient = new BlobContainerClient(blobStorageUrl, credential);
+
+EventProcessorClient processor = new EventProcessorClient
+(
+    storageClient,
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential
+);
+```
+
+When using Azure Active Directory with Event Hubs, your principal must be assigned a role which allows reading from Event Hubs, such as the `Azure Event Hubs Data Receiver` role. For more information about using Azure Active Directory authorization with Event Hubs, please refer to [the associated documentation](https://docs.microsoft.com/en-us/azure/event-hubs/authorize-access-azure-active-directory).
+
+When using Azure Active Directory with Azure Storage, your principal must be assigned a role which allows read, write, and delete access to blobs, such as the `Storage Blob Data Contributor` role.  For more information about using Active Directory Authorization with Azure Storage, please refer to the [the associated documentation](https://docs.microsoft.com/en-us/azure/storage/common/storage-auth-aad) and the [Azure Storage authorization sample](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Blobs/samples/Sample02_Auth.cs).
+
 ## Troubleshooting
 
-### Common exceptions
+### Event Processor client exceptions
 
-#### Timeout
+The Event Processor client makes every attempt to be resilient in the face of exceptions and will take the necessary actions to continue processing unless it is impossible to do so.  No action from developers is needed for this to take place; it is natively part of the processor's behavior.
 
-This indicates that the Event Hubs service did not respond to an operation within the expected amount of time.  This may have been caused by a transient network issue or service problem.  The Event Hubs service may or may not have successfully completed the request; the status is not known.  It is recommended to attempt to verify the current state and retry if necessary.
+In order to allow developers the opportunity to inspect and react to exceptions that occur within the Event Processor client operations, they are surfaced via the `ProcessError` event.  The arguments for this event offer details about the exception and the context in which it was observed.  Developers may perform normal operations on the Event Processor client from within this event handler, such as stopping and/or restarting it in response to errors, but may not otherwise influence the processor's exception behavior.  
 
-#### Quota Exceeded
+For a basic example of implementing the error handler, please see the sample: [Manage the Event Processor when an error is encountered](./samples/Sample07_RestartProcessingOnError.cs).
 
-This typically indicates that there are too many active event processors for a consumer group.  This limit depends on the tier of the Event Hubs namespace, and moving to a higher tier may be desired.  An alternative would be do create additional consumer groups and ensure that the number of active processors for any group is within the limit.  Please see [Azure Event Hubs quotas and limits](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-quotas) for more information.
+### Exceptions in event handlers
 
-### Other exceptions
+Because the Event Processor client lacks the appropriate context to understand the severity of exceptions within the event handlers that developers provide, it cannot assume what actions would be a reasonable response to them.  As a result, developers are considered responsible for exceptions that occur within the event handlers they provide using `try/catch` blocks and other standard language constructs.  
 
-For detailed information about these and other exceptions that may occur, please refer to [Event Hubs messaging exceptions](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-messaging-exceptions). 
+The Event Processor client will not attempt to detect exceptions in developer code nor surface them explicitly.  The resulting behavior will depend on the processor's hosting environment and the context in which the event handler was called.  Because this may vary between different scenarios, it is strongly recommended that developers code their event handlers defensively and account for potential exceptions.
+
+### Exception details
+
+For detailed information about exceptions that may occur, please refer to the Event Hubs client library [README]( https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Azure.Messaging.EventHubs/README.md#event-hubs-exception) and the service documentation for [Event Hubs messaging exceptions](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-messaging-exceptions). 
 
 ## Next steps
 

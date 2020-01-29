@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Provides the version state of a succesfully released blob or container
+    /// Provides the version state of a successfully released blob or container
     /// object.
     /// </summary>
     public class ReleasedObjectInfo

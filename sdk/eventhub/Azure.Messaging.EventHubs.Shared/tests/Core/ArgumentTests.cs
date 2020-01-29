@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Errors;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -196,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void NotClosedEnforcesClosed()
         {
             var target = "test";
-            Assert.That(() => Argument.AssertNotClosed(true, target), Throws.InstanceOf<EventHubsClientClosedException>().And.Message.Contains(target));
+            Assert.That(() => Argument.AssertNotClosed(true, target), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed).And.Message.Contains(target));
         }
     }
 }

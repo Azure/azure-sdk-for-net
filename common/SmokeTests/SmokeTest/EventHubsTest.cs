@@ -26,7 +26,7 @@ namespace SmokeTest
             Console.WriteLine("---------------------------------");
             Console.WriteLine("Functionalities to test: 2:");
             Console.WriteLine("1.- Send an Event batch");
-            Console.WriteLine("2.- Recieve those events\n");
+            Console.WriteLine("2.- Receive those events\n");
 
             var connectionString = Environment.GetEnvironmentVariable("EVENT_HUBS_CONNECTION_STRING");
 

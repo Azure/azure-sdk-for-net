@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -88,30 +89,33 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service.
+        ///   This property is only populated for events received from the Event Hubs service. If this
+        ///   EventData was not recived from the Event Hubs service, the value is <see cref="long.MinValue"/>.
         /// </remarks>
         ///
-        public long? SequenceNumber { get; }
+        public long SequenceNumber { get; }
 
         /// <summary>
         ///   The offset of the event when it was received from the associated Event Hub partition.
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service.
+        ///   This property is only populated for events received from the Event Hubs service. If this
+        ///   EventData was not recived from the Event Hubs service, the value is <see cref="long.MinValue"/>.
         /// </remarks>
         ///
-        public long? Offset { get; }
+        public long Offset { get; }
 
         /// <summary>
         ///   The date and time, in UTC, of when the event was enqueued in the Event Hub partition.
         /// </summary>
         ///
         /// <remarks>
-        ///   This property is only populated for events received from the Event Hubs service.
+        ///   This property is only populated for events received from the Event Hubs service. If this
+        ///   EventData was not recived from the Event Hubs service, the value <c>default(DateTimeOffset)</c>.
         /// </remarks>
         ///
-        public DateTimeOffset? EnqueuedTime { get; }
+        public DateTimeOffset EnqueuedTime { get; }
 
         /// <summary>
         ///   The partition hashing key applied to the batch that the associated <see cref="EventData"/>, was published with.
@@ -201,9 +205,9 @@ namespace Azure.Messaging.EventHubs
         internal EventData(ReadOnlyMemory<byte> eventBody,
                            IDictionary<string, object> properties = null,
                            IReadOnlyDictionary<string, object> systemProperties = null,
-                           long? sequenceNumber = null,
-                           long? offset = null,
-                           DateTimeOffset? enqueuedTime = null,
+                           long sequenceNumber = long.MinValue,
+                           long offset = long.MinValue,
+                           DateTimeOffset enqueuedTime = default,
                            string partitionKey = null,
                            long? lastPartitionSequenceNumber = null,
                            long? lastPartitionOffset = null,
@@ -238,9 +242,9 @@ namespace Azure.Messaging.EventHubs
         protected EventData(ReadOnlyMemory<byte> eventBody,
                             IDictionary<string, object> properties = null,
                             IReadOnlyDictionary<string, object> systemProperties = null,
-                            long? sequenceNumber = null,
-                            long? offset = null,
-                            DateTimeOffset? enqueuedTime = null,
+                            long sequenceNumber = long.MinValue,
+                            long offset = long.MinValue,
+                            DateTimeOffset enqueuedTime = default,
                             string partitionKey = null) : this(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey, lastPartitionSequenceNumber: null)
         {
         }

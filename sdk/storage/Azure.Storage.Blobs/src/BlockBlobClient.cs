@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -229,10 +230,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="version">
+        /// The version of the service to use when sending requests.
+        /// </param>
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, clientDiagnostics, customerProvidedKey)
+        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
+            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
         {
         }
 
@@ -258,7 +262,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlockBlobClient(blobUri, pipeline, new ClientDiagnostics(options), null);
+            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null);
         }
         #endregion ctors
 
@@ -287,7 +291,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.ToUri(), Pipeline, ClientDiagnostics, CustomerProvidedKey);
+            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
         }
 
         ///// <summary>
@@ -361,17 +365,23 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            UploadInternal(
+            CancellationToken cancellationToken = default)
+        {
+            PartitionedUploader uploader = new PartitionedUploader(
+                client: this,
+                transferOptions: default,
+                singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
+                operationName: Constants.Blob.Block.UploadOperationName);
+
+            return uploader.Upload(
                 content,
                 httpHeaders,
                 metadata,
                 conditions,
-                accessTier: accessTier,
                 progressHandler,
-                false, // async
-                cancellationToken)
-                .EnsureCompleted();
+                accessTier,
+                cancellationToken);
+        }
 
         /// <summary>
         /// The <see cref="UploadAsync"/> operation creates a new block  blob,
@@ -427,17 +437,23 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions = default,
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
-            CancellationToken cancellationToken = default) =>
-            await UploadInternal(
+            CancellationToken cancellationToken = default)
+        {
+            PartitionedUploader uploader = new PartitionedUploader(
+                client: this,
+                transferOptions: default,
+                singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
+                operationName: Constants.Blob.Block.UploadOperationName);
+
+            return await uploader.UploadAsync(
                 content,
                 httpHeaders,
                 metadata,
                 conditions,
-                accessTier: accessTier,
                 progressHandler,
-                true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                accessTier,
+                cancellationToken).ConfigureAwait(false);
+            }
 
         /// <summary>
         /// The <see cref="UploadInternal"/> operation creates a new block blob,
@@ -474,6 +490,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
         /// </param>
+        /// <param name="operationName">
+        /// The name of the calling operation.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -489,17 +508,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal async Task<Response<BlobContentInfo>> UploadInternal(
+        internal virtual async Task<Response<BlobContentInfo>> UploadInternal(
             Stream content,
             BlobHttpHeaders blobHttpHeaders,
             Metadata metadata,
             BlobRequestConditions conditions,
             AccessTier? accessTier,
             IProgress<long> progressHandler,
+            string operationName,
             bool async,
             CancellationToken cancellationToken)
         {
-            content = content.WithNoDispose().WithProgress(progressHandler);
+            content = content?.WithNoDispose().WithProgress(progressHandler);
             using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
                 Pipeline.LogMethodEnter(
@@ -515,7 +535,8 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         body: content,
-                        contentLength: content.Length,
+                        contentLength: content?.Length ?? 0,
+                        version: Version.ToVersionString(),
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,
                         blobContentLanguage: blobHttpHeaders?.ContentLanguage,
@@ -533,7 +554,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Block.UploadOperationName,
+                        operationName: operationName ?? Constants.Blob.Block.UploadOperationName,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -759,6 +780,7 @@ namespace Azure.Storage.Blobs.Specialized
                         blockId: base64BlockId,
                         body: content,
                         contentLength: content.Length,
+                        version: Version.ToVersionString(),
                         transactionalContentHash: transactionalContentHash,
                         leaseId: conditions?.LeaseId,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -766,7 +788,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         async: async,
                         operationName: Constants.Blob.Block.StageBlockOperationName,
-                        cancellationToken: cancellationToken);
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -1025,6 +1047,7 @@ namespace Azure.Storage.Blobs.Specialized
                         contentLength: default,
                         blockId: base64BlockId,
                         sourceUri: sourceUri,
+                        version: Version.ToVersionString(),
                         sourceRange: sourceRange.ToString(),
                         sourceContentHash: sourceContentHash,
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
@@ -1267,6 +1290,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         blocks,
+                        version: Version.ToVersionString(),
                         blobCacheControl: blobHttpHeaders?.CacheControl,
                         blobContentType: blobHttpHeaders?.ContentType,
                         blobContentEncoding: blobHttpHeaders?.ContentEncoding,
@@ -1465,6 +1489,7 @@ namespace Azure.Storage.Blobs.Specialized
                         Pipeline,
                         Uri,
                         listType: blockListTypes.ToBlockListType(),
+                        version: Version.ToVersionString(),
                         snapshot: snapshot,
                         leaseId: conditions?.LeaseId,
                         async: async,
@@ -1511,6 +1536,7 @@ namespace Azure.Storage.Blobs.Specialized
             new BlockBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
+                client.Version,
                 client.ClientDiagnostics,
                 client.CustomerProvidedKey);
     }

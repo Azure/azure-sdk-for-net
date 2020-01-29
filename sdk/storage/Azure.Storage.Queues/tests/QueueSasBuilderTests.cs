@@ -82,6 +82,30 @@ namespace Azure.Storage.Queues.Test
             Assert.Throws<ArgumentNullException>(() => queueSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
+        [Test]
+        public void ToSasQueryParameters_IdentifierTest()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var queueName = GetNewQueueName();
+
+            QueueSasBuilder sasBuilder = new QueueSasBuilder
+            {
+                Identifier = constants.Sas.Identifier,
+                QueueName = queueName,
+                Protocol = SasProtocol.Https,
+                Version = constants.Sas.Version
+            };
+
+            // Act
+            SasQueryParameters sasQueryParameters = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+
+            // Assert
+            Assert.AreEqual(constants.Sas.Identifier, sasQueryParameters.Identifier);
+            Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
+            Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
+        }
+
         private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName, bool includeVersion)
         {
             var queueSasBuilder = new QueueSasBuilder

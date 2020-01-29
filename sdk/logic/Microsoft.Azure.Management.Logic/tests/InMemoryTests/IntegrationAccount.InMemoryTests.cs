@@ -67,7 +67,7 @@ namespace Test.Azure.Management.Logic
                 Content = new StringContent(string.Empty)
             };
 
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListBySubscription());
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.ListBySubscription());
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListBySubscriptionNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListBySubscriptionNext(Constants.NextPageLink));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.ListBySubscriptionNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListByResourceGroup(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListByResourceGroup(Constants.DefaultResourceGroup));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.ListByResourceGroup(Constants.DefaultResourceGroup));
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace Test.Azure.Management.Logic
             };
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListByResourceGroupNext(null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListByResourceGroupNext(Constants.NextPageLink));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.ListByResourceGroupNext(Constants.NextPageLink));
         }
 
         [Fact]
@@ -199,7 +199,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.CreateOrUpdate(null, "IntegrationAccountName", new IntegrationAccount()));
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, null, new IntegrationAccount()));
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", new IntegrationAccount()));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.CreateOrUpdate(Constants.DefaultResourceGroup, "IntegrationAccountName", new IntegrationAccount()));
         }
 
         [Fact]
@@ -260,7 +260,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.Delete(null, "IntegrationAccountName"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, "IntegrationAccountName"));
         }
 
         [Fact]
@@ -313,7 +313,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.Get(null, "IntegrationAccountName"));
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, "IntegrationAccountName"));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.Get(Constants.DefaultResourceGroup, "IntegrationAccountName"));
         }
 
         [Fact]
@@ -353,7 +353,7 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.Update(null, "IntegrationAccountName", new IntegrationAccount()));
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.Update(Constants.DefaultResourceGroup, null, new IntegrationAccount()));
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.Update(Constants.DefaultResourceGroup, "IntegrationAccountName", null));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.Update(Constants.DefaultResourceGroup, "IntegrationAccountName", new IntegrationAccount()));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.Update(Constants.DefaultResourceGroup, "IntegrationAccountName", new IntegrationAccount()));
         }
 
         [Fact]
@@ -398,7 +398,7 @@ namespace Test.Azure.Management.Logic
 
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(null, "IntegrationAccountName", new GetCallbackUrlParameters()));
             Assert.Throws<ValidationException>(() => client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup, null, new GetCallbackUrlParameters()));
-            Assert.Throws<CloudException>(() => client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup, "IntegrationAccountName", new GetCallbackUrlParameters()));
+            Assert.Throws<ErrorResponseException>(() => client.IntegrationAccounts.ListCallbackUrl(Constants.DefaultResourceGroup, "IntegrationAccountName", new GetCallbackUrlParameters()));
         }
 
         [Fact]

@@ -431,8 +431,9 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ConnectivityInformation>> CheckConnectivityWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the relative latency score for internet service providers from
-        /// a specified location to Azure regions.
+        /// NOTE: This feature is currently in preview and still being tested
+        /// for stability. Gets the relative latency score for internet service
+        /// providers from a specified location to Azure regions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -460,8 +461,9 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<AzureReachabilityReport>> GetAzureReachabilityReportWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, AzureReachabilityReportParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all available internet service providers for a specified
-        /// Azure region.
+        /// NOTE: This feature is currently in preview and still being tested
+        /// for stability. Lists all available internet service providers for a
+        /// specified Azure region.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -779,8 +781,9 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<ConnectivityInformation>> BeginCheckConnectivityWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, ConnectivityParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the relative latency score for internet service providers from
-        /// a specified location to Azure regions.
+        /// NOTE: This feature is currently in preview and still being tested
+        /// for stability. Gets the relative latency score for internet service
+        /// providers from a specified location to Azure regions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.
@@ -808,8 +811,9 @@ namespace Microsoft.Azure.Management.Network
         /// </exception>
         Task<AzureOperationResponse<AzureReachabilityReport>> BeginGetAzureReachabilityReportWithHttpMessagesAsync(string resourceGroupName, string networkWatcherName, AzureReachabilityReportParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all available internet service providers for a specified
-        /// Azure region.
+        /// NOTE: This feature is currently in preview and still being tested
+        /// for stability. Lists all available internet service providers for a
+        /// specified Azure region.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the network watcher resource group.

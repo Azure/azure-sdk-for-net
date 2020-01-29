@@ -11,6 +11,7 @@ using System.Reflection;
 using Xunit;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace NetApp.Tests.ResourceTests
 {
@@ -379,7 +380,144 @@ namespace NetApp.Tests.ResourceTests
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }
-        
+
+        private void WaitForReplicationStatus(AzureNetAppFilesManagementClient netAppMgmtClient, string targetState)
+        {
+            var replicationStatus = netAppMgmtClient.Volumes.ReplicationStatusMethod(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+
+            while (replicationStatus.MirrorState != targetState)
+            {
+                replicationStatus = netAppMgmtClient.Volumes.ReplicationStatusMethod(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+                Thread.Sleep(1);
+            }
+
+            Assert.True(replicationStatus.Healthy);
+        }
+
+        private void WaitForSucceeded(AzureNetAppFilesManagementClient netAppMgmtClient, Volume sourceVolume,Volume  dpVolume)
+        {
+            do
+            {
+                sourceVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.repResourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                dpVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+
+                Thread.Sleep(1);
+            } while ((sourceVolume.ProvisioningState != "Succeeded") || (dpVolume.ProvisioningState != "Succeeded"));
+        }
+
+        [Fact]
+        public void CreateDpVolume()
+        {
+            HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var netAppMgmtClient = NetAppTestUtilities.GetNetAppManagementClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+                                
+                // create the source volume
+                var sourceVolume = ResourceUtils.CreateVolume(netAppMgmtClient, resourceGroup: ResourceUtils.repResourceGroup, vnet: ResourceUtils.repVnet);
+
+                sourceVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.repResourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+
+                // create the data protection volume from the source
+                var dpVolume = ResourceUtils.CreateDpVolume(netAppMgmtClient, sourceVolume);
+                Assert.Equal(ResourceUtils.remoteVolumeName1, dpVolume.Name.Substring(dpVolume.Name.LastIndexOf('/') + 1));
+                Assert.NotNull(dpVolume.DataProtection);
+
+                var authorizeRequest = new AuthorizeRequest
+                {
+                    RemoteVolumeResourceId = dpVolume.Id
+                };
+
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
+
+                netAppMgmtClient.Volumes.AuthorizeReplication(ResourceUtils.repResourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, authorizeRequest);
+
+                WaitForSucceeded(netAppMgmtClient, sourceVolume, dpVolume);
+
+                WaitForReplicationStatus(netAppMgmtClient, "Mirrored");
+
+                netAppMgmtClient.Volumes.BreakReplication(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+
+                WaitForReplicationStatus(netAppMgmtClient, "Broken");
+
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
+
+                // sync to the test
+
+                WaitForSucceeded(netAppMgmtClient, sourceVolume, dpVolume);
+
+                // resync 
+                netAppMgmtClient.Volumes.ResyncReplication(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+
+                WaitForReplicationStatus(netAppMgmtClient, "Mirrored");
+
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
+
+                // break again
+
+                netAppMgmtClient.Volumes.BreakReplication(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+
+                WaitForReplicationStatus(netAppMgmtClient, "Broken");
+
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(30000);
+                }
+
+                // delete the data protection object
+                //  - initiate delete replication on destination, this then releases on source, both resulting in object deletion
+                netAppMgmtClient.Volumes.DeleteReplication(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+
+                var replicationFound = true; // because it was previously present
+                while (replicationFound)
+                {
+                    try
+                    {
+                        var replicationStatus = netAppMgmtClient.Volumes.ReplicationStatusMethod(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+                    }
+                    catch
+                    {
+                        // an exception means the replication was not found
+                        // i.e. it has been deleted
+                        // ok without checking it could have been for another reason
+                        // but then the delete below will fail
+                        replicationFound = false;
+                    }
+                    
+                    Thread.Sleep(1);
+                }
+
+                // seems the volumes are not always in a terminal state here so check again
+                // and ensure the replication objects are removed
+                do
+                {
+                    sourceVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.repResourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                    dpVolume = netAppMgmtClient.Volumes.Get(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+
+                    Thread.Sleep(1);
+                } while ((sourceVolume.ProvisioningState != "Succeeded") || (dpVolume.ProvisioningState != "Succeeded") || (sourceVolume.DataProtection.Replication != null) || (dpVolume.DataProtection.Replication != null));
+
+                // now proceed with the delete of the volumes
+                netAppMgmtClient.Volumes.Delete(ResourceUtils.remoteResourceGroup, ResourceUtils.remoteAccountName1, ResourceUtils.remotePoolName1, ResourceUtils.remoteVolumeName1);
+                netAppMgmtClient.Volumes.Delete(ResourceUtils.repResourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+
+                // cleanup pool and account
+                ResourceUtils.DeletePool(netAppMgmtClient, resourceGroup: ResourceUtils.repResourceGroup);
+                ResourceUtils.DeletePool(netAppMgmtClient, ResourceUtils.remotePoolName1, ResourceUtils.remoteAccountName1, ResourceUtils.remoteResourceGroup);
+                ResourceUtils.DeleteAccount(netAppMgmtClient, resourceGroup: ResourceUtils.repResourceGroup);
+                ResourceUtils.DeleteAccount(netAppMgmtClient, ResourceUtils.remoteAccountName1, ResourceUtils.remoteResourceGroup);
+            }
+        }
+
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.VolumeTests).GetTypeInfo().Assembly.Location;

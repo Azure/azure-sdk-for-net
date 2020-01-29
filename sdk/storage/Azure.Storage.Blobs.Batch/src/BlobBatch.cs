@@ -186,6 +186,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpMessage message = BatchRestClient.Blob.DeleteAsync_CreateMessage(
                 _client.BatchOperationPipeline,
                 blobUri,
+                version: _client.Version.ToVersionString(),
                 deleteSnapshots: snapshotsOption == DeleteSnapshotsOption.None ? null : (DeleteSnapshotsOption?)snapshotsOption,
                 leaseId: conditions?.LeaseId,
                 ifModifiedSince: conditions?.IfModifiedSince,
@@ -289,6 +290,7 @@ namespace Azure.Storage.Blobs.Specialized
                 _client.BatchOperationPipeline,
                 blobUri,
                 tier: accessTier,
+                version: _client.Version.ToVersionString(),
                 rehydratePriority: rehydratePriority,
                 leaseId: leaseAccessConditions?.LeaseId);
             _messages.Add(message);

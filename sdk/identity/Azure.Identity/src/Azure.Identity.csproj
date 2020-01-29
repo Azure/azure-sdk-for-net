@@ -3,13 +3,8 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <Version>1.2.0-preview</Version>
+    <Version>1.2.0-preview.1</Version>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
-    <PackageReleaseNotes>
-      <![CDATA[
-      GA release of Azure.Identity package.
-      ]]>
-    </PackageReleaseNotes>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021</NoWarn>
@@ -27,6 +22,7 @@
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />

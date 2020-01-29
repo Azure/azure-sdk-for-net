@@ -17,9 +17,17 @@ namespace Azure.Identity
         {
             AuthorityHost = options.AuthorityHost;
 
-            HttpPipeline = HttpPipelineBuilder.Build(options);
+
+            HttpPipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new CredentialResponseClassifier());
 
             Diagnostics = new ClientDiagnostics(options);
+        }
+
+        private CredentialPipeline(Uri authorityHost, HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
+        {
+            AuthorityHost = authorityHost ?? throw new ArgumentNullException(nameof(authorityHost));
+            HttpPipeline = httpPipeline ?? throw new ArgumentNullException(nameof(httpPipeline));
+            Diagnostics = diagnostics ?? throw new ArgumentNullException(nameof(diagnostics));
         }
 
         public static CredentialPipeline GetInstance(TokenCredentialOptions options)
@@ -52,6 +60,23 @@ namespace Azure.Identity
             scope.Start();
 
             return scope;
+        }
+
+        /// <summary>
+        /// Creates a new CredentialPipeline from an existing pipeline while replacing the AuthorityHost with a new value.
+        /// </summary>
+        /// <returns></returns>
+        public CredentialPipeline WithAuthorityHost(Uri authorityHost)
+        {
+            return new CredentialPipeline(authorityHost, HttpPipeline, Diagnostics);
+        }
+
+        private class CredentialResponseClassifier : ResponseClassifier
+        {
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                return base.IsRetriableResponse(message) || message.Response.Status == 404;
+            }
         }
     }
 }

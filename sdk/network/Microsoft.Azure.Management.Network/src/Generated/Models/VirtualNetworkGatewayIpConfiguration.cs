@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="privateIPAllocationMethod">The private IP address
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
-        /// <param name="subnet">The reference of the subnet resource.</param>
-        /// <param name="publicIPAddress">The reference of the public IP
+        /// <param name="subnet">The reference to the subnet resource.</param>
+        /// <param name="publicIPAddress">The reference to the public IP
         /// resource.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// virtual network gateway IP configuration resource. Possible values
@@ -74,13 +74,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource.
+        /// Gets or sets the reference to the subnet resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the public IP resource.
+        /// Gets or sets the reference to the public IP resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }

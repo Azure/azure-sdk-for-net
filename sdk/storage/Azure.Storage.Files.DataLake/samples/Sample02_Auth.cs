@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 Uri endpoint = file.Uri;
                 DataLakeFileClient anonymous = new DataLakeFileClient(endpoint);
 
-                // Make a service request to verify we've succesfully authenticated
+                // Make a service request to verify we've successfully authenticated
                 await anonymous.GetPropertiesAsync();
             }
             finally
@@ -105,7 +105,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             // Get a reference to a service Client
             DataLakeServiceClient service = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.CreateFileSystemAsync("sample-filesystem-sharedkey");
             await service.DeleteFileSystemAsync("sample-filesystem-sharedkey");
         }
@@ -149,7 +149,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             // Create a client that can authenticate with the SAS URI
             DataLakeServiceClient service = new DataLakeServiceClient(sasUri.Uri);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.GetFileSystemsAsync().FirstAsync();
 
             // Try to create a new container (which is beyond our
@@ -189,7 +189,7 @@ namespace Azure.Storage.Files.DataLake.Samples
             // Create a client that can authenticate using our token credential
             DataLakeServiceClient service = new DataLakeServiceClient(ActiveDirectoryBlobUri, credential);
 
-            // Make a service request to verify we've succesfully authenticated
+            // Make a service request to verify we've successfully authenticated
             await service.CreateFileSystemAsync("sample-filesystem-aad");
             await service.DeleteFileSystemAsync("sample-filesystem-aad");
         }

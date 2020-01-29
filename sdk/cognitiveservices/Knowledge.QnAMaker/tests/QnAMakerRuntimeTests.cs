@@ -19,7 +19,7 @@ namespace QnAMaker.Tests
                 HttpMockServer.Initialize(this.GetType(), "QnAMakerRuntimeGenerateAnswerTest");
 
                 var client = GetQnAMakerRuntimeClient(HttpMockServer.CreateInstance());
-                var answer = client.Runtime.GenerateAnswer("8758c6af-fa29-4e03-a517-9c36927f558f", new QueryDTO(question: "good afternoon"));
+                var answer = client.Runtime.GenerateAnswerAsync("8758c6af-fa29-4e03-a517-9c36927f558f", new QueryDTO(question: "good afternoon")).Result;
                 Assert.Equal(1, answer.Answers.Count);
                 Assert.Equal(100, answer.Answers[0].Score);
             }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -12,14 +13,15 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.Tests;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
     public class BlobClientTests : BlobTestBase
     {
-        public BlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -33,7 +35,7 @@ namespace Azure.Storage.Blobs.Test
             var blobEndpoint = new Uri("http://127.0.0.1/" + accountName);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + accountName + "-secondary");
 
-            var connectionString = new StorageConnectionString(credentials, (blobEndpoint, blobSecondaryEndpoint), (default, default), (default, default));
+            var connectionString = new StorageConnectionString(credentials, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
 
             var containerName = GetNewContainerName();
             var blobName = GetNewBlobName();
@@ -202,6 +204,26 @@ namespace Azure.Storage.Blobs.Test
                 using var actual = new MemoryStream();
                 await download.Value.Content.CopyToAsync(actual);
                 TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_Stream_NullStreamFail()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = (Stream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadAsync(stream),
+                    e => Assert.AreEqual("body", e.ParamName));
             }
         }
 
@@ -442,7 +464,7 @@ namespace Azure.Storage.Blobs.Test
             long singleBlockThreshold,
             StorageTransferOptions transferOptions)
         {
-            var data = GetRandomBuffer(size);
+            using Stream stream = await CreateLimitedMemoryStream(size);
             await using DisposingContainer test = await GetTestContainerAsync();
 
             var name = GetNewBlobName();
@@ -450,36 +472,17 @@ namespace Azure.Storage.Blobs.Test
             var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
             blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-            using (var stream = new MemoryStream(data))
-            {
-                await blob.StagedUploadAsync(
-                    content: stream,
-                    blobHttpHeaders: default,
-                    metadata: default,
-                    conditions: default,
-                    progressHandler: default,
-                    singleUploadThreshold: singleBlockThreshold,
-                    transferOptions: transferOptions,
-                    async: true);
-            }
+            await blob.StagedUploadAsync(
+                content: stream,
+                blobHttpHeaders: default,
+                metadata: default,
+                conditions: default,
+                progressHandler: default,
+                singleUploadThreshold: singleBlockThreshold,
+                transferOptions: transferOptions,
+                async: true);
 
-            var actual = new byte[Constants.DefaultBufferSize];
-            var actualStream = new MemoryStream(actual);
-
-            // we are testing Upload, not download: so we download in partitions to avoid the default timeout
-            for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
-            {
-                var startIndex = i;
-                var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
-
-                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
-                actualStream.Position = 0;
-                await download.Value.Content.CopyToAsync(actualStream);
-                TestHelper.AssertSequenceEqual(
-                    data.AsSpan(startIndex, count).ToArray(),
-                    actual.AsSpan(0, count).ToArray()
-                    );
-            }
+            await DownloadAndAssertAsync(stream, blob);
         }
 
         private async Task UploadFileAndVerify(
@@ -487,12 +490,19 @@ namespace Azure.Storage.Blobs.Test
             long singleBlockThreshold,
             StorageTransferOptions transferOptions)
         {
-            var data = GetRandomBuffer(size);
             var path = Path.GetTempFileName();
 
             try
             {
-                File.WriteAllBytes(path, data);
+                using Stream stream = await CreateLimitedMemoryStream(size);
+
+                // create a new file and copy contents of stream into it, and then close the FileStream
+                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                using (FileStream fileStream = File.Create(path))
+                {
+                    await stream.CopyToAsync(fileStream);
+                }
+
                 await using DisposingContainer test = await GetTestContainerAsync();
 
                 var name = GetNewBlobName();
@@ -500,36 +510,17 @@ namespace Azure.Storage.Blobs.Test
                 var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
                 blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
 
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.StagedUploadAsync(
-                        path: path,
-                        blobHttpHeaders: default,
-                        metadata: default,
-                        conditions: default,
-                        progressHandler: default,
-                        singleUploadThreshold: singleBlockThreshold,
-                        transferOptions: transferOptions,
-                        async: true);
-                }
+                await blob.StagedUploadAsync(
+                    path: path,
+                    blobHttpHeaders: default,
+                    metadata: default,
+                    conditions: default,
+                    progressHandler: default,
+                    singleUploadThreshold: singleBlockThreshold,
+                    transferOptions: transferOptions,
+                    async: true);
 
-                var actual = new byte[Constants.DefaultBufferSize];
-                var actualStream = new MemoryStream(actual);
-
-                // we are testing Upload, not download: so we download in partitions to avoid the default timeout
-                for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
-                {
-                    var startIndex = i;
-                    var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
-
-                    Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
-                    actualStream.Position = 0;
-                    await download.Value.Content.CopyToAsync(actualStream);
-                    TestHelper.AssertSequenceEqual(
-                        data.AsSpan(startIndex, count).ToArray(),
-                        actual.AsSpan(0, count).ToArray()
-                        );
-                }
+                await DownloadAndAssertAsync(stream, blob);
             }
             finally
             {
@@ -537,6 +528,34 @@ namespace Azure.Storage.Blobs.Test
                 {
                     File.Delete(path);
                 }
+            }
+        }
+
+        private static async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
+        {
+            var actual = new byte[Constants.DefaultBufferSize];
+            using var actualStream = new MemoryStream(actual);
+
+            // reset the stream before validating
+            stream.Seek(0, SeekOrigin.Begin);
+            long size = stream.Length;
+            // we are testing Upload, not download: so we download in partitions to avoid the default timeout
+            for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
+            {
+                var startIndex = i;
+                var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
+
+                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
+                actualStream.Seek(0, SeekOrigin.Begin);
+                await download.Value.Content.CopyToAsync(actualStream);
+
+                var buffer = new byte[count];
+                stream.Seek(i, SeekOrigin.Begin);
+                await stream.ReadAsync(buffer, 0, count);
+
+                TestHelper.AssertSequenceEqual(
+                    buffer,
+                    actual.AsSpan(0, count).ToArray());
             }
         }
 
@@ -575,17 +594,26 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(33 * Constants.MB, 8)]
         [TestCase(33 * Constants.MB, 16)]
         [TestCase(33 * Constants.MB, null)]
+        public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
+        }
+
+        [Test]
+        [LiveOnly]
+        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
         [TestCase(257 * Constants.MB, 1)]
         [TestCase(257 * Constants.MB, 4)]
         [TestCase(257 * Constants.MB, 8)]
-        [TestCase(257 * Constants.MB, 16)]
         [TestCase(257 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 16)]
         [TestCase(1 * Constants.GB, 1)]
         [TestCase(1 * Constants.GB, 4)]
         [TestCase(1 * Constants.GB, 8)]
-        [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
-        public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
+        [TestCase(1 * Constants.GB, 16)]
+        public async Task UploadStreamAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadStreamAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
@@ -598,17 +626,26 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(33 * Constants.MB, 8)]
         [TestCase(33 * Constants.MB, 16)]
         [TestCase(33 * Constants.MB, null)]
+        public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
+        {
+            // TODO: #6781 We don't want to add 1GB of random data in the recordings
+            await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
+        }
+
+        [Test]
+        [LiveOnly]
+        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
         [TestCase(257 * Constants.MB, 1)]
         [TestCase(257 * Constants.MB, 4)]
         [TestCase(257 * Constants.MB, 8)]
-        [TestCase(257 * Constants.MB, 16)]
         [TestCase(257 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 16)]
         [TestCase(1 * Constants.GB, 1)]
         [TestCase(1 * Constants.GB, 4)]
         [TestCase(1 * Constants.GB, 8)]
-        [TestCase(1 * Constants.GB, 16)]
         [TestCase(1 * Constants.GB, null)]
-        public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
+        [TestCase(1 * Constants.GB, 16)]
+        public async Task UploadFileAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadFileAndVerify(size, 16 * Constants.MB, new StorageTransferOptions { MaximumConcurrency = maximumThreadCount });
@@ -740,6 +777,31 @@ namespace Azure.Storage.Blobs.Test
                 }
             }
         }
+
+        [LiveOnly]
+        [Test]
+        public async Task UploadAsync_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            TestProgress progress = new TestProgress();
+            StorageTransferOptions options = new StorageTransferOptions
+            {
+                MaximumTransferLength = Constants.MB,
+                MaximumConcurrency = 16
+            };
+            int size = Constants.Blob.Block.MaxUploadBytes + 1; // ensure that the Parallel upload code path is hit
+            using var stream = new MemoryStream(GetRandomBuffer(size));
+
+            // Act
+            await blob.UploadAsync(content: stream, progressHandler: progress, transferOptions: options);
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(size, progress.List[progress.List.Count - 1]);
+        }
         #endregion Upload
 
         [Test]
@@ -788,7 +850,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // Keep uploading a GB
                 var data = GetRandomBuffer(Constants.GB);
-                for (;;)
+                for (; ; )
                 {
                     BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
                     using var stream = new MemoryStream(data);
@@ -810,26 +872,40 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Upload a GB
+            // Upload 100MB
             var data = GetRandomBuffer(100 * Constants.MB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
             using var stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
-            // Create a CancellationToken that times out after .1s
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.1));
-            CancellationToken token = source.Token;
+            await AssertDownloadAsync();
+            await AssertDownloadToAsync();
 
-            // Verifying downloading will cancel
-            try
+            async Task AssertDownloadAsync()
             {
-                using BlobDownloadInfo result = await blob.DownloadAsync(cancellationToken: token);
+                // Create a CancellationToken that is already cancelled
+                CancellationToken token = new CancellationToken(canceled: true);
+
+                // Verifying Download will cancel
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadAsync(cancellationToken: token));
             }
-            catch (OperationCanceledException)
+
+            async Task AssertDownloadToAsync()
             {
-                return; // Succeeded
+                // Create a CancellationToken that times out after .01s
+                // Intentionally not delaying here, as DownloadToAsync operation should always cancel
+                // since it buffers the full response.
+                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                CancellationToken token = source.Token;
+
+                // Verifying DownloadTo will cancel
+                using var downloadStream = new MemoryStream();
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadToAsync(
+                        destination: downloadStream,
+                        cancellationToken: token));
             }
-            Assert.Fail("Not canceled!");
         }
     }
 }
