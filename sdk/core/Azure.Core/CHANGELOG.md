@@ -3,6 +3,7 @@
 ## 1.1.0-preview.1 (Unreleased)
 
 - Block bearer token authentication for non TLS protected endpoints.
+- Add support for retrying on request timeouts.
 
 ## 1.0.1
 

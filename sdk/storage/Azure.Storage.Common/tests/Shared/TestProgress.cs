@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Storage.Blobs.Test
+namespace Azure.Storage.Test
 {
     public class TestProgress : IProgress<long>
     {

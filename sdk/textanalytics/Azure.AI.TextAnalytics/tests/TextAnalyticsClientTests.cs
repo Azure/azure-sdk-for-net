@@ -88,5 +88,40 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((List<string>)null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync(null, new TextAnalyticsRequestOptions()));
         }
+
+        [Test]
+        public void ConvertToDocumentInputTest()
+        {
+            string input = "This is a test";
+            var expectedDocument = new TextDocumentInput("0", input)
+            {
+                Language = "en"
+            };
+
+            TextDocumentInput textInput = Client.ConvertToDocumentInput(input, null);
+            Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
+
+            textInput = Client.ConvertToDocumentInput(input, "es");
+            expectedDocument.Language = "es";
+            Assert.IsTrue(CompareTextDocumentInput(expectedDocument, textInput));
+
+            textInput = Client.ConvertToDocumentInput(input, "es", 2);
+            var expectedDocument2 = new TextDocumentInput("2", input)
+            {
+                Language = "es"
+            };
+            Assert.IsTrue(CompareTextDocumentInput(expectedDocument2, textInput));
+        }
+
+        private bool CompareTextDocumentInput(TextDocumentInput tdi1, TextDocumentInput tdi2)
+        {
+            if (!tdi1.Id.Equals(tdi2.Id))
+                return false;
+            if (!tdi1.Language.Equals(tdi2.Language))
+                return false;
+            if (!tdi1.Text.Equals(tdi2.Text))
+                return false;
+            return true;
+        }
     }
 }
