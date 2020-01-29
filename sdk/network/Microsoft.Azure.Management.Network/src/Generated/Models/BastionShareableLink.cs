@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// machine.</param>
         /// <param name="createdAt">The time when the link was created.</param>
         /// <param name="message">Optional field indicating the warning or
-        /// error message related to the vm in case of partial failure</param>
+        /// error message related to the vm in case of partial failure.</param>
         public BastionShareableLink(VM vm, string bsl = default(string), string createdAt = default(string), string message = default(string))
         {
             Vm = vm;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets optional field indicating the warning or error message related
-        /// to the vm in case of partial failure
+        /// to the vm in case of partial failure.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }

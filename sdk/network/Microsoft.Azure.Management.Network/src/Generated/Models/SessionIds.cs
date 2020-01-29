@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// List of session ids.
+    /// List of session IDs.
     /// </summary>
     public partial class SessionIds
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the SessionIds class.
         /// </summary>
-        /// <param name="sessionIdsProperty">List of session ids</param>
+        /// <param name="sessionIdsProperty">List of session IDs.</param>
         public SessionIds(IList<string> sessionIdsProperty = default(IList<string>))
         {
             SessionIdsProperty = sessionIdsProperty;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of session ids
+        /// Gets or sets list of session IDs.
         /// </summary>
         [JsonProperty(PropertyName = "sessionIds")]
         public IList<string> SessionIdsProperty { get; set; }
