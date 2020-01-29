@@ -92,14 +92,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\..\eng\ApiCompat\ApiCompat.csproj", "{C5E06F11-9E1D-410D-93B9-7CE70718D2F5}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\keyvault\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{2792ab89-fb2f-4bb6-b94a-9d8664815c99}*SharedItemsImports = 5
-		..\..\keyvault\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{71f53944-4727-4732-a363-e54a173815c9}*SharedItemsImports = 5
-		..\..\keyvault\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{9a544d9a-7be3-4d3d-90d4-be9d81332bfa}*SharedItemsImports = 5
-		..\..\keyvault\Azure.Security.KeyVault.Shared\tests\Azure.Security.KeyVault.Shared.Tests.projitems*{ce6bb00e-11cd-47ff-9d61-c625bcba7e20}*SharedItemsImports = 5
-		..\..\keyvault\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{e57b0d4d-a8fb-4da0-bd54-5955aaaa98d4}*SharedItemsImports = 5
-		..\..\keyvault\Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{f5b8fefc-8ed4-4ee8-a601-a8d01cc52ffd}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
