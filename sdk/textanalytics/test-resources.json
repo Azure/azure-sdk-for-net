@@ -81,7 +81,7 @@
             "type": "string",
             "value": "[parameters('testApplicationSecret')]"
         },
-        "TEXT_ANALYTICS_SUBSCRIPTION_KEY": {
+        "TEXT_ANALYTICS_API_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
         },

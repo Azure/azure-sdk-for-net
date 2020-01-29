@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Tests
     public class TextAnalyticsClientLiveTests : RecordedTestBase
     {
         public const string EndpointEnvironmentVariable = "TEXT_ANALYTICS_ENDPOINT";
-        public const string SubscriptionKeyEnvironmentVariable = "TEXT_ANALYTICS_SUBSCRIPTION_KEY";
+        public const string ApiKeyEnvironmentVariable = "TEXT_ANALYTICS_API_KEY";
 
         public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -21,10 +21,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Matcher = new RecordMatcher(Sanitizer);
         }
 
-        public TextAnalyticsClient GetClient(TextAnalyticsSubscriptionKeyCredential credential = default)
+        public TextAnalyticsClient GetClient(TextAnalyticsApiKeyCredential credential = default)
         {
-            string subscriptionKey = Recording.GetVariableFromEnvironment(SubscriptionKeyEnvironmentVariable);
-            credential ??= new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
+            string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
+            credential ??= new TextAnalyticsApiKeyCredential(apiKey);
             return InstrumentClient (
                 new TextAnalyticsClient(
                     new Uri(Recording.GetVariableFromEnvironment(EndpointEnvironmentVariable)),
@@ -298,11 +298,11 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RotateSubscriptionKey()
+        public async Task RotateApiKey()
         {
             // Instantiate a client that will be used to call the service.
-            string subscriptionKey = Recording.GetVariableFromEnvironment(SubscriptionKeyEnvironmentVariable);
-            var credential = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
+            string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
+            var credential = new TextAnalyticsApiKeyCredential(apiKey);
             TextAnalyticsClient client = GetClient(credential);
 
             string input = "Este documento está en español.";
@@ -310,13 +310,13 @@ namespace Azure.AI.TextAnalytics.Tests
             // Verify the credential works (i.e., doesn't throw)
             await client.DetectLanguageAsync(input);
 
-            // Rotate the subscription key to an invalid value and make sure it fails
+            // Rotate the API key to an invalid value and make sure it fails
             credential.UpdateCredential("Invalid");
             Assert.ThrowsAsync<RequestFailedException>(
                    async () => await client.DetectLanguageAsync(input));
 
-            // Re-rotate the subscription key and make sure it succeeds again
-            credential.UpdateCredential(subscriptionKey);
+            // Re-rotate the API key and make sure it succeeds again
+            credential.UpdateCredential(apiKey);
             await client.DetectLanguageAsync(input);
         }
     }

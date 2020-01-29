@@ -29,34 +29,34 @@ Install-Package Azure.AI.TextAnalytics
 ```
 
 ### Authenticate the client
-In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either a **subscription key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
-#### Get Subscription Key
+#### Get API Key
 
-Use the [Azure CLI][azure_cli] snippet below to get the subscription key from the Text Analytics resource.
+Use the [Azure CLI][azure_cli] snippet below to get the API key from the Text Analytics resource.
 
 ```PowerShell
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-Alternatively, you can get the endpoint and subscription key from the resource information in the [Azure Portal][azure_portal].
+Alternatively, you can get the endpoint and API key from the resource information in the [Azure Portal][azure_portal].
 
-#### Create TextAnalyticsClient with Subscription Key Credential
-Once you have the value for the subscription key, create a `TextAnalyticsSubscriptionKeyCredential`. This will allow you to
-update the subscription key by using the `UpdateCredential` method without creating a new client.
+#### Create TextAnalyticsClient with API Key Credential
+Once you have the value for the API key, create a `TextAnalyticsApiKeyCredential`. This will allow you to
+update the API key by using the `UpdateCredential` method without creating a new client.
 
-With the value of the endpoint and a `TextAnalyticsSubscriptionKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
+With the value of the endpoint and a `TextAnalyticsApiKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
-string subscriptionKey = "<subscriptionKey>";
-var credential = new TextAnalyticsSubscriptionKeyCredential(subscriptionKey);
+string apiKey = "<apiKey>";
+var credential = new TextAnalyticsApiKeyCredential(apiKey);
 var client = new TextAnalyticsClient(new Uri(endpoint), credential);
 ```
 
 #### Create TextAnalyticsClient with Azure Active Directory Credential
 
-Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
+Client API key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
 
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:

@@ -72,10 +72,10 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credential">The subscription key used to access
-        /// the service. This will allow you to update the subscription key
+        /// <param name="credential">The API key used to access
+        /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
-        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential)
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsApiKeyCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
         }
@@ -86,12 +86,12 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credential">The subscription key used to access
-        /// the service. This will allow you to update the subscription key
+        /// <param name="credential">The API key used to access
+        /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
         /// <param name="options"><see cref="TextAnalyticsClientOptions"/> that allow
         /// callers to configure how requests are sent to the service.</param>
-        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential, TextAnalyticsClientOptions options)
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsApiKeyCredential credential, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -99,7 +99,7 @@ namespace Azure.AI.TextAnalytics
 
             _baseUri = endpoint;
             _apiVersion = options.GetVersionString();
-            _pipeline = HttpPipelineBuilder.Build(options, new SubscriptionKeyAuthenticationPolicy(credential));
+            _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
         }

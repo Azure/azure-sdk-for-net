@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Tests
     public class TextAnalyticsClientMockTests : ClientTestBase
     {
         private static readonly string s_endpoint = "https://contoso-textanalytics.cognitiveservices.azure.com/";
-        private static readonly string s_subscriptionKey = "FakeSubscriptionKey";
+        private static readonly string s_apiKey = "FakeapiKey";
 
         public TextAnalyticsClientMockTests(bool isAsync) : base(isAsync)
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Transport = transport
             };
 
-            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), new TextAnalyticsSubscriptionKeyCredential(s_subscriptionKey), options));
+            var client = InstrumentClient(new TextAnalyticsClient(new Uri(s_endpoint), new TextAnalyticsApiKeyCredential(s_apiKey), options));
 
             return client;
         }
