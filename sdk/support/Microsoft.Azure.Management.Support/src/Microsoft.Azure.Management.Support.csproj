@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code below this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.Support</PackageId>
+    <Description>Provides developers with libraries for the creation and management of SupportTicket resource.</Description>
+    <Version>1.0.0-preview.1</Version>
+    <AssemblyName>Microsoft.Azure.Management.Support</AssemblyName>
+    <PackageTags>Management.Suppport;Support;SupportTickets</PackageTags>
+    <PackageReleaseNotes>
+      <![CDATA[
+        This is a public preview release of the Azure Support SDK. Included with this release is ability to create and manage support tickets for Azure subscription. Support tickets can be created for Billing, Subscription Management, Service and subscription limits (quotas) and Technical issues. It also provides the ability to add a communication message to a support ticket and retrieve all communications for a support ticket.
+      ]]>
+</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <ItemGroup>
+    <Compile Remove="Generated2\**" />
+    <EmbeddedResource Remove="Generated2\**" />
+    <None Remove="Generated2\**" />
+  </ItemGroup>
+  <!-- Please do not move/edit code above this line -->
+</Project>
