@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics
         /// This is intended to be used when you've regenerated your service API key
         /// and want to update long lived clients.
         /// </summary>
-        /// <param name="apiKey">API key to athenticate the service against.</param>
+        /// <param name="apiKey">API key to authenticate the service against.</param>
         public void UpdateCredential(string apiKey) =>
             ApiKey = apiKey;
     }
