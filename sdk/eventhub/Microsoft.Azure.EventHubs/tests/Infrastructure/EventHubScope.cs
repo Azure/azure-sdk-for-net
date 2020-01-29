@@ -15,6 +15,7 @@ using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
+using Microsoft.Azure.Storage;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
@@ -222,19 +223,27 @@ namespace Microsoft.Azure.EventHubs.Tests
             Policy
                 .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                 .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .Or<TaskCanceledException>()
-                .Or<OperationCanceledException>()
-                .Or<SocketException>()
-                .Or<IOException>()
+                .Or<StorageException>(ex => IsRetriableStatus((HttpStatusCode)ex.RequestInformation.HttpStatusCode))
+                .Or<StorageException>(ex => IsRetriableExceptionType(ex.InnerException))
+                .Or<Exception>(ex => ((IsRetriableExceptionType(ex)) || (IsRetriableExceptionType(ex.InnerException))))
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
             ((statusCode == HttpStatusCode.Unauthorized)
-                || (statusCode == HttpStatusCode.InternalServerError)
-                || (statusCode == HttpStatusCode.ServiceUnavailable)
+                || (statusCode == ((HttpStatusCode)408))
                 || (statusCode == HttpStatusCode.Conflict)
                 || (statusCode == ((HttpStatusCode)429))
+                || (statusCode == HttpStatusCode.InternalServerError)
+                || (statusCode == HttpStatusCode.ServiceUnavailable)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
+
+        public static bool IsRetriableExceptionType(Exception ex) =>
+            ((ex is TimeoutException)
+                || (ex is TaskCanceledException)
+                || (ex is OperationCanceledException)
+                || (ex is TimeoutException)
+                || (ex is SocketException)
+                || (ex is IOException));
 
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
             TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds));
