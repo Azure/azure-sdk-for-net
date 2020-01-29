@@ -1,36 +1,33 @@
 {
   "Entries": [
     {
-      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/validate?api-version=2019-07-01",
-      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRpYW5vLW1ndGVzdDAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q2MDcxL3ZhbGlkYXRlP2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/validate?api-version=2019-10-01",
+      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDkvdmFsaWRhdGU/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"storageAccountName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tianosatestgl\"\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"name\": \"policy2\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"properties\": {\r\n            \"policyType\": \"Custom\",\r\n            \"parameters\": {},\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"field\": \"location\",\r\n                \"equals\": \"northeurope\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"name\": \"location-lock\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"dependsOn\": [\r\n            \"policy2\"\r\n          ],\r\n          \"properties\": {\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01\",\r\n            \"policyDefinitionId\": \"[concat('/providers/Microsoft.Management/managementGroups/tiano-mgtest01/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sdktest-subnested\",\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"location\": \"West US\",\r\n          \"subscriptionId\": \"fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"rg-001\",\r\n                  \"apiVersion\": \"2018-05-01\",\r\n                  \"location\": \"East US 2 EUAP\",\r\n                  \"properties\": {}\r\n                },\r\n                {\r\n                  \"type\": \"Microsoft.Resources/deployments\",\r\n                  \"name\": \"rg-nested\",\r\n                  \"apiVersion\": \"2017-05-10\",\r\n                  \"resourceGroup\": \"rg-001\",\r\n                  \"dependsOn\": [\r\n                    \"rg-001\"\r\n                  ],\r\n                  \"properties\": {\r\n                    \"template\": {\r\n                      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                      \"contentVersion\": \"1.0.0.0\",\r\n                      \"parameters\": {},\r\n                      \"variables\": {},\r\n                      \"resources\": [\r\n                        {\r\n                          \"type\": \"Microsoft.Storage/storageAccounts\",\r\n                          \"name\": \"[parameters('storageAccountName')]\",\r\n                          \"apiVersion\": \"2015-06-15\",\r\n                          \"location\": \"East US\",\r\n                          \"properties\": {\r\n                            \"accountType\": \"Standard_LRS\"\r\n                          }\r\n                        }\r\n                      ]\r\n                    },\r\n                    \"mode\": \"Incremental\"\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"value\": \"tianosatestgl\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"storageAccountName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tagsa1\"\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"name\": \"policy2\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"properties\": {\r\n            \"policyType\": \"Custom\",\r\n            \"parameters\": {},\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"field\": \"location\",\r\n                \"equals\": \"northeurope\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"name\": \"location-lock\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"dependsOn\": [\r\n            \"policy2\"\r\n          ],\r\n          \"properties\": {\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/tag-mg1\",\r\n            \"policyDefinitionId\": \"[concat('/providers/Microsoft.Management/managementGroups/tag-mg1/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sdktest-subnested\",\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"location\": \"West US\",\r\n          \"subscriptionId\": \"b9f138a1-1d64-4108-8413-9ea3be1c1b2d\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"rg-001\",\r\n                  \"apiVersion\": \"2018-05-01\",\r\n                  \"location\": \"East US\",\r\n                  \"properties\": {}\r\n                },\r\n                {\r\n                  \"type\": \"Microsoft.Resources/deployments\",\r\n                  \"name\": \"rg-nested\",\r\n                  \"apiVersion\": \"2017-05-10\",\r\n                  \"resourceGroup\": \"rg-001\",\r\n                  \"dependsOn\": [\r\n                    \"rg-001\"\r\n                  ],\r\n                  \"properties\": {\r\n                    \"template\": {\r\n                      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                      \"contentVersion\": \"1.0.0.0\",\r\n                      \"parameters\": {},\r\n                      \"variables\": {},\r\n                      \"resources\": [\r\n                        {\r\n                          \"type\": \"Microsoft.Storage/storageAccounts\",\r\n                          \"name\": \"[parameters('storageAccountName')]\",\r\n                          \"apiVersion\": \"2015-06-15\",\r\n                          \"location\": \"East US\",\r\n                          \"properties\": {\r\n                            \"accountType\": \"Standard_LRS\"\r\n                          }\r\n                        }\r\n                      ]\r\n                    },\r\n                    \"mode\": \"Incremental\"\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"value\": \"tagsa1\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ee2022e1-4e57-4202-9729-ee488da2ae3d"
+          "01c837d0-e7f7-45f0-9be2-8560065fa441"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "3734"
+          "3699"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 06 Aug 2019 22:45:30 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "c43022fa-76f4-4c6d-9f25-eeb6898ea768"
+          "3d6b8e00-9f22-4052-bb15-fc38c78970b7"
         ],
         "x-ms-correlation-request-id": [
-          "c43022fa-76f4-4c6d-9f25-eeb6898ea768"
+          "3d6b8e00-9f22-4052-bb15-fc38c78970b7"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190806T224530Z:c43022fa-76f4-4c6d-9f25-eeb6898ea768"
+          "WESTUS:20200111T000216Z:3d6b8e00-9f22-4052-bb15-fc38c78970b7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -53,8 +50,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Sat, 11 Jan 2020 00:02:15 GMT"
+        ],
         "Content-Length": [
-          "2063"
+          "2014"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,58 +63,55 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071\",\r\n  \"name\": \"csharpsdktest6071\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"8177151422603797865\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tianosatestgl\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2019-08-06T22:45:29.7477841Z\",\r\n    \"duration\": \"PT0S\",\r\n    \"correlationId\": \"c43022fa-76f4-4c6d-9f25-eeb6898ea768\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ],\r\n    \"validatedResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Resources/deployments/sdktest-subnested\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/rg-001\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/rg-001/providers/Microsoft.Resources/deployments/rg-nested\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tianosatestgl\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649\",\r\n  \"name\": \"csharpsdktest7649\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"2703533561468293118\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tagsa1\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2020-01-11T00:02:15.6320586Z\",\r\n    \"duration\": \"PT0S\",\r\n    \"correlationId\": \"3d6b8e00-9f22-4052-bb15-fc38c78970b7\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ],\r\n    \"validatedResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Resources/deployments/sdktest-subnested\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001/providers/Microsoft.Resources/deployments/rg-nested\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071?api-version=2019-07-01",
-      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRpYW5vLW1ndGVzdDAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q2MDcxP2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649?api-version=2019-10-01",
+      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDk/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"storageAccountName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tianosatestgl\"\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"name\": \"policy2\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"properties\": {\r\n            \"policyType\": \"Custom\",\r\n            \"parameters\": {},\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"field\": \"location\",\r\n                \"equals\": \"northeurope\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"name\": \"location-lock\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"dependsOn\": [\r\n            \"policy2\"\r\n          ],\r\n          \"properties\": {\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01\",\r\n            \"policyDefinitionId\": \"[concat('/providers/Microsoft.Management/managementGroups/tiano-mgtest01/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sdktest-subnested\",\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"location\": \"West US\",\r\n          \"subscriptionId\": \"fb3a3d6b-44c8-44f5-88c9-b20917c9b96b\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"rg-001\",\r\n                  \"apiVersion\": \"2018-05-01\",\r\n                  \"location\": \"East US 2 EUAP\",\r\n                  \"properties\": {}\r\n                },\r\n                {\r\n                  \"type\": \"Microsoft.Resources/deployments\",\r\n                  \"name\": \"rg-nested\",\r\n                  \"apiVersion\": \"2017-05-10\",\r\n                  \"resourceGroup\": \"rg-001\",\r\n                  \"dependsOn\": [\r\n                    \"rg-001\"\r\n                  ],\r\n                  \"properties\": {\r\n                    \"template\": {\r\n                      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                      \"contentVersion\": \"1.0.0.0\",\r\n                      \"parameters\": {},\r\n                      \"variables\": {},\r\n                      \"resources\": [\r\n                        {\r\n                          \"type\": \"Microsoft.Storage/storageAccounts\",\r\n                          \"name\": \"[parameters('storageAccountName')]\",\r\n                          \"apiVersion\": \"2015-06-15\",\r\n                          \"location\": \"East US\",\r\n                          \"properties\": {\r\n                            \"accountType\": \"Standard_LRS\"\r\n                          }\r\n                        }\r\n                      ]\r\n                    },\r\n                    \"mode\": \"Incremental\"\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"value\": \"tianosatestgl\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"template\": {\r\n      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n      \"contentVersion\": \"1.0.0.0\",\r\n      \"parameters\": {\r\n        \"storageAccountName\": {\r\n          \"type\": \"string\",\r\n          \"defaultValue\": \"tagsa1\"\r\n        }\r\n      },\r\n      \"variables\": {},\r\n      \"resources\": [\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"name\": \"policy2\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"properties\": {\r\n            \"policyType\": \"Custom\",\r\n            \"parameters\": {},\r\n            \"policyRule\": {\r\n              \"if\": {\r\n                \"field\": \"location\",\r\n                \"equals\": \"northeurope\"\r\n              },\r\n              \"then\": {\r\n                \"effect\": \"deny\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"name\": \"location-lock\",\r\n          \"apiVersion\": \"2016-12-01\",\r\n          \"dependsOn\": [\r\n            \"policy2\"\r\n          ],\r\n          \"properties\": {\r\n            \"scope\": \"/providers/Microsoft.Management/managementGroups/tag-mg1\",\r\n            \"policyDefinitionId\": \"[concat('/providers/Microsoft.Management/managementGroups/tag-mg1/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]\"\r\n          }\r\n        },\r\n        {\r\n          \"type\": \"Microsoft.Resources/deployments\",\r\n          \"name\": \"sdktest-subnested\",\r\n          \"apiVersion\": \"2018-05-01\",\r\n          \"location\": \"West US\",\r\n          \"subscriptionId\": \"b9f138a1-1d64-4108-8413-9ea3be1c1b2d\",\r\n          \"properties\": {\r\n            \"template\": {\r\n              \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n              \"contentVersion\": \"1.0.0.0\",\r\n              \"parameters\": {},\r\n              \"variables\": {},\r\n              \"resources\": [\r\n                {\r\n                  \"type\": \"Microsoft.Resources/resourceGroups\",\r\n                  \"name\": \"rg-001\",\r\n                  \"apiVersion\": \"2018-05-01\",\r\n                  \"location\": \"East US\",\r\n                  \"properties\": {}\r\n                },\r\n                {\r\n                  \"type\": \"Microsoft.Resources/deployments\",\r\n                  \"name\": \"rg-nested\",\r\n                  \"apiVersion\": \"2017-05-10\",\r\n                  \"resourceGroup\": \"rg-001\",\r\n                  \"dependsOn\": [\r\n                    \"rg-001\"\r\n                  ],\r\n                  \"properties\": {\r\n                    \"template\": {\r\n                      \"$schema\": \"https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#\",\r\n                      \"contentVersion\": \"1.0.0.0\",\r\n                      \"parameters\": {},\r\n                      \"variables\": {},\r\n                      \"resources\": [\r\n                        {\r\n                          \"type\": \"Microsoft.Storage/storageAccounts\",\r\n                          \"name\": \"[parameters('storageAccountName')]\",\r\n                          \"apiVersion\": \"2015-06-15\",\r\n                          \"location\": \"East US\",\r\n                          \"properties\": {\r\n                            \"accountType\": \"Standard_LRS\"\r\n                          }\r\n                        }\r\n                      ]\r\n                    },\r\n                    \"mode\": \"Incremental\"\r\n                  }\r\n                }\r\n              ]\r\n            },\r\n            \"mode\": \"Incremental\"\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"value\": \"tagsa1\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "96c85077-7787-4f44-813e-39e83ed10ae3"
+          "cb33a1f5-028a-4eee-bf99-3b64708848ad"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "3734"
+          "3699"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 06 Aug 2019 22:45:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operationStatuses/08586364753547628998?api-version=2019-07-01"
+          "https://management.azure.com/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operationStatuses/08586229059490457264?api-version=2019-10-01"
         ],
         "x-ms-ratelimit-remaining-tenant-writes": [
           "1199"
         ],
         "x-ms-request-id": [
-          "02c09615-b6d6-4840-805d-3ac6657efd2f"
+          "daa2463c-8942-4820-89dd-d3edd821fcbd"
         ],
         "x-ms-correlation-request-id": [
-          "02c09615-b6d6-4840-805d-3ac6657efd2f"
+          "daa2463c-8942-4820-89dd-d3edd821fcbd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190806T224532Z:02c09615-b6d6-4840-805d-3ac6657efd2f"
+          "WESTUS:20200111T000218Z:daa2463c-8942-4820-89dd-d3edd821fcbd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -122,8 +119,11 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Sat, 11 Jan 2020 00:02:17 GMT"
+        ],
         "Content-Length": [
-          "1295"
+          "1267"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -132,28 +132,25 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071\",\r\n  \"name\": \"csharpsdktest6071\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"8177151422603797865\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tianosatestgl\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2019-08-06T22:45:32.3523736Z\",\r\n    \"duration\": \"PT1.6376568S\",\r\n    \"correlationId\": \"02c09615-b6d6-4840-805d-3ac6657efd2f\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649\",\r\n  \"name\": \"csharpsdktest7649\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"2703533561468293118\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tagsa1\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2020-01-11T00:02:17.8670014Z\",\r\n    \"duration\": \"PT1.4350997S\",\r\n    \"correlationId\": \"daa2463c-8942-4820-89dd-d3edd821fcbd\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operationStatuses/08586364753547628998?api-version=2019-07-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL3RpYW5vLW1ndGVzdDAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q2MDcxL29wZXJhdGlvblN0YXR1c2VzLzA4NTg2MzY0NzUzNTQ3NjI4OTk4P2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operationStatuses/08586229059490457264?api-version=2019-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL3RhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDkvb3BlcmF0aW9uU3RhdHVzZXMvMDg1ODYyMjkwNTk0OTA0NTcyNjQ/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 06 Aug 2019 22:46:02 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -162,13 +159,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "5826427f-94b8-4aa6-835f-ff99c1965cb5"
+          "ba09786c-6d9a-41c9-9a41-3ff8f83d3c16"
         ],
         "x-ms-correlation-request-id": [
-          "5826427f-94b8-4aa6-835f-ff99c1965cb5"
+          "ba09786c-6d9a-41c9-9a41-3ff8f83d3c16"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190806T224602Z:5826427f-94b8-4aa6-835f-ff99c1965cb5"
+          "WESTUS:20200111T000248Z:ba09786c-6d9a-41c9-9a41-3ff8f83d3c16"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -176,38 +173,38 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "20"
+        "Date": [
+          "Sat, 11 Jan 2020 00:02:47 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "20"
         ]
       },
       "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operationStatuses/08586364753547628998?api-version=2019-07-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL3RpYW5vLW1ndGVzdDAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q2MDcxL29wZXJhdGlvblN0YXR1c2VzLzA4NTg2MzY0NzUzNTQ3NjI4OTk4P2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operationStatuses/08586229059490457264?api-version=2019-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL3RhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDkvb3BlcmF0aW9uU3RhdHVzZXMvMDg1ODYyMjkwNTk0OTA0NTcyNjQ/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 06 Aug 2019 22:46:32 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -216,13 +213,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "5dde50e7-ec36-4e20-abd0-74cad2eb3744"
+          "3f9d20c4-5759-49da-ba38-86416c84391b"
         ],
         "x-ms-correlation-request-id": [
-          "5dde50e7-ec36-4e20-abd0-74cad2eb3744"
+          "3f9d20c4-5759-49da-ba38-86416c84391b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190806T224633Z:5dde50e7-ec36-4e20-abd0-74cad2eb3744"
+          "WESTUS:20200111T000318Z:3f9d20c4-5759-49da-ba38-86416c84391b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -230,38 +227,38 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "22"
+        "Date": [
+          "Sat, 11 Jan 2020 00:03:18 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "20"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Running\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071?api-version=2019-07-01",
-      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRpYW5vLW1ndGVzdDAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q2MDcxP2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestUri": "/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operationStatuses/08586229059490457264?api-version=2019-10-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlbWVudC9tYW5hZ2VtZW50R3JvdXBzL3RhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDkvb3BlcmF0aW9uU3RhdHVzZXMvMDg1ODYyMjkwNTk0OTA0NTcyNjQ/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 06 Aug 2019 22:46:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -270,13 +267,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "d2c7545a-3382-4019-9084-946017735441"
+          "1632902d-4b0b-4ffb-a6a0-f604b555293a"
         ],
         "x-ms-correlation-request-id": [
-          "d2c7545a-3382-4019-9084-946017735441"
+          "1632902d-4b0b-4ffb-a6a0-f604b555293a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190806T224633Z:d2c7545a-3382-4019-9084-946017735441"
+          "WESTUS:20200111T000349Z:1632902d-4b0b-4ffb-a6a0-f604b555293a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -284,44 +281,38 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "1813"
+        "Date": [
+          "Sat, 11 Jan 2020 00:03:48 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "22"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071\",\r\n  \"name\": \"csharpsdktest6071\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"8177151422603797865\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tianosatestgl\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2019-08-06T22:46:31.038577Z\",\r\n    \"duration\": \"PT1M0.3238602S\",\r\n    \"correlationId\": \"02c09615-b6d6-4840-805d-3ac6657efd2f\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/rg-001\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tianosatestgl\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071?api-version=2019-07-01",
-      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRpYW5vLW1ndGVzdDAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q2MDcxP2FwaS12ZXJzaW9uPTIwMTktMDctMDE=",
+      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649?api-version=2019-10-01",
+      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDk/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "f9cab3b3-a8b8-4111-b9f2-91485f225dfe"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 06 Aug 2019 22:46:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -330,13 +321,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "694cbda3-48a8-4fc7-982c-f46be4db2a44"
+          "1b43b090-8e6e-4662-9fd1-c64954325a33"
         ],
         "x-ms-correlation-request-id": [
-          "694cbda3-48a8-4fc7-982c-f46be4db2a44"
+          "1b43b090-8e6e-4662-9fd1-c64954325a33"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190806T224633Z:694cbda3-48a8-4fc7-982c-f46be4db2a44"
+          "WESTUS:20200111T000349Z:1b43b090-8e6e-4662-9fd1-c64954325a33"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -344,44 +335,44 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "1813"
+        "Date": [
+          "Sat, 11 Jan 2020 00:03:48 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "1766"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071\",\r\n  \"name\": \"csharpsdktest6071\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"8177151422603797865\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tianosatestgl\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2019-08-06T22:46:31.038577Z\",\r\n    \"duration\": \"PT1M0.3238602S\",\r\n    \"correlationId\": \"02c09615-b6d6-4840-805d-3ac6657efd2f\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/rg-001\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tianosatestgl\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649\",\r\n  \"name\": \"csharpsdktest7649\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"2703533561468293118\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tagsa1\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2020-01-11T00:03:27.2638383Z\",\r\n    \"duration\": \"PT1M10.8319366S\",\r\n    \"correlationId\": \"daa2463c-8942-4820-89dd-d3edd821fcbd\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operations?api-version=2019-07-01",
-      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRpYW5vLW1ndGVzdDAxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzaGFycHNka3Rlc3Q2MDcxL29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxOS0wNy0wMQ==",
+      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649?api-version=2019-10-01",
+      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDk/YXBpLXZlcnNpb249MjAxOS0xMC0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d904ed90-8525-40aa-89cc-ad498e5453f8"
+          "acc92e68-bc5d-4a08-a486-0dcfc52a1eec"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26328.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/2.1.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 06 Aug 2019 22:46:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -390,13 +381,13 @@
           "11995"
         ],
         "x-ms-request-id": [
-          "9385eb76-c953-4f95-8dda-b9be1cb202f4"
+          "4052b924-2977-43bb-9274-aa7aee2932ba"
         ],
         "x-ms-correlation-request-id": [
-          "9385eb76-c953-4f95-8dda-b9be1cb202f4"
+          "4052b924-2977-43bb-9274-aa7aee2932ba"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20190806T224633Z:9385eb76-c953-4f95-8dda-b9be1cb202f4"
+          "WESTUS:20200111T000349Z:4052b924-2977-43bb-9274-aa7aee2932ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -404,26 +395,89 @@
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "2612"
+        "Date": [
+          "Sat, 11 Jan 2020 00:03:49 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "1766"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operations/C4BD8862752210C1\",\r\n      \"operationId\": \"C4BD8862752210C1\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:46:30.885437Z\",\r\n        \"duration\": \"PT54.9222844S\",\r\n        \"trackingId\": \"f6b392bf-dcdd-4a3a-9840-4371d92593cc\",\r\n        \"serviceRequestId\": \"67cc7858-0f70-4ff6-91e0-9ad292054cac\",\r\n        \"statusCode\": \"OK\",\r\n        \"targetResource\": {\r\n          \"id\": \"/subscriptions/fb3a3d6b-44c8-44f5-88c9-b20917c9b96b/providers/Microsoft.Resources/deployments/sdktest-subnested\",\r\n          \"resourceType\": \"Microsoft.Resources/deployments\",\r\n          \"resourceName\": \"sdktest-subnested\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operations/EC5EC028160C085A\",\r\n      \"operationId\": \"EC5EC028160C085A\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:45:38.5961615Z\",\r\n        \"duration\": \"PT0.1579109S\",\r\n        \"trackingId\": \"4f228d3e-6a5e-43e9-9ca0-dd565df9fc7e\",\r\n        \"serviceRequestId\": \"eastus2:aa8e8772-cf6f-4637-98bd-cfe9ea58ce9d\",\r\n        \"statusCode\": \"Created\",\r\n        \"targetResource\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n          \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"resourceName\": \"location-lock\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operations/8DA0DF42F92BC438\",\r\n      \"operationId\": \"8DA0DF42F92BC438\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:45:38.1886163Z\",\r\n        \"duration\": \"PT2.2254637S\",\r\n        \"trackingId\": \"25accd28-4e46-494e-bf8f-45f924b2a65c\",\r\n        \"serviceRequestId\": \"eastus2:7ec1cb0c-0dda-460c-9504-336039cf440b\",\r\n        \"statusCode\": \"Created\",\r\n        \"targetResource\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"resourceName\": \"policy2\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tiano-mgtest01/providers/Microsoft.Resources/deployments/csharpsdktest6071/operations/08586364753547628998\",\r\n      \"operationId\": \"08586364753547628998\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"EvaluateDeploymentOutput\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2019-08-06T22:46:31.0117399Z\",\r\n        \"duration\": \"PT0.0782949S\",\r\n        \"trackingId\": \"4237f208-7b60-4aa2-b5a5-661f4d565101\",\r\n        \"statusCode\": \"OK\",\r\n        \"statusMessage\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649\",\r\n  \"name\": \"csharpsdktest7649\",\r\n  \"type\": \"Microsoft.Resources/deployments\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"templateHash\": \"2703533561468293118\",\r\n    \"parameters\": {\r\n      \"storageAccountName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"tagsa1\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"timestamp\": \"2020-01-11T00:03:27.2638383Z\",\r\n    \"duration\": \"PT1M10.8319366S\",\r\n    \"correlationId\": \"daa2463c-8942-4820-89dd-d3edd821fcbd\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Authorization\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"policyDefinitions\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"policyAssignments\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      {\r\n        \"namespace\": \"Microsoft.Resources\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"deployments\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n            \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n            \"resourceName\": \"policy2\"\r\n          }\r\n        ],\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n        \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n        \"resourceName\": \"location-lock\"\r\n      }\r\n    ],\r\n    \"outputResources\": [\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\"\r\n      },\r\n      {\r\n        \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001\"\r\n      },\r\n      {\r\n        \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/resourceGroups/rg-001/providers/Microsoft.Storage/storageAccounts/tagsa1\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/%2Fproviders%2FMicrosoft.Management%2FmanagementGroups%2Ftag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operations?api-version=2019-10-01",
+      "EncodedRequestUri": "LyUyRnByb3ZpZGVycyUyRk1pY3Jvc29mdC5NYW5hZ2VtZW50JTJGbWFuYWdlbWVudEdyb3VwcyUyRnRhZy1tZzEvcHJvdmlkZXJzL01pY3Jvc29mdC5SZXNvdXJjZXMvZGVwbG95bWVudHMvY3NoYXJwc2RrdGVzdDc2NDkvb3BlcmF0aW9ucz9hcGktdmVyc2lvbj0yMDE5LTEwLTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7cc8e5c1-9fdf-427c-a9ce-7d130d964329"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.28207.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/3.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "11994"
+        ],
+        "x-ms-request-id": [
+          "83cbacfd-0e1d-4f0b-accb-279cf19d8e42"
+        ],
+        "x-ms-correlation-request-id": [
+          "83cbacfd-0e1d-4f0b-accb-279cf19d8e42"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS:20200111T000349Z:83cbacfd-0e1d-4f0b-accb-279cf19d8e42"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sat, 11 Jan 2020 00:03:49 GMT"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "2569"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operations/7BD3B782F18D2551\",\r\n      \"operationId\": \"7BD3B782F18D2551\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2020-01-11T00:03:27.0319142Z\",\r\n        \"duration\": \"PT1M4.7499505S\",\r\n        \"trackingId\": \"d5ce6ed9-0827-4f78-a53d-6b70f59aee39\",\r\n        \"serviceRequestId\": \"8f9b9981-0859-4330-879b-32bf9b04b6aa\",\r\n        \"statusCode\": \"OK\",\r\n        \"targetResource\": {\r\n          \"id\": \"/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Resources/deployments/sdktest-subnested\",\r\n          \"resourceType\": \"Microsoft.Resources/deployments\",\r\n          \"resourceName\": \"sdktest-subnested\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operations/3636B08D54C11DB7\",\r\n      \"operationId\": \"3636B08D54C11DB7\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2020-01-11T00:02:22.6749582Z\",\r\n        \"duration\": \"PT0.1082092S\",\r\n        \"trackingId\": \"4630b23a-f024-495f-bcd7-3cdfa5941088\",\r\n        \"serviceRequestId\": \"eastus:81ca7e3f-9264-4d7d-a6bd-e5b855925f5c\",\r\n        \"statusCode\": \"Created\",\r\n        \"targetResource\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n          \"resourceType\": \"Microsoft.Authorization/policyAssignments\",\r\n          \"resourceName\": \"location-lock\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operations/C845763560A82518\",\r\n      \"operationId\": \"C845763560A82518\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"Create\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2020-01-11T00:02:22.5367663Z\",\r\n        \"duration\": \"PT0.2548026S\",\r\n        \"trackingId\": \"a2e2c777-8d50-4d00-bd2b-97ab95b003fc\",\r\n        \"serviceRequestId\": \"eastus:48a9cb06-e8ea-4c7c-8e8d-324f0077e6b4\",\r\n        \"statusCode\": \"Created\",\r\n        \"targetResource\": {\r\n          \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n          \"resourceType\": \"Microsoft.Authorization/policyDefinitions\",\r\n          \"resourceName\": \"policy2\"\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest7649/operations/08586229059490457264\",\r\n      \"operationId\": \"08586229059490457264\",\r\n      \"properties\": {\r\n        \"provisioningOperation\": \"EvaluateDeploymentOutput\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"timestamp\": \"2020-01-11T00:03:27.231888Z\",\r\n        \"duration\": \"PT0.0870037S\",\r\n        \"trackingId\": \"10fc770d-ef89-4c2a-87c6-1dc6d3981e41\",\r\n        \"statusCode\": \"OK\",\r\n        \"statusMessage\": null\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {
     "DeploymentWithScope_AtManagementGroup": [
-      "csharpsdktest6071"
+      "csharpsdktest7649"
     ]
   },
   "Variables": {
-    "SubscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b"
+    "SubscriptionId": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
   }
 }
