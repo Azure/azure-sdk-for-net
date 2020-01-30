@@ -1162,7 +1162,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input text,
+        /// Personally Identifiable Information found in the passed-in input text,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1219,7 +1219,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input text,
+        /// Personally Identifiable Information found in the passed-in input text,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1276,7 +1276,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input strings,
+        /// Personally Identifiable Information found in the passed-in input strings,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1304,7 +1304,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input strings,
+        /// Personally Identifiable Information found in the passed-in input strings,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1332,7 +1332,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input documents,
+        /// Personally Identifiable Information found in the passed-in input documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1380,7 +1380,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input documents,
+        /// Personally Identifiable Information found in the passed-in input documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see

@@ -174,7 +174,7 @@ foreach (NamedEntity entity in entities)
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
 
 ### Recognize PII Entities
-Run a predictive model to identify a collection of entities containing personally identifiable information found in the passed-in input text or batch of input text documents, and categorize those entities into types such as US social security number, drivers license number, or credit card number.
+Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in input text or batch of input text documents, and categorize those entities into types such as US social security number, drivers license number, or credit card number.
 
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
@@ -304,9 +304,9 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Sample4_DetectLanguageAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
 
 ### Recognize PII Entities
-* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing personally identifiable information in a single text input.
-* [Sample5_DetectLanguageBatchConvenience.cs][recognize_pii_entities_sample1] - Recognize entities containing personally identifiable information in each input in a collection of text input strings.
-* [Sample5_DetectLanguageBatch.cs][recognize_pii_entities_sample2] - Recognize entities containing personally identifiable information in each input in a collection of text document inputs.
+* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a single text input.
+* [Sample5_DetectLanguageBatchConvenience.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information in each input in a collection of text input strings.
+* [Sample5_DetectLanguageBatch.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each input in a collection of text document inputs.
 
 ### Recognize Linked Entities
 * [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a single text input.
