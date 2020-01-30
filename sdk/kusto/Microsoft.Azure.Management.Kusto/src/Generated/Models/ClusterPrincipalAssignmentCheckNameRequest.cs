@@ -15,35 +15,36 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// A data connection check name availability request.
+    /// A principal assignment check name availability request.
     /// </summary>
-    public partial class DataConnectionCheckNameRequest
+    public partial class ClusterPrincipalAssignmentCheckNameRequest
     {
         /// <summary>
-        /// Initializes a new instance of the DataConnectionCheckNameRequest
-        /// class.
+        /// Initializes a new instance of the
+        /// ClusterPrincipalAssignmentCheckNameRequest class.
         /// </summary>
-        public DataConnectionCheckNameRequest()
+        public ClusterPrincipalAssignmentCheckNameRequest()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataConnectionCheckNameRequest
-        /// class.
+        /// Initializes a new instance of the
+        /// ClusterPrincipalAssignmentCheckNameRequest class.
         /// </summary>
-        /// <param name="name">Data Connection name.</param>
-        public DataConnectionCheckNameRequest(string name)
+        /// <param name="name">Principal Assignment resource name.</param>
+        public ClusterPrincipalAssignmentCheckNameRequest(string name)
         {
             Name = name;
             CustomInit();
         }
         /// <summary>
-        /// Static constructor for DataConnectionCheckNameRequest class.
+        /// Static constructor for ClusterPrincipalAssignmentCheckNameRequest
+        /// class.
         /// </summary>
-        static DataConnectionCheckNameRequest()
+        static ClusterPrincipalAssignmentCheckNameRequest()
         {
-            Type = "Microsoft.Kusto/clusters/databases/dataConnections";
+            Type = "Microsoft.Kusto/clusters/principalAssignments";
         }
 
         /// <summary>
@@ -52,14 +53,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets data Connection name.
+        /// Gets or sets principal Assignment resource name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// The type of resource,
-        /// Microsoft.Kusto/clusters/databases/dataConnections.
+        /// Microsoft.Kusto/clusters/principalAssignments.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public static string Type { get; private set; }

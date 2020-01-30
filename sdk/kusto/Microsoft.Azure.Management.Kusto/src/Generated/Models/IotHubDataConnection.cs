@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// used to create a data connection.</param>
         /// <param name="consumerGroup">The iot hub consumer group.</param>
         /// <param name="sharedAccessPolicyName">The name of the share access
-        /// policy name</param>
+        /// policy</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -56,7 +56,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
         /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'</param>
+        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET',
+        /// 'ORC'</param>
         /// <param name="eventSystemProperties">System properties of the iot
         /// hub</param>
         public IotHubDataConnection(string iotHubResourceId, string consumerGroup, string sharedAccessPolicyName, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>))
@@ -108,7 +109,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
         /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE'
+        /// 'RAW', 'SINGLEJSON', 'AVRO', 'TSVE', 'PARQUET', 'ORC'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }
@@ -120,7 +121,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public IList<string> EventSystemProperties { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the share access policy name
+        /// Gets or sets the name of the share access policy
         /// </summary>
         [JsonProperty(PropertyName = "properties.sharedAccessPolicyName")]
         public string SharedAccessPolicyName { get; set; }
