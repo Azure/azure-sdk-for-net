@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Template.Tests
         private static string ClientSecret = Environment.GetEnvironmentVariable("CLIENT_SECRET", EnvironmentVariableTarget.Machine);
 
         private const string QueueName = "josh";
+        private const string SessionQueueName = "joshsession";
         private const string TopicName = "joshtopic";
         private const string Endpoint = "jolovservicebus.servicebus.windows.net";
 
@@ -119,69 +120,91 @@ namespace Microsoft.Azure.Template.Tests
             {
                 sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body));
             }
-            IEnumerable<ServiceBusMessage> peekedMessages = await receiver.PeekAsync(
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekAsync(
                 fromSequenceNumber: 1,
                 messageCount: messageCt);
 
-            foreach (ServiceBusMessage peekedMessage in peekedMessages)
+            var ct = 0;
+            await foreach (ServiceBusMessage peekedMessage in peekedMessages)
             {
                 var peekedText = Encoding.Default.GetString(peekedMessage.Body);
-                var sentText = sentMessageIdToLabel[peekedMessage.MessageId];
+                //var sentText = sentMessageIdToLabel[peekedMessage.MessageId];
 
-                sentMessageIdToLabel.Remove(peekedMessage.MessageId);
-                Assert.AreEqual(sentText, peekedText);
+                //sentMessageIdToLabel.Remove(peekedMessage.MessageId);
+                //Assert.AreEqual(sentText, peekedText);
 
                 TestContext.Progress.WriteLine($"{peekedMessage.Label}: {peekedText}");
+                ct++;
             }
+            Assert.AreEqual(messageCt, ct);
         }
 
         [Test]
-        public async Task Peek_Session()
+        [TestCase(1, null)]
+        [TestCase(1, "key")]
+        [TestCase(10000, null)]
+        [TestCase(null, null)]
+        public async Task Peek_Session(long? sequenceNumber, string partitionKey)
         {
-            var sender = new ServiceBusSenderClient(ConnString, "joshsession");
+            var sender = new ServiceBusSenderClient(ConnString, SessionQueueName);
             var messageCt = 10;
             var sessionId = Guid.NewGuid().ToString();
 
             // send the messages
-            IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
+            IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId, partitionKey);
             await sender.SendAsync(sentMessages);
 
             // peek the messages
-            var receiver = new ServiceBusReceiverClient(ConnString, "joshsession");
-            Dictionary<string, string> sentMessageIdToLabel = new Dictionary<string, string>();
+            var receiver = new ServiceBusReceiverClient(ConnString, SessionQueueName);
+            Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
             foreach (ServiceBusMessage message in sentMessages)
             {
-                sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body));
+                sentMessageIdToMsg.Add(message.MessageId, message);
             }
-            IEnumerable<ServiceBusMessage> peekedMessages = await receiver.PeekAsync(
-                fromSequenceNumber: 1,
-                messageCount: 10,
+            sequenceNumber ??= 1;
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekAsync(
+                fromSequenceNumber: (long)sequenceNumber,
+                messageCount: messageCt,
                 sessionId: sessionId);
-            Assert.AreEqual(messageCt, peekedMessages.ToList().Count);
             // verify peeked == send
-            foreach (ServiceBusMessage peekedMessage in peekedMessages)
+            var ct = 0;
+            await foreach (ServiceBusMessage peekedMessage in peekedMessages)
             {
                 var peekedText = Encoding.Default.GetString(peekedMessage.Body);
-                var sentText = sentMessageIdToLabel[peekedMessage.MessageId];
+                var sentMsg = sentMessageIdToMsg[peekedMessage.MessageId];
 
-                sentMessageIdToLabel.Remove(peekedMessage.MessageId);
-                Assert.AreEqual(sentText, peekedText);
-
+                sentMessageIdToMsg.Remove(peekedMessage.MessageId);
+                Assert.AreEqual(Encoding.Default.GetString(sentMsg.Body), peekedText);
+                Assert.AreEqual(sentMsg.PartitionKey, peekedMessage.PartitionKey);
+                Assert.IsTrue(peekedMessage.SystemProperties.SequenceNumber >= sequenceNumber);
                 TestContext.Progress.WriteLine($"{peekedMessage.Label}: {peekedText}");
+                ct++;
+            }
+            if (sequenceNumber == 1)
+            {
+                Assert.AreEqual(messageCt, ct);
             }
         }
 
-        private IEnumerable<ServiceBusMessage> GetMessages(int count, string sessionId = null)
+        [Test]
+        public void ClientProperties()
+        {
+            var sender = new ServiceBusSenderClient(ConnString, QueueName);
+            Assert.AreEqual(QueueName, sender.EntityName);
+            Assert.AreEqual(Endpoint, sender.FullyQualifiedNamespace);
+        }
+
+        private IEnumerable<ServiceBusMessage> GetMessages(int count, string sessionId = null, string partitionKey = null)
         {
             var messages = new List<ServiceBusMessage>();
             for (int i = 0; i < count; i++)
             {
-                messages.Add(GetMessage(sessionId));
+                messages.Add(GetMessage(sessionId, partitionKey));
             }
             return messages;
         }
 
-        private ServiceBusMessage GetMessage(string sessionId = null)
+        private ServiceBusMessage GetMessage(string sessionId = null, string partitionKey = null)
         {
             var msg = new ServiceBusMessage(GetRandomBuffer(100))
             {
@@ -191,6 +214,10 @@ namespace Microsoft.Azure.Template.Tests
             if (sessionId != null)
             {
                 msg.SessionId = sessionId;
+            }
+            if (partitionKey != null)
+            {
+                msg.PartitionKey = partitionKey;
             }
             return msg;
         }

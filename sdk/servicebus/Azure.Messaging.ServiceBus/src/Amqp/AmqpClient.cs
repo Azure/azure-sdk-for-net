@@ -145,7 +145,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                EventHubsEventSource.Log.EventHubClientCreateStart(host, entityName);
+                ServiceBusEventSource.Log.EventHubClientCreateStart(host, entityName);
 
                 ServiceEndpoint = new UriBuilder
                 {
@@ -169,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                EventHubsEventSource.Log.EventHubClientCreateComplete(host, entityName);
+                ServiceBusEventSource.Log.EventHubClientCreateComplete(host, entityName);
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     try
                     {
-                        EventHubsEventSource.Log.GetPropertiesStart(EntityName);
+                        ServiceBusEventSource.Log.GetPropertiesStart(EntityName);
 
                         // Create the request message and the management link.
 
@@ -236,7 +236,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.GetPropertiesError(EntityName, activeEx.Message);
+                            ServiceBusEventSource.Log.GetPropertiesError(EntityName, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -260,13 +260,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.GetPropertiesError(EntityName, ex.Message);
+                ServiceBusEventSource.Log.GetPropertiesError(EntityName, ex.Message);
                 throw;
             }
             finally
             {
                 stopWatch.Stop();
-                EventHubsEventSource.Log.GetPropertiesComplete(EntityName);
+                ServiceBusEventSource.Log.GetPropertiesComplete(EntityName);
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (sessionId != null && receiveLink == null)
                 {
-                    // a session receive link is required for peeking by session 
+                    // a session receive link is required for peeking by session
                     receiveLink = await consumer.ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                 }
 
@@ -347,11 +347,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 stopWatch.Stop();
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                //stopWatch.Stop();
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                //stopWatch.Stop();
                 var amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
                 // Process the response.
 
@@ -425,7 +420,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     try
                     {
-                        EventHubsEventSource.Log.GetPartitionPropertiesStart(EntityName, partitionId);
+                        ServiceBusEventSource.Log.GetPartitionPropertiesStart(EntityName, partitionId);
 
                         // Create the request message and the management link.
 
@@ -459,7 +454,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.GetPartitionPropertiesError(EntityName, partitionId, activeEx.Message);
+                            ServiceBusEventSource.Log.GetPartitionPropertiesError(EntityName, partitionId, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -483,13 +478,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.GetPartitionPropertiesError(EntityName, partitionId, ex.Message);
+                ServiceBusEventSource.Log.GetPartitionPropertiesError(EntityName, partitionId, ex.Message);
                 throw;
             }
             finally
             {
                 stopWatch.Stop();
-                EventHubsEventSource.Log.GetPartitionPropertiesComplete(EntityName, partitionId);
+                ServiceBusEventSource.Log.GetPartitionPropertiesComplete(EntityName, partitionId);
             }
         }
 
@@ -592,7 +587,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                EventHubsEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
+                ServiceBusEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (ManagementLink?.TryGetOpenedObject(out var _) == true)
@@ -607,13 +602,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception ex)
             {
                 _closed = false;
-                EventHubsEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
 
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
+                ServiceBusEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
             }
         }
 

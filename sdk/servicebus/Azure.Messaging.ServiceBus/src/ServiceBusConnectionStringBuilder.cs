@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus
             }
 
             this.Endpoint = endpoint;
-            this.EntityPath = entityPath;
+            this.EntityName = entityPath;
             this.SasKeyName = sharedAccessKeyName;
             this.SasKey = sharedAccessKey;
         }
@@ -123,7 +123,7 @@ namespace Azure.Messaging.ServiceBus
             }
 
             this.Endpoint = endpoint;
-            this.EntityPath = entityPath;
+            this.EntityName = entityPath;
             this.SasToken = sharedAccessSignature;
         }
 
@@ -195,13 +195,18 @@ namespace Azure.Messaging.ServiceBus
 
                 var uriBuilder = new UriBuilder(value.Trim());
                 this.endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
+                FullyQualifiedNamespace = uriBuilder.Host;
             }
         }
+        /// <summary>
+        ///
+        /// </summary>
+        public string FullyQualifiedNamespace { get; private set; }
 
         /// <summary>
-        /// Get the entity path value from the connection string
+        /// Get the entity name value from the connection string
         /// </summary>
-        public string EntityPath
+        public string EntityName
         {
             get => this._entityPath;
             set => this._entityPath = value.Trim();
@@ -337,12 +342,12 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>Entity connection string</returns>
         public string GetEntityConnectionString()
         {
-            if (string.IsNullOrWhiteSpace(this.EntityPath))
+            if (string.IsNullOrWhiteSpace(this.EntityName))
             {
-                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.EntityPath));
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(this.EntityName));
             }
 
-            return $"{this.GetNamespaceConnectionString()}{KeyValuePairDelimiter}{EntityPathConfigName}{KeyValueSeparator}{this.EntityPath}";
+            return $"{this.GetNamespaceConnectionString()}{KeyValuePairDelimiter}{EntityPathConfigName}{KeyValueSeparator}{this.EntityName}";
         }
 
         /// <summary>
@@ -351,7 +356,7 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>The connection string</returns>
         public override string ToString()
         {
-            if (string.IsNullOrWhiteSpace(this.EntityPath))
+            if (string.IsNullOrWhiteSpace(this.EntityName))
             {
                 return this.GetNamespaceConnectionString();
             }
@@ -359,7 +364,7 @@ namespace Azure.Messaging.ServiceBus
             return this.GetEntityConnectionString();
         }
 
-        private void ParseConnectionString(string connectionString)
+        internal void ParseConnectionString(string connectionString)
         {
             // First split based on ';'
             var keyValuePairs = connectionString.Split(new[] { KeyValuePairDelimiter }, StringSplitOptions.RemoveEmptyEntries);
@@ -384,7 +389,7 @@ namespace Azure.Messaging.ServiceBus
                 }
                 else if (key.Equals(EntityPathConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.EntityPath = value;
+                    this.EntityName = value;
                 }
                 else if (key.Equals(SharedAccessKeyConfigName, StringComparison.OrdinalIgnoreCase))
                 {

@@ -238,7 +238,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                EventHubsEventSource.Log.ClientCloseStart(clientType, EventHubName, clientId);
+                ServiceBusEventSource.Log.ClientCloseStart(clientType, EventHubName, clientId);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (SendLink?.TryGetOpenedObject(out var _) == true)
@@ -252,13 +252,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception ex)
             {
                 _closed = false;
-                EventHubsEventSource.Log.ClientCloseError(clientType, EventHubName, clientId, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(clientType, EventHubName, clientId, ex.Message);
 
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(clientType, EventHubName, clientId);
+                ServiceBusEventSource.Log.ClientCloseComplete(clientType, EventHubName, clientId);
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         using AmqpMessage batchMessage = messageFactory();
                         messageHash = batchMessage.GetHashCode().ToString();
 
-                        EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, messageHash);
+                        ServiceBusEventSource.Log.EventPublishStart(EventHubName, logPartition, messageHash);
 
                         link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -335,7 +335,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, activeEx.Message);
+                            ServiceBusEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -359,13 +359,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
+                ServiceBusEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
                 throw;
             }
             finally
             {
                 stopWatch.Stop();
-                EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, messageHash);
+                ServiceBusEventSource.Log.EventPublishComplete(EventHubName, logPartition, messageHash);
             }
         }
 

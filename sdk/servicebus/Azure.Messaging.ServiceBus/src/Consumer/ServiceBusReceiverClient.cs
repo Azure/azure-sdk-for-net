@@ -352,7 +352,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            EventHubsEventSource.Log.ReadEventsFromPartitionStart(EventHubName, partitionId);
+            ServiceBusEventSource.Log.ReadEventsFromPartitionStart(EventHubName, partitionId);
 
             var cancelPublishingAsync = default(Func<Task>);
             var eventChannel = default(Channel<PartitionMessage>);
@@ -367,10 +367,10 @@ namespace Azure.Messaging.ServiceBus.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ReadEventsFromPartitionError(EventHubName, partitionId, ex.Message);
+                ServiceBusEventSource.Log.ReadEventsFromPartitionError(EventHubName, partitionId, ex.Message);
                 await cancelPublishingAsync().ConfigureAwait(false);
 
-                EventHubsEventSource.Log.ReadEventsFromPartitionComplete(EventHubName, partitionId);
+                ServiceBusEventSource.Log.ReadEventsFromPartitionComplete(EventHubName, partitionId);
                 throw;
             }
 
@@ -387,7 +387,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             {
                 cancellationSource?.Cancel();
                 await cancelPublishingAsync().ConfigureAwait(false);
-                EventHubsEventSource.Log.ReadEventsFromPartitionComplete(EventHubName, partitionId);
+                ServiceBusEventSource.Log.ReadEventsFromPartitionComplete(EventHubName, partitionId);
             }
 
             // If cancellation was requested, then surface the expected exception.
@@ -495,7 +495,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            EventHubsEventSource.Log.ReadAllEventsStart(EventHubName);
+            ServiceBusEventSource.Log.ReadAllEventsStart(EventHubName);
 
             var cancelPublishingAsync = default(Func<Task>);
             var eventChannel = default(Channel<PartitionMessage>);
@@ -527,7 +527,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ReadAllEventsError(EventHubName, ex.Message);
+                ServiceBusEventSource.Log.ReadAllEventsError(EventHubName, ex.Message);
                 cancellationSource?.Cancel();
 
                 if (cancelPublishingAsync != null)
@@ -535,7 +535,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
                     await cancelPublishingAsync().ConfigureAwait(false);
                 }
 
-                EventHubsEventSource.Log.ReadAllEventsComplete(EventHubName);
+                ServiceBusEventSource.Log.ReadAllEventsComplete(EventHubName);
                 throw;
             }
 
@@ -552,7 +552,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             {
                 cancellationSource?.Cancel();
                 await cancelPublishingAsync().ConfigureAwait(false);
-                EventHubsEventSource.Log.ReadAllEventsComplete(EventHubName);
+                ServiceBusEventSource.Log.ReadAllEventsComplete(EventHubName);
             }
 
             // If cancellation was requested, then surface the expected exception.
@@ -586,24 +586,29 @@ namespace Azure.Messaging.ServiceBus.Consumer
         /// <param name="sessionId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+        public virtual async IAsyncEnumerable<ServiceBusMessage> PeekAsync(
             long fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
+            [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
             TransportConsumer consumer = Connection.CreateTransportConsumer(
                 EventPosition.Latest,
                 RetryPolicy,
                 sessionId: sessionId);
-            return await Connection.PeekAsync(
+
+            foreach (ServiceBusMessage message in await Connection.PeekAsync(
                 consumer,
                 RetryPolicy,
                 fromSequenceNumber,
                 messageCount,
                 sessionId,
                 cancellationToken)
-                .ConfigureAwait(false);
+                .ConfigureAwait(false))
+            {
+                yield return message;
+            }
         }
 
         /// <summary>
@@ -620,7 +625,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString();
-            EventHubsEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiverClient), EventHubName, clientHash);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiverClient), EventHubName, clientHash);
 
             // Attempt to close the active transport consumers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -641,7 +646,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EventHubName, clientHash, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -657,13 +662,13 @@ namespace Azure.Messaging.ServiceBus.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EventHubName, clientHash, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EventHubName, clientHash, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(ServiceBusReceiverClient), EventHubName, clientHash);
+                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusReceiverClient), EventHubName, clientHash);
             }
 
             // If there was an active exception pending from closing the individual
@@ -742,7 +747,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
                                                                             CancellationTokenSource publishingCancellationSource)
         {
             publishingCancellationSource.Token.ThrowIfCancellationRequested<TaskCanceledException>();
-            EventHubsEventSource.Log.PublishPartitionEventsToChannelStart(EventHubName, partitionId);
+            ServiceBusEventSource.Log.PublishPartitionEventsToChannelStart(EventHubName, partitionId);
 
             var transportConsumer = default(TransportConsumer);
             var publishingTask = default(Task);
@@ -785,13 +790,13 @@ namespace Azure.Messaging.ServiceBus.Consumer
                 {
                     if (observedException != default)
                     {
-                        EventHubsEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, observedException.Message);
+                        ServiceBusEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, observedException.Message);
                         throw observedException;
                     }
                 }
                 finally
                 {
-                    EventHubsEventSource.Log.PublishPartitionEventsToChannelComplete(EventHubName, partitionId);
+                    ServiceBusEventSource.Log.PublishPartitionEventsToChannelComplete(EventHubName, partitionId);
                 }
             }
 
@@ -832,7 +837,7 @@ namespace Azure.Messaging.ServiceBus.Consumer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, ex.Message);
+                ServiceBusEventSource.Log.PublishPartitionEventsToChannelError(EventHubName, partitionId, ex.Message);
                 await performCleanup().ConfigureAwait(false);
 
                 throw;

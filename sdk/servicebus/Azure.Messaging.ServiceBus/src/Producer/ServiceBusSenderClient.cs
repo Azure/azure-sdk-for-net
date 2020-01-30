@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Producer
         internal const int MinimumBatchSizeLimit = 24;
 
         /// <summary>The set of default publishing options to use when no specific options are requested.</summary>
-        private static readonly SendEventOptions DefaultSendOptions = new SendEventOptions();
+        private static readonly SendEventOptions s_defaultSendOptions = new SendEventOptions();
 
         /// <summary>
         ///   The fully qualified Service Bus namespace that the producer is associated with.  This is likely
@@ -176,6 +176,7 @@ namespace Azure.Messaging.ServiceBus.Producer
                                       ServiceBusSenderClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
+            // interesting.. I assume this is done for immutability?
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
 
             OwnsConnection = true;
@@ -262,58 +263,58 @@ namespace Azure.Messaging.ServiceBus.Producer
             OwnsConnection = false;
         }
 
-        /// <summary>
-        ///   Retrieves information about the Event Hub that the connection is associated with, including
-        ///   the number of partitions present and their identifiers.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
-        ///
-        public virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
-            return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
-        }
+        ///// <summary>
+        /////   Retrieves information about the Event Hub that the connection is associated with, including
+        /////   the number of partitions present and their identifiers.
+        ///// </summary>
+        /////
+        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /////
+        ///// <returns>The set of information for the Event Hub that this client is associated with.</returns>
+        /////
+        //public virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
+        //    return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
+        //}
 
-        /// <summary>
-        ///   Retrieves the set of identifiers for the partitions of an Event Hub.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
-        ///
-        /// <remarks>
-        ///   This method is synonymous with invoking <see cref="GetEventHubPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
-        ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
-        ///   No new or extended information is presented.
-        /// </remarks>
-        ///
-        public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
-        {
+        ///// <summary>
+        /////   Retrieves the set of identifiers for the partitions of an Event Hub.
+        ///// </summary>
+        /////
+        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /////
+        ///// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
+        /////
+        ///// <remarks>
+        /////   This method is synonymous with invoking <see cref="GetEventHubPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
+        /////   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
+        /////   No new or extended information is presented.
+        ///// </remarks>
+        /////
+        //public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
+        //{
 
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
-            return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
-        }
+        //    Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
+        //    return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
+        //}
 
-        /// <summary>
-        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
-        ///   events in the partition event stream.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
-        ///
-        public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                             CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
-            return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
-        }
+        ///// <summary>
+        /////   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
+        /////   events in the partition event stream.
+        ///// </summary>
+        /////
+        ///// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /////
+        ///// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
+        /////
+        //public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
+        //                                                                     CancellationToken cancellationToken = default)
+        //{
+        //    Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
+        //    return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
+        //}
 
         /// <summary>
         ///   Sends an event to the associated Event Hub using a batched approach.  If the size of the event exceeds the
@@ -395,7 +396,7 @@ namespace Azure.Messaging.ServiceBus.Producer
                                               SendEventOptions options,
                                               CancellationToken cancellationToken = default)
         {
-            options ??= DefaultSendOptions;
+            options ??= s_defaultSendOptions;
 
             Argument.AssertNotNull(messages, nameof(messages));
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
@@ -549,7 +550,7 @@ namespace Azure.Messaging.ServiceBus.Producer
             IsClosed = true;
 
             var identifier = GetHashCode().ToString();
-            EventHubsEventSource.Log.ClientCloseStart(typeof(ServiceBusSenderClient), EntityName, identifier);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusSenderClient), EntityName, identifier);
 
             // Attempt to close the active transport producers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -572,7 +573,7 @@ namespace Azure.Messaging.ServiceBus.Producer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(ServiceBusSenderClient), EntityName, identifier, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusSenderClient), EntityName, identifier, ex.Message);
                 transportProducerException = ex;
             }
 
@@ -588,12 +589,12 @@ namespace Azure.Messaging.ServiceBus.Producer
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(ServiceBusSenderClient), EntityName, identifier, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusSenderClient), EntityName, identifier, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(ServiceBusSenderClient), EntityName, identifier);
+                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusSenderClient), EntityName, identifier);
             }
 
             // If there was an active exception pending from closing the individual

@@ -785,7 +785,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             return async _ =>
             {
-                EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshStart(EntityName, endpoint.AbsoluteUri);
+                ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshStart(EntityName, endpoint.AbsoluteUri);
                 var refreshTimer = refreshTimerFactory();
 
                 try
@@ -812,7 +812,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 catch (Exception ex)
                 {
-                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshError(EntityName, endpoint.AbsoluteUri, ex.Message);
+                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshError(EntityName, endpoint.AbsoluteUri, ex.Message);
 
                     // Attempt to unset the timer; there's a decent chance that it has been disposed at this point or
                     // that the connection has been closed.  Ignore potential exceptions, as they won't impact operation.
@@ -822,7 +822,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 }
                 finally
                 {
-                    EventHubsEventSource.Log.AmqpLinkAuthorizationRefreshComplete(EntityName, endpoint.AbsoluteUri);
+                    ServiceBusEventSource.Log.AmqpLinkAuthorizationRefreshComplete(EntityName, endpoint.AbsoluteUri);
                 }
             };
         }

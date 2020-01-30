@@ -132,8 +132,8 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
-        /// <param name="entityName">The name of the specific Event Hub to associate the connection with.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
+        /// <param name="entityName">The name of the specific Event Hub to associate the connection with (if not contained in connectionString).</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
@@ -151,22 +151,20 @@ namespace Azure.Messaging.ServiceBus
 
             connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
             ValidateConnectionOptions(connectionOptions);
+            var builder = new ServiceBusConnectionStringBuilder(connectionString);
 
-            ConnectionStringProperties connectionStringProperties = ConnectionStringParser.Parse(connectionString);
-            ValidateConnectionProperties(connectionStringProperties, nameof(connectionString));
-
-            var fullyQualifiedNamespace = connectionStringProperties.Endpoint.Host;
+            var fullyQualifiedNamespace = builder.FullyQualifiedNamespace;
 
             if (string.IsNullOrEmpty(entityName))
             {
-                entityName = connectionStringProperties.EntityName;
+                entityName = builder.EntityName;
             }
 
             var sharedAccessSignature = new SharedAccessSignature
             (
                  BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, entityName),
-                 connectionStringProperties.SharedAccessKeyName,
-                 connectionStringProperties.SharedAccessKey
+                 builder.SasKeyName,
+                 builder.SasKey
             );
 
             var sharedCredentials = new SharedAccessSignatureCredential(sharedAccessSignature);
@@ -183,17 +181,17 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub to associate the connection with.</param>
+        /// <param name="entityName">The name of the specific Event Hub to associate the connection with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         public ServiceBusConnection(string fullyQualifiedNamespace,
-                                  string eventHubName,
+                                  string entityName,
                                   TokenCredential credential,
                                   ServiceBusConnectionOptions connectionOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             connectionOptions = connectionOptions?.Clone() ?? new ServiceBusConnectionOptions();
@@ -205,17 +203,17 @@ namespace Azure.Messaging.ServiceBus
                     break;
 
                 case ServiceBusSharedKeyCredential sharedKeyCredential:
-                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+                    credential = sharedKeyCredential.AsSharedAccessSignatureCredential(BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, entityName));
                     break;
             }
 
-            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, eventHubName));
+            var tokenCredential = new ServiceBusTokenCredential(credential, BuildAudienceResource(connectionOptions.TransportType, fullyQualifiedNamespace, entityName));
 
             FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EntityName = eventHubName;
+            EntityName = entityName;
             Options = connectionOptions;
 
-            InnerClient = CreateTransportClient(fullyQualifiedNamespace, eventHubName, tokenCredential, connectionOptions);
+            InnerClient = CreateTransportClient(fullyQualifiedNamespace, entityName, tokenCredential, connectionOptions);
         }
 
         /// <summary>
@@ -237,7 +235,7 @@ namespace Azure.Messaging.ServiceBus
         public async virtual Task CloseAsync(CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            EventHubsEventSource.Log.ClientCloseStart(typeof(ServiceBusConnection), EntityName, FullyQualifiedNamespace);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusConnection), EntityName, FullyQualifiedNamespace);
 
             try
             {
@@ -245,12 +243,12 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.ClientCloseError(typeof(ServiceBusConnection), EntityName, FullyQualifiedNamespace, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusConnection), EntityName, FullyQualifiedNamespace, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(typeof(ServiceBusConnection), EntityName, FullyQualifiedNamespace);
+                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusConnection), EntityName, FullyQualifiedNamespace);
             }
         }
 
@@ -424,7 +422,7 @@ namespace Azure.Messaging.ServiceBus
         ///   requested connection type of the <paramref name="options" />.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="entityName">The name of a specific Event Hub.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
         /// <param name="options">The set of options to use for the client.</param>
@@ -461,18 +459,18 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="transportType">The type of protocol and transport that will be used for communicating with the Event Hubs service.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub to connect the client to.</param>
+        /// <param name="entityName">The name of the specific entity to connect the client to.</param>
         ///
         /// <returns>The value to use as the audience of the signature.</returns>
         ///
         private static string BuildAudienceResource(ServiceBusTransportType transportType,
                                                     string fullyQualifiedNamespace,
-                                                    string eventHubName)
+                                                    string entityName)
         {
             var builder = new UriBuilder(fullyQualifiedNamespace)
             {
                 Scheme = transportType.GetUriScheme(),
-                Path = eventHubName,
+                Path = entityName,
                 Port = -1,
                 Fragment = string.Empty,
                 Password = string.Empty,
@@ -487,42 +485,42 @@ namespace Azure.Messaging.ServiceBus
             return builder.Uri.AbsoluteUri.ToLowerInvariant();
         }
 
-        /// <summary>
-        ///   Performs the actions needed to validate the set of properties for connecting to the
-        ///   Event Hubs service, as passed to this client during creation.
-        /// </summary>
-        ///
-        /// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
-        /// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
-        ///
-        /// <remarks>
-        ///   In the case that the properties violate an invariant or otherwise represent a combination that
-        ///   is not permissible, an appropriate exception will be thrown.
-        /// </remarks>
-        ///
-        private static void ValidateConnectionProperties(ConnectionStringProperties properties,
-                                                         string connectionStringArgumentName)
-        {
-            // The Event Hub name may only be specified in one of the possible forms, either as part of the
-            // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
-            // value, then do not consider this a failure.
+        ///// <summary>
+        /////   Performs the actions needed to validate the set of properties for connecting to the
+        /////   Event Hubs service, as passed to this client during creation.
+        ///// </summary>
+        /////
+        ///// <param name="properties">The set of properties parsed from the connection string associated this client.</param>
+        ///// <param name="connectionStringArgumentName">The name of the argument associated with the connection string; to be used when raising <see cref="ArgumentException" /> variants.</param>
+        /////
+        ///// <remarks>
+        /////   In the case that the properties violate an invariant or otherwise represent a combination that
+        /////   is not permissible, an appropriate exception will be thrown.
+        ///// </remarks>
+        /////
+        //private static void ValidateConnectionProperties(ConnectionStringProperties properties,
+        //                                                 string connectionStringArgumentName)
+        //{
+        //    // The Event Hub name may only be specified in one of the possible forms, either as part of the
+        //    // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
+        //    // value, then do not consider this a failure.
 
-            //if ((!string.IsNullOrEmpty(properties.EventHubName))
-            //    && (!string.Equals(properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
-            //{
-            //    throw new ArgumentException(Resources1.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
-            //}
+        //    if ((!string.IsNullOrEmpty(properties.EntityName))
+        //        && (!string.Equals(properties.EventHubName, StringComparison.InvariantCultureIgnoreCase)))
+        //    {
+        //        throw new ArgumentException(Resources1.OnlyOneEventHubNameMayBeSpecified, connectionStringArgumentName);
+        //    }
 
-            // Ensure that each of the needed components are present for connecting.
+        //    // Ensure that each of the needed components are present for connecting.
 
-            if (
-                  (string.IsNullOrEmpty(properties.Endpoint?.Host))
-                || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
-                || (string.IsNullOrEmpty(properties.SharedAccessKey)))
-            {
-                throw new ArgumentException(Resources1.MissingConnectionInformation, connectionStringArgumentName);
-            }
-        }
+        //    if (
+        //          (string.IsNullOrEmpty(properties.Endpoint?.Host))
+        //        || (string.IsNullOrEmpty(properties.SharedAccessKeyName))
+        //        || (string.IsNullOrEmpty(properties.SharedAccessKey)))
+        //    {
+        //        throw new ArgumentException(Resources1.MissingConnectionInformation, connectionStringArgumentName);
+        //    }
+        //}
 
         /// <summary>
         ///   Performs the actions needed to validate the <see cref="ServiceBusConnectionOptions" /> associated

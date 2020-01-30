@@ -211,7 +211,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     try
                     {
-                        EventHubsEventSource.Log.EventReceiveStart(EntityName, ConsumerGroup, PartitionId);
+                        ServiceBusEventSource.Log.EventReceiveStart(EntityName, ConsumerGroup, PartitionId);
 
                         link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -283,7 +283,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventReceiveError(EntityName, ConsumerGroup, PartitionId, activeEx.Message);
+                            ServiceBusEventSource.Log.EventReceiveError(EntityName, ConsumerGroup, PartitionId, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -306,13 +306,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.EventReceiveError(EntityName, ConsumerGroup, PartitionId, ex.Message);
+                ServiceBusEventSource.Log.EventReceiveError(EntityName, ConsumerGroup, PartitionId, ex.Message);
                 throw;
             }
             finally
             {
                 stopWatch.Stop();
-                EventHubsEventSource.Log.EventReceiveComplete(EntityName, ConsumerGroup, PartitionId, receivedEventCount);
+                ServiceBusEventSource.Log.EventReceiveComplete(EntityName, ConsumerGroup, PartitionId, receivedEventCount);
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                EventHubsEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
+                ServiceBusEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (ReceiveLink?.TryGetOpenedObject(out var _) == true)
@@ -350,13 +350,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception ex)
             {
                 _closed = false;
-                EventHubsEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
 
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
+                ServiceBusEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
             }
         }
 

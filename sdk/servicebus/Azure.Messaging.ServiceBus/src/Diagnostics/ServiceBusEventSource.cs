@@ -18,22 +18,22 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     ///   the StopEvent.Id must be exactly StartEvent.Id + 1.
     /// </remarks>
     ///
-    [EventSource(Name = "Azure-Messaging-EventHubs")]
-    internal sealed class EventHubsEventSource : EventSource
+    [EventSource(Name = "Azure-Messaging-ServiceBus")]
+    internal sealed class ServiceBusEventSource : EventSource
     {
         /// <summary>
         ///   Provides a singleton instance of the event source for callers to
         ///   use for logging.
         /// </summary>
         ///
-        public static EventHubsEventSource Log { get; } = new EventHubsEventSource();
+        public static ServiceBusEventSource Log { get; } = new ServiceBusEventSource();
 
         /// <summary>
-        ///   Prevents an instance of the <see cref="EventHubsEventSource"/> class from being created
+        ///   Prevents an instance of the <see cref="ServiceBusEventSource"/> class from being created
         ///   outside the scope of the <see cref="Log" /> instance.
         /// </summary>
         ///
-        private EventHubsEventSource()
+        private ServiceBusEventSource()
         {
         }
 

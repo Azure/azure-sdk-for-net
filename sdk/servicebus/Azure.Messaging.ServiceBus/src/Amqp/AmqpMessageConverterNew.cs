@@ -584,7 +584,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 case AmqpProperty.Type.Unknown:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources1.FailedToSerializeUnsupportedType, eventPropertyValue.GetType().FullName));
-                    EventHubsEventSource.Log.UnexpectedException(exception.Message);
+                    ServiceBusEventSource.Log.UnexpectedException(exception.Message);
                     throw exception;
             }
 
@@ -670,7 +670,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 default:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, Resources1.FailedToSerializeUnsupportedType, amqpPropertyValue.GetType().FullName));
-                    EventHubsEventSource.Log.UnexpectedException(exception.Message);
+                    ServiceBusEventSource.Log.UnexpectedException(exception.Message);
                     throw exception;
             }
 
