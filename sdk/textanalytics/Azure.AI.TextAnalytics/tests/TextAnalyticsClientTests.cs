@@ -39,14 +39,9 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public void DetectLanguageArgumentValidation()
         {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync(null));
-        }
-
-        [Test]
-        public void DetectLanguagesArgumentValidation()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguagesAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguagesAsync(null, new TextAnalyticsRequestOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync((string)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
