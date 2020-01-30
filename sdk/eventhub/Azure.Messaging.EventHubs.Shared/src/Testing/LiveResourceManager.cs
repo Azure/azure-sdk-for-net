@@ -136,10 +136,7 @@ namespace Azure.Messaging.EventHubs.Tests
            Policy<T>
                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-               .Or<TaskCanceledException>()
-               .Or<OperationCanceledException>()
-               .Or<SocketException>()
-               .Or<IOException>()
+               .Or<Exception>(ex => ((IsRetriableExceptionType(ex)) || (IsRetriableExceptionType(ex.InnerException))))
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         /// <summary>
@@ -158,10 +155,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Policy
                 .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
                 .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .Or<TaskCanceledException>()
-                .Or<OperationCanceledException>()
-                .Or<SocketException>()
-                .Or<IOException>()
+                .Or<Exception>(ex => ((IsRetriableExceptionType(ex)) || (IsRetriableExceptionType(ex.InnerException))))
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         /// <summary>
@@ -175,11 +169,29 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
             ((statusCode == HttpStatusCode.Unauthorized)
+                || (statusCode == ((HttpStatusCode)408))
                 || (statusCode == HttpStatusCode.Conflict)
                 || (statusCode == ((HttpStatusCode)429))
                 || (statusCode == HttpStatusCode.InternalServerError)
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
+
+        /// <summary>
+        ///   Determines whether the type of the specified exception is considered eligible to retry
+        ///   the associated operation.
+        /// </summary>
+        ///
+        /// <param name="ex">The exception to consider.</param>
+        ///
+        /// <returns><c>true</c> if the exception type is eligible for retries; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool IsRetriableExceptionType(Exception ex) =>
+            ((ex is TimeoutException)
+                || (ex is TaskCanceledException)
+                || (ex is OperationCanceledException)
+                || (ex is TimeoutException)
+                || (ex is SocketException)
+                || (ex is IOException));
 
         /// <summary>
         ///   Calculates the retry delay to use for management-related operations.
