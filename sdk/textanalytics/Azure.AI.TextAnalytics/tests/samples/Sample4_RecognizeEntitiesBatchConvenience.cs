@@ -38,11 +38,11 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (RecognizeEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.NamedEntities.Count()} entities were found: ");
+                Debug.WriteLine($"the following {result.CategorizedEntities.Count()} entities were found: ");
 
-                foreach (NamedEntity entity in result.NamedEntities)
+                foreach (CategorizedEntity entity in result.CategorizedEntities)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
             }
         }

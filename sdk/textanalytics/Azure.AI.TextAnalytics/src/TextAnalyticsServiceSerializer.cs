@@ -274,12 +274,12 @@ namespace Azure.AI.TextAnalytics
 
         private static RecognizeEntitiesResult ReadRecognizeEntityResult(JsonElement documentElement)
         {
-            List<NamedEntity> entities = new List<NamedEntity>();
+            List<CategorizedEntity> entities = new List<CategorizedEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
                 {
-                    entities.Add(ReadNamedEntity(entityElement));
+                    entities.Add(ReadCategorizedEntity(entityElement));
                 }
             }
 
@@ -289,7 +289,7 @@ namespace Azure.AI.TextAnalytics
                 entities);
         }
 
-        private static NamedEntity ReadNamedEntity(JsonElement entityElement)
+        private static CategorizedEntity ReadCategorizedEntity(JsonElement entityElement)
         {
             string text = default;
             string type = default;
@@ -311,7 +311,7 @@ namespace Azure.AI.TextAnalytics
             if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
                 scoreValue.TryGetDouble(out score);
 
-            return new NamedEntity(text, type, subtype, offset, length, score);
+            return new CategorizedEntity(text, type, subtype, offset, length, score);
         }
 
         #endregion Recognize Entities
@@ -630,12 +630,12 @@ namespace Azure.AI.TextAnalytics
 
         private static RecognizePiiEntitiesResult ReadRecognizePiiEntityResult(JsonElement documentElement)
         {
-            List<NamedEntity> entities = new List<NamedEntity>();
+            List<CategorizedEntity> entities = new List<CategorizedEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
                 {
-                    entities.Add(ReadNamedEntity(entityElement));
+                    entities.Add(ReadCategorizedEntity(entityElement));
                 }
             }
 
