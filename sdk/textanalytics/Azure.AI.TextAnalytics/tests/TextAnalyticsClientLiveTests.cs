@@ -148,7 +148,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeEntitiesWithSubtypeTest()
+        public async Task RecognizeEntitiesWithSubCategoryTest()
         {
             TextAnalyticsClient client = GetClient();
             string input = "I had a wonderful trip to Seattle last week.";
@@ -241,7 +241,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
-        public async Task RecognizeEntitiesTypesSubTypes()
+        public async Task RecognizeEntitiesCategoriesSubCategories()
         {
             TextAnalyticsClient client = GetClient();
             const string input = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C";
