@@ -13,23 +13,28 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ScopeProperties
+    /// <summary>
+    /// The Resource name.
+    /// </summary>
+    public partial class SubRequestName
     {
         /// <summary>
-        /// Initializes a new instance of the ScopeProperties class.
+        /// Initializes a new instance of the SubRequestName class.
         /// </summary>
-        public ScopeProperties()
+        public SubRequestName()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ScopeProperties class.
+        /// Initializes a new instance of the SubRequestName class.
         /// </summary>
-        public ScopeProperties(string scope = default(string), bool? valid = default(bool?))
+        /// <param name="localizedValue">Resource display name.</param>
+        /// <param name="value">Resource name.</param>
+        public SubRequestName(string localizedValue = default(string), string value = default(string))
         {
-            Scope = scope;
-            Valid = valid;
+            LocalizedValue = localizedValue;
+            Value = value;
             CustomInit();
         }
 
@@ -39,14 +44,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets resource display name.
         /// </summary>
-        [JsonProperty(PropertyName = "scope")]
-        public string Scope { get; set; }
+        [JsonProperty(PropertyName = "localizedValue")]
+        public string LocalizedValue { get; private set; }
 
         /// <summary>
+        /// Gets resource name.
         /// </summary>
-        [JsonProperty(PropertyName = "valid")]
-        public bool? Valid { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; private set; }
 
     }
 }
