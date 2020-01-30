@@ -13,6 +13,8 @@
         The C# client provides management capabilities for Azure Data Explorer (Kusto) entities. The following capabilities are included with this release:
         - Add principal assignments resource for managing cluster principals.
         - Add principal assignments resource for managing database principals.
+		- Support GZip compression in EventHub.
+		- Support Parquet & ORC in all Data-connection kinds (Blob Storage, EventHub, IoThub).
       ]]>
   </PackageReleaseNotes>
   </PropertyGroup>
