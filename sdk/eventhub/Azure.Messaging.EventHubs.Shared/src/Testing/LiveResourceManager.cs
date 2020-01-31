@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Threading;
@@ -189,7 +190,7 @@ namespace Azure.Messaging.EventHubs.Tests
             ((ex is TimeoutException)
                 || (ex is TaskCanceledException)
                 || (ex is OperationCanceledException)
-                || (ex is TimeoutException)
+                || (ex is HttpRequestException)
                 || (ex is SocketException)
                 || (ex is IOException));
 
