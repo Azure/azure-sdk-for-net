@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics
             DocumentSentiment = documentSentiment;
         }
 
-        internal AnalyzeSentimentResult(string id, string errorMessage) : base(id, errorMessage) { }
+        internal AnalyzeSentimentResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// Gets the predicted sentiment for the full document.

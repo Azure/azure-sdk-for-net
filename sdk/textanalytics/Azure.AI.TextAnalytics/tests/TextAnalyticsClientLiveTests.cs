@@ -65,8 +65,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "That was the best day of my life!";
 
-            AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input);
-            DocumentSentiment docSentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(input);
 
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
             Assert.IsNotNull(docSentiment.SentimentScores.Positive);
@@ -91,8 +90,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "El mejor test del mundo!";
 
-            AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input, "es");
-            DocumentSentiment docSentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(input, "es");
 
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
         }
@@ -103,8 +101,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "My cat might need to see a veterinarian.";
 
-            ExtractKeyPhrasesResult result = await client.ExtractKeyPhrasesAsync(input);
-            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+            IList<string> keyPhrases = (IList<string>)await client.ExtractKeyPhrasesAsync(input);
 
             Assert.AreEqual(2, keyPhrases.Count);
             Assert.IsTrue(keyPhrases.Contains("cat"));
@@ -117,8 +114,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Mi perro está en el veterinario";
 
-            ExtractKeyPhrasesResult result = await client.ExtractKeyPhrasesAsync(input, "es");
-            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+            IList<string> keyPhrases = (IList<string>)await client.ExtractKeyPhrasesAsync(input, "es");
 
             Assert.AreEqual(2, keyPhrases.Count);
         }
@@ -129,8 +125,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = (IReadOnlyCollection<CategorizedEntity>)await client.RecognizeEntitiesAsync(input);
 
             Assert.AreEqual(3, entities.Count);
 
@@ -151,8 +146,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input, "es");
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = (IReadOnlyCollection<CategorizedEntity>)await client.RecognizeEntitiesAsync(input, "es");
 
             Assert.AreEqual(3, entities.Count);
         }
@@ -163,8 +157,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "I had a wonderful trip to Seattle last week.";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = (IReadOnlyCollection<CategorizedEntity>)await client.RecognizeEntitiesAsync(input);
 
             Assert.AreEqual(2, entities.Count);
 
@@ -181,8 +174,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
-            RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = (IReadOnlyCollection<CategorizedEntity>)await client.RecognizePiiEntitiesAsync(input);
 
             Assert.AreEqual(2, entities.Count);
 
@@ -203,8 +195,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
-            RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input, "en");
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = (IReadOnlyCollection<CategorizedEntity>)await client.RecognizePiiEntitiesAsync(input, "en");
 
             Assert.AreEqual(2, entities.Count);
         }
@@ -215,15 +206,12 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            RecognizeLinkedEntitiesResult result = await client.RecognizeLinkedEntitiesAsync(input);
+            IList<LinkedEntity> linkedEntities = (IList<LinkedEntity>)await client.RecognizeLinkedEntitiesAsync(input);
 
-            Assert.IsNotNull(result.Id);
-            Assert.AreEqual(3, result.LinkedEntities.Count);
-            Assert.IsNotNull(result.Statistics.CharacterCount);
-            Assert.IsNotNull(result.Statistics.TransactionCount);
+            Assert.AreEqual(3, linkedEntities.Count);
 
             var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
-            foreach (LinkedEntity entity in result.LinkedEntities)
+            foreach (LinkedEntity entity in linkedEntities)
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Name));
                 Assert.IsNotNull(entity.DataSource);
@@ -244,10 +232,9 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            RecognizeLinkedEntitiesResult result = await client.RecognizeLinkedEntitiesAsync(input, "es");
+            IList<LinkedEntity> linkedEntities = (IList<LinkedEntity>)await client.RecognizeLinkedEntitiesAsync(input, "es");
 
-            Assert.IsNotNull(result.Id);
-            Assert.AreEqual(3, result.LinkedEntities.Count);
+            Assert.AreEqual(3, linkedEntities.Count);
         }
 
         [Test]
@@ -256,8 +243,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             const string input = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            List<CategorizedEntity> entities = result.CategorizedEntities.ToList();
+            IList<CategorizedEntity> entities = (IList<CategorizedEntity>)await client.RecognizeEntitiesAsync(input);
 
             Assert.AreEqual(15, entities.Count);
 

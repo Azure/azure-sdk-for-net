@@ -19,8 +19,8 @@ namespace Azure.AI.TextAnalytics
             KeyPhrases = new ReadOnlyCollection<string>(keyPhrases);
         }
 
-        internal ExtractKeyPhrasesResult(string id, string errorMessage)
-            : base(id, errorMessage)
+        internal ExtractKeyPhrasesResult(string id, TextAnalyticsError error)
+            : base(id, error)
         {
             KeyPhrases = Array.Empty<string>();
         }
