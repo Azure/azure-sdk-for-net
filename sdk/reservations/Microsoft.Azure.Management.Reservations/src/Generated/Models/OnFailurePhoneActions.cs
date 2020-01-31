@@ -15,24 +15,26 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Collections.Generic;
     using System.Linq;
 
-    public partial class SubscriptionScopeProperties
+    /// <summary>
+    /// The phone actions for auto quota increase.
+    /// </summary>
+    public partial class OnFailurePhoneActions
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the OnFailurePhoneActions class.
         /// </summary>
-        public SubscriptionScopeProperties()
+        public OnFailurePhoneActions()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionScopeProperties
-        /// class.
+        /// Initializes a new instance of the OnFailurePhoneActions class.
         /// </summary>
-        public SubscriptionScopeProperties(IList<ScopeProperties> scopes = default(IList<ScopeProperties>))
+        /// <param name="value">The list of phone actions.</param>
+        public OnFailurePhoneActions(IList<PhoneAction> value = default(IList<PhoneAction>))
         {
-            Scopes = scopes;
+            Value = value;
             CustomInit();
         }
 
@@ -42,9 +44,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the list of phone actions.
         /// </summary>
-        [JsonProperty(PropertyName = "scopes")]
-        public IList<ScopeProperties> Scopes { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<PhoneAction> Value { get; set; }
 
     }
 }
