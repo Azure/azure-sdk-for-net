@@ -2,13 +2,15 @@
   <PropertyGroup>
     <Description>Microsoft Azure Key Vault Cryptography Class Library
 
-The latest libraries to interact with the KeyVault service are:
+This library has been replaced by the following new Azure SDKs. You can read about the new Azure SDKs at https://aka.ms/azsdkvalueprop.
 
-* Azure.Security.KeyVault.Keys
-* Azure.Security.KeyVault.Secrets
-* Azure.Security.KeyVault.Certificates
+The latest libraries to interact with the Azure KeyVault service are:
 
-It is recommended that you move to the new packages.</Description>
+*	Azure.Security.KeyVault.Keys
+*	Azure.Security.KeyVault.Secrets
+*	Azure.Security.KeyVault.Certificates
+
+It is recommended that you move to the new package.</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Cryptography</AssemblyTitle>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageReleaseNotes>
