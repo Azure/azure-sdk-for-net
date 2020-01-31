@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics
         internal DocumentSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<TextSentiment> sentenceSentiments)
         {
             Sentiment = sentiment;
-            SentimentScores = new TextSentimentScores(positiveScore, neutralScore, negativeScore);
+            SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);
             Sentences = new ReadOnlyCollection<TextSentiment>(sentenceSentiments);
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the sentiment confidence score between 0 and 1,
         /// for each sentiment label.
         /// </summary>
-        public TextSentimentScores SentimentScores { get; }
+        public SentimentScorePerLabel SentimentScores { get; }
 
         /// <summary>
         /// Gets the predicted sentiment for each sentence in the corresponding

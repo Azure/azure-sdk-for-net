@@ -6,9 +6,9 @@ namespace Azure.AI.TextAnalytics
     /// <summary>
     /// The sentiment confidence scores, by sentiment class label.
     /// </summary>
-    public class TextSentimentScores
+    public class SentimentScorePerLabel
     {
-        internal TextSentimentScores(double positive, double neutral, double negative)
+        internal SentimentScorePerLabel(double positive, double neutral, double negative)
         {
             Positive = positive;
             Neutral = neutral;

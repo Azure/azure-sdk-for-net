@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics
         internal TextSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
-            SentimentScores = new TextSentimentScores(positiveScore, neutralScore, negativeScore);
+            SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;
         }
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the sentiment confidence score between 0 and 1,
         /// for each sentiment label.
         /// </summary>
-        public TextSentimentScores SentimentScores { get; }
+        public SentimentScorePerLabel SentimentScores { get; }
 
         /// <summary>
         /// Gets the start position for the matching text in the input document.
