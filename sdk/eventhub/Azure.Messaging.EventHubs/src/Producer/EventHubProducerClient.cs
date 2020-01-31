@@ -178,7 +178,7 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = true;
             Connection = new EventHubConnection(connectionString, eventHubName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            PartitionProducerPool = new TransportProducerPool(Connection.CreateTransportProducer(null, RetryPolicy));
+            PartitionProducerPool = new TransportProducerPool(Connection, RetryPolicy);
         }
 
         /// <summary>
@@ -196,7 +196,6 @@ namespace Azure.Messaging.EventHubs.Producer
                                       EventHubProducerClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -206,7 +205,7 @@ namespace Azure.Messaging.EventHubs.Producer
             Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
 
-            PartitionProducerPool = new TransportProducerPool(Connection.CreateTransportProducer(null, RetryPolicy));
+            PartitionProducerPool = new TransportProducerPool(Connection, RetryPolicy);
         }
 
         /// <summary>
@@ -225,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Producer
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            PartitionProducerPool = new TransportProducerPool(Connection.CreateTransportProducer(null, RetryPolicy));
+            PartitionProducerPool = new TransportProducerPool(Connection, RetryPolicy);
         }
 
         /// <summary>
@@ -250,8 +249,8 @@ namespace Azure.Messaging.EventHubs.Producer
 
             OwnsConnection = false;
             Connection = connection;
-            PartitionProducerPool = partitionProducerPool ?? new TransportProducerPool(transportProducer);
             RetryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            PartitionProducerPool = partitionProducerPool ?? new TransportProducerPool(Connection, RetryPolicy, eventHubProducer: transportProducer);
         }
 
         /// <summary>
@@ -409,8 +408,7 @@ namespace Azure.Messaging.EventHubs.Producer
             events = events.ToList();
             InstrumentMessages(events);
 
-            TransportProducerPool.PooledProducer pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
-            TransportProducer activeProducer = null;
+            TransportProducerPool.PooledProducer pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested
                    && ++attempts <= MaximumCreateProducerAttempts
@@ -425,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     isMessageSent = true;
                 }
                 catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                   && ShouldRecreateProducer(activeProducer, options.PartitionId))
+                                                                   && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
                 {
                     if (attempts >= MaximumCreateProducerAttempts)
                     {
@@ -433,7 +431,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         throw;
                     }
 
-                    pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
+                    pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
                 }
                 catch (Exception ex)
                 {
@@ -468,8 +466,7 @@ namespace Azure.Messaging.EventHubs.Producer
             bool isMessageSent = false;
             using DiagnosticScope scope = CreateDiagnosticScope();
 
-            var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
-            TransportProducer activeProducer = null;
+            var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested
                    && ++attempts <= MaximumCreateProducerAttempts
@@ -484,7 +481,7 @@ namespace Azure.Messaging.EventHubs.Producer
                     isMessageSent = true;
                 }
                 catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                   && ShouldRecreateProducer(activeProducer, eventBatch.SendOptions.PartitionId))
+                                                                   && ShouldRecreateProducer(pooledProducer.TransportProducer, eventBatch.SendOptions.PartitionId))
                 {
                     if (attempts >= MaximumCreateProducerAttempts)
                     {
@@ -492,7 +489,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         throw;
                     }
 
-                    pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
+                    pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
                 }
                 catch (Exception ex)
                 {
@@ -541,9 +538,7 @@ namespace Azure.Messaging.EventHubs.Producer
             options = options?.Clone() ?? new CreateBatchOptions();
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            var transportProducer = PartitionProducerPool.GetTransportProducer();
-
-            TransportEventBatch transportBatch = await transportProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
+            TransportEventBatch transportBatch = await PartitionProducerPool.EventHubProducer.CreateBatchAsync(options, cancellationToken).ConfigureAwait(false);
             return new EventDataBatch(transportBatch, options.ToSendOptions());
         }
 
@@ -563,17 +558,14 @@ namespace Azure.Messaging.EventHubs.Producer
             var identifier = GetHashCode().ToString();
             EventHubsEventSource.Log.ClientCloseStart(typeof(EventHubProducerClient), EventHubName, identifier);
 
-            // Attempt to close the active transport producers.  In the event that an exception is encountered,
+            // Attempt to close the pool of producers.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
 
             var transportProducerException = default(Exception);
 
             try
             {
-                var transportProducer = PartitionProducerPool.GetTransportProducer();
-
-                await transportProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
-                await PartitionProducerPool.CloseAsync().ConfigureAwait(false);
+                await PartitionProducerPool.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

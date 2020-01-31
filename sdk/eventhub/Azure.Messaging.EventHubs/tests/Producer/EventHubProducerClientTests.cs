@@ -657,9 +657,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new SendEventOptions { PartitionId = "0" };
             var transportProducer = new ObservableTransportProducerMock();
-            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock());
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock(), eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
             var events = new EventData[0];
 
@@ -679,9 +680,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new ObservableTransportProducerMock();
-            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock());
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock(), eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
 
             await producerClient.SendAsync(batch);
@@ -700,9 +702,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new ObservableTransportProducerMock();
-            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock());
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock(), eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
 
             await producerClient.SendAsync(batch);
@@ -720,9 +723,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new SendEventOptions { PartitionId = "0" };
             var transportProducer = new ObservableTransportProducerMock();
-            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock());
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock(), eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer, mockTransportProducerPool);
             var events = new EventData[0];
 
@@ -742,9 +746,10 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new SendEventOptions { PartitionId = "0" };
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
             var events = new EventData[0];
 
@@ -779,9 +784,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
@@ -811,9 +816,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new SendEventOptions { PartitionId = "0" };
             var events = new EventData[0];
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock());
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock(), eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
             var numberOfCalls = 0;
 
@@ -843,9 +849,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock());
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(new ObservableTransportProducerMock(), eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
             var numberOfCalls = 0;
 
@@ -874,11 +881,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new SendEventOptions { PartitionId = "0" };
             var events = new EventData[0];
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var retryPolicy = GetRetryPolicy(producerClient);
 
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<IEnumerable<EventData>>(),
@@ -905,11 +912,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
-            var retryPolicy = GetRetryPolicy(producerClient);
 
             transportProducer
                 .Setup(transportProducer => transportProducer.SendAsync(It.IsAny<EventDataBatch>(),
@@ -934,9 +941,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new SendEventOptions { PartitionId = "0" };
             var events = new EventData[0];
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
@@ -970,9 +978,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
@@ -1004,9 +1013,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new SendEventOptions { PartitionId = "0" };
             var events = new EventData[0];
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
@@ -1040,9 +1050,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
 
             transportProducer
@@ -1074,9 +1085,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new SendEventOptions { PartitionId = "0" };
             var events = new EventData[0];
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(options.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
             var cancellationTokenSource = new CancellationTokenSource();
             var numberOfCalls = 0;
@@ -1119,9 +1131,10 @@ namespace Azure.Messaging.EventHubs.Tests
             var batchOptions = new CreateBatchOptions { PartitionId = "0" };
             var batch = new EventDataBatch(new MockTransportBatch(), batchOptions.ToSendOptions());
             var transportProducer = new Mock<TransportProducer>();
-            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object);
-            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var eventHubConnection = new MockConnection(() => transportProducer.Object);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            var mockTransportProducerPool = new MockTransportProducerPool(transportProducer.Object, eventHubConnection, retryPolicy);
+            var mockPooledProducer = mockTransportProducerPool.GetPooledProducer(batchOptions.PartitionId) as MockPooledProducer;
             var producerClient = new EventHubProducerClient(eventHubConnection, transportProducer.Object, mockTransportProducerPool);
             var cancellationTokenSource = new CancellationTokenSource();
             var numberOfCalls = 0;
@@ -1349,15 +1362,15 @@ namespace Azure.Messaging.EventHubs.Tests
             public MockPooledProducer MockPooledProducer { get; }
 
             public MockTransportProducerPool(TransportProducer transportProducer,
+                                             EventHubConnection connection,
+                                             EventHubsRetryPolicy retryPolicy,
                                              ConcurrentDictionary<string, PoolItem> pool = default,
-                                             TimeSpan? expirationInterval = default): base(transportProducer, pool, expirationInterval)
+                                             TimeSpan? expirationInterval = default): base(connection, retryPolicy, pool, expirationInterval)
             {
                 MockPooledProducer = new MockPooledProducer(transportProducer);
             }
 
             public override PooledProducer GetPooledProducer(string partitionId,
-                                                             EventHubConnection connection = null,
-                                                             EventHubsRetryPolicy retryPolicy = null,
                                                              TimeSpan? removeAfterDuration = default)
             {
                 WasCalled = true;

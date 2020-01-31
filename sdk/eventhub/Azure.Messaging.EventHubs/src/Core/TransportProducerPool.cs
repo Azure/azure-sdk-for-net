@@ -35,6 +35,19 @@ namespace Azure.Messaging.EventHubs.Core
         public TransportProducer EventHubProducer { get; }
 
         /// <summary>
+        ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
+        ///   about the associated Event Hub and access to a transport-aware producer.
+        /// </summary>
+        ///
+        private EventHubConnection Connection { get; }
+
+        /// <summary>
+        ///   The policy to use for determining retry behavior for when an operation fails.
+        /// </summary>
+        ///
+        private EventHubsRetryPolicy RetryPolicy { get; }
+
+        /// <summary>
         ///   A reference to a <see cref="Timer" /> periodically checking every <see cref="DefaultPerformExpirationPeriod" />
         ///   the <see cref="TransportProducer" /> that are in use and those that can be closed.
         /// </summary>
@@ -45,23 +58,28 @@ namespace Azure.Messaging.EventHubs.Core
         ///   Initializes a new instance of the <see cref="TransportProducerPool" /> class.
         /// </summary>
         ///
-        /// <param name="eventHubProducer">An abstracted Event Hub transport-specific producer that is associated with the Event Hub gateway rather than a specific partition.</param>
+        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
+        /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
         /// <param name="pool">The pool of <see cref="PoolItem" /> that is going to be used to store the partition specific <see cref="TransportProducer" />.</param>
         /// <param name="performExpirationPeriod">The period after which <see cref="PerformExpiration" /> is run. Overrides <see cref="DefaultPerformExpirationPeriod" />.</param>
+        /// <param name="eventHubProducer">An abstracted Event Hub transport-specific producer that is associated with the Event Hub gateway rather than a specific partition.</param>
         ///
-        public TransportProducerPool(TransportProducer eventHubProducer,
+        public TransportProducerPool(EventHubConnection connection,
+                                     EventHubsRetryPolicy retryPolicy,
                                      ConcurrentDictionary<string, PoolItem> pool = default,
-                                     TimeSpan? performExpirationPeriod = default)
+                                     TimeSpan? performExpirationPeriod = default,
+                                     TransportProducer eventHubProducer = default)
         {
-            performExpirationPeriod ??= DefaultPerformExpirationPeriod;
+            Connection = connection;
+            RetryPolicy = retryPolicy;
             Pool = pool ?? new ConcurrentDictionary<string, PoolItem>();
+            performExpirationPeriod ??= DefaultPerformExpirationPeriod;
+            EventHubProducer = eventHubProducer ?? connection.CreateTransportProducer(null, retryPolicy);
 
             ExpirationTimer = new Timer(PerformExpiration(),
                                         null,
                                         performExpirationPeriod.Value,
                                         performExpirationPeriod.Value);
-
-            EventHubProducer = eventHubProducer;
         }
 
         /// <summary>
@@ -70,8 +88,6 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
-        /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
         /// <param name="removeAfterDuration">The period of inactivity after which a <see cref="PoolItem" /> will become eligible for eviction. Overrides <see cref="PoolItem.DefaultRemoveAfterDuration" />.</param>
         ///
         /// <returns>A <see cref="PooledProducer" /> mapping to the partition id passed in as parameter.</returns>
@@ -82,13 +98,8 @@ namespace Azure.Messaging.EventHubs.Core
         /// </remarks>
         ///
         public virtual PooledProducer GetPooledProducer(string partitionId,
-                                                        EventHubConnection connection,
-                                                        EventHubsRetryPolicy retryPolicy,
                                                         TimeSpan? removeAfterDuration = default)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
-            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-
             if (string.IsNullOrEmpty(partitionId))
             {
                 return new PooledProducer(EventHubProducer);
@@ -96,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Core
 
             var identifier = Guid.NewGuid().ToString();
 
-            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, connection.CreateTransportProducer(id, retryPolicy), removeAfterDuration));
+            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, Connection.CreateTransportProducer(id, RetryPolicy), removeAfterDuration));
 
             // A race condition at this point may end with CloseAsync called on
             // the returned PoolItem if it had expired. The probability is very low and
@@ -105,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Core
             if (item.PartitionProducer.IsClosed == true || !item.ActiveInstances.TryAdd(identifier, 0))
             {
                 identifier = Guid.NewGuid().ToString();
-                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, connection.CreateTransportProducer(id, retryPolicy), removeAfterDuration));
+                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, Connection.CreateTransportProducer(id, RetryPolicy), removeAfterDuration));
                 item.ActiveInstances.TryAdd(identifier, 0);
             }
 
@@ -140,33 +151,6 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   Creates a <see cref="TransportProducer" /> matching the partition id passed as input.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        ///
-        /// <returns>A <see cref="TransportProducer" /> matching the partition id passed as input.</returns>
-        ///
-        public virtual TransportProducer GetTransportProducer(string partitionId = default)
-        {
-            // Determine the transport producer to delegate the send operation to.  Because sending to a specific
-            // partition requires a dedicated client, use (or create) that client if a partition was specified.  Otherwise
-            // the default gateway producer can be used to request automatic routing from the Event Hubs service gateway.
-
-            if (string.IsNullOrEmpty(partitionId))
-            {
-                return EventHubProducer;
-            }
-
-            if (Pool.TryGetValue(partitionId, out var poolItem))
-            {
-                return poolItem.PartitionProducer;
-            }
-
-            return null;
-        }
-
-        /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="TransportProducerPool" />.
         /// </summary>
         ///
@@ -181,8 +165,10 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public async Task CloseAsync()
+        public async Task CloseAsync(CancellationToken cancellationToken = default)
         {
+            await EventHubProducer.CloseAsync(cancellationToken).ConfigureAwait(false);
+
             var pendingCloses = new List<Task>();
 
             foreach (var poolItem in Pool.Values)

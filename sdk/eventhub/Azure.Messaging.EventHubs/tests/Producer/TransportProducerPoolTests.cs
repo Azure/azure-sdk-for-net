@@ -31,6 +31,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TransportProducerPoolRemovesExpiredItems()
         {
             var transportProducer = new ObservableTransportProducerMock();
+            var connection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
             DateTimeOffset oneMinuteAgo = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(1));
             var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
             {
@@ -39,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ["1"] = new TransportProducerPool.PoolItem("0", transportProducer),
                 ["2"] = new TransportProducerPool.PoolItem("0", transportProducer),
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
 
             GetExpirationCallBack(transportProducerPool).Invoke(null);
 
@@ -66,10 +68,10 @@ namespace Azure.Messaging.EventHubs.Tests
                 // An expired item in the pool
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
 
             // This call should refresh the timespan associated to the item
-            _ = transportProducerPool.GetPooledProducer("0", connection, retryPolicy);
+            _ = transportProducerPool.GetPooledProducer("0");
 
             // The expiration call back should not remove the item
             GetExpirationCallBack(transportProducerPool).Invoke(null);
@@ -90,13 +92,13 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer);
             var connection = new MockConnection(() => transportProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy);
             var expectedTime = DateTimeOffset.UtcNow.AddMinutes(10);
             var expectedRemoveAfter = Is.InRange(expectedTime.AddMinutes(-1), expectedTime.AddMinutes(1));
 
-            await using var pooledProducer = transportProducerPool.GetPooledProducer("0", connection, retryPolicy);
+            await using var pooledProducer = transportProducerPool.GetPooledProducer("0");
 
             // This call should refresh the timespan associated to an item in the pool
             await pooledProducer.DisposeAsync();
@@ -120,9 +122,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 // An expired item in the pool
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer, removeAfter: oneMinuteAgo)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
 
-            var pooledProducer = transportProducerPool.GetPooledProducer("0", connection, retryPolicy);
+            var pooledProducer = transportProducerPool.GetPooledProducer("0");
             startingPool.TryGetValue("0", out var poolItem);
 
             await using (pooledProducer)
@@ -147,9 +149,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
 
-            var pooledProducer = transportProducerPool.GetPooledProducer("0", connection, retryPolicy, TimeSpan.FromMinutes(-1));
+            var pooledProducer = transportProducerPool.GetPooledProducer("0", TimeSpan.FromMinutes(-1));
 
             await using (var _ = pooledProducer.ConfigureAwait(false))
             {
@@ -170,7 +172,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("0")]
         public void TransportProducerPoolAllowsTakingTheRightTransportProducer(string partitionId)
         {
-            var transportProducer = new ObservableTransportProducerMock(partitionId);
+            var transportProducer = new ObservableTransportProducerMock();
             var partitionProducer = new ObservableTransportProducerMock(partitionId);
             var connection = new MockConnection(() => partitionProducer);
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
@@ -178,9 +180,9 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 ["0"] = new TransportProducerPool.PoolItem("0", partitionProducer)
             };
-            TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
+            TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, eventHubProducer: transportProducer);
 
-            var returnedProducer = transportProducerPool.GetTransportProducer(partitionId) as ObservableTransportProducerMock;
+            var returnedProducer = transportProducerPool.GetPooledProducer(partitionId).TransportProducer as ObservableTransportProducerMock;
 
             Assert.That(returnedProducer.PartitionId == partitionId);
         }
