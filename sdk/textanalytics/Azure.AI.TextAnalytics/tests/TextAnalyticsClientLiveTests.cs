@@ -66,13 +66,23 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "That was the best day of my life!";
 
             AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input);
-            TextSentiment sentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = result.DocumentSentiment;
 
-            Assert.AreEqual("Positive", sentiment.SentimentClass.ToString());
-            Assert.IsNotNull(sentiment.PositiveScore);
-            Assert.IsNotNull(sentiment.NeutralScore);
-            Assert.IsNotNull(sentiment.NegativeScore);
-            Assert.IsNotNull(sentiment.Offset);
+            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+            Assert.IsNotNull(docSentiment.SentimentScores.Positive);
+            Assert.IsNotNull(docSentiment.SentimentScores.Neutral);
+            Assert.IsNotNull(docSentiment.SentimentScores.Negative);
+
+            foreach (var sentence in docSentiment.Sentences)
+            {
+                Assert.AreEqual("Positive", sentence.Sentiment.ToString());
+                Assert.IsNotNull(sentence.SentimentScores.Positive);
+                Assert.IsNotNull(sentence.SentimentScores.Neutral);
+                Assert.IsNotNull(sentence.SentimentScores.Negative);
+                Assert.IsNotNull(sentence.Offset);
+                Assert.IsNotNull(sentence.Length);
+                Assert.AreEqual(input.Length, sentence.Length);
+            }
         }
 
         [Test]
@@ -82,9 +92,9 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "El mejor test del mundo!";
 
             AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input, "es");
-            TextSentiment sentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = result.DocumentSentiment;
 
-            Assert.AreEqual("Positive", sentiment.SentimentClass.ToString());
+            Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
         }
 
         [Test]
