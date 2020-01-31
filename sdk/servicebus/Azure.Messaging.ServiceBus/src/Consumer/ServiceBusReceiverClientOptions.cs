@@ -21,6 +21,11 @@ namespace Azure.Messaging.ServiceBus.Consumer
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
 
         /// <summary>
+        ///
+        /// </summary>
+        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+
+        /// <summary>
         ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
         /// </summary>
         ///

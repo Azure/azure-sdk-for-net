@@ -340,21 +340,21 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///
         /// </summary>
-        /// <param name="consumer"></param>
         /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
-            TransportConsumer consumer,
             ServiceBusRetryPolicy retryPolicy,
             long fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
+            string receiveLinkName = null,
             CancellationToken cancellationToken = default) =>
-            await InnerClient.PeekAsync(consumer, retryPolicy, fromSequenceNumber, messageCount, sessionId, cancellationToken)
+            await InnerClient.PeekAsync(retryPolicy, fromSequenceNumber, messageCount, sessionId, receiveLinkName, cancellationToken)
             .ConfigureAwait(false);
 
         /// <summary>

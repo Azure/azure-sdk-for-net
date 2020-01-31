@@ -273,19 +273,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         ///
         /// </summary>
-        /// <param name="consumer"></param>
         /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
-            TransportConsumer consumer,
             ServiceBusRetryPolicy retryPolicy,
             long fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
+            string receiveLinkName = null,
             CancellationToken cancellationToken = default)
         {
             try
@@ -298,17 +298,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         TimeSpan.FromSeconds(100),
                         null);
                 var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink);
 
-                if (sessionId != null && receiveLink == null)
+                if (receiveLinkName != null)
                 {
-                    // a session receive link is required for peeking by session
-                    receiveLink = await consumer.ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
-                }
-
-                if (receiveLink != null)
-                {
-                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+                    // include associated link for service optimization
+                    amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLinkName;
                 }
 
                 amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber;

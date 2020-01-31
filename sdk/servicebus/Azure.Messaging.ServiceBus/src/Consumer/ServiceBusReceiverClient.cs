@@ -16,6 +16,7 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Consumer
 {
@@ -567,15 +568,19 @@ namespace Azure.Messaging.ServiceBus.Consumer
         /// <param name="messageCount"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
+        public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveAsync(
             long fromSequenceNumber,
             int messageCount = 1,
+            [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
             var consumer = Connection.CreateTransportConsumer(
                 EventPosition.Latest,
                 RetryPolicy);
-            return await consumer.ReceiveAsync(messageCount, TimeSpan.FromSeconds(100), cancellationToken).ConfigureAwait(false);
+            foreach (ServiceBusMessage message in await consumer.ReceiveAsync(messageCount, TimeSpan.FromSeconds(100), cancellationToken).ConfigureAwait(false))
+            {
+                yield return message;
+            }
         }
 
         /// <summary>
@@ -593,21 +598,37 @@ namespace Azure.Messaging.ServiceBus.Consumer
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            TransportConsumer consumer = Connection.CreateTransportConsumer(
-                EventPosition.Latest,
-                RetryPolicy,
-                sessionId: sessionId);
+            string receiveLinkName = null;
+            TransportConsumer consumer = null;
+
+            if (sessionId != null)
+            {
+                consumer = Connection.CreateTransportConsumer(
+                    EventPosition.Latest,
+                    RetryPolicy,
+                    sessionId: sessionId);
+                ReceivingAmqpLink openedLink = await consumer.ReceiveLink.GetOrCreateAsync(TimeSpan.FromSeconds(60)).ConfigureAwait(false);
+                if (openedLink != null)
+                {
+                    receiveLinkName = openedLink.Name;
+                }
+            }
 
             foreach (ServiceBusMessage message in await Connection.PeekAsync(
-                consumer,
                 RetryPolicy,
                 fromSequenceNumber,
                 messageCount,
                 sessionId,
+                receiveLinkName,
                 cancellationToken)
                 .ConfigureAwait(false))
             {
                 yield return message;
+            }
+
+            if (consumer != null)
+            {
+                await consumer.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 

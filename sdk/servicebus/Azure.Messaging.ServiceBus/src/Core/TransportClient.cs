@@ -65,19 +65,19 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         ///
         /// </summary>
-        /// <param name="consumer"></param>
         /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public abstract Task<IEnumerable<ServiceBusMessage>> PeekAsync(
-            TransportConsumer consumer,
             ServiceBusRetryPolicy retryPolicy,
             long fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
+            string receiveLinkName = null,
             CancellationToken cancellationToken = default);
 
         /// <summary>

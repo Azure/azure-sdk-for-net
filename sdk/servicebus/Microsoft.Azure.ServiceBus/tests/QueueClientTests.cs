@@ -3,8 +3,12 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
+    using Microsoft.Azure.ServiceBus.Core;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -21,7 +25,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task PeekLockTest(bool partitioned, bool sessionEnabled,  int messageCount = 10)
+        public async Task PeekLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -35,6 +39,109 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await queueClient.CloseAsync();
                 }
             });
+        }
+
+        [LiveTest]
+        [DisplayTestMethodName]
+        [Fact]
+        public void Track1Receive_ReceiveAndDelete()
+        {
+            var queueName = "josh";
+            var connString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
+
+            // default ReceiveMode of PeekLock is used
+            var queueClient = new QueueClient(connString, queueName, ReceiveMode.ReceiveAndDelete);
+
+            // Set the message handler options and register the Exception handler
+            var messageHandlerOptions = new MessageHandlerOptions(ExceptionHandlerAsync)
+            {
+                MaxConcurrentCalls = 1,
+                AutoComplete = false
+            };
+
+            // Register the function that will process messages
+            queueClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
+        }
+
+        [LiveTest]
+        [DisplayTestMethodName]
+        [Fact]
+        public async Task Track1Receive_ReceiveAndDeleteSession()
+        {
+            var queueName = "josh";
+            var connString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
+
+            var messageSender = new MessageReceiver(connString, queueName);
+            IList<Message> messages = await messageSender.PeekAsync(maxMessageCount: 10);
+
+
+            var topicName = "joshtopic";
+            var topicClient = new TopicClient(connString, topicName);
+            ServiceBusConnection connection = topicClient.ServiceBusConnection;
+            var queueClient = new QueueClient(connection, queueName);
+            queueClient.CompleteAsync()
+            var sessionId = "1";
+
+            var sessionClient = new SessionClient(connString, queueName);
+            var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
+            Message receivedMessage = await sessionReceiver.ReceiveAsync();
+            await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+
+            IList<Message> peekedMessages = await sessionReceiver.PeekAsync(maxMessageCount: 10);
+
+
+            Message message = GetMessages();
+            await queueClient.SendAsync(message);
+
+            // Set the message handler options and register the Exception handler
+            var sessionHandlerOptions = new SessionHandlerOptions(ExceptionHandlerAsync)
+            {
+                MaxConcurrentSessions = 1,
+                AutoComplete = false
+            };
+
+            // Register the function that will process messages
+            queueClient.RegisterSessionHandler(ProcessMessagesAsync, sessionHandlerOptions);
+        }
+
+
+        [LiveTest]
+        [DisplayTestMethodName]
+        [Fact]
+        public async Task Track1Receive_ReceiveByPull()
+        {
+            var queueName = "josh";
+            var connString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
+
+            // default ReceiveMode of PeekLock is used
+            var receiverClient = new MessageReceiver(connString, queueName, ReceiveMode.ReceiveAndDelete);
+
+            Message messages = await receiverClient.ReceiveAsync();
+
+            // Set the message handler options and register the Exception handler
+            var sessionHandlerOptions = new SessionHandlerOptions(ExceptionHandlerAsync)
+            {
+                MaxConcurrentSessions = 1,
+                AutoComplete = false
+            };
+
+            // Register the function that will process messages
+            queueClient.RegisterSessionHandler(ProcessMessagesAsync, sessionHandlerOptions);
+        }
+
+        static Task ExceptionHandlerAsync(ExceptionReceivedEventArgs args)
+        {
+            return Task.CompletedTask;
+        }
+
+        static async Task ProcessMessagesAsync(IMessageSession session, Message message, CancellationToken token)
+        {
+            // Process the message
+            
+            Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
+            var queueClient = new QueueClient(connString, queueName, ReceiveMode.ReceiveAndDelete);
+            // Complete the message so that it is not received again.
+            await queueClient.CompleteAsync(message.SystemProperties.LockToken);
         }
 
         [Theory]

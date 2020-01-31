@@ -88,21 +88,21 @@ namespace Microsoft.Azure.Template.Tests
             await sender.SendAsync(message);
         }
 
-        [Test]
-        public async Task Receive()
-        {
-            var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            await sender.SendAsync(GetMessages(10));
+        //[Test]
+        //public async Task Receive()
+        //{
+        //    var sender = new ServiceBusSenderClient(ConnString, QueueName);
+        //    await sender.SendAsync(GetMessages(10));
 
-            var receiver = new ServiceBusReceiverClient(ConnString, QueueName);
-            var msgs = await receiver.ReceiveAsync(0, 10);
-            int ct = 0;
-            foreach (ServiceBusMessage msg in msgs)
-            {
-                var text = Encoding.Default.GetString(msg.Body);
-                TestContext.Progress.WriteLine($"#{++ct} - {msg.Label}: {text}");
-            }
-        }
+        //    var receiver = new ServiceBusReceiverClient(ConnString, QueueName);
+        //    var msgs = await receiver.ReceiveAsync(0, 10);
+        //    int ct = 0;
+        //    foreach (ServiceBusMessage msg in msgs)
+        //    {
+        //        var text = Encoding.Default.GetString(msg.Body);
+        //        TestContext.Progress.WriteLine($"#{++ct} - {msg.Label}: {text}");
+        //    }
+        //}
 
         [Test]
         public async Task Peek()
@@ -153,14 +153,15 @@ namespace Microsoft.Azure.Template.Tests
             // send the messages
             IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId, partitionKey);
             await sender.SendAsync(sentMessages);
-
-            // peek the messages
-            var receiver = new ServiceBusReceiverClient(ConnString, SessionQueueName);
             Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
             foreach (ServiceBusMessage message in sentMessages)
             {
                 sentMessageIdToMsg.Add(message.MessageId, message);
             }
+
+            // peek the messages
+            var receiver = new ServiceBusReceiverClient(ConnString, SessionQueueName);
+
             sequenceNumber ??= 1;
             IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekAsync(
                 fromSequenceNumber: (long)sequenceNumber,
@@ -185,6 +186,50 @@ namespace Microsoft.Azure.Template.Tests
                 Assert.AreEqual(messageCt, ct);
             }
         }
+
+        [Test]
+        public async Task PeekMultipleSessions_ShouldThrow()
+        {
+            var sender = new ServiceBusSenderClient(ConnString, SessionQueueName);
+            var messageCt = 10;
+            var sessionId = Guid.NewGuid().ToString();
+            // send the messages
+            IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
+            await sender.SendAsync(sentMessages);
+
+            var receiver1 = new ServiceBusReceiverClient(ConnString, SessionQueueName);
+            var receiver2 = new ServiceBusReceiverClient(ConnString, SessionQueueName);
+            Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
+
+            // peek the messages
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages1 = receiver1.PeekAsync(
+                fromSequenceNumber: 1,
+                messageCount: messageCt,
+                sessionId: sessionId);
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages2 = receiver2.PeekAsync(
+                fromSequenceNumber: 1,
+                messageCount: messageCt,
+                sessionId: sessionId);
+            await peekedMessages1.GetAsyncEnumerator().MoveNextAsync();
+            try
+            {
+                await peekedMessages2.GetAsyncEnumerator().MoveNextAsync();
+            }
+            catch (Exception)
+            {
+                return;
+            }
+            Assert.Fail("No exception!");
+        }
+
+        //[Test]
+        //public async Task ReceiveModeTest()
+        //{
+        //    var options = new ServiceBusReceiverClientOptions();
+        //    options.ReceiveMode = ReceiveMode.PeekWithoutLock;
+        //    var receiver = new ServiceBusReceiverClient(ConnString, options);
+        //    IAsyncEnumerable<ServiceBusMessage> messages = receiver.ReceiveAsync(fromSequenceNumber: 1);
+        //}
 
         [Test]
         public void ClientProperties()
