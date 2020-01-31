@@ -215,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.GetEventHubPropertiesAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.GetEventHubPropertiesAsync" />
         ///   method.
         /// </summary>
         ///
@@ -232,7 +232,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.GetPartitionIdsAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.GetPartitionIdsAsync" />
         ///   method.
         /// </summary>
         ///
@@ -249,7 +249,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.GetPartitionPropertiesAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.GetPartitionPropertiesAsync" />
         ///   method.
         /// </summary>
         ///
@@ -266,7 +266,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -278,7 +278,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -290,7 +290,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -309,7 +309,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -328,7 +328,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -342,7 +342,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -356,7 +356,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -370,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -386,7 +386,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -402,7 +402,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -418,7 +418,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -434,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -454,7 +454,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -475,7 +475,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.SendAsync" />
         ///   method.
         /// </summary>
         ///
@@ -492,7 +492,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync" />
         ///   method.
         /// </summary>
         ///
@@ -507,7 +507,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync" />
         ///   method.
         /// </summary>
         ///
@@ -527,7 +527,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync" />
         ///   method.
         /// </summary>
         ///
@@ -547,7 +547,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync"/>
+        ///   Verifies functionality of the <see cref="EventHubProducerClient.CreateBatchAsync" />
         ///   method.
         /// </summary>
         ///
@@ -647,8 +647,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that when calling <see cref="EventHubProducerClient.SendAsync"/>
-        ///   a <see cref="TransportProducer"/> is taken from a <see cref="TransportProducerPool"/>
+        ///   Verifies that when calling <see cref="EventHubProducerClient.SendAsync" />
+        ///   a <see cref="TransportProducer"/> is taken from a <see cref="TransportProducerPool" />
         ///   when a partition id is specified.
         /// </summary>
         ///
@@ -669,8 +669,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that when calling <see cref="EventHubProducerClient.SendAsync"/> for batches
-        ///   a <see cref="TransportProducer"/> is taken from a <see cref="TransportProducerPool"/> when a partition id is specified.
+        ///   Verifies that when calling <see cref="EventHubProducerClient.SendAsync" /> for batches
+        ///   a <see cref="TransportProducer"/> is taken from a <see cref="TransportProducerPool" /> when a partition id is specified.
         /// </summary>
         ///
         [Test]
@@ -690,7 +690,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that a <see cref="TransportProducerPool.PooledProducer.DisposeAsync()"/> is called
+        ///   Verifies that a <see cref="TransportProducerPool.PooledProducer.DisposeAsync()" /> is called
         ///   to unregister a producer from the pool.
         /// </summary>
         ///
@@ -711,7 +711,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that a <see cref="TransportProducerPool.PooledProducer.DisposeAsync()"/> is called
+        ///   Verifies that a <see cref="TransportProducerPool.PooledProducer.DisposeAsync()" /> is called
         ///   to unregister a producer from the pool.
         /// </summary>
         ///
@@ -732,7 +732,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that a <see cref="EventHubProducerClient"/> retries sending an
+        ///   Verifies that a <see cref="EventHubProducerClient" /> retries sending an
         ///   event if a partition producer returned by the pool was closed due to a race conditions between an
         ///   AMQP operation and a request to close a client.
         /// </summary>
@@ -765,12 +765,10 @@ namespace Azure.Messaging.EventHubs.Tests
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Exactly(EventHubProducerClient.MaximumCreateProducerAttempts));
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(EventHubProducerClient.MaximumCreateProducerAttempts));
         }
 
         /// <summary>
-        ///   Verifies that a <see cref="EventHubProducerClient"/> retries sending an
+        ///   Verifies that a <see cref="EventHubProducerClient" /> retries sending an
         ///   event if a partition producer returned by the pool was closed due to a race conditions between an
         ///   AMQP operation and a request to close a client.
         /// </summary>
@@ -801,8 +799,6 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Exactly(EventHubProducerClient.MaximumCreateProducerAttempts));
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(EventHubProducerClient.MaximumCreateProducerAttempts));
         }
 
         /// <summary>
@@ -962,8 +958,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Once);
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(1));
         }
 
         /// <summary>
@@ -998,8 +992,6 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Once);
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(1));
         }
 
         /// <summary>
@@ -1036,8 +1028,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Once);
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(1));
         }
 
         /// <summary>
@@ -1072,8 +1062,6 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Once);
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(1));
         }
 
         /// <summary>
@@ -1119,8 +1107,6 @@ namespace Azure.Messaging.EventHubs.Tests
                                                       It.IsAny<SendEventOptions>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Exactly(expectedNumberOfCalls));
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(expectedNumberOfCalls));
         }
 
         /// <summary>
@@ -1164,8 +1150,6 @@ namespace Azure.Messaging.EventHubs.Tests
             transportProducer.Verify(t => t.SendAsync(It.IsAny<EventDataBatch>(),
                                                       It.IsAny<CancellationToken>()),
                                      Times.Exactly(expectedNumberOfCalls));
-
-            Assert.That(mockTransportProducerPool.GetTransportProducerCount, Is.EqualTo(expectedNumberOfCalls));
         }
 
         /// <summary>
@@ -1337,12 +1321,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   Allows for observation of operations performed by the producer for testing purposes.
         /// </summary>
         ///
-        private class MockPooledProducer : TransportProducerPool.PooledProducer
+        private class MockPooledProducer: TransportProducerPool.PooledProducer
         {
             public bool WasClosed { get; set; } = false;
 
-            public MockPooledProducer(TransportProducerPool transportProducerPool,
-                                      string partitionId = default) : base(transportProducerPool, partitionId, () => Task.CompletedTask)
+            public MockPooledProducer(TransportProducer transportProducer): base(transportProducer, (_) => Task.CompletedTask)
             {
 
             }
@@ -1363,32 +1346,23 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             public bool WasCalled { get; set; }
 
-            public int GetTransportProducerCount { get; set; }
-
             public MockPooledProducer MockPooledProducer { get; }
 
-            public MockTransportProducerPool(TransportProducer defaultProducer,
+            public MockTransportProducerPool(TransportProducer transportProducer,
                                              ConcurrentDictionary<string, PoolItem> pool = default,
-                                             TimeSpan? expirationInterval = default): base(defaultProducer, pool, expirationInterval)
+                                             TimeSpan? expirationInterval = default): base(transportProducer, pool, expirationInterval)
             {
-                MockPooledProducer = new MockPooledProducer(this);
+                MockPooledProducer = new MockPooledProducer(transportProducer);
             }
 
             public override PooledProducer GetPooledProducer(string partitionId,
+                                                             EventHubConnection connection = null,
+                                                             EventHubsRetryPolicy retryPolicy = null,
                                                              TimeSpan? removeAfterDuration = default)
             {
                 WasCalled = true;
 
                 return MockPooledProducer;
-            }
-
-            public override TransportProducer GetTransportProducer(string partitionId = null,
-                                                                   EventHubConnection connection = null,
-                                                                   EventHubsRetryPolicy retryPolicy = null)
-            {
-                GetTransportProducerCount++;
-
-                return base.GetTransportProducer(partitionId, connection, retryPolicy);
             }
         }
     }

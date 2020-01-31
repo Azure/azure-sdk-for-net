@@ -50,8 +50,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   When a <see cref="TransportProducerPool.PoolItem"/> is requested
-        ///   its <see cref="TransportProducerPool.PoolItem.RemoveAfter"/> will be increased.
+        ///   When a <see cref="TransportProducerPool.PoolItem" /> is requested
+        ///   its <see cref="TransportProducerPool.PoolItem.RemoveAfter" /> will be increased.
         /// </summary>
         ///
         [Test]
@@ -59,6 +59,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             DateTimeOffset oneMinuteAgo = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(1));
             var transportProducer = new ObservableTransportProducerMock();
+            var connection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
             var startingPool = new ConcurrentDictionary<string, TransportProducerPool.PoolItem>
             {
                 // An expired item in the pool
@@ -67,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
 
             // This call should refresh the timespan associated to the item
-            _ = transportProducerPool.GetPooledProducer("0");
+            _ = transportProducerPool.GetPooledProducer("0", connection, retryPolicy);
 
             // The expiration call back should not remove the item
             GetExpirationCallBack(transportProducerPool).Invoke(null);
@@ -76,8 +78,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   When a <see cref="TransportProducerPool.PooledProducer"/> is disposed, the <see cref="TimeSpan"/>
-        ///   of the associated <see cref="TransportProducerPool.PoolItem"/> is increased.
+        ///   When a <see cref="TransportProducerPool.PooledProducer" /> is disposed, the <see cref="TimeSpan"/>
+        ///   of the associated <see cref="TransportProducerPool.PoolItem" /> is increased.
         /// </summary>
         ///
         [Test]
@@ -89,10 +91,12 @@ namespace Azure.Messaging.EventHubs.Tests
                 ["0"] = new TransportProducerPool.PoolItem("0", transportProducer)
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer);
+            var connection = new MockConnection(() => transportProducer);
+            var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
             var expectedTime = DateTimeOffset.UtcNow.AddMinutes(10);
             var expectedRemoveAfter = Is.InRange(expectedTime.AddMinutes(-1), expectedTime.AddMinutes(1));
 
-            await using var pooledProducer = transportProducerPool.GetPooledProducer("0");
+            await using var pooledProducer = transportProducerPool.GetPooledProducer("0", connection, retryPolicy);
 
             // This call should refresh the timespan associated to an item in the pool
             await pooledProducer.DisposeAsync();
@@ -118,7 +122,7 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
 
-            var pooledProducer = transportProducerPool.GetPooledProducer("0");
+            var pooledProducer = transportProducerPool.GetPooledProducer("0", connection, retryPolicy);
             startingPool.TryGetValue("0", out var poolItem);
 
             await using (pooledProducer)
@@ -130,7 +134,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   It is possible to configure how long a <see cref="TransportProducerPool.PoolItem"/> should sit in memory.
+        ///   It is possible to configure how long a <see cref="TransportProducerPool.PoolItem" /> should sit in memory.
         /// </summary>
         ///
         [Test]
@@ -145,11 +149,10 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(transportProducer, startingPool);
 
-            var pooledProducer = transportProducerPool.GetPooledProducer("0", TimeSpan.FromMinutes(-1));
+            var pooledProducer = transportProducerPool.GetPooledProducer("0", connection, retryPolicy, TimeSpan.FromMinutes(-1));
 
             await using (var _ = pooledProducer.ConfigureAwait(false))
             {
-                pooledProducer.GetTransportProducer(connection, retryPolicy);
             };
 
             GetExpirationCallBack(transportProducerPool).Invoke(null);
@@ -158,7 +161,7 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   The <see cref="TransportProducerPool"/> returns the right <see cref="TransportProducer"/>
+        ///   The <see cref="TransportProducerPool"/> returns the right <see cref="TransportProducer" />
         ///   matching the righ partition id.
         /// </summary>
         ///

@@ -409,7 +409,7 @@ namespace Azure.Messaging.EventHubs.Producer
             events = events.ToList();
             InstrumentMessages(events);
 
-            TransportProducerPool.PooledProducer pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
+            TransportProducerPool.PooledProducer pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
             TransportProducer activeProducer = null;
 
             while (!cancellationToken.IsCancellationRequested
@@ -420,7 +420,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     await using var _ = pooledProducer.ConfigureAwait(false);
 
-                    activeProducer = pooledProducer.GetTransportProducer(Connection, RetryPolicy);
+                    activeProducer = pooledProducer.TransportProducer;
 
                     await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
 
@@ -435,7 +435,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         throw;
                     }
 
-                    pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
+                    pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
                 }
                 catch (Exception ex)
                 {
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Producer
             bool isMessageSent = false;
             using DiagnosticScope scope = CreateDiagnosticScope();
 
-            var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
+            var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
             TransportProducer activeProducer = null;
 
             while (!cancellationToken.IsCancellationRequested
@@ -481,7 +481,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     await using var _ = pooledProducer.ConfigureAwait(false);
 
-                    activeProducer = pooledProducer.GetTransportProducer(Connection, RetryPolicy);
+                    activeProducer = pooledProducer.TransportProducer;
 
                     await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
 
@@ -496,7 +496,7 @@ namespace Azure.Messaging.EventHubs.Producer
                         throw;
                     }
 
-                    pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
+                    pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, Connection, RetryPolicy, PartitionProducerLifespan);
                 }
                 catch (Exception ex)
                 {

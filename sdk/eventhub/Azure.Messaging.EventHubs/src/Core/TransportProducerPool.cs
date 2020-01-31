@@ -70,6 +70,8 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
+        /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
         /// <param name="removeAfterDuration">The period of inactivity after which a <see cref="PoolItem" /> will become eligible for eviction. Overrides <see cref="PoolItem.DefaultRemoveAfterDuration" />.</param>
         ///
         /// <returns>A <see cref="PooledProducer" /> mapping to the partition id passed in as parameter.</returns>
@@ -79,16 +81,22 @@ namespace Azure.Messaging.EventHubs.Core
         ///   after it is returned and the caller may want to handle that scenario.
         /// </remarks>
         ///
-        public virtual PooledProducer GetPooledProducer(string partitionId = default,
+        public virtual PooledProducer GetPooledProducer(string partitionId,
+                                                        EventHubConnection connection,
+                                                        EventHubsRetryPolicy retryPolicy,
                                                         TimeSpan? removeAfterDuration = default)
         {
+            Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
+
             if (string.IsNullOrEmpty(partitionId))
             {
-                return new PooledProducer(this);
+                return new PooledProducer(EventHubProducer);
             }
 
             var identifier = Guid.NewGuid().ToString();
-            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId));
+
+            var item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, connection.CreateTransportProducer(id, retryPolicy), removeAfterDuration));
 
             // A race condition at this point may end with CloseAsync called on
             // the returned PoolItem if it had expired. The probability is very low and
@@ -97,14 +105,16 @@ namespace Azure.Messaging.EventHubs.Core
             if (item.PartitionProducer?.IsClosed == true || !item.ActiveInstances.TryAdd(identifier, 0))
             {
                 identifier = Guid.NewGuid().ToString();
-                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId));
+                item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, connection.CreateTransportProducer(id, retryPolicy), removeAfterDuration));
                 item.ActiveInstances.TryAdd(identifier, 0);
             }
 
             item.ExtendRemoveAfter(removeAfterDuration);
 
-            return new PooledProducer(this, partitionId, cleanUp: () =>
+            return new PooledProducer(item.PartitionProducer, cleanUp: producer =>
             {
+                Argument.AssertNotNull(producer, nameof(producer));
+
                 if (Pool.TryGetValue(partitionId, out PoolItem pooledItem))
                 {
                     pooledItem.ExtendRemoveAfter(removeAfterDuration);
@@ -122,7 +132,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                 if (!Pool.TryGetValue(partitionId, out _) && !item.ActiveInstances.Any())
                 {
-                    return item.PartitionProducer?.CloseAsync(CancellationToken.None);
+                    return producer.CloseAsync(CancellationToken.None);
                 }
 
                 return Task.CompletedTask;
@@ -154,7 +164,7 @@ namespace Azure.Messaging.EventHubs.Core
 
             if (Pool.TryGetValue(partitionId, out var poolItem))
             {
-                return poolItem.GetTransportProducer(connection, retryPolicy);
+                return poolItem.PartitionProducer;
             }
 
             return null;
@@ -269,26 +279,6 @@ namespace Azure.Messaging.EventHubs.Core
             }
 
             /// <summary>
-            ///   Creates a <see cref="TransportProducer" /> matching the <see cref="PartitionId" />.
-            /// </summary>
-            ///
-            /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
-            /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
-            ///
-            /// <returns>A <see cref="TransportProducer" /> matching the <see cref="PartitionId" />.</returns>
-            ///
-            public TransportProducer GetTransportProducer(EventHubConnection connection,
-                                                          EventHubsRetryPolicy retryPolicy)
-            {
-                if (PartitionProducer == null || PartitionProducer.IsClosed)
-                {
-                    PartitionProducer = connection.CreateTransportProducer(PartitionId, retryPolicy);
-                }
-
-                return PartitionProducer;
-            }
-
-            /// <summary>
             ///   Initializes a new instance of the <see cref="PoolItem" /> class with a default timespan of <see cref="DefaultRemoveAfterDuration" />.
             /// </summary>
             ///
@@ -298,11 +288,12 @@ namespace Azure.Messaging.EventHubs.Core
             /// <param name="removeAfter">The UTC date and time when a <see cref="PoolItem" /> will become eligible for eviction.</param>
             ///
             public PoolItem(string partitionId,
-                            TransportProducer partitionProducer = default,
+                            TransportProducer partitionProducer,
                             TimeSpan? removeAfterDuration = default,
                             DateTimeOffset? removeAfter = default)
             {
-                Argument.AssertNotNull(partitionId, nameof(partitionId));
+                Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
+                Argument.AssertNotNull(partitionProducer, nameof(partitionProducer));
 
                 PartitionProducer = partitionProducer;
                 PartitionId = partitionId;
@@ -328,52 +319,29 @@ namespace Azure.Messaging.EventHubs.Core
             ///   A function responsible of cleaning up the resources in use.
             /// </summary>
             ///
-            private Func<Task> CleanUp { get; }
+            private Func<TransportProducer, Task> CleanUp { get; }
 
             /// <summary>
-            ///   The <see cref="Core.TransportProducerPool" /> that is associated with the current <see cref="PooledProducer" />.
+            ///   An abstracted Event Hub transport-specific producer that is associated with the
+            ///   Event Hub gateway or a specific partition.
             /// </summary>
             ///
-            public TransportProducerPool TransportProducerPool { get; }
-
-            /// <summary>
-            ///   The unique identifier of a partition associated with the Event Hub.
-            /// </summary>
-            ///
-            public string PartitionId { get; set; }
+            public TransportProducer TransportProducer { get; }
 
             /// <summary>
             ///   Initializes a new instance of the <see cref="PooledProducer" /> class.
             /// </summary>
             ///
-            /// <param name="transportProducerPool">An Event Hub transport-specific producer specific to a given partition.</param>
-            /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
+            /// <param name="transportProducer">An abstracted Event Hub transport-specific producer that is associated with the Event Hub gateway or a specific partition.</param>
             /// <param name="cleanUp">The function responsible of cleaning up the resources in use.</param>
             ///
-            public PooledProducer(TransportProducerPool transportProducerPool,
-                                  string partitionId = default,
-                                  Func<Task> cleanUp = default)
+            public PooledProducer(TransportProducer transportProducer,
+                                  Func<TransportProducer, Task> cleanUp = default)
             {
-                Argument.AssertNotNull(transportProducerPool, nameof(transportProducerPool));
+                Argument.AssertNotNull(transportProducer, nameof(transportProducer));
 
-                TransportProducerPool = transportProducerPool;
+                TransportProducer = transportProducer;
                 CleanUp = cleanUp;
-                PartitionId = partitionId;
-            }
-
-            /// <summary>
-            ///   Creates a <see cref="TransportProducer" /> matching the partition id passed as input.
-            /// </summary>
-            ///
-            /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
-            /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
-            ///
-            /// <returns>A <see cref="TransportProducer" /> matching the partition id passed as input.</returns>
-            ///
-            public TransportProducer GetTransportProducer(EventHubConnection connection,
-                                                          EventHubsRetryPolicy retryPolicy)
-            {
-                return TransportProducerPool.GetTransportProducer(PartitionId, connection, retryPolicy);
             }
 
             /// <summary>
@@ -386,7 +354,7 @@ namespace Azure.Messaging.EventHubs.Core
             {
                 if (CleanUp != null)
                 {
-                    return new ValueTask(CleanUp());
+                    return new ValueTask(CleanUp(TransportProducer));
                 }
 
                 return new ValueTask(Task.CompletedTask);
