@@ -4,10 +4,9 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The predicted sentiment for a given span of text.
+    /// The predicted sentiment label for a given span of text.
     /// </summary>
-    #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
-    public enum TextSentimentClass
+    public enum TextSentimentLabel
     #pragma warning restore
     {
         /// <summary>

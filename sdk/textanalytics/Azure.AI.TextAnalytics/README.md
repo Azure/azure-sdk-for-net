@@ -127,12 +127,12 @@ Run a Text Analytics predictive model to identify the positive, negative, neutra
 string input = "That was the best day of my life!";
 
 AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
-TextSentiment sentiment = result.DocumentSentiment;
+DocumentSentiment docSentiment = result.DocumentSentiment;
 
-Console.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
-Console.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-Console.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
-Console.WriteLine($"    Negative score: {sentiment.NegativeScore:0.00}.");
+Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with scores: ");
+Console.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");
+Console.WriteLine($"    Neutral score: {docSentiment.SentimentScores.Neutral:0.00}.");
+Console.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0.00}.");
 ```
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
