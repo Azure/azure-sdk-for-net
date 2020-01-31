@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             #region Snippet:TextAnalyticsSample1DetectLanguagesConvenience
-            DetectLanguageResultCollection results = client.DetectLanguages(inputs);
+            DetectLanguageResultCollection results = client.DetectLanguage(inputs);
             #endregion
 
             int i = 0;

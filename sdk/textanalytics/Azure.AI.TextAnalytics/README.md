@@ -156,36 +156,36 @@ foreach (string keyPhrase in keyPhrases)
 Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
 ### Recognize Entities
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into types such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Types](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
+Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
 
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 RecognizeEntitiesResult result = client.RecognizeEntities(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
 
 ### Recognize PII Entities
-Run a predictive model to identify a collection of entities containing personally identifiable information found in the passed-in input text or batch of input text documents, and categorize those entities into types such as US social security number, drivers license number, or credit card number.
+Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in input text or batch of input text documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
 
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
 RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
@@ -223,18 +223,18 @@ Console.WriteLine($"Detected language {language.Name} with confidence {language.
 ```
 
 ### Recognize Entities Asynchronously
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into types such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Types](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
+Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
 
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
@@ -304,9 +304,9 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Sample4_DetectLanguageAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
 
 ### Recognize PII Entities
-* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing personally identifiable information in a single text input.
-* [Sample5_DetectLanguageBatchConvenience.cs][recognize_pii_entities_sample1] - Recognize entities containing personally identifiable information in each input in a collection of text input strings.
-* [Sample5_DetectLanguageBatch.cs][recognize_pii_entities_sample2] - Recognize entities containing personally identifiable information in each input in a collection of text document inputs.
+* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a single text input.
+* [Sample5_DetectLanguageBatchConvenience.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information in each input in a collection of text input strings.
+* [Sample5_DetectLanguageBatch.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each input in a collection of text document inputs.
 
 ### Recognize Linked Entities
 * [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a single text input.

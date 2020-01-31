@@ -13,18 +13,18 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyC
 
 ## Recognizing entities in a single input
 
-To recognize entities in a single text input, pass the input string to the client's `RecognizeEntities` method.  The returned `RecognizeEntitiesResult` contains a collection of `NamedEntities` that were recognized in the input text.
+To recognize entities in a single text input, pass the input string to the client's `RecognizeEntities` method.  The returned `RecognizeEntitiesResult` contains a collection of `CategorizedEntity` that were recognized in the input text.
 
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 RecognizeEntitiesResult result = client.RecognizeEntities(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
