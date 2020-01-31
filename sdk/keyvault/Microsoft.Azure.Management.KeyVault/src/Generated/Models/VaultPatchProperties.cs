@@ -48,8 +48,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// whether Azure Resource Manager is permitted to retrieve secrets
         /// from the key vault.</param>
         /// <param name="enableSoftDelete">Property to specify whether the
-        /// 'soft delete' functionality is enabled for this key vault. It does
-        /// not accept false value.</param>
+        /// 'soft delete' functionality is enabled for this key vault. If
+        /// omitted, assume true as default value. Once set to true, cannot be
+        /// reverted to false.</param>
         /// <param name="createMode">The vault's create mode to indicate
         /// whether the vault need to be recovered or not. Possible values
         /// include: 'recover', 'default'</param>
@@ -127,8 +128,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
 
         /// <summary>
         /// Gets or sets property to specify whether the 'soft delete'
-        /// functionality is enabled for this key vault. It does not accept
-        /// false value.
+        /// functionality is enabled for this key vault. If omitted, assume
+        /// true as default value. Once set to true, cannot be reverted to
+        /// false.
         /// </summary>
         [JsonProperty(PropertyName = "enableSoftDelete")]
         public bool? EnableSoftDelete { get; set; }
