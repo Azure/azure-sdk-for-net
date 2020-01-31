@@ -420,9 +420,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     await using var _ = pooledProducer.ConfigureAwait(false);
 
-                    activeProducer = pooledProducer.TransportProducer;
-
-                    await activeProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
+                    await pooledProducer.TransportProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
 
                     isMessageSent = true;
                 }
@@ -481,9 +479,7 @@ namespace Azure.Messaging.EventHubs.Producer
                 {
                     await using var _ = pooledProducer.ConfigureAwait(false);
 
-                    activeProducer = pooledProducer.TransportProducer;
-
-                    await activeProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
+                    await pooledProducer.TransportProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
 
                     isMessageSent = true;
                 }
