@@ -42,6 +42,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="billingProfileId">Billing profile Id.</param>
         /// <param name="billingProfileDisplayName">Billing profile display
         /// name.</param>
+        /// <param name="billingProfileStatus">The status of the billing
+        /// profile.</param>
+        /// <param name="billingProfileStatusReasonCode">Reason for the
+        /// specified billing profile status.</param>
+        /// <param name="billingProfileSpendingLimit">The billing profile
+        /// spending limit.</param>
         /// <param name="costCenter">Cost center name.</param>
         /// <param name="invoiceSectionId">Invoice Section Id.</param>
         /// <param name="invoiceSectionDisplayName">Invoice Section display
@@ -50,7 +56,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="productName">Product name.</param>
         /// <param name="skuId">SKU Id.</param>
         /// <param name="skuDescription">SKU description.</param>
-        public BillingProperty(string id = default(string), string name = default(string), string type = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string costCenter = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string productId = default(string), string productName = default(string), string skuId = default(string), string skuDescription = default(string))
+        public BillingProperty(string id = default(string), string name = default(string), string type = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), object billingProfileStatus = default(object), object billingProfileStatusReasonCode = default(object), object billingProfileSpendingLimit = default(object), string costCenter = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string productId = default(string), string productName = default(string), string skuId = default(string), string skuDescription = default(string))
             : base(id, name, type)
         {
             BillingTenantId = billingTenantId;
@@ -58,6 +64,9 @@ namespace Microsoft.Azure.Management.Billing.Models
             BillingAccountDisplayName = billingAccountDisplayName;
             BillingProfileId = billingProfileId;
             BillingProfileDisplayName = billingProfileDisplayName;
+            BillingProfileStatus = billingProfileStatus;
+            BillingProfileStatusReasonCode = billingProfileStatusReasonCode;
+            BillingProfileSpendingLimit = billingProfileSpendingLimit;
             CostCenter = costCenter;
             InvoiceSectionId = invoiceSectionId;
             InvoiceSectionDisplayName = invoiceSectionDisplayName;
@@ -102,6 +111,24 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the billing profile.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingProfileStatus")]
+        public object BillingProfileStatus { get; private set; }
+
+        /// <summary>
+        /// Gets reason for the specified billing profile status.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingProfileStatusReasonCode")]
+        public object BillingProfileStatusReasonCode { get; private set; }
+
+        /// <summary>
+        /// Gets the billing profile spending limit.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.billingProfileSpendingLimit")]
+        public object BillingProfileSpendingLimit { get; private set; }
 
         /// <summary>
         /// Gets cost center name.
