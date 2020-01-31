@@ -114,8 +114,7 @@ Run a Text Analytics predictive model to determine the language that the passed-
 ```C# Snippet:DetectLanguage
 string input = "Este documento está en español.";
 
-DetectLanguageResult result = client.DetectLanguage(input);
-DetectedLanguage language = result.PrimaryLanguage;
+DetectedLanguage language = client.DetectLanguage(input);
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
 ```
@@ -129,8 +128,7 @@ Run a Text Analytics predictive model to identify the positive, negative, neutra
 ```C# Snippet:AnalyzeSentiment
 string input = "That was the best day of my life!";
 
-AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
-DocumentSentiment docSentiment = result.DocumentSentiment;
+DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
 
 Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with scores: ");
 Console.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");
@@ -147,8 +145,8 @@ Run a model to identify a collection of significant phrases found in the passed-
 ```C# Snippet:ExtractKeyPhrases
 string input = "My cat might need to see a veterinarian.";
 
-ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
-IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
+IReadOnlyCollection<string> keyPhrases = response.Value;
 
 Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
 foreach (string keyPhrase in keyPhrases)
@@ -166,8 +164,8 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-RecognizeEntitiesResult result = client.RecognizeEntities(input);
-IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
+Response<IReadOnlyCollection<CategorizedEntity>> response = client.RecognizeEntities(input);
+IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (CategorizedEntity entity in entities)
@@ -185,8 +183,8 @@ Run a predictive model to identify a collection of entities containing Personall
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
-IReadOnlyCollection<PiiEntity> entities = result.Entities;
+Response<IReadOnlyCollection<PiiEntity>> response = client.RecognizePiiEntities(input);
+IReadOnlyCollection<PiiEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
@@ -203,10 +201,11 @@ Run a predictive model to identify a collection of entities found in the passed-
 ```C# Snippet:RecognizeLinkedEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-RecognizeLinkedEntitiesResult result = client.RecognizeLinkedEntities(input);
+Response<IReadOnlyCollection<LinkedEntity>> response = client.RecognizeLinkedEntities(input);
+IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
 
-Console.WriteLine($"Extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
-foreach (LinkedEntity linkedEntity in result.LinkedEntities)
+Console.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
+foreach (LinkedEntity linkedEntity in linkedEntities)
 {
     Console.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
@@ -225,8 +224,7 @@ Run a Text Analytics predictive model to determine the language that the passed-
 ```C# Snippet:DetectLanguageAsync
 string input = "Este documento está en español.";
 
-DetectLanguageResult result = await client.DetectLanguageAsync(input);
-DetectedLanguage language = result.PrimaryLanguage;
+DetectedLanguage language = await client.DetectLanguageAsync(input);
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
 ```
@@ -237,8 +235,8 @@ Run a predictive model to identify a collection of named entities in the passed-
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
+Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(input);
+IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (CategorizedEntity entity in entities)
@@ -257,7 +255,7 @@ For example, if you submit a batch of text document inputs containing duplicate 
 ```C# Snippet:BadRequest
 try
 {
-    DetectLanguageResult result = client.DetectLanguage(input);
+    DetectedLanguage result = client.DetectLanguage(input);
 }
 catch (RequestFailedException e)
 {

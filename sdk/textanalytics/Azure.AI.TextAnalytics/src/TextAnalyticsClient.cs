@@ -127,7 +127,7 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<DetectLanguageResult>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectedLanguage>> DetectLanguageAsync(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -146,12 +146,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         DetectLanguageResultCollection result = await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].ErrorMessage != default)
+                        if (result[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, result[0].ErrorMessage).ConfigureAwait(false);
+                            TextAnalyticsError error = result[0].Error;
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue(result[0], response);
+                        return Response.FromValue(result[0].PrimaryLanguage, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -184,7 +185,7 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<DetectLanguageResult> DetectLanguage(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
+        public virtual Response<DetectedLanguage> DetectLanguage(string inputText, string countryHint = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -203,12 +204,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         DetectLanguageResultCollection result = CreateDetectLanguageResponse(response, map);
-                        if (result[0].ErrorMessage != default)
+                        if (result[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw _clientDiagnostics.CreateRequestFailedException(response, result[0].ErrorMessage);
+                            TextAnalyticsError error = result[0].Error;
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue(result[0], response);
+                        return Response.FromValue(result[0].PrimaryLanguage, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -406,7 +408,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizeEntitiesResult>> RecognizeEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyCollection<CategorizedEntity>>> RecognizeEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -425,12 +427,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizeEntitiesResultCollection results = await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, results[0].ErrorMessage).ConfigureAwait(false);
+                            TextAnalyticsError error = results[0].Error;
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue(results[0], response);
+                        return Response.FromValue((IReadOnlyCollection<CategorizedEntity>)results[0].Entities, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -464,7 +467,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizeEntitiesResult> RecognizeEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyCollection<CategorizedEntity>> RecognizeEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -483,12 +486,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizeEntitiesResultCollection results = CreateRecognizeEntitiesResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
+                            TextAnalyticsError error = results[0].Error;
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue(results[0], response);
+                        return Response.FromValue((IReadOnlyCollection<CategorizedEntity>)results[0].Entities, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -689,7 +693,7 @@ namespace Azure.AI.TextAnalytics
         /// and each of the sentences it contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<AnalyzeSentimentResult>> AnalyzeSentimentAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DocumentSentiment>> AnalyzeSentimentAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -708,12 +712,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         AnalyzeSentimentResultCollection results = await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, results[0].ErrorMessage).ConfigureAwait(false);
+                            TextAnalyticsError error = results[0].Error;
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue(results[0], response);
+                        return Response.FromValue(results[0].DocumentSentiment, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -744,7 +749,7 @@ namespace Azure.AI.TextAnalytics
         /// and each of the sentences it contains.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<AnalyzeSentimentResult> AnalyzeSentiment(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<DocumentSentiment> AnalyzeSentiment(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -763,12 +768,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         AnalyzeSentimentResultCollection results = CreateAnalyzeSentimentResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
+                            TextAnalyticsError error = results[0].Error;
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue(results[0], response);
+                        return Response.FromValue(results[0].DocumentSentiment, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -956,7 +962,7 @@ namespace Azure.AI.TextAnalytics
         /// in the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<ExtractKeyPhrasesResult>> ExtractKeyPhrasesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyCollection<string>>> ExtractKeyPhrasesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -974,13 +980,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        ExtractKeyPhrasesResultCollection result = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].ErrorMessage != default)
+                        ExtractKeyPhrasesResultCollection results = await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, result[0].ErrorMessage).ConfigureAwait(false);
+                            TextAnalyticsError error = results[0].Error;
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue(result[0], response);
+                        return Response.FromValue((IReadOnlyCollection<string>)results[0].KeyPhrases, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1010,7 +1017,7 @@ namespace Azure.AI.TextAnalytics
         /// in the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<ExtractKeyPhrasesResult> ExtractKeyPhrases(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyCollection<string>> ExtractKeyPhrases(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -1028,13 +1035,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        ExtractKeyPhrasesResultCollection result = CreateKeyPhraseResponse(response, map);
-                        if (result[0].ErrorMessage != default)
+                        ExtractKeyPhrasesResultCollection results = CreateKeyPhraseResponse(response, map);
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw _clientDiagnostics.CreateRequestFailedException(response, result[0].ErrorMessage);
+                            TextAnalyticsError error = results[0].Error;
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue(result[0], response);
+                        return Response.FromValue((IReadOnlyCollection<string>)results[0].KeyPhrases, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1221,7 +1229,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizePiiEntitiesResult>> RecognizePiiEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyCollection<PiiEntity>>> RecognizePiiEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -1240,12 +1248,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizePiiEntitiesResultCollection results = await CreateRecognizePiiEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, results[0].ErrorMessage).ConfigureAwait(false);
+                            TextAnalyticsError error = results[0].Error;
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue(results[0], response);
+                        return Response.FromValue((IReadOnlyCollection<PiiEntity>)results[0].Entities, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1278,7 +1287,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizePiiEntitiesResult> RecognizePiiEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyCollection<PiiEntity>> RecognizePiiEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -1297,12 +1306,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizePiiEntitiesResultCollection results = CreateRecognizePiiEntitiesResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
+                            TextAnalyticsError error = results[0].Error;
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue(results[0], response);
+                        return Response.FromValue((IReadOnlyCollection<PiiEntity>)results[0].Entities, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1500,7 +1510,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<RecognizeLinkedEntitiesResult>> RecognizeLinkedEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyCollection<LinkedEntity>>> RecognizeLinkedEntitiesAsync(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -1518,13 +1528,14 @@ namespace Azure.AI.TextAnalytics
                 {
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
-                        RecognizeLinkedEntitiesResultCollection result = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
-                        if (result[0].ErrorMessage != default)
+                        RecognizeLinkedEntitiesResultCollection results = await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, result[0].ErrorMessage).ConfigureAwait(false);
+                            TextAnalyticsError error = results[0].Error;
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, error.Message, error.Code, CreateAdditionalInformation(error)).ConfigureAwait(false);
                         }
-                        return Response.FromValue(result[0], response);
+                        return Response.FromValue((IReadOnlyCollection<LinkedEntity>)results[0].Entities, response);
                     default:
                         throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
@@ -1556,7 +1567,7 @@ namespace Azure.AI.TextAnalytics
         /// that the entity correctly matches the identified substring.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<RecognizeLinkedEntitiesResult> RecognizeLinkedEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyCollection<LinkedEntity>> RecognizeLinkedEntities(string inputText, string language = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputText, nameof(inputText));
 
@@ -1575,12 +1586,13 @@ namespace Azure.AI.TextAnalytics
                     case 200:
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         RecognizeLinkedEntitiesResultCollection results = CreateLinkedEntityResponse(response, map);
-                        if (results[0].ErrorMessage != default)
+                        if (results[0].HasError)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
+                            TextAnalyticsError error = results[0].Error;
+                            throw _clientDiagnostics.CreateRequestFailedException(response, error.Message, error.Code, CreateAdditionalInformation(error));
                         }
-                        return Response.FromValue(results[0], response);
+                        return Response.FromValue((IReadOnlyCollection<LinkedEntity>)results[0].Entities, response);
                     default:
                         throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
@@ -1814,6 +1826,13 @@ namespace Azure.AI.TextAnalytics
             request.Content = RequestContent.Create(content);
 
             return request;
+        }
+
+        private IDictionary<string,string> CreateAdditionalInformation(TextAnalyticsError error)
+        {
+            if (string.IsNullOrEmpty(error.Target))
+                return null;
+            return new Dictionary<string, string> { { "Target", error.Target } };
         }
         #endregion
     }

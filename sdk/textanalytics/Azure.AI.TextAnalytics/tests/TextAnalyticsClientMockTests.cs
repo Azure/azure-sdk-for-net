@@ -87,8 +87,8 @@ namespace Azure.AI.TextAnalytics.Tests
                     new CategorizedEntity("EntityText0", "EntityCategory0", "EntitySubCategory0", 0, 1, 0.5),
                     new CategorizedEntity("EntityText1", "EntityCategory1", "EntitySubCategory1", 0, 1, 0.5),
                 }),
-                new RecognizeEntitiesResult("4", "Document is invalid."),
-                new RecognizeEntitiesResult("5", "Document is invalid."),
+                new RecognizeEntitiesResult("4", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
+                new RecognizeEntitiesResult("5", new TextAnalyticsError("InvalidDocument", "Document is invalid.")),
             };
             var mockResultCollection = new RecognizeEntitiesResultCollection(mockResults,
                 new TextDocumentBatchStatistics(2, 2, 2, 2),
@@ -125,7 +125,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 foreach (var result in resultCollection)
                 {
-                    if (result.Entities.Count > 0)
+                    if (!result.HasError)
                     {
                         json.WriteStartObject();
                         json.WriteString("id", result.Id);
@@ -149,17 +149,17 @@ namespace Azure.AI.TextAnalytics.Tests
             json.WriteEndArray();
 
             json.WriteStartArray("errors");
-            if (resultCollection.FirstOrDefault(r => r.ErrorMessage != default) != default)
+            if (resultCollection.FirstOrDefault(r => r.HasError) != default)
             {
                 foreach (var result in resultCollection)
                 {
-                    if (result.ErrorMessage != null)
+                    if (result.HasError)
                     {
                         json.WriteStartObject();
                         json.WriteString("id", result.Id);
                         json.WriteStartObject("error");
                         json.WriteStartObject("innerError");
-                        json.WriteString("message", result.ErrorMessage);
+                        json.WriteString("message", result.Error.Message);
                         json.WriteEndObject();
                         json.WriteEndObject();
                         json.WriteEndObject();

@@ -19,8 +19,8 @@ To extract key phrases from a single text input, pass the input string to the cl
 ```C# Snippet:ExtractKeyPhrases
 string input = "My cat might need to see a veterinarian.";
 
-ExtractKeyPhrasesResult result = client.ExtractKeyPhrases(input);
-IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
+IReadOnlyCollection<string> keyPhrases = response.Value;
 
 Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
 foreach (string keyPhrase in keyPhrases)
