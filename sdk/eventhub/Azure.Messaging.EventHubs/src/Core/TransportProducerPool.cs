@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventHubs.Core
             // the returned PoolItem if it had expired. The probability is very low and
             // possible exceptions should be handled by the invoking methods.
 
-            if (item.PartitionProducer?.IsClosed == true || !item.ActiveInstances.TryAdd(identifier, 0))
+            if (item.PartitionProducer.IsClosed == true || !item.ActiveInstances.TryAdd(identifier, 0))
             {
                 identifier = Guid.NewGuid().ToString();
                 item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, connection.CreateTransportProducer(id, retryPolicy), removeAfterDuration));
@@ -127,7 +127,7 @@ namespace Azure.Messaging.EventHubs.Core
 
                 item.ActiveInstances.TryRemove(identifier, out _);
 
-                // The second TryGet runs after the extension would have been seen, so it
+                // The second TryGetValue runs after the extension would have been seen, so it
                 // is intended to be sure that the item wasn't removed in the meantime.
 
                 if (!Pool.TryGetValue(partitionId, out _) && !item.ActiveInstances.Any())
@@ -144,14 +144,10 @@ namespace Azure.Messaging.EventHubs.Core
         /// </summary>
         ///
         /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="connection">The <see cref="EventHubConnection" /> connection to use for communication with the Event Hubs service.</param>
-        /// <param name="retryPolicy">The policy to use for determining retry behavior for when an operation fails.</param>
         ///
         /// <returns>A <see cref="TransportProducer" /> matching the partition id passed as input.</returns>
         ///
-        public virtual TransportProducer GetTransportProducer(string partitionId = default,
-                                                              EventHubConnection connection = default,
-                                                              EventHubsRetryPolicy retryPolicy = default)
+        public virtual TransportProducer GetTransportProducer(string partitionId = default)
         {
             // Determine the transport producer to delegate the send operation to.  Because sending to a specific
             // partition requires a dedicated client, use (or create) that client if a partition was specified.  Otherwise
@@ -191,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Core
 
             foreach (var poolItem in Pool.Values)
             {
-                pendingCloses.Add(poolItem.PartitionProducer?.CloseAsync(CancellationToken.None));
+                pendingCloses.Add(poolItem.PartitionProducer.CloseAsync(CancellationToken.None));
             }
 
             Pool.Clear();
@@ -218,7 +214,7 @@ namespace Azure.Messaging.EventHubs.Core
                 {
                     if (Pool.TryGetValue(key, out var poolItem))
                     {
-                        if (poolItem.RemoveAfter <= now && poolItem.PartitionProducer != null)
+                        if (poolItem.RemoveAfter <= now)
                         {
                             if (Pool.TryRemove(key, out var _) && !poolItem.ActiveInstances.Any())
                             {
@@ -310,7 +306,7 @@ namespace Azure.Messaging.EventHubs.Core
         }
 
         /// <summary>
-        ///   A class wrapping a <see cref="Core.TransportProducerPool" />, triggering a clean-up when the object is disposed.
+        ///   A class wrapping a <see cref="Core.TransportProducer" />, triggering a clean-up when the object is disposed.
         /// </summary>
         ///
         internal class PooledProducer: IAsyncDisposable
@@ -352,7 +348,7 @@ namespace Azure.Messaging.EventHubs.Core
             ///
             public virtual ValueTask DisposeAsync()
             {
-                if (CleanUp != null)
+                if (CleanUp != default)
                 {
                     return new ValueTask(CleanUp(TransportProducer));
                 }
