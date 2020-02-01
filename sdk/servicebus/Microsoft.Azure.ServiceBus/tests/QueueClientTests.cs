@@ -71,19 +71,46 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var queueName = "josh";
             var connString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
 
-            var messageSender = new MessageReceiver(connString, queueName);
-            IList<Message> messages = await messageSender.PeekAsync(maxMessageCount: 10);
+            var messageSender = new MessageSender(connString, queueName);
+            Message message = GetMessage();
+            long sequenceNumber = await messageSender.ScheduleMessageAsync(message, DateTimeOffset.Now.AddDays(1));
 
+            var messageReceiver = new MessageReceiver(connString, queueName);
+            Message message = await messageReceiver.ReceiveAsync();
+
+            IList<long> deferredSequences = new List<long>();
+            foreach (Message message in messages)
+            {
+                if (SomeDeferralLogic(message))
+                {
+                    deferredSequences.Add(message.SystemProperties.SequenceNumber);
+                    await messageReceiver.DeferAsync(message.SystemProperties.LockToken);
+                }
+            }
+
+            // later on
+            messages = await messageReceiver.ReceiveDeferredMessageAsync(deferredSequences)
+
+            Message message = GetMessage();
 
             var topicName = "joshtopic";
             var topicClient = new TopicClient(connString, topicName);
             ServiceBusConnection connection = topicClient.ServiceBusConnection;
-            var queueClient = new QueueClient(connection, queueName);
+            var queueClient = new QueueClient(connString, queueName);
+            
+            Message message = GetMessage();
+            long sequenceNumber = await queueClient.ScheduleMessageAsync(message, DateTimeOffset.Now.AddDays(1));
+
+            await queueClient.CancelScheduledMessageAsync(sequenceNumber);
             queueClient.CompleteAsync()
             var sessionId = "1";
 
             var sessionClient = new SessionClient(connString, queueName);
-            var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
+            IMessageSession sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
+            var state = "some state";
+            await sessionReceiver.SetStateAsync(state.GetBytes());
+            byte[] receivedState = await sessionReceiver.GetStateAsync();
+
             Message receivedMessage = await sessionReceiver.ReceiveAsync();
             await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
 
@@ -102,6 +129,38 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             // Register the function that will process messages
             queueClient.RegisterSessionHandler(ProcessMessagesAsync, sessionHandlerOptions);
+
+            await TestUtility.SendMessagesAsync(messageSender, messageCount);
+
+            // Receive messages
+            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
+
+            var message = receivedMessages.First();
+            var firstLockedUntilUtcTime = message.SystemProperties.LockedUntilUtc;
+            TestUtility.Log($"MessageLockedUntil: {firstLockedUntilUtcTime}");
+
+            TestUtility.Log("Sleeping 10 seconds...");
+            await Task.Delay(TimeSpan.FromSeconds(10));
+
+            var messageReceiver = new MessageReceiver(connString, queueName);
+            Message message = await messageReceiver.ReceiveAsync();
+            
+            await messageReceiver.RenewLockAsync(message);
+            DateTime lockedUntil = message.SystemProperties.LockedUntilUtc;
+            
+            // can also pass lock token
+            lockedUntil = await messageReceiver.RenewLockAsync(message.SystemProperties.LockToken);
+
+            TestUtility.Log($"After First Renewal: {message.SystemProperties.LockedUntilUtc}");
+            Assert.True(message.SystemProperties.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+
+            TestUtility.Log("Sleeping 5 seconds...");
+            await Task.Delay(TimeSpan.FromSeconds(5));
+
+            await messageReceiver.RenewLockAsync(message.SystemProperties.LockToken);
+            TestUtility.Log($"After Second Renewal: {message.SystemProperties.LockedUntilUtc}");
+            Assert.True(message.SystemProperties.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(5));
+
         }
 
 
