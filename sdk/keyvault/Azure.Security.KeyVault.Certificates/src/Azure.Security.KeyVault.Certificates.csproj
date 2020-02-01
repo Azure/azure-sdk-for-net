@@ -34,6 +34,6 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticsScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
   </ItemGroup>
 </Project>

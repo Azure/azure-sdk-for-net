@@ -31,6 +31,9 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Azure.Storage.Blobs\src\Sas\SasQueryParametersExtensions.cs" Link="Shared\Sas\KeySasQueryParametersExtensions.cs" />

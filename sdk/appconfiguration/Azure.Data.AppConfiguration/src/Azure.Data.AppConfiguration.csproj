@@ -31,7 +31,7 @@
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponse{T}.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticsScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
   </ItemGroup>
 
 </Project>

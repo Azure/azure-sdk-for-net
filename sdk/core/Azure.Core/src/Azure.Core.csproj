@@ -29,7 +29,7 @@
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
-    <Compile Include="Shared\DiagnosticsScopeFactory.cs" />
+    <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
   </ItemGroup>
 </Project>

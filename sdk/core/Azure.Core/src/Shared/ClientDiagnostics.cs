@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed class ClientDiagnostics: DiagnosticsScopeFactory
+    internal sealed class ClientDiagnostics: DiagnosticScopeFactory
     {
         private const string DefaultMessage = "Service request failed.";
 

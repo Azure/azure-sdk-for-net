@@ -10,7 +10,7 @@ using System.Reflection;
 namespace Azure.Core.Pipeline
 {
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
-    internal class DiagnosticsScopeFactory
+    internal class DiagnosticScopeFactory
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly string? _resourceProviderNamespace;
@@ -18,7 +18,7 @@ namespace Azure.Core.Pipeline
 
         public bool IsActivityEnabled { get;  }
 
-        public DiagnosticsScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled)
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
