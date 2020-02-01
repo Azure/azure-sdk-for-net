@@ -1109,7 +1109,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         {
             await using (var scope = await EventHubScope.CreateAsync(2))
             {
-                var longHostname = StringUtility.GetRandomString(32) + StringUtility.GetRandomString(32) + StringUtility.GetRandomString(32);
+                var longHostname = StringUtility.GetRandomString(100);
                 var connectionString = TestUtility.BuildEventHubsConnectionString(scope.EventHubName);
                 var eventProcessorHost = new EventProcessorHost(
                     longHostname,
