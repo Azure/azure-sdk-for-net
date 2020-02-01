@@ -30,10 +30,11 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticsScopeFactory.cs" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" />
   </ItemGroup>
 

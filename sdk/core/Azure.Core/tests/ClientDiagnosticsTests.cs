@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
         {
 
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
+            DiagnosticsScopeFactory clientDiagnostics = new DiagnosticsScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests
         {
 
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients", null, true);
+            DiagnosticsScopeFactory clientDiagnostics = new DiagnosticsScopeFactory("Azure.Clients", null, true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.Start();
@@ -79,7 +79,7 @@ namespace Azure.Core.Tests
         public void AddLinkCallsPassesLinksAsPartOfStartPayload()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests",true);
+            DiagnosticsScopeFactory clientDiagnostics = new DiagnosticsScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests",true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -120,7 +120,7 @@ namespace Azure.Core.Tests
         public void FailedStopsActivityAndWritesExceptionEvent()
         {
             using var testListener = new TestDiagnosticListener("Azure.Clients");
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true);
+            DiagnosticsScopeFactory clientDiagnostics = new DiagnosticsScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", true);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
@@ -155,7 +155,7 @@ namespace Azure.Core.Tests
         [Test]
         public void NoopsWhenDisabled()
         {
-            ClientDiagnostics clientDiagnostics = new ClientDiagnostics("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);
+            DiagnosticsScopeFactory clientDiagnostics = new DiagnosticsScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false);
             DiagnosticScope scope = clientDiagnostics.CreateScope("");
 
             scope.AddAttribute("Attribute1", "Value1");

@@ -12,6 +12,7 @@ namespace Azure.Core.Tests
     public class FailedResponseExceptionTests
     {
         private static readonly string s_nl = Environment.NewLine;
+        private static ClientDiagnostics ClientDiagnostics = new ClientDiagnostics(new TestClientOption());
 
         [Test]
         public async Task FormatsResponse()
@@ -28,7 +29,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
 
-            RequestFailedException exception = await response.CreateRequestFailedExceptionAsync();
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
@@ -51,7 +52,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.SetContent("{\"errorCode\": 1}");
 
-            RequestFailedException exception = await response.CreateRequestFailedExceptionAsync();
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
@@ -69,7 +70,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Content-Type", "binary"));
             response.SetContent("{\"errorCode\": 1}");
 
-            RequestFailedException exception = await response.CreateRequestFailedExceptionAsync();
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
@@ -89,9 +90,20 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
 
-            RequestFailedException exception = await response.CreateRequestFailedExceptionAsync(null, errorCode: "CUSTOM CODE");
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(null, errorCode: "CUSTOM CODE");
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
+        private class TestClientOption : ClientOptions
+        {
+            public TestClientOption()
+            {
+                Diagnostics.LoggedHeaderNames.Add("x-ms-requestId");
+                Diagnostics.LoggedHeaderNames.Add("Content-Type");
+                Diagnostics.LoggedHeaderNames.Add("Custom-Header");
+                Diagnostics.LoggedHeaderNames.Add("x-ms-requestId");
+                Diagnostics.LoggedHeaderNames.Add("Headers");
+            }
+        }
     }
 }

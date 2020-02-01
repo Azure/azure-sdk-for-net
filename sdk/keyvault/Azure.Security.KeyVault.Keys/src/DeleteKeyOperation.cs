@@ -111,7 +111,7 @@ namespace Azure.Security.KeyVault.Keys
         public override ValueTask<Response<DeletedKey>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
-        private static async ValueTask<bool> CheckCompletedAsync(Response response)
+        private async ValueTask<bool> CheckCompletedAsync(Response response)
         {
             switch (response.Status)
             {
@@ -123,10 +123,10 @@ namespace Azure.Security.KeyVault.Keys
                     return false;
 
                 default:
-                    throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                    throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
             }
         }
-        private static bool CheckCompleted(Response response)
+        private bool CheckCompleted(Response response)
         {
             switch (response.Status)
             {
@@ -138,7 +138,7 @@ namespace Azure.Security.KeyVault.Keys
                     return false;
 
                 default:
-                    throw response.CreateRequestFailedException();
+                    throw _pipeline.Diagnostics.CreateRequestFailedException(response);
             }
         }
     }

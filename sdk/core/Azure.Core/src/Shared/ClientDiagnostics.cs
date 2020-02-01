@@ -1,53 +1,93 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 #nullable enable
 
 namespace Azure.Core.Pipeline
 {
-#pragma warning disable CA1001 // Types that own disposable fields should be disposable
-    internal sealed class ClientDiagnostics
-#pragma warning restore CA1001 // Types that own disposable fields should be disposable
+    internal sealed class ClientDiagnostics: DiagnosticsScopeFactory
     {
-        private readonly string? _resourceProviderNamespace;
-        private readonly DiagnosticListener? _source;
+        private const string DefaultMessage = "Service request failed.";
 
-        public bool IsActivityEnabled { get;  }
-
-        public ClientDiagnostics(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled)
-        {
-            _resourceProviderNamespace = resourceProviderNamespace;
-            IsActivityEnabled = isActivityEnabled;
-            if (IsActivityEnabled)
-            {
-                _source = new DiagnosticListener(clientNamespace);
-            }
-        }
-
-        public ClientDiagnostics(ClientOptions options) : this(
+        private readonly HttpMessageSanitizer _sanitizer;
+        public ClientDiagnostics(ClientOptions options) : base(
             options.GetType().Namespace,
             GetResourceProviderNamespace(options.GetType().Assembly),
             options.Diagnostics.IsDistributedTracingEnabled)
         {
+            _sanitizer = new HttpMessageSanitizer(
+                options.Diagnostics.LoggedHeaderNames.ToArray(),
+                options.Diagnostics.LoggedQueryParameters.ToArray());
         }
 
-        public DiagnosticScope CreateScope(string name)
+        public ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null)
         {
-            if (_source == null)
-            {
-                return default;
-            }
-            var scope = new DiagnosticScope(name, _source);
+            return CreateRequestFailedExceptionAsync(message ?? DefaultMessage, response, errorCode, true);
+        }
 
-            if (_resourceProviderNamespace != null)
+        public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null)
+        {
+            ValueTask<RequestFailedException> messageTask = CreateRequestFailedExceptionAsync(message ?? DefaultMessage, response, errorCode, false);
+            Debug.Assert(messageTask.IsCompleted);
+            return messageTask.GetAwaiter().GetResult();
+        }
+
+        public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, string? errorCode, bool async)
+        {
+            message = await CreateRequestFailedMessageAsync(message, response, errorCode, async).ConfigureAwait(false);
+            return new RequestFailedException(response.Status, message, errorCode, null);
+        }
+
+        public async ValueTask<string> CreateRequestFailedMessageAsync(string message, Response response, string? errorCode, bool async)
+        {
+            StringBuilder messageBuilder = new StringBuilder()
+                .AppendLine(message)
+                .Append("Status: ")
+                .Append(response.Status.ToString(CultureInfo.InvariantCulture))
+                .Append(" (")
+                .Append(response.ReasonPhrase)
+                .AppendLine(")");
+
+            if (!string.IsNullOrWhiteSpace(errorCode))
             {
-                scope.AddAttribute("az.namespace", _resourceProviderNamespace);
+                messageBuilder.Append("ErrorCode: ")
+                    .Append(errorCode)
+                    .AppendLine();
             }
-            return scope;
+
+            if (response.ContentStream != null &&
+                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            {
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Content:");
+
+                using (var streamReader = new StreamReader(response.ContentStream, encoding))
+                {
+                    string content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
+
+                    messageBuilder.AppendLine(content);
+                }
+            }
+
+            messageBuilder
+                .AppendLine()
+                .AppendLine("Headers:");
+            foreach (HttpHeader responseHeader in response.Headers)
+            {
+                string headerValue = _sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
+                messageBuilder.AppendLine($"{responseHeader.Name}: {headerValue}");
+            }
+
+            return messageBuilder.ToString();
         }
 
         internal static string? GetResourceProviderNamespace(Assembly assembly)

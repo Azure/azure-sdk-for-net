@@ -149,11 +149,11 @@ namespace Azure.AI.TextAnalytics
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0], response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -206,11 +206,11 @@ namespace Azure.AI.TextAnalytics
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
+                            throw _clientDiagnostics.CreateRequestFailedException(response, result[0].ErrorMessage);
                         }
                         return Response.FromValue(result[0], response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -314,7 +314,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateDetectLanguageResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -360,7 +360,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return CreateDetectLanguageResponse(response, map);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -418,11 +418,11 @@ namespace Azure.AI.TextAnalytics
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, results[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0], response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -476,11 +476,11 @@ namespace Azure.AI.TextAnalytics
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
                         }
                         return Response.FromValue(results[0], response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -587,7 +587,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateRecognizeEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -636,7 +636,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return CreateRecognizeEntitiesResponse(response, map);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -691,11 +691,11 @@ namespace Azure.AI.TextAnalytics
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, results[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0], response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -746,11 +746,11 @@ namespace Azure.AI.TextAnalytics
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
                         }
                         return Response.FromValue(results[0], response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -848,7 +848,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateAnalyzeSentimentResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -894,7 +894,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return CreateAnalyzeSentimentResponse(response, map);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -948,11 +948,11 @@ namespace Azure.AI.TextAnalytics
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0], response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1002,11 +1002,11 @@ namespace Azure.AI.TextAnalytics
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(result[0].ErrorMessage);
+                            throw _clientDiagnostics.CreateRequestFailedException(response, result[0].ErrorMessage);
                         }
                         return Response.FromValue(result[0], response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1101,7 +1101,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateKeyPhraseResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1146,7 +1146,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return CreateKeyPhraseResponse(response, map);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1203,11 +1203,11 @@ namespace Azure.AI.TextAnalytics
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(results[0].ErrorMessage).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, results[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return Response.FromValue(results[0], response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1260,11 +1260,11 @@ namespace Azure.AI.TextAnalytics
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
                         }
                         return Response.FromValue(results[0], response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1368,7 +1368,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateRecognizePiiEntitiesResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1416,7 +1416,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return CreateRecognizePiiEntitiesResponse(response, map);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1472,11 +1472,11 @@ namespace Azure.AI.TextAnalytics
                         if (result[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw await response.CreateRequestFailedExceptionAsync(result[0].ErrorMessage).ConfigureAwait(false);
+                            throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, result[0].ErrorMessage).ConfigureAwait(false);
                         }
                         return Response.FromValue(result[0], response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1528,11 +1528,11 @@ namespace Azure.AI.TextAnalytics
                         if (results[0].ErrorMessage != default)
                         {
                             // only one input, so we can ignore the id and grab the first error message.
-                            throw response.CreateRequestFailedException(results[0].ErrorMessage);
+                            throw _clientDiagnostics.CreateRequestFailedException(response, results[0].ErrorMessage);
                         }
                         return Response.FromValue(results[0], response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1633,7 +1633,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return await CreateLinkedEntityResponseAsync(response, map, cancellationToken).ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1680,7 +1680,7 @@ namespace Azure.AI.TextAnalytics
                         IDictionary<string, int> map = CreateIdToIndexMap(inputs);
                         return CreateLinkedEntityResponse(response, map);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
