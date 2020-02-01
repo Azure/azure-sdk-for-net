@@ -36,7 +36,7 @@ foreach (LinkedEntity linkedEntity in result.LinkedEntities)
 To recognize linked entities in multiple text inputs as a batch, call `RecognizeLinkedEntities` on an `IEnumerable` of strings.  The results are returned as a `RecognizeLinkedEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
 ```
 
 To recognize linked entities in a collection of text inputs in different languages, call `RecognizeLinkedEntities` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
@@ -58,7 +58,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

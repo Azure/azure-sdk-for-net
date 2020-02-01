@@ -30,7 +30,7 @@ Console.WriteLine($"Detected language {language.Name} with confidence {language.
 To detect the language of a collection of text inputs in the same language, call `DetectLanguages` on an `IEnumerable` of strings.  The results are returned as a `DetectLanguageResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample1DetectLanguagesConvenience
-DetectLanguageResultCollection results = client.DetectLanguage(inputs);
+DetectLanguageResultCollection results = client.DetectLanguageBatch(inputs);
 ```
 
 To detect the languages of a collection of text inputs in different language, call `DetectLanguages` on an `IEnumerable` of `DetectLanguageInput` objects, setting the `CountryHint` on each input.
@@ -56,7 +56,7 @@ var inputs = new List<DetectLanguageInput>
     }
 };
 
-DetectLanguageResultCollection results = client.DetectLanguage(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+DetectLanguageResultCollection results = client.DetectLanguageBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:
