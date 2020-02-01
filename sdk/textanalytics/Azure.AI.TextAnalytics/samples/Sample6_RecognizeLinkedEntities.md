@@ -33,13 +33,13 @@ foreach (LinkedEntity linkedEntity in result.LinkedEntities)
 
 ## Recognizing linked entities in multiple inputs
 
-To recognize linked entities in multiple text inputs as a batch, call `RecognizeLinkedEntities` on an `IEnumerable` of strings.  The results are returned as a `RecognizeLinkedEntitiesResultCollection`.
+To recognize linked entities in multiple text inputs as a batch, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeLinkedEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
 RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
 ```
 
-To recognize linked entities in a collection of text inputs in different languages, call `RecognizeLinkedEntities` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To recognize linked entities in a collection of text inputs in different languages, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
 var inputs = new List<TextDocumentInput>
