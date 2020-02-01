@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
 
         public Queue<(string, object, object)> IsEnabledCalls { get; } = new Queue<(string, object, object)>();
 
-        public TestDiagnosticListener(string name): this(source => source.Name == name)
+        public TestDiagnosticListener(string name) : this(source => source.Name == name)
         {
         }
 
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        private class InternalListener: IObserver<KeyValuePair<string, object>>
+        private class InternalListener : IObserver<KeyValuePair<string, object>>
         {
             private readonly Queue<(string, object, DiagnosticListener)> _queue;
 

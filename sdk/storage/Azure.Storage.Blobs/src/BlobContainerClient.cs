@@ -60,6 +60,22 @@ namespace Azure.Storage.Blobs
         internal virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
+        /// The <see cref="BlobClientOptions"/> used to make this client's <see cref="Pipeline"/>.
+        /// </summary>
+        private readonly BlobClientOptions _sourceOptions; // TODO set this
+
+        /// <summary>
+        /// A deep copy of the <see cref="BlobClientOptions"/> used to make this client. Every call to this property
+        /// will return a new deep copy of the original, free to safely mutate.
+        /// </summary>
+        internal virtual BlobClientOptions SourceOptions => new BlobClientOptions(_sourceOptions);
+
+        /// <summary>
+        /// The authentication pipeline policy for this client's pipeline.
+        /// </summary>
+        internal virtual HttpPipelinePolicy AuthPolicy { get; } // TODO set this
+
+        /// <summary>
         /// The version of the service to use when sending requests.
         /// </summary>
         private readonly BlobClientOptions.ServiceVersion _version;
@@ -179,6 +195,7 @@ namespace Azure.Storage.Blobs
             _uri = builder.ToUri();
             options ??= new BlobClientOptions();
             _pipeline = options.Build(conn.Credentials);
+            _sourceOptions = new BlobClientOptions(options);
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;

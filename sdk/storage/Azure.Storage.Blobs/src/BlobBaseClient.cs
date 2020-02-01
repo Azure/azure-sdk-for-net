@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -42,6 +43,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </summary>
         internal virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// The <see cref="BlobClientOptions"/> used to make this client's <see cref="Pipeline"/>.
+        /// </summary>
+        private readonly BlobClientOptions _sourceOptions;
+
+        /// <summary>
+        /// A deep copy of the <see cref="BlobClientOptions"/> used to make this client. Every call to this property
+        /// will return a new deep copy of the original, free to safely mutate.
+        /// </summary>
+        public virtual BlobClientOptions SourceOptions => new BlobClientOptions(_sourceOptions);
 
         /// <summary>
         /// The version of the service to use when sending requests.
@@ -194,6 +206,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _sourceOptions = new BlobClientOptions(options);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
@@ -290,6 +303,7 @@ namespace Azure.Storage.Blobs.Specialized
             _version = options.Version;
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
+            _sourceOptions = new BlobClientOptions(options);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
@@ -312,7 +326,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="clientDiagnostics">Client diagnostics.</param>
         /// <param name="customerProvidedKey">Customer provided key.</param>
         internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-        {
+        { //TODO ensure options are passed into here from wherever they came from
             _uri = blobUri;
             _pipeline = pipeline;
             _version = version;
@@ -2931,6 +2945,14 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion SetAccessTier
+
+        /// <summary>
+        /// Accessor for separately packaged blob clients to access details about a container client's pipeline.
+        /// </summary>
+        /// <param name="containerClient">Client to get details of.</param>
+        /// <returns>The details.</returns>
+        protected static (BlobClientOptions options, HttpPipelinePolicy authPolicy) GetContainerPipelineInfo(BlobContainerClient containerClient)
+            => (containerClient.SourceOptions, containerClient.AuthPolicy);
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,15 +11,14 @@ using Azure.Core.Cryptography;
 using Azure.Core.Testing;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Test
+namespace Azure.Storage.Blobs.Cryptography.Tests
 {
-    public class EncryptedBlockBlobClientTests : BlobTestBase
+    public class EncryptedBlobClientTests : BlobTestBase
     {
-        public EncryptedBlockBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        public EncryptedBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
@@ -31,17 +30,18 @@ namespace Azure.Storage.Blobs.Test
         /// </summary>
         /// <param name="blob">The blob client created.</param>
         /// <returns>The IDisposable to delete the container when finished.</returns>
-        private IDisposable GetEncryptedBlockBlobClient(out EncryptedBlobClient blob, MockKeyEncryptionKey mock)
+        private IAsyncDisposable GetEncryptedBlockBlobClient(out EncryptedBlobClient blob, MockKeyEncryptionKey mock)
         {
-            var disposable = GetNewContainer(out var container);
+            var disposable = GetTestContainerAsync().Result;
             blob = InstrumentClient(new EncryptedBlobClient(
-                    container.GetBlobClient(GetNewBlobName()).Uri,
+                    disposable.Container.GetBlobClient(GetNewBlobName()).Uri,
                     GetNewSharedKeyCredentials(),
-                    options: new EncryptedBlobClientOptions(GetOptions())
+                    new ClientsideEncryptionOptions()
                     {
                         KeyEncryptionKey = mock,
-                        KeyResolver = mock
-                    }));
+                        KeyResolver = mock,
+                    },
+                    GetOptions()));
 
             return disposable;
         }
@@ -62,8 +62,8 @@ namespace Azure.Storage.Blobs.Test
         private async Task<IKeyEncryptionKey> GetKeyvaultIKeyEncryptionKey()
         {
             var keyClient = GetKeyClient_TargetKeyClient();
-            Security.KeyVault.Keys.Key key = await keyClient.CreateRsaKeyAsync(
-                new Security.KeyVault.Keys.RsaKeyCreateOptions($"CloudRsaKey-{Guid.NewGuid()}", false));
+            Security.KeyVault.Keys.KeyVaultKey key = await keyClient.CreateRsaKeyAsync(
+                new Security.KeyVault.Keys.CreateRsaKeyOptions($"CloudRsaKey-{Guid.NewGuid()}", false));
             return new CryptographyClient(key.Id, GetTokenCredential_TargetKeyClient());
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(dataSize);
             var key = new MockKeyEncryptionKey();
-            using (GetEncryptedBlockBlobClient(out var blob, key))
+            await using (GetEncryptedBlockBlobClient(out var blob, key))
             {
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(dataSize);
             var key = new MockKeyEncryptionKey();
-            using (this.GetEncryptedBlockBlobClient(out var blob, key))
+            await using (this.GetEncryptedBlockBlobClient(out var blob, key))
             {
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
@@ -119,7 +119,7 @@ namespace Azure.Storage.Blobs.Test
                 byte[] downloadData;
                 using (var stream = new MemoryStream())
                 {
-                    await blob.DownloadAsync(stream);
+                    await blob.DownloadToAsync(stream);
                     downloadData = stream.ToArray();
                 }
 
@@ -143,7 +143,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(offset + (count ?? 16) + 32); // ensure we have enough room in original data
             var key = new MockKeyEncryptionKey();
-            using (GetEncryptedBlockBlobClient(out var blob, key))
+            await using (GetEncryptedBlockBlobClient(out var blob, key))
             {
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
@@ -178,13 +178,13 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(Constants.KB);
             var key = new MockKeyEncryptionKey();
-            using (this.GetEncryptedBlockBlobClient(out var track2Blob, key))
+            await using (this.GetEncryptedBlockBlobClient(out var track2Blob, key))
             {
                 // upload with track 1
                 var creds = GetNewSharedKeyCredentials();
                 var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
                     track2Blob.Uri,
-                    new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.AccountKeyValue));
+                    new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.GetAccountKey()));
                 await track1Blob.UploadFromByteArrayAsync(
                     data, 0, data.Length, default,
                     new Microsoft.Azure.Storage.Blob.BlobRequestOptions()
@@ -195,7 +195,7 @@ namespace Azure.Storage.Blobs.Test
 
                 // download with track 2
                 var downloadStream = new MemoryStream();
-                await track2Blob.DownloadAsync(downloadStream);
+                await track2Blob.DownloadToAsync(downloadStream);
 
                 // compare original data to downloaded data
                 Assert.AreEqual(data, downloadStream.ToArray());
@@ -208,7 +208,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(Constants.KB); // ensure we have enough room in original data
             var key = new MockKeyEncryptionKey();
-            using (GetEncryptedBlockBlobClient(out var track2Blob, key))
+            await using (GetEncryptedBlockBlobClient(out var track2Blob, key))
             {
                 // upload with track 2
                 await track2Blob.UploadAsync(new MemoryStream(data));
@@ -217,7 +217,7 @@ namespace Azure.Storage.Blobs.Test
                 var creds = GetNewSharedKeyCredentials();
                 var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
                     track2Blob.Uri,
-                    new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.AccountKeyValue));
+                    new Microsoft.Azure.Storage.Auth.StorageCredentials(creds.AccountName, creds.GetAccountKey()));
                 var downloadData = new byte[data.Length];
                 await track1Blob.DownloadToByteArrayAsync(downloadData, 0, default,
                     new Microsoft.Azure.Storage.Blob.BlobRequestOptions()
@@ -237,21 +237,22 @@ namespace Azure.Storage.Blobs.Test
         {
             var data = GetRandomBuffer(Constants.KB);
             IKeyEncryptionKey key = await GetKeyvaultIKeyEncryptionKey();
-            using (GetNewContainer(out var container))
+            await using (var disposable = await GetTestContainerAsync())
             {
                 var blob = new EncryptedBlobClient(
-                    new Uri(Path.Combine(container.Uri.ToString(), this.GetNewBlobName())),
+                    new Uri(Path.Combine(disposable.Container.Uri.ToString(), this.GetNewBlobName())),
                     this.GetNewSharedKeyCredentials(),
-                    options: new EncryptedBlobClientOptions()
+                    new ClientsideEncryptionOptions()
                     {
                         KeyEncryptionKey = key,
                         EncryptionKeyWrapAlgorithm = "RSA-OAEP-256"
-                    });
+                    },
+                    GetOptions());
 
                 await blob.UploadAsync(new MemoryStream(data));
 
                 var downloadStream = new MemoryStream();
-                await blob.DownloadAsync(downloadStream);
+                await blob.DownloadToAsync(downloadStream);
 
                 Assert.AreEqual(data, downloadStream.ToArray());
             }

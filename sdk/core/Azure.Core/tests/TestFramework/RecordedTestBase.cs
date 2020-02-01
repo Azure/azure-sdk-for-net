@@ -47,7 +47,7 @@ namespace Azure.Core.Testing
             if (Mode != RecordedTestMode.Live &&
                 test.Properties.ContainsKey("SkipRecordings"))
             {
-                throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
+                throw new IgnoreException((string)test.Properties.Get("SkipRecordings"));
             }
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
         }

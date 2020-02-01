@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized.Models;
 using Azure.Storage.Common;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -52,11 +54,16 @@ namespace Azure.Storage.Blobs.Specialized
         ///
         /// For more information, <see href="https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string"/>.
         /// </param>
-        /// <param name="containerName">
+        /// <param name="blobContainerName">
         /// The name of the container containing this encrypted block blob.
         /// </param>
         /// <param name="blobName">
         /// The name of this encrypted block blob.
+        /// </param>
+        /// <param name="encryptionOptions">
+        /// Clientside encryption options to provide encryption and/or
+        /// decryption implementations to the client.
+        /// every request.
         /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
@@ -65,17 +72,20 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public EncryptedBlobClient(
             string connectionString,
-            string containerName,
+            string blobContainerName,
             string blobName,
-            EncryptedBlobClientOptions options = default)
+            ClientsideEncryptionOptions encryptionOptions,
+            BlobClientOptions options = default)
             : base(
                   connectionString,
-                  containerName,
+                  blobContainerName,
                   blobName,
-                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
+                  options.WithPolicy(new ClientSideDecryptionPolicy(
+                      encryptionOptions.KeyResolver,
+                      encryptionOptions.KeyEncryptionKey)))
         {
-            KeyWrapper = options.KeyEncryptionKey;
-            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
+            KeyWrapper = encryptionOptions.KeyEncryptionKey;
+            KeyWrapAlgorithm = encryptionOptions.EncryptionKeyWrapAlgorithm;
         }
 
         /// <summary>
@@ -87,6 +97,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// name of the account, the name of the container, and the name of
         /// the blob.
         /// </param>
+        /// <param name="encryptionOptions">
+        /// Clientside encryption options to provide encryption and/or
+        /// decryption implementations to the client.
+        /// every request.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -94,13 +109,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         public EncryptedBlobClient(
             Uri blobUri,
-            EncryptedBlobClientOptions options = default)
+            ClientsideEncryptionOptions encryptionOptions,
+            BlobClientOptions options = default)
             : base(
                   blobUri,
-                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
+                  options.WithPolicy(new ClientSideDecryptionPolicy(
+                      encryptionOptions.KeyResolver,
+                      encryptionOptions.KeyEncryptionKey)))
         {
-            KeyWrapper = options.KeyEncryptionKey;
-            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
+            KeyWrapper = encryptionOptions.KeyEncryptionKey;
+            KeyWrapAlgorithm = encryptionOptions.EncryptionKeyWrapAlgorithm;
         }
 
         /// <summary>
@@ -115,6 +133,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="credential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="encryptionOptions">
+        /// Clientside encryption options to provide encryption and/or
+        /// decryption implementations to the client.
+        /// every request.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -123,14 +146,17 @@ namespace Azure.Storage.Blobs.Specialized
         public EncryptedBlobClient(
             Uri blobUri,
             StorageSharedKeyCredential credential,
-            EncryptedBlobClientOptions options = default)
+            ClientsideEncryptionOptions encryptionOptions,
+            BlobClientOptions options = default)
             : base(
                   blobUri,
                   credential,
-                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
+                  options.WithPolicy(new ClientSideDecryptionPolicy(
+                      encryptionOptions.KeyResolver,
+                      encryptionOptions.KeyEncryptionKey)))
         {
-            KeyWrapper = options.KeyEncryptionKey;
-            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
+            KeyWrapper = encryptionOptions.KeyEncryptionKey;
+            KeyWrapAlgorithm = encryptionOptions.EncryptionKeyWrapAlgorithm;
         }
 
         /// <summary>
@@ -145,6 +171,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="credential">
         /// The token credential used to sign requests.
         /// </param>
+        /// <param name="encryptionOptions">
+        /// Clientside encryption options to provide encryption and/or
+        /// decryption implementations to the client.
+        /// every request.
+        /// </param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline
         /// policies for authentication, retries, etc., that are applied to
@@ -153,33 +184,52 @@ namespace Azure.Storage.Blobs.Specialized
         public EncryptedBlobClient(
             Uri blobUri,
             TokenCredential credential,
-            EncryptedBlobClientOptions options = default)
+            ClientsideEncryptionOptions encryptionOptions,
+            BlobClientOptions options = default)
             : base(
                   blobUri,
                   credential,
-                  options.WithPolicy(new ClientSideDecryptionPolicy(options.KeyResolver, options.KeyEncryptionKey)))
+                  options.WithPolicy(new ClientSideDecryptionPolicy(
+                      encryptionOptions.KeyResolver,
+                      encryptionOptions.KeyEncryptionKey)))
         {
-            KeyWrapper = options.KeyEncryptionKey;
-            KeyWrapAlgorithm = options.EncryptionKeyWrapAlgorithm;
+            KeyWrapper = encryptionOptions.KeyEncryptionKey;
+            KeyWrapAlgorithm = encryptionOptions.EncryptionKeyWrapAlgorithm;
         }
 
-        // TODO to be re-added upon resolution of https://github.com/Azure/azure-sdk-for-net/issues/7713
-        // we need the ability to create a pipeline based on the given one
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="BlockBlobClient"/>
-        ///// class.
-        ///// </summary>
-        ///// <param name="blobUri">
-        ///// A <see cref="Uri"/> referencing the encrypted block blob that includes the
-        ///// name of the account, the name of the container, and the name of
-        ///// the blob.
-        ///// </param>
-        ///// <param name="pipeline">
-        ///// The transport pipeline used to send every request.
-        ///// </param>
-        //internal EncryptedBlobClient(Uri blobUri, HttpPipeline pipeline)
-        //    : base(blobUri, pipeline)
-        //{ }
+        private EncryptedBlobClient(
+            Uri blobUri,
+            ClientsideEncryptionOptions encryptionOptions,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options)
+            : base(blobUri, authentication, options)
+        {
+            KeyWrapper = encryptionOptions.KeyEncryptionKey;
+            KeyWrapAlgorithm = encryptionOptions.EncryptionKeyWrapAlgorithm;
+        }
+
+        /// <summary>
+        /// This behaves like a constructor. It has a conflicting signature with another public construtor, but
+        /// has different behavior. The necessary extra behavior happens in this method and then invokes a private
+        /// constructor with a now-unique signature.
+        /// </summary>
+        /// <param name="containerClient"></param>
+        /// <param name="blobName"></param>
+        /// <param name="encryptionOptions"></param>
+        /// <returns></returns>
+        internal static EncryptedBlobClient EncryptedBlobClientFromContainerClient(
+            BlobContainerClient containerClient,
+            string blobName,
+            ClientsideEncryptionOptions encryptionOptions)
+        {
+            (var options, var authPolicy) = GetContainerPipelineInfo(containerClient);
+
+            return new EncryptedBlobClient(
+                containerClient.Uri.AppendToPath(blobName),
+                encryptionOptions,
+                authPolicy,
+                options);
+        }
         #endregion ctors
 
         /// <summary>
@@ -188,7 +238,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="content">Content to transform.</param>
         /// <param name="metadata">Content metadata to transform.</param>
         /// <returns>Transformed content stream.</returns>
-        internal override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        public override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
@@ -251,46 +301,40 @@ namespace Azure.Storage.Blobs.Specialized
         }
     }
 
+    /// <summary>
+    /// Add easy to discover methods to <see cref="BlobContainerClient"/> for
+    /// creating <see cref="EncryptedBlobClient"/> instances.
+    /// </summary>
 #pragma warning disable SA1402 // File may only contain a single type
-    internal static class BlobClientOptionsExtensions
+    public static partial class SpecializedBlobExtensions
 #pragma warning restore SA1402 // File may only contain a single type
     {
-        public static BlobClientOptions WithPolicy(
-           this BlobClientOptions options,
-           HttpPipelinePolicy policy,
-           HttpPipelinePosition position = HttpPipelinePosition.PerCall)
-        {
-            if (options == default)
-            {
-                options = new BlobClientOptions();
-            }
-            options.AddPolicy(policy, position);
-            return options;
-        }
+        /// <summary>
+        /// Create a new <see cref="EncryptedBlobClient"/> object by
+        /// concatenating <paramref name="blobName"/> to
+        /// the end of the <paramref name="containerClient"/>'s
+        /// <see cref="BlobContainerClient.Uri"/>.
+        /// </summary>
+        /// <param name="containerClient">The <see cref="BlobContainerClient"/>.</param>
+        /// <param name="blobName">The name of the encrypted block blob.</param>
+        /// <param name="encryptionOptions">
+        /// Clientside encryption options to provide encryption and/or
+        /// decryption implementations to the client.
+        /// every request.
+        /// </param>
+        /// <returns>A new <see cref="EncryptedBlobClient"/> instance.</returns>
+        public static EncryptedBlobClient GetEncryptedBlobClient(
+            this BlobContainerClient containerClient,
+            string blobName,
+            ClientsideEncryptionOptions encryptionOptions)
+            /*
+             * Extension methods have to be in their own static class, but the logic for this method needs a protected
+             * static method in BlobBaseClient. So this extension method just passes the arguments on to a place with
+             * access to that method.
+             */
+            => EncryptedBlobClient.EncryptedBlobClientFromContainerClient(
+                containerClient,
+                blobName,
+                encryptionOptions);
     }
-
-    // TODO to be re-added upon resolution of https://github.com/Azure/azure-sdk-for-net/issues/7713
-    ///// <summary>
-    ///// Add easy to discover methods to <see cref="BlobContainerClient"/> for
-    ///// creating <see cref="EncryptedBlockBlobClient"/> instances.
-    ///// </summary>
-    //public static partial class SpecializedBlobExtensions
-    //{
-    //    /// <summary>
-    //    /// Create a new <see cref="EncryptedBlockBlobClient"/> object by
-    //    /// concatenating <paramref name="blobName"/> to
-    //    /// the end of the <paramref name="client"/>'s
-    //    /// <see cref="BlobContainerClient.Uri"/>. The new
-    //    /// <see cref="EncryptedBlockBlobClient"/>
-    //    /// uses the same request policy pipeline as the
-    //    /// <see cref="BlobContainerClient"/>.
-    //    /// </summary>
-    //    /// <param name="client">The <see cref="BlobContainerClient"/>.</param>
-    //    /// <param name="blobName">The name of the encrypted block blob.</param>
-    //    /// <returns>A new <see cref="EncryptedBlockBlobClient"/> instance.</returns>
-    //    public static EncryptedBlockBlobClient GetEncryptedBlockBlobClient(
-    //        this BlobContainerClient client,
-    //        string blobName)
-    //        => new EncryptedBlockBlobClient(client.Uri.AppendToPath(blobName), client.Pipeline);
-    //}
 }

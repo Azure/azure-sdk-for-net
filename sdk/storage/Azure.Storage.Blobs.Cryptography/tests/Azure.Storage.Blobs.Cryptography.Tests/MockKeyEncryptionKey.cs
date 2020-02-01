@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Microsoft.Azure.KeyVault.Core;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Cryptography.Tests
 {
     /// <summary>
     /// Mock for a key encryption key. Not meant for production use.

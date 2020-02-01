@@ -74,17 +74,18 @@ namespace Azure.Storage.Blobs
             AddHeadersAndQueryParameters();
         }
 
-#pragma warning disable AZC0009 // ClientOptions constructors should take a ServiceVersion as their first parameter; param `other` contains the service version
         /// <summary>
-        /// Copy constructor for an instance of the <see cref="BlobClientOptions"/> class.
+        /// Copy constructor for the <see cref="BlobClientOptions"/> class.
         /// </summary>
-        /// <param name="other">Instance to copy.</param>
-        protected BlobClientOptions(BlobClientOptions other)
+        /// <param name="other">Options to copy.</param>
+#pragma warning disable AZC0009 // ClientOptions constructors should take a ServiceVersion as their first parameter
+                                // This is a copy constructor, the ServiceVersion is provided in the copy
+        public BlobClientOptions(BlobClientOptions other)
 #pragma warning restore AZC0009 // ClientOptions constructors should take a ServiceVersion as their first parameter
             : base(other)
         {
             Version = other.Version;
-            CustomerProvidedKey = other.CustomerProvidedKey;
+            CustomerProvidedKey = other.CustomerProvidedKey; // struct is immutable; this is safe
             GeoRedundantSecondaryUri = other.GeoRedundantSecondaryUri;
         }
 

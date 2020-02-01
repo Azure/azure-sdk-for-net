@@ -6,7 +6,7 @@ using System.Linq;
 using Azure.Storage.Common;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Cryptography.Tests
 {
     public class RollingBufferStreamTests // pure local tests; don't inherit recording bulk
     {

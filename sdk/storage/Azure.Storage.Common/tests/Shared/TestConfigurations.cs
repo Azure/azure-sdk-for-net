@@ -125,7 +125,7 @@ namespace Azure.Storage.Test
         /// </summary>
         public static KeyVaultConfiguration DefaultTargetKeyVault =>
             GetKeyVault("TargetKeyVault", s_configurations.Value.TargetKeyVaultName);
-        
+
         /// <summary>
         /// Gets a tenant to use for any tests that require hierarchical namespace
         /// </summary>

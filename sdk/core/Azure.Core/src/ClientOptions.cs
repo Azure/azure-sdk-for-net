@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -25,14 +24,18 @@ namespace Azure.Core
             Diagnostics = new DiagnosticsOptions();
         }
 
-        //protected ClientOptions(ClientOptions other)
-        //{
-        //    Retry = other.Retry;
-        //    Diagnostics = other.Diagnostics;
-        //    Transport = other.Transport;
-        //    PerCallPolicies = other.PerCallPolicies.ToList();
-        //    PerRetryPolicies = other.PerRetryPolicies.ToList();
-        //}
+        /// <summary>
+        /// Copy constructor.
+        /// </summary>
+        /// <param name="other">Options to copy.</param>
+        protected ClientOptions(ClientOptions other)
+        {
+            Transport = other.Transport;
+            Diagnostics = new DiagnosticsOptions(other.Diagnostics);
+            Retry = new RetryOptions(other.Retry);
+            PerCallPolicies = new List<HttpPipelinePolicy>(other.PerCallPolicies);
+            PerRetryPolicies = new List<HttpPipelinePolicy>(other.PerRetryPolicies);
+        }
 
         /// <summary>
         /// The <see cref="HttpPipelineTransport"/> to be used for this client. Defaults to an instance of <see cref="HttpClientTransport"/>.

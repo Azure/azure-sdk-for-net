@@ -6,12 +6,10 @@ using Azure.Core.Cryptography;
 
 namespace Azure.Storage.Blobs.Specialized
 {
-#pragma warning disable AZC0008 // ClientOptions should have a nested enum called ServiceVersion; handled in base class
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Blob using clientside encryption.
     /// </summary>
-    public class EncryptedBlobClientOptions : BlobClientOptions
-#pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
+    public class ClientsideEncryptionOptions
     {
         /// <summary>
         /// Required for upload operations.
@@ -33,26 +31,5 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="IKeyEncryptionKey.WrapKey(string, ReadOnlyMemory{byte}, System.Threading.CancellationToken)"/>.
         /// </summary>
         public string EncryptionKeyWrapAlgorithm { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EncryptedBlobClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="version">
-        /// The <see cref="BlobClientOptions.ServiceVersion"/> of the service API used when
-        /// making requests
-        /// </param>
-        public EncryptedBlobClientOptions(ServiceVersion version = LatestVersion)
-            : base(version)
-        { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EncryptedBlobClientOptions"/> class based on an existing
-        /// <see cref="BlobClientOptions"/> instance.
-        /// </summary>
-        /// <param name="options"></param>
-        public EncryptedBlobClientOptions(BlobClientOptions options)
-            : base(options)
-        { }
     }
 }

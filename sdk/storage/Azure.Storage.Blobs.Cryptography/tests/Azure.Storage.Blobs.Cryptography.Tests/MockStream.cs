@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Cryptography.Tests
 {
     /// <summary>
     /// Read-only, unseekable Stream where the 0-indexed nth byte read will have the value n.
