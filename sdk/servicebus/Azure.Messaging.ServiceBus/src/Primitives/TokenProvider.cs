@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// This abstract base class can be extended to implement additional token providers.
     /// </summary>
-    public abstract class TokenProvider : ITokenProvider
+    internal abstract class TokenProvider : ITokenProvider
     {
         /// <summary>
         /// Construct a TokenProvider based on a sharedAccessSignature.

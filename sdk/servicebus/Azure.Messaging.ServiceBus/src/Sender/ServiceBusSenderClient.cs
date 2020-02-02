@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
-namespace Azure.Messaging.ServiceBus.Producer
+namespace Azure.Messaging.ServiceBus.Sender
 {
     /// <summary>
     ///   A client responsible for publishing <see cref="EventData" /> to a specific Event Hub,
@@ -190,24 +190,24 @@ namespace Azure.Messaging.ServiceBus.Producer
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="eventHubName">The name of the specific Event Hub to associated the producer with.</param>
+        /// <param name="entityName">The name of the specific Event Hub to associated the producer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         public ServiceBusSenderClient(string fullyQualifiedNamespace,
-                                      string eventHubName,
+                                      string entityName,
                                       TokenCredential credential,
                                       ServiceBusSenderClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(credential, nameof(credential));
 
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
 
             OwnsConnection = true;
-            Connection = new ServiceBusConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             ServiceBusSender = Connection.CreateTransportProducer(null, RetryPolicy);
         }
@@ -219,7 +219,7 @@ namespace Azure.Messaging.ServiceBus.Producer
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Event Hubs service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
-        public ServiceBusSenderClient(ServiceBusConnection connection,
+        internal ServiceBusSenderClient(ServiceBusConnection connection,
                                       ServiceBusSenderClientOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
@@ -262,104 +262,22 @@ namespace Azure.Messaging.ServiceBus.Producer
         {
             OwnsConnection = false;
         }
-
-        ///// <summary>
-        /////   Retrieves information about the Event Hub that the connection is associated with, including
-        /////   the number of partitions present and their identifiers.
-        ///// </summary>
-        /////
-        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /////
-        ///// <returns>The set of information for the Event Hub that this client is associated with.</returns>
-        /////
-        //public virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
-        //    return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
-        //}
-
-        ///// <summary>
-        /////   Retrieves the set of identifiers for the partitions of an Event Hub.
-        ///// </summary>
-        /////
-        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /////
-        ///// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
-        /////
-        ///// <remarks>
-        /////   This method is synonymous with invoking <see cref="GetEventHubPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
-        /////   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
-        /////   No new or extended information is presented.
-        ///// </remarks>
-        /////
-        //public virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
-        //{
-
-        //    Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
-        //    return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
-        //}
-
-        ///// <summary>
-        /////   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
-        /////   events in the partition event stream.
-        ///// </summary>
-        /////
-        ///// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /////
-        ///// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
-        /////
-        //public virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-        //                                                                     CancellationToken cancellationToken = default)
-        //{
-        //    Argument.AssertNotClosed(IsClosed, nameof(ServiceBusSenderClient));
-        //    return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
-        //}
-
         /// <summary>
-        ///   Sends an event to the associated Event Hub using a batched approach.  If the size of the event exceeds the
+        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///
-        /// <param name="message">The event data to send.</param>
+        /// <param name="message">The set of event data to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(ServiceBusMessage, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, SendEventOptions, CancellationToken)" />
+        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, SendEventOptions, CancellationToken)"/>
         ///
-        internal virtual Task SendAsync(ServiceBusMessage message,
-                                        CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(message, nameof(message));
-            return SendAsync(new[] { message }, null, cancellationToken);
-        }
-
-        /// <summary>
-        ///   Sends an event to the associated Event Hub using a batched approach.  If the size of the event exceeds the
-        ///   maximum size of a single batch, an exception will be triggered and the send will fail.
-        /// </summary>
-        ///
-        /// <param name="message">The event data to send.</param>
-        /// <param name="options">The set of options to consider when sending this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        /// <seealso cref="SendAsync(ServiceBusMessage, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, SendEventOptions, CancellationToken)" />
-        ///
-        internal virtual Task SendAsync(ServiceBusMessage message,
-                                        SendEventOptions options,
-                                        CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(message, nameof(message));
-            return SendAsync(new[] { message }, options, cancellationToken);
-        }
-
+        public virtual async Task SendAsync(
+            ServiceBusMessage message,
+            CancellationToken cancellationToken = default) =>
+            await SendAsync(new ServiceBusMessage[] { message }, null, cancellationToken).ConfigureAwait(false);
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
@@ -372,11 +290,33 @@ namespace Azure.Messaging.ServiceBus.Producer
         ///
         /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, SendEventOptions, CancellationToken)"/>
         ///
-        public virtual Task SendAsync(
-            IEnumerable<ServiceBusMessage> messages,
-            CancellationToken cancellationToken = default) =>
-            SendAsync(messages, null, cancellationToken);
+        public virtual async Task SendRangeAsync(IEnumerable<ServiceBusMessage> messages, CancellationToken cancellationToken = default) =>
+            await SendAsync(messages, null, cancellationToken).ConfigureAwait(false);
 
+
+        /// <summary>
+        /// Schedules a message to appear on Service Bus at a later time.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The sequence number of the message that was scheduled.</returns>
+        public virtual Task<long> ScheduleMessageAsync(ServiceBusMessage message, DateTimeOffset scheduleEnqueueTimeUtc, CancellationToken cancellationToken = default)
+        {
+            //this.ThrowIfClosed();
+            return Connection.ScheduleMessageAsync(message, scheduleEnqueueTimeUtc);
+        }
+
+        /// <summary>
+        /// Cancels a message that was scheduled.
+        /// </summary>
+        /// <param name="sequenceNumber">The <see cref="ServiceBusMessage.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="cancellationToken"></param>
+        public virtual async Task CancelScheduledMessageAsync(long sequenceNumber, CancellationToken cancellationToken = default)
+        {
+            //this.ThrowIfClosed();
+            await Connection.CancelScheduledMessageAsync(sequenceNumber).ConfigureAwait(false);
+        }
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
@@ -388,9 +328,8 @@ namespace Azure.Messaging.ServiceBus.Producer
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(ServiceBusMessage, CancellationToken)" />
-        /// <seealso cref="SendAsync(ServiceBusMessage, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, CancellationToken)" />
+
+        /// <seealso cref="SendRangeAsync(IEnumerable{ServiceBusMessage}, CancellationToken)" />
         ///
         internal virtual async Task SendAsync(IEnumerable<ServiceBusMessage> messages,
                                               SendEventOptions options,
@@ -508,7 +447,7 @@ namespace Azure.Messaging.ServiceBus.Producer
         ///
         /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
         ///
-        public virtual ValueTask<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
+        internal virtual ValueTask<EventDataBatch> CreateBatchAsync(CancellationToken cancellationToken = default) => CreateBatchAsync(null, cancellationToken);
 
         /// <summary>
         ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
@@ -526,7 +465,7 @@ namespace Azure.Messaging.ServiceBus.Producer
         ///
         /// <seealso cref="CreateBatchAsync(CreateBatchOptions, CancellationToken)" />
         ///
-        public virtual async ValueTask<EventDataBatch> CreateBatchAsync(CreateBatchOptions options,
+        internal virtual async ValueTask<EventDataBatch> CreateBatchAsync(CreateBatchOptions options,
                                                                         CancellationToken cancellationToken = default)
         {
             options = options?.Clone() ?? new CreateBatchOptions();

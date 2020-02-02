@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus
     ///   use with Event Hubs operations.
     /// </summary>
     ///
-    public class EventData
+    internal class EventData
     {
         /// <summary>
         ///   The data associated with the event.

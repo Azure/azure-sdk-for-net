@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
@@ -112,7 +112,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="entityName">The name of the Event Hub from which events will be consumed.</param>
-        /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
@@ -132,7 +131,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpConsumer(string entityName,
                             //string consumerGroup,
                             //string partitionId,
-                            EventPosition eventPosition,
+                            //EventPosition eventPosition,
                             bool trackLastEnqueuedEventProperties,
                             long? ownerLevel,
                             uint? prefetchCount,
@@ -151,7 +150,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             EntityName = entityName;
             //ConsumerGroup = consumerGroup;
             //PartitionId = partitionId;
-            CurrentEventPosition = eventPosition;
+            //CurrentEventPosition = eventPosition;
             TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;

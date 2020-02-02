@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Core

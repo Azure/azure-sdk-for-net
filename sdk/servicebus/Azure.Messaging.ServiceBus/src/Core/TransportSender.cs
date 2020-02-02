@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Producer;
+using Azure.Messaging.ServiceBus.Sender;
 
 namespace Azure.Messaging.ServiceBus.Core
 {

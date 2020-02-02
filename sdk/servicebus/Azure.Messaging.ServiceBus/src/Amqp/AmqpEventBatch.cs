@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Producer;
+using Azure.Messaging.ServiceBus.Sender;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Amqp

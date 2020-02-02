@@ -3,7 +3,7 @@
 
 using System;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 

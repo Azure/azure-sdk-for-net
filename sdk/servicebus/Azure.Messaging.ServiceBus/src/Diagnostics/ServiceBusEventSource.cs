@@ -3,8 +3,8 @@
 
 using System;
 using System.Diagnostics.Tracing;
-using Azure.Messaging.ServiceBus.Consumer;
-using Azure.Messaging.ServiceBus.Producer;
+using Azure.Messaging.ServiceBus.Receiver;
+using Azure.Messaging.ServiceBus.Sender;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {

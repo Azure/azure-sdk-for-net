@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Messaging.ServiceBus
+namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
     /// Specifies the behavior of the receiver.
@@ -15,9 +15,9 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>ReceiveAndDelete will delete the message from Service Bus as soon as the message is delivered.</summary>
         ReceiveAndDelete,
 
-        /// <summary>
-        ///
-        /// </summary>
-        PeekWithoutLock,
+        ///// <summary>
+        /////
+        ///// </summary>
+        //PeekWithoutLock,
     }
 }

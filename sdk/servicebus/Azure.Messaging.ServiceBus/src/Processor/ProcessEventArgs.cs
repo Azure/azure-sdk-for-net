@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 
 namespace Azure.Messaging.ServiceBus.Processor
 {
@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Processor
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.ServiceBus.Processor" />
     ///
-    public struct ProcessEventArgs
+    internal struct ProcessEventArgs
     {
         /// <summary>
         ///   Indicates whether or not the arguments contain an event to be processed.  In

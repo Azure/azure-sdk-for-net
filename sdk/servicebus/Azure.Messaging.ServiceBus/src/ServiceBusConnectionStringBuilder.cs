@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     /// Used to generate Service Bus connection strings.
     /// </summary>
-    public class ServiceBusConnectionStringBuilder
+    internal class ServiceBusConnectionStringBuilder
     {
         private const char KeyValueSeparator = '=';
         private const char KeyValuePairDelimiter = ';';

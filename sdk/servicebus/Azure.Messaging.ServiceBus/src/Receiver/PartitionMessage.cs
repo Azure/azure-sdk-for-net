@@ -3,14 +3,14 @@
 
 using Azure.Core;
 
-namespace Azure.Messaging.ServiceBus.Consumer
+namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
     ///   Contains information about a partition that has attempted to receive an event from the Azure Event Hub
     ///   service, as well as the received event, if any.
     /// </summary>
     ///
-    public struct PartitionMessage
+    internal struct PartitionMessage
     {
         /// <summary>
         ///   The Event Hub partition that the <see cref="PartitionMessage.Message" /> is associated with.

@@ -5,14 +5,14 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.Messaging.ServiceBus.Consumer
+namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
     ///   The set of options that can be specified to configure behavior when reading events from an
     ///   <see cref="ServiceBusReceiverClient" />.
     /// </summary>
     ///
-    public class ReadEventOptions
+    internal class ReadEventOptions
     {
         /// <summary>The maximum amount of time to wait to for an event to be available before emitting an empty item; if <c>null</c>, empty items will not be emitted.</summary>
         private TimeSpan? _maximumWaitTime = null;

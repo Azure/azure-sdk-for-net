@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// Provides interface definition of a token provider.
     /// </summary>
-    public interface ITokenProvider
+    internal interface ITokenProvider
     {
         /// <summary>
         /// Gets a <see cref="SecurityToken"/>.

@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Processor
     ///   Contains information about the partition whose processing is being stopped.
     /// </summary>
     ///
-    public class PartitionClosingEventArgs
+    internal class PartitionClosingEventArgs
     {
         /// <summary>
         ///   The identifier of the Event Hub partition this instance is associated with.

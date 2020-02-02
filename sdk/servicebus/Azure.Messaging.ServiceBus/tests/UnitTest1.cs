@@ -3,13 +3,13 @@
 
 using System;
 using NUnit.Framework;
-using Azure.Messaging.ServiceBus.Producer;
+using Azure.Messaging.ServiceBus.Sender;
 using Azure.Messaging.ServiceBus;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 using System.Net;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Template.Tests
         public async Task Send_ConnString()
         {
             var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            await sender.SendAsync(GetMessages(10));
+            await sender.SendRangeAsync(GetMessages(10));
         }
 
         [Test]
@@ -111,18 +111,17 @@ namespace Microsoft.Azure.Template.Tests
             var messageCt = 10;
 
             IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt);
-            await sender.SendAsync(sentMessages);
+            await sender.SendRangeAsync(sentMessages);
 
-            var receiver = new ServiceBusReceiverClient(ConnString, QueueName);
+            var receiver = new QueueReceiverClient(ConnString, QueueName);
 
             Dictionary<string, string> sentMessageIdToLabel = new Dictionary<string, string>();
             foreach (ServiceBusMessage message in sentMessages)
             {
                 sentMessageIdToLabel.Add(message.MessageId, Encoding.Default.GetString(message.Body));
             }
-            IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekAsync(
-                fromSequenceNumber: 1,
-                messageCount: messageCt);
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeAsync(
+                maxMessages: messageCt);
 
             var ct = 0;
             await foreach (ServiceBusMessage peekedMessage in peekedMessages)
@@ -152,7 +151,7 @@ namespace Microsoft.Azure.Template.Tests
 
             // send the messages
             IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId, partitionKey);
-            await sender.SendAsync(sentMessages);
+            await sender.SendRangeAsync(sentMessages);
             Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
             foreach (ServiceBusMessage message in sentMessages)
             {
@@ -160,10 +159,10 @@ namespace Microsoft.Azure.Template.Tests
             }
 
             // peek the messages
-            var receiver = new ServiceBusReceiverClient(ConnString, SessionQueueName);
+            var receiver = new QueueReceiverClient(ConnString, SessionQueueName);
 
             sequenceNumber ??= 1;
-            IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekAsync(
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeBySequenceAsync(
                 fromSequenceNumber: (long)sequenceNumber,
                 messageCount: messageCt,
                 sessionId: sessionId);
@@ -195,18 +194,18 @@ namespace Microsoft.Azure.Template.Tests
             var sessionId = Guid.NewGuid().ToString();
             // send the messages
             IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
-            await sender.SendAsync(sentMessages);
+            await sender.SendRangeAsync(sentMessages);
 
-            var receiver1 = new ServiceBusReceiverClient(ConnString, SessionQueueName);
-            var receiver2 = new ServiceBusReceiverClient(ConnString, SessionQueueName);
+            var receiver1 = new QueueReceiverClient(ConnString, SessionQueueName);
+            var receiver2 = new QueueReceiverClient(ConnString, SessionQueueName);
             Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
 
             // peek the messages
-            IAsyncEnumerable<ServiceBusMessage> peekedMessages1 = receiver1.PeekAsync(
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages1 = receiver1.PeekRangeBySequenceAsync(
                 fromSequenceNumber: 1,
                 messageCount: messageCt,
                 sessionId: sessionId);
-            IAsyncEnumerable<ServiceBusMessage> peekedMessages2 = receiver2.PeekAsync(
+            IAsyncEnumerable<ServiceBusMessage> peekedMessages2 = receiver2.PeekRangeBySequenceAsync(
                 fromSequenceNumber: 1,
                 messageCount: messageCt,
                 sessionId: sessionId);
@@ -286,5 +285,50 @@ namespace Microsoft.Azure.Template.Tests
             }
             return text;
         }
+
+        //private async Task Scenarios()
+        //{
+        //    var queueReceiver = new QueueReceiverClient(ConnString, QueueName);
+        //    var messageHandlerOptions = new MessageHandlerOptions(ExceptionHandlerAsync)
+        //    {
+        //        MaxConcurrentCalls = 1,
+        //        AutoComplete = false
+        //    };
+        //    // Register the function that will process messages; can do things like queueClient.CompleteAsync on the message in the handler
+        //    queueReceiver.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
+        //    ServiceBusMessage message = await queueReceiver.ReceiveAsync();
+        //    await queueReceiver.CompleteAsync(message.SystemProperties.LockToken);
+
+        //    var queueClient = new QueueReceiverClient(connString, queueName);
+        //    IAsyncEnumerable<ServiceBusMessage> messages = queueClient.PeekRangeAsync(maxMessages: 10);
+
+
+        //    IAsyncEnumerable<ServiceBusMessage> messages = queueReceiver.ReceiveRangeAsync(maxMessages: 10);
+        //    var sessionId = "1";
+        //    var sessionClient = new SessionReceiverClient(ConnString, QueueName, sessionId);
+        //    string state = "some state";
+        //    await sessionClient.SetStateAsync(Encoding.Default.GetBytes(state));
+        //    byte[] receivedState = await sessionClient.GetStateAsync();
+        //    await sessionClient.RenewSessionLockAsync(message);
+        //    IAsyncEnumerable<ServiceBusMessage> receivedMessages = sessionClient.ReceiveRangeAsync(maxMessages: 10);
+        //    IAsyncEnumerable<ServiceBusMessage> peekedMessages = sessionClient.PeekRangeAsync(maxMessages: 10);
+        //    var queueClient = new QueueReceiverClient(ConnString, QueueName);
+        //    IAsyncEnumerable<ServiceBusMessage> messages = queueClient.ReceiveRangeAsync(maxMessages: 10);
+        //    IList<long> deferredSequences = new List<long>();
+        //    foreach (ServiceBusMessage message in messages)
+        //    {
+        //        if (SomeDeferralLogic(message))
+        //        {
+        //            deferredSequences.Add(message.SystemProperties.SequenceNumber);
+        //            await queueClient.DeferAsync(message.SystemProperties.LockToken);
+        //        }
+        //    }
+        //    queueClient.RenewLockAsync()
+        //    //var senderClient = new ServiceBusSenderClient(ConnString, QueueName);
+        //    //ServiceBusMessage message = GetMessages();
+        //    //long sequenceNumber = await senderClient.ScheduleMessageAsync(message);
+        //    //await senderClient.CancelScheduledMessageAsync(sequenceNumber);
+
+        //}
     }
 }

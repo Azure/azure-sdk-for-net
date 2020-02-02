@@ -5,20 +5,30 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Producer
+namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
-    ///   The set of options that can be specified when creating an <see cref="ServiceBusSenderClient" />
+    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiverClient" />
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ServiceBusSenderClientOptions
+    public abstract class ServiceBusReceiverClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+
+        /// <summary>
+        ///
+        /// </summary>
+        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public int PrefetchCount = 0;
 
         /// <summary>
         ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
@@ -79,17 +89,17 @@ namespace Azure.Messaging.ServiceBus.Producer
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        /// <summary>
-        ///   Creates a new copy of the current <see cref="ServiceBusSenderClientOptions" />, cloning its attributes into a new instance.
-        /// </summary>
-        ///
-        /// <returns>A new copy of <see cref="ServiceBusSenderClientOptions" />.</returns>
-        ///
-        internal ServiceBusSenderClientOptions Clone() =>
-            new ServiceBusSenderClientOptions
-            {
-                _connectionOptions = ConnectionOptions.Clone(),
-                _retryOptions = RetryOptions.Clone()
-            };
+        ///// <summary>
+        /////   Creates a new copy of the current <see cref="ServiceBusReceiverClientOptions" />, cloning its attributes into a new instance.
+        ///// </summary>
+        /////
+        ///// <returns>A new copy of <see cref="ServiceBusReceiverClientOptions" />.</returns>
+        /////
+        //internal ServiceBusReceiverClientOptions Clone() =>
+        //    new ServiceBusReceiverClientOptions
+        //    {
+        //        _connectionOptions = ConnectionOptions.Clone(),
+        //        _retryOptions = RetryOptions.Clone()
+        //    };
     }
 }

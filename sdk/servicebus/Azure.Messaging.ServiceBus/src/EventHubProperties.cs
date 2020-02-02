@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus
     ///   A set of information for an Event Hub.
     /// </summary>
     ///
-    public class EventHubProperties
+    internal class EventHubProperties
     {
         /// <summary>
         ///   The name of the Event Hub, specific to the namespace

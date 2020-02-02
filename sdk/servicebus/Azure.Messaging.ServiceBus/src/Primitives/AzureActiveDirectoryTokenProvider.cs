@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// Represents the Azure Active Directory token provider for the Service Bus.
     /// </summary>
-    public class AzureActiveDirectoryTokenProvider : TokenProvider
+    internal class AzureActiveDirectoryTokenProvider : TokenProvider
     {
         private readonly string _authority;
         private readonly object _authCallbackState;
@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
         /// <param name="authenticationCallback"></param>
         /// <param name="authority"></param>
         /// <param name="state"></param>
-        public AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
+        internal AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
         {
             this.AuthCallback = authenticationCallback ?? throw Fx.Exception.ArgumentNull(nameof(authenticationCallback));
             this._authority = authority ?? throw Fx.Exception.ArgumentNull(nameof(authority));

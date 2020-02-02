@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Messaging.ServiceBus.Producer;
+using Azure.Messaging.ServiceBus.Sender;
 
 namespace Azure.Messaging.ServiceBus.Core
 {

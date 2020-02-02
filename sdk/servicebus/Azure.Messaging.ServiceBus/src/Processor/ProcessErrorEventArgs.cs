@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus.Processor
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.ServiceBus.Processor" />
     ///
-    public struct ProcessErrorEventArgs
+    internal struct ProcessErrorEventArgs
     {
         /// <summary>
         ///   The identifier of the partition whose processing threw an exception.

@@ -2,16 +2,44 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using Azure.Core;
 
-namespace Azure.Messaging.ServiceBus.Producer
+namespace Azure.Messaging.ServiceBus.Sender
 {
     /// <summary>
-    ///   The set of options that can be specified to influence the way in which events
-    ///   are sent to the Event Hubs service.
+    ///   The set of options that can be specified to influence the way in which an event batch
+    ///   behaves and is sent to the Event Hubs service.
     /// </summary>
     ///
-    internal class SendEventOptions
+    internal class CreateBatchOptions
     {
+        /// <summary>The requested maximum size to allow for the batch, in bytes.</summary>
+        private long? _maximumSizeInBytes = null;
+
+        /// <summary>
+        ///   The maximum size to allow for a single batch of events, in bytes.
+        /// </summary>
+        ///
+        /// <value>
+        ///   The desired limit, in bytes, for the size of the associated event batch.  If <c>null</c>,
+        ///   the maximum size allowed by the active transport will be used.
+        /// </value>
+        ///
+        public long? MaximumSizeInBytes
+        {
+            get => _maximumSizeInBytes;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, ServiceBusSenderClient.MinimumBatchSizeLimit, nameof(MaximumSizeInBytes));
+                }
+
+                _maximumSizeInBytes = value;
+            }
+        }
+
         /// <summary>
         ///   Allows a hashing key to be provided for the batch of events, which instructs the Event Hubs
         ///   service map this key to a specific partition but allowing the service to choose an arbitrary,
@@ -33,24 +61,24 @@ namespace Azure.Messaging.ServiceBus.Producer
         /// </value>
         ///
         /// <remarks>
-        ///   If the <see cref="SendEventOptions.PartitionKey" /> is specified, then no <see cref="SendEventOptions.PartitionId" />
+        ///   If the <see cref="CreateBatchOptions.PartitionKey" /> is specified, then no <see cref="CreateBatchOptions.PartitionId" />
         ///   may be set when sending.
         /// </remarks>
         ///
         public string PartitionKey { get; set; }
 
         /// <summary>
-        ///   If specified, events be published to this specific partition.  If the identifier is not
+        ///   If specified, events will be published to this specific partition.  If the identifier is not
         ///   specified, the Event Hubs service will be responsible for routing events automatically to an available partition.
         /// </summary>
         ///
         /// <value>
-        ///   If the producer wishes the events to be automatically to partitions, <c>null</c>; otherwise, the identifier
+        ///   If the producer wishes the events to be automatically routed to partitions, <c>null</c>; otherwise, the identifier
         ///   of the desired partition.
         /// </value>
         ///
         /// <remarks>
-        ///   If the <see cref="SendEventOptions.PartitionId" /> is specified, then no <see cref="SendEventOptions.PartitionKey" />
+        ///   If the <see cref="CreateBatchOptions.PartitionId" /> is specified, then no <see cref="CreateBatchOptions.PartitionKey" />
         ///   may be set when sending.
         ///
         ///   <para>Allowing automatic routing of partitions is recommended when:</para>
@@ -65,26 +93,27 @@ namespace Azure.Messaging.ServiceBus.Producer
         public string PartitionId { get; set; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SendEventOptions"/> class.
+        ///   Creates a new copy of the current <see cref="CreateBatchOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        public SendEventOptions()
-        {
-        }
+        /// <returns>A new copy of <see cref="CreateBatchOptions" />.</returns>
+        ///
+        internal CreateBatchOptions Clone() =>
+            new CreateBatchOptions
+            {
+                PartitionId = PartitionId,
+                PartitionKey = PartitionKey,
+                _maximumSizeInBytes = MaximumSizeInBytes
+            };
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="SendEventOptions"/> class.
+        ///   Converts the <see cref="CreateBatchOptions" /> into an equivalent
+        ///   <see cref="SendEventOptions" /> instance.
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the partition to which events should be sent.</param>
-        /// <param name="partitionKey">The hashing key to use for influencing the partition to which the events are routed.</param>
+        /// <returns>A set of sending options equivalent to those represented by the batch options.</returns>
         ///
-        internal SendEventOptions(string partitionId,
-                             string partitionKey)
-        {
-            PartitionId = partitionId;
-            PartitionKey = partitionKey;
-        }
+        internal SendEventOptions ToSendOptions() => new SendEventOptions(PartitionId, PartitionKey);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// Provides information about a security token such as audience, expiry time, and the string token value.
     /// </summary>
-    public class SecurityToken
+    internal class SecurityToken
     {
         /// <summary>
         /// Token literal

@@ -3,13 +3,13 @@
 
 using System;
 
-namespace Azure.Messaging.ServiceBus.Consumer
+namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
     ///   A set of information about the enqueued state of a partition, as observed by the consumer.
     /// </summary>
     ///
-    public struct LastEnqueuedEventProperties
+    internal struct LastEnqueuedEventProperties
     {
         /// <summary>
         ///   The sequence number of the last observed event to be enqueued in the partition.

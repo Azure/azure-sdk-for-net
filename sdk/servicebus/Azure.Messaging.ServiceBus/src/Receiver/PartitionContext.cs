@@ -5,14 +5,14 @@ using System;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Consumer
+namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
     ///   Represents an Event Hub partition and its relative state, as scoped to an associated
     ///   operation performed against it.
     /// </summary>
     ///
-    public class PartitionContext
+    internal class PartitionContext
     {
         /// <summary>
         ///   The identifier of the Event Hub partition this context is associated with.

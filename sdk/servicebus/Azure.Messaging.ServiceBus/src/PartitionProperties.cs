@@ -9,7 +9,7 @@ namespace Azure.Messaging.ServiceBus
     ///   A set of information for a single partition of an Event Hub.
     /// </summary>
     ///
-    public class PartitionProperties
+    internal class PartitionProperties
     {
         /// <summary>
         ///   The name of the Event Hub where the partitions reside, specific to the

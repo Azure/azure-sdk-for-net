@@ -7,14 +7,14 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
-namespace Azure.Messaging.ServiceBus.Producer
+namespace Azure.Messaging.ServiceBus.Sender
 {
     /// <summary>
     ///   A set of <see cref="EventData" /> with size constraints known up-front,
     ///   intended to be sent to the Event Hubs service as a single batch.
     /// </summary>
     ///
-    public sealed class EventDataBatch : IDisposable
+    internal sealed class EventDataBatch : IDisposable
     {
         /// <summary>
         ///   The maximum size allowed for the batch, in bytes.  This includes the events in the batch as

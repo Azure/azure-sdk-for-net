@@ -5,25 +5,20 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Consumer
+namespace Azure.Messaging.ServiceBus.Sender
 {
     /// <summary>
-    ///   The baseline set of options that can be specified when creating a <see cref="ServiceBusReceiverClient" />
+    ///   The set of options that can be specified when creating an <see cref="ServiceBusSenderClient" />
     ///   to configure its behavior.
     /// </summary>
     ///
-    public class ServiceBusReceiverClientOptions
+    public class ServiceBusSenderClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
-
-        /// <summary>
-        ///
-        /// </summary>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
         ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
@@ -85,13 +80,13 @@ namespace Azure.Messaging.ServiceBus.Consumer
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Creates a new copy of the current <see cref="ServiceBusReceiverClientOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="ServiceBusSenderClientOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="ServiceBusReceiverClientOptions" />.</returns>
+        /// <returns>A new copy of <see cref="ServiceBusSenderClientOptions" />.</returns>
         ///
-        internal ServiceBusReceiverClientOptions Clone() =>
-            new ServiceBusReceiverClientOptions
+        internal ServiceBusSenderClientOptions Clone() =>
+            new ServiceBusSenderClientOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()

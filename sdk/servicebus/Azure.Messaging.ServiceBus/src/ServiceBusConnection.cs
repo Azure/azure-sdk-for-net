@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Authorization;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Newtonsoft.Json.Linq;
@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus
     ///
     /// <seealso href="https://docs.microsoft.com/en-us/Azure/event-hubs/event-hubs-about" />
     ///
-    public class ServiceBusConnection : IAsyncDisposable
+    internal class ServiceBusConnection : IAsyncDisposable
     {
         /// <summary>
         ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
@@ -253,6 +253,59 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Schedules a message to appear on Service Bus at a later time.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing</param>
+        /// <returns>The sequence number of the message that was scheduled.</returns>
+        public virtual Task<long> ScheduleMessageAsync(ServiceBusMessage message, DateTimeOffset scheduleEnqueueTimeUtc)
+        {
+            return Task.FromResult((long)5);
+        }
+
+        /// <summary>
+        /// Cancels a message that was scheduled.
+        /// </summary>
+        /// <param name="sequenceNumber">The <see cref="ServiceBusMessage.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        public async Task CancelScheduledMessageAsync(long sequenceNumber)
+        {
+            await Task.Run(() => sequenceNumber + 1).ConfigureAwait(false);
+            //this.ThrowIfClosed();
+            //if (Transaction.Current != null)
+            //{
+            //    throw new ServiceBusException(false, $"{nameof(CancelScheduledMessageAsync)} method is not supported within a transaction.");
+            //}
+
+            //MessagingEventSource.Log.CancelScheduledMessageStart(this.ClientId, sequenceNumber);
+
+            //bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
+            //Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.CancelStart(sequenceNumber) : null;
+            //Task cancelTask = null;
+
+            //try
+            //{
+            //    cancelTask = this.RetryPolicy.RunOperation(() => this.OnCancelScheduledMessageAsync(sequenceNumber),
+            //        this.OperationTimeout);
+            //    await cancelTask.ConfigureAwait(false);
+            //}
+            //catch (Exception exception)
+            //{
+            //    if (isDiagnosticSourceEnabled)
+            //    {
+            //        this.diagnosticSource.ReportException(exception);
+            //    }
+
+            //    MessagingEventSource.Log.CancelScheduledMessageException(this.ClientId, exception);
+            //    throw;
+            //}
+            //finally
+            //{
+            //    this.diagnosticSource.CancelStop(activity, sequenceNumber, cancelTask?.Status);
+            //}
+            //MessagingEventSource.Log.CancelScheduledMessageStop(this.ClientId);
+        }
+
+        /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
         ///   including ensuring that the connection itself has been closed.
         /// </summary>
@@ -391,7 +444,6 @@ namespace Azure.Messaging.ServiceBus
         ///   When <c>null</c>, consumers are created as non-exclusive.
         /// </summary>
         ///
-        /// <param name="eventPosition">The position within the partition where the consumer should begin reading events.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
@@ -403,7 +455,6 @@ namespace Azure.Messaging.ServiceBus
         internal virtual TransportConsumer CreateTransportConsumer(
             //string consumerGroup,
             //                                                       string partitionId,
-                                                                   EventPosition eventPosition,
                                                                    ServiceBusRetryPolicy retryPolicy,
                                                                    bool trackLastEnqueuedEventProperties = true,
                                                                    long? ownerLevel = default,
@@ -414,7 +465,7 @@ namespace Azure.Messaging.ServiceBus
             //Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            return InnerClient.CreateConsumer(eventPosition, retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount, sessionId);
+            return InnerClient.CreateConsumer(retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount, sessionId);
         }
 
         /// <summary>

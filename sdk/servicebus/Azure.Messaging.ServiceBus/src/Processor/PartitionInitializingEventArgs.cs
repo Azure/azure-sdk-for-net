@@ -3,7 +3,7 @@
 
 using System.Threading;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Consumer;
+using Azure.Messaging.ServiceBus.Receiver;
 
 namespace Azure.Messaging.ServiceBus.Processor
 {
@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus.Processor
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.ServiceBus.Processor" />
     ///
-    public class PartitionInitializingEventArgs
+    internal class PartitionInitializingEventArgs
     {
         /// <summary>
         ///   The identifier of the partition whose processing is starting.
@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Processor
         ///   begin reading events when no checkpoint can be found.
         /// </summary>
         ///
-        public EventPosition DefaultStartingPosition { get; set; }
+        internal EventPosition DefaultStartingPosition { get; set; }
 
         /// <summary>
         ///   A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.

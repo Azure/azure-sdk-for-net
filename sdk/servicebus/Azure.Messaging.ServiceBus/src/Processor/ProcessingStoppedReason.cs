@@ -7,7 +7,7 @@ namespace Azure.Messaging.ServiceBus.Processor
     ///   The reason for stopping event processing for a given partition.
     /// </summary>
     ///
-    public enum ProcessingStoppedReason
+    internal enum ProcessingStoppedReason
     {
         /// <summary>A request was made to stop processing.</summary>
         Shutdown,

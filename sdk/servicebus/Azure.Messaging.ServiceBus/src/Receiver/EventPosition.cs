@@ -5,14 +5,14 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.Messaging.ServiceBus.Consumer
+namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
     ///   The position of events in an Event Hub partition, typically used in the creation of
     ///   an <see cref="ServiceBusReceiverClient" />.
     /// </summary>
     ///
-    public struct EventPosition : IEquatable<EventPosition>
+    internal struct EventPosition : IEquatable<EventPosition>
     {
         /// <summary>The token that represents the beginning event in the stream of a partition.</summary>
         private const string StartOfStreamOffset = "-1";

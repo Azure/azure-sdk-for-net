@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// Extends SecurityToken for JWT specific properties
     /// </summary>
-    public class JsonSecurityToken : SecurityToken
+    internal class JsonSecurityToken : SecurityToken
     {
         /// <summary>
         /// Creates a new instance of the <see cref="JsonSecurityToken"/> class.

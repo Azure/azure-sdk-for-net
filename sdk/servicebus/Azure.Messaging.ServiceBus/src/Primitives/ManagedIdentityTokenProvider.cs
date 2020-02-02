@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// Represents the Azure Active Directory token provider for Azure Managed Identity integration.
     /// </summary>
-    public class ManagedIdentityTokenProvider : TokenProvider
+    internal class ManagedIdentityTokenProvider : TokenProvider
     {
         private static AzureServiceTokenProvider s_azureServiceTokenProvider = new AzureServiceTokenProvider();
 

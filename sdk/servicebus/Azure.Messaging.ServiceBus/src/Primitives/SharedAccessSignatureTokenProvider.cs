@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Primitives
     /// <summary>
     /// The SharedAccessSignatureTokenProvider generates tokens using a shared access key or existing signature.
     /// </summary>
-    public class SharedAccessSignatureTokenProvider : TokenProvider
+    internal class SharedAccessSignatureTokenProvider : TokenProvider
     {
         internal static readonly TimeSpan DefaultTokenTTL = TimeSpan.FromMinutes(60);
         private readonly byte[] _encodedSharedAccessKey;
