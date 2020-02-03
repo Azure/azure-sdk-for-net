@@ -229,7 +229,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(entity.DataSource);
                 Assert.IsNotNull(entity.Id);
                 Assert.IsNotNull(entity.Language);
-                Assert.IsNotNull(entity.Uri);
+                Assert.IsNotNull(entity.Url);
                 Assert.IsNotNull(entity.Matches);
                 Assert.IsNotNull(entity.Matches.First().Length);
                 Assert.IsNotNull(entity.Matches.First().Offset);
