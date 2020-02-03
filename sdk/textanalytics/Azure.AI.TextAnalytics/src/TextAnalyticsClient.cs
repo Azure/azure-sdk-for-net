@@ -235,6 +235,7 @@ namespace Azure.AI.TextAnalytics
         /// in the request sent to the service.  If set to an empty string, the
         /// service will apply a model where the country is explicitly set to
         /// "None".  The same country hint is applied to all strings in the
+        /// input collection.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
