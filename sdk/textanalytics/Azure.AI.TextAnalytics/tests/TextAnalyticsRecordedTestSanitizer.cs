@@ -22,7 +22,7 @@ namespace Azure.Core.Testing
         {
             return variableName switch
             {
-                "TEXT_ANALYTICS_SUBSCRIPTION_KEY" => SanitizeValue,
+                "TEXT_ANALYTICS_API_KEY" => SanitizeValue,
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
         }

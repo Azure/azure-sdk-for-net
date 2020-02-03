@@ -3,8 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading;
@@ -13,6 +16,7 @@ using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.Storage;
+using Microsoft.Azure.Storage;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
@@ -24,9 +28,9 @@ namespace Microsoft.Azure.EventHubs.Tests
 {
     internal sealed class EventHubScope : IAsyncDisposable
     {
-        private const int RetryMaximumAttempts = 15;
+        private const int RetryMaximumAttempts = 20;
         private const double RetryExponentialBackoffSeconds = 3.0;
-        private const double RetryBaseJitterSeconds = 20.0;
+        private const double RetryBaseJitterSeconds = 60.0;
 
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -208,22 +212,57 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttempts, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
            Policy<T>
-               .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-               .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+               .Handle<Exception>(ex => ShouldRetry(ex))
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttempts, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
             Policy
-                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+                .Handle<Exception>(ex => ShouldRetry(ex))
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
             ((statusCode == HttpStatusCode.Unauthorized)
+                || (statusCode == ((HttpStatusCode)408))
+                || (statusCode == HttpStatusCode.Conflict)
+                || (statusCode == ((HttpStatusCode)429))
                 || (statusCode == HttpStatusCode.InternalServerError)
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
-                || (statusCode == HttpStatusCode.Conflict)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
+
+         private static bool ShouldRetry(Exception ex) =>
+            ((IsRetriableException(ex)) || (IsRetriableException(ex?.InnerException)));
+
+        private static bool IsRetriableException(Exception ex)
+        {
+            if (ex == null)
+            {
+                return false;
+            }
+
+            switch (ex)
+            {
+                case ErrorResponseException erEx:
+                    return IsRetriableStatus(erEx.Response.StatusCode);
+
+                case CloudException clEx:
+                    return IsRetriableStatus(clEx.Response.StatusCode);
+
+                case StorageException stEx:
+                    return IsRetriableStatus((HttpStatusCode)stEx.RequestInformation.HttpStatusCode);
+
+                case TimeoutException _:
+                case TaskCanceledException _:
+                case OperationCanceledException _:
+                case HttpRequestException _:
+                case WebException _:
+                case SocketException _:
+                case IOException _:
+                    return true;
+
+                default:
+                    return false;
+            };
+        }
 
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
             TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds));

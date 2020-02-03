@@ -16,10 +16,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void AnalyzeSentimentBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
             var inputs = new List<TextDocumentInput>
@@ -61,21 +61,21 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.SentimentClass.ToString()}, with scores: ");
-                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.PositiveScore:0.00}.");
-                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.NeutralScore:0.00}.");
-                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.NegativeScore:0.00}.");
+                    Debug.WriteLine($"Document sentiment is {result.DocumentSentiment.Sentiment}, with scores: ");
+                    Debug.WriteLine($"    Positive score: {result.DocumentSentiment.SentimentScores.Positive:0.00}.");
+                    Debug.WriteLine($"    Neutral score: {result.DocumentSentiment.SentimentScores.Neutral:0.00}.");
+                    Debug.WriteLine($"    Negative score: {result.DocumentSentiment.SentimentScores.Negative:0.00}.");
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
-                    foreach (TextSentiment sentenceSentiment in result.SentenceSentiments)
+                    foreach (TextSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 
-                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.SentimentClass.ToString()}, with scores: ");
-                        Debug.WriteLine($"        Positive score: {sentenceSentiment.PositiveScore:0.00}.");
-                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.NeutralScore:0.00}.");
-                        Debug.WriteLine($"        Negative score: {sentenceSentiment.NegativeScore:0.00}.");
+                        Debug.WriteLine($"    Sentiment is {sentenceSentiment.Sentiment}, with scores: ");
+                        Debug.WriteLine($"        Positive score: {sentenceSentiment.SentimentScores.Positive:0.00}.");
+                        Debug.WriteLine($"        Neutral score: {sentenceSentiment.SentimentScores.Neutral:0.00}.");
+                        Debug.WriteLine($"        Negative score: {sentenceSentiment.SentimentScores.Negative:0.00}.");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

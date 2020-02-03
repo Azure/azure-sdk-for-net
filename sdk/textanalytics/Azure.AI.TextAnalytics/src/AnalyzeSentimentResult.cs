@@ -14,29 +14,17 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class AnalyzeSentimentResult : TextAnalyticsResult
     {
-        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, TextSentiment documentSentiment, IList<TextSentiment> sentenceSentiments)
+        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
             : base(id, statistics)
         {
             DocumentSentiment = documentSentiment;
-            SentenceSentiments = new ReadOnlyCollection<TextSentiment>(sentenceSentiments);
         }
 
-        internal AnalyzeSentimentResult(string id, string errorMessage)
-            : base(id, errorMessage)
-        {
-            SentenceSentiments = Array.Empty<TextSentiment>();
-        }
+        internal AnalyzeSentimentResult(string id, string errorMessage) : base(id, errorMessage) { }
 
-        // TODO: set DocumentSentiment.Length
         /// <summary>
         /// Gets the predicted sentiment for the full document.
         /// </summary>
-        public TextSentiment DocumentSentiment { get; }
-
-        /// <summary>
-        /// Gets the predicted sentiment for each sentence in the corresponding
-        /// document.
-        /// </summary>
-        public IReadOnlyCollection<TextSentiment> SentenceSentiments { get; }
+        public DocumentSentiment DocumentSentiment { get; }
     }
 }

@@ -104,7 +104,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// connection associated with the specified storage account</param>
         /// <param name="routingPreference">Maintains information about the
         /// network routing choice opted by the user for data transfer</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference))
+        /// <param name="blobRestoreStatus">Blob restore status</param>
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference), BlobRestoreStatus blobRestoreStatus = default(BlobRestoreStatus))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -131,6 +132,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             LargeFileSharesState = largeFileSharesState;
             PrivateEndpointConnections = privateEndpointConnections;
             RoutingPreference = routingPreference;
+            BlobRestoreStatus = blobRestoreStatus;
             CustomInit();
         }
 
@@ -313,6 +315,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         public RoutingPreference RoutingPreference { get; set; }
 
         /// <summary>
+        /// Gets blob restore status
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.blobRestoreStatus")]
+        public BlobRestoreStatus BlobRestoreStatus { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -350,6 +358,10 @@ namespace Microsoft.Azure.Management.Storage.Models
                         element.Validate();
                     }
                 }
+            }
+            if (BlobRestoreStatus != null)
+            {
+                BlobRestoreStatus.Validate();
             }
         }
     }

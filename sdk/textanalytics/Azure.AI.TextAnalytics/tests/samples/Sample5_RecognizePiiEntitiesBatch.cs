@@ -17,10 +17,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void RecognizePiiEntitiesBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
             var inputs = new List<TextDocumentInput>
@@ -54,11 +54,11 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies" : "y ")}:");
+                    Debug.WriteLine($"    Recognized the following {result.CategorizedEntities.Count()} PII entit{(result.CategorizedEntities.Count() > 1 ? "ies" : "y ")}:");
 
-                    foreach (NamedEntity entity in result.NamedEntities)
+                    foreach (CategorizedEntity entity in result.CategorizedEntities)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                        Debug.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

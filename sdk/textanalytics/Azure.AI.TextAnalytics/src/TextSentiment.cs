@@ -11,12 +11,10 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct TextSentiment
     {
-        internal TextSentiment(TextSentimentClass sentimentClass, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal TextSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
-            SentimentClass = sentimentClass;
-            PositiveScore = positiveScore;
-            NeutralScore = neutralScore;
-            NegativeScore = negativeScore;
+            Sentiment = sentiment;
+            SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);
             Offset = offset;
             Length = length;
         }
@@ -25,25 +23,13 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for the analyzed input document
         /// or substring.
         /// </summary>
-        public TextSentimentClass SentimentClass { get; }
+        public TextSentimentLabel Sentiment { get; }
 
         /// <summary>
-        /// Gets a score between 0 and 1, indicating the confidence that the
-        /// sentiment of the analyzed text is positive.
+        /// Gets the sentiment confidence score between 0 and 1,
+        /// for each sentiment label.
         /// </summary>
-        public double PositiveScore { get; }
-
-        /// <summary>
-        /// Gets a score between 0 and 1, indicating the confidence that the
-        /// sentiment of the analyzed text is neutral.
-        /// </summary>
-        public double NeutralScore { get; }
-
-        /// <summary>
-        /// Gets a score between 0 and 1, indicating the confidence that the
-        /// sentiment of the analyzed text is negative.
-        /// </summary>
-        public double NegativeScore { get; }
+        public SentimentScorePerLabel SentimentScores { get; }
 
         /// <summary>
         /// Gets the start position for the matching text in the input document.

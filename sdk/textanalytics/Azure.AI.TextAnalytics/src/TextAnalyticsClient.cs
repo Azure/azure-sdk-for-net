@@ -72,10 +72,10 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credential">The subscription key used to access
-        /// the service. This will allow you to update the subscription key
+        /// <param name="credential">The API key used to access
+        /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
-        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential)
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsApiKeyCredential credential)
             : this(endpoint, credential, new TextAnalyticsClientOptions())
         {
         }
@@ -86,12 +86,12 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credential">The subscription key used to access
-        /// the service. This will allow you to update the subscription key
+        /// <param name="credential">The API key used to access
+        /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
         /// <param name="options"><see cref="TextAnalyticsClientOptions"/> that allow
         /// callers to configure how requests are sent to the service.</param>
-        public TextAnalyticsClient(Uri endpoint, TextAnalyticsSubscriptionKeyCredential credential, TextAnalyticsClientOptions options)
+        public TextAnalyticsClient(Uri endpoint, TextAnalyticsApiKeyCredential credential, TextAnalyticsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -99,7 +99,7 @@ namespace Azure.AI.TextAnalytics
 
             _baseUri = endpoint;
             _apiVersion = options.GetVersionString();
-            _pipeline = HttpPipelineBuilder.Build(options, new SubscriptionKeyAuthenticationPolicy(credential));
+            _pipeline = HttpPipelineBuilder.Build(options, new ApiKeyAuthenticationPolicy(credential));
             _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
         }
@@ -242,11 +242,11 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageAsync(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(inputs, countryHint);
-            return await DetectLanguagesAsync(detectLanguageInputs, new TextAnalyticsRequestOptions(), cancellationToken).ConfigureAwait(false);
+            return await DetectLanguageAsync(detectLanguageInputs, new TextAnalyticsRequestOptions(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -271,11 +271,11 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
+        public virtual Response<DetectLanguageResultCollection> DetectLanguage(IEnumerable<string> inputs, string countryHint = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             List<DetectLanguageInput> detectLanguageInputs = ConvertToDetectLanguageInputs(inputs, countryHint);
-            return DetectLanguages(detectLanguageInputs, new TextAnalyticsRequestOptions(), cancellationToken);
+            return DetectLanguage(detectLanguageInputs, new TextAnalyticsRequestOptions(), cancellationToken);
         }
 
         /// <summary>
@@ -295,12 +295,12 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguagesAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DetectLanguageResultCollection>> DetectLanguageAsync(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguages)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.Start();
 
             try
@@ -341,12 +341,12 @@ namespace Azure.AI.TextAnalytics
         /// the model could not analyze the input text.</returns>
         /// <exception cref="RequestFailedException">Service returned a non-success
         /// status code.</exception>
-        public virtual Response<DetectLanguageResultCollection> DetectLanguages(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
+        public virtual Response<DetectLanguageResultCollection> DetectLanguage(IEnumerable<DetectLanguageInput> inputs, TextAnalyticsRequestOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
             options ??= new TextAnalyticsRequestOptions();
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguages)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(DetectLanguage)}");
             scope.Start();
 
             try
@@ -1162,7 +1162,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input text,
+        /// Personally Identifiable Information found in the passed-in input text,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1219,7 +1219,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input text,
+        /// Personally Identifiable Information found in the passed-in input text,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1276,7 +1276,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input strings,
+        /// Personally Identifiable Information found in the passed-in input strings,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1304,7 +1304,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input strings,
+        /// Personally Identifiable Information found in the passed-in input strings,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1332,7 +1332,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input documents,
+        /// Personally Identifiable Information found in the passed-in input documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
@@ -1380,7 +1380,7 @@ namespace Azure.AI.TextAnalytics
 
         /// <summary>
         /// Runs a predictive model to identify a collection of entities containing
-        /// personally identifiable information found in the passed-in input documents,
+        /// Personally Identifiable Information found in the passed-in input documents,
         /// and categorize those entities into types such as US social security
         /// number, drivers license number, or credit card number.
         /// For a list of languages supported by this operation, see
