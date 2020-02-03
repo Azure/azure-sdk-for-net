@@ -957,7 +957,8 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (Exception ex)
                     {
-                        var errorEventArgs = new ProcessErrorEventArgs(null, string.Empty /*which resource to use here?*/, ex, cancellationToken);
+                        Logger.LoadBalancingTaskError(Identifier, ex.Message);
+                        var errorEventArgs = new ProcessErrorEventArgs(null, string.Empty, ex, cancellationToken);
                         _ = OnProcessErrorAsync(errorEventArgs);
                     }
 

@@ -1019,7 +1019,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task StartProcessingAsyncStartsLoadbalancer()
         {
-            using var cancellationSource = new CancellationTokenSource();
             const int NumberOfPartitions = 3;
             var mockLoadbalancer = new Mock<PartitionLoadBalancer>();
             mockLoadbalancer.SetupGet(m => m.LoadBalanceInterval).Returns(TimeSpan.FromSeconds(1));
@@ -1037,7 +1036,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockLoadbalancer.Verify(m => m.RunLoadBalancingAsync(It.Is<string[]>(p => p.Length == NumberOfPartitions), It.IsAny<CancellationToken>()));
 
-            await processor.StopProcessingAsync(cancellationSource.Token);
+            await processor.StopProcessingAsync(CancellationToken.None);
         }
 
         /// <summary>

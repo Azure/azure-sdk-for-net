@@ -33,7 +33,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task RelinquishOwnershipAsyncRelinquishesPartitionOwnershipOtherClientsConsiderThemClaimableImmediately()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
@@ -51,7 +50,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                await loadbalancer1.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+                await loadbalancer1.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             }
 
             completeOwnership = await partitionManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
@@ -62,7 +61,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Stopping the loadbalancer should relinquish all partition ownership.
 
-            await loadbalancer1.RelinquishOwnershipAsync(tokenSource.Token);
+            await loadbalancer1.RelinquishOwnershipAsync(CancellationToken.None);
 
             completeOwnership = await partitionManager.ListOwnershipAsync(loadbalancer1.FullyQualifiedNamespace, loadbalancer1.EventHubName, loadbalancer1.ConsumerGroup);
 
@@ -75,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                await loadbalancer2.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+                await loadbalancer2.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             }
 
             completeOwnership = await partitionManager.ListOwnershipAsync(loadbalancer1.FullyQualifiedNamespace, loadbalancer1.EventHubName, loadbalancer1.ConsumerGroup);
@@ -92,7 +91,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task RunLoadBalancingAsyncClaimsAllClaimablePartitions()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int NumberOfPartitions = 3;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
@@ -108,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             }
 
             completeOwnership = await partitionManager.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup);
@@ -126,7 +124,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task RunLoadBalancingAsyncClaimsPartitionsWhenOwnedEqualsMinimumOwnedPartitionsCount()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int MinimumpartitionCount = 4;
             const int NumberOfPartitions = 13;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
@@ -171,7 +168,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Start the loadbalancer to claim owership from of a Partition even though ownedPartitionCount == MinimumOwnedPartitionsCount.
 
-            await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
 
             // Get owned partitions.
 
@@ -192,7 +189,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task RunLoadBalancingAsyncStealsPartitionsWhenThisLoadbalancerOwnsMinPartitionsAndOtherLoadbalancerOwnsGreatherThanMaxPartitions()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int MinimumpartitionCount = 4;
             const int MaximumpartitionCount = 5;
             const int NumberOfPartitions = 14;
@@ -240,7 +236,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Start the loadbalancer to steal owership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a loadbalancer owns > MaximumPartitionCount.
 
-            await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
 
             // Get owned partitions.
 
@@ -265,7 +261,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task RunLoadBalancingAsyncStealsPartitionsWhenThisLoadbalancerOwnsLessThanMinPartitionsAndOtherLoadbalancerOwnsMaxPartitions()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int MinimumpartitionCount = 4;
             const int MaximumpartitionCount = 5;
             const int NumberOfPartitions = 12;
@@ -313,7 +308,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             // Start the loadbalancer to steal owership from of a when ownedPartitionCount == MinimumOwnedPartitionsCount but a loadbalancer owns > MaximumPartitionCount.
 
-            await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+            await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
 
             // Get owned partitions.
 
@@ -337,7 +332,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         public async Task VerifiesEventProcessorLogs()
         {
-            using CancellationTokenSource tokenSource = new CancellationTokenSource();
             const int NumberOfPartitions = 4;
             const int MinimumpartitionCount = NumberOfPartitions / 2;
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
@@ -359,10 +353,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
 
             for (int i = 0; i < NumberOfPartitions; i++)
             {
-                await loadbalancer.RunLoadBalancingAsync(partitionIds, tokenSource.Token);
+                await loadbalancer.RunLoadBalancingAsync(partitionIds, CancellationToken.None);
             }
 
-            await loadbalancer.RelinquishOwnershipAsync(tokenSource.Token);
+            await loadbalancer.RelinquishOwnershipAsync(CancellationToken.None);
 
             mockLog.Verify(m => m.RenewOwnershipStart(loadbalancer.OwnerIdentifier));
             mockLog.Verify(m => m.RenewOwnershipComplete(loadbalancer.OwnerIdentifier));

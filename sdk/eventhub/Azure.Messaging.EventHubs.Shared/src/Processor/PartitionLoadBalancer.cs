@@ -31,12 +31,6 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly PartitionManager StorageManager;
 
         /// <summary>
-        ///   The set of partition ownership the associated event processor owns.  Partition ids are used as keys.
-        /// </summary>
-        ///
-        private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
-
-        /// <summary>
         ///   A partition distribution dictionary, mapping an owner's identifier to the amount of partitions it owns and its list of partitions.
         /// </summary>
         ///
@@ -88,6 +82,12 @@ namespace Azure.Messaging.EventHubs.Processor
         public IEnumerable<string> OwnedPartitionIds => InstanceOwnership.Keys;
 
         /// <summary>
+        ///   The set of partition ownership the associated event processor owns.  Partition ids are used as keys.
+        /// </summary>
+        ///
+        private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
+
+        /// <summary>
         ///   The instance of <see cref="PartitionLoadBalancerEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
@@ -105,11 +105,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="ownershipExpiration">The minimum amount of time for an ownership to be considered expired without further updates.</param>
         ///
         public PartitionLoadBalancer(PartitionManager storageManager,
-                                      string identifier,
-                                      string consumerGroup,
-                                      string fullyQualifiedNamespace,
-                                      string eventHubName,
-                                      TimeSpan ownershipExpiration)
+                                     string identifier,
+                                     string consumerGroup,
+                                     string fullyQualifiedNamespace,
+                                     string eventHubName,
+                                     TimeSpan ownershipExpiration)
         {
             Argument.AssertNotNull(storageManager, nameof(storageManager));
             Argument.AssertNotNullOrEmpty(identifier, nameof(identifier));
