@@ -22,18 +22,18 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
     /// Describes an identity resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Identity : IResource
+    public partial class IdentityPatch : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the IdentityPatch class.
         /// </summary>
-        public Identity()
+        public IdentityPatch()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the IdentityPatch class.
         /// </summary>
         /// <param name="tags">Resource tags</param>
         /// <param name="tenantId">The id of the tenant which the identity
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <param name="type">The type of resource i.e.
         /// Microsoft.ManagedIdentity/userAssignedIdentities. Possible values
         /// include: 'Microsoft.ManagedIdentity/userAssignedIdentities'</param>
-        public Identity(IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string type = default(string))
+        public IdentityPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string type = default(string))
         {
             Tags = tags;
             TenantId = tenantId;

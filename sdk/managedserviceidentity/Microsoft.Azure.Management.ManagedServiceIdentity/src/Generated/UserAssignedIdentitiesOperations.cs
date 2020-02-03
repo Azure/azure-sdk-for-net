@@ -679,7 +679,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Identity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, Identity parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Identity>> UpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, IdentityPatch parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {

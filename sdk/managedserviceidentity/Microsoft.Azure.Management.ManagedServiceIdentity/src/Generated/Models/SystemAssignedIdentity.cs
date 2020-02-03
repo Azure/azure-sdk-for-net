@@ -14,43 +14,41 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Describes an identity resource.
+    /// Describes a system assigned identity resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Identity : IResource
+    public partial class SystemAssignedIdentity : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the SystemAssignedIdentity class.
         /// </summary>
-        public Identity()
+        public SystemAssignedIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the SystemAssignedIdentity class.
         /// </summary>
-        /// <param name="tags">Resource tags</param>
         /// <param name="tenantId">The id of the tenant which the identity
         /// belongs to.</param>
         /// <param name="principalId">The id of the service principal object
         /// associated with the created identity.</param>
         /// <param name="clientId">The id of the app associated with the
         /// identity. This is a random generated UUID by MSI.</param>
+        /// <param name="clientSecretUrl"> The ManagedServiceIdentity DataPlane
+        /// URL that can be queried to obtain the identity credentials.</param>
         /// <param name="type">The type of resource i.e.
-        /// Microsoft.ManagedIdentity/userAssignedIdentities. Possible values
-        /// include: 'Microsoft.ManagedIdentity/userAssignedIdentities'</param>
-        public Identity(IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string type = default(string))
+        /// Microsoft.Compute/virtualMachineScaleSets</param>
+        public SystemAssignedIdentity(System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string clientSecretUrl = default(string), string type = default(string))
         {
-            Tags = tags;
             TenantId = tenantId;
             PrincipalId = principalId;
             ClientId = clientId;
+            ClientSecretUrl = clientSecretUrl;
             Type = type;
             CustomInit();
         }
@@ -59,12 +57,6 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets the id of the tenant which the identity belongs to.
@@ -87,9 +79,15 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         public System.Guid? ClientId { get; private set; }
 
         /// <summary>
+        /// Gets  The ManagedServiceIdentity DataPlane URL that can be queried
+        /// to obtain the identity credentials.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecretUrl")]
+        public string ClientSecretUrl { get; private set; }
+
+        /// <summary>
         /// Gets the type of resource i.e.
-        /// Microsoft.ManagedIdentity/userAssignedIdentities. Possible values
-        /// include: 'Microsoft.ManagedIdentity/userAssignedIdentities'
+        /// Microsoft.Compute/virtualMachineScaleSets
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
