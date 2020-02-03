@@ -189,14 +189,13 @@ namespace Azure.Storage.Blobs.Specialized
                 else
                 {
                     IV = new byte[EncryptionConstants.EncryptionBlockSize];
-                    var readTask = ciphertext.ReadAsync(IV, 0, IV.Length);
                     if (async)
                     {
-                        await readTask.ConfigureAwait(false);
+                        await ciphertext.ReadAsync(IV, 0, IV.Length).ConfigureAwait(false);
                     }
                     else
                     {
-                        readTask.EnsureCompleted();
+                        ciphertext.Read(IV, 0, IV.Length);
                     }
                     read = IV.Length;
                 }
@@ -298,8 +297,8 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 var resolveTask = KeyResolver.ResolveAsync(encryptionData.WrappedContentKey.KeyId);
                 key = async
-                    ? await resolveTask.ConfigureAwait(false)
-                    : resolveTask.EnsureCompleted();
+                    ? await KeyResolver.ResolveAsync(encryptionData.WrappedContentKey.KeyId).ConfigureAwait(false)
+                    : KeyResolver.Resolve(encryptionData.WrappedContentKey.KeyId);
             }
             else
             {
@@ -311,12 +310,13 @@ namespace Azure.Storage.Blobs.Specialized
                 throw EncryptionErrors.NoKeyAccessor(nameof(LocalKey), nameof(KeyResolver));
             }
 
-            var unwrapTask = key.UnwrapKeyAsync(
-                encryptionData.WrappedContentKey.Algorithm,
-                encryptionData.WrappedContentKey.EncryptedKey);
             return async
-                ? await unwrapTask.ConfigureAwait(false)
-                : unwrapTask.EnsureCompleted();
+                ? await key.UnwrapKeyAsync(
+                    encryptionData.WrappedContentKey.Algorithm,
+                    encryptionData.WrappedContentKey.EncryptedKey).ConfigureAwait(false)
+                : key.UnwrapKey(
+                    encryptionData.WrappedContentKey.Algorithm,
+                    encryptionData.WrappedContentKey.EncryptedKey);
         }
 
         private static Stream WrapStream(Stream contentStream, byte[] contentEncryptionKey,

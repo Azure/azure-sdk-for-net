@@ -1005,6 +1005,8 @@ namespace Azure.Storage.Blobs
                 singleUploadThreshold,
                 operationName: Constants.Blob.UploadOperationName);
 
+            (content, metadata) = TransformContent(content, metadata);
+
             if (async)
             {
                 return await uploader.UploadAsync(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
@@ -1015,84 +1017,84 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        /// <summary>
-        /// This operation will create a new
-        /// block blob of arbitrary size by uploading it as indiviually staged
-        /// blocks if it's larger than the
-        /// <paramref name="singleUploadThreshold"/>.
-        /// </summary>
-        /// <param name="path">
-        /// A file path of the file to upload.
-        /// </param>
-        /// <param name="blobHttpHeaders">
-        /// Optional standard HTTP header properties that can be set for the
-        /// block blob.
-        /// </param>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this block blob.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
-        /// </param>
-        /// <param name="progressHandler">
-        /// Optional <see cref="IProgress{Long}"/> to provide
-        /// progress updates about data transfers.
-        /// </param>
-        /// <param name="accessTier">
-        /// Optional <see cref="AccessTier"/>
-        /// Indicates the tier to be set on the blob.
-        /// </param>
-        /// <param name="singleUploadThreshold">
-        /// The maximum size stream that we'll upload as a single block.  The
-        /// default value is 256MB.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
-        /// </param>
-        /// <param name="async">
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
-            string path,
-            BlobHttpHeaders blobHttpHeaders,
-            Metadata metadata,
-            BlobRequestConditions conditions,
-            IProgress<long> progressHandler,
-            AccessTier? accessTier = default,
-            long? singleUploadThreshold = default,
-            StorageTransferOptions transferOptions = default,
-            bool async = true,
-            CancellationToken cancellationToken = default)
-        {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
-            {
-                return await StagedUploadAsync(
-                    stream,
-                    blobHttpHeaders,
-                    metadata,
-                    conditions,
-                    progressHandler,
-                    accessTier,
-                    singleUploadThreshold: singleUploadThreshold,
-                    transferOptions: transferOptions,
-                    async: async,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-        }
+        ///// <summary>
+        ///// This operation will create a new
+        ///// block blob of arbitrary size by uploading it as indiviually staged
+        ///// blocks if it's larger than the
+        ///// <paramref name="singleUploadThreshold"/>.
+        ///// </summary>
+        ///// <param name="path">
+        ///// A file path of the file to upload.
+        ///// </param>
+        ///// <param name="blobHttpHeaders">
+        ///// Optional standard HTTP header properties that can be set for the
+        ///// block blob.
+        ///// </param>
+        ///// <param name="metadata">
+        ///// Optional custom metadata to set for this block blob.
+        ///// </param>
+        ///// <param name="conditions">
+        ///// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        ///// the creation of this new block blob.
+        ///// </param>
+        ///// <param name="progressHandler">
+        ///// Optional <see cref="IProgress{Long}"/> to provide
+        ///// progress updates about data transfers.
+        ///// </param>
+        ///// <param name="accessTier">
+        ///// Optional <see cref="AccessTier"/>
+        ///// Indicates the tier to be set on the blob.
+        ///// </param>
+        ///// <param name="singleUploadThreshold">
+        ///// The maximum size stream that we'll upload as a single block.  The
+        ///// default value is 256MB.
+        ///// </param>
+        ///// <param name="transferOptions">
+        ///// Optional <see cref="StorageTransferOptions"/> to configure
+        ///// parallel transfer behavior.
+        ///// </param>
+        ///// <param name="async">
+        ///// </param>
+        ///// <param name="cancellationToken">
+        ///// Optional <see cref="CancellationToken"/> to propagate
+        ///// notifications that the operation should be cancelled.
+        ///// </param>
+        ///// <returns>
+        ///// A <see cref="Response{BlobContentInfo}"/> describing the
+        ///// state of the updated block blob.
+        ///// </returns>
+        ///// <remarks>
+        ///// A <see cref="RequestFailedException"/> will be thrown if
+        ///// a failure occurs.
+        ///// </remarks>
+        //internal async Task<Response<BlobContentInfo>> StagedUploadAsync(
+        //    string path,
+        //    BlobHttpHeaders blobHttpHeaders,
+        //    Metadata metadata,
+        //    BlobRequestConditions conditions,
+        //    IProgress<long> progressHandler,
+        //    AccessTier? accessTier = default,
+        //    long? singleUploadThreshold = default,
+        //    StorageTransferOptions transferOptions = default,
+        //    bool async = true,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    using (FileStream stream = new FileStream(path, FileMode.Open))
+        //    {
+        //        return await StagedUploadAsync(
+        //            stream,
+        //            blobHttpHeaders,
+        //            metadata,
+        //            conditions,
+        //            progressHandler,
+        //            accessTier,
+        //            singleUploadThreshold: singleUploadThreshold,
+        //            transferOptions: transferOptions,
+        //            async: async,
+        //            cancellationToken: cancellationToken)
+        //            .ConfigureAwait(false);
+        //    }
+        //}
         #endregion Upload
 
         // NOTE: TransformContent is no longer called by the new implementation

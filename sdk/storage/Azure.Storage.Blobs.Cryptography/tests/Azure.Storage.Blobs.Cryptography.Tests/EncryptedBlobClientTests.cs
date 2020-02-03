@@ -73,6 +73,7 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
         [TestCase(14)] // a single unalligned cipher block
         [TestCase(Constants.KB)] // multiple blocks
         [TestCase(Constants.KB - 4)] // multiple unalligned blocks
+        [TestCase(10 * Constants.MB)] // larger test, increasing likelihood to trigger async extension usage bugs
         [LiveOnly] // cannot seed content encryption key
         public async Task UploadAsync(long dataSize)
         {
@@ -84,12 +85,13 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download without decrypting
-                var normalBlob = (await new BlobClient(blob.Uri, this.GetNewSharedKeyCredentials()).DownloadAsync()).Value;
+                var normalBlob = (await new BlobClient(blob.Uri, GetNewSharedKeyCredentials()).DownloadAsync()).Value;
                 var encryptedData = new byte[normalBlob.ContentLength];
                 await normalBlob.Content.ReadAsync(encryptedData, 0, encryptedData.Length);
 
                 // encrypt original data manually for comparison
                 var encryptionMetadata = ClientSideDecryptionPolicy.GetAndValidateEncryptionData(normalBlob.Details.Metadata);
+                Assert.NotNull(encryptionMetadata, "Never encrypted data.");
                 byte[] expectedEncryptedData = LocalManualEncryption(
                     data,
                     (await key.UnwrapKeyAsync(null, encryptionMetadata.WrappedContentKey.EncryptedKey)
