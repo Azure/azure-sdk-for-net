@@ -28,6 +28,12 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         /// ="EntityNameHelper.FormatSubscriptionPath(string, string)"/>
         public string Path { get; }
+
+        /// <summary>
+        /// Gets the name of the subscription.
+        /// </summary>
+        public string SubscriptionName { get; }
+
         /// <summary>
         ///
         /// </summary>

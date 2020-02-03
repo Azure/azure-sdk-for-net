@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        protected string EntityName => Connection.EntityName;
+        internal string EntityName => Connection.EntityName;
 
         /// <summary>
         ///   The name of the consumer group that this consumer is associated with.  Events will be read
@@ -61,6 +61,16 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         internal string ConsumerGroup { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public ReceiveMode ReceiveMode { get; private set; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public int PrefetchCount { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusReceiverClient"/> has been closed.
