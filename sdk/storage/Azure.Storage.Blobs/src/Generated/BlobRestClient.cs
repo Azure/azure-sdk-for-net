@@ -149,7 +149,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SetPropertiesAsync Azure.Response.</returns>
             internal static Azure.Response SetPropertiesAsync_CreateResponse(
@@ -286,7 +286,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties> GetPropertiesAsync_CreateResponse(
@@ -432,7 +432,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetStatisticsAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> GetStatisticsAsync_CreateResponse(
@@ -601,7 +601,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.ListBlobContainersSegmentAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.ListBlobContainersSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainersSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainersSegment> ListBlobContainersSegmentAsync_CreateResponse(
@@ -763,7 +763,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetUserDelegationKeyAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetUserDelegationKeyAsync Azure.Response{Azure.Storage.Blobs.Models.UserDelegationKey}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKeyAsync_CreateResponse(
@@ -893,7 +893,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetAccountInfoAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetAccountInfoAsync Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
@@ -1076,7 +1076,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.SubmitBatchAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
@@ -1249,7 +1249,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.CreateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> CreateAsync_CreateResponse(
@@ -1406,7 +1406,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem> GetPropertiesAsync_CreateResponse(
@@ -1611,7 +1611,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
@@ -1771,7 +1771,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.SetMetadataAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetMetadataAsync_CreateResponse(
@@ -1929,7 +1929,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.GetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerAccessPolicy}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy> GetAccessPolicyAsync_CreateResponse(
@@ -2138,7 +2138,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.SetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetAccessPolicyAsync_CreateResponse(
@@ -2315,7 +2315,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> AcquireLeaseAsync_CreateResponse(
@@ -2494,7 +2494,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> ReleaseLeaseAsync_CreateResponse(
@@ -2669,7 +2669,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> RenewLeaseAsync_CreateResponse(
@@ -2844,7 +2844,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
@@ -3033,7 +3033,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> ChangeLeaseAsync_CreateResponse(
@@ -3213,7 +3213,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ListBlobsFlatSegmentAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ListBlobsFlatSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsFlatSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment> ListBlobsFlatSegmentAsync_CreateResponse(
@@ -3389,7 +3389,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ListBlobsHierarchySegmentAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ListBlobsHierarchySegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsHierarchySegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment> ListBlobsHierarchySegmentAsync_CreateResponse(
@@ -3623,7 +3623,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.DownloadAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.DownloadAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> DownloadAsync_CreateResponse(
@@ -4064,7 +4064,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetPropertiesAsync_CreateResponse(
@@ -4390,7 +4390,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
@@ -4580,7 +4580,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetAccessControlAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult> SetAccessControlAsync_CreateResponse(
@@ -4771,7 +4771,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.GetAccessControlAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.GetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.BlobGetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult> GetAccessControlAsync_CreateResponse(
@@ -5065,7 +5065,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.RenameAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.RenameAsync Azure.Response{Azure.Storage.Blobs.Models.BlobRenameResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult> RenameAsync_CreateResponse(
@@ -5220,7 +5220,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.UndeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.UndeleteAsync Azure.Response.</returns>
             internal static Azure.Response UndeleteAsync_CreateResponse(
@@ -5422,7 +5422,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetHttpHeadersAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetHttpHeadersAsync Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> SetHttpHeadersAsync_CreateResponse(
@@ -5636,7 +5636,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetMetadataAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation> SetMetadataAsync_CreateResponse(
@@ -5832,7 +5832,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> AcquireLeaseAsync_CreateResponse(
@@ -6022,7 +6022,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ReleaseLeaseAsync_CreateResponse(
@@ -6208,7 +6208,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> RenewLeaseAsync_CreateResponse(
@@ -6408,7 +6408,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> ChangeLeaseAsync_CreateResponse(
@@ -6594,7 +6594,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
@@ -6808,7 +6808,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.CreateSnapshotAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.CreateSnapshotAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> CreateSnapshotAsync_CreateResponse(
@@ -7053,7 +7053,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.StartCopyFromUriAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.StartCopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> StartCopyFromUriAsync_CreateResponse(
@@ -7299,7 +7299,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.CopyFromUriAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.CopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyFromUriAsync_CreateResponse(
@@ -7475,7 +7475,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.AbortCopyFromUriAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.AbortCopyFromUriAsync Azure.Response.</returns>
             internal static Azure.Response AbortCopyFromUriAsync_CreateResponse(
@@ -7629,7 +7629,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetAccessTierAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetAccessTierAsync Azure.Response.</returns>
             internal static Azure.Response SetAccessTierAsync_CreateResponse(
@@ -7896,7 +7896,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.CreateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
@@ -8162,7 +8162,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UploadPagesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UploadPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesAsync_CreateResponse(
@@ -8408,7 +8408,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.ClearPagesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.ClearPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPagesAsync_CreateResponse(
@@ -8714,7 +8714,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UploadPagesFromUriAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesFromUriAsync_CreateResponse(
@@ -8937,7 +8937,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.GetPageRangesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.GetPageRangesAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesAsync_CreateResponse(
@@ -9146,7 +9146,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.GetPageRangesDiffAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesDiffAsync_CreateResponse(
@@ -9361,7 +9361,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.ResizeAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.ResizeAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> ResizeAsync_CreateResponse(
@@ -9558,7 +9558,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UpdateSequenceNumberAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> UpdateSequenceNumberAsync_CreateResponse(
@@ -9747,7 +9747,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.CopyIncrementalAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.CopyIncrementalAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyIncrementalAsync_CreateResponse(
@@ -10015,7 +10015,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.CreateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
@@ -10268,7 +10268,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.AppendBlockAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.AppendBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockAsync_CreateResponse(
@@ -10567,7 +10567,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.AppendBlockFromUriAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.AppendBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockFromUriAsync_CreateResponse(
@@ -10889,7 +10889,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.UploadAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.UploadAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadAsync_CreateResponse(
@@ -11116,7 +11116,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.StageBlockAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.StageBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockAsync_CreateResponse(
@@ -11363,7 +11363,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.StageBlockFromUriAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUriAsync_CreateResponse(
@@ -11661,7 +11661,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.CommitBlockListAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.CommitBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CommitBlockListAsync_CreateResponse(
@@ -11842,7 +11842,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.GetBlockListAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.GetBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> GetBlockListAsync_CreateResponse(
@@ -12093,7 +12093,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.CreateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryCreateResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult> CreateAsync_CreateResponse(
@@ -12377,7 +12377,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.RenameAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.RenameAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryRenameResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult> RenameAsync_CreateResponse(
@@ -12581,7 +12581,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.DeleteAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryDeleteResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult> DeleteAsync_CreateResponse(
@@ -12782,7 +12782,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.SetAccessControlAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.SetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.DirectorySetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult> SetAccessControlAsync_CreateResponse(
@@ -12973,7 +12973,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.GetAccessControlAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.GetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult> GetAccessControlAsync_CreateResponse(

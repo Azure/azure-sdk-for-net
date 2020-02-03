@@ -160,7 +160,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.SubmitBatchAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
@@ -334,7 +334,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetAccessTierAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetAccessTierAsync Azure.Response.</returns>
             internal static Azure.Response SetAccessTierAsync_CreateResponse(
@@ -515,7 +515,7 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(

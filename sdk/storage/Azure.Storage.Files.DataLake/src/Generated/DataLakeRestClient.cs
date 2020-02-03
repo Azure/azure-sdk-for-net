@@ -151,7 +151,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Service.ListFileSystemsAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.ListFileSystemsAsync Azure.Response{Azure.Storage.Files.DataLake.Models.ServiceListFileSystemsResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.ServiceListFileSystemsResult> ListFileSystemsAsync_CreateResponse(
@@ -325,7 +325,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the FileSystem.CreateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The FileSystem.CreateAsync Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemCreateResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemCreateResult> CreateAsync_CreateResponse(
@@ -501,7 +501,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the FileSystem.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The FileSystem.SetPropertiesAsync Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemSetPropertiesResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemSetPropertiesResult> SetPropertiesAsync_CreateResponse(
@@ -655,7 +655,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the FileSystem.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The FileSystem.GetPropertiesAsync Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemGetPropertiesResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemGetPropertiesResult> GetPropertiesAsync_CreateResponse(
@@ -833,7 +833,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the FileSystem.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The FileSystem.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
@@ -1010,7 +1010,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the FileSystem.ListPathsAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The FileSystem.ListPathsAsync Azure.Response{Azure.Storage.Files.DataLake.Models.FileSystemListPathsResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemListPathsResult> ListPathsAsync_CreateResponse(
@@ -1312,7 +1312,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.CreateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.CreateAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathCreateResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathCreateResult> CreateAsync_CreateResponse(
@@ -1619,7 +1619,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.UpdateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.UpdateAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathUpdateResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathUpdateResult> UpdateAsync_CreateResponse(
@@ -1881,7 +1881,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.LeaseAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.LeaseAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathLeaseResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathLeaseResult> LeaseAsync_CreateResponse(
@@ -2130,7 +2130,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.ReadAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.ReadAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathReadResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathReadResult> ReadAsync_CreateResponse(
@@ -2470,7 +2470,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.GetPropertiesAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathGetPropertiesResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathGetPropertiesResult> GetPropertiesAsync_CreateResponse(
@@ -2745,7 +2745,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.DeleteAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathDeleteResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathDeleteResult> DeleteAsync_CreateResponse(
@@ -2949,7 +2949,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.SetAccessControlAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.SetAccessControlAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathSetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathSetAccessControlResult> SetAccessControlAsync_CreateResponse(
@@ -3205,7 +3205,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.FlushDataAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.FlushDataAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathFlushDataResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathFlushDataResult> FlushDataAsync_CreateResponse(
@@ -3403,7 +3403,7 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// Create the Path.AppendDataAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Path.AppendDataAsync Azure.Response{Azure.Storage.Files.DataLake.Models.PathAppendDataResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.DataLake.Models.PathAppendDataResult> AppendDataAsync_CreateResponse(

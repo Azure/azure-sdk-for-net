@@ -149,7 +149,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SetPropertiesAsync Azure.Response.</returns>
             internal static Azure.Response SetPropertiesAsync_CreateResponse(
@@ -286,7 +286,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Queues.Models.QueueServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueueServiceProperties> GetPropertiesAsync_CreateResponse(
@@ -432,7 +432,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetStatisticsAsync Azure.Response{Azure.Storage.Queues.Models.QueueServiceStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueueServiceStatistics> GetStatisticsAsync_CreateResponse(
@@ -601,7 +601,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.ListQueuesSegmentAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.ListQueuesSegmentAsync Azure.Response{Azure.Storage.Queues.Models.QueuesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueuesSegment> ListQueuesSegmentAsync_CreateResponse(
@@ -764,7 +764,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.CreateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.CreateAsync Azure.Response.</returns>
             internal static Azure.Response CreateAsync_CreateResponse(
@@ -903,7 +903,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
@@ -1039,7 +1039,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.GetPropertiesAsync Azure.Response{Azure.Storage.Queues.Models.QueueProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueueProperties> GetPropertiesAsync_CreateResponse(
@@ -1209,7 +1209,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.SetMetadataAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.SetMetadataAsync Azure.Response.</returns>
             internal static Azure.Response SetMetadataAsync_CreateResponse(
@@ -1345,7 +1345,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.GetAccessPolicyAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.QueueSignedIdentifier}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>> GetAccessPolicyAsync_CreateResponse(
@@ -1513,7 +1513,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.SetAccessPolicyAsync Azure.Response.</returns>
             internal static Azure.Response SetAccessPolicyAsync_CreateResponse(
@@ -1668,7 +1668,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.DequeueAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.DequeueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.QueueMessage}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>> DequeueAsync_CreateResponse(
@@ -1816,7 +1816,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.ClearAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.ClearAsync Azure.Response.</returns>
             internal static Azure.Response ClearAsync_CreateResponse(
@@ -1979,7 +1979,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.EnqueueAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.EnqueueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.SendReceipt}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SendReceipt>> EnqueueAsync_CreateResponse(
@@ -2130,7 +2130,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.PeekAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.PeekAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.PeekedMessage}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>> PeekAsync_CreateResponse(
@@ -2318,7 +2318,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the MessageId.UpdateAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The MessageId.UpdateAsync Azure.Response{Azure.Storage.Queues.Models.UpdateReceipt}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt> UpdateAsync_CreateResponse(
@@ -2478,7 +2478,7 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the MessageId.DeleteAsync response or throw a failure exception.
             /// </summary>
-            /// <param name="response">The ClientDiagnostics instance to use.</param>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The MessageId.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(

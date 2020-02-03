@@ -465,7 +465,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// Create the ${regionName} response or throw a failure exception.`);
     w.line(`/// </summary>`);
-    w.line(`/// <param name="response">The ClientDiagnostics instance to use.</param>`);
+    w.line(`/// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>`);
     w.line(`/// <param name="response">The raw Response.</param>`);
     w.line(`/// <returns>The ${regionName} ${returnType.replace(/</g, '{').replace(/>/g, '}')}.</returns>`);
     w.write(`internal static ${returnType} ${methodName}_CreateResponse(`);
