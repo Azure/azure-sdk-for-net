@@ -53,7 +53,7 @@ namespace Azure.Core
             StringBuilder stringBuilder = new StringBuilder(uri.Length);
             stringBuilder.Append(uri, 0, indexOfQuerySeparator);
 
-            string query = uri.Substring(indexOfQuerySeparator + 1);
+            string query = uri.Substring(indexOfQuerySeparator);
 
             int queryIndex = 1;
             stringBuilder.Append('?');

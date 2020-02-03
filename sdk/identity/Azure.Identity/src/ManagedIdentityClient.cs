@@ -75,12 +75,7 @@ namespace Azure.Identity
             {
                 _msiType = MsiType.Unavailable;
 
-                ValueTask<string> messageTask = _pipeline.Diagnostics.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, false);
-
-                // TODO: this should use TaskExtensions EnsureCompleted from Azure.Core shared source when it gets move into shared source.
-                Debug.Assert(messageTask.IsCompleted);
-
-                string message = messageTask.GetAwaiter().GetResult();
+                string message = _pipeline.Diagnostics.CreateRequestFailedMessage(response, message: IdentityUnavailableError);
 
                 return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }
@@ -113,7 +108,7 @@ namespace Azure.Identity
             {
                 _msiType = MsiType.Unavailable;
 
-                string message = await _pipeline.Diagnostics.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, true).ConfigureAwait(false);
+                string message = await _pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, message: IdentityUnavailableError, errorCode: null).ConfigureAwait(false);
 
                 return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }

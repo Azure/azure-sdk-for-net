@@ -26,20 +26,22 @@ namespace Azure.Core.Pipeline
             options.Diagnostics.IsDistributedTracingEnabled)
         {
             _sanitizer = new HttpMessageSanitizer(
-                options.Diagnostics.LoggedHeaderNames.ToArray(),
-                options.Diagnostics.LoggedQueryParameters.ToArray());
+                options.Diagnostics.LoggedQueryParameters.ToArray(),
+                options.Diagnostics.LoggedHeaderNames.ToArray());
         }
 
-        public ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null)
+        public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
-            return CreateRequestFailedExceptionAsync(message ?? DefaultMessage, response, errorCode, true);
+            var content = await ReadContentAsync(response, true).ConfigureAwait(false);
+
+            return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
-        public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null)
+        public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
-            ValueTask<RequestFailedException> messageTask = CreateRequestFailedExceptionAsync(message ?? DefaultMessage, response, errorCode, false);
-            Debug.Assert(messageTask.IsCompleted);
-            return messageTask.GetAwaiter().GetResult();
+            ValueTask<string?> contentTask = ReadContentAsync(response, false);
+            Debug.Assert(contentTask.IsCompleted);
+            return CreateRequestFailedExceptionWithContent(response, message, contentTask.GetAwaiter().GetResult(), errorCode, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedExceptionWithContent(
@@ -50,7 +52,7 @@ namespace Azure.Core.Pipeline
             IDictionary<string, string>? additionalInfo = null,
             Exception? innerException = null)
         {
-            var formatMessage = FormatMessage(response, message, content, errorCode, additionalInfo);
+            var formatMessage = CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
             var exception = new RequestFailedException(response.Status, formatMessage, errorCode, innerException);
 
             if (additionalInfo != null)
@@ -64,29 +66,25 @@ namespace Azure.Core.Pipeline
             return exception;
         }
 
-        public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, string? errorCode, bool async)
+        public ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message = null, string? errorCode= null, IDictionary<string, string>? additionalInfo = null)
         {
-            message = await CreateRequestFailedMessageAsync(message, response, errorCode, async).ConfigureAwait(false);
-            return new RequestFailedException(response.Status, message, errorCode, null);
+            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, async: true);
         }
 
-        public async ValueTask<string> CreateRequestFailedMessageAsync(string message, Response response, string? errorCode, bool async)
+        public string CreateRequestFailedMessage(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null)
         {
-            string? content = null;
-
-            if (response.ContentStream != null &&
-                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
-            {
-                using (var streamReader = new StreamReader(response.ContentStream, encoding))
-                {
-                    content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
-                }
-            }
-
-            return FormatMessage(response, message, content, errorCode);
+            ValueTask<string> messageTask = CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, false);
+            Debug.Assert(messageTask.IsCompleted);
+            return messageTask.GetAwaiter().GetResult();
         }
 
-        public string FormatMessage(Response response, string? message = null, string? content = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null)
+        private async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)
+        {
+            var content = await ReadContentAsync(response, async).ConfigureAwait(false);
+
+            return CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
+        }
+        public string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, IDictionary<string, string>? additionalInfo)
         {
             StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message ?? DefaultMessage)
@@ -136,6 +134,22 @@ namespace Azure.Core.Pipeline
             }
 
             return messageBuilder.ToString();
+        }
+
+        private static async ValueTask<string?> ReadContentAsync(Response response, bool async)
+        {
+            string? content = null;
+
+            if (response.ContentStream != null &&
+                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            {
+                using (var streamReader = new StreamReader(response.ContentStream, encoding))
+                {
+                    content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
+                }
+            }
+
+            return content;
         }
 
         internal static string? GetResourceProviderNamespace(Assembly assembly)
