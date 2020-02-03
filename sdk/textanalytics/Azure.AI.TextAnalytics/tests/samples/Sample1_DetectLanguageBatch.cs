@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Samples
             // Instantiate a client that will be used to call the service.
             var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSample1DetectLanguagesBatch
+            #region Snippet:TextAnalyticsSample1DetectLanguageBatch
             var inputs = new List<DetectLanguageInput>
             {
                 new DetectLanguageInput("1", "Hello world")

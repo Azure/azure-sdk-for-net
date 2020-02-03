@@ -89,9 +89,9 @@ An operation result, such as `AnalyzeSentimentResult`, is the result of a Text A
 An operation result collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections.  An operation result collection may optionally include information about the input batch and how it was processed.
 
  ### Operation on multiple text inputs
-For each supported operation, `TextAnalyticsClient` provides a method that accepts a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects. This methods allow callers to give each document a unique ID, or indicate that the documents in the batch are written in different languages.
+For each supported operation, `TextAnalyticsClient` provides a method that accepts a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects. This methods allow callers to give each document a unique ID, indicate that the documents in the batch are written in different languages, or provide a country hint about the language of the document.
 
-**Note:** Multiple text inputs methods are the expected methods to use when working on a production environment.
+**Note:** It is recommended to use the batch methods when working on production environments as they allow you to send one request with multiple text inputs. This is more performant than sending a request per each text input.
 
  ## Examples
  The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient), and covers the main functions of Text Analytics.
