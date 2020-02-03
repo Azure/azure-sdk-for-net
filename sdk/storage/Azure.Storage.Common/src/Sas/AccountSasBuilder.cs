@@ -114,7 +114,7 @@ namespace Azure.Storage.Sas
 
             if (ExpiresOn == default || string.IsNullOrEmpty(Permissions) || ResourceTypes == default || Services == default)
             {
-                throw CommonErrors.AccountSasMissingData();
+                throw Errors.AccountSasMissingData();
             }
             if (string.IsNullOrEmpty(Version))
             {
