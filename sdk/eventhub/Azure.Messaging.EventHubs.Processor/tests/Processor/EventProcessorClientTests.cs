@@ -976,7 +976,6 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
-
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
             await completionSource.Task;
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
