@@ -17,9 +17,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void RecognizeEntitiesBatchConvenience()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            // Instantiate a client that will be used to call the service.
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             var inputs = new List<string>
             {
@@ -37,11 +38,11 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (RecognizeEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.NamedEntities.Count()} entities were found: ");
+                Debug.WriteLine($"the following {result.CategorizedEntities.Count()} entities were found: ");
 
-                foreach (NamedEntity entity in result.NamedEntities)
+                foreach (CategorizedEntity entity in result.CategorizedEntities)
                 {
-                    Debug.WriteLine($"    Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                    Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }
             }
         }

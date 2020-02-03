@@ -813,13 +813,15 @@ namespace Azure.Messaging.EventHubs
                                                           CancellationToken cancellationToken) => Task.Run(async () =>
         {
             var emptyPartitionContext = new EmptyPartitionContext(partitionId);
+            var connection = ConnectionFactory();
+            var consumer = CreateConsumer(ConsumerGroup, connection, ProcessingConsumerOptions);
 
-            await using var connection = ConnectionFactory();
-            await using var consumer = CreateConsumer(ConsumerGroup, connection, ProcessingConsumerOptions);
+            await using var connectionAwaiter = connection.ConfigureAwait(false);
+            await using var consumerAwaiter = consumer.ConfigureAwait(false);
             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken).ConfigureAwait(false))
             {
                 using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
-                diagnosticScope.AddAttribute("kind", "server");
+                diagnosticScope.AddAttribute("kind", DiagnosticProperty.ConsumerKind);
 
                 if (diagnosticScope.IsEnabled
                     && partitionEvent.Data != null
@@ -914,7 +916,8 @@ namespace Azure.Messaging.EventHubs
         {
             // We'll use this connection to retrieve an updated list of partition ids from the service.
 
-            await using var consumer = CreateConsumer(ConsumerGroup, ConnectionFactory(), ProcessingConsumerOptions);
+            var consumer = CreateConsumer(ConsumerGroup, ConnectionFactory(), ProcessingConsumerOptions);
+            await using var consumerAwaiter = consumer.ConfigureAwait(false);
 
             while (!cancellationToken.IsCancellationRequested)
             {

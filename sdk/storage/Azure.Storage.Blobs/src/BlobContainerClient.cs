@@ -588,11 +588,11 @@ namespace Azure.Storage.Blobs
                     metadata,
                     async,
                     cancellationToken,
-                    Constants.Blob.Container.CreateIfNotExistsOperationName)
+                    $"{nameof(BlobContainerClient)}.{nameof(CreateIfNotExists)}")
                     .ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
             {
                 response = default;
             }
@@ -645,7 +645,7 @@ namespace Azure.Storage.Blobs
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Container.CreateOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -664,7 +664,7 @@ namespace Azure.Storage.Blobs
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -845,12 +845,12 @@ namespace Azure.Storage.Blobs
                     conditions,
                     async,
                     cancellationToken,
-                    Constants.Blob.Container.DeleteIfExistsOperationName)
+                    $"{nameof(BlobContainerClient)}.{nameof(DeleteIfExists)}")
                     .ConfigureAwait(false);
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 return Response.FromValue(false, default);
             }
@@ -888,7 +888,7 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Container.DeleteOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -914,7 +914,7 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1016,14 +1016,14 @@ namespace Azure.Storage.Blobs
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Container.ExistsOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(Exists)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -1157,7 +1157,7 @@ namespace Azure.Storage.Blobs
                             version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             async: async,
-                            operationName: Constants.Blob.Container.GetPropertiesOperationName,
+                            operationName: $"{nameof(BlobContainerClient)}.{nameof(GetProperties)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1322,7 +1322,7 @@ namespace Azure.Storage.Blobs
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         async: async,
-                        operationName: Constants.Blob.Container.SetMetaDataOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1451,7 +1451,7 @@ namespace Azure.Storage.Blobs
                         version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: Constants.Blob.Container.GetAccessPolicyOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(GetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1651,7 +1651,7 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: Constants.Blob.Container.SetAccessPolicyOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2084,10 +2084,8 @@ namespace Azure.Storage.Blobs
 
         #region UploadBlob
         /// <summary>
-        /// The <see cref="UploadBlob"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// The <see cref="UploadBlobAsync"/> operation creates a new block
+        /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -2109,8 +2107,11 @@ namespace Azure.Storage.Blobs
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To override an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> UploadBlob(
@@ -2123,10 +2124,8 @@ namespace Azure.Storage.Blobs
                     cancellationToken);
 
         /// <summary>
-        /// The <see cref="UploadBlobAsync"/> operation creates a new block
-        /// blob or updates the content of an existing block blob in this
-        /// container.  Updating an existing block blob overwrites any existing
-        /// metadata on the blob.
+        /// The <see cref="UploadBlob"/> operation creates a new block
+        /// blob.
         ///
         /// For partial block blob updates and other advanced features, please
         /// see <see cref="BlockBlobClient"/>.  To create or modify page or
@@ -2148,8 +2147,11 @@ namespace Azure.Storage.Blobs
         /// state of the updated block blob.
         /// </returns>
         /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To override an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(

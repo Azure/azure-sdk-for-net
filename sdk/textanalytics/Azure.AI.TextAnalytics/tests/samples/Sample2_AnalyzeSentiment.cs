@@ -14,22 +14,22 @@ namespace Azure.AI.TextAnalytics.Samples
         public void AnalyzeSentiment()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample2CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
             #endregion
 
             #region Snippet:AnalyzeSentiment
             string input = "That was the best day of my life!";
 
             AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
-            TextSentiment sentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = result.DocumentSentiment;
 
-            Console.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
-            Console.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-            Console.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
-            Console.WriteLine($"    Negative score: {sentiment.NeutralScore:0.00}.");
+            Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with scores: ");
+            Console.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");
+            Console.WriteLine($"    Neutral score: {docSentiment.SentimentScores.Neutral:0.00}.");
+            Console.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0.00}.");
             #endregion
         }
     }

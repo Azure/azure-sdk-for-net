@@ -86,7 +86,7 @@ additional questions or comments.
 [storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[auth_credentials]: src/SharedKeyCredential.cs
+[auth_credentials]: src/StorageSharedKeyCredential.cs
 [blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md#Examples
 [files_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Files.Shares/README.md#Examples
 [queues_examples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Queues/README.md#Examples

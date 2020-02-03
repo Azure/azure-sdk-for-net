@@ -12,7 +12,7 @@ The Azure Event Hubs client library allows for publishing and consuming of Azure
 
 - Receive events from one or more publishers, transform them to better meet the needs of your ecosystem, then publish the transformed events to a new stream for consumers to observe.
 
-[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventhub.html) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](.) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventHubs/) | [API reference documentation](https://aka.ms/azsdk-dotnet-eventhubs-docs) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
 
 ## Getting started
 
@@ -37,7 +37,7 @@ If you'd like to run samples that use [Azure.Identity](https://github.com/Azure/
 Install the Azure Event Hubs client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```PowerShell
-Install-Package Azure.Messaging.EventHubs -Version 5.0.0
+Install-Package Azure.Messaging.EventHubs
 ```
 
 ### Obtain a connection string

@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventHubs.Samples.Infrastructure
         ///   The name of the sample.
         /// </summary>
         ///
-        public string Name { get; }
+        string Name { get; }
 
         /// <summary>
         ///   A short description of the associated sample.
         /// </summary>
         ///
-        public string Description { get; }
+        string Description { get; }
 
     }
 }

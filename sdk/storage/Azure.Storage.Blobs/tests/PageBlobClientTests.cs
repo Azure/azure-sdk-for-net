@@ -28,8 +28,8 @@ namespace Azure.Storage.Blobs.Test
         private const string ContentLanguage = "language";
         private const string ContentType = "type";
 
-        public PageBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public PageBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -358,6 +358,26 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                     blob.UploadPagesAsync(stream, 5 * Constants.KB),
                     e => Assert.AreEqual("InvalidPageRange", e.ErrorCode));
+            }
+        }
+
+        [Test]
+        public async Task UploadPagesAsync_NullStream_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.UploadPagesAsync(
+                        content: stream,
+                        offset: 0),
+                    e => Assert.AreEqual("body", e.ParamName));
             }
         }
 

@@ -202,30 +202,13 @@ namespace Azure.Core.Testing
             return Random.Next().ToString();
         }
 
-        public string GetConnectionStringFromEnvironment(string variableName)
-        {
-            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
-            switch (Mode)
-            {
-                case RecordedTestMode.Record:
-                    _session.Variables[variableName] = _sanitizer.SanitizeConnectionString(environmentVariableValue);
-                    return environmentVariableValue;
-                case RecordedTestMode.Live:
-                    return environmentVariableValue;
-                case RecordedTestMode.Playback:
-                    return _session.Variables[variableName];
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         public string GetVariableFromEnvironment(string variableName)
         {
             var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
             switch (Mode)
             {
                 case RecordedTestMode.Record:
-                    _session.Variables[variableName] = environmentVariableValue;
+                    _session.Variables[variableName] = _sanitizer.SanitizeVariable(variableName, environmentVariableValue);
                     return environmentVariableValue;
                 case RecordedTestMode.Live:
                     return environmentVariableValue;

@@ -41,6 +41,20 @@ namespace Azure.Messaging.EventHubs.Core
         public double JitterFactor { get; } = 0.08;
 
         /// <summary>
+        ///   The minimum number of seconds to increase the calculated retry duration when a
+        ///   service signals a request to throttle.
+        /// </summary>
+        ///
+        public int MinimumThrottleSeconds { get; } = 4;
+
+        /// <summary>
+        ///   The maximum number of seconds to increase the calculated retry duration when a
+        ///   service signals a request to throttle.
+        /// </summary>
+        ///
+        public int MaximumThrottleSeconds { get; } = 8;
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="BasicRetryPolicy"/> class.
         /// </summary>
         ///
@@ -93,6 +107,14 @@ namespace Azure.Messaging.EventHubs.Core
                 _ => throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownRetryMode, Options.Mode.ToString())),
             };
 
+            // If the exception indicates a service throttle, adjust the delay for an
+            // additional throttle factor.
+
+            if (IsThrottleException(lastException))
+            {
+                retryDelay = retryDelay.Add(TimeSpan.FromSeconds(RandomNumberGenerator.Value.Next(MinimumThrottleSeconds, (MaximumThrottleSeconds + 1))));
+            }
+
             // Adjust the delay, if needed, to keep within the maximum
             // duration.
 
@@ -139,6 +161,21 @@ namespace Azure.Messaging.EventHubs.Core
                     return false;
             }
         }
+
+        /// <summary>
+        ///   Determines if an exception represents a request to throttle.
+        /// </summary>
+        ///
+        /// <param name="exception">The exception to consider.</param>
+        ///
+        /// <returns><c>true</c> to consider the exception as a throttle request; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool IsThrottleException(Exception exception) =>
+            exception switch
+            {
+                EventHubsException ex when (ex.Reason == EventHubsException.FailureReason.ServiceBusy) => true,
+                _ => false
+            };
 
         /// <summary>
         ///   Calculates the delay for an exponential back-off.

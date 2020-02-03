@@ -29,30 +29,34 @@ Install-Package Azure.AI.TextAnalytics
 ```
 
 ### Authenticate the client
-In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either a **subscription key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
-#### Get Subscription Key
+#### Get API Key
 
-Use the [Azure CLI][azure_cli] snippet below to get the subscription key from the Text Analytics resource.
+Use the [Azure CLI][azure_cli] snippet below to get the API key from the Text Analytics resource.
 
 ```PowerShell
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
 
-Alternatively, you can get the endpoint and subscription key from the resource information in the [Azure Portal][azure_portal].
+Alternatively, you can get the endpoint and API key from the resource information in the [Azure Portal][azure_portal].
 
-#### Create TextAnalyticsClient with Subscription Key
-Once you have the values for endpoint and subscription key, you can create the [TextAnalyticsClient][textanalytics_client_class]:
+#### Create TextAnalyticsClient with API Key Credential
+Once you have the value for the API key, create a `TextAnalyticsApiKeyCredential`. This will allow you to
+update the API key by using the `UpdateCredential` method without creating a new client.
+
+With the value of the endpoint and a `TextAnalyticsApiKeyCredential`, you can create the [TextAnalyticsClient][textanalytics_client_class]:
 
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
-string subscriptionKey = "<subscriptionKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+string apiKey = "<apiKey>";
+var credential = new TextAnalyticsApiKeyCredential(apiKey);
+var client = new TextAnalyticsClient(new Uri(endpoint), credential);
 ```
 
 #### Create TextAnalyticsClient with Azure Active Directory Credential
 
-Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
+Client API key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
 
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
@@ -123,12 +127,12 @@ Run a Text Analytics predictive model to identify the positive, negative, neutra
 string input = "That was the best day of my life!";
 
 AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
-TextSentiment sentiment = result.DocumentSentiment;
+DocumentSentiment docSentiment = result.DocumentSentiment;
 
-Console.WriteLine($"Sentiment was {sentiment.SentimentClass.ToString()}, with scores: ");
-Console.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-Console.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
-Console.WriteLine($"    Negative score: {sentiment.NeutralScore:0.00}.");
+Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with scores: ");
+Console.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");
+Console.WriteLine($"    Neutral score: {docSentiment.SentimentScores.Neutral:0.00}.");
+Console.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0.00}.");
 ```
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
@@ -152,36 +156,36 @@ foreach (string keyPhrase in keyPhrases)
 Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
 ### Recognize Entities
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into types such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Types](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
+Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
 
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 RecognizeEntitiesResult result = client.RecognizeEntities(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
 
 ### Recognize PII Entities
-Run a predictive model to identify a collection of entities containing personally identifiable information found in the passed-in input text or batch of input text documents, and categorize those entities into types such as US social security number, drivers license number, or credit card number.
+Run a predictive model to identify a collection of entities containing Personally Identifiable Information found in the passed-in input text or batch of input text documents, and categorize those entities into categories such as US social security number, drivers license number, or credit card number.
 
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
 RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
@@ -219,18 +223,18 @@ Console.WriteLine($"Detected language {language.Name} with confidence {language.
 ```
 
 ### Recognize Entities Asynchronously
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into types such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Types](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
+Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
 
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
@@ -300,9 +304,9 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Sample4_DetectLanguageAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
 
 ### Recognize PII Entities
-* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing personally identifiable information in a single text input.
-* [Sample5_DetectLanguageBatchConvenience.cs][recognize_pii_entities_sample1] - Recognize entities containing personally identifiable information in each input in a collection of text input strings.
-* [Sample5_DetectLanguageBatch.cs][recognize_pii_entities_sample2] - Recognize entities containing personally identifiable information in each input in a collection of text document inputs.
+* [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a single text input.
+* [Sample5_DetectLanguageBatchConvenience.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information in each input in a collection of text input strings.
+* [Sample5_DetectLanguageBatch.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each input in a collection of text document inputs.
 
 ### Recognize Linked Entities
 * [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a single text input.

@@ -304,7 +304,7 @@ namespace Azure.Storage.Blobs.Specialized
                     multipartContentType: contentType,
                     version: Version.ToVersionString(),
                     async: async,
-                    operationName: BatchConstants.BatchOperationName,
+                    operationName: $"{nameof(BlobBatchClient)}.{nameof(SubmitBatch)}",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 

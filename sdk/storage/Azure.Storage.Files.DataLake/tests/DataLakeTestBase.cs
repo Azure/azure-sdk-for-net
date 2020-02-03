@@ -86,6 +86,10 @@ namespace Azure.Storage.Files.DataLake.Tests
         public DataLakeServiceClient GetServiceClient_OAuth()
             => GetServiceClientFromOauthConfig(TestConfigHierarchicalNamespace);
 
+        public StorageSharedKeyCredential GetStorageSharedKeyCredentials()
+            => new StorageSharedKeyCredential(
+                TestConfigHierarchicalNamespace.AccountName,
+                TestConfigHierarchicalNamespace.AccountKey);
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
@@ -113,12 +117,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             {
                 await RetryAsync(
                     async () => await fileSystem.CreateAsync(metadata: metadata, publicAccessType: publicAccessType),
-                    ex => ex.ErrorCode == Constants.Blob.Container.AlreadyExists,
+                    ex => ex.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists,
                     retryDelay: TestConstants.DataLakeRetryDelay,
                     retryAttempts: 1);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
+            when (storageRequestFailedException.ErrorCode == Blobs.Models.BlobErrorCode.ContainerAlreadyExists)
             {
                 // if we still get this error after retrying, mark the test as inconclusive
                 TestContext.Out.WriteLine(

@@ -662,7 +662,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
@@ -735,7 +734,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             string path,
             BlobHttpHeaders httpHeaders = default,
@@ -974,12 +972,16 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-
             var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
             singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
             Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
 
-            var uploader = new PartitionedUploader(client, transferOptions, singleUploadThreshold);
+            PartitionedUploader uploader = new PartitionedUploader(
+                client,
+                transferOptions,
+                singleUploadThreshold,
+                operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
+
             if (async)
             {
                 return await uploader.UploadAsync(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);

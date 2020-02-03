@@ -917,7 +917,7 @@ namespace Azure.Storage.Queues
                         MessagesUri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.ClearMessagesOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(ClearMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1126,7 +1126,7 @@ namespace Azure.Storage.Queues
                             visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                             messageTimeToLive: (int?)timeToLive?.TotalSeconds,
                             async: async,
-                            operationName: Constants.Queue.SendMessageOperationName,
+                            operationName: $"{nameof(QueueClient)}.{nameof(SendMessage)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     // The service returns a sequence of messages, but the
@@ -1300,7 +1300,7 @@ namespace Azure.Storage.Queues
                         numberOfMessages: maxMessages,
                         visibilitytimeout: (int?)visibilityTimeout?.TotalSeconds,
                         async: async,
-                        operationName: Constants.Queue.ReceiveMessagesOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(ReceiveMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1407,7 +1407,7 @@ namespace Azure.Storage.Queues
                         version: Version.ToVersionString(),
                         numberOfMessages: maxMessages,
                         async: async,
-                        operationName: Constants.Queue.PeekMessagesOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(PeekMessages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1528,7 +1528,7 @@ namespace Azure.Storage.Queues
                         popReceipt: popReceipt,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.DeleteMessageOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(DeleteMessage)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1673,7 +1673,7 @@ namespace Azure.Storage.Queues
                         visibilitytimeout: (int)visibilityTimeout.TotalSeconds,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Queue.UpdateMessageOperationName,
+                        operationName: $"{nameof(QueueClient)}.{nameof(UpdateMessage)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

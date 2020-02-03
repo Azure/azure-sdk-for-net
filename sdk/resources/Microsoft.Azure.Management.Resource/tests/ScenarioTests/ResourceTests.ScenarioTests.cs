@@ -345,7 +345,7 @@ namespace ResourceGroups.Tests
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string subscriptionId = "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b";
+                string subscriptionId = "b9f138a1-1d64-4108-8413-9ea3be1c1b2d";
                 string groupName = TestUtilities.GenerateName("csmrg");
                 string resourceName = TestUtilities.GenerateName("csmr");
                 var client = GetResourceManagementClient(context, handler);

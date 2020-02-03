@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class AppendBlobClientTests : BlobTestBase
     {
-        public AppendBlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public AppendBlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -821,6 +821,24 @@ namespace Azure.Storage.Blobs.Test
                         actualException => Assert.IsTrue(true)
                     );
                 }
+            }
+        }
+
+        [Test]
+        public async Task AppendBlockAsync_NullStream_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
+
+            // Act
+            using (var stream = (MemoryStream)null)
+            {
+                // Check if the correct param name that is causing the error is being returned
+                await TestHelper.AssertExpectedExceptionAsync<ArgumentNullException>(
+                    blob.AppendBlockAsync(content: stream),
+                    e => Assert.AreEqual("body", e.ParamName));
             }
         }
 

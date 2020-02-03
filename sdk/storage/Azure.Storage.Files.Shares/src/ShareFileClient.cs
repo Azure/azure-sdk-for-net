@@ -531,7 +531,7 @@ namespace Azure.Storage.Files.Shares
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.CreateOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(Create)}")
                         .ConfigureAwait(false);
 
                     return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
@@ -668,7 +668,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.StartCopyOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(StartCopy)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -787,7 +787,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.AbortCopyOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(AbortCopy)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1039,7 +1039,7 @@ namespace Azure.Storage.Files.Shares
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
                     cancellationToken: cancellationToken,
-                    operationName: Constants.File.DownloadOperationName)
+                    operationName: $"{nameof(ShareFileClient)}.{nameof(Download)}")
                     .ConfigureAwait(false);
             Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
             return (response, stream);
@@ -1130,7 +1130,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.DeleteOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(Delete)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1243,7 +1243,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetPropertiesOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetProperties)}")
                         .ConfigureAwait(false);
 
                     // Return an exploding Response on 304
@@ -1441,7 +1441,7 @@ namespace Azure.Storage.Files.Shares
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: Constants.File.SetHttpHeadersOperationName,
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(SetHttpHeaders)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1565,7 +1565,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.SetMetadataOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(SetMetadata)}")
                         .ConfigureAwait(false);
 
                     return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
@@ -1771,7 +1771,7 @@ namespace Azure.Storage.Files.Shares
                         contentHash: transactionalContentHash,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.UploadRangeOperationName);
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(UploadRange)}").ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -2243,7 +2243,7 @@ namespace Azure.Storage.Files.Shares
                         range: range.ToString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetRangeListOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}")
                         .ConfigureAwait(false);
                     return Response.FromValue(new ShareFileRangeInfo(response.Value), response.GetRawResponse());
                 }
@@ -2421,7 +2421,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 false, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                $"{nameof(ShareFileClient)}.{nameof(ForceCloseHandle)}")
                 .EnsureCompleted();
 
             return Response.FromValue(
@@ -2468,7 +2468,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 true, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                $"{nameof(ShareFileClient)}.{nameof(ForceCloseHandle)}")
                 .ConfigureAwait(false);
 
             return Response.FromValue(
@@ -2637,7 +2637,7 @@ namespace Azure.Storage.Files.Shares
             string marker,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.File.ForceCloseAllHandlesOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -2658,7 +2658,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: operationName)
+                        operationName: operationName ?? $"{nameof(ShareFileClient)}.{nameof(ForceCloseAllHandles)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
