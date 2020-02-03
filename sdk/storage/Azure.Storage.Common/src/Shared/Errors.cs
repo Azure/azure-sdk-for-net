@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Security.Authentication;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage
 {
@@ -52,9 +53,6 @@ namespace Azure.Storage
         public static InvalidOperationException TokenCredentialsRequireHttps()
             => new InvalidOperationException("Use of token credentials requires HTTPS");
 
-        public static InvalidOperationException AccountSasMissingData()
-            => new InvalidOperationException($"Account SAS is missing at least one of these: ExpiryTime, Permissions, Service, or ResourceType");
-
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
 
@@ -101,8 +99,8 @@ namespace Azure.Storage
         public static AuthenticationException InvalidCredentials(string fullName)
             => new AuthenticationException($"Cannot authenticate credentials with {fullName}");
 
-        public static RequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
-            => StorageExceptionExtensions.CreateException(
+        public static RequestFailedException ClientRequestIdMismatch(ClientDiagnostics clientDiagnostics, Response response, string echo, string original)
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(
                     response,
                     $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.");
 

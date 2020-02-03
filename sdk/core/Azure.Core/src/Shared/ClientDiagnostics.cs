@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -40,6 +42,28 @@ namespace Azure.Core.Pipeline
             return messageTask.GetAwaiter().GetResult();
         }
 
+        public RequestFailedException CreateRequestFailedExceptionWithContent(
+            Response response,
+            string? message = null,
+            string? content = null,
+            string? errorCode = null,
+            IDictionary<string, string>? additionalInfo = null,
+            Exception? innerException = null)
+        {
+            var formatMessage = FormatMessage(response, message, content, errorCode, additionalInfo);
+            var exception = new RequestFailedException(response.Status, formatMessage, errorCode, innerException);
+
+            if (additionalInfo != null)
+            {
+                foreach (KeyValuePair<string, string> keyValuePair in additionalInfo)
+                {
+                    exception.Data.Add(keyValuePair.Key, keyValuePair.Value);
+                }
+            }
+
+            return exception;
+        }
+
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, string? errorCode, bool async)
         {
             message = await CreateRequestFailedMessageAsync(message, response, errorCode, async).ConfigureAwait(false);
@@ -48,8 +72,24 @@ namespace Azure.Core.Pipeline
 
         public async ValueTask<string> CreateRequestFailedMessageAsync(string message, Response response, string? errorCode, bool async)
         {
+            string? content = null;
+
+            if (response.ContentStream != null &&
+                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            {
+                using (var streamReader = new StreamReader(response.ContentStream, encoding))
+                {
+                    content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
+                }
+            }
+
+            return FormatMessage(response, message, content, errorCode);
+        }
+
+        public string FormatMessage(Response response, string? message = null, string? content = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null)
+        {
             StringBuilder messageBuilder = new StringBuilder()
-                .AppendLine(message)
+                .AppendLine(message ?? DefaultMessage)
                 .Append("Status: ")
                 .Append(response.Status.ToString(CultureInfo.InvariantCulture))
                 .Append(" (")
@@ -63,24 +103,32 @@ namespace Azure.Core.Pipeline
                     .AppendLine();
             }
 
-            if (response.ContentStream != null &&
-                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
+            if (additionalInfo != null && additionalInfo.Count > 0)
             {
                 messageBuilder
                     .AppendLine()
-                    .AppendLine("Content:");
-
-                using (var streamReader = new StreamReader(response.ContentStream, encoding))
+                    .AppendLine("Additional Information:");
+                foreach (KeyValuePair<string, string> info in additionalInfo)
                 {
-                    string content = async ? await streamReader.ReadToEndAsync().ConfigureAwait(false) : streamReader.ReadToEnd();
-
-                    messageBuilder.AppendLine(content);
+                    messageBuilder
+                        .Append(info.Key)
+                        .Append(": ")
+                        .AppendLine(info.Value);
                 }
+            }
+
+            if (content != null)
+            {
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Content:")
+                    .AppendLine(content);
             }
 
             messageBuilder
                 .AppendLine()
                 .AppendLine("Headers:");
+
             foreach (HttpHeader responseHeader in response.Headers)
             {
                 string headerValue = _sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
