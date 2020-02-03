@@ -206,7 +206,7 @@ namespace Azure.AI.TextAnalytics
             return new DetectLanguageResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                languages);
+                languages.OrderBy(l => l.Score).FirstOrDefault());
         }
 
         private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
