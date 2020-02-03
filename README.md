@@ -12,17 +12,15 @@ For tutorials, samples, quick starts, and other documentation, go to [Azure for 
 
 ## Packages available
 
-For the most up-to-date information about 
-
 ### Client
 
 New wave of packages that we are announcing as **GA** and several that are currently releasing in **preview**. These libraries follow the [Azure SDK Design Guidelines for .NET](https://azure.github.io/azure-sdk/dotnet/guidelines/) and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features at [Azure.Core](sdk/core/Azure.Core/README.md).
 
-These preview libraries can be easily identified by their folder, package, and namespaces names starting with 'Azure', e.g. Azure.Storage.Blobs.
+These new client libraries can be identified by the naming used for their folder, package, and namespace. Each will start with `Azure`, followed by the service category, and then the name of the service. For example [`Azure.Storage.Blobs`](./sdk/core/Azure.Storage.Blobs).
 
-For a complete list of available packages please see the [latest available packages](https://azure.github.io/azure-sdk/releases/latest/dotnet.html) page.
+For a complete list of available packages, please see the [latest available packages](https://azure.github.io/azure-sdk/releases/latest/dotnet.html) page.
 
-> NOTE: If you need to ensure your code is ready for production use one of the stable, non-preview libraries.
+> NOTE: If you need to ensure your code is ready for production we strongly recommend using one of the stable, non-preview libraries.
 
 ### Client: Previous Versions
 
