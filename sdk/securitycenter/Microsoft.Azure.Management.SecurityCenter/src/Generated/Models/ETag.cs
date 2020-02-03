@@ -14,26 +14,27 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the Azure resource that was assessed
+    /// Entity tag is used for comparing two or more entities from the same
+    /// requested resource.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Azure")]
-    public partial class AzureResourceDetails : ResourceDetails
+    public partial class ETag
     {
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the ETag class.
         /// </summary>
-        public AzureResourceDetails()
+        public ETag()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the ETag class.
         /// </summary>
-        /// <param name="id">Azure resource Id of the assessed resource</param>
-        public AzureResourceDetails(string id = default(string))
+        /// <param name="etag">Entity tag is used for comparing two or more
+        /// entities from the same requested resource.</param>
+        public ETag(string etag = default(string))
         {
-            Id = id;
+            Etag = etag;
             CustomInit();
         }
 
@@ -43,10 +44,11 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets azure resource Id of the assessed resource
+        /// Gets or sets entity tag is used for comparing two or more entities
+        /// from the same requested resource.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; set; }
 
     }
 }

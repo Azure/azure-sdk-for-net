@@ -11,29 +11,31 @@
 namespace Microsoft.Azure.Management.Security.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Details of the Azure resource that was assessed
+    /// A rule set which evaluates all its rules upon an event interception.
+    /// Only when all the included rules in the rule set will be evaluated as
+    /// 'true', will the event trigger the defined actions.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Azure")]
-    public partial class AzureResourceDetails : ResourceDetails
+    public partial class AutomationRuleSet
     {
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the AutomationRuleSet class.
         /// </summary>
-        public AzureResourceDetails()
+        public AutomationRuleSet()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the AutomationRuleSet class.
         /// </summary>
-        /// <param name="id">Azure resource Id of the assessed resource</param>
-        public AzureResourceDetails(string id = default(string))
+        public AutomationRuleSet(IList<AutomationTriggeringRule> rules = default(IList<AutomationTriggeringRule>))
         {
-            Id = id;
+            Rules = rules;
             CustomInit();
         }
 
@@ -43,10 +45,9 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets azure resource Id of the assessed resource
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "rules")]
+        public IList<AutomationTriggeringRule> Rules { get; set; }
 
     }
 }
