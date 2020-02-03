@@ -30,13 +30,13 @@ Console.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0
 
 ## Analyzing the sentiment of multipile text inputs
 
-To analyze the sentiment of a collection of text inputs in the same language, call `AnalyzeSentiment` on an `IEnumerable` of strings.  The results are returned as a `AnalyzeSentimentResultCollection`.
+To analyze the sentiment of a collection of text inputs in the same language, call `AnalyzeSentimentBatch` on an `IEnumerable` of strings.  The results are returned as a `AnalyzeSentimentResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample2AnalyzeSentimentConvenience
-AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs);
+AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs);
 ```
 
-To analyze the sentiment of a collection of text inputs in different languages, call `AnalyzeSentiment` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To analyze the sentiment of a collection of text inputs in different languages, call `AnalyzeSentimentBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample2AnalyzeSentimentBatch
 var inputs = new List<TextDocumentInput>
@@ -59,7 +59,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

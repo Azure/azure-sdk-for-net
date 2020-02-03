@@ -86,10 +86,12 @@ A **text input**, sometimes called a **document**, is a single unit of input to 
 An operation result, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single text input.  An operation's result type also may optionally include information about the input document and how it was processed.
 
 ### Operation Result Collection
- An operation result collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections.  An operation result collection may optionally include information about the input batch and how it was processed.
+An operation result collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections.  An operation result collection may optionally include information about the input batch and how it was processed.
 
- ### Operation Overloads
- For each supported operation, `TextAnalyticsClient` provides method overloads to take a single text input, a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects.  The overload taking the `TextDocumentInput` or `DetectLanguageInput` batch allows callers to give each document a unique ID, or indicate that the documents in the batch are written in different languages.
+ ### Operation on multiple text inputs
+For each supported operation, `TextAnalyticsClient` provides a method that accepts a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects. This methods allow callers to give each document a unique ID, indicate that the documents in the batch are written in different languages, or provide a country hint about the language of the document.
+
+**Note:** It is recommended to use the batch methods when working on production environments as they allow you to send one request with multiple text inputs. This is more performant than sending a request per each text input.
 
  ## Examples
  The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient), and covers the main functions of Text Analytics.
@@ -117,6 +119,7 @@ DetectedLanguage language = result.PrimaryLanguage;
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
 ```
+For samples on using the production recommended option `DetectLanguageBatch` see [here](#detect-language-1).
 
 Please refer to the service documentation for a conceptual discussion of [language detection][language_detection].
 
@@ -134,6 +137,7 @@ Console.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0
 Console.WriteLine($"    Neutral score: {docSentiment.SentimentScores.Neutral:0.00}.");
 Console.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0.00}.");
 ```
+For samples on using the production recommended option `AnalyzeSentimentBatch` see [here](#analyze-sentiment-1).
 
 Please refer to the service documentation for a conceptual discussion of [sentiment analysis][sentiment_analysis].
 
@@ -152,6 +156,7 @@ foreach (string keyPhrase in keyPhrases)
     Console.WriteLine(keyPhrase);
 }
 ```
+For samples on using the production recommended option `ExtractKeyPhrasesBatch` see [here](#extract-key-phrases-1).
 
 Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
@@ -170,6 +175,7 @@ foreach (CategorizedEntity entity in entities)
     Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
+For samples on using the production recommended option `RecognizeEntitiesBatch` see [here](#recognize-entities-1).
 
 Please refer to the service documentation for a conceptual discussion of [named entity recognition][named_entity_recognition].
 
@@ -189,6 +195,8 @@ foreach (CategorizedEntity entity in entities)
 }
 ```
 
+For samples on using the production recommended option `RecognizePiiEntitiesBatch` see [here](#recognize-pii-entities-1).
+
 ### Recognize Linked Entities
 Run a predictive model to identify a collection of entities found in the passed-in input text or batch of input text documents, and include information linking the entities to their corresponding entries in a well-known knowledge base.
 
@@ -207,6 +215,7 @@ foreach (LinkedEntity linkedEntity in result.LinkedEntities)
     }
 }
 ```
+For samples on using the production recommended option `RecognizeLinkedEntitiesBatch` see [here](#recognize-linked-entities-1).
 
 Please refer to the service documentation for a conceptual discussion of [entity linking][named_entity_recognition].
 

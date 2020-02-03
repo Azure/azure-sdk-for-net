@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Linked entities for each input are:\n");

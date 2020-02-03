@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;

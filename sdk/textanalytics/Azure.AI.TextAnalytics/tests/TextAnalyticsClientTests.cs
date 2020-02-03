@@ -40,48 +40,48 @@ namespace Azure.AI.TextAnalytics.Tests
         public void DetectLanguageArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageAsync(null, new TextAnalyticsRequestOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.DetectLanguageBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void RecognizeEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesAsync(null, new TextAnalyticsRequestOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void AnalyzeSentimentArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentAsync(null, new TextAnalyticsRequestOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.AnalyzeSentimentBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void ExtractKeyPhrasesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesAsync(null, new TextAnalyticsRequestOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.ExtractKeyPhrasesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void RecognizePiiEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesAsync(null, new TextAnalyticsRequestOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizePiiEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]
         public void RecognizeLinkedEntitiesArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((string)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync((List<string>)null));
-            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesAsync(null, new TextAnalyticsRequestOptions()));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync((List<string>)null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.RecognizeLinkedEntitiesBatchAsync(null, new TextAnalyticsRequestOptions()));
         }
 
         [Test]

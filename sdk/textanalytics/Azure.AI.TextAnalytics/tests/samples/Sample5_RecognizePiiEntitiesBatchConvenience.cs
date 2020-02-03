@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"The following Personally Identifiable Information entities were recognized:");

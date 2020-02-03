@@ -36,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentConvenience
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs);
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Predicted sentiments are:");

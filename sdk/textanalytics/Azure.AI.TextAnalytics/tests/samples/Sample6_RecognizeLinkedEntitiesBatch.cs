@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;

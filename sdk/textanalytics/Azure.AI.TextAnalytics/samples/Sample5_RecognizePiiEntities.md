@@ -30,13 +30,13 @@ foreach (CategorizedEntity entity in entities)
 
 ## Recognizing Personally Identifiable Information in multiple inputs
 
-To recognize Personally Identifiable Information in multiple text inputs as a batch, call `RecognizePiiEntities` on an `IEnumerable` of strings.  The results are returned as a `RecognizePiiEntitiesResultCollection`.
+To recognize Personally Identifiable Information in multiple text inputs as a batch, call `RecognizePiiEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizePiiEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
-RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs);
 ```
 
-To recognize Personally Identifiable Information in a collection of text inputs in different languages, call `RecognizePiiEntities` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To recognize Personally Identifiable Information in a collection of text inputs in different languages, call `RecognizePiiEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
 var inputs = new List<TextDocumentInput>
@@ -51,7 +51,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

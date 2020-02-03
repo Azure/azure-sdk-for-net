@@ -30,13 +30,13 @@ foreach (CategorizedEntity entity in entities)
 
 ## Recognizing entities in multiple inputs
 
-To recognize entities in multiple text inputs as a batch, call `RecognizeEntities` on an `IEnumerable` of strings.  The results are returned as a `RecognizeEntitiesResultCollection`.
+To recognize entities in multiple text inputs as a batch, call `RecognizeEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
+RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs);
 ```
 
-To recognize entities in a collection of text inputs in different languages, call `RecognizeEntities` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To recognize entities in a collection of text inputs in different languages, call `RecognizeEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesBatch
 var inputs = new List<TextDocumentInput>
@@ -55,7 +55,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

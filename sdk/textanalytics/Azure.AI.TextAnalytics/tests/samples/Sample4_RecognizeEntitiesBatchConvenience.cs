@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
+            RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Recognized entities for each input are:");
