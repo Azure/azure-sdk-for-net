@@ -11,29 +11,31 @@
 namespace Microsoft.Azure.Management.Security.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Details of the Azure resource that was assessed
+    /// A list of key value pairs that describe the resource.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Azure")]
-    public partial class AzureResourceDetails : ResourceDetails
+    public partial class Tags
     {
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the Tags class.
         /// </summary>
-        public AzureResourceDetails()
+        public Tags()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the Tags class.
         /// </summary>
-        /// <param name="id">Azure resource Id of the assessed resource</param>
-        public AzureResourceDetails(string id = default(string))
+        /// <param name="tagsProperty">A list of key value pairs that describe
+        /// the resource.</param>
+        public Tags(IDictionary<string, string> tagsProperty = default(IDictionary<string, string>))
         {
-            Id = id;
+            TagsProperty = tagsProperty;
             CustomInit();
         }
 
@@ -43,10 +45,10 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets azure resource Id of the assessed resource
+        /// Gets or sets a list of key value pairs that describe the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> TagsProperty { get; set; }
 
     }
 }
