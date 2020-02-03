@@ -18,6 +18,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: null, content: null, ErrorCode);
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: null, content: null, response.GetErrorCode(ErrorCode));
     }
 }

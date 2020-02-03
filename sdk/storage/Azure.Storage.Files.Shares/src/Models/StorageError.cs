@@ -48,6 +48,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// A <see cref="RequestFailedException"/>.
         /// </returns>
         public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Message, content: null, Code);
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Message, content: null, response.GetErrorCode(Code));
     }
 }
