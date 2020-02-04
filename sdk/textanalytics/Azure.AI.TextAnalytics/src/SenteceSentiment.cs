@@ -9,9 +9,9 @@ namespace Azure.AI.TextAnalytics
     /// input.  For more information regarding text sentiment, see
     /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.
     /// </summary>
-    public readonly struct TextSentiment
+    public readonly struct SenteceSentiment
     {
-        internal TextSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal SenteceSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
             SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);

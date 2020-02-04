@@ -14,11 +14,11 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DocumentSentiment
     {
-        internal DocumentSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<TextSentiment> sentenceSentiments)
+        internal DocumentSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<SenteceSentiment> sentenceSentiments)
         {
             Sentiment = sentiment;
             SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);
-            Sentences = new ReadOnlyCollection<TextSentiment>(sentenceSentiments);
+            Sentences = new ReadOnlyCollection<SenteceSentiment>(sentenceSentiments);
         }
 
         /// <summary>
@@ -37,6 +37,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for each sentence in the corresponding
         /// document.
         /// </summary>
-        public IReadOnlyCollection<TextSentiment> Sentences { get; }
+        public IReadOnlyCollection<SenteceSentiment> Sentences { get; }
     }
 }
