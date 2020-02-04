@@ -75,7 +75,7 @@ namespace Azure.Storage
         public static RequestFailedException ClientRequestIdMismatch(ClientDiagnostics clientDiagnostics, Response response, string echo, string original)
             => clientDiagnostics.CreateRequestFailedExceptionWithContent(
                 response,
-                $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.");
+                $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.", errorCode: response.GetErrorCode(null));
 
         public static void VerifyHttpsTokenAuth(Uri uri)
         {
