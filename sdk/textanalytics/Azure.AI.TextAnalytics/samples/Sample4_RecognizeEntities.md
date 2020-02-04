@@ -19,7 +19,7 @@ To recognize entities in a single text input, pass the input string to the clien
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 RecognizeEntitiesResult result = client.RecognizeEntities(input);
-IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (CategorizedEntity entity in entities)

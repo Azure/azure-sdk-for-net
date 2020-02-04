@@ -121,16 +121,16 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             json.WriteStartObject();
             json.WriteStartArray("documents");
-            if (resultCollection.FirstOrDefault(r => r.CategorizedEntities.Count > 0) != default)
+            if (resultCollection.FirstOrDefault(r => r.Entities.Count > 0) != default)
             {
                 foreach (var result in resultCollection)
                 {
-                    if (result.CategorizedEntities.Count > 0)
+                    if (result.Entities.Count > 0)
                     {
                         json.WriteStartObject();
                         json.WriteString("id", result.Id);
                         json.WriteStartArray("entities");
-                        foreach (var entity in result.CategorizedEntities)
+                        foreach (var entity in result.Entities)
                         {
                             json.WriteStartObject();
                             json.WriteString("text", entity.Text);
