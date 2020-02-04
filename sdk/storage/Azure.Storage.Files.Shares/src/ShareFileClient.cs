@@ -1646,8 +1646,6 @@ namespace Azure.Storage.Files.Shares
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
-
-
         /// <summary>
         /// The <see cref="UploadRangeInternal"/> operation clears the
         /// <paramref name="range"/> of a file.
@@ -1681,7 +1679,6 @@ namespace Azure.Storage.Files.Shares
             using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(ClearRange)}");
-
 
                 Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
@@ -1810,7 +1807,7 @@ namespace Azure.Storage.Files.Shares
         public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
             HttpRange range,
             Stream content,
-            byte[] transactionalContentHash = null,
+            byte[] transactionalContentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await UploadRangeInternal(
