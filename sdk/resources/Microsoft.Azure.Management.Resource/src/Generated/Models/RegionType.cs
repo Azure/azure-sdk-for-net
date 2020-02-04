@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Resources.Models
+namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
