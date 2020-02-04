@@ -10,25 +10,26 @@ namespace Microsoft.Resources.Models
     using System.Linq;
 
     /// <summary>
-    /// Deployment filter.
+    /// Information about a tenant managing the subscription.
     /// </summary>
-    public partial class DeploymentExtendedFilter
+    public partial class ManagedByTenant
     {
         /// <summary>
-        /// Initializes a new instance of the DeploymentExtendedFilter class.
+        /// Initializes a new instance of the ManagedByTenant class.
         /// </summary>
-        public DeploymentExtendedFilter()
+        public ManagedByTenant()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DeploymentExtendedFilter class.
+        /// Initializes a new instance of the ManagedByTenant class.
         /// </summary>
-        /// <param name="provisioningState">The provisioning state.</param>
-        public DeploymentExtendedFilter(string provisioningState = default(string))
+        /// <param name="tenantId">The tenant ID of the managing tenant. This
+        /// is a GUID.</param>
+        public ManagedByTenant(string tenantId = default(string))
         {
-            ProvisioningState = provisioningState;
+            TenantId = tenantId;
             CustomInit();
         }
 
@@ -38,10 +39,10 @@ namespace Microsoft.Resources.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provisioning state.
+        /// Gets the tenant ID of the managing tenant. This is a GUID.
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        [JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; private set; }
 
     }
 }
