@@ -260,7 +260,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Create)}");
 
             try
             {
@@ -337,7 +337,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(Create)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Create)}");
 
             try
             {
@@ -392,7 +392,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(Delete)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Delete)}");
 
             try
             {
@@ -440,7 +440,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(Delete)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Delete)}");
 
             try
             {
@@ -504,7 +504,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
 
             try
             {
@@ -571,7 +571,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions destinationConditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(Rename)}");
 
             try
             {
@@ -639,7 +639,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(GetAccessControl)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetAccessControl)}");
 
             try
             {
@@ -698,7 +698,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(GetAccessControl)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetAccessControl)}");
 
             try
             {
@@ -763,7 +763,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetAccessControlList)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetAccessControlList)}");
 
             try
             {
@@ -827,7 +827,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetAccessControlList)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetAccessControlList)}");
 
             try
             {
@@ -894,7 +894,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetPermissions)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetPermissions)}");
 
             try
             {
@@ -959,7 +959,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetPermissions)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetPermissions)}");
 
             try
             {
@@ -1016,7 +1016,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(GetProperties)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetProperties)}");
 
             try
             {
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(GetProperties)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(GetProperties)}");
 
             try
             {
@@ -1124,7 +1124,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetHttpHeaders)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetHttpHeaders)}");
 
             try
             {
@@ -1178,7 +1178,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetHttpHeaders)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetHttpHeaders)}");
 
             try
             {
@@ -1235,7 +1235,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetMetadata)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetMetadata)}");
 
             try
             {
@@ -1289,7 +1289,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(SetMetadata)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(SetMetadata)}");
 
             try
             {
@@ -1369,7 +1369,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(CreateFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(CreateFile)}");
 
             try
             {
@@ -1455,7 +1455,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(CreateFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(CreateFile)}");
 
             try
             {
@@ -1518,7 +1518,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(DeleteFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(DeleteFile)}");
 
             try
             {
@@ -1568,7 +1568,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(DeleteFile)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(DeleteFile)}");
 
             try
             {
@@ -1647,7 +1647,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(CreateSubDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(CreateSubDirectory)}");
 
             try
             {
@@ -1734,7 +1734,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(CreateSubDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(CreateSubDirectory)}");
 
             try
             {
@@ -1804,7 +1804,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(DeleteSubDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(DeleteSubDirectory)}");
 
             try
             {
@@ -1861,7 +1861,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(Azure)}.{nameof(Storage)}.{nameof(Files)}.{nameof(DataLake)}.{nameof(DataLakeDirectoryClient)}.{nameof(DeleteSubDirectory)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(DeleteSubDirectory)}");
 
             try
             {

@@ -21,7 +21,6 @@ namespace Azure.Identity
     {
         internal const string MsiUnavailableError = "No managed identity endpoint found.";
 
-        private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private readonly ManagedIdentityClient _client;
 
@@ -47,13 +46,12 @@ namespace Azure.Identity
         }
 
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline)
-            : this(clientId, pipeline, new ManagedIdentityClient(pipeline))
+            : this(pipeline, new ManagedIdentityClient(pipeline, clientId))
         {
         }
 
-        internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, ManagedIdentityClient client)
+        internal ManagedIdentityCredential(CredentialPipeline pipeline, ManagedIdentityClient client)
         {
-            _clientId = clientId;
 
             _pipeline = pipeline;
 
@@ -94,21 +92,22 @@ namespace Azure.Identity
 
         private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ManagedIdentityCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ManagedIdentityCredential.GetToken", requestContext);
 
             try
             {
-                MsiType msiType = await _client.GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
+                ExtendedAccessToken result = await _client.AuthenticateAsync(requestContext.Scopes, cancellationToken).ConfigureAwait(false);
 
-                // if msi is unavailable or we were unable to determine the type return a default access token
-                if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
+                if (result.Exception != null)
                 {
-                    return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(MsiUnavailableError)));
+                    scope.Failed(result.Exception);
+                }
+                else
+                {
+                    scope.Succeeded(result.AccessToken);
                 }
 
-                AccessToken token = await _client.AuthenticateAsync(msiType, requestContext.Scopes, _clientId, cancellationToken).ConfigureAwait(false);
-
-                return new ExtendedAccessToken(scope.Succeeded(token));
+                return result;
             }
             catch (OperationCanceledException e)
             {
@@ -124,21 +123,22 @@ namespace Azure.Identity
 
         private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.ManagedIdentityCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("ManagedIdentityCredential.GetToken", requestContext);
 
             try
             {
-                MsiType msiType = _client.GetMsiType(cancellationToken);
+                ExtendedAccessToken result = _client.Authenticate(requestContext.Scopes, cancellationToken);
 
-                // if msi is unavailable or we were unable to determine the type return a default access token
-                if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
+                if (result.Exception != null)
                 {
-                    return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(MsiUnavailableError)));
+                    scope.Failed(result.Exception);
+                }
+                else
+                {
+                    scope.Succeeded(result.AccessToken);
                 }
 
-                AccessToken token = _client.Authenticate(msiType, requestContext.Scopes, _clientId, cancellationToken);
-
-                return new ExtendedAccessToken(scope.Succeeded(token));
+                return result;
             }
             catch (OperationCanceledException e)
             {

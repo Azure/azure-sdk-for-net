@@ -16,22 +16,22 @@ namespace Azure.AI.TextAnalytics.Samples
         public void RecognizeEntities()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample4CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
             #endregion
 
             #region Snippet:RecognizeEntities
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
             RecognizeEntitiesResult result = client.RecognizeEntities(input);
-            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
 
             Console.WriteLine($"Recognized {entities.Count()} entities:");
-            foreach (NamedEntity entity in entities)
+            foreach (CategorizedEntity entity in entities)
             {
-                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType ?? "N/A"}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
             }
             #endregion
         }

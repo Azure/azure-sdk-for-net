@@ -1,5 +1,13 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 14.4.0
+
+- Support Point In Time Restore, to restore blob ranges
+
+### Changes in 14.3.0
+
+- Support Queue/Table Encyrtpion Keytype when create Storage account
+
 ### Changes in 14.2.0
 
 - Change the maximum limitation for share size from 100000(GiB) to 102400(GiB)

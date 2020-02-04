@@ -9,7 +9,7 @@
 - Install VS 2019 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Need at least .NET Framework 4.6.1 and 4.7 development tools
 - Install the **.NET Core cross-platform development** workloads in VisualStudio
-- Install **.NET Core 3.0.100 SDK ** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.0)
+- Install **.NET Core 3.1.101 SDK** or higher for your specific platform. (https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - Install the latest version of git (https://git-scm.com/downloads)
 
 ## GENERAL THINGS TO KNOW:
@@ -132,6 +132,7 @@ The `ApiCompatVerification` target defined in `ApiCompat.csproj` is referenced i
 
 ### Adding a new GA'ed library
 To include add a new GA'ed library in the `ApiCompatVerification` target, add a package reference for the library to the `ApiCompat.csproj` file. You will also need to include the latest GA version of the library in [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props). 
+Finally, include the `ApiCompat.csproj` in your solution so that the project will get automatically restored in Visual Studio.
 
 ### Releasing a new version of a GA'ed libary
 Since the [eng/Packages.Data.props](https://github.com/Azure/azure-sdk-for-net/blob/master/eng/Packages.Data.props) is currently maintained manually, you will need to update the version number for your library in this file when releasing a new version.
