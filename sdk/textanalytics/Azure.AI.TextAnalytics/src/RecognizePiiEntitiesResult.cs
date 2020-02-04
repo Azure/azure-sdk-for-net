@@ -18,19 +18,19 @@ namespace Azure.AI.TextAnalytics
         internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, IList<PiiEntity> entities)
             : base(id, statistics)
         {
-            PiiEntities = new ReadOnlyCollection<PiiEntity>(entities);
+            Entities = new ReadOnlyCollection<PiiEntity>(entities);
         }
 
         internal RecognizePiiEntitiesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
-            PiiEntities = Array.Empty<PiiEntity>();
+            Entities = Array.Empty<PiiEntity>();
         }
 
         /// <summary>
         /// Gets the collection of PII entities containing Personally
         /// Identifiable Information in the input document.
         /// </summary>
-        public IReadOnlyCollection<PiiEntity> PiiEntities { get; }
+        public IReadOnlyCollection<PiiEntity> Entities { get; }
     }
 }

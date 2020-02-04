@@ -130,7 +130,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
             RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
 
             Assert.AreEqual(3, entities.Count);
 
@@ -152,7 +152,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
             RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input, "es");
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
 
             Assert.AreEqual(3, entities.Count);
         }
@@ -164,7 +164,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "I had a wonderful trip to Seattle last week.";
 
             RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
 
             Assert.AreEqual(2, entities.Count);
 
@@ -182,7 +182,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
             RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input);
-            IReadOnlyCollection<PiiEntity> entities = result.PiiEntities;
+            IReadOnlyCollection<PiiEntity> entities = result.Entities;
 
             Assert.AreEqual(2, entities.Count);
 
@@ -204,7 +204,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
             RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input, "en");
-            IReadOnlyCollection<PiiEntity> entities = result.PiiEntities;
+            IReadOnlyCollection<PiiEntity> entities = result.Entities;
 
             Assert.AreEqual(2, entities.Count);
         }
@@ -257,7 +257,7 @@ namespace Azure.AI.TextAnalytics.Tests
             const string input = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C";
 
             RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            List<CategorizedEntity> entities = result.CategorizedEntities.ToList();
+            List<CategorizedEntity> entities = result.Entities.ToList();
 
             Assert.AreEqual(15, entities.Count);
 
