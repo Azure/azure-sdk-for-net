@@ -79,6 +79,7 @@ jobs:
           patterns: "*.nupkg"
       - pwsh: |
           mkdir "$(Build.ArtifactStagingDirectory)/reports"
+          Copy-Item -Path "$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html" -Destination "$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html"
           & "tools/AnalyzeDeps/AnalyzeDeps.ps1" -PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" `
           -OutPath "$(Build.ArtifactStagingDirectory)/reports/dependencies.html" -DumpPath "$(Build.ArtifactStagingDirectory)/reports/data.js"
         displayName: "Analyze dependencies"
