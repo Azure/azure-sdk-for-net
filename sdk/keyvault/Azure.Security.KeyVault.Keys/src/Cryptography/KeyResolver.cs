@@ -169,7 +169,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     result.Deserialize(response.ContentStream);
                     return Response.FromValue(result, response);
                 default:
-                    throw response.CreateRequestFailedException();
+                    throw _clientDiagnostics.CreateRequestFailedException(response);
             }
         }
 

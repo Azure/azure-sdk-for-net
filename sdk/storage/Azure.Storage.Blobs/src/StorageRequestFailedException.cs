@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Azure.Core.Pipeline;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -43,10 +44,11 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Create an exception corresponding to the StorageError.
         /// </summary>
+        /// <param name="clientDiagnostics">The <see cref="ClientDiagnostics"/> instance to use.</param>
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
-        public Exception CreateException(Azure.Response response)
-            => StorageExceptionExtensions.CreateException(response, Message, null, Code, AdditionalInformation);
+        public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Message, content: null,  response.GetErrorCode(Code));
     }
 
     /// <summary>
@@ -57,10 +59,11 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Create an exception corresponding to the ConditionNotMetError.
         /// </summary>
+        /// <param name="clientDiagnostics">The <see cref="ClientDiagnostics"/> instance to use.</param>
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
-        public Exception CreateException(Azure.Response response)
-            => StorageExceptionExtensions.CreateException(response, null, null, ErrorCode);
+        public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: null, content: null, response.GetErrorCode(ErrorCode));
     }
 
     /// <summary>
@@ -71,9 +74,10 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Create an exception corresponding to the DataLakeStorageError.
         /// </summary>
+        /// <param name="clientDiagnostics">The <see cref="ClientDiagnostics"/> instance to use.</param>
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
-        public Exception CreateException(Azure.Response response)
-            => StorageExceptionExtensions.CreateException(response, Error.Message, null, Error.Code);
+        public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Error.Message, content: null, response.GetErrorCode(Error.Code));
     }
 }
