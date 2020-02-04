@@ -17,7 +17,7 @@ namespace Azure.Identity
     /// <summary>
     /// Enables authentication to Azure Active Directory using Azure CLI to generated an access token.
     /// </summary>
-    public class AzureCliCredential : TokenCredential, IExtendedTokenCredential
+    public class AzureCliCredential : TokenCredential
     {
         private const string AzureCLINotInstalled = "Azure CLI not installed";
         private const string AzNotLogIn = "Please run 'az login' to setup account";
@@ -53,7 +53,7 @@ namespace Azure.Identity
         /// <returns></returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult().GetTokenOrThrow();
+            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -64,20 +64,10 @@ namespace Azure.Identity
         /// <returns></returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
-        }
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
             return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return GetTokenImplAsync(requestContext, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.AzureCliCredential.GetToken", requestContext);
 
@@ -107,10 +97,10 @@ namespace Azure.Identity
                     }
                     else if (isLoginError)
                     {
-                        throw new AuthenticationFailedException(AzNotLogIn);
+                        throw new CredentialUnavailableException(AzNotLogIn);
                     }
 
-                    throw new AuthenticationFailedException(output);
+                    throw new CredentialUnavailableException(output);
                 }
 
                 byte[] byteArrary = Encoding.ASCII.GetBytes(output);
@@ -125,7 +115,7 @@ namespace Azure.Identity
 
                 AccessToken token = new AccessToken(accessToken, expiresOn);
 
-                return new ExtendedAccessToken(scope.Succeeded(token));
+                return scope.Succeeded(token);
             }
             catch (OperationCanceledException e)
             {
