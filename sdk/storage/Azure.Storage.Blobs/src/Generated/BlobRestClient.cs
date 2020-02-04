@@ -75,7 +75,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetPropertiesAsync_CreateResponse(_response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -149,9 +149,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SetPropertiesAsync Azure.Response.</returns>
             internal static Azure.Response SetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -167,7 +169,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -223,7 +225,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -284,9 +286,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -311,7 +315,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -367,7 +371,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetStatisticsAsync_CreateResponse(_response);
+                        return GetStatisticsAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -428,9 +432,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetStatisticsAsync Azure.Response{Azure.Storage.Blobs.Models.BlobServiceStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobServiceStatistics> GetStatisticsAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -455,7 +461,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -523,7 +529,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListBlobContainersSegmentAsync_CreateResponse(_response);
+                        return ListBlobContainersSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -595,9 +601,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.ListBlobContainersSegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.ListBlobContainersSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainersSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainersSegment> ListBlobContainersSegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -622,7 +630,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -681,7 +689,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetUserDelegationKeyAsync_CreateResponse(_response);
+                        return GetUserDelegationKeyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -755,9 +763,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetUserDelegationKeyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetUserDelegationKeyAsync Azure.Response{Azure.Storage.Blobs.Models.UserDelegationKey}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.UserDelegationKey> GetUserDelegationKeyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -778,7 +788,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -828,7 +838,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccountInfoAsync_CreateResponse(_response);
+                        return GetAccountInfoAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -883,9 +893,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.GetAccountInfoAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetAccountInfoAsync Azure.Response{Azure.Storage.Blobs.Models.AccountInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.AccountInfo> GetAccountInfoAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -920,7 +932,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -985,7 +997,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SubmitBatchAsync_CreateResponse(_response);
+                        return SubmitBatchAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1064,9 +1076,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Service.SubmitBatchAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SubmitBatchAsync Azure.Response{Azure.Storage.Blobs.Models.BlobBatchResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobBatchResult> SubmitBatchAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1094,7 +1108,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1170,7 +1184,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1251,9 +1265,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1284,7 +1300,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1343,7 +1359,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1406,9 +1422,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedContainerItem}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedContainerItem> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1483,7 +1501,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1548,7 +1566,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1617,9 +1635,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1635,7 +1655,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1700,7 +1720,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1775,9 +1795,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1808,7 +1830,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1867,7 +1889,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessPolicyAsync_CreateResponse(_response);
+                        return GetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1931,9 +1953,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.GetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerAccessPolicy}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerAccessPolicy> GetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1978,7 +2002,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2049,7 +2073,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessPolicyAsync_CreateResponse(_response);
+                        return SetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2138,9 +2162,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.SetAccessPolicyAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> SetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2171,7 +2197,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2239,7 +2265,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AcquireLeaseAsync_CreateResponse(_response);
+                        return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2313,9 +2339,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> AcquireLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2350,7 +2378,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2415,7 +2443,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ReleaseLeaseAsync_CreateResponse(_response);
+                        return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2490,9 +2518,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContainerInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContainerInfo> ReleaseLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2523,7 +2553,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2588,7 +2618,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenewLeaseAsync_CreateResponse(_response);
+                        return RenewLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2663,9 +2693,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> RenewLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2700,7 +2732,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2765,7 +2797,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return BreakLeaseAsync_CreateResponse(_response);
+                        return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2836,9 +2868,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2873,7 +2907,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2941,7 +2975,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ChangeLeaseAsync_CreateResponse(_response);
+                        return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3023,9 +3057,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> ChangeLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3060,7 +3096,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3128,7 +3164,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListBlobsFlatSegmentAsync_CreateResponse(_response);
+                        return ListBlobsFlatSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3201,9 +3237,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ListBlobsFlatSegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ListBlobsFlatSegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsFlatSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsFlatSegment> ListBlobsFlatSegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3228,7 +3266,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3299,7 +3337,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListBlobsHierarchySegmentAsync_CreateResponse(_response);
+                        return ListBlobsHierarchySegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3375,9 +3413,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Container.ListBlobsHierarchySegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Container.ListBlobsHierarchySegmentAsync Azure.Response{Azure.Storage.Blobs.Models.BlobsHierarchySegment}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobsHierarchySegment> ListBlobsHierarchySegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3402,7 +3442,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3504,7 +3544,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return (DownloadAsync_CreateResponse(_response), _message.ExtractResponseContent());
+                        return (DownloadAsync_CreateResponse(clientDiagnostics, _response), _message.ExtractResponseContent());
                     }
                 }
                 catch (System.Exception ex)
@@ -3607,9 +3647,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.DownloadAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.DownloadAsync Azure.Response{Azure.Storage.Blobs.Models.FlattenedDownloadProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.FlattenedDownloadProperties> DownloadAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3885,7 +3927,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3968,7 +4010,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4054,9 +4096,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.GetPropertiesAsync Azure.Response{Azure.Storage.Blobs.Models.BlobProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4225,7 +4269,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4302,7 +4346,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4382,9 +4426,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4400,7 +4446,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4483,7 +4529,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessControlAsync_CreateResponse(_response);
+                        return SetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4570,9 +4616,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSetAccessControlResult> SetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4603,7 +4651,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4677,7 +4725,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessControlAsync_CreateResponse(_response);
+                        return GetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4759,9 +4807,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.GetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.GetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.BlobGetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobGetAccessControlResult> GetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4812,7 +4862,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4928,7 +4978,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenameAsync_CreateResponse(_response);
+                        return RenameAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5051,9 +5101,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.RenameAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.RenameAsync Azure.Response{Azure.Storage.Blobs.Models.BlobRenameResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobRenameResult> RenameAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5088,7 +5140,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5144,7 +5196,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UndeleteAsync_CreateResponse(_response);
+                        return UndeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5204,9 +5256,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.UndeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.UndeleteAsync Azure.Response.</returns>
             internal static Azure.Response UndeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5222,7 +5276,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5311,7 +5365,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetHttpHeadersAsync_CreateResponse(_response);
+                        return SetHttpHeadersAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5404,9 +5458,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetHttpHeadersAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetHttpHeadersAsync Azure.Response{Azure.Storage.Blobs.Models.SetHttpHeadersOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetHttpHeadersOperation> SetHttpHeadersAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5441,7 +5497,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5527,7 +5583,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5622,9 +5678,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetMetadataAsync Azure.Response{Azure.Storage.Blobs.Models.SetMetadataOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.SetMetadataOperation> SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5667,7 +5725,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5741,7 +5799,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AcquireLeaseAsync_CreateResponse(_response);
+                        return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5820,9 +5878,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.AcquireLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> AcquireLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5857,7 +5917,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5928,7 +5988,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ReleaseLeaseAsync_CreateResponse(_response);
+                        return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6008,9 +6068,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.ReleaseLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> ReleaseLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6041,7 +6103,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6112,7 +6174,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenewLeaseAsync_CreateResponse(_response);
+                        return RenewLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6192,9 +6254,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.RenewLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.RenewLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> RenewLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6229,7 +6293,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6303,7 +6367,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ChangeLeaseAsync_CreateResponse(_response);
+                        return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6390,9 +6454,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.ChangeLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BlobLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobLease> ChangeLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6427,7 +6493,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6498,7 +6564,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return BreakLeaseAsync_CreateResponse(_response);
+                        return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6574,9 +6640,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.BreakLeaseAsync Azure.Response{Azure.Storage.Blobs.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6611,7 +6679,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6697,7 +6765,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateSnapshotAsync_CreateResponse(_response);
+                        return CreateSnapshotAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6792,9 +6860,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.CreateSnapshotAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.CreateSnapshotAsync Azure.Response{Azure.Storage.Blobs.Models.BlobSnapshotInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobSnapshotInfo> CreateSnapshotAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6833,7 +6903,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6928,7 +6998,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return StartCopyFromUriAsync_CreateResponse(_response);
+                        return StartCopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7035,9 +7105,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.StartCopyFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.StartCopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> StartCopyFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7076,7 +7148,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7171,7 +7243,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CopyFromUriAsync_CreateResponse(_response);
+                        return CopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7279,9 +7351,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.CopyFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.CopyFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7320,7 +7394,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7382,7 +7456,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AbortCopyFromUriAsync_CreateResponse(_response);
+                        return AbortCopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7453,9 +7527,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.AbortCopyFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.AbortCopyFromUriAsync Azure.Response.</returns>
             internal static Azure.Response AbortCopyFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7471,7 +7547,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7536,7 +7612,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessTierAsync_CreateResponse(_response);
+                        return SetAccessTierAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7605,9 +7681,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Blob.SetAccessTierAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Blob.SetAccessTierAsync Azure.Response.</returns>
             internal static Azure.Response SetAccessTierAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7627,7 +7705,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -7751,7 +7829,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7876,9 +7954,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7925,7 +8005,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8032,7 +8112,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadPagesAsync_CreateResponse(_response);
+                        return UploadPagesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8150,9 +8230,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UploadPagesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UploadPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8203,7 +8285,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8301,7 +8383,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ClearPagesAsync_CreateResponse(_response);
+                        return ClearPagesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8404,9 +8486,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.ClearPagesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.ClearPagesAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> ClearPagesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8453,7 +8537,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8575,7 +8659,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadPagesFromUriAsync_CreateResponse(_response);
+                        return UploadPagesFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8714,9 +8798,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UploadPagesFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UploadPagesFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.PageInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageInfo> UploadPagesFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8773,7 +8859,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                     default:
                     {
@@ -8781,7 +8867,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -8858,7 +8944,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPageRangesAsync_CreateResponse(_response);
+                        return GetPageRangesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -8939,9 +9025,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.GetPageRangesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.GetPageRangesAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -8982,7 +9070,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9065,7 +9153,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPageRangesDiffAsync_CreateResponse(_response);
+                        return GetPageRangesDiffAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9152,9 +9240,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.GetPageRangesDiffAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.GetPageRangesDiffAsync Azure.Response{Azure.Storage.Blobs.Models.PageRangesInfoInternal}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageRangesInfoInternal> GetPageRangesDiffAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9195,7 +9285,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9281,7 +9371,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ResizeAsync_CreateResponse(_response);
+                        return ResizeAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9371,9 +9461,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.ResizeAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.ResizeAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> ResizeAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9408,7 +9500,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9485,7 +9577,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UpdateSequenceNumberAsync_CreateResponse(_response);
+                        return UpdateSequenceNumberAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9566,9 +9658,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.UpdateSequenceNumberAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.UpdateSequenceNumberAsync Azure.Response{Azure.Storage.Blobs.Models.PageBlobInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.PageBlobInfo> UpdateSequenceNumberAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9603,7 +9697,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9674,7 +9768,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CopyIncrementalAsync_CreateResponse(_response);
+                        return CopyIncrementalAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -9753,9 +9847,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the PageBlob.CopyIncrementalAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The PageBlob.CopyIncrementalAsync Azure.Response{Azure.Storage.Blobs.Models.BlobCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobCopyInfo> CopyIncrementalAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -9794,7 +9890,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -9909,7 +10005,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10025,9 +10121,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -10074,7 +10172,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -10175,7 +10273,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AppendBlockAsync_CreateResponse(_response);
+                        return AppendBlockAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10286,9 +10384,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.AppendBlockAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.AppendBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -10347,7 +10447,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -10466,7 +10566,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AppendBlockFromUriAsync_CreateResponse(_response);
+                        return AppendBlockFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10593,9 +10693,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the AppendBlob.AppendBlockFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The AppendBlob.AppendBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlobAppendInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobAppendInfo> AppendBlockFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -10660,7 +10762,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                     default:
                     {
@@ -10668,7 +10770,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -10792,7 +10894,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadAsync_CreateResponse(_response);
+                        return UploadAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -10923,9 +11025,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.UploadAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.UploadAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> UploadAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -10972,7 +11076,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11058,7 +11162,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return StageBlockAsync_CreateResponse(_response);
+                        return StageBlockAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11158,9 +11262,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.StageBlockAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.StageBlockAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11199,7 +11305,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11300,7 +11406,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return StageBlockFromUriAsync_CreateResponse(_response);
+                        return StageBlockFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11413,9 +11519,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.StageBlockFromUriAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.StageBlockFromUriAsync Azure.Response{Azure.Storage.Blobs.Models.BlockInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlockInfo> StageBlockFromUriAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11460,7 +11568,7 @@ namespace Azure.Storage.Blobs
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                     default:
                     {
@@ -11468,7 +11576,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11584,7 +11692,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CommitBlockListAsync_CreateResponse(_response);
+                        return CommitBlockListAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11719,9 +11827,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.CommitBlockListAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.CommitBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.BlobContentInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.BlobContentInfo> CommitBlockListAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11768,7 +11878,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -11833,7 +11943,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetBlockListAsync_CreateResponse(_response);
+                        return GetBlockListAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -11902,9 +12012,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the BlockBlob.GetBlockListAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The BlockBlob.GetBlockListAsync Azure.Response{Azure.Storage.Blobs.Models.GetBlockListOperation}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.GetBlockListOperation> GetBlockListAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -11949,7 +12061,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.StorageError _value = Azure.Storage.Blobs.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12052,7 +12164,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12151,9 +12263,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.CreateAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryCreateResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryCreateResult> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12188,7 +12302,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12307,7 +12421,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return RenameAsync_CreateResponse(_response);
+                        return RenameAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12433,9 +12547,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.RenameAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.RenameAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryRenameResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryRenameResult> RenameAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12474,7 +12590,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12551,7 +12667,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12635,9 +12751,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.DeleteAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryDeleteResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryDeleteResult> DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12664,7 +12782,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12747,7 +12865,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessControlAsync_CreateResponse(_response);
+                        return SetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -12834,9 +12952,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.SetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.SetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.DirectorySetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectorySetAccessControlResult> SetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -12867,7 +12987,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -12941,7 +13061,7 @@ namespace Azure.Storage.Blobs
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessControlAsync_CreateResponse(_response);
+                        return GetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -13023,9 +13143,11 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// Create the Directory.GetAccessControlAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.GetAccessControlAsync Azure.Response{Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult}.</returns>
             internal static Azure.Response<Azure.Storage.Blobs.Models.DirectoryGetAccessControlResult> GetAccessControlAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -13076,7 +13198,7 @@ namespace Azure.Storage.Blobs
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Blobs.Models.DataLakeStorageError _value = Azure.Storage.Blobs.Models.DataLakeStorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }

@@ -72,7 +72,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetPropertiesAsync_CreateResponse(_response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -143,9 +143,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Service.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SetPropertiesAsync Azure.Response.</returns>
             internal static Azure.Response SetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -161,7 +163,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -214,7 +216,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -272,9 +274,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareServiceProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -299,7 +303,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -364,7 +368,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListSharesSegmentAsync_CreateResponse(_response);
+                        return ListSharesSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -433,9 +437,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Service.ListSharesSegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.ListSharesSegmentAsync Azure.Response{Azure.Storage.Files.Shares.Models.SharesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.SharesSegment> ListSharesSegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -460,7 +466,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -527,7 +533,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -595,9 +601,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.CreateAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -628,7 +636,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -684,7 +692,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -744,9 +752,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -809,7 +819,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -868,7 +878,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -931,9 +941,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -949,7 +961,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1005,7 +1017,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateSnapshotAsync_CreateResponse(_response);
+                        return CreateSnapshotAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1071,9 +1083,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.CreateSnapshotAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.CreateSnapshotAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareSnapshotInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareSnapshotInfo> CreateSnapshotAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1108,7 +1122,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1164,7 +1178,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreatePermissionAsync_CreateResponse(_response);
+                        return CreatePermissionAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1234,9 +1248,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.CreatePermissionAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.CreatePermissionAsync Azure.Response{Azure.Storage.Files.Shares.Models.PermissionInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.PermissionInfo> CreatePermissionAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1263,7 +1279,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1319,7 +1335,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPermissionAsync_CreateResponse(_response);
+                        return GetPermissionAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1384,9 +1400,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.GetPermissionAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.GetPermissionAsync Azure.Response{string}.</returns>
             internal static Azure.Response<string> GetPermissionAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1414,7 +1432,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1470,7 +1488,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetQuotaAsync_CreateResponse(_response);
+                        return SetQuotaAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1531,9 +1549,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.SetQuotaAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.SetQuotaAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetQuotaAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1564,7 +1584,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1620,7 +1640,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1686,9 +1706,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.SetMetadataAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1719,7 +1741,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1772,7 +1794,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessPolicyAsync_CreateResponse(_response);
+                        return GetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1830,9 +1852,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.GetAccessPolicyAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Files.Shares.Models.ShareSignedIdentifier}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Files.Shares.Models.ShareSignedIdentifier>> GetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1861,7 +1885,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1917,7 +1941,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessPolicyAsync_CreateResponse(_response);
+                        return SetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1991,9 +2015,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.SetAccessPolicyAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareInfo> SetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2024,7 +2050,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2077,7 +2103,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetStatisticsAsync_CreateResponse(_response);
+                        return GetStatisticsAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2135,9 +2161,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Share.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Share.GetStatisticsAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareStatistics> GetStatisticsAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2162,7 +2190,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2241,7 +2269,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2333,9 +2361,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.CreateAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2394,7 +2424,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2450,7 +2480,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2510,9 +2540,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2587,7 +2619,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2640,7 +2672,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2697,9 +2729,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2715,7 +2749,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2783,7 +2817,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetPropertiesAsync_CreateResponse(_response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2868,9 +2902,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.SetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo> SetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2929,7 +2965,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2985,7 +3021,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3051,9 +3087,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.SetMetadataAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageDirectoryInfo> SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3084,7 +3122,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3149,7 +3187,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListFilesAndDirectoriesSegmentAsync_CreateResponse(_response);
+                        return ListFilesAndDirectoriesSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3219,9 +3257,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.ListFilesAndDirectoriesSegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.ListFilesAndDirectoriesSegmentAsync Azure.Response{Azure.Storage.Files.Shares.Models.FilesAndDirectoriesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FilesAndDirectoriesSegment> ListFilesAndDirectoriesSegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3246,7 +3286,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3311,7 +3351,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListHandlesAsync_CreateResponse(_response);
+                        return ListHandlesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3384,9 +3424,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.ListHandlesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.ListHandlesAsync Azure.Response{Azure.Storage.Files.Shares.Models.StorageHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.StorageHandlesSegment> ListHandlesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3411,7 +3453,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3476,7 +3518,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ForceCloseHandlesAsync_CreateResponse(_response);
+                        return ForceCloseHandlesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3553,9 +3595,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the Directory.ForceCloseHandlesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Directory.ForceCloseHandlesAsync Azure.Response{Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment> ForceCloseHandlesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3590,7 +3634,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3693,7 +3737,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -3819,9 +3863,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.CreateAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileInfo> CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -3884,7 +3930,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -3948,7 +3994,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return (DownloadAsync_CreateResponse(_response), _message.ExtractResponseContent());
+                        return (DownloadAsync_CreateResponse(clientDiagnostics, _response), _message.ExtractResponseContent());
                     }
                 }
                 catch (System.Exception ex)
@@ -4017,9 +4063,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.DownloadAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.DownloadAsync Azure.Response{Azure.Storage.Files.Shares.Models.FlattenedStorageFileProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FlattenedStorageFileProperties> DownloadAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4307,7 +4355,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4366,7 +4414,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4428,9 +4476,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.GetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4575,7 +4625,7 @@ namespace Azure.Storage.Files.Shares
                             _value.ErrorCode = _header;
                         }
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4631,7 +4681,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4690,9 +4740,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4708,7 +4760,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -4800,7 +4852,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetPropertiesAsync_CreateResponse(_response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -4918,9 +4970,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.SetPropertiesAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileInfo> SetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -4983,7 +5037,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5042,7 +5096,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5110,9 +5164,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.SetMetadataAsync Azure.Response{Azure.Storage.Files.Shares.Models.RawStorageFileInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.RawStorageFileInfo> SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5147,7 +5203,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5209,7 +5265,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AcquireLeaseAsync_CreateResponse(_response);
+                        return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5276,9 +5332,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.AcquireLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.AcquireLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> AcquireLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5313,7 +5371,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5372,7 +5430,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ReleaseLeaseAsync_CreateResponse(_response);
+                        return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5440,9 +5498,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.ReleaseLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.ReleaseLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLeaseReleaseInfo> ReleaseLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5473,7 +5533,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5535,7 +5595,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ChangeLeaseAsync_CreateResponse(_response);
+                        return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5606,9 +5666,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.ChangeLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.ChangeLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> ChangeLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5643,7 +5705,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5702,7 +5764,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return BreakLeaseAsync_CreateResponse(_response);
+                        return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5766,9 +5828,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.BreakLeaseAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.BreakLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.BrokenLease}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.BrokenLease> BreakLeaseAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5803,7 +5867,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -5874,7 +5938,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadRangeAsync_CreateResponse(_response);
+                        return UploadRangeAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -5958,9 +6022,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.UploadRangeAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.UploadRangeAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileUploadInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileUploadInfo> UploadRangeAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -5999,7 +6065,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6076,7 +6142,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UploadRangeFromURLAsync_CreateResponse(_response);
+                        return UploadRangeFromURLAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6166,9 +6232,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.UploadRangeFromURLAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.UploadRangeFromURLAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileUploadRangeFromURLResult> UploadRangeFromURLAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6207,7 +6275,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6269,7 +6337,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetRangeListAsync_CreateResponse(_response);
+                        return GetRangeListAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6335,9 +6403,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.GetRangeListAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.GetRangeListAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileRangeInfoInternal> GetRangeListAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6382,7 +6452,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6468,7 +6538,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return StartCopyAsync_CreateResponse(_response);
+                        return StartCopyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6574,9 +6644,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.StartCopyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.StartCopyAsync Azure.Response{Azure.Storage.Files.Shares.Models.ShareFileCopyInfo}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.ShareFileCopyInfo> StartCopyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6615,7 +6687,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6674,7 +6746,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return AbortCopyAsync_CreateResponse(_response);
+                        return AbortCopyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6742,9 +6814,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.AbortCopyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.AbortCopyAsync Azure.Response.</returns>
             internal static Azure.Response AbortCopyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6760,7 +6834,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6822,7 +6896,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListHandlesAsync_CreateResponse(_response);
+                        return ListHandlesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -6888,9 +6962,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.ListHandlesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.ListHandlesAsync Azure.Response{Azure.Storage.Files.Shares.Models.StorageHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.StorageHandlesSegment> ListHandlesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -6915,7 +6991,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -6977,7 +7053,7 @@ namespace Azure.Storage.Files.Shares
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ForceCloseHandlesAsync_CreateResponse(_response);
+                        return ForceCloseHandlesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -7047,9 +7123,11 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// Create the File.ForceCloseHandlesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The File.ForceCloseHandlesAsync Azure.Response{Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment> ForceCloseHandlesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -7084,7 +7162,7 @@ namespace Azure.Storage.Files.Shares
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Files.Shares.Models.StorageError _value = Azure.Storage.Files.Shares.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
