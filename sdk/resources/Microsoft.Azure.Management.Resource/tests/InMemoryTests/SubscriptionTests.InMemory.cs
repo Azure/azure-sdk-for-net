@@ -38,7 +38,7 @@ namespace ResourceGroups.Tests
                         'metadata': {
                             'longitude': '114.188',
 		                    'latitude': '22.267'
-                        }   
+                        }
 	                },
 	                {
 		                'id': '/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/locations/southeastasia',
@@ -47,7 +47,7 @@ namespace ResourceGroups.Tests
                         'metadata': {
                             'longitude': '103.833',
     		                'latitude': '1.283'
-                        } 
+                        }
 	                }]
                 }")
             };

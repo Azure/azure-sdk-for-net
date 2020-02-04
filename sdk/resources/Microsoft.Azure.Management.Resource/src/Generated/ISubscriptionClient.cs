@@ -66,12 +66,6 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
         /// <summary>
         /// Gets the ISubscriptionsOperations.
         /// </summary>
