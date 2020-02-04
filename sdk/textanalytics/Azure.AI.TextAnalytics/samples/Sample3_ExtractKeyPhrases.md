@@ -31,13 +31,13 @@ foreach (string keyPhrase in keyPhrases)
 
 ## Extracting key phrases from multiple inputs
 
-To extract key phrases from multiple text inputs as a batch, call `ExtractKeyPhrases` on an `IEnumerable` of strings.  The results are returned as a `ExtractKeyPhrasesResultCollection`.
+To extract key phrases from multiple text inputs as a batch, call `ExtractKeyPhrasesBatch` on an `IEnumerable` of strings.  The results are returned as a `ExtractKeyPhrasesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
-ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs);
+ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs);
 ```
 
-To extract key phrases from a collection of text inputs in different languages, call `ExtractKeyPhrases` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To extract key phrases from a collection of text inputs in different languages, call `ExtractKeyPhrasesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
 var inputs = new List<TextDocumentInput>
@@ -56,7 +56,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

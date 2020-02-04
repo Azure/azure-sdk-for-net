@@ -128,7 +128,6 @@ namespace Azure.Messaging.EventHubs.Tests
                             if (!wereEventsPublished)
                             {
                                 await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partition });
-
                                 wereEventsPublished = true;
                                 continue;
                             }
@@ -147,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if (receivedEvents.Count < 1)
                                 {
-                                    await Task.Delay(50);
+                                    await Task.Delay(150);
                                 }
                             }
                         }
@@ -225,7 +224,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if (receivedEvents.Count < 1)
                                 {
-                                    await Task.Delay(50);
+                                    await Task.Delay(150);
                                 }
                             }
                         }
@@ -305,7 +304,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if (receivedEvents.Count < eventSet.Length)
                                 {
-                                    await Task.Delay(50);
+                                    await Task.Delay(150);
                                 }
                             }
                         }
@@ -389,7 +388,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if (receivedEvents.Count < eventBatch.Length)
                                 {
-                                    await Task.Delay(50);
+                                    await Task.Delay(150);
                                 }
                             }
                         }
@@ -476,7 +475,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if (receivedEvents.Count < eventBatch.Length)
                                 {
-                                    await Task.Delay(50);
+                                    await Task.Delay(150);
                                 }
                             }
                         }
@@ -558,7 +557,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if (receivedEvents.Count < expectedEventsCount)
                                 {
-                                    await Task.Delay(50);
+                                    await Task.Delay(150);
                                 }
                             }
                         }
@@ -616,7 +615,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                 if (receivedEvents.Count < expectedEventsCount)
                                 {
-                                    await Task.Delay(50);
+                                    await Task.Delay(150);
                                 }
                             }
                         }
@@ -688,7 +687,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                     if (receivedEvents.Count < expectedEventsCount)
                                     {
-                                        await Task.Delay(50);
+                                        await Task.Delay(150);
                                     }
                                 }
                             }
@@ -763,7 +762,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                     if (receivedEvents.Count < expectedEventsCount)
                                     {
-                                        await Task.Delay(50);
+                                        await Task.Delay(150);
                                     }
                                 }
                             }
@@ -839,7 +838,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                                     if (receivedEvents.Count < expectedEventsCount)
                                     {
-                                        await Task.Delay(50);
+                                        await Task.Delay(150);
                                     }
                                 }
                             }
@@ -919,7 +918,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (receivedEvents.Count < expectedCount)
                             {
-                                await Task.Delay(50);
+                                await Task.Delay(150);
                             }
                         }
                     }
@@ -980,6 +979,7 @@ namespace Azure.Messaging.EventHubs.Tests
                             }
 
                             await producer.SendAsync(batch, cancellationSource.Token);
+                            await Task.Delay(TimeSpan.FromSeconds(1));
                         }
                     }
 
@@ -1008,7 +1008,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (receivedEvents.Count < expectedCount)
                             {
-                                await Task.Delay(50);
+                                await Task.Delay(150);
                             }
                         }
                     }
@@ -1050,7 +1050,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (receivedEvents.Count < expectedCount)
                             {
-                                await Task.Delay(50);
+                                await Task.Delay(150);
                             }
                         }
                     }
@@ -1274,7 +1274,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                             if (receivedEvents.Count < expectedEventsCount)
                             {
-                                await Task.Delay(50);
+                                await Task.Delay(150);
                             }
                         }
                     }
@@ -2112,6 +2112,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                 await producer.SendAsync(eventBatch, new SendEventOptions { PartitionId = partitionIds[0] });
                             }
 
+                            await Task.Delay(TimeSpan.FromSeconds(1));
                             wereEventsPublished = true;
                             continue;
                         }

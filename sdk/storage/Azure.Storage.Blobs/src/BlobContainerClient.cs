@@ -588,11 +588,11 @@ namespace Azure.Storage.Blobs
                     metadata,
                     async,
                     cancellationToken,
-                    Constants.Blob.Container.CreateIfNotExistsOperationName)
+                    $"{nameof(BlobContainerClient)}.{nameof(CreateIfNotExists)}")
                     .ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.AlreadyExists)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerAlreadyExists)
             {
                 response = default;
             }
@@ -645,7 +645,7 @@ namespace Azure.Storage.Blobs
             Metadata metadata,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Container.CreateOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -664,7 +664,7 @@ namespace Azure.Storage.Blobs
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -845,12 +845,12 @@ namespace Azure.Storage.Blobs
                     conditions,
                     async,
                     cancellationToken,
-                    Constants.Blob.Container.DeleteIfExistsOperationName)
+                    $"{nameof(BlobContainerClient)}.{nameof(DeleteIfExists)}")
                     .ConfigureAwait(false);
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
                 return Response.FromValue(false, default);
             }
@@ -888,7 +888,7 @@ namespace Azure.Storage.Blobs
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Container.DeleteOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
             {
@@ -914,7 +914,7 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobContainerClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1016,14 +1016,14 @@ namespace Azure.Storage.Blobs
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Container.ExistsOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(Exists)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == Constants.Blob.Container.NotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.ContainerNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -1157,7 +1157,7 @@ namespace Azure.Storage.Blobs
                             version: Version.ToVersionString(),
                             leaseId: conditions?.LeaseId,
                             async: async,
-                            operationName: Constants.Blob.Container.GetPropertiesOperationName,
+                            operationName: $"{nameof(BlobContainerClient)}.{nameof(GetProperties)}",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
 
@@ -1322,7 +1322,7 @@ namespace Azure.Storage.Blobs
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         async: async,
-                        operationName: Constants.Blob.Container.SetMetaDataOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1451,7 +1451,7 @@ namespace Azure.Storage.Blobs
                         version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: Constants.Blob.Container.GetAccessPolicyOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(GetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1651,7 +1651,7 @@ namespace Azure.Storage.Blobs
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         async: async,
-                        operationName: Constants.Blob.Container.SetAccessPolicyOperationName,
+                        operationName: $"{nameof(BlobContainerClient)}.{nameof(SetAccessPolicy)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

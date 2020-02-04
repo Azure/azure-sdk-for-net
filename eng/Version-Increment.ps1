@@ -14,6 +14,9 @@ The Name of the Service Directory
 .PARAMETER PackageName
 The Name of the Package
 
+.PARAMETER PackageDirName
+Used in the case where the package directory name is different from the package name. e.g in cognitiveservice packages
+
 .EXAMPLE
 Updating package version for core
 
@@ -29,13 +32,16 @@ Param (
     [Parameter(Mandatory=$True)]
     [string] $ServiceDirectory,
     [Parameter(Mandatory=$True)]
-    [string] $PackageName
+    [string] $PackageName,
+    [string] $PackageDirName
 )
 # Regular expression as specified in https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
 $VERSION_REGEX = "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
 
+if ([System.String]::IsNullOrEmpty($PackageDirName)) {$PackageDirName = $PackageName}
 $CsprojData = New-Object -TypeName XML
-$PackageCsprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageName "src" "${PackageName}.csproj"
+$PackageCsprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "src" "${PackageName}.csproj"
+$ChangelogPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "CHANGELOG.md"
 $CsprojData.Load($PackageCsprojPath)
 
 $PackageVersion = Select-XML -Xml $CsprojData -XPath '/Project/PropertyGroup/Version'
@@ -90,3 +96,6 @@ $NewPackageVersion = "{0}.{1}.{2}-{3}.{4}" -F $Major, $Minor, $Patch, $PreTag, $
 Write-Verbose "New Version: ${NewPackageVersion}"
 ${PackageVersion}.Node.InnerText = $NewPackageVersion
 $CsprojData.Save($PackageCsprojPath)
+
+# Increment Version in ChangeLog file
+& "${PSScriptRoot}/common/Update-Change-Log.ps1" -Version $NewPackageVersion -ChangeLogPath $ChangelogPath
