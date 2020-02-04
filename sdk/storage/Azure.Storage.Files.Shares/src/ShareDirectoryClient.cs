@@ -1751,7 +1751,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadRange(HttpRange, System.IO.Stream, byte[], IProgress{long}, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1808,7 +1808,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadAsync(System.IO.Stream, IProgress{long}, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
