@@ -206,7 +206,7 @@ namespace Azure.AI.TextAnalytics
             return new DetectLanguageResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                languages);
+                languages.OrderBy(l => l.Score).FirstOrDefault());
         }
 
         private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
@@ -560,7 +560,7 @@ namespace Azure.AI.TextAnalytics
             string id = default;
             string language = default;
             string dataSource = default;
-            Uri uri = default;
+            Uri url = default;
 
             if (entityElement.TryGetProperty("name", out JsonElement nameElement))
                 name = nameElement.ToString();
@@ -571,11 +571,11 @@ namespace Azure.AI.TextAnalytics
             if (entityElement.TryGetProperty("dataSource", out JsonElement dataSourceValue))
                 dataSource = dataSourceValue.ToString();
             if (entityElement.TryGetProperty("url", out JsonElement urlValue))
-                uri = new Uri(urlValue.ToString());
+                url = new Uri(urlValue.ToString());
 
             IEnumerable<LinkedEntityMatch> matches = ReadLinkedEntityMatches(entityElement);
 
-            return new LinkedEntity(name, id, language, dataSource, uri, matches);
+            return new LinkedEntity(name, id, language, dataSource, url, matches);
         }
 
         private static IEnumerable<LinkedEntityMatch> ReadLinkedEntityMatches(JsonElement entityElement)
