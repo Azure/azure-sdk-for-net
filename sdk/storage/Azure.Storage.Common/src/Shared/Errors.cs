@@ -19,6 +19,9 @@ namespace Azure.Storage
                 accountNameCredential,
                 accountNameValue));
 
+        public static InvalidOperationException AccountSasMissingData()
+            => new InvalidOperationException($"Account SAS is missing at least one of these: ExpiryTime, Permissions, Service, or ResourceType");
+
         public static ArgumentNullException ArgumentNull(string paramName)
             => new ArgumentNullException(paramName);
 
