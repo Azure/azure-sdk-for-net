@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClientOptions GetOptions()
         {
-            var options = new ShareClientOptions()
+            var options = new ShareClientOptions
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
@@ -43,31 +43,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
                 },
                 Transport = GetTransport()
-            };
-
-            if (Mode != RecordedTestMode.Live)
-            {
-                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
-            }
-
-            return Recording.InstrumentClientOptions(options);
-        }
-
-        public ShareClientOptions GetOptions(ShareClientOptions.ServiceVersion serviceVersion)
-        {
-            var options = new ShareClientOptions(serviceVersion)
-            {
-                Diagnostics = { IsLoggingEnabled = true },
-                Retry =
-                {
-                    Mode = RetryMode.Exponential,
-                    MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
-                },
-                Transport = GetTransport()
-            };
-
+        };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
