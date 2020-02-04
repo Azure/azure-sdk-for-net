@@ -1697,7 +1697,7 @@ namespace Azure.Storage.Files.Shares
                         contentLength: 0,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.UploadRangeOperationName).ConfigureAwait(false);
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(UploadRange)}").ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
