@@ -367,14 +367,14 @@ namespace Azure.AI.TextAnalytics
 
         private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName)
         {
-            TextSentimentLabel sentiment = default;
+            SentimentLabel sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (TextSentimentLabel)Enum.Parse(typeof(TextSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (SentimentLabel)Enum.Parse(typeof(SentimentLabel), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -389,7 +389,7 @@ namespace Azure.AI.TextAnalytics
                     negativeValue.TryGetDouble(out negativeScore);
             }
 
-            var sentenceSentiments = new List<SenteceSentiment>();
+            var sentenceSentiments = new List<SentenceSentiment>();
             if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
             {
                 foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
@@ -401,9 +401,9 @@ namespace Azure.AI.TextAnalytics
             return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments);
         }
 
-        private static SenteceSentiment ReadSentenceSentiment(JsonElement documentElement, string scoresElementName)
+        private static SentenceSentiment ReadSentenceSentiment(JsonElement documentElement, string scoresElementName)
         {
-            TextSentimentLabel sentiment = default;
+            SentimentLabel sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
@@ -412,7 +412,7 @@ namespace Azure.AI.TextAnalytics
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (TextSentimentLabel)Enum.Parse(typeof(TextSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (SentimentLabel)Enum.Parse(typeof(SentimentLabel), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -433,7 +433,7 @@ namespace Azure.AI.TextAnalytics
             if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
                 lengthValue.TryGetInt32(out length);
 
-            return new SenteceSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
+            return new SentenceSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
         }
 
         #endregion

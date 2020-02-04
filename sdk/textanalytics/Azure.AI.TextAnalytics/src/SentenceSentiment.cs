@@ -9,9 +9,9 @@ namespace Azure.AI.TextAnalytics
     /// input.  For more information regarding text sentiment, see
     /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis"/>.
     /// </summary>
-    public readonly struct SenteceSentiment
+    public readonly struct SentenceSentiment
     {
-        internal SenteceSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
+        internal SentenceSentiment(SentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, int offset, int length)
         {
             Sentiment = sentiment;
             SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);
@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for the analyzed input document
         /// or substring.
         /// </summary>
-        public TextSentimentLabel Sentiment { get; }
+        public SentimentLabel Sentiment { get; }
 
         /// <summary>
         /// Gets the sentiment confidence score between 0 and 1,
