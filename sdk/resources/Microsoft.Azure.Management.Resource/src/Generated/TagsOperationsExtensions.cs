@@ -210,6 +210,153 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Create or Replace existing tags with passing in tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for creating multiple tags.
+            /// </param>
+            public static TagsResource ResourceCreate(this ITagsOperations operations, string scope, TagsResource parameters)
+            {
+                return operations.ResourceCreateAsync(scope, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or Replace existing tags with passing in tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for creating multiple tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagsResource> ResourceCreateAsync(this ITagsOperations operations, string scope, TagsResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResourceCreateWithHttpMessagesAsync(scope, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update multiple tags: if the tagKey exists, update tagValue with the new
+            /// value; if not, insert the new record.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for updating multiple tags.
+            /// </param>
+            public static TagsResource ResourceUpdate(this ITagsOperations operations, string scope, TagPatchRequest parameters)
+            {
+                return operations.ResourceUpdateAsync(scope, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update multiple tags: if the tagKey exists, update tagValue with the new
+            /// value; if not, insert the new record.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for updating multiple tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagsResource> ResourceUpdateAsync(this ITagsOperations operations, string scope, TagPatchRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResourceUpdateWithHttpMessagesAsync(scope, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all the tags for the resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            public static TagsResource ResourceGet(this ITagsOperations operations, string scope)
+            {
+                return operations.ResourceGetAsync(scope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all the tags for the resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagsResource> ResourceGetAsync(this ITagsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ResourceGetWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes all the tags for the resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            public static void ResourceDelete(this ITagsOperations operations, string scope)
+            {
+                operations.ResourceDeleteAsync(scope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes all the tags for the resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='scope'>
+            /// The resource scope.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ResourceDeleteAsync(this ITagsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ResourceDeleteWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets the names and values of all resource tags that are defined in a
             /// subscription.
             /// </summary>

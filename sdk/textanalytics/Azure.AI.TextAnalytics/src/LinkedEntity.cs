@@ -14,13 +14,13 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct LinkedEntity
     {
-        internal LinkedEntity(string name, string id, string language, string dataSource, Uri uri, IEnumerable<LinkedEntityMatch> matches)
+        internal LinkedEntity(string name, string id, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
         {
             Name = name;
             Id = id;
             Language = language;
             DataSource = dataSource;
-            Uri = uri;
+            Url = url;
             Matches = matches;
         }
 
@@ -45,9 +45,9 @@ namespace Azure.AI.TextAnalytics
         public string DataSource { get; }
 
         /// <summary>
-        /// Gets the URI that identifies the linked entity's entry in the data source.
+        /// Gets the URL that identifies the linked entity's entry in the data source.
         /// </summary>
-        public Uri Uri { get; }
+        public Uri Url { get; }
 
         /// <summary>
         /// Collection identifying the substrings of the document that correspond

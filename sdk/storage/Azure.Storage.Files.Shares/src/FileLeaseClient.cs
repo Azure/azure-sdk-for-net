@@ -187,7 +187,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         duration: Constants.File.Lease.InfiniteLeaseDuration,
                         proposedLeaseId: LeaseId,
                         async: async,
-                        operationName: Constants.File.Lease.AcquireOperationName,
+                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Acquire)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -308,7 +308,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         leaseId: LeaseId,
                         Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Lease.ReleaseOperationName,
+                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Release)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -436,7 +436,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         Version.ToVersionString(),
                         proposedLeaseId: proposedId,
                         async: async,
-                        operationName: Constants.File.Lease.ChangeOperationName,
+                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Change)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -563,7 +563,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         Version.ToVersionString(),
                         leaseId: LeaseId,
                         async: async,
-                        operationName: Constants.File.Lease.BreakOperationName,
+                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Break)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToLease();

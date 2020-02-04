@@ -427,11 +427,11 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions,
                     async,
                     cancellationToken,
-                    Constants.Blob.Append.CreateIfNotExistsOperationName)
+                    $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
                     .ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.AlreadyExists)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
             {
                 return default;
             }
@@ -480,7 +480,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Append.CreateOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
@@ -515,7 +515,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(AppendBlobClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

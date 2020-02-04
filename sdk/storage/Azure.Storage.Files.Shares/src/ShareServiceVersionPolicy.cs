@@ -50,14 +50,14 @@ namespace Azure.Storage.Files.Shares
                 // headers in service versions < 2019-07-07.
                 if (message.Request.Headers.Contains("x-ms-copy-source"))
                 {
-                    ThrowIfContainsHeader(message, "x-ms-file-permission", Constants.File.StartCopyOperationName, serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-permission-key", Constants.File.StartCopyOperationName, serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-permission-copy-mode", Constants.File.StartCopyOperationName, serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-copy-ignore-read-only", Constants.File.StartCopyOperationName, serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-copy-set-archive", Constants.File.StartCopyOperationName, serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-attributes", Constants.File.StartCopyOperationName, serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-creation-time", Constants.File.StartCopyOperationName, serviceVersionString);
-                    ThrowIfContainsHeader(message, "x-ms-file-last-write-time", Constants.File.StartCopyOperationName, serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-permission", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-permission-key", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-permission-copy-mode", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-copy-ignore-read-only", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-copy-set-archive", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-attributes", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-creation-time", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
+                    ThrowIfContainsHeader(message, "x-ms-file-last-write-time", $"{nameof(ShareFileClient)}.{nameof(ShareFileClient.StartCopy)}", serviceVersionString);
                 }
             }
         }

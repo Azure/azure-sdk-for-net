@@ -11,7 +11,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
 
     public class CheckpointingTests
     {
-        [Fact(Skip = "Test is unstable during nightly runs.  Tracking with #7435")]
+        [Fact]
         [DisplayTestMethodName]
         public void CheckpointBatchTest()
         {
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
                 $"Unexpected change in sequence number from {checkpointedEvent.SystemProperties.SequenceNumber} to {restartEvent.SystemProperties.SequenceNumber}");
         }
 
-        [Fact(Skip = "Test is unstable during nightly runs.  Tracking with #7435")]
+        [Fact]
         [DisplayTestMethodName]
         public void CheckpointEventTest()
         {

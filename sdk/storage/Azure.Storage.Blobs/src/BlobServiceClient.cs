@@ -636,7 +636,7 @@ namespace Azure.Storage.Blobs
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Service.GetAccountInfoOperationName,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetAccountInfo)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -743,7 +743,7 @@ namespace Azure.Storage.Blobs
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Service.GetPropertiesOperationName,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -872,7 +872,7 @@ namespace Azure.Storage.Blobs
                         properties,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Service.SetPropertiesOperationName,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(SetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -985,7 +985,7 @@ namespace Azure.Storage.Blobs
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Service.GetStatisticsOperationName,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetStatistics)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1131,7 +1131,7 @@ namespace Azure.Storage.Blobs
                         keyInfo: keyInfo,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Service.GetUserDelegationKeyOperationName,
+                        operationName: $"{nameof(BlobServiceClient)}.{nameof(GetUserDelegationKey)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

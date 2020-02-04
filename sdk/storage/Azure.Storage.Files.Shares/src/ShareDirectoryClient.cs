@@ -496,7 +496,7 @@ namespace Azure.Storage.Files.Shares
                         fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: Constants.File.Directory.CreateOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -596,7 +596,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Directory.DeleteOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -709,7 +709,7 @@ namespace Azure.Storage.Files.Shares
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.File.Directory.GetPropertiesOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetProperties)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -862,7 +862,7 @@ namespace Azure.Storage.Files.Shares
                         fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: Constants.File.Directory.SetHttpHeadersOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(SetHttpHeaders)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -982,7 +982,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
-                        operationName: Constants.File.Directory.SetMetadataOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(SetMetadata)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1125,7 +1125,7 @@ namespace Azure.Storage.Files.Shares
                         prefix: prefix,
                         maxresults: pageSizeHint,
                         async: async,
-                        operationName: Constants.File.Directory.ListFilesAndDirectoriesSegmentOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetFilesAndDirectories)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1262,7 +1262,7 @@ namespace Azure.Storage.Files.Shares
                         maxresults: maxResults,
                         recursive: recursive,
                         async: async,
-                        operationName: Constants.File.Directory.GetHandlesOperationName,
+                        operationName: $"{nameof(ShareDirectoryClient)}.{nameof(GetHandles)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1317,7 +1317,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 false, // async
                 cancellationToken,
-                Constants.File.Directory.ForceCloseHandleOperationName)
+                $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseHandle)}")
                 .EnsureCompleted();
 
             return Response.FromValue(
@@ -1362,7 +1362,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 true, // async
                 cancellationToken,
-                Constants.File.Directory.ForceCloseHandleOperationName)
+                $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseHandle)}")
                 .ConfigureAwait(false);
 
             return Response.FromValue(
@@ -1559,7 +1559,7 @@ namespace Azure.Storage.Files.Shares
             bool? recursive,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.File.Directory.ForceCloseAllHandlesOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareDirectoryClient)))
             {
@@ -1581,7 +1581,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         recursive: recursive,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(ForceCloseAllHandles)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

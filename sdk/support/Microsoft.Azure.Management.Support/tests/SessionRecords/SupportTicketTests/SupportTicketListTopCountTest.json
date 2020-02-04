@@ -1,0 +1,134 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets?$top=1&api-version=2019-05-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zdXBwb3J0VGlja2V0cz8kdG9wPTEmYXBpLXZlcnNpb249MjAxOS0wNS0wMS1wcmV2aWV3",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ae7ca089-ab6e-4345-92ad-3040596f0dfe"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Support.MicrosoftSupportClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 29 Jan 2020 06:46:40 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11984"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "dc5108da-20b7-4a29-aa74-4b25ebe19004"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc5108da-20b7-4a29-aa74-4b25ebe19004"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20200129T064640Z:dc5108da-20b7-4a29-aa74-4b25ebe19004"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1998"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/SdkNetTest2339\",\r\n      \"name\": \"SdkNetTest2339\",\r\n      \"type\": \"Microsoft.Support/supportTickets\",\r\n      \"properties\": {\r\n        \"description\": \"test ticket from sdk test. please ignore and close\",\r\n        \"problemClassificationId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/3ec1a070-f242-9ecf-5a7c-e1a88ce029ef\",\r\n        \"problemClassificationDisplayName\": \"Add or update VAT, tax id, PO number or profile information\",\r\n        \"severity\": \"Minimal\",\r\n        \"require24X7Response\": false,\r\n        \"enrollmentId\": \"\",\r\n        \"productionOutage\": false,\r\n        \"contactDetails\": {\r\n          \"firstName\": \"first name\",\r\n          \"lastName\": \"last name\",\r\n          \"preferredContactMethod\": \"Email\",\r\n          \"primaryEmailAddress\": \"user@contoso.com\",\r\n          \"preferredTimeZone\": \"Pacific Standard Time\",\r\n          \"country\": \"USA\",\r\n          \"preferredSupportLanguage\": \"en-us\"\r\n        },\r\n        \"serviceLevelAgreement\": {\r\n          \"startTime\": \"2020-01-29T14:00:00Z\",\r\n          \"expirationTime\": \"2020-01-29T18:00:00Z\",\r\n          \"slaMinutes\": 240\r\n        },\r\n        \"supportEngineer\": {},\r\n        \"supportPlanType\": \"Premier\",\r\n        \"supportTicketId\": \"120012921000410\",\r\n        \"title\": \"test ticket from sdk test. please ignore and close\",\r\n        \"serviceId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc\",\r\n        \"serviceDisplayName\": \"Billing\",\r\n        \"status\": \"Open\",\r\n        \"createdDate\": \"2020-01-29T06:46:10Z\",\r\n        \"modifiedDate\": \"2020-01-29T06:46:12Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://centraluseuap.management.azure.com:443/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets?%24top=1&api-version=2019-05-01-preview&%24skipToken=%255B%257B%2522compositeToken%2522%253A%257B%2522token%2522%253Anull%252C%2522range%2522%253A%257B%2522min%2522%253A%252205C1E3FFFFFFFE%2522%252C%2522max%2522%253A%252205C1E5673399CA%2522%257D%257D%252C%2522orderByItems%2522%253A%255B%257B%2522item%2522%253A%25222020-01-29T06%253A45%253A34.0967426Z%2522%257D%255D%252C%2522rid%2522%253A%2522e6dtAI34RR8AID4AAADAAg%253D%253D%2522%252C%2522skipCount%2522%253A0%252C%2522filter%2522%253Anull%257D%255D\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets?%24top=1&api-version=2019-05-01-preview&%24skipToken=%255B%257B%2522compositeToken%2522%253A%257B%2522token%2522%253Anull%252C%2522range%2522%253A%257B%2522min%2522%253A%252205C1E3FFFFFFFE%2522%252C%2522max%2522%253A%252205C1E5673399CA%2522%257D%257D%252C%2522orderByItems%2522%253A%255B%257B%2522item%2522%253A%25222020-01-29T06%253A45%253A34.0967426Z%2522%257D%255D%252C%2522rid%2522%253A%2522e6dtAI34RR8AID4AAADAAg%253D%253D%2522%252C%2522skipCount%2522%253A0%252C%2522filter%2522%253Anull%257D%255D",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNzZjYjc3ZmEtOGIxNy00ZWFiLTk0OTMtYjY1ZGFjZTk5ODEzL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3VwcG9ydC9zdXBwb3J0VGlja2V0cz8lMjR0b3A9MSZhcGktdmVyc2lvbj0yMDE5LTA1LTAxLXByZXZpZXcmJTI0c2tpcFRva2VuPSUyNTVCJTI1N0IlMjUyMmNvbXBvc2l0ZVRva2VuJTI1MjIlMjUzQSUyNTdCJTI1MjJ0b2tlbiUyNTIyJTI1M0FudWxsJTI1MkMlMjUyMnJhbmdlJTI1MjIlMjUzQSUyNTdCJTI1MjJtaW4lMjUyMiUyNTNBJTI1MjIwNUMxRTNGRkZGRkZGRSUyNTIyJTI1MkMlMjUyMm1heCUyNTIyJTI1M0ElMjUyMjA1QzFFNTY3MzM5OUNBJTI1MjIlMjU3RCUyNTdEJTI1MkMlMjUyMm9yZGVyQnlJdGVtcyUyNTIyJTI1M0ElMjU1QiUyNTdCJTI1MjJpdGVtJTI1MjIlMjUzQSUyNTIyMjAyMC0wMS0yOVQwNiUyNTNBNDUlMjUzQTM0LjA5Njc0MjZaJTI1MjIlMjU3RCUyNTVEJTI1MkMlMjUyMnJpZCUyNTIyJTI1M0ElMjUyMmU2ZHRBSTM0UlI4QUlENEFBQURBQWclMjUzRCUyNTNEJTI1MjIlMjUyQyUyNTIyc2tpcENvdW50JTI1MjIlMjUzQTAlMjUyQyUyNTIyZmlsdGVyJTI1MjIlMjUzQW51bGwlMjU3RCUyNTVE",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7ad8b556-e66f-4efa-9418-01906b413909"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Support.MicrosoftSupportClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 29 Jan 2020 06:46:42 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "f7124f75-d545-41fe-8bea-8a9bf5d2fdb8"
+        ],
+        "x-ms-correlation-request-id": [
+          "f7124f75-d545-41fe-8bea-8a9bf5d2fdb8"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20200129T064642Z:f7124f75-d545-41fe-8bea-8a9bf5d2fdb8"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "2092"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets/SdkNetTest8920\",\r\n      \"name\": \"SdkNetTest8920\",\r\n      \"type\": \"Microsoft.Support/supportTickets\",\r\n      \"properties\": {\r\n        \"description\": \"test ticket from sdk test. please ignore and close\",\r\n        \"problemClassificationId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc/problemClassifications/3ec1a070-f242-9ecf-5a7c-e1a88ce029ef\",\r\n        \"problemClassificationDisplayName\": \"Add or update VAT, tax id, PO number or profile information\",\r\n        \"severity\": \"Minimal\",\r\n        \"require24X7Response\": false,\r\n        \"enrollmentId\": \"\",\r\n        \"productionOutage\": false,\r\n        \"contactDetails\": {\r\n          \"firstName\": \"first name updated\",\r\n          \"lastName\": \"last name updated\",\r\n          \"preferredContactMethod\": \"Email\",\r\n          \"primaryEmailAddress\": \"user@contoso.com\",\r\n          \"preferredTimeZone\": \"Pacific Standard Time\",\r\n          \"country\": \"USA\",\r\n          \"preferredSupportLanguage\": \"en-us\"\r\n        },\r\n        \"serviceLevelAgreement\": {\r\n          \"startTime\": \"2020-01-29T14:00:00Z\",\r\n          \"expirationTime\": \"2020-01-29T18:00:00Z\",\r\n          \"slaMinutes\": 240\r\n        },\r\n        \"supportEngineer\": {},\r\n        \"supportPlanType\": \"Premier\",\r\n        \"supportTicketId\": \"120012921000409\",\r\n        \"title\": \"test ticket from sdk test. please ignore and close\",\r\n        \"serviceId\": \"/providers/Microsoft.Support/services/517f2da6-78fd-0498-4e22-ad26996b1dfc\",\r\n        \"serviceDisplayName\": \"Billing\",\r\n        \"status\": \"Open\",\r\n        \"createdDate\": \"2020-01-29T06:45:34Z\",\r\n        \"modifiedDate\": \"2020-01-29T06:46:03Z\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": \"https://centraluseuap.management.azure.com:443/subscriptions/76cb77fa-8b17-4eab-9493-b65dace99813/providers/Microsoft.Support/supportTickets?%24top=1&api-version=2019-05-01-preview&%24skipToken=%255B%257B%2522compositeToken%2522%253A%257B%2522token%2522%253Anull%252C%2522range%2522%253A%257B%2522min%2522%253A%2522%2522%252C%2522max%2522%253A%252205C199CD673380%2522%257D%257D%252C%2522orderByItems%2522%253A%255B%257B%2522item%2522%253A%25222020-01-29T06%253A44%253A26.3860927Z%2522%257D%255D%252C%2522rid%2522%253A%2522e6dtAI34RR%252BGHj4AAADACA%253D%253D%2522%252C%2522skipCount%2522%253A0%252C%2522filter%2522%253A%2522c.CreatedOn%2520%253C%2520%255C%25222020-01-29T06%253A45%253A34.0967426Z%255C%2522%2522%257D%255D\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "76cb77fa-8b17-4eab-9493-b65dace99813"
+  }
+}

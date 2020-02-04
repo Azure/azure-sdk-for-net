@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 containerClient.CreateAsync(encryptionScopeOptions: encryptionScopeOptions),
-                e => Assert.AreEqual($"x-ms-default-encryption-scope is not supported for {Constants.Blob.Container.CreateOperationName} in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-default-encryption-scope is not supported for {nameof(BlobContainerClient)}.{nameof(BlobContainerClient.Create)} in service version 2019-02-02", e.Message));
 
             // Arrange
             encryptionScopeOptions.DefaultEncryptionScope = null;
@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 containerClient.CreateAsync(encryptionScopeOptions: encryptionScopeOptions),
-                e => Assert.AreEqual($"x-ms-deny-encryption-scope-override is not supported for {Constants.Blob.Container.CreateOperationName} in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-deny-encryption-scope-override is not supported for {nameof(BlobContainerClient)}.{nameof(BlobContainerClient.Create)} in service version 2019-02-02", e.Message));
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Azure.Storage.Blobs.Test
             // Arange
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 pageBlob.GetManagedDiskPageRangesDiffAsync(previousSnapshotUrl: pageBlob.Uri),
-                e => Assert.AreEqual($"x-ms-previous-snapshot-url is not supported for {Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName} in service version 2019-02-02", e.Message));
+                e => Assert.AreEqual($"x-ms-previous-snapshot-url is not supported for {nameof(PageBlobClient)}.{nameof(PageBlobClient.GetManagedDiskPageRangesDiff)} in service version 2019-02-02", e.Message));
         }
     }
 }

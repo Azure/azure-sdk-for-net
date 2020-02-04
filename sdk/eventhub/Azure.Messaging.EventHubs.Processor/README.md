@@ -6,7 +6,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - Reading and processing events across all partitions of an Event Hub at scale with resilience to transient failures and intermittent network issues.
 
-- Procesing events cooperatively, where multiple processors dynamically distribute and share the responsibility in the context of a consumer group, gracefully managing the load as processors are added and removed from the group.
+- Processing events cooperatively, where multiple processors dynamically distribute and share the responsibility in the context of a consumer group, gracefully managing the load as processors are added and removed from the group.
 
 - Managing checkpoints and state for processing in a durable manner using Azure Storage blobs as the underlying data store.
 
@@ -177,10 +177,12 @@ The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/mas
 
 To make use of an Active Directory principal, one of the available identity tokens from the `Azure.Identity` library is also provided when creating the Event Processor client.  In addition, the fully qualified Event Hubs namespace and the name of the desired Event Hub are supplied in lieu of the Event Hubs connection string.
 
-```csharp
-Uri blobStorageUrl = new Uri("<< FULLY-QUALIFIED BLOBS CONTAINER URL >>");
+To make use of an Active Directory principal with Azure Storage blob containers, the fully qualified URL to the container must be provided when creating the storage client.  Details about the valid URI formats for accessing Blob storage may be found in [Naming and Referencing Containers, Blobs, and Metadata](https://docs.microsoft.com/en-us/rest/api/storageservices/Naming-and-Referencing-Containers--Blobs--and-Metadata#resource-uri-syntax).  
 
-string fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net)>>"
+```csharp
+Uri blobStorageUrl = new Uri("<< FULLY-QUALIFIED CONTAINER URL (like https://myaccount.blob.core.windows.net/mycontainer) >>");
+
+string fullyQualifiedNamespace = "<< FULLY-QUALIFIED EVENT HUBS NAMESPACE (like something.servicebus.windows.net) >>";
 string eventHubName = "<< NAME OF THE EVENT HUB >>";
 string consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 

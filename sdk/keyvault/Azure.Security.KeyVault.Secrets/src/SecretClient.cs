@@ -674,13 +674,13 @@ namespace Azure.Security.KeyVault.Secrets
 
             try
             {
+                return _pipeline.SendRequest(RequestMethod.Delete, cancellationToken, DeletedSecretsPath, name);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
-            return _pipeline.SendRequest(RequestMethod.Delete, cancellationToken, DeletedSecretsPath, name);
         }
 
         /// <summary>

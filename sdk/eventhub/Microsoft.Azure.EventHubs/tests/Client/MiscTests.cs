@@ -166,7 +166,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "Test is unstable during nightly runs.  Tracking with #7435")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task ClosingEventHubClientClosesSenderEntities()
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact(Skip = "Test is unstable during nightly runs.  Tracking with #7435")]
+        [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task ClosingEventHubClientClosesReceiverEntities()

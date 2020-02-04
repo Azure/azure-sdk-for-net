@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs
 {
@@ -37,12 +38,12 @@ namespace Azure.Storage.Blobs
             if (serviceVersion < BlobClientOptions.ServiceVersion.V2019_07_07)
             {
                 // Encryption Scope
-                ThrowIfContainsHeader(message, "x-ms-default-encryption-scope", Constants.Blob.Container.CreateOperationName, serviceVersionString);
-                ThrowIfContainsHeader(message, "x-ms-deny-encryption-scope-override", Constants.Blob.Container.CreateOperationName, serviceVersionString);
+                ThrowIfContainsHeader(message, "x-ms-default-encryption-scope", $"{nameof(BlobContainerClient)}.{nameof(BlobContainerClient.Create)}", serviceVersionString);
+                ThrowIfContainsHeader(message, "x-ms-deny-encryption-scope-override", $"{nameof(BlobContainerClient)}.{nameof(BlobContainerClient.Create)}", serviceVersionString);
                 ThrowIfContainsHeader(message, "x-ms-encryption-scope", "any API", serviceVersionString);
 
                 // Previous Snapshot URL
-                ThrowIfContainsHeader(message, "x-ms-previous-snapshot-url", Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName, serviceVersionString);
+                ThrowIfContainsHeader(message, "x-ms-previous-snapshot-url", $"{nameof(PageBlobClient)}.{nameof(PageBlobClient.GetManagedDiskPageRangesDiff)}", serviceVersionString);
             }
         }
 

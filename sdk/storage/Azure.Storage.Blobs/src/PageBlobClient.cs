@@ -517,11 +517,11 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions,
                     async,
                     cancellationToken,
-                    Constants.Blob.Page.CreateIfNotExistsOperationName)
+                    $"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}")
                     .ConfigureAwait(false);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.AlreadyExists)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
             {
                 return default;
             }
@@ -582,7 +582,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Page.CreateOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
@@ -620,7 +620,7 @@ namespace Azure.Storage.Blobs.Specialized
                         blobContentLength: size,
                         blobSequenceNumber: sequenceNumber,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(PageBlobClient)}.{nameof(Create)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -852,7 +852,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Page.UploadOperationName,
+                        operationName: $"{nameof(PageBlobClient)}.{nameof(UploadPages)}",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1022,7 +1022,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Page.ClearOperationName,
+                        operationName: $"{nameof(PageBlobClient)}.{nameof(ClearPages)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1192,7 +1192,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Page.GetPageRangesOperationName,
+                        operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRanges)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshotUrl: default,
                 conditions,
                 async: false,
-                operationName: Constants.Blob.Page.GetPageRangesDiffOperationName,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}",
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -1325,7 +1325,7 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshotUrl: default,
                 conditions,
                 async: true,
-                operationName: Constants.Blob.Page.GetPageRangesDiffOperationName,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}",
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1498,7 +1498,7 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshotUrl,
                 conditions,
                 async: false,
-                operationName: Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetManagedDiskPageRangesDiff)}",
                 cancellationToken)
                 .EnsureCompleted();
 
@@ -1557,7 +1557,7 @@ namespace Azure.Storage.Blobs.Specialized
                 previousSnapshotUrl,
                 conditions,
                 async: true,
-                operationName: Constants.Blob.Page.GetManagedDiskPageRangesDiffOperationName,
+                operationName: $"{nameof(PageBlobClient)}.{nameof(GetManagedDiskPageRangesDiff)}",
                 cancellationToken)
                 .ConfigureAwait(false);
 
@@ -1711,7 +1711,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Page.ResizeOperationName,
+                        operationName: $"{nameof(PageBlobClient)}.{nameof(Resize)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1920,7 +1920,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
-                        operationName: Constants.Blob.Page.UpdateSequenceNumberOperationName,
+                        operationName: $"{nameof(PageBlobClient)}.{nameof(UpdateSequenceNumber)}",
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -2279,7 +2279,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Page.StartCopyIncrementalOperationName,
+                        operationName: $"{nameof(PageBlobClient)}.{nameof(StartCopyIncremental)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2553,7 +2553,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Page.UploadPagesFromUriOperationName,
+                        operationName: $"{nameof(PageBlobClient)}.{nameof(UploadPagesFromUri)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
