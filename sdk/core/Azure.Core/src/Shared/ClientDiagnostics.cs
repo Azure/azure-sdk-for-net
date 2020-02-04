@@ -84,6 +84,7 @@ namespace Azure.Core.Pipeline
 
             return CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
         }
+
         public string CreateRequestFailedMessageWithContent(Response response, string? message, string? content, string? errorCode, IDictionary<string, string>? additionalInfo)
         {
             StringBuilder messageBuilder = new StringBuilder()

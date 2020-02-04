@@ -10,12 +10,12 @@ namespace Azure.Core
 {
     internal class HttpMessageSanitizer
     {
+        private const string LogAllValue = "*";
         private readonly bool _logAllHeaders;
         private readonly bool _logFullQueries;
         private readonly string[] _allowedQueryParameters;
         private readonly string _redactedPlaceholder;
         private readonly HashSet<string> _allowedHeaders;
-        private const string LogAllValue = "*";
 
         public HttpMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED")
         {
@@ -37,23 +37,23 @@ namespace Azure.Core
             return _redactedPlaceholder;
         }
 
-        public string SanitizeUrl(string uri)
+        public string SanitizeUrl(string url)
         {
             if (_logFullQueries)
             {
-                return uri;
+                return url;
             }
 
-            var indexOfQuerySeparator = uri.IndexOf('?');
+            int indexOfQuerySeparator = url.IndexOf('?');
             if (indexOfQuerySeparator == -1)
             {
-                return uri;
+                return url;
             }
 
-            StringBuilder stringBuilder = new StringBuilder(uri.Length);
-            stringBuilder.Append(uri, 0, indexOfQuerySeparator);
+            StringBuilder stringBuilder = new StringBuilder(url.Length);
+            stringBuilder.Append(url, 0, indexOfQuerySeparator);
 
-            string query = uri.Substring(indexOfQuerySeparator);
+            string query = url.Substring(indexOfQuerySeparator);
 
             int queryIndex = 1;
             stringBuilder.Append('?');

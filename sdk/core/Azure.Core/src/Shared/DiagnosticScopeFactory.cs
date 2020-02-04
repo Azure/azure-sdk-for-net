@@ -16,8 +16,6 @@ namespace Azure.Core.Pipeline
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
 
-        public bool IsActivityEnabled { get;  }
-
         public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
@@ -27,6 +25,8 @@ namespace Azure.Core.Pipeline
                 _source = new DiagnosticListener(clientNamespace);
             }
         }
+
+        public bool IsActivityEnabled { get; }
 
         public DiagnosticScope CreateScope(string name)
         {
