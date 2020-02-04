@@ -182,12 +182,12 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
             RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<PiiEntity> entities = result.PiiEntities;
 
             Assert.AreEqual(2, entities.Count);
 
             var entitiesList = new List<string> { "555-55-5555", " 800-102-1100 " };
-            foreach (CategorizedEntity entity in entities)
+            foreach (PiiEntity entity in entities)
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Text));
                 Assert.IsNotNull(entity.Score);
@@ -204,7 +204,7 @@ namespace Azure.AI.TextAnalytics.Tests
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
             RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input, "en");
-            IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+            IReadOnlyCollection<PiiEntity> entities = result.PiiEntities;
 
             Assert.AreEqual(2, entities.Count);
         }

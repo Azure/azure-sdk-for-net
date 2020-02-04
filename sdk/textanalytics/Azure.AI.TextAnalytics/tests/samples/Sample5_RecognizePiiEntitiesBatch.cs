@@ -54,9 +54,9 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.CategorizedEntities.Count()} PII entit{(result.CategorizedEntities.Count() > 1 ? "ies" : "y ")}:");
+                    Debug.WriteLine($"    Recognized the following {result.PiiEntities.Count()} PII entit{(result.PiiEntities.Count() > 1 ? "ies" : "y ")}:");
 
-                    foreach (CategorizedEntity entity in result.CategorizedEntities)
+                    foreach (PiiEntity entity in result.PiiEntities)
                     {
                         Debug.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }

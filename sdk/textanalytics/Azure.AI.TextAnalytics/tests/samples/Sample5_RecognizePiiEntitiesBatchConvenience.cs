@@ -37,9 +37,9 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (RecognizePiiEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.CategorizedEntities.Count()} PII entit{(result.CategorizedEntities.Count() > 1 ? "ies were" : "y was")} found:");
+                Debug.WriteLine($"the following {result.PiiEntities.Count()} PII entit{(result.PiiEntities.Count() > 1 ? "ies were" : "y was")} found:");
 
-                foreach (CategorizedEntity entity in result.CategorizedEntities)
+                foreach (PiiEntity entity in result.PiiEntities)
                 {
                     Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }

@@ -656,12 +656,12 @@ namespace Azure.AI.TextAnalytics
 
         private static RecognizePiiEntitiesResult ReadRecognizePiiEntityResult(JsonElement documentElement)
         {
-            List<CategorizedEntity> entities = new List<CategorizedEntity>();
+            List<PiiEntity> entities = new List<PiiEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
                 {
-                    entities.Add(ReadCategorizedEntity(entityElement));
+                    entities.Add(ReadPiiEntity(entityElement));
                 }
             }
 
@@ -669,6 +669,31 @@ namespace Azure.AI.TextAnalytics
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
                 entities);
+        }
+
+        private static PiiEntity ReadPiiEntity(JsonElement entityElement)
+        {
+            string text = default;
+            string type = default;
+            string subtype = default;
+            int offset = default;
+            int length = default;
+            double score = default;
+
+            if (entityElement.TryGetProperty("text", out JsonElement textValue))
+                text = textValue.GetString();
+            if (entityElement.TryGetProperty("type", out JsonElement typeValue))
+                type = typeValue.ToString();
+            if (entityElement.TryGetProperty("subtype", out JsonElement subTypeValue))
+                subtype = subTypeValue.ToString();
+            if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
+                offsetValue.TryGetInt32(out offset);
+            if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
+                lengthValue.TryGetInt32(out length);
+            if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
+                scoreValue.TryGetDouble(out score);
+
+            return new PiiEntity(text, type, subtype, offset, length, score);
         }
 
         #endregion Recognize Entities
