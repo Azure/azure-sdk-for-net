@@ -37,6 +37,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="type">Identity Provider Type identifier. Possible
         /// values include: 'facebook', 'google', 'microsoft', 'twitter',
         /// 'aad', 'aadB2C'</param>
+        /// <param name="signinTenant">The TenantId to use instead of Common
+        /// when logging into Active Directory</param>
         /// <param name="allowedTenants">List of Allowed Tenants when
         /// configuring Azure Active Directory login.</param>
         /// <param name="authority">OpenID Connect discovery endpoint hostname
@@ -49,9 +51,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Only applies to AAD B2C Identity Provider.</param>
         /// <param name="passwordResetPolicyName">Password Reset Policy Name.
         /// Only applies to AAD B2C Identity Provider.</param>
-        public IdentityProviderBaseParameters(string type = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
+        public IdentityProviderBaseParameters(string type = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
         {
             Type = type;
+            SigninTenant = signinTenant;
             AllowedTenants = allowedTenants;
             Authority = authority;
             SignupPolicyName = signupPolicyName;
@@ -73,6 +76,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TenantId to use instead of Common when logging
+        /// into Active Directory
+        /// </summary>
+        [JsonProperty(PropertyName = "signinTenant")]
+        public string SigninTenant { get; set; }
 
         /// <summary>
         /// Gets or sets list of Allowed Tenants when configuring Azure Active

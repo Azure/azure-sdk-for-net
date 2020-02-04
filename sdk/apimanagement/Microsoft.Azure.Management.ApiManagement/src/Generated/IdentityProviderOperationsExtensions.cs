@@ -344,6 +344,54 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Gets the client secret details of the Identity Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='identityProviderName'>
+            /// Identity Provider Type identifier. Possible values include: 'facebook',
+            /// 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+            /// </param>
+            public static ClientSecretContract ListSecrets(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName, identityProviderName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the Identity Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='identityProviderName'>
+            /// Identity Provider Type identifier. Possible values include: 'facebook',
+            /// 'google', 'microsoft', 'twitter', 'aad', 'aadB2C'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClientSecretContract> ListSecretsAsync(this IIdentityProviderOperations operations, string resourceGroupName, string serviceName, string identityProviderName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, identityProviderName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists a collection of Identity Provider configured in the specified service
             /// instance.
             /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-aad#how-to-authorize-developer-accounts-using-azure-active-directory" />
