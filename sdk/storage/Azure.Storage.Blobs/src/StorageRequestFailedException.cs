@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
         public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
-            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: null, content: null,  response.GetErrorCode(Code));
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: Message, content: null,  response.GetErrorCode(Code));
     }
 
     /// <summary>
