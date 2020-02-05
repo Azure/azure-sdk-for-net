@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -28,9 +29,11 @@ namespace Azure.Storage
             new AppendBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.Version,
-                blob.ClientDiagnostics,
-                customerProvidedKey);
+                blob.AuthenticationPolicy,
+                new BlobClientOptions(blob.SourceOptions)
+                {
+                    CustomerProvidedKey = customerProvidedKey
+                });
 
         public static BlockBlobClient WithCustomerProvidedKey(
             this BlockBlobClient blob,
@@ -38,9 +41,11 @@ namespace Azure.Storage
             new BlockBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.Version,
-                blob.ClientDiagnostics,
-                customerProvidedKey);
+                blob.AuthenticationPolicy,
+                new BlobClientOptions(blob.SourceOptions)
+                {
+                    CustomerProvidedKey = customerProvidedKey
+                });
 
         public static PageBlobClient WithCustomerProvidedKey(
             this PageBlobClient blob,
@@ -48,9 +53,11 @@ namespace Azure.Storage
             new PageBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
-                blob.Version,
-                blob.ClientDiagnostics,
-                customerProvidedKey);
+                blob.AuthenticationPolicy,
+                new BlobClientOptions(blob.SourceOptions)
+                {
+                    CustomerProvidedKey = customerProvidedKey
+                });
 
         /// <summary>
         /// Convert a base RequestConditions to BlobRequestConditions.

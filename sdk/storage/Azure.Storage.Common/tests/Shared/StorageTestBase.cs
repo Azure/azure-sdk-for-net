@@ -213,6 +213,19 @@ namespace Azure.Storage.Test.Shared
         public byte[] GetRandomBuffer(long size)
             => TestHelper.GetRandomBuffer(size, Recording.Random);
 
+        public byte[] GetRepeatingBuffer(long size, byte[] repeatingData)
+        {
+            var result = new byte[size];
+            int i = 0;
+            while (i < result.Length)
+            {
+                Array.Copy(repeatingData, 0, result, i, Math.Min(repeatingData.Length, result.Length - i));
+                i += repeatingData.Length;
+            }
+
+            return result;
+        }
+
         public string GetNewString(int length = 20)
         {
             var buffer = new char[length];

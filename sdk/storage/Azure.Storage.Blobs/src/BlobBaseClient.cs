@@ -53,7 +53,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// A deep copy of the <see cref="BlobClientOptions"/> used to make this client. Every call to this property
         /// will return a new deep copy of the original, free to safely mutate.
         /// </summary>
-        public virtual BlobClientOptions SourceOptions => new BlobClientOptions(_sourceOptions);
+        internal virtual BlobClientOptions SourceOptions => _sourceOptions == default
+            ? default
+            : new BlobClientOptions(_sourceOptions);
+
+        /// <summary>
+        /// The authentication policy for our pipeline.  We cache it here in
+        /// case we need to construct a pipeline for authenticating batch
+        /// operations.
+        /// </summary>
+        private readonly HttpPipelinePolicy _authenticationPolicy;
+
+        internal virtual HttpPipelinePolicy AuthenticationPolicy => _authenticationPolicy;
 
         /// <summary>
         /// The version of the service to use when sending requests.
@@ -192,22 +203,58 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : this(
+                StorageConnectionString.Parse(connectionString),
+                blobContainerName,
+                blobName,
+                options)
         {
-            options ??= new BlobClientOptions();
-            var conn = StorageConnectionString.Parse(connectionString);
-            var builder =
-                new BlobUriBuilder(conn.BlobEndpoint)
+            //options ??= new BlobClientOptions();
+            //var conn = StorageConnectionString.Parse(connectionString);
+            //var builder =
+            //    new BlobUriBuilder(conn.BlobEndpoint)
+            //    {
+            //        BlobContainerName = blobContainerName,
+            //        BlobName = blobName
+            //    };
+            //_uri = builder.ToUri();
+            //_pipeline = options.Build(conn.Credentials);
+            //_version = options.Version;
+            //_clientDiagnostics = new ClientDiagnostics(options);
+            //_customerProvidedKey = options.CustomerProvidedKey;
+            //_sourceOptions = new BlobClientOptions(options);
+            //BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+        }
+
+        /// <summary>
+        /// Private constructor allowing <see cref="BlobBaseClient(string, string, string, BlobClientOptions)"/> to parse
+        /// the connection string once and efficiently call into
+        /// <see cref="BlobBaseClient(Uri, HttpPipelinePolicy, BlobClientOptions)"/>.
+        /// </summary>
+        /// <param name="connectionString">
+        /// Parsed connection string.
+        /// </param>
+        /// <param name="blobContainerName">
+        /// The name of the container containing this blob.
+        /// </param>
+        /// <param name="blobName">
+        /// The name of this blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        private BlobBaseClient(StorageConnectionString connectionString, string blobContainerName, string blobName, BlobClientOptions options)
+            : this(
+                new BlobUriBuilder(connectionString.BlobEndpoint)
                 {
                     BlobContainerName = blobContainerName,
                     BlobName = blobName
-                };
-            _uri = builder.ToUri();
-            _pipeline = options.Build(conn.Credentials);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options.CustomerProvidedKey;
-            _sourceOptions = new BlobClientOptions(options);
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+                }.ToUri(),
+                StorageClientOptions.GetAuthenticationPolicy(connectionString.Credentials),
+                options)
+        {
         }
 
         /// <summary>
@@ -295,16 +342,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// This constructor is intended as the forwarding spot for other
+        /// constructors on this class.
+        /// </remarks>
         internal BlobBaseClient(Uri blobUri, HttpPipelinePolicy authentication, BlobClientOptions options)
+            : this(
+                blobUri,
+                (options ?? new BlobClientOptions()).Build(authentication),
+                authentication,
+                options)
         {
-            options ??= new BlobClientOptions();
-            _uri = blobUri;
-            _pipeline = options.Build(authentication);
-            _version = options.Version;
-            _clientDiagnostics = new ClientDiagnostics(options);
-            _customerProvidedKey = options.CustomerProvidedKey;
-            _sourceOptions = new BlobClientOptions(options);
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
@@ -320,18 +368,36 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
+        /// <param name="authentication">
+        /// The authentication policy that was used in the given pipeline, for tracking purposes.
         /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobBaseClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-        { //TODO ensure options are passed into here from wherever they came from
+        /// <param name="options">
+        /// The options used to construct the given pipeline, for tracking purposes.
+        /// </param>
+        /// <remarks>
+        /// This constructor is intended for existing clients to pass on their
+        /// pipeline when creating new clients.
+        /// </remarks>
+        internal BlobBaseClient(
+            Uri blobUri,
+            HttpPipeline pipeline,
+            /*BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey*/
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options)
+        {
             _uri = blobUri;
+            _authenticationPolicy = authentication;
+
+            // save the actual options passed in before any modifications made for construction
+            _sourceOptions = options == default
+                ? default
+                : new BlobClientOptions(options);
+            options ??= new BlobClientOptions();
+
             _pipeline = pipeline;
-            _version = version;
-            _clientDiagnostics = clientDiagnostics;
-            _customerProvidedKey = customerProvidedKey;
+            _version = options.Version;
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _customerProvidedKey = options.CustomerProvidedKey;
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
         #endregion ctors
@@ -361,7 +427,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlobBaseClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
+            return new BlobBaseClient(builder.ToUri(), Pipeline, AuthenticationPolicy, SourceOptions);
         }
 
         /// <summary>
@@ -1217,7 +1283,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Debug.Assert(initialTransferLength <= Constants.Blob.Block.MaxDownloadBytes);
 
-            var client = new BlobBaseClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
+            var client = new BlobBaseClient(Uri, Pipeline, AuthenticationPolicy, SourceOptions);
             PartitionedDownloader downloader = new PartitionedDownloader(client, transferOptions, initialTransferLength);
 
             if (async)
@@ -2952,7 +3018,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="containerClient">Client to get details of.</param>
         /// <returns>The details.</returns>
         protected static (BlobClientOptions options, HttpPipelinePolicy authPolicy) GetContainerPipelineInfo(BlobContainerClient containerClient)
-            => (containerClient.SourceOptions, containerClient.AuthPolicy);
+            => (containerClient.SourceOptions, containerClient.AuthenticationPolicy);
     }
 
     /// <summary>
@@ -2977,8 +3043,7 @@ namespace Azure.Storage.Blobs.Specialized
             new BlobBaseClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey);
+                client.AuthenticationPolicy,
+                client.SourceOptions);
     }
 }

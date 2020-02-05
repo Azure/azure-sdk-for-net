@@ -230,13 +230,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
+        /// <param name="authentication">
+        /// The authentication policy that was used in the given pipeline, for tracking purposes.
         /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
+        /// <param name="options">
+        /// The options used to construct the given pipeline, for tracking purposes.
+        /// </param>
+        /// <remarks>
+        /// This constructor is intended for existing clients to pass on their
+        /// pipeline when creating new clients.
+        /// </remarks>
+        internal BlockBlobClient(Uri blobUri, HttpPipeline pipeline, HttpPipelinePolicy authentication, BlobClientOptions options)
+            : base(blobUri, pipeline, authentication, options)
         {
         }
 
@@ -262,7 +267,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null);
+            /* This method only exists for the DataLake client to have an internal block blob client. We don't have to
+             * worry about having a paper trail to the client, so the auth policy can be safely ignored and we don't
+             * care that we pass the fake client options into this method.
+             */
+            return new BlockBlobClient(blobUri, pipeline, default, options);
         }
         #endregion ctors
 
@@ -291,7 +300,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected sealed override BlobBaseClient WithSnapshotCore(string snapshot)
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
+            return new BlockBlobClient(builder.ToUri(), Pipeline, AuthenticationPolicy, SourceOptions);
         }
 
         ///// <summary>
@@ -1536,8 +1545,7 @@ namespace Azure.Storage.Blobs.Specialized
             new BlockBlobClient(
                 client.Uri.AppendToPath(blobName),
                 client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey);
+                client.AuthenticationPolicy,
+                client.SourceOptions);
     }
 }

@@ -157,13 +157,18 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
+        /// <param name="authentication">
+        /// The authentication policy that was used in the given pipeline, for tracking purposes.
         /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        internal BlobClient(Uri blobUri, HttpPipeline pipeline, BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey)
-            : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey)
+        /// <param name="options">
+        /// The options used to construct the given pipeline, for tracking purposes.
+        /// </param>
+        /// <remarks>
+        /// This constructor is intended for existing clients to pass on their
+        /// pipeline when creating new clients.
+        /// </remarks>
+        internal BlobClient(Uri blobUri, HttpPipeline pipeline, HttpPipelinePolicy authentication, BlobClientOptions options)
+            : base(blobUri, pipeline, authentication, options)
         {
         }
 
@@ -995,7 +1000,7 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            var client = new BlockBlobClient(Uri, Pipeline, Version, ClientDiagnostics, CustomerProvidedKey);
+            var client = new BlockBlobClient(Uri, Pipeline, AuthenticationPolicy, SourceOptions);
             singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
             Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
 

@@ -224,11 +224,16 @@ namespace Azure.Storage.Blobs.Specialized
         {
             (var options, var authPolicy) = GetContainerPipelineInfo(containerClient);
 
+            var editedOptions = new BlobClientOptions(options);
+            editedOptions.AddPolicy(
+                new ClientSideDecryptionPolicy(encryptionOptions.KeyResolver, encryptionOptions.KeyEncryptionKey),
+                HttpPipelinePosition.PerCall);
+
             return new EncryptedBlobClient(
                 containerClient.Uri.AppendToPath(blobName),
                 encryptionOptions,
                 authPolicy,
-                options);
+                editedOptions);
         }
         #endregion ctors
 

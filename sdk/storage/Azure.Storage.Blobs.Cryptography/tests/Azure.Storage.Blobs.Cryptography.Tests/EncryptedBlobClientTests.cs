@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Azure.Core.Testing;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Specialized.Models;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -24,27 +26,6 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
         }
 
         #region Utility
-
-        /// <summary>
-        /// Gets a client to a nonexistent blob using client-side encryption in a brand new disposable container.
-        /// </summary>
-        /// <param name="blob">The blob client created.</param>
-        /// <returns>The IDisposable to delete the container when finished.</returns>
-        private IAsyncDisposable GetEncryptedBlockBlobClient(out EncryptedBlobClient blob, MockKeyEncryptionKey mock)
-        {
-            var disposable = GetTestContainerAsync().Result;
-            blob = InstrumentClient(new EncryptedBlobClient(
-                    disposable.Container.GetBlobClient(GetNewBlobName()).Uri,
-                    GetNewSharedKeyCredentials(),
-                    new ClientsideEncryptionOptions()
-                    {
-                        KeyEncryptionKey = mock,
-                        KeyResolver = mock,
-                    },
-                    GetOptions()));
-
-            return disposable;
-        }
 
         private byte[] LocalManualEncryption(byte[] data, byte[] key, byte[] iv)
         {
@@ -73,28 +54,38 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
         [TestCase(14)] // a single unalligned cipher block
         [TestCase(Constants.KB)] // multiple blocks
         [TestCase(Constants.KB - 4)] // multiple unalligned blocks
-        [TestCase(10 * Constants.MB)] // larger test, increasing likelihood to trigger async extension usage bugs
+        [TestCase(Constants.MB)] // larger test, increasing likelihood to trigger async extension usage bugs
         [LiveOnly] // cannot seed content encryption key
         public async Task UploadAsync(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
-            var key = new MockKeyEncryptionKey();
-            await using (GetEncryptedBlockBlobClient(out var blob, key))
+            var mockKey = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerAsync())
             {
+                var blobName = GetNewBlobName();
+                var blob = disposable.Container.GetEncryptedBlobClient(
+                    blobName,
+                    new ClientsideEncryptionOptions()
+                    {
+                        KeyEncryptionKey = mockKey,
+                        KeyResolver = mockKey
+                    });
+
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
 
                 // download without decrypting
-                var normalBlob = (await new BlobClient(blob.Uri, GetNewSharedKeyCredentials()).DownloadAsync()).Value;
-                var encryptedData = new byte[normalBlob.ContentLength];
-                await normalBlob.Content.ReadAsync(encryptedData, 0, encryptedData.Length);
+                var encryptedDataStream = new MemoryStream();
+                await disposable.Container.GetBlobClient(blobName).DownloadToAsync(encryptedDataStream);
+                var encryptedData = encryptedDataStream.ToArray();
 
                 // encrypt original data manually for comparison
-                var encryptionMetadata = ClientSideDecryptionPolicy.GetAndValidateEncryptionData(normalBlob.Details.Metadata);
+                EncryptionData encryptionMetadata = ClientSideDecryptionPolicy.GetAndValidateEncryptionData(
+                    (await blob.GetPropertiesAsync()).Value.Metadata);
                 Assert.NotNull(encryptionMetadata, "Never encrypted data.");
                 byte[] expectedEncryptedData = LocalManualEncryption(
                     data,
-                    (await key.UnwrapKeyAsync(null, encryptionMetadata.WrappedContentKey.EncryptedKey)
+                    (await mockKey.UnwrapKeyAsync(null, encryptionMetadata.WrappedContentKey.EncryptedKey)
                         .ConfigureAwait(false)).ToArray(),
                     encryptionMetadata.ContentEncryptionIV);
 
@@ -111,9 +102,17 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
         public async Task RoundtripAsync(long dataSize)
         {
             var data = GetRandomBuffer(dataSize);
-            var key = new MockKeyEncryptionKey();
-            await using (this.GetEncryptedBlockBlobClient(out var blob, key))
+            var mockKey = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerAsync())
             {
+                var blob = disposable.Container.GetEncryptedBlobClient(
+                    GetNewBlobName(),
+                    new ClientsideEncryptionOptions()
+                    {
+                        KeyEncryptionKey = mockKey,
+                        KeyResolver = mockKey
+                    });
+
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
 
@@ -144,9 +143,17 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
         public async Task PartialDownloadAsync(int offset, int? count)
         {
             var data = GetRandomBuffer(offset + (count ?? 16) + 32); // ensure we have enough room in original data
-            var key = new MockKeyEncryptionKey();
-            await using (GetEncryptedBlockBlobClient(out var blob, key))
+            var mockKey = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerAsync())
             {
+                var blob = disposable.Container.GetEncryptedBlobClient(
+                    GetNewBlobName(),
+                    new ClientsideEncryptionOptions()
+                    {
+                        KeyEncryptionKey = mockKey,
+                        KeyResolver = mockKey
+                    });
+
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
 
@@ -179,9 +186,17 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
         public async Task Track2DownloadTrack1Blob()
         {
             var data = GetRandomBuffer(Constants.KB);
-            var key = new MockKeyEncryptionKey();
-            await using (this.GetEncryptedBlockBlobClient(out var track2Blob, key))
+            var mockKey = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerAsync())
             {
+                var track2Blob = disposable.Container.GetEncryptedBlobClient(
+                    GetNewBlobName(),
+                    new ClientsideEncryptionOptions()
+                    {
+                        KeyEncryptionKey = mockKey,
+                        KeyResolver = mockKey
+                    });
+
                 // upload with track 1
                 var creds = GetNewSharedKeyCredentials();
                 var track1Blob = new Microsoft.Azure.Storage.Blob.CloudBlockBlob(
@@ -191,7 +206,7 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
                     data, 0, data.Length, default,
                     new Microsoft.Azure.Storage.Blob.BlobRequestOptions()
                     {
-                        EncryptionPolicy = new Microsoft.Azure.Storage.Blob.BlobEncryptionPolicy(key, key)
+                        EncryptionPolicy = new Microsoft.Azure.Storage.Blob.BlobEncryptionPolicy(mockKey, mockKey)
                     },
                     default, default);
 
@@ -209,9 +224,17 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
         public async Task Track1DownloadTrack2Blob()
         {
             var data = GetRandomBuffer(Constants.KB); // ensure we have enough room in original data
-            var key = new MockKeyEncryptionKey();
-            await using (GetEncryptedBlockBlobClient(out var track2Blob, key))
+            var mockKey = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerAsync())
             {
+                var track2Blob = disposable.Container.GetEncryptedBlobClient(
+                    GetNewBlobName(),
+                    new ClientsideEncryptionOptions()
+                    {
+                        KeyEncryptionKey = mockKey,
+                        KeyResolver = mockKey
+                    });
+
                 // upload with track 2
                 await track2Blob.UploadAsync(new MemoryStream(data));
 
@@ -224,7 +247,7 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
                 await track1Blob.DownloadToByteArrayAsync(downloadData, 0, default,
                     new Microsoft.Azure.Storage.Blob.BlobRequestOptions()
                     {
-                        EncryptionPolicy = new Microsoft.Azure.Storage.Blob.BlobEncryptionPolicy(key, key)
+                        EncryptionPolicy = new Microsoft.Azure.Storage.Blob.BlobEncryptionPolicy(mockKey, mockKey)
                     },
                     default, default);
 
@@ -257,6 +280,50 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
                 await blob.DownloadToAsync(downloadStream);
 
                 Assert.AreEqual(data, downloadStream.ToArray());
+            }
+        }
+
+        [Test]
+        [LiveOnly] // cannot seed content encryption key
+        [Explicit] // big stress test
+        public async Task StressAsync()
+        {
+            static async Task<byte[]> RoundTripDataHelper(BlobClient client, byte[] data)
+            {
+                using (var dataStream = new MemoryStream(data))
+                {
+                    await client.UploadAsync(dataStream);
+                }
+
+                using (var downloadStream = new MemoryStream())
+                {
+                    await client.DownloadToAsync(downloadStream);
+                    return downloadStream.ToArray();
+                }
+            }
+
+            var data = GetRandomBuffer(10 * Constants.MB);
+            var key = new MockKeyEncryptionKey();
+            await using (var disposable = await GetTestContainerAsync())
+            {
+                var downloadTasks = new List<Task<byte[]>>();
+                foreach (var _ in Enumerable.Range(0, 10))
+                {
+                    var blob = disposable.Container.GetEncryptedBlobClient(GetNewBlobName(), new ClientsideEncryptionOptions()
+                    {
+                        KeyEncryptionKey = key,
+                        KeyResolver = key
+                    });
+
+                    downloadTasks.Add(RoundTripDataHelper(blob, data));
+                }
+
+                var downloads = await Task.WhenAll(downloadTasks);
+
+                foreach (byte[] downloadData in downloads)
+                {
+                    Assert.AreEqual(data, downloadData);
+                }
             }
         }
     }
