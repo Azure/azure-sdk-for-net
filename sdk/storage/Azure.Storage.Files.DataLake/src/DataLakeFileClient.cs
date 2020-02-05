@@ -2687,7 +2687,7 @@ namespace Azure.Storage.Files.DataLake
                 client,
                 transferOptions,
                 singleUploadThreshold,
-                operationName: Constants.Blob.UploadOperationName);
+                operationName: "BlobClient.Upload");
 
             if (async)
             {
