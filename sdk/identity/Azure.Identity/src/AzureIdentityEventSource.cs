@@ -72,7 +72,7 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void ProbeImdsEndpoint(RequestUriBuilder uri)
+        public void ProbeImdsEndpoint(Uri uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
@@ -87,7 +87,7 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void ImdsEndpointFound(RequestUriBuilder uri)
+        public void ImdsEndpointFound(Uri uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
@@ -102,7 +102,7 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void ImdsEndpointUnavailable(RequestUriBuilder uri)
+        public void ImdsEndpointUnavailable(Uri uri)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {

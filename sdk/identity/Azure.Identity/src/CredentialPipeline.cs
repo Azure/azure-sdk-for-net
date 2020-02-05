@@ -17,7 +17,8 @@ namespace Azure.Identity
         {
             AuthorityHost = options.AuthorityHost;
 
-            HttpPipeline = HttpPipelineBuilder.Build(options);
+
+            HttpPipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new CredentialResponseClassifier());
 
             Diagnostics = new ClientDiagnostics(options);
         }
@@ -68,6 +69,14 @@ namespace Azure.Identity
         public CredentialPipeline WithAuthorityHost(Uri authorityHost)
         {
             return new CredentialPipeline(authorityHost, HttpPipeline, Diagnostics);
+        }
+
+        private class CredentialResponseClassifier : ResponseClassifier
+        {
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                return base.IsRetriableResponse(message) || message.Response.Status == 404;
+            }
         }
     }
 }

@@ -14,27 +14,17 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DetectLanguageResult : TextAnalyticsResult
     {
-        internal DetectLanguageResult(string id, TextDocumentStatistics statistics, IList<DetectedLanguage> detectedLanguages)
+        internal DetectLanguageResult(string id, TextDocumentStatistics statistics, DetectedLanguage detectedLanguage)
             : base(id, statistics)
         {
-            DetectedLanguages = new ReadOnlyCollection<DetectedLanguage>(detectedLanguages);
+            PrimaryLanguage = detectedLanguage;
         }
 
-        internal DetectLanguageResult(string id, string errorMessage)
-            : base(id, errorMessage)
-        {
-            DetectedLanguages = Array.Empty<DetectedLanguage>();
-        }
-
-        /// <summary>
-        /// Gets a collection of languages detected in the document.  This value
-        /// contains a single language.
-        /// </summary>
-        public IReadOnlyCollection<DetectedLanguage> DetectedLanguages { get; }
+        internal DetectLanguageResult(string id, string errorMessage) : base(id, errorMessage) { }
 
         /// <summary>
         /// The primary language detected in the document.
         /// </summary>
-        public DetectedLanguage PrimaryLanguage => DetectedLanguages.OrderBy(l => l.Score).FirstOrDefault();
+        public DetectedLanguage PrimaryLanguage { get; }
     }
 }

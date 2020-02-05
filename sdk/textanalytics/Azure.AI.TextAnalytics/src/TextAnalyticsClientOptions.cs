@@ -25,7 +25,7 @@ namespace Azure.AI.TextAnalytics
             /// <summary>
             /// Version 3.0-preview.1
             /// </summary>
-            V3_0_preview_1 = 0
+            V3_0_preview_1 = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -65,7 +65,7 @@ namespace Azure.AI.TextAnalytics
                     return "v3.0-preview.1";
 
                 default:
-                    throw new ArgumentException(Version.ToString());
+                    throw new ArgumentException($"Version {Version.ToString()} not supported.");
             }
         }
     }

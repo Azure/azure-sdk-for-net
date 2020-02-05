@@ -194,7 +194,7 @@ namespace Azure.Storage.Blobs.Specialized
                 ifMatch: conditions?.IfMatch,
                 ifNoneMatch: conditions?.IfNoneMatch);
             _messages.Add(message);
-            return new DelayedResponse(message, BatchRestClient.Blob.DeleteAsync_CreateResponse);
+            return new DelayedResponse(message, response => BatchRestClient.Blob.DeleteAsync_CreateResponse(_client.ClientDiagnostics, response));
         }
         #endregion DeleteBlob
 
@@ -294,7 +294,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rehydratePriority: rehydratePriority,
                 leaseId: leaseAccessConditions?.LeaseId);
             _messages.Add(message);
-            return new DelayedResponse(message, BatchRestClient.Blob.SetAccessTierAsync_CreateResponse);
+            return new DelayedResponse(message, response => BatchRestClient.Blob.SetAccessTierAsync_CreateResponse(_client.ClientDiagnostics, response));
         }
 
         /// <summary>

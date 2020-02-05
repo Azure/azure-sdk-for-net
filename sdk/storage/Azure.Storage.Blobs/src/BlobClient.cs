@@ -980,7 +980,7 @@ namespace Azure.Storage.Blobs
                 client,
                 transferOptions,
                 singleUploadThreshold,
-                operationName: Constants.Blob.UploadOperationName);
+                operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
             if (async)
             {

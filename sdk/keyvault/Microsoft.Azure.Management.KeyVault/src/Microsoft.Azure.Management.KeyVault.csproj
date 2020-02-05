@@ -10,11 +10,11 @@
 		<AssemblyName>Microsoft.Azure.Management.KeyVault</AssemblyName>
 		<Version>2.4.3</Version>
 		<PackageTags>Microsoft Azure key vault management;Key Vault;</PackageTags>
-		<PackageReleaseNotes>      
+		<PackageReleaseNotes>
 			<![CDATA[
 				Republishing to sign package with correct hash.
 			]]>
-    	</PackageReleaseNotes>
+	</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
