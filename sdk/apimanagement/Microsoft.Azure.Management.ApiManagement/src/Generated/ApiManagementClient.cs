@@ -257,9 +257,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IPolicyOperations Policy { get; private set; }
 
         /// <summary>
-        /// Gets the IPolicySnippetOperations.
+        /// Gets the IPolicyDescriptionOperations.
         /// </summary>
-        public virtual IPolicySnippetOperations PolicySnippet { get; private set; }
+        public virtual IPolicyDescriptionOperations PolicyDescription { get; private set; }
 
         /// <summary>
         /// Gets the ISignInSettingsOperations.
@@ -302,9 +302,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IProductPolicyOperations ProductPolicy { get; private set; }
 
         /// <summary>
-        /// Gets the IPropertyOperations.
+        /// Gets the INamedValueOperations.
         /// </summary>
-        public virtual IPropertyOperations Property { get; private set; }
+        public virtual INamedValueOperations NamedValue { get; private set; }
 
         /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
@@ -658,7 +658,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             NotificationRecipientEmail = new NotificationRecipientEmailOperations(this);
             OpenIdConnectProvider = new OpenIdConnectProviderOperations(this);
             Policy = new PolicyOperations(this);
-            PolicySnippet = new PolicySnippetOperations(this);
+            PolicyDescription = new PolicyDescriptionOperations(this);
             SignInSettings = new SignInSettingsOperations(this);
             SignUpSettings = new SignUpSettingsOperations(this);
             DelegationSettings = new DelegationSettingsOperations(this);
@@ -667,7 +667,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             ProductGroup = new ProductGroupOperations(this);
             ProductSubscriptions = new ProductSubscriptionsOperations(this);
             ProductPolicy = new ProductPolicyOperations(this);
-            Property = new PropertyOperations(this);
+            NamedValue = new NamedValueOperations(this);
             QuotaByCounterKeys = new QuotaByCounterKeysOperations(this);
             QuotaByPeriodKeys = new QuotaByPeriodKeysOperations(this);
             Region = new RegionOperations(this);
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserConfirmationPassword = new UserConfirmationPasswordOperations(this);
             ApiExport = new ApiExportOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-01-01";
+            ApiVersion = "2019-12-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

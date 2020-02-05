@@ -80,7 +80,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="bearerTokenSendingMethods">Specifies the mechanism by
         /// which access token is passed to the API. </param>
         /// <param name="clientSecret">Client or app secret registered with
-        /// this authorization server.</param>
+        /// this authorization server. This property will not be filled on
+        /// 'GET' operations! Use '/listSecrets' POST request to get the
+        /// value.</param>
         /// <param name="resourceOwnerUsername">Can be optionally specified
         /// when resource owner password grant type is supported by this
         /// authorization server. Default resource owner username.</param>
@@ -179,7 +181,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets client or app secret registered with this
-        /// authorization server.
+        /// authorization server. This property will not be filled on 'GET'
+        /// operations! Use '/listSecrets' POST request to get the value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientSecret")]
         public string ClientSecret { get; set; }
