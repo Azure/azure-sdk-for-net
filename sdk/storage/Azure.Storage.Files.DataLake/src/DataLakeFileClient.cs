@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.DataLake
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// </summary>
-        public virtual int BlockBlobMaxUploadBlobBytes => Constants.DataLake.MaxUploadBytes;
+        public virtual int MaxUploadBytes => Constants.DataLake.MaxUploadBytes;
 
         #region ctors
         /// <summary>
@@ -2380,7 +2380,7 @@ namespace Azure.Storage.Files.DataLake
         #region Upload
         /// <summary>
         /// The <see cref="Upload(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation updates the content of anexisting file.
+        /// operation updates the content of an existing file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2412,7 +2412,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <returns>
         /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
+        /// state of the updated file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2680,8 +2680,8 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DataLakeFileClient client = new DataLakeFileClient(Uri, Pipeline, Version, ClientDiagnostics);
-            singleUploadThreshold ??= client.BlockBlobMaxUploadBlobBytes;
-            Debug.Assert(singleUploadThreshold <= client.BlockBlobMaxUploadBlobBytes);
+            singleUploadThreshold ??= client.MaxUploadBytes;
+            Debug.Assert(singleUploadThreshold <= client.MaxUploadBytes);
 
             DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
                 client,
@@ -2713,7 +2713,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// This operation will upload data it as indiviually staged
+        /// This operation will upload data it as individually staged
         /// blocks if it's larger than the
         /// <paramref name="singleUploadThreshold"/>.
         /// </summary>

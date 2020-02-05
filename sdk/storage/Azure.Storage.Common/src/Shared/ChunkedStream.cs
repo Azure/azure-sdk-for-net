@@ -4,7 +4,6 @@
 using System;
 using System.Buffers;
 
-
 namespace Azure.Storage.Shared
 {
     internal readonly struct ChunkedStream : IDisposable

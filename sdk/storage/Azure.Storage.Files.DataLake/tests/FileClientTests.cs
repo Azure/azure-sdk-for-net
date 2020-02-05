@@ -2396,5 +2396,63 @@ namespace Azure.Storage.Files.DataLake.Tests
                 TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
             }
         }
+
+        [Test]
+        [Ignore("Live tests will run out of memory")]
+        public async Task UploadAsync_Stream()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            var data = GetRandomBuffer(200 * Constants.MB);
+
+            // Act
+            using (var stream = new System.IO.MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Assert
+            using var actual = new System.IO.MemoryStream();
+            await file.DownloadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [Ignore("Live tests will run out of memory")]
+        public async Task UploadAsync_File()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            var data = GetRandomBuffer(200 * Constants.MB);
+
+
+            using (var stream = new System.IO.MemoryStream(data))
+            {
+                var path = System.IO.Path.GetTempFileName();
+
+                try
+                {
+                    System.IO.File.WriteAllBytes(path, data);
+
+                    await file.UploadAsync(path);
+                }
+                finally
+                {
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+            }
+
+            // Assert
+            using var actual = new System.IO.MemoryStream();
+            await file.DownloadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
     }
 }
