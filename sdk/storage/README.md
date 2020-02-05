@@ -1,4 +1,4 @@
-# Azure Storage libraries for .NET
+# Azure Storage libraries for .NET 
 
 Azure Storage is a Microsoft-managed service providing cloud storage that is highly available, secure, durable, scalable, and redundant.  Azure Storage includes Blobs (objects), Queues, and Files.
 
