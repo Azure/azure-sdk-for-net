@@ -12,10 +12,10 @@ using Azure.Storage.Files.Shares.Models;
 namespace Azure.Storage.Files.Shares.Specialized
 {
     /// <summary>
-    /// The <see cref="FileLeaseClient"/> allows you to manipulate Azure
+    /// The <see cref="ShareLeaseClient"/> allows you to manipulate Azure
     /// Storage leases on files.
     /// </summary>
-    public class FileLeaseClient
+    public class ShareLeaseClient
     {
         /// <summary>
         /// The <see cref="ShareFileClient"/> to manage leases for.
@@ -55,16 +55,16 @@ namespace Azure.Storage.Files.Shares.Specialized
         internal virtual ClientDiagnostics ClientDiagnostics => FileClient?.ClientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileLeaseClient"/> class
+        /// Initializes a new instance of the <see cref="ShareLeaseClient"/> class
         /// for mocking.
         /// </summary>
-        protected FileLeaseClient()
+        protected ShareLeaseClient()
         {
             _file = null;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileLeaseClient"/> class.
+        /// Initializes a new instance of the <see cref="ShareLeaseClient"/> class.
         /// </summary>
         /// <param name="client">
         /// A <see cref="ShareFileClient"/> representing the file being leased.
@@ -73,7 +73,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public FileLeaseClient(ShareFileClient client, string leaseId = null)
+        public ShareLeaseClient(ShareFileClient client, string leaseId = null)
         {
             _file = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();
@@ -107,7 +107,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FileLease> Acquire(
+        public virtual Response<FileShareLease> Acquire(
             CancellationToken cancellationToken = default) =>
             AcquireInternal(
                 false, // async
@@ -135,7 +135,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileLease>> AcquireAsync(
+        public virtual async Task<Response<FileShareLease>> AcquireAsync(
             CancellationToken cancellationToken = default) =>
             await AcquireInternal(
                 true, // async
@@ -166,14 +166,14 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileLease>> AcquireInternal(
+        private async Task<Response<FileShareLease>> AcquireInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(FileLeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(FileLeaseClient),
+                    nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n");
@@ -187,7 +187,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         duration: Constants.File.Lease.InfiniteLeaseDuration,
                         proposedLeaseId: LeaseId,
                         async: async,
-                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Acquire)}",
+                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Acquire)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -198,7 +198,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(FileLeaseClient));
+                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                 }
             }
         }
@@ -288,14 +288,14 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileLeaseReleaseInfo>> ReleaseInternal(
+        internal virtual async Task<Response<FileLeaseReleaseInfo>> ReleaseInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(FileLeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(FileLeaseClient),
+                    nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
@@ -308,7 +308,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         leaseId: LeaseId,
                         Version.ToVersionString(),
                         async: async,
-                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Release)}",
+                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Release)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -319,7 +319,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(FileLeaseClient));
+                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                 }
             }
         }
@@ -348,7 +348,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FileLease> Change(
+        public virtual Response<FileShareLease> Change(
             string proposedId,
             CancellationToken cancellationToken = default) =>
             ChangeInternal(
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileLease>> ChangeAsync(
+        public virtual async Task<Response<FileShareLease>> ChangeAsync(
             string proposedId,
             CancellationToken cancellationToken = default) =>
             await ChangeInternal(
@@ -413,15 +413,15 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileLease>> ChangeInternal(
+        private async Task<Response<FileShareLease>> ChangeInternal(
             string proposedId,
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(FileLeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(FileLeaseClient),
+                    nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}\n" +
@@ -436,7 +436,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         Version.ToVersionString(),
                         proposedLeaseId: proposedId,
                         async: async,
-                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Change)}",
+                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Change)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(FileLeaseClient));
+                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                 }
             }
         }
@@ -478,7 +478,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FileLease> Break(
+        public virtual Response<FileShareLease> Break(
             CancellationToken cancellationToken = default) =>
             BreakInternal(
                 false, // async
@@ -509,7 +509,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileLease>> BreakAsync(
+        public virtual async Task<Response<FileShareLease>> BreakAsync(
             CancellationToken cancellationToken = default) =>
             await BreakInternal(
                 true, // async
@@ -543,14 +543,14 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileLease>> BreakInternal(
+        private async Task<Response<FileShareLease>> BreakInternal(
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(FileLeaseClient)))
+            using (Pipeline.BeginLoggingScope(nameof(ShareLeaseClient)))
             {
                 Pipeline.LogMethodEnter(
-                    nameof(FileLeaseClient),
+                    nameof(ShareLeaseClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(LeaseId)}: {LeaseId}");
@@ -563,7 +563,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         Version.ToVersionString(),
                         leaseId: LeaseId,
                         async: async,
-                        operationName: $"{nameof(FileLeaseClient)}.{nameof(Break)}",
+                        operationName: $"{nameof(ShareLeaseClient)}.{nameof(Break)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToLease();
@@ -575,7 +575,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(FileLeaseClient));
+                    Pipeline.LogMethodExit(nameof(ShareLeaseClient));
                 }
             }
         }
@@ -584,13 +584,13 @@ namespace Azure.Storage.Files.Shares.Specialized
 
     /// <summary>
     /// Add easy to discover methods to <see cref="ShareFileClient"/> for
-    /// easily creating <see cref="FileLeaseClient"/>
+    /// easily creating <see cref="ShareLeaseClient"/>
     /// instances.
     /// </summary>
     public static partial class SpecializedFileExtensions
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileLeaseClient"/> class.
+        /// Initializes a new instance of the <see cref="ShareLeaseClient"/> class.
         /// </summary>
         /// <param name="client">
         /// A <see cref="ShareFileClient"/> representing the file being leased.
@@ -599,9 +599,9 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        public static FileLeaseClient GetFileLeaseClient(
+        public static ShareLeaseClient GetShareLeaseClient(
             this ShareFileClient client,
             string leaseId = null) =>
-            new FileLeaseClient(client, leaseId);
+            new ShareLeaseClient(client, leaseId);
     }
 }

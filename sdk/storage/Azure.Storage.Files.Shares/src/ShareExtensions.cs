@@ -23,9 +23,9 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal static Response<FileLease> ToLease(this Response<BrokenLease> response)
+        internal static Response<FileShareLease> ToLease(this Response<BrokenLease> response)
             => Response.FromValue(
-                new FileLease
+                new FileShareLease
                 {
                     ETag = response.Value.ETag,
                     LastModified = response.Value.LastModified,

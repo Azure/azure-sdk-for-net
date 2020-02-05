@@ -774,7 +774,7 @@ directive:
   transform: >
     $.put.responses["201"].description = "The lease operation completed successfully.";
     $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a file's lease";
-    $.put.responses["201"]["x-az-response-name"] = "FileLease";
+    $.put.responses["201"]["x-az-response-name"] = "FileShareLease";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=lease&release
@@ -795,7 +795,7 @@ directive:
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
-    $.put.responses["200"]["x-az-response-name"] = "FileLease";
+    $.put.responses["200"]["x-az-response-name"] = "FileShareLease";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=lease&break
@@ -806,6 +806,15 @@ directive:
   transform: >
     $.put.responses["202"]["x-az-response-name"] = "BrokenLease";
     $.put.responses["202"]["x-az-public"] = false;
+```
+
+### FileCopyPermissionCopyMode
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters.FileCopyPermissionCopyMode
+  transform: >
+    $["x-ms-enum"]["name"] = "PermissionCopyMode";
 ```
 
 ### Treat the API version as a parameter instead of a constant

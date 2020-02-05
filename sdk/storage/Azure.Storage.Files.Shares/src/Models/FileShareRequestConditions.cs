@@ -6,7 +6,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// Specifies lease access conditions for a file.
     /// </summary>
-    public class FileRequestConditions
+    public class FileShareRequestConditions
     {
         /// <summary>
         /// Optionally limit requests to resources with an active lease

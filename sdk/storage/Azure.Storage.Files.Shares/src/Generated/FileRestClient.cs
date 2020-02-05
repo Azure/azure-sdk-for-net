@@ -5224,8 +5224,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileLease>> AcquireLeaseAsync(
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileShareLease}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileShareLease>> AcquireLeaseAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5334,8 +5334,8 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.AcquireLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> AcquireLeaseAsync_CreateResponse(
+            /// <returns>The File.AcquireLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileShareLease}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileShareLease> AcquireLeaseAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -5345,7 +5345,7 @@ namespace Azure.Storage.Files.Shares
                     case 201:
                     {
                         // Create the result
-                        Azure.Storage.Files.Shares.Models.FileLease _value = new Azure.Storage.Files.Shares.Models.FileLease();
+                        Azure.Storage.Files.Shares.Models.FileShareLease _value = new Azure.Storage.Files.Shares.Models.FileShareLease();
 
                         // Get response headers
                         string _header;
@@ -5554,8 +5554,8 @@ namespace Azure.Storage.Files.Shares
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
-            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}</returns>
-            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileLease>> ChangeLeaseAsync(
+            /// <returns>Azure.Response{Azure.Storage.Files.Shares.Models.FileShareLease}</returns>
+            public static async System.Threading.Tasks.ValueTask<Azure.Response<Azure.Storage.Files.Shares.Models.FileShareLease>> ChangeLeaseAsync(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Core.Pipeline.HttpPipeline pipeline,
                 System.Uri resourceUri,
@@ -5668,8 +5668,8 @@ namespace Azure.Storage.Files.Shares
             /// </summary>
             /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
-            /// <returns>The File.ChangeLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileLease}.</returns>
-            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileLease> ChangeLeaseAsync_CreateResponse(
+            /// <returns>The File.ChangeLeaseAsync Azure.Response{Azure.Storage.Files.Shares.Models.FileShareLease}.</returns>
+            internal static Azure.Response<Azure.Storage.Files.Shares.Models.FileShareLease> ChangeLeaseAsync_CreateResponse(
                 Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
@@ -5679,7 +5679,7 @@ namespace Azure.Storage.Files.Shares
                     case 200:
                     {
                         // Create the result
-                        Azure.Storage.Files.Shares.Models.FileLease _value = new Azure.Storage.Files.Shares.Models.FileLease();
+                        Azure.Storage.Files.Shares.Models.FileShareLease _value = new Azure.Storage.Files.Shares.Models.FileShareLease();
 
                         // Get response headers
                         string _header;
@@ -6492,7 +6492,7 @@ namespace Azure.Storage.Files.Shares
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string filePermission = default,
                 string filePermissionKey = default,
-                Azure.Storage.Files.Shares.Models.PermissionCopyModeType? filePermissionCopyMode = default,
+                Azure.Storage.Files.Shares.Models.PermissionCopyMode? filePermissionCopyMode = default,
                 bool? ignoreReadOnly = default,
                 string fileAttributes = default,
                 string fileCreationTime = default,
@@ -6580,7 +6580,7 @@ namespace Azure.Storage.Files.Shares
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string filePermission = default,
                 string filePermissionKey = default,
-                Azure.Storage.Files.Shares.Models.PermissionCopyModeType? filePermissionCopyMode = default,
+                Azure.Storage.Files.Shares.Models.PermissionCopyMode? filePermissionCopyMode = default,
                 bool? ignoreReadOnly = default,
                 string fileAttributes = default,
                 string fileCreationTime = default,
@@ -7486,60 +7486,6 @@ namespace Azure.Storage.Files.Shares.Models
 }
 #endregion class FileItem
 
-#region class FileLease
-namespace Azure.Storage.Files.Shares.Models
-{
-    /// <summary>
-    /// FileLease
-    /// </summary>
-    public partial class FileLease
-    {
-        /// <summary>
-        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
-        /// </summary>
-        public Azure.ETag ETag { get; internal set; }
-
-        /// <summary>
-        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
-        /// </summary>
-        public System.DateTimeOffset LastModified { get; internal set; }
-
-        /// <summary>
-        /// Uniquely identifies a file's lease
-        /// </summary>
-        public string LeaseId { get; internal set; }
-
-        /// <summary>
-        /// Prevent direct instantiation of FileLease instances.
-        /// You can use ShareModelFactory.FileLease instead.
-        /// </summary>
-        internal FileLease() { }
-    }
-
-    /// <summary>
-    /// ShareModelFactory provides utilities for mocking.
-    /// </summary>
-    public static partial class ShareModelFactory
-    {
-        /// <summary>
-        /// Creates a new FileLease instance for mocking.
-        /// </summary>
-        public static FileLease FileLease(
-            Azure.ETag eTag,
-            System.DateTimeOffset lastModified,
-            string leaseId)
-        {
-            return new FileLease()
-            {
-                ETag = eTag,
-                LastModified = lastModified,
-                LeaseId = leaseId,
-            };
-        }
-    }
-}
-#endregion class FileLease
-
 #region class FileLeaseReleaseInfo
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -7629,6 +7575,60 @@ namespace Azure.Storage.Files.Shares.Models
     }
 }
 #endregion class FileProperty
+
+#region class FileShareLease
+namespace Azure.Storage.Files.Shares.Models
+{
+    /// <summary>
+    /// FileShareLease
+    /// </summary>
+    public partial class FileShareLease
+    {
+        /// <summary>
+        /// The ETag contains a value that you can use to perform operations conditionally. If the request version is 2011-08-18 or newer, the ETag value will be in quotes.
+        /// </summary>
+        public Azure.ETag ETag { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file.
+        /// </summary>
+        public System.DateTimeOffset LastModified { get; internal set; }
+
+        /// <summary>
+        /// Uniquely identifies a file's lease
+        /// </summary>
+        public string LeaseId { get; internal set; }
+
+        /// <summary>
+        /// Prevent direct instantiation of FileShareLease instances.
+        /// You can use ShareModelFactory.FileShareLease instead.
+        /// </summary>
+        internal FileShareLease() { }
+    }
+
+    /// <summary>
+    /// ShareModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class ShareModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileShareLease instance for mocking.
+        /// </summary>
+        public static FileShareLease FileShareLease(
+            Azure.ETag eTag,
+            System.DateTimeOffset lastModified,
+            string leaseId)
+        {
+            return new FileShareLease()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                LeaseId = leaseId,
+            };
+        }
+    }
+}
+#endregion class FileShareLease
 
 #region class FilesAndDirectoriesSegment
 namespace Azure.Storage.Files.Shares.Models
@@ -8194,13 +8194,13 @@ namespace Azure.Storage.Files.Shares
 }
 #endregion enum ListSharesIncludeType
 
-#region enum PermissionCopyModeType
+#region enum PermissionCopyMode
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
     /// Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key.
     /// </summary>
-    public enum PermissionCopyModeType
+    public enum PermissionCopyMode
     {
         /// <summary>
         /// source
@@ -8220,29 +8220,29 @@ namespace Azure.Storage.Files.Shares
     {
         public static partial class Serialization
         {
-            public static string ToString(Azure.Storage.Files.Shares.Models.PermissionCopyModeType value)
+            public static string ToString(Azure.Storage.Files.Shares.Models.PermissionCopyMode value)
             {
                 return value switch
                 {
-                    Azure.Storage.Files.Shares.Models.PermissionCopyModeType.Source => "source",
-                    Azure.Storage.Files.Shares.Models.PermissionCopyModeType.Override => "override",
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.PermissionCopyModeType value.")
+                    Azure.Storage.Files.Shares.Models.PermissionCopyMode.Source => "source",
+                    Azure.Storage.Files.Shares.Models.PermissionCopyMode.Override => "override",
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.PermissionCopyMode value.")
                 };
             }
 
-            public static Azure.Storage.Files.Shares.Models.PermissionCopyModeType ParsePermissionCopyModeType(string value)
+            public static Azure.Storage.Files.Shares.Models.PermissionCopyMode ParsePermissionCopyMode(string value)
             {
                 return value switch
                 {
-                    "source" => Azure.Storage.Files.Shares.Models.PermissionCopyModeType.Source,
-                    "override" => Azure.Storage.Files.Shares.Models.PermissionCopyModeType.Override,
-                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.PermissionCopyModeType value.")
+                    "source" => Azure.Storage.Files.Shares.Models.PermissionCopyMode.Source,
+                    "override" => Azure.Storage.Files.Shares.Models.PermissionCopyMode.Override,
+                    _ => throw new System.ArgumentOutOfRangeException(nameof(value), value, "Unknown Azure.Storage.Files.Shares.Models.PermissionCopyMode value.")
                 };
             }
         }
     }
 }
-#endregion enum PermissionCopyModeType
+#endregion enum PermissionCopyMode
 
 #region class PermissionInfo
 namespace Azure.Storage.Files.Shares.Models
