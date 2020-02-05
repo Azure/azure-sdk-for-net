@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.Testing;
@@ -100,21 +98,6 @@ namespace Azure.Core.Tests
         {
             var options = new DiagnosticsOptions();
             Assert.Throws<ArgumentOutOfRangeException>(() => options.ApplicationId = "0123456789012345678912345");
-        }
-
-        [Test]
-        public async Task LibraryNameExtractedFromOptions()
-        {
-            var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = HttpPipelineBuilder.CreateTelemetryPolicy(new TestOptions());
-
-            await SendGetRequest(transport, telemetryPolicy);
-
-            Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
-            StringAssert.IsMatch(userAgent,
-                Regex.Escape("azsdk-net-Core.Tests/") +
-                "[.-\\d]+" +
-                Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})"));
         }
 
         private class TestOptions : ClientOptions
