@@ -31,7 +31,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal static void VerifyCpkAndEncryptionScopeNotBothSet(CustomerProvidedKey? customerProvidedKey, EncryptionScope encryptionScope)
+        internal static void VerifyCpkAndEncryptionScopeNotBothSet(CustomerProvidedKey? customerProvidedKey, string encryptionScope)
         {
             if (customerProvidedKey.HasValue && encryptionScope != null)
             {

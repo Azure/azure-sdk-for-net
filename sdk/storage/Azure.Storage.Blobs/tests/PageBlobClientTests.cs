@@ -161,11 +161,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
 
             // Act
             Response<BlobContentInfo> response = await blob.CreateAsync(Constants.KB);
@@ -371,11 +367,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(blobName));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             var data = GetRandomBuffer(Constants.KB);
             await blob.CreateAsync(Constants.KB);
 
@@ -655,11 +647,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             await blob.CreateAsync(4 * Constants.KB);
             var data = GetRandomBuffer(4 * Constants.KB);
             using (var stream = new MemoryStream(data))
@@ -1268,11 +1256,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             await blob.CreateAsync(Constants.KB);
             var newSize = 8 * Constants.KB;
 
@@ -1838,11 +1822,7 @@ namespace Azure.Storage.Blobs.Test
             await sourceBlob.UploadPagesAsync(stream, 0);
 
             PageBlobClient destBlob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            destBlob = InstrumentClient(destBlob.WithEncryptionScope(encryptionScope));
+            destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             await destBlob.CreateAsync(Constants.KB);
             var range = new HttpRange(0, Constants.KB);
 

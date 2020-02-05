@@ -106,14 +106,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
             BlobClientOptions blobClientOptions = new BlobClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey,
-                EncryptionScope = encryptionScope
+                EncryptionScope = TestConfigDefault.EncryptionScope
             };
 
             // Act
@@ -237,11 +233,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var data = GetRandomBuffer(Constants.KB);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             using (var stream = new MemoryStream(data))
             {
                 await blob.UploadAsync(stream);
@@ -1427,11 +1419,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             await blob.CreateAsync();
 
             // Act
@@ -1967,11 +1955,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             IDictionary<string, string> metadata = BuildMetadata();
             await blob.CreateAsync();
 
@@ -2081,11 +2065,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             await blob.CreateAsync();
 
             // Act

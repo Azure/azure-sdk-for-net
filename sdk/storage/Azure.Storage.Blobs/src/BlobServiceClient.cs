@@ -83,14 +83,14 @@ namespace Azure.Storage.Blobs
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
 
         /// <summary>
-        /// The <see cref="EncryptionScope"/> to be used when sending request.
+        /// The name of the Encryption Scope to be used when sending request.
         /// </summary>
-        internal readonly EncryptionScope _encryptionScope;
+        internal readonly string _encryptionScope;
 
         /// <summary>
-        /// The <see cref="EncryptionScope"/> to be used when sending request.
+        /// The name of the Encryption Scope to be used when sending request.
         /// </summary>
-        internal virtual EncryptionScope EncryptionScope => _encryptionScope;
+        internal virtual string EncryptionScope => _encryptionScope;
 
         /// <summary>
         /// The Storage account name corresponding to the service client.
@@ -287,7 +287,7 @@ namespace Azure.Storage.Blobs
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
-            EncryptionScope encryptionScope,
+            string encryptionScope,
             HttpPipeline pipeline)
         {
             _uri = serviceUri;

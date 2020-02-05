@@ -105,14 +105,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
             BlobClientOptions blobClientOptions = new BlobClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey,
-                EncryptionScope = encryptionScope
+                EncryptionScope = TestConfigDefault.EncryptionScope
             };
 
             // Act

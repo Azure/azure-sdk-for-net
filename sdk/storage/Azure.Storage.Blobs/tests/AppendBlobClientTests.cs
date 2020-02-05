@@ -83,14 +83,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
             BlobClientOptions blobClientOptions = new BlobClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey,
-                EncryptionScope = encryptionScope
+                EncryptionScope = TestConfigDefault.EncryptionScope
             };
 
             // Act
@@ -189,11 +185,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
 
             // Act
             Response<BlobContentInfo> response = await blob.CreateAsync();
@@ -406,11 +398,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             var blobName = GetNewBlobName();
             AppendBlobClient blob = InstrumentClient(test.Container.GetAppendBlobClient(blobName));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             var data = GetRandomBuffer(Constants.KB);
             await blob.CreateAsync();
 
@@ -708,11 +696,7 @@ namespace Azure.Storage.Blobs.Test
                 await sourceBlob.AppendBlockAsync(stream);
 
                 AppendBlobClient destBlob = InstrumentClient(test.Container.GetAppendBlobClient(GetNewBlobName()));
-                EncryptionScope encryptionScope = new EncryptionScope
-                {
-                    EncryptionScopeKey = TestConfigDefault.EncryptionScope
-                };
-                destBlob = InstrumentClient(destBlob.WithEncryptionScope(encryptionScope));
+                destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
                 await destBlob.CreateAsync();
 
                 // Act

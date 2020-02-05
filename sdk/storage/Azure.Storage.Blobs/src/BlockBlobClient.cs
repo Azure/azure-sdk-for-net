@@ -242,7 +242,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
-            EncryptionScope encryptionScope)
+            string encryptionScope)
             : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
@@ -556,7 +556,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         tier: accessTier,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -795,7 +795,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         async: async,
                         operationName: $"{nameof(BlockBlobClient)}.{nameof(StageBlock)}",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -1063,7 +1063,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         leaseId: conditions?.LeaseId,
                         sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
                         sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
@@ -1313,7 +1313,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         tier: accessTier,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,

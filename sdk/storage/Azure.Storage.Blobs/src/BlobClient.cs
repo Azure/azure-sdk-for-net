@@ -169,7 +169,7 @@ namespace Azure.Storage.Blobs
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
-            EncryptionScope encryptionScope)
+            string encryptionScope)
             : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }

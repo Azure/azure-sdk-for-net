@@ -76,14 +76,14 @@ namespace Azure.Storage.Blobs.Specialized
         internal virtual CustomerProvidedKey? CustomerProvidedKey => _customerProvidedKey;
 
         /// <summary>
-        /// The <see cref="EncryptionScope"/> to be used when sending requests.
+        /// The name of the Encryption Scope to be used when sending requests.
         /// </summary>
-        internal readonly EncryptionScope _encryptionScope;
+        internal readonly string _encryptionScope;
 
         /// <summary>
-        /// The <see cref="EncryptionScope"/> to be used when sending requests.
+        /// The name of the Encryption Scope to be used when sending requests.
         /// </summary>
-        internal virtual EncryptionScope EncryptionScope => _encryptionScope;
+        internal virtual string EncryptionScope => _encryptionScope;
 
         /// <summary>
         /// The Storage account name corresponding to the blob client.
@@ -332,7 +332,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
-            EncryptionScope encryptionScope)
+            string encryptionScope)
         {
             _uri = blobUri;
             _pipeline = pipeline;
@@ -2596,7 +2596,7 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionKey: CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                            encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                            encryptionScope: EncryptionScope,
                             ifModifiedSince: conditions?.IfModifiedSince,
                             ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                             ifMatch: conditions?.IfMatch,
@@ -2750,7 +2750,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,

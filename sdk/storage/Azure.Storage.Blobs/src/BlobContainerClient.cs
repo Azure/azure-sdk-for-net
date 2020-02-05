@@ -95,12 +95,12 @@ namespace Azure.Storage.Blobs
         /// <summary>
         /// The <see cref="EncryptionScope"/> to be used when sending requests.
         /// </summary>
-        internal readonly EncryptionScope _encryptionScope;
+        internal readonly string _encryptionScope;
 
         /// <summary>
         /// The <see cref="EncryptionScope"/> to be used when sending requests.
         /// </summary>
-        internal virtual EncryptionScope EncryptionScope => _encryptionScope;
+        internal virtual string EncryptionScope => _encryptionScope;
 
         /// <summary>
         /// The Storage account name corresponding to the container client.
@@ -316,7 +316,7 @@ namespace Azure.Storage.Blobs
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
-            EncryptionScope encryptionScope)
+            string encryptionScope)
         {
             _uri = containerUri;
             _pipeline = pipeline;

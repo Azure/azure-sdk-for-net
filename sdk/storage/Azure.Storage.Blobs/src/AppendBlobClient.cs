@@ -191,7 +191,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClientOptions.ServiceVersion version,
             ClientDiagnostics clientDiagnostics,
             CustomerProvidedKey? customerProvidedKey,
-            EncryptionScope encryptionScope)
+            string encryptionScope)
             : base(blobUri, pipeline, version, clientDiagnostics, customerProvidedKey, encryptionScope)
         {
         }
@@ -509,7 +509,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
                         ifMatch: conditions?.IfMatch,
@@ -722,7 +722,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         appendPosition: conditions?.IfAppendPositionEqual,
                         ifModifiedSince: conditions?.IfModifiedSince,
                         ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
@@ -970,7 +970,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKey: CustomerProvidedKey?.EncryptionKey,
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope?.EncryptionScopeKey,
+                        encryptionScope: EncryptionScope,
                         leaseId: conditions?.LeaseId,
                         maxSize: conditions?.IfMaxSizeLessThanOrEqual,
                         appendPosition: conditions?.IfAppendPositionEqual,

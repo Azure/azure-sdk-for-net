@@ -90,14 +90,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
             BlobClientOptions blobClientOptions = new BlobClientOptions
             {
                 CustomerProvidedKey = customerProvidedKey,
-                EncryptionScope = encryptionScope
+                EncryptionScope = TestConfigDefault.EncryptionScope
             };
 
             // Act
@@ -198,11 +194,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             var data = GetRandomBuffer(Size);
 
             // Create BlockBlob
@@ -451,11 +443,7 @@ namespace Azure.Storage.Blobs.Test
             }
 
             BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            destBlob = InstrumentClient(destBlob.WithEncryptionScope(encryptionScope));
+            destBlob = InstrumentClient(destBlob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
 
             // Act
             Response<BlockInfo> response = await destBlob.StageBlockFromUriAsync(
@@ -781,11 +769,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
 
             var data = GetRandomBuffer(Size);
             var firstBlockName = GetNewBlockName();
@@ -1387,11 +1371,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Arrange
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
-            EncryptionScope encryptionScope = new EncryptionScope
-            {
-                EncryptionScopeKey = TestConfigDefault.EncryptionScope
-            };
-            blob = InstrumentClient(blob.WithEncryptionScope(encryptionScope));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
             var data = GetRandomBuffer(Size);
 
             // Act

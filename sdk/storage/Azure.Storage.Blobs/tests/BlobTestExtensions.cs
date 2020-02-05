@@ -36,7 +36,7 @@ namespace Azure.Storage
         //TODO remove ToHttps() after service fixes HTTPS bug.
         public static AppendBlobClient WithEncryptionScope(
             this AppendBlobClient blob,
-            EncryptionScope encryptionScope) =>
+            string encryptionScope) =>
             new AppendBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
@@ -59,7 +59,7 @@ namespace Azure.Storage
         //TODO remove ToHttps() after service fixes HTTPS bug.
         public static BlockBlobClient WithEncryptionScope(
             this BlockBlobClient blob,
-            EncryptionScope encryptionScope) =>
+            string encryptionScope) =>
             new BlockBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
@@ -82,7 +82,7 @@ namespace Azure.Storage
         //TODO remove ToHttps() after service fixes HTTPS bug.
         public static PageBlobClient WithEncryptionScope(
             this PageBlobClient blob,
-            EncryptionScope encryptionScope) =>
+            string encryptionScope) =>
             new PageBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
