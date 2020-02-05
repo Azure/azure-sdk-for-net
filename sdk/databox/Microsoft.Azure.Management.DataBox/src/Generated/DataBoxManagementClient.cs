@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.DataBox
             Jobs = new JobsOperations(this);
             Service = new ServiceOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-09-01";
+            ApiVersion = "2018-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -369,14 +369,6 @@ namespace Microsoft.Azure.Management.DataBox
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobDetails>("jobDetailsType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<JobSecrets>("jobSecretsType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<JobSecrets>("jobSecretsType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScheduleAvailabilityRequest>("skuName"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScheduleAvailabilityRequest>("skuName"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ValidationInputRequest>("validationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ValidationInputRequest>("validationType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ValidationInputResponse>("validationType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ValidationInputResponse>("validationType"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ValidationRequest>("validationCategory"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ValidationRequest>("validationCategory"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

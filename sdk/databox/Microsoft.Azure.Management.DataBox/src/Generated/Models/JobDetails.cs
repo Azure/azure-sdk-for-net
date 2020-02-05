@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// customer.</param>
         /// <param name="destinationAccountDetails">Destination account
         /// details.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
+        /// <param name="expectedDataSizeInTeraBytes">The expected size of the
         /// data, which needs to be transferred in this job, in
         /// terabytes.</param>
         /// <param name="jobStages">List of stages that run in the job.</param>
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// download the return shipment label</param>
         /// <param name="chainOfCustodySasKey">Shared access key to download
         /// the chain of custody logs</param>
-        public JobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTerabytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string))
+        public JobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTeraBytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string))
         {
-            ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
+            ExpectedDataSizeInTeraBytes = expectedDataSizeInTeraBytes;
             JobStages = jobStages;
             ContactDetails = contactDetails;
             ShippingAddress = shippingAddress;
@@ -80,8 +80,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Gets or sets the expected size of the data, which needs to be
         /// transferred in this job, in terabytes.
         /// </summary>
-        [JsonProperty(PropertyName = "expectedDataSizeInTerabytes")]
-        public int? ExpectedDataSizeInTerabytes { get; set; }
+        [JsonProperty(PropertyName = "expectedDataSizeInTeraBytes")]
+        public int? ExpectedDataSizeInTeraBytes { get; set; }
 
         /// <summary>
         /// Gets list of stages that run in the job.
@@ -176,10 +176,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
             if (ShippingAddress != null)
             {
                 ShippingAddress.Validate();
-            }
-            if (Preferences != null)
-            {
-                Preferences.Validate();
             }
         }
     }

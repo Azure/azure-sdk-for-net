@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         [EnumMember(Value = "UnknownType")]
         UnknownType,
         /// <summary>
-        /// Storsimple data format.
+        /// StorSimple data format.
         /// </summary>
         [EnumMember(Value = "HCS")]
         HCS,

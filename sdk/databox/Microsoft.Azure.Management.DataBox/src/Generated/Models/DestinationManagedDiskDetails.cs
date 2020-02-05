@@ -39,10 +39,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// that can be used to copy the vhd for staging.</param>
         /// <param name="accountId">Arm Id of the destination where the data
         /// has to be moved.</param>
-        /// <param name="sharePassword">Share password to be shared by all
-        /// shares in SA.</param>
-        public DestinationManagedDiskDetails(string resourceGroupId, string stagingStorageAccountId, string accountId = default(string), string sharePassword = default(string))
-            : base(accountId, sharePassword)
+        public DestinationManagedDiskDetails(string resourceGroupId, string stagingStorageAccountId, string accountId = default(string))
+            : base(accountId)
         {
             ResourceGroupId = resourceGroupId;
             StagingStorageAccountId = stagingStorageAccountId;

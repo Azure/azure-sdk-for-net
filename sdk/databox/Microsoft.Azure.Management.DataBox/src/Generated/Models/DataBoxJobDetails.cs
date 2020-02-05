@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Databox Job Details
+    /// DataBox Job Details
     /// </summary>
     [Newtonsoft.Json.JsonObject("DataBox")]
     public partial class DataBoxJobDetails : JobDetails
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// customer.</param>
         /// <param name="destinationAccountDetails">Destination account
         /// details.</param>
-        /// <param name="expectedDataSizeInTerabytes">The expected size of the
+        /// <param name="expectedDataSizeInTeraBytes">The expected size of the
         /// data, which needs to be transferred in this job, in
         /// terabytes.</param>
         /// <param name="jobStages">List of stages that run in the job.</param>
@@ -56,13 +56,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// the chain of custody logs</param>
         /// <param name="copyProgress">Copy progress per storage
         /// account.</param>
-        /// <param name="devicePassword">Set Device password for unlocking
-        /// Databox</param>
-        public DataBoxJobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTerabytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), IList<CopyProgress> copyProgress = default(IList<CopyProgress>), string devicePassword = default(string))
-            : base(contactDetails, shippingAddress, destinationAccountDetails, expectedDataSizeInTerabytes, jobStages, deliveryPackage, returnPackage, errorDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey)
+        public DataBoxJobDetails(ContactDetails contactDetails, ShippingAddress shippingAddress, IList<DestinationAccountDetails> destinationAccountDetails, int? expectedDataSizeInTeraBytes = default(int?), IList<JobStages> jobStages = default(IList<JobStages>), PackageShippingDetails deliveryPackage = default(PackageShippingDetails), PackageShippingDetails returnPackage = default(PackageShippingDetails), IList<JobErrorDetails> errorDetails = default(IList<JobErrorDetails>), Preferences preferences = default(Preferences), IList<CopyLogDetails> copyLogDetails = default(IList<CopyLogDetails>), string reverseShipmentLabelSasKey = default(string), string chainOfCustodySasKey = default(string), IList<CopyProgress> copyProgress = default(IList<CopyProgress>))
+            : base(contactDetails, shippingAddress, destinationAccountDetails, expectedDataSizeInTeraBytes, jobStages, deliveryPackage, returnPackage, errorDetails, preferences, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey)
         {
             CopyProgress = copyProgress;
-            DevicePassword = devicePassword;
             CustomInit();
         }
 
@@ -76,12 +73,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "copyProgress")]
         public IList<CopyProgress> CopyProgress { get; private set; }
-
-        /// <summary>
-        /// Gets or sets set Device password for unlocking Databox
-        /// </summary>
-        [JsonProperty(PropertyName = "devicePassword")]
-        public string DevicePassword { get; set; }
 
         /// <summary>
         /// Validate the object.

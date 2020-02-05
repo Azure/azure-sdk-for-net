@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the destination storage accounts.
+    /// Details of the destination of the data
     /// </summary>
     public partial class DestinationAccountDetails
     {
@@ -31,12 +31,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="accountId">Arm Id of the destination where the data
         /// has to be moved.</param>
-        /// <param name="sharePassword">Share password to be shared by all
-        /// shares in SA.</param>
-        public DestinationAccountDetails(string accountId = default(string), string sharePassword = default(string))
+        public DestinationAccountDetails(string accountId = default(string))
         {
             AccountId = accountId;
-            SharePassword = sharePassword;
             CustomInit();
         }
 
@@ -51,12 +48,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "accountId")]
         public string AccountId { get; set; }
-
-        /// <summary>
-        /// Gets or sets share password to be shared by all shares in SA.
-        /// </summary>
-        [JsonProperty(PropertyName = "sharePassword")]
-        public string SharePassword { get; set; }
 
     }
 }

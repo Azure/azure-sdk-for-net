@@ -37,10 +37,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Id.</param>
         /// <param name="accountId">Arm Id of the destination where the data
         /// has to be moved.</param>
-        /// <param name="sharePassword">Share password to be shared by all
-        /// shares in SA.</param>
-        public DestinationStorageAccountDetails(string storageAccountId, string accountId = default(string), string sharePassword = default(string))
-            : base(accountId, sharePassword)
+        public DestinationStorageAccountDetails(string storageAccountId, string accountId = default(string))
+            : base(accountId)
         {
             StorageAccountId = storageAccountId;
             CustomInit();

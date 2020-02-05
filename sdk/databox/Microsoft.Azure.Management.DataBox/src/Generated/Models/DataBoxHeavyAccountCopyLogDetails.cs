@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// Copy log details for a storage account for Databox heavy
+    /// Copy log details for a storage account for DataBoxHeavy
     /// </summary>
     [Newtonsoft.Json.JsonObject("DataBoxHeavy")]
     public partial class DataBoxHeavyAccountCopyLogDetails : CopyLogDetails

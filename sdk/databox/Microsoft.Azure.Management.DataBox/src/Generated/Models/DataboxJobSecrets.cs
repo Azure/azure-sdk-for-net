@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// The secrets related to a databox job.
+    /// The secrets related to a DataBox job.
     /// </summary>
     [Newtonsoft.Json.JsonObject("DataBox")]
     public partial class DataboxJobSecrets : JobSecrets
@@ -32,12 +32,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <summary>
         /// Initializes a new instance of the DataboxJobSecrets class.
         /// </summary>
-        /// <param name="dcAccessSecurityCode">Dc Access Security Code for
-        /// Customer Managed Shipping</param>
         /// <param name="podSecrets">Contains the list of secret objects for a
         /// job.</param>
-        public DataboxJobSecrets(DcAccessSecurityCode dcAccessSecurityCode = default(DcAccessSecurityCode), IList<DataBoxSecret> podSecrets = default(IList<DataBoxSecret>))
-            : base(dcAccessSecurityCode)
+        public DataboxJobSecrets(IList<DataBoxSecret> podSecrets = default(IList<DataBoxSecret>))
         {
             PodSecrets = podSecrets;
             CustomInit();
