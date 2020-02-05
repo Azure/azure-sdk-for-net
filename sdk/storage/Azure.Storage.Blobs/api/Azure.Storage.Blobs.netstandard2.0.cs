@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs
     {
         public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2019_07_07) { }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
-        public Azure.Storage.Blobs.Models.EncryptionScope EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
+        public string EncryptionScope { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public System.Uri GeoRedundantSecondaryUri { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
         public Azure.Storage.Blobs.BlobClientOptions.ServiceVersion Version { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public enum ServiceVersion
@@ -805,11 +805,6 @@ namespace Azure.Storage.Blobs.Models
     public enum EncryptionAlgorithmType
     {
         Aes256 = 0,
-    }
-    public partial class EncryptionScope
-    {
-        public EncryptionScope() { }
-        public string EncryptionScopeKey { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
     public enum LeaseDurationType
     {
