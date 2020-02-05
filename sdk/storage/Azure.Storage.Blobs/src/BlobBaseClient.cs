@@ -1843,12 +1843,12 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions,
                     async,
                     cancellationToken,
-                    Constants.Blob.Base.DeleteIfExists)
+                    $"{nameof(BlobBaseClient)}.{nameof(DeleteIfExists)}")
                     .ConfigureAwait(false);
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
             {
                 return Response.FromValue(false, default);
             }
@@ -1894,7 +1894,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Base.Delete)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -1918,7 +1918,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2019,14 +2019,14 @@ namespace Azure.Storage.Blobs.Specialized
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Base.ExistsOperationName,
+                        operationName: $"{nameof(BlobBaseClient)}.{nameof(Exists)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     return Response.FromValue(false, default);
                 }

@@ -235,7 +235,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 w.line(`Azure.Response ${responseName} = ${messageName}.Response;`);
                 w.line(`${cancellationName}.ThrowIfCancellationRequested();`);
 
-                const createResponse = `${methodName}_CreateResponse(${responseName})`;
+                const createResponse = `${methodName}_CreateResponse(${clientDiagnostics}, ${responseName})`;
                 if (result.returnStream) {
                     w.line(`return (${createResponse}, ${messageName}.ExtractResponseContent());`);
                 }
@@ -465,10 +465,12 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
     w.line(`/// <summary>`);
     w.line(`/// Create the ${regionName} response or throw a failure exception.`);
     w.line(`/// </summary>`);
+    w.line(`/// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>`);
     w.line(`/// <param name="response">The raw Response.</param>`);
     w.line(`/// <returns>The ${regionName} ${returnType.replace(/</g, '{').replace(/>/g, '}')}.</returns>`);
     w.write(`internal static ${returnType} ${methodName}_CreateResponse(`);
     w.scope(() => {
+        w.line(`Azure.Core.Pipeline.ClientDiagnostics ${clientDiagnostics},`);
         w.write(`Azure.Response ${responseName})`);
     });
     w.scope(`{`, `}`, () => {
@@ -526,7 +528,7 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                     if (response.exception) {
                         // If we're using x-ms-create-exception we'll pass the response to
                         // an unimplemented method on the partial class
-                        w.line(`throw ${valueName}.CreateException(${responseName});`);
+                        w.line(`throw ${valueName}.CreateException(${clientDiagnostics}, ${responseName});`);
                     } else {
                         w.line(`throw new Azure.RequestFailedException(${responseName});`);
                     }

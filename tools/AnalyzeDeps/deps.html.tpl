@@ -283,7 +283,7 @@ $(
         <tbody>
         $(
           foreach ($PkgName in ($Pkgs.Keys | sort)) {
-            "<tr><td>$PkgName</td><td>$($Pkgs[$PkgName][0])</td><td>$($Pkgs[$PkgName][1])</td></tr>"
+            "<tr><td>$PkgName</td><td>$($Pkgs[$PkgName]['Ver'])</td><td>$($Pkgs[$PkgName]['Src'])</td></tr>"
           }
         )
         </tbody>

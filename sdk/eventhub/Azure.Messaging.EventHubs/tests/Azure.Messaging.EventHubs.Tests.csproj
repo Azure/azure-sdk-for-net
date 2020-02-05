@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Azure.Messaging.EventHubs.Tests</AssemblyName>
-    <VersionPrefix>5.0.1</VersionPrefix>
+    <Version>1.0.0</Version>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>

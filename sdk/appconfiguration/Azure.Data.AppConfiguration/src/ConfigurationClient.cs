@@ -142,9 +142,9 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false);
                     case 412:
-                        throw await response.CreateRequestFailedExceptionAsync("Setting was already present.").ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "Setting was already present.").ConfigureAwait(false);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -177,9 +177,9 @@ namespace Azure.Data.AppConfiguration
                     case 201:
                         return CreateResponse(response);
                     case 412:
-                        throw response.CreateRequestFailedException("Setting was already present.");
+                        throw _clientDiagnostics.CreateRequestFailedException(response, "Setting was already present.");
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -265,10 +265,10 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
-                    409 => throw await response.CreateRequestFailedExceptionAsync("The setting is read only").ConfigureAwait(false),
+                    409 => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response, "The setting is read only").ConfigureAwait(false),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
+                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
             }
             catch (Exception e)
@@ -303,10 +303,10 @@ namespace Azure.Data.AppConfiguration
                 return response.Status switch
                 {
                     200 => CreateResponse(response),
-                    409 => throw response.CreateRequestFailedException("The setting is read only"),
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only"),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw response.CreateRequestFailedException(),
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -413,10 +413,10 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw response.CreateRequestFailedException("The setting is read only"),
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only"),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw response.CreateRequestFailedException()
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -441,10 +441,10 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => response,
                     204 => response,
-                    409 => throw response.CreateRequestFailedException("The setting is read only."),
+                    409 => throw _clientDiagnostics.CreateRequestFailedException(response, "The setting is read only."),
 
                     // Throws on 412 if resource was modified.
-                    _ => throw response.CreateRequestFailedException()
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response)
                 };
             }
             catch (Exception e)
@@ -569,7 +569,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false),
+                    _ => throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false),
                 };
             }
             catch (Exception e)
@@ -594,7 +594,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     200 => CreateResponse(response),
                     304 => CreateResourceModifiedResponse(response),
-                    _ => throw response.CreateRequestFailedException(),
+                    _ => throw _clientDiagnostics.CreateRequestFailedException(response),
                 };
             }
             catch (Exception e)
@@ -720,7 +720,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -753,7 +753,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -801,7 +801,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = await ConfigurationServiceSerializer.ParseBatchAsync(response, cancellationToken).ConfigureAwait(false);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -834,7 +834,7 @@ namespace Azure.Data.AppConfiguration
                         SettingBatch settingBatch = ConfigurationServiceSerializer.ParseBatch(response);
                         return Page<ConfigurationSetting>.FromValues(settingBatch.Settings, settingBatch.NextBatchLink, response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -902,7 +902,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                         return CreateResponse(response);
                     default:
-                        throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+                        throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -937,7 +937,7 @@ namespace Azure.Data.AppConfiguration
                     case 200:
                         return CreateResponse(response);
                     default:
-                        throw response.CreateRequestFailedException();
+                        throw _clientDiagnostics.CreateRequestFailedException(response);
                 }
             }
             catch (Exception e)

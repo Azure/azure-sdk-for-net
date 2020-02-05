@@ -16,12 +16,12 @@ namespace Azure.AI.TextAnalytics.Samples
         public void DetectLanguageBatch()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsSubscriptionKeyCredential(subscriptionKey));
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
-            #region Snippet:TextAnalyticsSample1DetectLanguagesBatch
+            #region Snippet:TextAnalyticsSample1DetectLanguageBatch
             var inputs = new List<DetectLanguageInput>
             {
                 new DetectLanguageInput("1", "Hello world")
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            DetectLanguageResultCollection results = client.DetectLanguages(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            DetectLanguageResultCollection results = client.DetectLanguageBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
