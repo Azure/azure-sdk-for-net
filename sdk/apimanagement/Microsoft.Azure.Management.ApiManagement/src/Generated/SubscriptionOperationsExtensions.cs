@@ -465,6 +465,54 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Gets the subscription keys.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='sid'>
+            /// Subscription entity Identifier. The entity represents the association
+            /// between a user and a product in API Management.
+            /// </param>
+            public static SubscriptionKeysContract ListSecrets(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName, sid).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the subscription keys.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='sid'>
+            /// Subscription entity Identifier. The entity represents the association
+            /// between a user and a product in API Management.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SubscriptionKeysContract> ListSecretsAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, sid, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all subscriptions of the API Management service instance.
             /// </summary>
             /// <param name='operations'>

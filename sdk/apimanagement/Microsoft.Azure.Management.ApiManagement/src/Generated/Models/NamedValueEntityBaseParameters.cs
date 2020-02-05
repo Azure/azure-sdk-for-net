@@ -17,28 +17,28 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Property Entity Base Parameters set.
+    /// NamedValue Entity Base Parameters set.
     /// </summary>
-    public partial class PropertyEntityBaseParameters
+    public partial class NamedValueEntityBaseParameters
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyEntityBaseParameters
+        /// Initializes a new instance of the NamedValueEntityBaseParameters
         /// class.
         /// </summary>
-        public PropertyEntityBaseParameters()
+        public NamedValueEntityBaseParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyEntityBaseParameters
+        /// Initializes a new instance of the NamedValueEntityBaseParameters
         /// class.
         /// </summary>
         /// <param name="tags">Optional tags that when provided can be used to
-        /// filter the property list.</param>
+        /// filter the NamedValue list.</param>
         /// <param name="secret">Determines whether the value is a secret and
         /// should be encrypted or not. Default value is false.</param>
-        public PropertyEntityBaseParameters(IList<string> tags = default(IList<string>), bool? secret = default(bool?))
+        public NamedValueEntityBaseParameters(IList<string> tags = default(IList<string>), bool? secret = default(bool?))
         {
             Tags = tags;
             Secret = secret;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets optional tags that when provided can be used to filter
-        /// the property list.
+        /// the NamedValue list.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IList<string> Tags { get; set; }
