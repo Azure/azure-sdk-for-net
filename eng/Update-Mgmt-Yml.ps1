@@ -28,14 +28,12 @@ Install-Module -Name powershell-yaml -RequiredVersion 0.4.1 -Force -Scope Curren
 $MgmtYml = Get-Content $MgmtYmlPath -Raw
 $MgmtYmlObj = ConvertFrom-Yaml $MgmtYml -Ordered
 
-$Ci = [ordered]@{ }
 $Pr = [ordered]@{ }
 $CiBranches = [ordered]@{ }
 $CiPaths = [ordered]@{ }
 $PrBranches = [ordered]@{ }
 $PrPaths = [ordered]@{ }
 $Includes = New-Object "System.Collections.Generic.List[String]"
-$CiIncludes = New-Object "System.Collections.Generic.List[String]"
 $PrIncludes = New-Object "System.Collections.Generic.List[String]"
 
 $MgmtDirs = Get-ChildItem -Path "$PackagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.FullName -match ".Management.|\\mgmt" }
@@ -50,19 +48,13 @@ foreach ($Item in $MgmtDirs) {
 }
 
 # Ci and Pr section
-$CiIncludes.Add('master')
 $PrIncludes.Add('master')
 $PrIncludes.Add('*-preview')
-$CiBranches.Add("include", $CiIncludes)
 $PrBranches.Add("include", $PrIncludes)
-$CiPaths.Add("include", $Includes)
 $PrPaths.Add("include", $Includes)
-$Ci.Add("branches", $CiBranches)
 $Pr.Add("branches", $PrBranches)
-$Ci.Add("paths", $CiPaths)
 $Pr.Add("paths", $PrPaths)
 
 $MgmtYmlObj.pr = $Pr
-$MgmtYmlObj.trigger = $Ci
 
 $NewMgmtYml = ConvertTo-Yaml $MgmtYmlObj -OutFile $MgmtYmlPath -Force
