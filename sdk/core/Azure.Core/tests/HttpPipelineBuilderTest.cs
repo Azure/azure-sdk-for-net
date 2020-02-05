@@ -73,7 +73,7 @@ namespace Azure.Core.Tests
 
             Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
             StringAssert.IsMatch(Regex.Escape("azsdk-net-Core.Tests/") +
-                                 "[.-0-9a-z]+" +
+                                 "[.\\-0-9a-z]+" +
                                  Regex.Escape($" ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})"), userAgent);
         }
 
