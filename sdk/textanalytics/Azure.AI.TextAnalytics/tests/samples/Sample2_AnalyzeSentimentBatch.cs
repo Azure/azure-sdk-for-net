@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
-                    foreach (TextSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
+                    foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 
