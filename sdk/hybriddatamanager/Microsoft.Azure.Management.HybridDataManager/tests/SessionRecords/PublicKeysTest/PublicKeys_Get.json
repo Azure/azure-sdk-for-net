@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9wdWJsaWNLZXlzP2FwaS12ZXJzaW9uPTIwMTYtMDYtMDE=",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9wdWJsaWNLZXlzP2FwaS12ZXJzaW9uPTIwMTktMDYtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "70ff0c5a-0804-4da6-a29b-c24973aa7212"
+          "ce999f13-a953-42e5-8b42-4cb83032f18a"
         ],
         "accept-language": [
           "en-US"
@@ -15,8 +15,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:41 GMT"
+          "Wed, 05 Feb 2020 08:50:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,22 +33,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "2d383895-a46a-4b2b-8dbe-43ea52dba0bf"
+          "23019d63-c70a-40da-b5ae-91dd04462a63"
         ],
         "x-ms-client-request-id": [
-          "70ff0c5a-0804-4da6-a29b-c24973aa7212"
+          "ce999f13-a953-42e5-8b42-4cb83032f18a"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "e1845de7-b371-46ec-b8ea-03cab7a15def"
+          "8a1549a9-e19c-44da-a5b3-5eab67c680ba"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091341Z:e1845de7-b371-46ec-b8ea-03cab7a15def"
+          "SOUTHINDIA:20200205T085025Z:8a1549a9-e19c-44da-a5b3-5eab67c680ba"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -63,17 +63,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"dataServiceLevel1Key\": {\r\n          \"keyModulus\": \"tVt57Rj6bGTsI/ayDNfk5jRzYeHBqyJmcArL6cd1LMbKJQen/vZhisZj0RqIucWufUL6DQuZObdc+Rb2NGkxW2UEER323CA71oa19nOEW8T8DyiCxExUGtOeM86ZD4dQmugOLBHTI5iAFLeh6DdMPJhu/UyNTZeqVroEpJdM0F5AJCFO0IbgZfqEg7jT421IOO6Ie0lt1Hp7TyKvOJJovCBRZBmtCdlJLw7iwGy3ReEVOU2MG6UDw9THVZdgRDiTT6ovLCZiC8CqMNzDSG3R+ZMNHlE/gBRRAY6ji2bUTvaNMPgVNxUQw/RveKsGZ+CWvxOfE2nEwOduWLhFb0N+Uw==\",\r\n          \"keyExponent\": \"AQAB\",\r\n          \"encryptionChunkSizeInBytes\": 245\r\n        },\r\n        \"dataServiceLevel2Key\": {\r\n          \"keyModulus\": \"xlSZmsnyu/uBkPhxd8q3drECa1NMhuFI1f3V+4JzuE4BVIip8bhm6YGCrKuY12xJ4uNNk8oKRtyzGkALgbmW5LldTLwgQ+2I3sgPWMeOSOqeJ3irHtsCNSTyT1xvOUDF8ar+f8hB7Nhjt8VKgYPN0u4Dx+Inw/DeQBNf5Qh/dEaQF/b75tLJxrg7huMCod5adCR1Xa6+BcKRzghmjXeSF64ojj1VYLuGt3bLwfbYPLw3pm6zIt2+ta9c69JVzutKgt9eLZik5mtSYCH/io8AuS3EdIlIIsdLntJI9FKGWQDDLWP6Npd5ecs1iigYRWM6XhPP5IIsj2GF/bsQ8+KKUQ==\",\r\n          \"keyExponent\": \"AQAB\",\r\n          \"encryptionChunkSizeInBytes\": 245\r\n        }\r\n      },\r\n      \"name\": \"default\",\r\n      \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys/default\",\r\n      \"type\": \"Microsoft.HybridData/dataManagers/publicKeys\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"dataServiceLevel1Key\": {\r\n          \"keyModulus\": \"mjDxqxGmawhC15TUM/oKCe2rRg6nM+IEqujgn17vc1litm3TPmv7rtDr4Y/L/t+tYCug7aXxJtwGA9ETOUF9iUoGPE3zBKMGPJhO5nRF3IW27OzYUNTdHgUjlV0ba5QlZQ/f5ideEboJvdlw05ofPVQKZ9Hh95/9sOFYuNBKP0LPwKz1VrrhvM7tVgdIhZdekuIOt4S+7WjRV5J+XT0jlhwUBEIxx8knRPagmxygSZM3h/FbX+mEbduIwVy+y1HwtfwVq3PyR9YIDjVDuc3+6VNZd69TEIHqRQlbwb2jkitgEHx/Vs32KtDyfRZgkhA6ZGZRlnEiX3R0YRzjCt5xCw==\",\r\n          \"keyExponent\": \"AQAB\",\r\n          \"encryptionChunkSizeInBytes\": 245\r\n        },\r\n        \"dataServiceLevel2Key\": {\r\n          \"keyModulus\": \"rtCsQNdCaDwLHIvgkhkKldvUNjili+rsj8CVaKGTwAyQGvAIwKOe3zfwW3TFaeycTFAQ1payBjY2tW9uWSWDTJRpHZVYTTX/1mjnXHTqcZYsgSkblt0PhLWbbYATGMmyBie0XM3Xfy1ilwAMYNHu+YaW56NyFpepyNcheZbmkD4/Vveh+5JStwObqEp1vsagraQ/IqUDCAETRxFc3iIWJZnqW2yfIWZshky20fkmyBnRrpe5fexpj6Xz4VHT76Lj+7bTEbsFSq7fNUjRcCIf2gat8bBN4HD2w//GZVCKarQG6G0kilA0bDZHFAzVeTs2+UYB+1GA+r+Uy3SOEIdLPw==\",\r\n          \"keyExponent\": \"AQAB\",\r\n          \"encryptionChunkSizeInBytes\": 245\r\n        }\r\n      },\r\n      \"name\": \"default\",\r\n      \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys/default\",\r\n      \"type\": \"Microsoft.HybridData/dataManagers/publicKeys\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys/default?api-version=2016-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9wdWJsaWNLZXlzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAxNi0wNi0wMQ==",
+      "RequestUri": "/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys/default?api-version=2019-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNmUwMjE5ZjUtMzI3YS00MzY1LTkwNGYtMDVlZWQ0MjI3YWQ3L3Jlc291cmNlR3JvdXBzL1Jlc291cmNlR3JvdXBGb3JTREtUZXN0L3Byb3ZpZGVycy9NaWNyb3NvZnQuSHlicmlkRGF0YS9kYXRhTWFuYWdlcnMvVGVzdEF6dXJlU0RLT3BlcmF0aW9ucy9wdWJsaWNLZXlzL2RlZmF1bHQ/YXBpLXZlcnNpb249MjAxOS0wNi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1547cfce-2b90-4e12-8530-2a536405eeba"
+          "7f00c10d-7c0c-4004-8157-e1a0e61d620e"
         ],
         "accept-language": [
           "en-US"
@@ -81,8 +81,8 @@
         "User-Agent": [
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18875.",
-          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/0.9.0.preview"
+          "OSVersion/Microsoft.Windows.10.0.19555.",
+          "Microsoft.Azure.Management.HybridData.HybridDataManagementClient/1.0.1.preview"
         ]
       },
       "ResponseHeaders": {
@@ -90,7 +90,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 10 Apr 2019 09:13:41 GMT"
+          "Wed, 05 Feb 2020 08:50:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -99,22 +99,22 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "4b7880d8-4ff6-48b7-bd1a-9fe41bf0beed"
+          "64f80957-3775-405a-ae62-4011387a025d"
         ],
         "x-ms-client-request-id": [
-          "1547cfce-2b90-4e12-8530-2a536405eeba"
+          "7f00c10d-7c0c-4004-8157-e1a0e61d620e"
         ],
         "X-Powered-By": [
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "088469a0-fb41-4bbc-8113-4b799a2758c8"
+          "2c0dc6e6-5bef-4e57-87f6-561c00753fa5"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20190410T091341Z:088469a0-fb41-4bbc-8113-4b799a2758c8"
+          "SOUTHINDIA:20200205T085025Z:2c0dc6e6-5bef-4e57-87f6-561c00753fa5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -129,7 +129,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"dataServiceLevel1Key\": {\r\n      \"keyModulus\": \"tVt57Rj6bGTsI/ayDNfk5jRzYeHBqyJmcArL6cd1LMbKJQen/vZhisZj0RqIucWufUL6DQuZObdc+Rb2NGkxW2UEER323CA71oa19nOEW8T8DyiCxExUGtOeM86ZD4dQmugOLBHTI5iAFLeh6DdMPJhu/UyNTZeqVroEpJdM0F5AJCFO0IbgZfqEg7jT421IOO6Ie0lt1Hp7TyKvOJJovCBRZBmtCdlJLw7iwGy3ReEVOU2MG6UDw9THVZdgRDiTT6ovLCZiC8CqMNzDSG3R+ZMNHlE/gBRRAY6ji2bUTvaNMPgVNxUQw/RveKsGZ+CWvxOfE2nEwOduWLhFb0N+Uw==\",\r\n      \"keyExponent\": \"AQAB\",\r\n      \"encryptionChunkSizeInBytes\": 245\r\n    },\r\n    \"dataServiceLevel2Key\": {\r\n      \"keyModulus\": \"xlSZmsnyu/uBkPhxd8q3drECa1NMhuFI1f3V+4JzuE4BVIip8bhm6YGCrKuY12xJ4uNNk8oKRtyzGkALgbmW5LldTLwgQ+2I3sgPWMeOSOqeJ3irHtsCNSTyT1xvOUDF8ar+f8hB7Nhjt8VKgYPN0u4Dx+Inw/DeQBNf5Qh/dEaQF/b75tLJxrg7huMCod5adCR1Xa6+BcKRzghmjXeSF64ojj1VYLuGt3bLwfbYPLw3pm6zIt2+ta9c69JVzutKgt9eLZik5mtSYCH/io8AuS3EdIlIIsdLntJI9FKGWQDDLWP6Npd5ecs1iigYRWM6XhPP5IIsj2GF/bsQ8+KKUQ==\",\r\n      \"keyExponent\": \"AQAB\",\r\n      \"encryptionChunkSizeInBytes\": 245\r\n    }\r\n  },\r\n  \"name\": \"default\",\r\n  \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys/default\",\r\n  \"type\": \"Microsoft.HybridData/dataManagers/publicKeys\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"dataServiceLevel1Key\": {\r\n      \"keyModulus\": \"mjDxqxGmawhC15TUM/oKCe2rRg6nM+IEqujgn17vc1litm3TPmv7rtDr4Y/L/t+tYCug7aXxJtwGA9ETOUF9iUoGPE3zBKMGPJhO5nRF3IW27OzYUNTdHgUjlV0ba5QlZQ/f5ideEboJvdlw05ofPVQKZ9Hh95/9sOFYuNBKP0LPwKz1VrrhvM7tVgdIhZdekuIOt4S+7WjRV5J+XT0jlhwUBEIxx8knRPagmxygSZM3h/FbX+mEbduIwVy+y1HwtfwVq3PyR9YIDjVDuc3+6VNZd69TEIHqRQlbwb2jkitgEHx/Vs32KtDyfRZgkhA6ZGZRlnEiX3R0YRzjCt5xCw==\",\r\n      \"keyExponent\": \"AQAB\",\r\n      \"encryptionChunkSizeInBytes\": 245\r\n    },\r\n    \"dataServiceLevel2Key\": {\r\n      \"keyModulus\": \"rtCsQNdCaDwLHIvgkhkKldvUNjili+rsj8CVaKGTwAyQGvAIwKOe3zfwW3TFaeycTFAQ1payBjY2tW9uWSWDTJRpHZVYTTX/1mjnXHTqcZYsgSkblt0PhLWbbYATGMmyBie0XM3Xfy1ilwAMYNHu+YaW56NyFpepyNcheZbmkD4/Vveh+5JStwObqEp1vsagraQ/IqUDCAETRxFc3iIWJZnqW2yfIWZshky20fkmyBnRrpe5fexpj6Xz4VHT76Lj+7bTEbsFSq7fNUjRcCIf2gat8bBN4HD2w//GZVCKarQG6G0kilA0bDZHFAzVeTs2+UYB+1GA+r+Uy3SOEIdLPw==\",\r\n      \"keyExponent\": \"AQAB\",\r\n      \"encryptionChunkSizeInBytes\": 245\r\n    }\r\n  },\r\n  \"name\": \"default\",\r\n  \"id\": \"/subscriptions/6e0219f5-327a-4365-904f-05eed4227ad7/resourceGroups/ResourceGroupForSDKTest/providers/Microsoft.HybridData/dataManagers/TestAzureSDKOperations/publicKeys/default\",\r\n  \"type\": \"Microsoft.HybridData/dataManagers/publicKeys\"\r\n}",
       "StatusCode": 200
     }
   ],
