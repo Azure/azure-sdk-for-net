@@ -2078,13 +2078,236 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partitionId in partitionIds)
             {
-                Assert.That(closingEventArgsList.Where(args => args.PartitionId == partitionId), Is.Not.Empty, $"The closing handler should have been triggered with partitionId = '{ partitionId }'.");
+                Assert.That(closingEventArgsList.Any(args => args.PartitionId == partitionId), Is.True, $"The closing handler should have been triggered with partitionId = '{ partitionId }'.");
             }
 
             foreach (var eventArgs in closingEventArgsList)
             {
                 Assert.That(eventArgs.Reason, Is.EqualTo(ProcessingStoppedReason.Shutdown), $"The partition '{ eventArgs.PartitionId }' should have stopped processing with the correct reason.");
             }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.StopProcessingAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StopProcessingAsyncCallsTheStopHandlerWithOwnershipLostReasonWhenPartitionProcessingHasFailed()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+
+            var partitionIds = new[] { "0", "1" };
+            var faultedPartitionId = partitionIds.Last();
+
+            mockProcessor.CatchNUnitRunnerException = (partitionId, position, token) => partitionId != faultedPartitionId;
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(partitionIds));
+
+            var completionSource = new TaskCompletionSource<bool>();
+            var partitionsBeingProcessed = 0;
+
+            // Use the ReadEventsFromPartitionAsync method to notify when all partitions have started being processed. If the partition is faulted,
+            // throw.
+
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Callback(() =>
+                {
+                    if (Interlocked.Increment(ref partitionsBeingProcessed) == partitionIds.Length)
+                    {
+                        completionSource.SetResult(true);
+                    }
+                })
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) =>
+                {
+                    if (partition == faultedPartitionId)
+                    {
+                        throw new Exception();
+                    }
+
+                    return MockEndlessPartitionEventEnumerable(options.MaximumWaitTime, token);
+                });
+
+            // Use the close handler to keep track of the partitions that have been closed.
+
+            var closingEventArgs = new ConcurrentBag<PartitionClosingEventArgs>();
+
+            mockProcessor.PartitionClosingAsync += eventArgs =>
+            {
+                closingEventArgs.Add(eventArgs);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            mockProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+            await mockProcessor.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            foreach (var partitionId in partitionIds)
+            {
+                var associatedEventArgs = closingEventArgs.Where(eventArgs => eventArgs.PartitionId == partitionId).ToList();
+                var expectedReason = (partitionId == faultedPartitionId) ? ProcessingStoppedReason.OwnershipLost : ProcessingStoppedReason.Shutdown;
+
+                Assert.That(associatedEventArgs, Is.Not.Empty, $"The close handler should have been called for partition '{ partitionId }' at least once.");
+                Assert.That(associatedEventArgs.Any(eventArgs => eventArgs.Reason != expectedReason), Is.False, $"Stop reasons in '{ partitionId }' should all be { expectedReason }.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.PartitionInitializingAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task PartitionInitializingAsyncIsTriggeredWhenPartitionProcessingIsStarting()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
+            var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+
+            var partitionIds = new[] { "0", "1" };
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(partitionIds));
+
+            var completionSource = new TaskCompletionSource<bool>();
+            var partitionsBeingProcessed = 0;
+
+            // Use the ReadEventsFromPartitionAsync method to notify when all partitions have started being processed.
+
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Callback(() =>
+                {
+                    if (Interlocked.Increment(ref partitionsBeingProcessed) == partitionIds.Length)
+                    {
+                        completionSource.SetResult(true);
+                    }
+                })
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) =>
+                    MockEndlessPartitionEventEnumerable(options.MaximumWaitTime, token));
+
+            // Use the init handler to keep track of the partitions that have been initialized.
+
+            var initializingEventArgs = new ConcurrentBag<PartitionInitializingEventArgs>();
+
+            mockProcessor.PartitionInitializingAsync += eventArgs =>
+            {
+                initializingEventArgs.Add(eventArgs);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            mockProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+            await mockProcessor.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            var initializingEventArgsList = initializingEventArgs.ToList();
+
+            Assert.That(initializingEventArgsList.Count, Is.EqualTo(partitionIds.Length), $"The initializing handler should have been called { partitionIds.Length } times.");
+
+            foreach (var partitionId in partitionIds)
+            {
+                Assert.That(initializingEventArgsList.Any(args => args.PartitionId == partitionId), Is.True, $"The initializing handler should have been triggered with partitionId = '{ partitionId }'.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessErrorAsyncIsTriggeredWhenOwnershipClaimFails()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
+            var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+
+            var partitionId = "0";
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new[] { partitionId }));
+
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockEndlessPartitionEventEnumerable(options.MaximumWaitTime, token));
+            var expectedExceptionReference = new Exception();
+
+            // When the mock storage intercepts a call to ClaimOwnershipAsync with a single object, it means we have found a claim attempt.
+            // We will force an exception and catch it with the error handler.
+
+            mockStorage
+                .Setup(storage => storage.ClaimOwnershipAsync(
+                    It.Is<IEnumerable<PartitionOwnership>>(ownershipEnumerable => ownershipEnumerable.Count() == 1),
+                    It.IsAny<CancellationToken>()))
+                .Throws(expectedExceptionReference);
+
+            mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            var capturedEventArgs = default(ProcessErrorEventArgs);
+            var completionSource = new TaskCompletionSource<bool>();
+
+            mockProcessor.ProcessErrorAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                completionSource.TrySetResult(true);
+
+                return Task.CompletedTask;
+            };
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+            await mockProcessor.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The error event args should have been captured.");
+            Assert.That(capturedEventArgs.Operation, Is.EqualTo(Resources.OperationClaimOwnership), "The captured Operation string is not correct.");
+            Assert.That(capturedEventArgs.Exception, Is.EqualTo(expectedExceptionReference), "The captured and expected exceptions do not match.");
+            Assert.That(capturedEventArgs.PartitionId, Is.EqualTo(partitionId), "The associated partition id does not match.");
         }
 
         /// <summary>
@@ -2103,8 +2326,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(new[] { "0" }));
 
-            // Use the ReadEventsFromPartitionAsync method to notify when all partitions have started being processed.
-
             mockConsumer
                 .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
                     It.IsAny<string>(),
@@ -2112,10 +2333,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<ReadEventOptions>(),
                     It.IsAny<CancellationToken>()))
                 .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockEndlessPartitionEventEnumerable(options.MaximumWaitTime, token));
-
-            mockConsumer
-                .Setup(consumer => consumer.DisposeAsync())
-                .Returns(() => new ValueTask());
 
             var partitionHasBeenClaimed = false;
             var expectedExceptionReference = new Exception();
@@ -2143,7 +2360,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.ProcessErrorAsync += eventArgs =>
             {
                 capturedEventArgs = eventArgs;
-                completionSource.SetResult(true);
+                completionSource.TrySetResult(true);
 
                 return Task.CompletedTask;
             };
@@ -2162,7 +2379,255 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(capturedEventArgs, Is.Not.Null, "The error event args should have been captured.");
             Assert.That(capturedEventArgs.Operation, Is.EqualTo(Resources.OperationRenewOwnership), "The captured Operation string is not correct.");
             Assert.That(capturedEventArgs.Exception, Is.EqualTo(expectedExceptionReference), "The captured and expected exceptions do not match.");
-            Assert.That(capturedEventArgs.PartitionId, Is.Null, "There should be no partition id associated with the renewal attemp failure.");
+            Assert.That(capturedEventArgs.PartitionId, Is.Null, "There should be no partition id associated with the renewal attempt failure.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessErrorAsyncIsTriggeredWhenListOwnershipFails()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
+            var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new[] { "0" }));
+
+            var expectedExceptionReference = new Exception();
+
+            // We will force an exception and catch it with the error handler.
+
+            mockStorage
+                .Setup(storage => storage.ListOwnershipAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(expectedExceptionReference);
+
+            mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            var capturedEventArgs = default(ProcessErrorEventArgs);
+            var completionSource = new TaskCompletionSource<bool>();
+
+            mockProcessor.ProcessErrorAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                completionSource.TrySetResult(true);
+
+                return Task.CompletedTask;
+            };
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+            await mockProcessor.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The error event args should have been captured.");
+            Assert.That(capturedEventArgs.Operation, Is.EqualTo(Resources.OperationListOwnership), "The captured Operation string is not correct.");
+            Assert.That(capturedEventArgs.Exception, Is.EqualTo(expectedExceptionReference), "The captured and expected exceptions do not match.");
+            Assert.That(capturedEventArgs.PartitionId, Is.Null, "There should be no partition id associated with the list ownership failure.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessErrorAsyncIsTriggeredWhenGetPartitionIdsFails()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+
+            var expectedExceptionReference = new Exception();
+
+            // We will force an exception and catch it with the error handler.
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Throws(expectedExceptionReference);
+
+            mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            var capturedEventArgs = default(ProcessErrorEventArgs);
+            var completionSource = new TaskCompletionSource<bool>();
+
+            mockProcessor.ProcessErrorAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                completionSource.TrySetResult(true);
+
+                return Task.CompletedTask;
+            };
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+            await mockProcessor.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The error event args should have been captured.");
+            Assert.That(capturedEventArgs.Operation, Is.EqualTo(Resources.OperationGetPartitionIds), "The captured Operation string is not correct.");
+            Assert.That(capturedEventArgs.Exception, Is.EqualTo(expectedExceptionReference), "The captured and expected exceptions do not match.");
+            Assert.That(capturedEventArgs.PartitionId, Is.Null, "There should be no partition id associated with the get partition ids failure.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessErrorAsyncIsTriggeredWhenListCheckpointsFails()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
+            var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+
+            var partitionId = "0";
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new[] { partitionId }));
+
+            var expectedExceptionReference = new Exception();
+
+            // We will force an exception and catch it with the error handler.
+
+            mockStorage
+                .Setup(storage => storage.ListCheckpointsAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(expectedExceptionReference);
+
+            mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            var capturedEventArgs = default(ProcessErrorEventArgs);
+            var completionSource = new TaskCompletionSource<bool>();
+
+            mockProcessor.ProcessErrorAsync += eventArgs =>
+            {
+                capturedEventArgs = eventArgs;
+                completionSource.TrySetResult(true);
+
+                return Task.CompletedTask;
+            };
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+            await mockProcessor.StopProcessingAsync(cancellationSource.Token);
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            Assert.That(capturedEventArgs, Is.Not.Null, "The error event args should have been captured.");
+            Assert.That(capturedEventArgs.Operation, Is.EqualTo(Resources.OperationListCheckpoints), "The captured Operation string is not correct.");
+            Assert.That(capturedEventArgs.Exception, Is.EqualTo(expectedExceptionReference), "The captured and expected exceptions do not match.");
+            Assert.That(capturedEventArgs.PartitionId, Is.EqualTo(partitionId), "The associated partition id does not match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessorClient.ProcessErrorAsync" />
+        ///   event.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessErrorAsyncIsNotTriggeredWhenRelinquishingOwnershipFails()
+        {
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
+            var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
+
+            mockConsumer
+                .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(new[] { "0" }));
+
+            mockConsumer
+                .Setup(consumer => consumer.ReadEventsFromPartitionAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<EventPosition>(),
+                    It.IsAny<ReadEventOptions>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) => MockEndlessPartitionEventEnumerable(options.MaximumWaitTime, token));
+
+            var expectedExceptionReference = new Exception();
+
+            // When the mock storage intercepts a call to ClaimOwnershipAsync with no owner id, it means we have found a relinquish attempt.
+            // We will force an exception and catch it with the error handler.
+
+            mockStorage
+                .Setup(storage => storage.ClaimOwnershipAsync(
+                    It.Is<IEnumerable<PartitionOwnership>>(ownershipEnumerable => ownershipEnumerable.Any(ownership => string.IsNullOrEmpty(ownership.OwnerIdentifier))),
+                    It.IsAny<CancellationToken>()))
+                .Throws(expectedExceptionReference);
+
+            var completionSource = new TaskCompletionSource<bool>();
+
+            // We can stop processing once the partition has been claimed.
+
+            mockProcessor.PartitionInitializingAsync += eventArgs =>
+            {
+                completionSource.SetResult(true);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessEventAsync += eventArgs => Task.CompletedTask;
+
+            var hasCalledProcessError = false;
+
+            mockProcessor.ProcessErrorAsync += eventArgs =>
+            {
+                hasCalledProcessError = true;
+                return Task.CompletedTask;
+            };
+
+            // Establish timed cancellation to ensure that the test doesn't hang.
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            await mockProcessor.StartProcessingAsync(cancellationSource.Token);
+            await completionSource.Task;
+
+            var capturedException = default(Exception);
+
+            try
+            {
+                await mockProcessor.StopProcessingAsync(cancellationSource.Token);
+            }
+            catch (Exception ex)
+            {
+                capturedException = ex;
+            }
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processor should have stopped without cancellation.");
+
+            Assert.That(capturedException, Is.Not.Null, "An exception should have be thrown when stopping the processor.");
+            Assert.That(capturedException, Is.EqualTo(expectedExceptionReference), "The captured and expected exceptions do not match.");
+            Assert.That(hasCalledProcessError, Is.False, "The error handler should not have been triggered.");
         }
 
         /// <summary>
@@ -2252,6 +2717,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class InjectableEventSourceProcessorMock : EventProcessorClient
         {
+            public Func<string, EventPosition, CancellationToken, bool> CatchNUnitRunnerException = (id, pos, token) => true;
+
             private EventHubConsumerClient _consumer;
             private bool _stopCalled;
 
@@ -2284,7 +2751,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     await base.RunPartitionProcessingAsync(partitionId, startingPosition, cancellationToken).ConfigureAwait(false);
                 }
                 catch (NullReferenceException ex)
-                    when ((_stopCalled) && (string.Equals(ex.Source, "Microsoft.Bcl.AsyncInterfaces", StringComparison.OrdinalIgnoreCase)))
+                    when ((CatchNUnitRunnerException(partitionId, startingPosition, cancellationToken))
+                        && (_stopCalled)
+                        && (string.Equals(ex.Source, "Microsoft.Bcl.AsyncInterfaces", StringComparison.OrdinalIgnoreCase)))
                 {
                     // This is a test-specific error that occurs when stopping and using a mocked event source.
                     // This scenario does not occur outside of the NUnit runner environment.  To ensure that

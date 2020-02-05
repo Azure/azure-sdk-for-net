@@ -1026,7 +1026,7 @@ namespace Azure.Messaging.EventHubs
 
                         foreach (PartitionOwnership ownership in completeOwnershipList)
                         {
-                            if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrWhiteSpace(ownership.OwnerIdentifier))
+                            if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrEmpty(ownership.OwnerIdentifier))
                             {
                                 if (ActiveOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
                                 {
@@ -1231,7 +1231,7 @@ namespace Azure.Messaging.EventHubs
                 // partition.
 
                 Logger.StartPartitionProcessingError(partitionId, ex.Message);
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationListCheckpoints, ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationListCheckpoints, ex, cancellationToken);
                 _ = OnProcessErrorAsync(errorEventArgs);
 
                 return;
@@ -1361,7 +1361,7 @@ namespace Azure.Messaging.EventHubs
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
                 Logger.ClaimOwnershipError(partitionId, ex.Message);
-                var errorEventArgs = new ProcessErrorEventArgs(null, Resources.OperationClaimOwnership, ex, cancellationToken);
+                var errorEventArgs = new ProcessErrorEventArgs(partitionId, Resources.OperationClaimOwnership, ex, cancellationToken);
                 _ = OnProcessErrorAsync(errorEventArgs);
 
                 return default;
