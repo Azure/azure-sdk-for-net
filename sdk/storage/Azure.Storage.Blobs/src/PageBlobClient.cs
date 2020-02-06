@@ -511,7 +511,10 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline.LogMethodEnter(
                     nameof(PageBlobClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}");
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(size)}: {size}\n" +
+                    $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
+                    $"{nameof(httpHeaders)}: {httpHeaders}");
                 var conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 try
                 {

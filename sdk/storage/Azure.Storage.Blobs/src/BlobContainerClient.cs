@@ -837,8 +837,9 @@ namespace Azure.Storage.Blobs
                 Pipeline.LogMethodEnter(
                     nameof(BlobContainerClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}");
-                Response<BlobContainerInfo> response;
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(publicAccessType)}: {publicAccessType}");
+                Response <BlobContainerInfo> response;
                 try
                 {
                     response = await CreateInternal(
@@ -1119,7 +1120,8 @@ namespace Azure.Storage.Blobs
                 Pipeline.LogMethodEnter(
                     nameof(BlobContainerClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}");
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     Response response = await DeleteInternal(

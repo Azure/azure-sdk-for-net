@@ -1865,7 +1865,9 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}");
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(snapshotsOption)}: {snapshotsOption}\n" +
+                    $"{nameof(conditions)}: {conditions}");
                 try
                 {
                     Response response = await DeleteInternal(

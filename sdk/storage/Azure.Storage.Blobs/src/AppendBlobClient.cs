@@ -423,7 +423,8 @@ namespace Azure.Storage.Blobs.Specialized
                 Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}");
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(httpHeaders)}: {httpHeaders}");
                 var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 try
                 {
