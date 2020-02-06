@@ -116,7 +116,7 @@ jobs:
           path: $(Build.ArtifactStagingDirectory)/reports
       - task: AzureFileCopy@2
         displayName: 'Upload dependency report'
-        condition: and(eq(variables['Build.Reason'],'Manual'), eq(variables['System.TeamProject'], 'internal'))
+        condition: and(eq(${{ parameters.PublishDepReports }}, 'true'), eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))
         inputs:
           sourcePath: '$(Build.ArtifactStagingDirectory)/reports'
           additionalArgumentsForBlobCopy: |
