@@ -9,8 +9,7 @@ resources:
       endpoint: azure
     - repository: azure-sdk-build-tools
       type: git
-      name: playground/azure-sdk-build-tools.chononiw
-      ref: refs/heads/PublishDependencies
+      name: internal/azure-sdk-build-tools
 
 trigger:
   branches:
