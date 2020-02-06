@@ -23,13 +23,6 @@ namespace Azure.Identity
             Diagnostics = new ClientDiagnostics(options);
         }
 
-        private CredentialPipeline(Uri authorityHost, HttpPipeline httpPipeline, ClientDiagnostics diagnostics)
-        {
-            AuthorityHost = authorityHost ?? throw new ArgumentNullException(nameof(authorityHost));
-            HttpPipeline = httpPipeline ?? throw new ArgumentNullException(nameof(httpPipeline));
-            Diagnostics = diagnostics ?? throw new ArgumentNullException(nameof(diagnostics));
-        }
-
         public static CredentialPipeline GetInstance(TokenCredentialOptions options)
         {
             return (options is null) ? s_Singleton.Value : new CredentialPipeline(options);
@@ -60,15 +53,6 @@ namespace Azure.Identity
             scope.Start();
 
             return scope;
-        }
-
-        /// <summary>
-        /// Creates a new CredentialPipeline from an existing pipeline while replacing the AuthorityHost with a new value.
-        /// </summary>
-        /// <returns></returns>
-        public CredentialPipeline WithAuthorityHost(Uri authorityHost)
-        {
-            return new CredentialPipeline(authorityHost, HttpPipeline, Diagnostics);
         }
 
         private class CredentialResponseClassifier : ResponseClassifier
