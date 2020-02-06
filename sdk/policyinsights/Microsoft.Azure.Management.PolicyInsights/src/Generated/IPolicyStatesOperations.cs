@@ -256,6 +256,49 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// </exception>
         Task<AzureOperationResponse<SummarizeResults>> SummarizeForResourceWithHttpMessagesAsync(string resourceId, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Triggers a policy evaluation scan for all the resources under the
+        /// subscription
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// Microsoft Azure subscription ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="QueryFailureException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> TriggerSubscriptionEvaluationWithHttpMessagesAsync(string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Triggers a policy evaluation scan for all the resources under the
+        /// resource group.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// Microsoft Azure subscription ID.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Resource group name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="QueryFailureException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> TriggerResourceGroupEvaluationWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Queries policy states for the subscription level policy set
         /// definition.
         /// </summary>
@@ -515,5 +558,48 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<SummarizeResults>> SummarizeForResourceGroupLevelPolicyAssignmentWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, QueryOptions queryOptions = default(QueryOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Triggers a policy evaluation scan for all the resources under the
+        /// subscription
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// Microsoft Azure subscription ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="QueryFailureException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginTriggerSubscriptionEvaluationWithHttpMessagesAsync(string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Triggers a policy evaluation scan for all the resources under the
+        /// resource group.
+        /// </summary>
+        /// <param name='subscriptionId'>
+        /// Microsoft Azure subscription ID.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Resource group name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="QueryFailureException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> BeginTriggerResourceGroupEvaluationWithHttpMessagesAsync(string subscriptionId, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
