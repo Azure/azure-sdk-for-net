@@ -28,7 +28,7 @@ namespace Azure.Identity
     {
         private readonly CredentialPipeline _pipeline;
         private readonly TokenCredential _credential;
-        private readonly string _unavailbleErrorMessage;
+        private const string UnavailbleErrorMessage = "EnvironmentCredential authentication unavailable, environment variables are not fully configured.";
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
@@ -75,43 +75,6 @@ namespace Azure.Identity
             if (_credential is null && sdkAuthLocation != null)
             {
                 _credential = new AuthFileCredential(sdkAuthLocation);
-            }
-
-            if (_credential is null)
-            {
-                StringBuilder builder = new StringBuilder("Environment variables not fully configured. AZURE_TENANT_ID and AZURE_CLIENT_ID must be set, along with either AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD. Alternately, AZURE_AUTH_LOCATION ca be set.  Currently set variables [");
-
-                if (tenantId != null)
-                {
-                    builder.Append(" AZURE_TENANT_ID");
-                }
-
-                if (clientId != null)
-                {
-                    builder.Append(" AZURE_CLIENT_ID");
-                }
-
-                if (clientSecret != null)
-                {
-                    builder.Append(" AZURE_CLIENT_SECRET");
-                }
-
-                if (username != null)
-                {
-                    builder.Append(" AZURE_USERNAME");
-                }
-
-                if (password != null)
-                {
-                    builder.Append(" AZURE_PASSWORD");
-                }
-
-                if (sdkAuthLocation != null)
-                {
-                    builder.Append(" AZURE_AUTH_LOCATION");
-                }
-
-                _unavailbleErrorMessage = builder.Append(" ]").ToString();
             }
         }
 
@@ -174,7 +137,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage)));
             }
 
             try
@@ -201,7 +164,7 @@ namespace Azure.Identity
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(_unavailbleErrorMessage)));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage)));
             }
 
             try

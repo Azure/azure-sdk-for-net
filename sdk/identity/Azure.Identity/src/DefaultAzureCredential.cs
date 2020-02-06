@@ -28,8 +28,8 @@ namespace Azure.Identity
     /// </remarks>
     public class DefaultAzureCredential : TokenCredential
     {
-        private const string DefaultExceptionMessage = "The DefaultAzureCredential failed to retrieve a token from the included credentials.";
-        private const string UnhandledExceptionMessage = "The DefaultAzureCredential failed due to an unhandled exception: ";
+        private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials.";
+        private const string UnhandledExceptionMessage = "DefaultAzureCredential authentication failed.";
         private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
         private readonly IExtendedTokenCredential[] _sources;
@@ -113,13 +113,18 @@ namespace Azure.Identity
                 }
                 else
                 {
-                    exceptions.Add(exToken.Exception);
-
-                    throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage} {_sources[i].GetType().Name} failed with unhandled exception {exToken.Exception.Message}.", new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions));
+                    throw scope.Failed(new AuthenticationFailedException(UnhandledExceptionMessage, exToken.Exception));
                 }
             }
 
-            throw scope.Failed(AuthenticationFailedException.CreateAggregateException(DefaultExceptionMessage, new ReadOnlyMemory<object>(_sources, 0, i), exceptions));
+            StringBuilder errorMsg = new StringBuilder(DefaultExceptionMessage).Append(" (");
+
+            foreach (Exception ex in exceptions)
+            {
+                errorMsg.Append(" ").Append(ex.Message);
+            }
+
+            throw scope.Failed(new CredentialUnavailableException(errorMsg.Append(" )").ToString()));
         }
 
 

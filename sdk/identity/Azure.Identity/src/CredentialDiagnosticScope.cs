@@ -49,7 +49,7 @@ namespace Azure.Identity
         {
             if (!(ex is AuthenticationFailedException))
             {
-                ex = new AuthenticationFailedException(Constants.AuthenticationUnhandledExceptionMessage, ex);
+                ex = new AuthenticationFailedException($"{_name.Substring(0, _name.IndexOf('.'))} authentication failed.", ex);
             }
 
             AzureIdentityEventSource.Singleton.GetTokenFailed(_name, _context, ex);
