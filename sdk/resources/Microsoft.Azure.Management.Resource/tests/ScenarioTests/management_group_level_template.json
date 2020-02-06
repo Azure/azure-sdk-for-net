@@ -4,7 +4,7 @@
   "parameters": {
     "storageAccountName": {
       "type": "string",
-      "defaultValue": "tianosatestgl"
+      "defaultValue": "tagsa1"
     }
   },
   "variables": {
@@ -37,8 +37,8 @@
       "apiVersion": "2016-12-01",
       "dependsOn": [ "policy2" ],
       "properties": {
-        "scope": "/providers/Microsoft.Management/managementGroups/tiano-mgtest01",
-        "policyDefinitionId": "[concat('/providers/Microsoft.Management/managementGroups/tiano-mgtest01/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]"
+        "scope": "/providers/Microsoft.Management/managementGroups/tag-mg1",
+        "policyDefinitionId": "[concat('/providers/Microsoft.Management/managementGroups/tag-mg1/', 'providers/', 'Microsoft.Authorization/policyDefinitions/', 'policy2')]"
       }
     },
     {
@@ -46,7 +46,7 @@
       "name": "sdktest-subnested",
       "apiVersion": "2018-05-01",
       "location": "West US",
-      "subscriptionId": "fb3a3d6b-44c8-44f5-88c9-b20917c9b96b",
+      "subscriptionId": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d",
       "properties": {
         "template": {
           "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
@@ -62,7 +62,7 @@
               "type": "Microsoft.Resources/resourceGroups",
               "name": "rg-001",
               "apiVersion": "2018-05-01",
-              "location": "East US 2 EUAP",
+              "location": "East US",
               "properties": {
 
               }

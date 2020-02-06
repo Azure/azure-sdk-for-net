@@ -822,5 +822,77 @@ namespace Storage.Tests
                 }
             }
         }
+
+        // Point In Time Restore test
+        [Fact]
+        public void PITRTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2(stage)",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                Assert.Equal(SkuName.StandardLRS, account.Sku.Name);
+
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgName, accountName, StorageAccountExpand.BlobRestoreStatus);
+                Assert.Null(account.BlobRestoreStatus);
+
+                // implement case
+                try
+                {
+                    //enable changefeed and softdelete, and enable restore policy
+                    BlobServiceProperties properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    properties.DeleteRetentionPolicy = new DeleteRetentionPolicy();
+                    properties.DeleteRetentionPolicy.Enabled = true;
+                    properties.DeleteRetentionPolicy.Days = 30;
+                    properties.ChangeFeed = new ChangeFeed();
+                    properties.ChangeFeed.Enabled = true;
+                    properties.RestorePolicy = new RestorePolicyProperties(true, 5);
+                    storageMgmtClient.BlobServices.SetServiceProperties(rgName, accountName, properties);
+                    properties = storageMgmtClient.BlobServices.GetServiceProperties(rgName, accountName);
+                    Assert.True(properties.RestorePolicy.Enabled);
+                    Assert.Equal(5,properties.RestorePolicy.Days);
+                    Assert.True(properties.DeleteRetentionPolicy.Enabled);
+                    Assert.Equal(30, properties.DeleteRetentionPolicy.Days);
+                    Assert.True(properties.ChangeFeed.Enabled);
+
+                    // restore blobs
+                    //Don't need sleep when playback, or Unit test will be slow. 
+                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    {
+                        System.Threading.Thread.Sleep(10000);
+                    }
+                    List<BlobRestoreRange> ranges = new List<BlobRestoreRange>();
+                    ranges.Add(new BlobRestoreRange("", "container1/blob1"));
+                    ranges.Add(new BlobRestoreRange("container1/blob2", "container2/blob3"));
+                    ranges.Add(new BlobRestoreRange("container3/blob3", ""));
+                    var restoreStatus = storageMgmtClient.StorageAccounts.RestoreBlobRanges(rgName, accountName, DateTime.Now.AddSeconds(-1), ranges);
+                    Assert.Equal("Complete", restoreStatus.Status);
+
+                    account = storageMgmtClient.StorageAccounts.GetProperties(rgName, accountName, StorageAccountExpand.BlobRestoreStatus);
+                    Assert.Equal("Complete", account.BlobRestoreStatus.Status);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -13,9 +14,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Create an exception corresponding to the FailureNoContent.
         /// </summary>
+        /// <param name="clientDiagnostics">The <see cref="ClientDiagnostics"/> instance to use.</param>
         /// <param name="response">The failed response.</param>
         /// <returns>A RequestFailedException.</returns>
-        public Exception CreateException(Azure.Response response)
-            => StorageExceptionExtensions.CreateException(response, null, null, ErrorCode);
+        public Exception CreateException(ClientDiagnostics clientDiagnostics, Azure.Response response)
+            => clientDiagnostics.CreateRequestFailedExceptionWithContent(response, message: null, content: null, response.GetErrorCode(ErrorCode));
     }
 }

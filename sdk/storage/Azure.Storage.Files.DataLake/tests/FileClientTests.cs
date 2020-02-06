@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Testing;
@@ -361,6 +362,25 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             DataLakeFileClient destFile = await sourceFile.RenameAsync(destinationPath: destFileName);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [Test]
+        public async Task RenameAsync_FileSystem()
+        {
+            await using DisposingFileSystem sourceTest = await GetNewFileSystem();
+            await using DisposingFileSystem destTest = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = await sourceTest.FileSystem.CreateFileAsync(GetNewFileName());
+            string destFileName = GetNewDirectoryName();
+
+            // Act
+            DataLakeFileClient destFile = await sourceFile.RenameAsync(
+                destinationPath: destFileName,
+                destinationFileSystem: destTest.FileSystem.Name);
 
             // Assert
             Response<PathProperties> response = await destFile.GetPropertiesAsync();
@@ -1332,6 +1352,30 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task AppendDataAsync_ProgressReporting()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            var data = GetRandomBuffer(Size);
+            TestProgress progress = new TestProgress();
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.AppendAsync(stream, 0, progressHandler: progress);
+            }
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+
+            Assert.AreEqual(Size, progress.List[progress.List.Count - 1]);
+
+        }
+
+        [Test]
         public async Task AppendDataAsync_ContentHash()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2270,6 +2314,87 @@ namespace Azure.Storage.Files.DataLake.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(file.GetDataLakeLeaseClient()).BreakAsync(),
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        public async Task DownloadToAsync_PathOverloads()
+        {
+            // Arrange
+            var path = System.IO.Path.GetTempFileName();
+            try
+            {
+                await using DisposingFileSystem test = await GetNewFileSystem();
+                DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+                int size = Constants.KB;
+                byte[] data = GetRandomBuffer(size);
+                using Stream stream = new MemoryStream(data);
+
+                await file.AppendAsync(stream, 0);
+                await file.FlushAsync(size);
+
+                await Verify(await file.DownloadToAsync(path));
+                await Verify(await file.DownloadToAsync(
+                    path,
+                    cancellationToken: CancellationToken.None));
+                await Verify(await file.DownloadToAsync(
+                    path,
+                    new DataLakeRequestConditions() { IfModifiedSince = default }));
+
+                async Task Verify(Response response)
+                {
+                    Assert.AreEqual(size, File.ReadAllBytes(path).Length);
+                    using MemoryStream actual = new MemoryStream();
+                    using FileStream resultStream = File.OpenRead(path);
+                    await resultStream.CopyToAsync(actual);
+                    TestHelper.AssertSequenceEqual(data, actual.ToArray());
+                }
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
+        [Test]
+        public async Task DownloadToAsync_StreamOverloads()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            int size = Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using Stream stream = new MemoryStream(data);
+
+            await file.AppendAsync(stream, 0);
+            await file.FlushAsync(size);
+
+            using (var resultStream = new MemoryStream(data))
+            {
+                await file.DownloadToAsync(resultStream);
+                Verify(resultStream);
+            }
+            using (var resultStream = new MemoryStream())
+            {
+                await file.DownloadToAsync(
+                    resultStream,
+                    cancellationToken: CancellationToken.None);
+                Verify(resultStream);
+            }
+            using (var resultStream = new MemoryStream())
+            {
+                await file.DownloadToAsync(
+                    resultStream,
+                    new DataLakeRequestConditions() { IfModifiedSince = default });
+                Verify(resultStream);
+            }
+
+            void Verify(MemoryStream resultStream)
+            {
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
         }
     }
 }

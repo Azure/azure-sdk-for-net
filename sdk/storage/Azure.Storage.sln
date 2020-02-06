@@ -114,6 +114,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{CCEBC6A7-FC9A-40A5-AC18-8609AC457A81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.Cryptography.Tests", "Azure.Storage.Blobs.Cryptography\tests\Azure.Storage.Blobs.Cryptography.Tests\Azure.Storage.Blobs.Cryptography.Tests.csproj", "{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{16260507-C87E-44D2-883F-8E338B7A519F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -209,6 +210,10 @@ Global
 		{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16260507-C87E-44D2-883F-8E338B7A519F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16260507-C87E-44D2-883F-8E338B7A519F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16260507-C87E-44D2-883F-8E338B7A519F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16260507-C87E-44D2-883F-8E338B7A519F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

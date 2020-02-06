@@ -14,10 +14,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void DetectLanguage()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:TextAnalyticsSample1CreateClient
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
             #endregion
 
             #region Snippet:DetectLanguage

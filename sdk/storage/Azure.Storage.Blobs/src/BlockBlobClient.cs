@@ -380,7 +380,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client: this,
                 transferOptions: default,
                 singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
-                operationName: Constants.Blob.Block.UploadOperationName);
+                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return uploader.Upload(
                 content,
@@ -452,7 +452,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client: this,
                 transferOptions: default,
                 singleUploadThreshold: BlockBlobMaxUploadBlobBytes,
-                operationName: Constants.Blob.Block.UploadOperationName);
+                operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
             return await uploader.UploadAsync(
                 content,
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: operationName ?? Constants.Blob.Block.UploadOperationName,
+                        operationName: operationName ?? $"{nameof(BlockBlobClient)}.{nameof(Upload)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -796,7 +796,7 @@ namespace Azure.Storage.Blobs.Specialized
                         encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
                         encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
                         async: async,
-                        operationName: Constants.Blob.Block.StageBlockOperationName,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(StageBlock)}",
                         cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1068,7 +1068,7 @@ namespace Azure.Storage.Blobs.Specialized
                         sourceIfMatch: sourceConditions?.IfMatch,
                         sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Block.StageBlockFromUriOperationName,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(StageBlockFromUri)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1317,7 +1317,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: Constants.Blob.Block.CommitBlockListOperationName,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1502,7 +1502,7 @@ namespace Azure.Storage.Blobs.Specialized
                         snapshot: snapshot,
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: Constants.Blob.Block.GetBlockListOperationName,
+                        operationName: $"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false))
                         .ToBlockList();

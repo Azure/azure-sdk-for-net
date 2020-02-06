@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Updates a deployment script.
+            /// Updates deployment script tags with specified values.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Name of the deployment script.
             /// </param>
             /// <param name='deploymentScript'>
-            /// Updated deployment script supplied to the operation.
+            /// Deployment script resource with the tags to be updated.
             /// </param>
             public static DeploymentScript Update(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, DeploymentScriptUpdateParameter deploymentScript = default(DeploymentScriptUpdateParameter))
             {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
-            /// Updates a deployment script.
+            /// Updates deployment script tags with specified values.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// Name of the deployment script.
             /// </param>
             /// <param name='deploymentScript'>
-            /// Updated deployment script supplied to the operation.
+            /// Deployment script resource with the tags to be updated.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -329,6 +329,52 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<DeploymentScript>> ListByResourceGroupAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates a deployment script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='scriptName'>
+            /// Name of the deployment script.
+            /// </param>
+            /// <param name='deploymentScript'>
+            /// Deployment script supplied to the operation.
+            /// </param>
+            public static DeploymentScript BeginCreate(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, DeploymentScript deploymentScript)
+            {
+                return operations.BeginCreateAsync(resourceGroupName, scriptName, deploymentScript).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a deployment script.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='scriptName'>
+            /// Name of the deployment script.
+            /// </param>
+            /// <param name='deploymentScript'>
+            /// Deployment script supplied to the operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DeploymentScript> BeginCreateAsync(this IDeploymentScriptsOperations operations, string resourceGroupName, string scriptName, DeploymentScript deploymentScript, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, scriptName, deploymentScript, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

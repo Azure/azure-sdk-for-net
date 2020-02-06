@@ -6,12 +6,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.Files.DataLake
 {
     internal static class ErrorExtensions
     {
-        internal static Exception CreateException(this string jsonMessage, Response response)
+// clientDiagnostics parameter is a pattern expected by the codegenerator
+#pragma warning disable CA1801
+        internal static Exception CreateException(this string jsonMessage, ClientDiagnostics clientDiagnostics, Response response)
+#pragma warning restore CA1801
         {
             if (string.IsNullOrWhiteSpace(jsonMessage))
             {

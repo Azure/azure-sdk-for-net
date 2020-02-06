@@ -837,7 +837,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ifMatch: conditions?.IfMatch,
                     ifNoneMatch: conditions?.IfNoneMatch,
                     async: async,
-                    operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Download",
+                    operationName: "BlobBaseClient.Download",
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -1558,7 +1558,7 @@ namespace Azure.Storage.Blobs.Specialized
                         leaseId: destinationConditions?.LeaseId,
                         metadata: metadata,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.StartCopyFromUri",
+                        operationName: "BlobBaseClient.StartCopyFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1700,7 +1700,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.AbortCopyFromUri",
+                        operationName: "BlobBaseClient.AbortCopyFromUri",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -1923,12 +1923,12 @@ namespace Azure.Storage.Blobs.Specialized
                     conditions,
                     async,
                     cancellationToken,
-                    Constants.Blob.Base.DeleteIfExists)
+                    $"{nameof(BlobBaseClient)}.{nameof(DeleteIfExists)}")
                     .ConfigureAwait(false);
                 return Response.FromValue(true, response);
             }
             catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
+            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
             {
                 return Response.FromValue(false, default);
             }
@@ -1974,7 +1974,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.Blob.Base.Delete)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
@@ -1998,7 +1998,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: operationName,
+                        operationName: operationName ?? $"{nameof(BlobBaseClient)}.{nameof(Delete)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2099,14 +2099,14 @@ namespace Azure.Storage.Blobs.Specialized
                         Uri,
                         version: Version.ToVersionString(),
                         async: async,
-                        operationName: Constants.Blob.Base.ExistsOperationName,
+                        operationName: $"{nameof(BlobBaseClient)}.{nameof(Exists)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
                     return Response.FromValue(true, response.GetRawResponse());
                 }
                 catch (RequestFailedException storageRequestFailedException)
-                when (storageRequestFailedException.ErrorCode == Constants.Blob.NotFound)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
                 {
                     return Response.FromValue(false, default);
                 }
@@ -2211,7 +2211,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.Undelete")
+                        operationName: "BlobBaseClient.Undelete")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -2349,7 +2349,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifMatch: conditions?.IfMatch,
                         ifNoneMatch: conditions?.IfNoneMatch,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.GetProperties",
+                        operationName: "BlobBaseClient.GetProperties",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2501,7 +2501,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetHttpHeaders",
+                            operationName: "BlobBaseClient.SetHttpHeaders",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return Response.FromValue(
@@ -2657,7 +2657,7 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch,
                             ifNoneMatch: conditions?.IfNoneMatch,
                             async: async,
-                            operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetMetadata",
+                            operationName: "BlobBaseClient.SetMetadata",
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     return Response.FromValue(
@@ -2811,7 +2811,7 @@ namespace Azure.Storage.Blobs.Specialized
                         ifNoneMatch: conditions?.IfNoneMatch,
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.CreateSnapshot",
+                        operationName: "BlobBaseClient.CreateSnapshot",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -2995,7 +2995,7 @@ namespace Azure.Storage.Blobs.Specialized
                         rehydratePriority: rehydratePriority,
                         leaseId: conditions?.LeaseId,
                         async: async,
-                        operationName: "Azure.Storage.Blobs.Specialized.BlobBaseClient.SetAccessTier",
+                        operationName: "BlobBaseClient.SetAccessTier",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
                 }

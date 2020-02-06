@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="provisioningState">State of the script execution. This
         /// only appears in the response. Possible values include: 'Creating',
         /// 'ProvisioningResources', 'Running', 'Succeeded', 'Failed',
-        /// 'Canceled', 'Expiring'</param>
+        /// 'Canceled'</param>
         /// <param name="status">Contains the results of script
         /// execution.</param>
         /// <param name="outputs">List of script outputs.</param>
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets state of the script execution. This only appears in the
         /// response. Possible values include: 'Creating',
         /// 'ProvisioningResources', 'Running', 'Succeeded', 'Failed',
-        /// 'Canceled', 'Expiring'
+        /// 'Canceled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

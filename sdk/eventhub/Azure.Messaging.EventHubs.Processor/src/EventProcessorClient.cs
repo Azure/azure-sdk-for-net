@@ -768,7 +768,7 @@ namespace Azure.Messaging.EventHubs
             );
 
             using DiagnosticScope scope =
-                EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
+                EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName);
             scope.Start();
 
             try
@@ -835,7 +835,7 @@ namespace Azure.Messaging.EventHubs
             await using var consumerAwaiter = consumer.ConfigureAwait(false);
             await foreach (var partitionEvent in consumer.ReadEventsFromPartitionAsync(partitionId, startingPosition, ProcessingReadEventOptions, cancellationToken).ConfigureAwait(false))
             {
-                using DiagnosticScope diagnosticScope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
+                using DiagnosticScope diagnosticScope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName);
                 diagnosticScope.AddAttribute("kind", DiagnosticProperty.ConsumerKind);
 
                 if (diagnosticScope.IsEnabled

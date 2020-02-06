@@ -35,13 +35,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="endTime">End time of the script execution.</param>
         /// <param name="expirationTime">Time the deployment script resource
         /// will expire.</param>
-        public ScriptStatus(string containerInstanceId = default(string), string storageAccountId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?))
+        /// <param name="error">Error that is relayed from the script
+        /// execution.</param>
+        public ScriptStatus(string containerInstanceId = default(string), string storageAccountId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.DateTime? expirationTime = default(System.DateTime?), DefaultErrorResponse error = default(DefaultErrorResponse))
         {
             ContainerInstanceId = containerInstanceId;
             StorageAccountId = storageAccountId;
             StartTime = startTime;
             EndTime = endTime;
             ExpirationTime = expirationTime;
+            Error = error;
             CustomInit();
         }
 
@@ -79,6 +82,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "expirationTime")]
         public System.DateTime? ExpirationTime { get; private set; }
+
+        /// <summary>
+        /// Gets or sets error that is relayed from the script execution.
+        /// </summary>
+        [JsonProperty(PropertyName = "error")]
+        public DefaultErrorResponse Error { get; set; }
 
     }
 }
