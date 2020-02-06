@@ -286,7 +286,8 @@ Headers:
     Content-Type: application/json; charset=utf-8
 ```
 
-## Next Steps
+## Next steps
+
 Samples showing how to use the Cognitive Services Text Analytics library are available in this GitHub repository.
 Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single text input, a collection of text input strings, and a collection of text document inputs.
 
