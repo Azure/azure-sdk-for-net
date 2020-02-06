@@ -653,7 +653,6 @@ namespace Azure.Storage.Files.Shares.Test
             using (var stream = new MemoryStream(data))
             {
                 await source.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(0, Constants.KB),
                     content: stream);
             }
@@ -678,7 +677,6 @@ namespace Azure.Storage.Files.Shares.Test
             using (var stream = new MemoryStream(data))
             {
                 await source.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(0, Constants.KB),
                     content: stream);
             }
@@ -723,7 +721,6 @@ namespace Azure.Storage.Files.Shares.Test
             using (var stream = new MemoryStream(data))
             {
                 await source.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(0, Constants.MB),
                     content: stream);
             }
@@ -807,7 +804,6 @@ namespace Azure.Storage.Files.Shares.Test
             using (var stream = new MemoryStream(data))
             {
                 await file.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(Constants.KB, data.LongLength),
                     content: stream);
 
@@ -874,7 +870,6 @@ namespace Azure.Storage.Files.Shares.Test
             using (var stream = new MemoryStream(data))
             {
                 await fileFaulty.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(offset, dataSize),
                     content: stream);
             }
@@ -926,7 +921,6 @@ namespace Azure.Storage.Files.Shares.Test
             using (var stream = new MemoryStream(data))
             {
                 Response<ShareFileUploadInfo> response = await file.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream);
 
@@ -949,7 +943,6 @@ namespace Azure.Storage.Files.Shares.Test
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream),
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
@@ -976,6 +969,34 @@ namespace Azure.Storage.Files.Shares.Test
             var download = await file.DownloadAsync();
             await download.Value.Content.CopyToAsync(bufferedContent);
             TestHelper.AssertSequenceEqual(data, bufferedContent.ToArray());
+        }
+
+        [Test]
+        public async Task ClearRangeAsync()
+        {
+            await using DisposingFile test = await GetTestFileAsync();
+            ShareFileClient file = test.File;
+
+            Response<ShareFileUploadInfo> response = await file.ClearRangeAsync(
+                range: new HttpRange(Constants.KB, Constants.KB));
+
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+        }
+
+        [Test]
+        public async Task ClearRangeAsync_Error()
+        {
+            // Arrange
+            await using DisposingDirectory test = await GetTestDirectoryAsync();
+            ShareDirectoryClient directory = test.Directory;
+
+            ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                file.ClearRangeAsync(
+                    range: new HttpRange(Constants.KB, Constants.KB)),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
         [Test]
@@ -1063,7 +1084,6 @@ namespace Azure.Storage.Files.Shares.Test
             using (var stream = new FaultyStream(new MemoryStream(data), 256 * Constants.KB, 1, new IOException("Simulated stream fault")))
             {
                 Response<ShareFileUploadInfo> result = await fileFaulty.UploadRangeAsync(
-                    writeType: ShareFileRangeWriteType.Update,
                     range: new HttpRange(offset, dataSize),
                     content: stream,
                     progressHandler: progressHandler);
@@ -1107,7 +1127,7 @@ namespace Azure.Storage.Files.Shares.Test
             await sourceFile.CreateAsync(maxSize: 1024);
             using (var stream = new MemoryStream(data))
             {
-                await sourceFile.UploadRangeAsync(ShareFileRangeWriteType.Update, new HttpRange(0, 1024), stream);
+                await sourceFile.UploadRangeAsync(new HttpRange(0, 1024), stream);
             }
 
             var destFile = directory.GetFileClient("destFile");

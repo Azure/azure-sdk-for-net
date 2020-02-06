@@ -17,18 +17,18 @@ namespace Azure.AI.TextAnalytics
         internal RecognizeEntitiesResult(string id, TextDocumentStatistics statistics, IList<CategorizedEntity> entities)
             : base(id, statistics)
         {
-            CategorizedEntities = new ReadOnlyCollection<CategorizedEntity>(entities);
+            Entities = new ReadOnlyCollection<CategorizedEntity>(entities);
         }
 
         internal RecognizeEntitiesResult(string id, string errorMessage)
             : base(id, errorMessage)
         {
-            CategorizedEntities = Array.Empty<CategorizedEntity>();
+            Entities = Array.Empty<CategorizedEntity>();
         }
 
         /// <summary>
         /// Gets the collection of named entities identified in the input document.
         /// </summary>
-        public IReadOnlyCollection<CategorizedEntity> CategorizedEntities { get; }
+        public IReadOnlyCollection<CategorizedEntity> Entities { get; }
     }
 }

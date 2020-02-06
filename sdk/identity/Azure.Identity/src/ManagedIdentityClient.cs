@@ -75,17 +75,12 @@ namespace Azure.Identity
             {
                 _msiType = MsiType.Unavailable;
 
-                ValueTask<string> messageTask = ResponseExceptionExtensions.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, false);
-
-                // TODO: this should use TaskExtensions EnsureCompleted from Azure.Core shared source when it gets move into shared source.
-                Debug.Assert(messageTask.IsCompleted);
-
-                string message = messageTask.GetAwaiter().GetResult();
+                string message = _pipeline.Diagnostics.CreateRequestFailedMessage(response, message: IdentityUnavailableError);
 
                 return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }
 
-            throw response.CreateRequestFailedException();
+            throw _pipeline.Diagnostics.CreateRequestFailedException(response);
         }
 
         public async virtual Task<ExtendedAccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
@@ -113,12 +108,12 @@ namespace Azure.Identity
             {
                 _msiType = MsiType.Unavailable;
 
-                string message = await ResponseExceptionExtensions.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, true).ConfigureAwait(false);
+                string message = await _pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, message: IdentityUnavailableError, errorCode: null).ConfigureAwait(false);
 
                 return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }
 
-            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+            throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
         }
 
         protected virtual MsiType GetMsiType(CancellationToken cancellationToken)

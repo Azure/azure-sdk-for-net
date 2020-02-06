@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
-                    foreach (TextSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
+                    foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 

@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs);
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Extracted key phrases for each input are:");

@@ -206,7 +206,7 @@ namespace Azure.AI.TextAnalytics
             return new DetectLanguageResult(
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
-                languages);
+                languages.OrderBy(l => l.Score).FirstOrDefault());
         }
 
         private static DetectedLanguage ReadDetectedLanguage(JsonElement languageElement)
@@ -367,14 +367,14 @@ namespace Azure.AI.TextAnalytics
 
         private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName)
         {
-            TextSentimentLabel sentiment = default;
+            SentimentLabel sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (TextSentimentLabel)Enum.Parse(typeof(TextSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (SentimentLabel)Enum.Parse(typeof(SentimentLabel), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -389,21 +389,21 @@ namespace Azure.AI.TextAnalytics
                     negativeValue.TryGetDouble(out negativeScore);
             }
 
-            var sentenceSentiments = new List<TextSentiment>();
+            var sentenceSentiments = new List<SentenceSentiment>();
             if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
             {
                 foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
                 {
-                    sentenceSentiments.Add(ReadTextSentiment(sentenceElement, "sentenceScores"));
+                    sentenceSentiments.Add(ReadSentenceSentiment(sentenceElement, "sentenceScores"));
                 }
             }
 
             return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments);
         }
 
-        private static TextSentiment ReadTextSentiment(JsonElement documentElement, string scoresElementName)
+        private static SentenceSentiment ReadSentenceSentiment(JsonElement documentElement, string scoresElementName)
         {
-            TextSentimentLabel sentiment = default;
+            SentimentLabel sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
@@ -412,7 +412,7 @@ namespace Azure.AI.TextAnalytics
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (TextSentimentLabel)Enum.Parse(typeof(TextSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (SentimentLabel)Enum.Parse(typeof(SentimentLabel), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -433,7 +433,7 @@ namespace Azure.AI.TextAnalytics
             if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
                 lengthValue.TryGetInt32(out length);
 
-            return new TextSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
+            return new SentenceSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
         }
 
         #endregion
@@ -560,7 +560,7 @@ namespace Azure.AI.TextAnalytics
             string id = default;
             string language = default;
             string dataSource = default;
-            Uri uri = default;
+            Uri url = default;
 
             if (entityElement.TryGetProperty("name", out JsonElement nameElement))
                 name = nameElement.ToString();
@@ -571,11 +571,11 @@ namespace Azure.AI.TextAnalytics
             if (entityElement.TryGetProperty("dataSource", out JsonElement dataSourceValue))
                 dataSource = dataSourceValue.ToString();
             if (entityElement.TryGetProperty("url", out JsonElement urlValue))
-                uri = new Uri(urlValue.ToString());
+                url = new Uri(urlValue.ToString());
 
             IEnumerable<LinkedEntityMatch> matches = ReadLinkedEntityMatches(entityElement);
 
-            return new LinkedEntity(name, id, language, dataSource, uri, matches);
+            return new LinkedEntity(name, id, language, dataSource, url, matches);
         }
 
         private static IEnumerable<LinkedEntityMatch> ReadLinkedEntityMatches(JsonElement entityElement)
@@ -656,12 +656,12 @@ namespace Azure.AI.TextAnalytics
 
         private static RecognizePiiEntitiesResult ReadRecognizePiiEntityResult(JsonElement documentElement)
         {
-            List<CategorizedEntity> entities = new List<CategorizedEntity>();
+            List<PiiEntity> entities = new List<PiiEntity>();
             if (documentElement.TryGetProperty("entities", out JsonElement entitiesValue))
             {
                 foreach (JsonElement entityElement in entitiesValue.EnumerateArray())
                 {
-                    entities.Add(ReadCategorizedEntity(entityElement));
+                    entities.Add(ReadPiiEntity(entityElement));
                 }
             }
 
@@ -669,6 +669,31 @@ namespace Azure.AI.TextAnalytics
                 ReadDocumentId(documentElement),
                 ReadDocumentStatistics(documentElement),
                 entities);
+        }
+
+        private static PiiEntity ReadPiiEntity(JsonElement entityElement)
+        {
+            string text = default;
+            string type = default;
+            string subtype = default;
+            int offset = default;
+            int length = default;
+            double score = default;
+
+            if (entityElement.TryGetProperty("text", out JsonElement textValue))
+                text = textValue.GetString();
+            if (entityElement.TryGetProperty("type", out JsonElement typeValue))
+                type = typeValue.ToString();
+            if (entityElement.TryGetProperty("subtype", out JsonElement subTypeValue))
+                subtype = subTypeValue.ToString();
+            if (entityElement.TryGetProperty("offset", out JsonElement offsetValue))
+                offsetValue.TryGetInt32(out offset);
+            if (entityElement.TryGetProperty("length", out JsonElement lengthValue))
+                lengthValue.TryGetInt32(out length);
+            if (entityElement.TryGetProperty("score", out JsonElement scoreValue))
+                scoreValue.TryGetDouble(out score);
+
+            return new PiiEntity(text, type, subtype, offset, length, score);
         }
 
         #endregion Recognize Entities

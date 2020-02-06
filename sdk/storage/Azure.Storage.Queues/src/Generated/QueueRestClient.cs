@@ -75,7 +75,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetPropertiesAsync_CreateResponse(_response);
+                        return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -149,9 +149,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.SetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.SetPropertiesAsync Azure.Response.</returns>
             internal static Azure.Response SetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -167,7 +169,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -223,7 +225,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -284,9 +286,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetPropertiesAsync Azure.Response{Azure.Storage.Queues.Models.QueueServiceProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueueServiceProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -311,7 +315,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -367,7 +371,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetStatisticsAsync_CreateResponse(_response);
+                        return GetStatisticsAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -428,9 +432,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.GetStatisticsAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.GetStatisticsAsync Azure.Response{Azure.Storage.Queues.Models.QueueServiceStatistics}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueueServiceStatistics> GetStatisticsAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -455,7 +461,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -523,7 +529,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ListQueuesSegmentAsync_CreateResponse(_response);
+                        return ListQueuesSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -595,9 +601,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Service.ListQueuesSegmentAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Service.ListQueuesSegmentAsync Azure.Response{Azure.Storage.Queues.Models.QueuesSegment}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueuesSegment> ListQueuesSegmentAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -622,7 +630,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -689,7 +697,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return CreateAsync_CreateResponse(_response);
+                        return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -756,9 +764,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.CreateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.CreateAsync Azure.Response.</returns>
             internal static Azure.Response CreateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -778,7 +788,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -834,7 +844,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -893,9 +903,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -911,7 +923,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -967,7 +979,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetPropertiesAsync_CreateResponse(_response);
+                        return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1027,9 +1039,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.GetPropertiesAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.GetPropertiesAsync Azure.Response{Azure.Storage.Queues.Models.QueueProperties}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.QueueProperties> GetPropertiesAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1068,7 +1082,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1127,7 +1141,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetMetadataAsync_CreateResponse(_response);
+                        return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1195,9 +1209,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.SetMetadataAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.SetMetadataAsync Azure.Response.</returns>
             internal static Azure.Response SetMetadataAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1213,7 +1229,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1269,7 +1285,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return GetAccessPolicyAsync_CreateResponse(_response);
+                        return GetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1329,9 +1345,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.GetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.GetAccessPolicyAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.QueueSignedIdentifier}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>> GetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1360,7 +1378,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1419,7 +1437,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return SetAccessPolicyAsync_CreateResponse(_response);
+                        return SetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1495,9 +1513,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Queue.SetAccessPolicyAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Queue.SetAccessPolicyAsync Azure.Response.</returns>
             internal static Azure.Response SetAccessPolicyAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1513,7 +1533,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1583,7 +1603,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DequeueAsync_CreateResponse(_response);
+                        return DequeueAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1648,9 +1668,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.DequeueAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.DequeueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.QueueMessage}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueMessage>> DequeueAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1679,7 +1701,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1735,7 +1757,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return ClearAsync_CreateResponse(_response);
+                        return ClearAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1794,9 +1816,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.ClearAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.ClearAsync Azure.Response.</returns>
             internal static Azure.Response ClearAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1812,7 +1836,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -1877,7 +1901,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return EnqueueAsync_CreateResponse(_response);
+                        return EnqueueAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -1955,9 +1979,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.EnqueueAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.EnqueueAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.SendReceipt}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.SendReceipt>> EnqueueAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -1982,7 +2008,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2041,7 +2067,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return PeekAsync_CreateResponse(_response);
+                        return PeekAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2104,9 +2130,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the Messages.PeekAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The Messages.PeekAsync Azure.Response{System.Collections.Generic.IEnumerable{Azure.Storage.Queues.Models.PeekedMessage}}.</returns>
             internal static Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.PeekedMessage>> PeekAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2135,7 +2163,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2208,7 +2236,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return UpdateAsync_CreateResponse(_response);
+                        return UpdateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2290,9 +2318,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the MessageId.UpdateAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The MessageId.UpdateAsync Azure.Response{Azure.Storage.Queues.Models.UpdateReceipt}.</returns>
             internal static Azure.Response<Azure.Storage.Queues.Models.UpdateReceipt> UpdateAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2323,7 +2353,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }
@@ -2382,7 +2412,7 @@ namespace Azure.Storage.Queues
                         }
                         Azure.Response _response = _message.Response;
                         cancellationToken.ThrowIfCancellationRequested();
-                        return DeleteAsync_CreateResponse(_response);
+                        return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
                 catch (System.Exception ex)
@@ -2448,9 +2478,11 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// Create the MessageId.DeleteAsync response or throw a failure exception.
             /// </summary>
+            /// <param name="clientDiagnostics">The ClientDiagnostics instance to use.</param>
             /// <param name="response">The raw Response.</param>
             /// <returns>The MessageId.DeleteAsync Azure.Response.</returns>
             internal static Azure.Response DeleteAsync_CreateResponse(
+                Azure.Core.Pipeline.ClientDiagnostics clientDiagnostics,
                 Azure.Response response)
             {
                 // Process the response
@@ -2466,7 +2498,7 @@ namespace Azure.Storage.Queues
                         System.Xml.Linq.XDocument _xml = System.Xml.Linq.XDocument.Load(response.ContentStream, System.Xml.Linq.LoadOptions.PreserveWhitespace);
                         Azure.Storage.Queues.Models.StorageError _value = Azure.Storage.Queues.Models.StorageError.FromXml(_xml.Root);
 
-                        throw _value.CreateException(response);
+                        throw _value.CreateException(clientDiagnostics, response);
                     }
                 }
             }

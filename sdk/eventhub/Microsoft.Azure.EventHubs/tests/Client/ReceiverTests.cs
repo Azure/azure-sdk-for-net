@@ -328,7 +328,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
         }
 
-        [Fact]
+        [Fact(Skip = "This test is intermittently failing.  Tracked by issue #9798")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task CreateReceiverWithInclusiveSequenceNumber()

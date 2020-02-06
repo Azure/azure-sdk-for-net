@@ -105,6 +105,12 @@ namespace Azure.Core.Pipeline
                 assemblyName = assemblyName.Substring(PackagePrefix.Length);
             }
 
+            int hashSeparator = version.IndexOf('+');
+            if (hashSeparator != -1)
+            {
+                version = version.Substring(0, hashSeparator);
+            }
+
             return new TelemetryPolicy(assemblyName, version, options.Diagnostics.ApplicationId);
         }
     }

@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -58,9 +58,9 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.CategorizedEntities.Count()} entities:");
+                    Debug.WriteLine($"    Recognized the following {result.Entities.Count()} entities:");
 
-                    foreach (CategorizedEntity entity in result.CategorizedEntities)
+                    foreach (CategorizedEntity entity in result.Entities)
                     {
                         Debug.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
