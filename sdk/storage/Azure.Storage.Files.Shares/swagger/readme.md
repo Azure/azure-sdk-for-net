@@ -774,7 +774,7 @@ directive:
   transform: >
     $.put.responses["201"].description = "The lease operation completed successfully.";
     $.put.responses["201"].headers["x-ms-lease-id"].description = "Uniquely identifies a file's lease";
-    $.put.responses["201"]["x-az-response-name"] = "FileShareLease";
+    $.put.responses["201"]["x-az-response-name"] = "ShareFileLease";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=lease&release
@@ -795,7 +795,7 @@ directive:
   transform: >
     $.put.responses["200"].description = "The lease operation completed successfully.";
     $.put.responses["200"].headers["x-ms-lease-id"].description = "Uniquely identifies a files's lease";
-    $.put.responses["200"]["x-az-response-name"] = "FileShareLease";
+    $.put.responses["200"]["x-az-response-name"] = "ShareFileLease";
 ```
 
 ### /{shareName}/{directory}/{fileName}?comp=lease&break

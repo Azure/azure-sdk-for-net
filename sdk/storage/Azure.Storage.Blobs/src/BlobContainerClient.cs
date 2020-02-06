@@ -380,7 +380,7 @@ namespace Azure.Storage.Blobs
 
         #region Create
         /// <summary>
-        /// The <see cref="Create(PublicAccessType, Metadata, ContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="Create(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container
         /// under the specified account. If the container with the same name
         /// already exists, the operation fails.
@@ -421,7 +421,7 @@ namespace Azure.Storage.Blobs
         public virtual Response<BlobContainerInfo> Create(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
-            ContainerEncryptionScopeOptions encryptionScopeOptions = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 publicAccessType,
@@ -482,7 +482,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync(PublicAccessType, Metadata, ContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="CreateAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
@@ -522,7 +522,7 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
-            ContainerEncryptionScopeOptions encryptionScopeOptions = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 publicAccessType,
@@ -583,7 +583,7 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, ContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
@@ -623,7 +623,7 @@ namespace Azure.Storage.Blobs
         public virtual Response<BlobContainerInfo> CreateIfNotExists(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
-            ContainerEncryptionScopeOptions encryptionScopeOptions = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
                 publicAccessType,
@@ -684,7 +684,7 @@ namespace Azure.Storage.Blobs
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, ContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// operation creates a new container under the specified account. If the container with the same name
         /// already exists, the operation fails.
         ///
@@ -724,7 +724,7 @@ namespace Azure.Storage.Blobs
         public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
-            ContainerEncryptionScopeOptions encryptionScopeOptions = default,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
                 publicAccessType,
@@ -785,7 +785,7 @@ namespace Azure.Storage.Blobs
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PublicAccessType, Metadata, ContainerEncryptionScopeOptions, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, bool, CancellationToken)"/>
         /// operation creates a new container under the specified account.  If the container already exists, it is
         /// not changed.
         ///
@@ -828,7 +828,7 @@ namespace Azure.Storage.Blobs
         private async Task<Response<BlobContainerInfo>> CreateIfNotExistsInternal(
             PublicAccessType publicAccessType,
             Metadata metadata,
-            ContainerEncryptionScopeOptions encryptionScopeOptions,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -899,7 +899,7 @@ namespace Azure.Storage.Blobs
         private async Task<Response<BlobContainerInfo>> CreateInternal(
             PublicAccessType publicAccessType,
             Metadata metadata,
-            ContainerEncryptionScopeOptions encryptionScopeOptions,
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions,
             bool async,
             CancellationToken cancellationToken,
             string operationName = null)
@@ -1207,7 +1207,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the container if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, ContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
         public virtual Response<bool> Exists(
@@ -1232,7 +1232,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs. If you want to create the container if
         /// it doesn't exist, use
-        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, ContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
         public virtual async Task<Response<bool>> ExistsAsync(

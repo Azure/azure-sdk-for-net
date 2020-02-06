@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareDirectoryClient directory = test.Directory;
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             await file.CreateAsync(maxSize: Constants.MB);
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -350,7 +350,7 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
             IDictionary<string, string> metadata = BuildMetadata();
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -450,7 +450,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient file = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             Response<ShareFileInfo> createResponse = await file.CreateAsync(maxSize: Constants.KB);
 
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -647,7 +647,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -831,7 +831,7 @@ namespace Azure.Storage.Files.Shares.Test
         {
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -1019,7 +1019,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient source = testSource.File;
             await using DisposingFile testDest = await GetTestFileAsync();
             ShareFileClient dest = testDest.File;
-            FileShareLease fileLease = await InstrumentClient(dest.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(dest.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -1177,7 +1177,7 @@ namespace Azure.Storage.Files.Shares.Test
             ShareFileClient dest = InstrumentClient(directory.GetFileClient(GetNewFileName()));
             await dest.CreateAsync(maxSize: Constants.MB);
 
-            FileShareLease fileLease = await InstrumentClient(dest.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(dest.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -1381,7 +1381,7 @@ namespace Azure.Storage.Files.Shares.Test
                     range: new HttpRange(Constants.KB, data.LongLength),
                     content: stream);
 
-                FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+                ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
                 FileShareRequestConditions conditions = new FileShareRequestConditions
                 {
                     LeaseId = fileLease.LeaseId
@@ -1510,7 +1510,7 @@ namespace Azure.Storage.Files.Shares.Test
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
 
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -1586,7 +1586,7 @@ namespace Azure.Storage.Files.Shares.Test
 
             await using DisposingFile test = await GetTestFileAsync();
             ShareFileClient file = test.File;
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -1683,7 +1683,7 @@ namespace Azure.Storage.Files.Shares.Test
             var file = this.InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
 
             await file.CreateAsync(size);
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -1754,7 +1754,7 @@ namespace Azure.Storage.Files.Shares.Test
             var file = this.InstrumentClient(share.GetRootDirectoryClient().GetFileClient(name));
 
             await file.CreateAsync(size);
-            FileShareLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(file.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -1971,7 +1971,7 @@ namespace Azure.Storage.Files.Shares.Test
             var destFile = directory.GetFileClient("destFile");
             await destFile.CreateAsync(maxSize: 1024);
 
-            FileShareLease fileLease = await InstrumentClient(destFile.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
+            ShareFileLease fileLease = await InstrumentClient(destFile.GetShareLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync();
             FileShareRequestConditions conditions = new FileShareRequestConditions
             {
                 LeaseId = fileLease.LeaseId
@@ -2174,7 +2174,7 @@ namespace Azure.Storage.Files.Shares.Test
             string leaseId = Recording.Random.NewGuid().ToString();
 
             // Act
-            Response<FileShareLease> response = await InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync();
+            Response<ShareFileLease> response = await InstrumentClient(file.GetShareLeaseClient(leaseId)).AcquireAsync();
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
@@ -2250,7 +2250,7 @@ namespace Azure.Storage.Files.Shares.Test
             await leaseClient.AcquireAsync();
 
             // Act
-            Response<FileShareLease> response = await leaseClient.ChangeAsync(newLeaseId);
+            Response<ShareFileLease> response = await leaseClient.ChangeAsync(newLeaseId);
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);
@@ -2288,7 +2288,7 @@ namespace Azure.Storage.Files.Shares.Test
             await leaseClient.AcquireAsync();
 
             // Act
-            Response<FileShareLease> response = await leaseClient.BreakAsync();
+            Response<ShareFileLease> response = await leaseClient.BreakAsync();
 
             // Assert
             Assert.IsNotNull(response.Value.ETag);

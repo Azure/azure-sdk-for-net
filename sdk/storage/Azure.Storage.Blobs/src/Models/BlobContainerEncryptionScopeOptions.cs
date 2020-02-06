@@ -6,7 +6,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Encryption scope options to be used when creating a container.
     /// </summary>
-    public class ContainerEncryptionScopeOptions
+    public class BlobContainerEncryptionScopeOptions
     {
         /// <summary>
         /// Specifies the default encryption scope to set on the container and use for all future writes.

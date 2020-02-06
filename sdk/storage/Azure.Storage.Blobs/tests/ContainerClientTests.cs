@@ -449,7 +449,7 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            ContainerEncryptionScopeOptions encryptionScopeOptions = new ContainerEncryptionScopeOptions
+            BlobContainerEncryptionScopeOptions encryptionScopeOptions = new BlobContainerEncryptionScopeOptions
             {
                 DefaultEncryptionScope = TestConfigDefault.EncryptionScope,
                 PreventEncryptionScopeOverride  = true

@@ -107,7 +107,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FileShareLease> Acquire(
+        public virtual Response<ShareFileLease> Acquire(
             CancellationToken cancellationToken = default) =>
             AcquireInternal(
                 false, // async
@@ -135,7 +135,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileShareLease>> AcquireAsync(
+        public virtual async Task<Response<ShareFileLease>> AcquireAsync(
             CancellationToken cancellationToken = default) =>
             await AcquireInternal(
                 true, // async
@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileShareLease>> AcquireInternal(
+        private async Task<Response<ShareFileLease>> AcquireInternal(
             bool async,
             CancellationToken cancellationToken)
         {
@@ -348,7 +348,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FileShareLease> Change(
+        public virtual Response<ShareFileLease> Change(
             string proposedId,
             CancellationToken cancellationToken = default) =>
             ChangeInternal(
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileShareLease>> ChangeAsync(
+        public virtual async Task<Response<ShareFileLease>> ChangeAsync(
             string proposedId,
             CancellationToken cancellationToken = default) =>
             await ChangeInternal(
@@ -413,7 +413,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileShareLease>> ChangeInternal(
+        private async Task<Response<ShareFileLease>> ChangeInternal(
             string proposedId,
             bool async,
             CancellationToken cancellationToken)
@@ -478,7 +478,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<FileShareLease> Break(
+        public virtual Response<ShareFileLease> Break(
             CancellationToken cancellationToken = default) =>
             BreakInternal(
                 false, // async
@@ -509,7 +509,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<FileShareLease>> BreakAsync(
+        public virtual async Task<Response<ShareFileLease>> BreakAsync(
             CancellationToken cancellationToken = default) =>
             await BreakInternal(
                 true, // async
@@ -543,7 +543,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<FileShareLease>> BreakInternal(
+        private async Task<Response<ShareFileLease>> BreakInternal(
             bool async,
             CancellationToken cancellationToken)
         {
