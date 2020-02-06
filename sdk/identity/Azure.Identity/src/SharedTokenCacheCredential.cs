@@ -19,10 +19,10 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential, IExtendedTokenCredential
     {
-        internal const string NoAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable, no accounts were found in the cache.";
-        internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable, multiple accounts were found in the cache use username and tenant id to disambiguate.";
-        internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable, no account matching the specified{0}{1} was found in the cache.";
-        internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable, multiple accounts matching the specified{0}{1} were found in the cache.";
+        internal const string NoAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.";
+        internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts were found in the cache. Use username and tenant id to disambiguate.";
+        internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No account matching the specified{0}{1} was found in the cache.";
+        internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
 
         private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
@@ -133,7 +133,7 @@ namespace Azure.Identity
             }
             catch (MsalUiRequiredException)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable, token acquisition failed for user {_username}. To fix, re-authenticate through developer tooling supporting Azure single sign on.")));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on.")));
             }
             catch (Exception e)
             {

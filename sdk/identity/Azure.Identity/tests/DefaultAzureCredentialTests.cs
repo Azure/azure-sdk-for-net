@@ -324,34 +324,6 @@ namespace Azure.Identity.Tests
             }
         }
 
-        //[Test]
-        //public void ValidateEnvironmentCredentialUnhandledException()
-        //{
-        //    using (new TestEnvVar("AZURE_CLIENT_ID", Guid.NewGuid().ToString()))
-        //    using (new TestEnvVar("AZURE_CLIENT_SECRET", Guid.NewGuid().ToString()))
-        //    using (new TestEnvVar("AZURE_TENANT_ID", "a7fc734e-9961-43ce-b4de-21b8b38403ba"))
-        //    {
-        //        var defaultCred = new DefaultAzureCredential();
-
-        //        var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await defaultCred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-
-        //        Assert.True(ex.Message.Contains("EnvironmentCredential"));
-        //    }
-
-        //    //var exMessage = "Call to AadIdentityClient failed with a mock exception.";
-
-        //    //var aadClient = new MockAadIdentityClient(() => throw new Exception(exMessage));
-
-        //    //var pipeline = CredentialPipeline.GetInstance(null);
-
-        //    //var clientSecretCred = new ClientSecretCredential(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), pipeline, aadClient);
-
-        //    //var environmentCred = new EnvironmentCredential(pipeline, clientSecretCred);
-
-        //    //var credFactory = new PartialMockDefaultAzureCredentialFactory(pipeline: pipeline, environmentCredential: environmentCred);
-
-        //}
-
         internal class PartialMockDefaultAzureCredentialFactory : DefaultAzureCredentialFactory
         {
             private EnvironmentCredential _environmentCredential;

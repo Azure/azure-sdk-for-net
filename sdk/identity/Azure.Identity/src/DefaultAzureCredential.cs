@@ -117,14 +117,14 @@ namespace Azure.Identity
                 }
             }
 
-            StringBuilder errorMsg = new StringBuilder(DefaultExceptionMessage).Append(" (");
+            StringBuilder errorMsg = new StringBuilder(DefaultExceptionMessage);
 
             foreach (Exception ex in exceptions)
             {
                 errorMsg.Append(" ").Append(ex.Message);
             }
 
-            throw scope.Failed(new CredentialUnavailableException(errorMsg.Append(" )").ToString()));
+            throw scope.Failed(new CredentialUnavailableException(errorMsg.ToString()));
         }
 
 
