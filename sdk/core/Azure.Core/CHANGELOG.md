@@ -4,7 +4,8 @@
 
 - Block bearer token authentication for non TLS protected endpoints.
 - Add support for retrying on request timeouts.
-- Add support for retrying on 408, 500, 502, 504 status codes
+- Add support for retrying on 408, 500, 502, 504 status codes.
+- Remove commit hash from User-Agent telemetry.
 
 ## 1.0.1
 
