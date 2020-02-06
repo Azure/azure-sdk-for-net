@@ -160,6 +160,7 @@ namespace Azure.Core
     public abstract partial class ClientOptions
     {
         protected ClientOptions() { }
+        protected ClientOptions(Azure.Core.ClientOptions other) { }
         public Azure.Core.DiagnosticsOptions Diagnostics { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public Azure.Core.RetryOptions Retry { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelineTransport Transport { get { throw null; } set { } }
