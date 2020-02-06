@@ -33,7 +33,6 @@ known_presence_issues:
   - ['sdk/cognitiveservices/Language.LUIS.Authoring','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Runtime','#5499']
   - ['sdk/cognitiveservices/Language.SpellCheck','#5499']
-  - ['sdk/cognitiveservices/Language.TextAnalytics','#5499']
   - ['sdk/cognitiveservices/Personalizer','#5499']
   - ['sdk/cognitiveservices/Search.BingAutoSuggest','#5499']
   - ['sdk/cognitiveservices/Search.BingCustomImageSearch','#5499']

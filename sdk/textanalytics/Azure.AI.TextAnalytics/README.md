@@ -94,6 +94,7 @@ For each supported operation, `TextAnalyticsClient` provides a method that accep
 **Note:** It is recommended to use the batch methods when working on production environments as they allow you to send one request with multiple text inputs. This is more performant than sending a request per each text input.
 
  ## Examples
+
  The following section provides several code snippets using the `client` [created above](#create-textanalyticsclient), and covers the main functions of Text Analytics.
 
 ### Sync examples
@@ -287,6 +288,7 @@ Headers:
 ```
 
 ## Next Steps
+
 Samples showing how to use the Cognitive Services Text Analytics library are available in this GitHub repository.
 Samples are provided for each main functional area, and for each area, samples are provided for analyzing a single text input, a collection of text input strings, and a collection of text document inputs.
 
