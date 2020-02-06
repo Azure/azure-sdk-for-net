@@ -39,6 +39,7 @@ stages:
   parameters:
     ServiceDirectory: core
     ServiceToBuild: '*'
+    PublishDepReports: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Core
