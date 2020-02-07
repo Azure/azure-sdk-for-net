@@ -35,12 +35,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
     ///
     public abstract class ServiceBusReceiverClient : IAsyncDisposable
     {
-        /// <summary>The size of event batch requested by the background publishing operation used for subscriptions.</summary>
-        private const int BackgroundPublishReceiveBatchSize = 50;
-
-        /// <summary>The maximum wait time for receiving an event batch for the background publishing operation used for subscriptions.</summary>
-        private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
-
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -133,11 +127,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         ///
         public ServiceBusReceiverClient(
-                                      string connectionString,
-                                      string entityName,
-                                      ReceiveMode receiveMode = ReceiveMode.PeekLock,
-                                      string sessionId = null,
-                                      ServiceBusReceiverClientOptions clientOptions = default)
+            string connectionString,
+            string entityName,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            string sessionId = null,
+            ServiceBusReceiverClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
 
@@ -161,12 +155,12 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public ServiceBusReceiverClient(
-                                      string fullyQualifiedNamespace,
-                                      string entityName,
-                                      TokenCredential credential,
-                                      ReceiveMode receiveMode = ReceiveMode.PeekLock,
-                                      string sessionId = null,
-                                      ServiceBusReceiverClientOptions clientOptions = default)
+            string fullyQualifiedNamespace,
+            string entityName,
+            TokenCredential credential,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            string sessionId = null,
+            ServiceBusReceiverClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
@@ -187,8 +181,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal ServiceBusReceiverClient(ServiceBusConnection connection,
-                                      ServiceBusReceiverClientOptions clientOptions = default)
+        internal ServiceBusReceiverClient(
+            ServiceBusConnection connection,
+            ServiceBusReceiverClientOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             //clientOptions = clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions();
@@ -318,10 +313,10 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceInternal(
-                    long fromSequenceNumber,
-                    int maxMessages = 1,
-                    string sessionId = null,
-                    [EnumeratorCancellation]
+            long fromSequenceNumber,
+            int maxMessages = 1,
+            string sessionId = null,
+            [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
             string receiveLinkName = null;
@@ -377,7 +372,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            var result = PeekRangeAsync(10);
+            IAsyncEnumerable<ServiceBusMessage> result = PeekRangeAsync(10);
             await foreach (ServiceBusMessage msg in result.ConfigureAwait(false))
             {
                 yield return msg;
@@ -516,8 +511,10 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// Abandoning a message will increase the delivery count on the message.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
-        public virtual async Task AbandonAsync(string lockToken, IDictionary<string, object> propertiesToModify = null, CancellationToken cancellationToken = default
-            )
+        public virtual async Task AbandonAsync(
+            string lockToken,
+            IDictionary<string, object> propertiesToModify = null,
+            CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
         }

@@ -119,11 +119,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public SubscriptionClient(
-                                      string fullyQualifiedNamespace,
-                                      string subscriptionName,
-                                      TokenCredential credential,
-                                      ReceiveMode receiveMode = ReceiveMode.PeekLock,
-                                      SubscriptionClientOptions clientOptions = default)
+            string fullyQualifiedNamespace,
+            string subscriptionName,
+            TokenCredential credential,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            SubscriptionClientOptions clientOptions = default)
             : base(fullyQualifiedNamespace, subscriptionName, credential, receiveMode)
         {
         }
@@ -143,7 +143,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// Max allowed length of rule name is 50 chars.
         /// </remarks>
         public virtual async Task AddRuleAsync(
-            string ruleName, Filter filter, CancellationToken cancellationToken = default)
+            string ruleName,
+            Filter filter,
+            CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
         }
@@ -160,7 +162,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// You can add multiple rules with distinct names to the same subscription.
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
-        public virtual async Task AddRuleAsync(RuleDescription description, CancellationToken cancellationToken = default)
+        public virtual async Task AddRuleAsync(
+            RuleDescription description,
+            CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
 
@@ -170,7 +174,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// Removes the rule on the subscription identified by <paramref name="ruleName" />.
         /// </summary>
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        public virtual async Task RemoveRuleAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task RemoveRuleAsync(
+            string ruleName,
+            CancellationToken cancellationToken = default)
         {
             await Task.Delay(1).ConfigureAwait(false);
 

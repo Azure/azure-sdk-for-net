@@ -97,11 +97,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         ///
         public SessionReceiverClient(
-        string connectionString,
-        string entityName,
-        string sessionId,
-        ReceiveMode receiveMode = ReceiveMode.PeekLock,
-        SessionReceiverClientOptions clientOptions = default)
+            string connectionString,
+            string entityName,
+            string sessionId,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            SessionReceiverClientOptions clientOptions = default)
         : base(connectionString, entityName, receiveMode, sessionId, clientOptions ?? new SessionReceiverClientOptions())
         {
             SessionId = sessionId;
@@ -137,7 +137,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <returns></returns>
         public override async Task<ServiceBusMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
-            var result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
+            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
             await result.MoveNextAsync().ConfigureAwait(false);
             return result.Current;
         }
@@ -152,7 +152,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             long fromSequenceNumber,
             CancellationToken cancellationToken = default)
         {
-            var result = PeekRangeBySequenceAsync(fromSequenceNumber: fromSequenceNumber).GetAsyncEnumerator();
+            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: fromSequenceNumber).GetAsyncEnumerator();
             await result.MoveNextAsync().ConfigureAwait(false);
             return result.Current;
         }

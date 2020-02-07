@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -477,9 +476,9 @@ namespace Azure.Messaging.ServiceBus.Sender
         private DiagnosticScope CreateDiagnosticScope()
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
-            scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType);
-            scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
-            scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EntityName);
+            scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.ServiceBusSenderType);
+            scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext);
+            scope.AddAttribute(DiagnosticProperty.ServiceBusAttribute, EntityName);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, Connection.ServiceEndpoint);
             scope.Start();
 

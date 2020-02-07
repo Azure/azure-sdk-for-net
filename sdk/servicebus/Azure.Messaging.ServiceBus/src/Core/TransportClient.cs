@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Receiver;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
@@ -117,14 +116,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
         public abstract TransportConsumer CreateConsumer(
-            //string consumerGroup,
-            //                                             string partitionId,
-                                                         //EventPosition eventPosition,
-                                                         ServiceBusRetryPolicy retryPolicy,
-                                                         bool trackLastEnqueuedEventProperties,
-                                                         long? ownerLevel,
-                                                         uint? prefetchCount,
-                                                         string sessionId);
+            ServiceBusRetryPolicy retryPolicy,
+            bool trackLastEnqueuedEventProperties,
+            long? ownerLevel,
+            uint? prefetchCount,
+            string sessionId);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

@@ -12,18 +12,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         public AmqpRequestMessage(string operation, TimeSpan timeout, string trackingId)
         {
-            this.Map = new AmqpMap();
-            this.AmqpMessage = AmqpMessage.Create(new AmqpValue { Value = this.Map });
-            this.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.Operation] = operation;
-            this.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Properties.ServerTimeout] = (uint)timeout.TotalMilliseconds;
-            this.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Properties.TrackingId] = trackingId ?? Guid.NewGuid().ToString();
-
-            //var request = AmqpMessage.Create();
-            //request.ApplicationProperties = new ApplicationProperties();
-            //request.ApplicationProperties.Map[AmqpManagement.ResourceNameKey] = eventHubName;
-            //request.ApplicationProperties.Map[AmqpManagement.OperationKey] = AmqpManagement.ReadOperationValue;
-            //request.ApplicationProperties.Map[AmqpManagement.ResourceTypeKey] = AmqpManagement.EventHubResourceTypeValue;
-            //request.ApplicationProperties.Map[AmqpManagement.SecurityTokenKey] = managementAuthorizationToken;
+            Map = new AmqpMap();
+            AmqpMessage = AmqpMessage.Create(new AmqpValue { Value = this.Map });
+            AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.Operation] = operation;
+            AmqpMessage.ApplicationProperties.Map[ManagementConstants.Properties.ServerTimeout] = (uint)timeout.TotalMilliseconds;
+            AmqpMessage.ApplicationProperties.Map[ManagementConstants.Properties.TrackingId] = trackingId ?? Guid.NewGuid().ToString();
         }
 
         public AmqpMessage AmqpMessage { get; }

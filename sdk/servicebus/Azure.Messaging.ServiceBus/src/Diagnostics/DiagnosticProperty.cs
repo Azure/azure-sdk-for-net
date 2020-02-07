@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     internal static class DiagnosticProperty
     {
         /// <summary>The common root for activity names in the Service Bus context.</summary>
-        public const string BaseActivityName = "Azure.Messaging.EventHubs";
+        public const string BaseActivityName = "Azure.Messaging.ServiceBus";
 
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
         public const string DiagnosticIdAttribute = "Diagnostic-Id";
@@ -22,16 +22,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         public const string ServiceContextAttribute = "component";
 
         /// <summary>The attribute which represents the Event Hub instance to associate with diagnostics information.</summary>
-        public const string EventHubAttribute = "message_bus.destination";
+        public const string ServiceBusAttribute = "message_bus.destination";
 
         /// <summary>The attribute which represents the fully-qualified endpoint address of the Service Bus namespace to associate with diagnostics information.</summary>
         public const string EndpointAttribute = "peer.address";
 
         /// <summary>The value which identifies the Service Bus diagnostics context.</summary>
-        public const string EventHubsServiceContext = "eventhubs";
+        public const string ServiceBusServiceContext = "servicebus";
 
         /// <summary>The value which identifies an Event Hub producer as the type associated with the diagnostics information.</summary>
-        public const string EventHubProducerType = "producer";
+        public const string ServiceBusSenderType = "sender";
 
         /// <summary>The attribute which represents the kind of diagnostic scope.</summary>
         public const string KindAttribute = "kind";
@@ -53,17 +53,5 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// </summary>
         ///
         public static string ProducerActivityName { get; } = $"{ BaseActivityName }.EventHubProducerClient.Send";
-
-        /// <summary>
-        ///   The activity name associated with EventProcessor processing a list of events.
-        /// </summary>
-        ///
-        public static string EventProcessorProcessingActivityName { get; } = $"{ BaseActivityName }.EventProcessorClient.Process";
-
-        /// <summary>
-        ///   The activity name associated with EventProcessor creating a checkpoint.
-        /// </summary>
-        ///
-        public static string EventProcessorCheckpointActivityName { get; } = $"{ BaseActivityName }.EventProcessorClient.Checkpoint";
     }
 }
