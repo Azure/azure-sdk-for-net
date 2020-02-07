@@ -13,18 +13,15 @@ namespace Microsoft.Azure.Management.ResourceManager
 
   internal static partial class SdkInfo
   {
-      public static IEnumerable<Tuple<string, string, string>> ApiInfo_SubscriptionClient
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_ManagementLockClient
       {
           get
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Resources", "Operations", "2019-11-01"),
-                new Tuple<string, string, string>("SubscriptionClient", "Subscriptions", "2019-11-01"),
-                new Tuple<string, string, string>("SubscriptionClient", "Tenants", "2019-11-01"),
+                new Tuple<string, string, string>("Authorization", "ManagementLocks", "2016-09-01"),
               }.AsEnumerable();
           }
       }
   }
 }
-

@@ -22,12 +22,14 @@ namespace Microsoft.Azure.Management.ResourceManager
     using System.Net.Http;
 
     /// <summary>
-    /// All resource groups and resources exist within subscriptions. These
-    /// operation enable you get information about your subscriptions and
-    /// tenants. A tenant is a dedicated instance of Azure Active Directory
-    /// (Azure AD) for your organization.
+    /// Azure resources can be linked together to form logical relationships.
+    /// You can establish links between resources belonging to different
+    /// resource groups. However, all the linked resources must belong to the
+    /// same subscription. Each resource can be linked to 50 other resources.
+    /// If any of the linked resources are deleted or moved, the link owner
+    /// must clean up the remaining link.
     /// </summary>
-    public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient, IAzureClient
+    public partial class ManagementLinkClient : ServiceClient<ManagementLinkClient>, IManagementLinkClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -48,6 +50,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        public string SubscriptionId { get; set; }
 
         /// <summary>
         /// The API version to use for the operation.
@@ -73,46 +80,36 @@ namespace Microsoft.Azure.Management.ResourceManager
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the IResourceLinksOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual IResourceLinksOperations ResourceLinks { get; private set; }
 
         /// <summary>
-        /// Gets the ISubscriptionsOperations.
-        /// </summary>
-        public virtual ISubscriptionsOperations Subscriptions { get; private set; }
-
-        /// <summary>
-        /// Gets the ITenantsOperations.
-        /// </summary>
-        public virtual ITenantsOperations Tenants { get; private set; }
-
-        /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SubscriptionClient.Dispose(). False: will not dispose provided httpClient</param>
-        protected SubscriptionClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling ManagementLinkClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ManagementLinkClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SubscriptionClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected ManagementLinkClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -120,13 +117,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected SubscriptionClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected ManagementLinkClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -137,7 +134,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected SubscriptionClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected ManagementLinkClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -147,7 +144,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -161,7 +158,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected SubscriptionClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected ManagementLinkClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -171,7 +168,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -182,7 +179,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SubscriptionClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ManagementLinkClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -196,7 +193,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -205,11 +202,11 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling SubscriptionClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// True: will dispose the provided httpClient on calling ManagementLinkClient.Dispose(). False: will not dispose provided httpClient</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SubscriptionClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        public ManagementLinkClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -223,7 +220,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -237,7 +234,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SubscriptionClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ManagementLinkClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -251,7 +248,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -265,7 +262,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SubscriptionClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        public ManagementLinkClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -284,7 +281,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionClient class.
+        /// Initializes a new instance of the ManagementLinkClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -301,7 +298,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public SubscriptionClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public ManagementLinkClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -328,10 +325,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         private void Initialize()
         {
-            Subscriptions = new SubscriptionsOperations(this);
-            Tenants = new TenantsOperations(this);
+            ResourceLinks = new ResourceLinksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-11-01";
+            ApiVersion = "2016-09-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
