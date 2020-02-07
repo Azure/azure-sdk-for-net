@@ -1,0 +1,3180 @@
+!<!CodeModel> 
+schemas: !<!Schemas> 
+  objects:
+  - !<!ObjectSchema> &ref_55
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_26
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        language: !<!Languages> 
+          default:
+            name: TableQueryResponse-odata.metadata
+            description: The metadata response of the table.
+        protocol: !<!Protocols> {}
+      serializedName: odata.metadata
+      language: !<!Languages> 
+        default:
+          name: odataMetadata
+          description: The metadata response of the table.
+          originalName: odata.metadata
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!ArraySchema> &ref_11
+        type: array
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        elementType: !<!ObjectSchema> &ref_0
+          type: object
+          apiVersions:
+          - !<!ApiVersion> 
+            version: '2018-10-10'
+          children: !<!Relations> 
+            all:
+            - !<!ObjectSchema> &ref_1
+              type: object
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              parents: !<!Relations> 
+                all:
+                - *ref_0
+                immediate:
+                - *ref_0
+              properties:
+              - !<!Property> 
+                schema: !<!StringSchema> &ref_32
+                  type: string
+                  apiVersions:
+                  - !<!ApiVersion> 
+                    version: '2018-10-10'
+                  language: !<!Languages> 
+                    default:
+                      name: TableResponse-odata.metadata
+                      description: The metadata response of the table.
+                  protocol: !<!Protocols> {}
+                serializedName: odata.metadata
+                language: !<!Languages> 
+                  default:
+                    name: odataMetadata
+                    description: The metadata response of the table.
+                    originalName: odata.metadata
+                protocol: !<!Protocols> {}
+              language: !<!Languages> 
+                default:
+                  name: TableResponse
+                  description: The response for a single table.
+                  namespace: Api20181010
+              protocol: !<!Protocols> {}
+            immediate:
+            - *ref_1
+          properties:
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_27
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: TableResponseProperties-TableName
+                  description: The name of the table.
+              protocol: !<!Protocols> {}
+            serializedName: TableName
+            language: !<!Languages> 
+              default:
+                name: TableName
+                description: The name of the table.
+                originalName: TableName
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_28
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: TableResponseProperties-odata.type
+                  description: The odata type of the table.
+              protocol: !<!Protocols> {}
+            serializedName: odata.type
+            language: !<!Languages> 
+              default:
+                name: odataType
+                description: The odata type of the table.
+                originalName: odata.type
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_29
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: TableResponseProperties-odata.id
+                  description: The id of the table.
+              protocol: !<!Protocols> {}
+            serializedName: odata.id
+            language: !<!Languages> 
+              default:
+                name: odataId
+                description: The id of the table.
+                originalName: odata.id
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_30
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: TableResponseProperties-odata.editLink
+                  description: The edit link of the table.
+              protocol: !<!Protocols> {}
+            serializedName: odata.editLink
+            language: !<!Languages> 
+              default:
+                name: odataEditLink
+                description: The edit link of the table.
+                originalName: odata.editLink
+            protocol: !<!Protocols> {}
+          language: !<!Languages> 
+            default:
+              name: TableResponseProperties
+              description: The properties for the table response.
+              namespace: Api20181010
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: TableQueryResponse-value
+            description: List of tables.
+        protocol: !<!Protocols> {}
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: List of tables.
+          originalName: value
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: TableQueryResponse
+        description: The properties for the table query response.
+        namespace: Api20181010
+    protocol: !<!Protocols> {}
+  - *ref_0
+  - !<!ObjectSchema> &ref_59
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_31
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        language: !<!Languages> 
+          default:
+            name: TableProperties-TableName
+            description: The name of the table to create.
+        protocol: !<!Protocols> {}
+      serializedName: TableName
+      language: !<!Languages> 
+        default:
+          name: TableName
+          description: The name of the table to create.
+          originalName: TableName
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: TableProperties
+        description: The properties for creating a table.
+        namespace: Api20181010
+    protocol: !<!Protocols> {}
+  - *ref_1
+  - !<!ObjectSchema> &ref_63
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_33
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        language: !<!Languages> 
+          default:
+            name: StorageError-Message
+            description: ''
+        protocol: !<!Protocols> {}
+      serializedName: Message
+      language: !<!Languages> 
+        default:
+          name: Message
+          description: ''
+          originalName: Message
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: StorageError
+        description: ''
+        namespace: Api20181010
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_79
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_34
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        language: !<!Languages> 
+          default:
+            name: TableEntityQueryResponse-odata.metadata
+            description: The metadata response of the table.
+        protocol: !<!Protocols> {}
+      serializedName: odata.metadata
+      language: !<!Languages> 
+        default:
+          name: odataMetadata
+          description: The metadata response of the table.
+          originalName: odata.metadata
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!ArraySchema> &ref_12
+        type: array
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        elementType: !<!DictionarySchema> &ref_8
+          type: dictionary
+          elementType: !<!AnySchema> 
+            type: any
+            language: !<!Languages> 
+              default:
+                name: any
+                description: <Any object>
+            protocol: !<!Protocols> {}
+          language: !<!Languages> 
+            default:
+              name: TableEntityProperties
+              description: The other properties of the table entity
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: TableEntityQueryResponse-value
+            description: List of table entities.
+        protocol: !<!Protocols> {}
+      serializedName: value
+      language: !<!Languages> 
+        default:
+          name: value
+          description: List of table entities.
+          originalName: value
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: TableEntityQueryResponse
+        description: The properties for the table entity query response.
+        namespace: Api20181010
+    protocol: !<!Protocols> {}
+  - !<!ObjectSchema> &ref_13
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    properties:
+    - !<!Property> 
+      schema: !<!StringSchema> &ref_35
+        type: string
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        language: !<!Languages> 
+          default:
+            name: SignedIdentifier-Id
+            description: a unique id
+        protocol: !<!Protocols> {}
+      required: true
+      serializedName: Id
+      language: !<!Languages> 
+        default:
+          name: Id
+          description: a unique id
+          originalName: Id
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!ObjectSchema> &ref_2
+        type: object
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        properties:
+        - !<!Property> 
+          schema: !<!DateTimeSchema> &ref_21
+            type: date-time
+            format: date-time
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            language: !<!Languages> 
+              default:
+                name: AccessPolicy-Start
+                description: the date-time the policy is active
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Start
+          language: !<!Languages> 
+            default:
+              name: Start
+              description: the date-time the policy is active
+              originalName: Start
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!DateTimeSchema> &ref_22
+            type: date-time
+            format: date-time
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            language: !<!Languages> 
+              default:
+                name: AccessPolicy-Expiry
+                description: the date-time the policy expires
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Expiry
+          language: !<!Languages> 
+            default:
+              name: Expiry
+              description: the date-time the policy expires
+              originalName: Expiry
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!StringSchema> &ref_36
+            type: string
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            language: !<!Languages> 
+              default:
+                name: AccessPolicy-Permission
+                description: the permissions for the acl policy
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Permission
+          language: !<!Languages> 
+            default:
+              name: Permission
+              description: the permissions for the acl policy
+              originalName: Permission
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: AccessPolicy
+            description: An Access policy
+            namespace: Api20181010
+        protocol: !<!Protocols> {}
+      required: true
+      serializedName: AccessPolicy
+      language: !<!Languages> 
+        default:
+          name: AccessPolicy
+          description: An Access policy
+          originalName: AccessPolicy
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: SignedIdentifier
+        description: signed identifier
+        namespace: Api20181010
+    protocol: !<!Protocols> {}
+  - *ref_2
+  - !<!ObjectSchema> &ref_124
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    properties:
+    - !<!Property> 
+      schema: !<!ObjectSchema> &ref_5
+        type: object
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        properties:
+        - !<!Property> 
+          schema: !<!StringSchema> &ref_37
+            type: string
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            language: !<!Languages> 
+              default:
+                name: Logging-Version
+                description: The version of Storage Analytics to configure.
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Version
+          language: !<!Languages> 
+            default:
+              name: Version
+              description: The version of Storage Analytics to configure.
+              originalName: Version
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!BooleanSchema> &ref_15
+            type: boolean
+            language: !<!Languages> 
+              default:
+                name: typeForDelete
+                description: Indicates whether all delete requests should be logged.
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Delete
+          language: !<!Languages> 
+            default:
+              name: Delete
+              description: Indicates whether all delete requests should be logged.
+              originalName: Delete
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!BooleanSchema> &ref_16
+            type: boolean
+            language: !<!Languages> 
+              default:
+                name: typeForRead
+                description: Indicates whether all read requests should be logged.
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Read
+          language: !<!Languages> 
+            default:
+              name: Read
+              description: Indicates whether all read requests should be logged.
+              originalName: Read
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!BooleanSchema> &ref_17
+            type: boolean
+            language: !<!Languages> 
+              default:
+                name: typeForWrite
+                description: Indicates whether all write requests should be logged.
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Write
+          language: !<!Languages> 
+            default:
+              name: Write
+              description: Indicates whether all write requests should be logged.
+              originalName: Write
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!ObjectSchema> &ref_3
+            type: object
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            properties:
+            - !<!Property> 
+              schema: !<!BooleanSchema> &ref_18
+                type: boolean
+                language: !<!Languages> 
+                  default:
+                    name: typeForEnabled
+                    description: Indicates whether a retention policy is enabled for the storage service
+                protocol: !<!Protocols> {}
+              required: true
+              serializedName: Enabled
+              language: !<!Languages> 
+                default:
+                  name: Enabled
+                  description: Indicates whether a retention policy is enabled for the storage service
+                  originalName: Enabled
+              protocol: !<!Protocols> {}
+            - !<!Property> 
+              schema: !<!NumberSchema> &ref_24
+                type: integer
+                minimum: 1
+                precision: 32
+                language: !<!Languages> 
+                  default:
+                    name: typeForDays
+                    description: Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
+                protocol: !<!Protocols> {}
+              required: false
+              serializedName: Days
+              language: !<!Languages> 
+                default:
+                  name: Days
+                  description: Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted
+                  originalName: Days
+              protocol: !<!Protocols> {}
+            language: !<!Languages> 
+              default:
+                name: RetentionPolicy
+                description: the retention policy
+                namespace: Api20181010
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: RetentionPolicy
+          language: !<!Languages> 
+            default:
+              name: RetentionPolicy
+              description: the retention policy
+              originalName: RetentionPolicy
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: Logging
+            description: Azure Analytics Logging settings.
+            namespace: Api20181010
+        protocol: !<!Protocols> {}
+      serializedName: Logging
+      language: !<!Languages> 
+        default:
+          name: Logging
+          description: Azure Analytics Logging settings.
+          originalName: Logging
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!ObjectSchema> &ref_4
+        type: object
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        properties:
+        - !<!Property> 
+          schema: !<!StringSchema> &ref_38
+            type: string
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            language: !<!Languages> 
+              default:
+                name: Metrics-Version
+                description: The version of Storage Analytics to configure.
+            protocol: !<!Protocols> {}
+          required: false
+          serializedName: Version
+          language: !<!Languages> 
+            default:
+              name: Version
+              description: The version of Storage Analytics to configure.
+              originalName: Version
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!BooleanSchema> &ref_19
+            type: boolean
+            language: !<!Languages> 
+              default:
+                name: typeForEnabled
+                description: Indicates whether metrics are enabled for the Queue service.
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Enabled
+          language: !<!Languages> 
+            default:
+              name: Enabled
+              description: Indicates whether metrics are enabled for the Queue service.
+              originalName: Enabled
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!BooleanSchema> &ref_20
+            type: boolean
+            language: !<!Languages> 
+              default:
+                name: typeForIncludeAPIs
+                description: Indicates whether metrics should generate summary statistics for called API operations.
+            protocol: !<!Protocols> {}
+          required: false
+          serializedName: IncludeAPIs
+          language: !<!Languages> 
+            default:
+              name: IncludeAPIs
+              description: Indicates whether metrics should generate summary statistics for called API operations.
+              originalName: IncludeAPIs
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: *ref_3
+          required: false
+          serializedName: RetentionPolicy
+          language: !<!Languages> 
+            default:
+              name: RetentionPolicy
+              description: the retention policy
+              originalName: RetentionPolicy
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: Metrics
+            description: ''
+            namespace: Api20181010
+        protocol: !<!Protocols> {}
+      serializedName: HourMetrics
+      language: !<!Languages> 
+        default:
+          name: HourMetrics
+          description: ''
+          originalName: HourMetrics
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: *ref_4
+      serializedName: MinuteMetrics
+      language: !<!Languages> 
+        default:
+          name: MinuteMetrics
+          description: ''
+          originalName: MinuteMetrics
+      protocol: !<!Protocols> {}
+    - !<!Property> 
+      schema: !<!ArraySchema> &ref_14
+        type: array
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        elementType: !<!ObjectSchema> &ref_6
+          type: object
+          apiVersions:
+          - !<!ApiVersion> 
+            version: '2018-10-10'
+          properties:
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_39
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: CorsRule-AllowedOrigins
+                  description: >-
+                    The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match
+                    with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
+              protocol: !<!Protocols> {}
+            required: true
+            serializedName: AllowedOrigins
+            language: !<!Languages> 
+              default:
+                name: AllowedOrigins
+                description: >-
+                  The origin domains that are permitted to make a request against the storage service via CORS. The origin domain is the domain from which the request originates. Note that the origin must be an exact case-sensitive match
+                  with the origin that the user age sends to the service. You can also use the wildcard character '*' to allow all origin domains to make requests via CORS.
+                originalName: AllowedOrigins
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_40
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: CorsRule-AllowedMethods
+                  description: The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+              protocol: !<!Protocols> {}
+            required: true
+            serializedName: AllowedMethods
+            language: !<!Languages> 
+              default:
+                name: AllowedMethods
+                description: The methods (HTTP request verbs) that the origin domain may use for a CORS request. (comma separated)
+                originalName: AllowedMethods
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_41
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: CorsRule-AllowedHeaders
+                  description: the request headers that the origin domain may specify on the CORS request.
+              protocol: !<!Protocols> {}
+            required: true
+            serializedName: AllowedHeaders
+            language: !<!Languages> 
+              default:
+                name: AllowedHeaders
+                description: the request headers that the origin domain may specify on the CORS request.
+                originalName: AllowedHeaders
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!StringSchema> &ref_42
+              type: string
+              apiVersions:
+              - !<!ApiVersion> 
+                version: '2018-10-10'
+              language: !<!Languages> 
+                default:
+                  name: CorsRule-ExposedHeaders
+                  description: The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+              protocol: !<!Protocols> {}
+            required: true
+            serializedName: ExposedHeaders
+            language: !<!Languages> 
+              default:
+                name: ExposedHeaders
+                description: The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer
+                originalName: ExposedHeaders
+            protocol: !<!Protocols> {}
+          - !<!Property> 
+            schema: !<!NumberSchema> &ref_25
+              type: integer
+              minimum: 0
+              precision: 32
+              language: !<!Languages> 
+                default:
+                  name: typeForMaxAgeInSeconds
+                  description: The maximum amount time that a browser should cache the preflight OPTIONS request.
+              protocol: !<!Protocols> {}
+            required: true
+            serializedName: MaxAgeInSeconds
+            language: !<!Languages> 
+              default:
+                name: MaxAgeInSeconds
+                description: The maximum amount time that a browser should cache the preflight OPTIONS request.
+                originalName: MaxAgeInSeconds
+            protocol: !<!Protocols> {}
+          language: !<!Languages> 
+            default:
+              name: CorsRule
+              description: >-
+                CORS is an HTTP feature that enables a web application running under one domain to access resources in another domain. Web browsers implement a security restriction known as same-origin policy that prevents a web page from
+                calling APIs in a different domain; CORS provides a secure way to allow one domain (the origin domain) to call APIs in another domain
+              namespace: Api20181010
+          protocol: !<!Protocols> {}
+        serialization:
+          xml:
+            attribute: false
+            wrapped: true
+        language: !<!Languages> 
+          default:
+            name: StorageServiceProperties-Cors
+            description: The set of CORS rules.
+        protocol: !<!Protocols> {}
+      serializedName: Cors
+      language: !<!Languages> 
+        default:
+          name: Cors
+          description: The set of CORS rules.
+          originalName: Cors
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: StorageServiceProperties
+        description: Storage Service Properties.
+        namespace: Api20181010
+    protocol: !<!Protocols> {}
+  - *ref_5
+  - *ref_3
+  - *ref_4
+  - *ref_6
+  - !<!ObjectSchema> &ref_135
+    type: object
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    properties:
+    - !<!Property> 
+      schema: !<!ObjectSchema> &ref_7
+        type: object
+        apiVersions:
+        - !<!ApiVersion> 
+          version: '2018-10-10'
+        properties:
+        - !<!Property> 
+          schema: !<!ChoiceSchema> &ref_10
+            choices:
+            - !<!ChoiceValue> 
+              value: live
+              language:
+                default:
+                  name: live
+                  description: ''
+            - !<!ChoiceValue> 
+              value: bootstrap
+              language:
+                default:
+                  name: bootstrap
+                  description: ''
+            - !<!ChoiceValue> 
+              value: unavailable
+              language:
+                default:
+                  name: unavailable
+                  description: ''
+            type: choice
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            choiceType: !<!StringSchema> &ref_9
+              type: string
+              language: !<!Languages> 
+                default:
+                  name: string
+                  description: simple string
+              protocol: !<!Protocols> {}
+            language: !<!Languages> 
+              default:
+                name: GeoReplicationStatusType
+                description: The status of the secondary location
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: Status
+          language: !<!Languages> 
+            default:
+              name: Status
+              description: The status of the secondary location
+              originalName: Status
+          protocol: !<!Protocols> {}
+        - !<!Property> 
+          schema: !<!DateTimeSchema> &ref_23
+            type: date-time
+            format: date-time-rfc1123
+            apiVersions:
+            - !<!ApiVersion> 
+              version: '2018-10-10'
+            language: !<!Languages> 
+              default:
+                name: GeoReplication-LastSyncTime
+                description: >-
+                  A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for
+                  reads.
+            protocol: !<!Protocols> {}
+          required: true
+          serializedName: LastSyncTime
+          language: !<!Languages> 
+            default:
+              name: LastSyncTime
+              description: >-
+                A GMT date/time value, to the second. All primary writes preceding this value are guaranteed to be available for read operations at the secondary. Primary writes after this point in time may or may not be available for
+                reads.
+              originalName: LastSyncTime
+          protocol: !<!Protocols> {}
+        language: !<!Languages> 
+          default:
+            name: GeoReplication
+            description: ''
+            namespace: Api20181010
+        protocol: !<!Protocols> {}
+      serializedName: GeoReplication
+      language: !<!Languages> 
+        default:
+          name: GeoReplication
+          description: ''
+          originalName: GeoReplication
+      protocol: !<!Protocols> {}
+    language: !<!Languages> 
+      default:
+        name: StorageServiceStats
+        description: Stats for the storage service.
+        namespace: Api20181010
+    protocol: !<!Protocols> {}
+  - *ref_7
+  dictionaries:
+  - *ref_8
+  choices:
+  - !<!ChoiceSchema> &ref_48
+    choices:
+    - !<!ChoiceValue> 
+      value: application/json;odata=nometadata
+      language:
+        default:
+          name: application/json;odata=nometadata
+          description: ''
+    - !<!ChoiceValue> 
+      value: application/json;odata=minimalmetadata
+      language:
+        default:
+          name: application/json;odata=minimalmetadata
+          description: ''
+    - !<!ChoiceValue> 
+      value: application/json;odata=fullmetadata
+      language:
+        default:
+          name: application/json;odata=fullmetadata
+          description: ''
+    type: choice
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    choiceType: *ref_9
+    language: !<!Languages> 
+      default:
+        name: Enum0
+        description: ''
+    protocol: !<!Protocols> {}
+  - *ref_10
+  arrays:
+  - *ref_11
+  - *ref_12
+  - !<!ArraySchema> &ref_115
+    type: array
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    elementType: *ref_13
+    serialization:
+      xml:
+        name: SignedIdentifiers
+        attribute: false
+        wrapped: true
+    language: !<!Languages> 
+      default:
+        name: SignedIdentifiers
+        description: a collection of signed identifiers
+    protocol: !<!Protocols> {}
+  - *ref_14
+  booleans:
+  - *ref_15
+  - *ref_16
+  - *ref_17
+  - *ref_18
+  - *ref_19
+  - *ref_20
+  constants:
+  - !<!ConstantSchema> &ref_43
+    type: constant
+    value: !<!ConstantValue> 
+      value: '2018-10-10'
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_9
+    language: !<!Languages> 
+      default:
+        name: Constant1
+        description: ''
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> &ref_47
+    type: constant
+    value: !<!ConstantValue> 
+      value: '3.0'
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_9
+    language: !<!Languages> 
+      default:
+        name: Constant2
+        description: ''
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> &ref_111
+    type: constant
+    value: !<!ConstantValue> 
+      value: acl
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_9
+    language: !<!Languages> 
+      default:
+        name: Constant3
+        description: ''
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> &ref_121
+    type: constant
+    value: !<!ConstantValue> 
+      value: service
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_9
+    language: !<!Languages> 
+      default:
+        name: Constant4
+        description: ''
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> &ref_122
+    type: constant
+    value: !<!ConstantValue> 
+      value: properties
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_9
+    language: !<!Languages> 
+      default:
+        name: Constant5
+        description: ''
+    protocol: !<!Protocols> {}
+  - !<!ConstantSchema> &ref_131
+    type: constant
+    value: !<!ConstantValue> 
+      value: stats
+      language:
+        default:
+          name: ''
+          description: ''
+    valueType: *ref_9
+    language: !<!Languages> 
+      default:
+        name: Constant6
+        description: ''
+    protocol: !<!Protocols> {}
+  dateTimes:
+  - !<!DateTimeSchema> &ref_56
+    type: date-time
+    format: date-time-rfc1123
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    language: !<!Languages> 
+      default:
+        name: date-time
+        description: ''
+        header: Date
+    protocol: !<!Protocols> {}
+  - *ref_21
+  - *ref_22
+  - *ref_23
+  numbers:
+  - !<!NumberSchema> &ref_49
+    type: integer
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    minimum: 0
+    precision: 32
+    language: !<!Languages> 
+      default:
+        name: integer
+        description: ''
+    protocol: !<!Protocols> {}
+  - !<!NumberSchema> &ref_67
+    type: integer
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    minimum: 0
+    precision: 32
+    language: !<!Languages> 
+      default:
+        name: integer
+        description: ''
+    protocol: !<!Protocols> {}
+  - *ref_24
+  - *ref_25
+  strings:
+  - *ref_9
+  - !<!StringSchema> &ref_46
+    type: string
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    language: !<!Languages> 
+      default:
+        name: string
+        description: ''
+        header: x-ms-error-code
+    protocol: !<!Protocols> {}
+  - *ref_26
+  - *ref_27
+  - *ref_28
+  - *ref_29
+  - *ref_30
+  - *ref_31
+  - *ref_32
+  - *ref_33
+  - *ref_34
+  - *ref_35
+  - *ref_36
+  - *ref_37
+  - *ref_38
+  - *ref_39
+  - *ref_40
+  - *ref_41
+  - *ref_42
+globalParameters:
+- !<!Parameter> &ref_44
+  schema: *ref_9
+  implementation: Client
+  required: true
+  extensions:
+    x-in: path
+    x-ms-priority: 0
+    x-ms-skip-url-encoding: true
+    x-name: url
+    x-required: true
+    x-type: string
+  language: !<!Languages> 
+    default:
+      name: url
+      description: The URL of the service account or table that is the targe of the desired operation.
+      serializedName: url
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: uri
+- !<!Parameter> &ref_45
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_57
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_64
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_68
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_80
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_89
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_97
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_104
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_110
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_116
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_123
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_128
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+- !<!Parameter> &ref_132
+  schema: *ref_43
+  implementation: Client
+  required: true
+  extensions:
+    x-ms-priority: 1
+  language: !<!Languages> 
+    default:
+      name: version
+      description: Specifies the version of the operation to use for this request.
+      serializedName: x-ms-version
+  protocol: !<!Protocols> 
+    http: !<!HttpParameter> 
+      in: header
+info: !<!Info> 
+  title: Azure.Storage.Tables
+operationGroups:
+- !<!OperationGroup> 
+  $key: Table
+  operations:
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - *ref_45
+      - !<!Parameter> &ref_50
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> 
+        schema: *ref_47
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: DataServiceVersion
+            description: Specifies the data service version
+            serializedName: DataServiceVersion
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_51
+        schema: *ref_48
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: &ref_58
+            name: QueryOptions
+        language: !<!Languages> 
+          default:
+            name: Format
+            description: Specifies the media type for the response
+            serializedName: $format
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_52
+        schema: *ref_49
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: &ref_69
+            name: QueryOptions
+        language: !<!Languages> 
+          default:
+            name: Top
+            description: Maximum number of records to return.
+            serializedName: $top
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_53
+        schema: *ref_46
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: &ref_70
+            name: QueryOptions
+        language: !<!Languages> 
+          default:
+            name: Select
+            description: 'Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".'
+            serializedName: $select
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_54
+        schema: *ref_46
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: &ref_71
+            name: QueryOptions
+        language: !<!Languages> 
+          default:
+            name: Filter
+            description: OData filter expression.
+            serializedName: $filter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      signatureParameters:
+      - *ref_50
+      - *ref_51
+      - *ref_52
+      - *ref_53
+      - *ref_54
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /Tables
+          method: get
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_55
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-continuation-NextTableName
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - '200'
+    language: !<!Languages> 
+      default:
+        name: Query
+        description: Queries tables under the given account.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - *ref_57
+      - !<!Parameter> &ref_60
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> 
+        schema: *ref_47
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: DataServiceVersion
+            description: Specifies the data service version
+            serializedName: DataServiceVersion
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_61
+        schema: *ref_48
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_58
+        language: !<!Languages> 
+          default:
+            name: Format
+            description: Specifies the media type for the response
+            serializedName: $format
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_62
+        schema: *ref_59
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: tableProperties
+        language: !<!Languages> 
+          default:
+            name: tableProperties
+            description: The Table properties.
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      signatureParameters:
+      - *ref_60
+      - *ref_61
+      - *ref_62
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /Tables
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_1
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - '201'
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          statusCodes:
+          - '204'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 4
+    language: !<!Languages> 
+      default:
+        name: Create
+        description: Creates a new table under the given account.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - *ref_64
+      - !<!Parameter> &ref_65
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_66
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      signatureParameters:
+      - *ref_65
+      - *ref_66
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/Tables(''{table}'')'
+          method: delete
+          uri: '{url}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          statusCodes:
+          - '204'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: Delete
+        description: Operation permanently deletes the specified table
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> &ref_72
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_68
+      - !<!Parameter> &ref_73
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> 
+        schema: *ref_47
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: DataServiceVersion
+            description: Specifies the data service version
+            serializedName: DataServiceVersion
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_74
+        schema: *ref_48
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_58
+        language: !<!Languages> 
+          default:
+            name: Format
+            description: Specifies the media type for the response
+            serializedName: $format
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_75
+        schema: *ref_49
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_69
+        language: !<!Languages> 
+          default:
+            name: Top
+            description: Maximum number of records to return.
+            serializedName: $top
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_76
+        schema: *ref_46
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_70
+        language: !<!Languages> 
+          default:
+            name: Select
+            description: 'Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".'
+            serializedName: $select
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_77
+        schema: *ref_46
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_71
+        language: !<!Languages> 
+          default:
+            name: Filter
+            description: OData filter expression.
+            serializedName: $filter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_78
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      signatureParameters:
+      - *ref_72
+      - *ref_73
+      - *ref_74
+      - *ref_75
+      - *ref_76
+      - *ref_77
+      - *ref_78
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/{table}()'
+          method: get
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_79
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-continuation-NextTableName
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: QueryEntities
+        description: Queries entities in a table.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> &ref_81
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_80
+      - !<!Parameter> &ref_82
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> 
+        schema: *ref_47
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: DataServiceVersion
+            description: Specifies the data service version
+            serializedName: DataServiceVersion
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_83
+        schema: *ref_48
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_58
+        language: !<!Languages> 
+          default:
+            name: Format
+            description: Specifies the media type for the response
+            serializedName: $format
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_84
+        schema: *ref_46
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_70
+        language: !<!Languages> 
+          default:
+            name: Select
+            description: 'Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId".'
+            serializedName: $select
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_85
+        schema: *ref_46
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_71
+        language: !<!Languages> 
+          default:
+            name: Filter
+            description: OData filter expression.
+            serializedName: $filter
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_86
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_87
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: partitionKey
+            description: The partition key of the entity
+            serializedName: partitionKey
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_88
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: rowKey
+            description: The row key of the entity
+            serializedName: rowKey
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      signatureParameters:
+      - *ref_81
+      - *ref_82
+      - *ref_83
+      - *ref_84
+      - *ref_85
+      - *ref_86
+      - *ref_87
+      - *ref_88
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/{table}(PartitionKey=''{partitionKey}'',RowKey=''{rowKey}'')'
+          method: get
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_79
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-continuation-NextTableName
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: QueryEntitiesWithPartitionAndRowKey
+        description: Queries entities in a table.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> &ref_90
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_89
+      - !<!Parameter> &ref_91
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> 
+        schema: *ref_47
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: DataServiceVersion
+            description: Specifies the data service version
+            serializedName: DataServiceVersion
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_92
+        schema: *ref_48
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_58
+        language: !<!Languages> 
+          default:
+            name: Format
+            description: Specifies the media type for the response
+            serializedName: $format
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_93
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_94
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: partitionKey
+            description: The partition key of the entity
+            serializedName: partitionKey
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_95
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: rowKey
+            description: The row key of the entity
+            serializedName: rowKey
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_96
+        schema: *ref_8
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: tableEntityProperties
+        language: !<!Languages> 
+          default:
+            name: tableEntityProperties
+            description: The properties for the table entity
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      signatureParameters:
+      - *ref_90
+      - *ref_91
+      - *ref_92
+      - *ref_93
+      - *ref_94
+      - *ref_95
+      - *ref_96
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: '/{table}(PartitionKey=''{partitionKey}'',RowKey=''{rowKey}'')'
+          method: put
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          uri: '{url}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 5
+    language: !<!Languages> 
+      default:
+        name: UpdateEntity
+        description: Update entity in a table.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> &ref_98
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_97
+      - !<!Parameter> &ref_99
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> 
+        schema: *ref_47
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: DataServiceVersion
+            description: Specifies the data service version
+            serializedName: DataServiceVersion
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_100
+        schema: *ref_48
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_58
+        language: !<!Languages> 
+          default:
+            name: Format
+            description: Specifies the media type for the response
+            serializedName: $format
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_101
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_102
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: partitionKey
+            description: The partition key of the entity
+            serializedName: partitionKey
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_103
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: rowKey
+            description: The row key of the entity
+            serializedName: rowKey
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      signatureParameters:
+      - *ref_98
+      - *ref_99
+      - *ref_100
+      - *ref_101
+      - *ref_102
+      - *ref_103
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/{table}(PartitionKey=''{partitionKey}'',RowKey=''{rowKey}'')'
+          method: delete
+          uri: '{url}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          statusCodes:
+          - '204'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: DeleteEntity
+        description: Deletes the specified entity in a table.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> &ref_105
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_104
+      - !<!Parameter> &ref_106
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> 
+        schema: *ref_47
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: DataServiceVersion
+            description: Specifies the data service version
+            serializedName: DataServiceVersion
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_107
+        schema: *ref_48
+        implementation: Method
+        extensions:
+          x-ms-parameter-grouping: *ref_58
+        language: !<!Languages> 
+          default:
+            name: Format
+            description: Specifies the media type for the response
+            serializedName: $format
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_108
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> &ref_109
+        schema: *ref_8
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: tableEntityProperties
+        language: !<!Languages> 
+          default:
+            name: tableEntityProperties
+            description: The properties for the table entity
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      signatureParameters:
+      - *ref_105
+      - *ref_106
+      - *ref_107
+      - *ref_108
+      - *ref_109
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: '/{table}'
+          method: post
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_8
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - '201'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: json
+          mediaTypes:
+          - application/json;odata=fullmetadata
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 5
+    language: !<!Languages> 
+      default:
+        name: InsertEntity
+        description: Insert entity in a table.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> &ref_112
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_110
+      - !<!Parameter> &ref_113
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_114
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> 
+        schema: *ref_111
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: comp
+            description: Required query string to handle stored access policies for the table that may be used with Shared Access Signatures
+            serializedName: comp
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      signatureParameters:
+      - *ref_112
+      - *ref_113
+      - *ref_114
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: '/{table}'
+          method: get
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_115
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: GetAccessPolicy
+        description: Retrieves details about any stored access policies specified on the table that may be used wit Shared Access Signatures.
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> &ref_117
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_116
+      - !<!Parameter> &ref_118
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_119
+        schema: *ref_46
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: table
+            description: The name of the table
+            serializedName: table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: path
+      - !<!Parameter> 
+        schema: *ref_111
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: comp
+            description: Required query string to handle stored access policies for the table that may be used with Shared Access Signatures
+            serializedName: comp
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_120
+        schema: *ref_115
+        implementation: Method
+        extensions:
+          x-ms-requestBody-name: tableAcl
+        language: !<!Languages> 
+          default:
+            name: tableAcl
+            description: the acls for the table
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      signatureParameters:
+      - *ref_117
+      - *ref_118
+      - *ref_119
+      - *ref_120
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: '/{table}'
+          method: put
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          uri: '{url}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          statusCodes:
+          - '204'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: SetAccessPolicy
+        description: sets stored access policies for the table that may be used with Shared Access Signatures
+    protocol: !<!Protocols> {}
+  language: !<!Languages> 
+    default:
+      name: Table
+      description: ''
+  protocol: !<!Protocols> {}
+- !<!OperationGroup> 
+  $key: Service
+  operations:
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> 
+        schema: *ref_121
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: restype
+            description: Required query string to set the storage service properties
+            serializedName: restype
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> 
+        schema: *ref_122
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: comp
+            description: Required query string to set the storage service properties
+            serializedName: comp
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_125
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_123
+      - !<!Parameter> &ref_126
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      - !<!Parameter> &ref_127
+        schema: *ref_124
+        implementation: Method
+        required: true
+        extensions:
+          x-ms-requestBody-name: storageServiceProperties
+        language: !<!Languages> 
+          default:
+            name: storageServiceProperties
+            description: The StorageService properties.
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: body
+            style: json
+      signatureParameters:
+      - *ref_125
+      - *ref_126
+      - *ref_127
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpWithBodyRequest> 
+          path: /
+          method: put
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          uri: '{url}'
+    responses:
+    - !<!Response> 
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          statusCodes:
+          - '202'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - default
+    extensions:
+      x-ms-requestBody-index: 0
+    language: !<!Languages> 
+      default:
+        name: SetProperties
+        description: 'Sets properties for a storage account''s Table service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules'
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> 
+        schema: *ref_121
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: restype
+            description: Required query string to set the storage service properties
+            serializedName: restype
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> 
+        schema: *ref_122
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: comp
+            description: Required query string to set the storage service properties
+            serializedName: comp
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_129
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_128
+      - !<!Parameter> &ref_130
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      signatureParameters:
+      - *ref_129
+      - *ref_130
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /
+          method: get
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_124
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: GetProperties
+        description: 'gets the properties of a storage account''s Table service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.'
+    protocol: !<!Protocols> {}
+  - !<!Operation> 
+    apiVersions:
+    - !<!ApiVersion> 
+      version: '2018-10-10'
+    request: !<!Request> 
+      parameters:
+      - *ref_44
+      - !<!Parameter> 
+        schema: *ref_121
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: restype
+            description: Required query string to set the storage service properties
+            serializedName: restype
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> 
+        schema: *ref_131
+        implementation: Method
+        required: true
+        language: !<!Languages> 
+          default:
+            name: comp
+            description: Required query string to get storage service stats
+            serializedName: comp
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - !<!Parameter> &ref_133
+        schema: *ref_67
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: timeout
+            description: >-
+              The The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations>Setting Timeouts for Queue Service
+              Operations.</a>
+            serializedName: timeout
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: query
+      - *ref_132
+      - !<!Parameter> &ref_134
+        schema: *ref_46
+        implementation: Method
+        language: !<!Languages> 
+          default:
+            name: requestId
+            description: 'Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.'
+            serializedName: x-ms-client-request-id
+        protocol: !<!Protocols> 
+          http: !<!HttpParameter> 
+            in: header
+      signatureParameters:
+      - *ref_133
+      - *ref_134
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpRequest> 
+          path: /
+          method: get
+          uri: '{url}'
+    responses:
+    - !<!SchemaResponse> 
+      schema: *ref_135
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-client-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-request-id
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-version
+          - !<!HttpHeader> 
+            schema: *ref_56
+            header: Date
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - '200'
+    exceptions:
+    - !<!SchemaResponse> 
+      schema: *ref_63
+      language: !<!Languages> 
+        default:
+          name: ''
+          description: ''
+      protocol: !<!Protocols> 
+        http: !<!HttpResponse> 
+          headers:
+          - !<!HttpHeader> 
+            schema: *ref_46
+            header: x-ms-error-code
+          knownMediaType: xml
+          mediaTypes:
+          - application/xml
+          statusCodes:
+          - default
+    language: !<!Languages> 
+      default:
+        name: GetStatistics
+        description: Retrieves statistics related to replication for the Table service. It is only available on the secondary location endpoint when read-access geo-redundant replication is enabled for the storage account.
+    protocol: !<!Protocols> {}
+  language: !<!Languages> 
+    default:
+      name: Service
+      description: ''
+  protocol: !<!Protocols> {}
+language: !<!Languages> 
+  default:
+    name: ''
+    description: ''
+protocol: !<!Protocols> 
+  http: !<!HttpModel> {}
