@@ -27,7 +27,7 @@ Passing the API key as a string is no longer supported.
 Credential class `TextAnalyticsApiKeyCredential` provides an `UpdateCredential()` method which allows you to update the API key for long-lived clients.
 
 ### Fixes and improvements
-A new `HasError` property has added to `xxColletion` types to allor you to check if an operation on a particular document succeeded or failed.
+A new `HasError` property has added to `xxColletion` types to allow you to check if an operation on a particular document succeeded or failed.
 If you try to access a result attribute where the operation was unsuccesful, an `InvalidOperationException` is raised with a custom error message that provides information about the error.
 
 ## 1.0.0-preview.1 (2020-01-09)
