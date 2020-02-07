@@ -68,13 +68,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private ServiceBusTokenCredential Credential { get; }
 
         /// <summary>
-        ///   The converter to use for translating between AMQP messages and client library
-        ///   types.
-        /// </summary>
-        ///
-        private AmqpMessageConverterNew MessageConverterEH { get; }
-
-        /// <summary>
         ///   The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
         ///
@@ -107,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpClient(string host,
                           string entityName,
                           ServiceBusTokenCredential credential,
-                          ServiceBusConnectionOptions clientOptions) : this(host, entityName, credential, clientOptions, null, null)
+                          ServiceBusConnectionOptions clientOptions) : this(host, entityName, credential, clientOptions, null)
         {
         }
 
@@ -120,7 +113,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         /// <param name="connectionScope">The optional scope to use for AMQP connection management.  If <c>null</c>, a new scope will be created.</param>
-        /// <param name="messageConverter">The optional converter to use for transforming AMQP message-related types.  If <c>null</c>, a new converter will be created.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -135,8 +127,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                              string entityName,
                              ServiceBusTokenCredential credential,
                              ServiceBusConnectionOptions clientOptions,
-                             AmqpConnectionScope connectionScope,
-                             AmqpMessageConverterNew messageConverter)
+                             AmqpConnectionScope connectionScope)
         {
             Argument.AssertNotNullOrEmpty(host, nameof(host));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
@@ -156,7 +147,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 EntityName = entityName;
                 Credential = credential;
-                MessageConverterEH = messageConverter ?? new AmqpMessageConverterNew();
                 ConnectionScope = connectionScope ?? new AmqpConnectionScope(ServiceEndpoint, entityName, credential, clientOptions.TransportType, clientOptions.Proxy);
 
                 ManagementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
@@ -170,103 +160,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             finally
             {
                 ServiceBusEventSource.Log.EventHubClientCreateComplete(host, entityName);
-            }
-        }
-
-        /// <summary>
-        ///   Retrieves information about an Event Hub, including the number of partitions present
-        ///   and their identifiers.
-        /// </summary>
-        ///
-        /// <param name="retryPolicy">The retry policy to use as the basis for retrieving the information.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
-        ///
-        public override async Task<EventHubProperties> GetPropertiesAsync(ServiceBusRetryPolicy retryPolicy,
-                                                                          CancellationToken cancellationToken)
-        {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
-            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-
-            var failedAttemptCount = 0;
-            var retryDelay = default(TimeSpan?);
-
-            var stopWatch = Stopwatch.StartNew();
-
-            try
-            {
-                var tryTimeout = retryPolicy.CalculateTryTimeout(0);
-
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    try
-                    {
-                        ServiceBusEventSource.Log.GetPropertiesStart(EntityName);
-
-                        // Create the request message and the management link.
-
-                        var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                        using AmqpMessage request = MessageConverterEH.CreateEventHubPropertiesRequest(EntityName, token);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.Elapsed))).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        // Send the request and wait for the response.
-
-                        using AmqpMessage response = await link.RequestAsync(request, tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                        stopWatch.Stop();
-
-                        // Process the response.
-
-                        AmqpError.ThrowIfErrorResponse(response, EntityName);
-                        return MessageConverterEH.CreateEventHubPropertiesFromResponse(response);
-                    }
-                    catch (Exception ex)
-                    {
-                        Exception activeEx = ex.TranslateServiceException(EntityName);
-
-                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                        // Otherwise, mark the exception as active and break out of the loop.
-
-                        ++failedAttemptCount;
-                        retryDelay = retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
-
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
-                        {
-                            ServiceBusEventSource.Log.GetPropertiesError(EntityName, activeEx.Message);
-                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-
-                            tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
-                            stopWatch.Reset();
-                        }
-                        else if (ex is AmqpException)
-                        {
-                            throw activeEx;
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-                }
-
-                // If no value has been returned nor exception thrown by this point,
-                // then cancellation has been requested.
-
-                throw new TaskCanceledException();
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.GetPropertiesError(EntityName, ex.Message);
-                throw;
-            }
-            finally
-            {
-                stopWatch.Stop();
-                ServiceBusEventSource.Log.GetPropertiesComplete(EntityName);
             }
         }
 
@@ -290,14 +183,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                var stopWatch = Stopwatch.StartNew();
-                var tryTimeout = retryPolicy.CalculateTryTimeout(0);
+                Stopwatch stopWatch = Stopwatch.StartNew();
+                TimeSpan tryTimeout = retryPolicy.CalculateTryTimeout(0);
 
-                var amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                         ManagementConstants.Operations.PeekMessageOperation,
-                        TimeSpan.FromSeconds(100),
+                        tryTimeout,
                         null);
-                var token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+                string token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
 
                 if (receiveLinkName != null)
                 {
@@ -316,9 +209,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 var messages = new List<ServiceBusMessage>();
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                var link = await ManagementLink.GetOrCreateAsync(
+                RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
                     UseMinimum(ConnectionScope.SessionTimeout,
-                    TimeSpan.FromSeconds(120)))//tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
+                    tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
                     .ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
@@ -341,14 +234,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 stopWatch.Stop();
 
-                var amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+                AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
                 // Process the response.
 
                 //AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
                     ServiceBusMessage message = null;
-                    var messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                    IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
                     foreach (AmqpMap entry in messageList)
                     {
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
@@ -379,112 +272,171 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-
         /// <summary>
-        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
-        ///   events in the partition event stream.
+        ///
         /// </summary>
-        ///
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="retryPolicy">The retry policy to use as the basis for retrieving the information.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
-        ///
-        public override async Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                                    ServiceBusRetryPolicy retryPolicy,
-                                                                                    CancellationToken cancellationToken)
+        /// <param name="sequenceNumber"></param>
+        /// <param name="retryPolicy"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task CancelScheduledMessageAsync(
+            long sequenceNumber,
+            ServiceBusRetryPolicy retryPolicy,
+            string receiveLinkName = null,
+            CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
-            Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
-            Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-
-            var failedAttemptCount = 0;
-            var retryDelay = default(TimeSpan?);
-            var token = default(string);
-            var link = default(RequestResponseAmqpLink);
-
-            var stopWatch = Stopwatch.StartNew();
 
             try
             {
-                var tryTimeout = retryPolicy.CalculateTryTimeout(0);
+                TimeSpan tryTimeout = retryPolicy.CalculateTryTimeout(0);
 
-                while (!cancellationToken.IsCancellationRequested)
+                var request = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.CancelScheduledMessageOperation,
+                    tryTimeout,
+                    null);
+
+                Stopwatch stopWatch = Stopwatch.StartNew();
+
+                if (receiveLinkName != null)
                 {
-                    try
-                    {
-                        ServiceBusEventSource.Log.GetPartitionPropertiesStart(EntityName, partitionId);
-
-                        // Create the request message and the management link.
-
-                        token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-                        using AmqpMessage request = MessageConverterEH.CreatePartitionPropertiesRequest(EntityName, partitionId, token);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        link = await ManagementLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout.CalculateRemaining(stopWatch.Elapsed))).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        // Send the request and wait for the response.
-
-                        using AmqpMessage response = await link.RequestAsync(request, tryTimeout.CalculateRemaining(stopWatch.Elapsed)).ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                        stopWatch.Stop();
-
-                        // Process the response.
-
-                        AmqpError.ThrowIfErrorResponse(response, EntityName);
-                        return MessageConverterEH.CreatePartitionPropertiesFromResponse(response);
-                    }
-                    catch (Exception ex)
-                    {
-                        Exception activeEx = ex.TranslateServiceException(EntityName);
-
-                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                        // Otherwise, mark the exception as active and break out of the loop.
-
-                        ++failedAttemptCount;
-                        retryDelay = retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
-
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
-                        {
-                            ServiceBusEventSource.Log.GetPartitionPropertiesError(EntityName, partitionId, activeEx.Message);
-                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-
-                            tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
-                            stopWatch.Reset();
-                        }
-                        else if (ex is AmqpException)
-                        {
-                            throw activeEx;
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
+                    request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLinkName;
                 }
 
-                // If no value has been returned nor exception thrown by this point,
-                // then cancellation has been requested.
+                request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
 
-                throw new TaskCanceledException();
-            }
-            catch (Exception ex)
-            {
-                ServiceBusEventSource.Log.GetPartitionPropertiesError(EntityName, partitionId, ex.Message);
-                throw;
-            }
-            finally
-            {
+                RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
+                        UseMinimum(ConnectionScope.SessionTimeout,
+                        tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
+                        .ConfigureAwait(false);
+
+                using AmqpMessage response = await link.RequestAsync(
+                    request.AmqpMessage,
+                    tryTimeout.CalculateRemaining(stopWatch.Elapsed))
+                    .ConfigureAwait(false);
+
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 stopWatch.Stop();
-                ServiceBusEventSource.Log.GetPartitionPropertiesComplete(EntityName, partitionId);
+                AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
+
+
+                if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
+                {
+                    throw new Exception();
+                    //throw response.ToMessagingContractException();
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+
+                //throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="retryPolicy"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task<long> ScheduleMessageAsync(
+            ServiceBusMessage message,
+            ServiceBusRetryPolicy retryPolicy,
+            string receiveLinkName = null,
+            CancellationToken cancellationToken = default)
+        {
+            using (AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
+            {
+                Stopwatch stopWatch = Stopwatch.StartNew();
+                TimeSpan tryTimeout = retryPolicy.CalculateTryTimeout(0);
+
+                var request = AmqpRequestMessage.CreateRequest(
+                        ManagementConstants.Operations.ScheduleMessageOperation,
+                        tryTimeout,
+                        null);
+
+                try
+                {
+                    if (receiveLinkName != null)
+                    {
+                        request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLinkName;
+                    }
+
+                    ArraySegment<byte>[] payload = amqpMessage.GetPayload();
+                    var buffer = new BufferListStream(payload);
+                    ArraySegment<byte> value = buffer.ReadBytes((int)buffer.Length);
+
+                    var entry = new AmqpMap();
+                    {
+                        entry[ManagementConstants.Properties.Message] = value;
+                        entry[ManagementConstants.Properties.MessageId] = message.MessageId;
+
+                        if (!string.IsNullOrWhiteSpace(message.SessionId))
+                        {
+                            entry[ManagementConstants.Properties.SessionId] = message.SessionId;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(message.PartitionKey))
+                        {
+                            entry[ManagementConstants.Properties.PartitionKey] = message.PartitionKey;
+                        }
+
+                        if (!string.IsNullOrWhiteSpace(message.ViaPartitionKey))
+                        {
+                            entry[ManagementConstants.Properties.ViaPartitionKey] = message.ViaPartitionKey;
+                        }
+                    }
+
+                    request.Map[ManagementConstants.Properties.Messages] = new List<AmqpMap> { entry };
+
+
+                    RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
+                        UseMinimum(ConnectionScope.SessionTimeout,
+                        tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
+                        .ConfigureAwait(false);
+
+                    using AmqpMessage response = await link.RequestAsync(
+                        request.AmqpMessage,
+                        tryTimeout.CalculateRemaining(stopWatch.Elapsed))
+                        .ConfigureAwait(false);
+
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    stopWatch.Stop();
+
+                    AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
+
+                    if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+                    {
+                        var sequenceNumbers = amqpResponseMessage.GetValue<long[]>(ManagementConstants.Properties.SequenceNumbers);
+                        if (sequenceNumbers == null || sequenceNumbers.Length < 1)
+                        {
+                            throw new ServiceBusException(true, "Could not schedule message successfully.");
+                        }
+
+                        return sequenceNumbers[0];
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+
+                        //throw response.ToMessagingContractException();
+                    }
+                }
+                catch (Exception)
+                {
+                    throw new Exception();
+                    // throw AmqpExceptionHelper.GetClientException(exception, sendLink?.GetTrackingId(), null, sendLink?.Session.IsClosing() ?? false);
+                }
             }
         }
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
+        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Event Hub.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
@@ -502,14 +454,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 EntityName,
                 partitionId,
                 ConnectionScope,
-                MessageConverterEH,
                 retryPolicy
             );
         }
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="EventData" /> from a specific Event Hub partition, in the context
+        ///   for reading <see cref="ServiceBusMessage" /> from a specific Event Hub partition, in the context
         ///   of a specific consumer group.
         ///
         ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer

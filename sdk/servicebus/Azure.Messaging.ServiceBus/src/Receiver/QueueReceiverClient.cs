@@ -39,7 +39,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         ///
         public QueueReceiverClient(string connectionString, ReceiveMode receiveMode)
-            : base(connectionString, receiveMode, default(QueueReceiverClientOptions))
+            : base(connectionString, null, receiveMode, null, new QueueReceiverClientOptions())
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///
         public QueueReceiverClient(string connectionString,
             ReceiveMode receiveMode,
-                                      QueueReceiverClientOptions clientOptions)
-            : base(connectionString, receiveMode, clientOptions)
+            QueueReceiverClientOptions clientOptions)
+            : base(connectionString, null, receiveMode, null, clientOptions)
         {
         }
 
@@ -82,9 +82,12 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public QueueReceiverClient(string connectionString, string queueName,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock, QueueReceiverClientOptions clientOptions = default)
-            : base(connectionString, queueName, receiveMode, clientOptions)
+        public QueueReceiverClient(
+            string connectionString,
+            string queueName,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            QueueReceiverClientOptions clientOptions = default)
+            : base(connectionString, queueName, receiveMode, null, clientOptions ?? new QueueReceiverClientOptions())
         {
         }
 
@@ -99,11 +102,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public QueueReceiverClient(
-                                      string fullyQualifiedNamespace,
-                                      string queueName,
-                                      TokenCredential credential,
-                                      ReceiveMode receiveMode = ReceiveMode.PeekLock,
-                                      QueueReceiverClientOptions clientOptions = default)
+            string fullyQualifiedNamespace,
+            string queueName,
+            TokenCredential credential,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            QueueReceiverClientOptions clientOptions = default)
             :base(fullyQualifiedNamespace, queueName, credential, receiveMode)
         {
         }

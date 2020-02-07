@@ -64,23 +64,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private ServiceBusRetryPolicy RetryPolicy { get; }
 
         /// <summary>
-        ///   The converter to use for translating between AMQP messages and client library
-        ///   types.
-        /// </summary>
-        ///
-        private AmqpMessageConverterNew MessageConverter { get; }
-
-        /// <summary>
         ///   The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
         ///
         private AmqpConnectionScope ConnectionScope { get; }
-
-        /// <summary>
-        ///   The AMQP link intended for use with publishing operations.
-        /// </summary>
-        ///
-        private FaultTolerantAmqpObject<SendingAmqpLink> SendLink { get; }
 
         /// <summary>
         ///   The maximum size of an AMQP message allowed by the associated
@@ -98,7 +85,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="eventHubName">The name of the Event Hub to which events will be published.</param>
         /// <param name="partitionId">The identifier of the Event Hub partition to which it is bound; if unbound, <c>null</c>.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
-        /// <param name="messageConverter">The converter to use for translating between AMQP messages and client types.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         ///
         /// <remarks>
@@ -113,19 +99,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public AmqpSender(string eventHubName,
                             string partitionId,
                             AmqpConnectionScope connectionScope,
-                            AmqpMessageConverterNew messageConverter,
                             ServiceBusRetryPolicy retryPolicy)
         {
             Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
-            Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             EventHubName = eventHubName;
             PartitionId = partitionId;
             RetryPolicy = retryPolicy;
             ConnectionScope = connectionScope;
-            MessageConverter = messageConverter;
 
             SendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
                 timeout => CreateLinkAndEnsureProducerStateAsync(partitionId, timeout, CancellationToken.None),
@@ -142,80 +125,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="messages">The set of event data to send.</param>
-        /// <param name="sendOptions">The set of options to consider when sending this batch.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public override async Task SendAsync(IEnumerable<ServiceBusMessage> messages,
-                                             SendEventOptions sendOptions,
                                              CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(messages, nameof(messages));
             Argument.AssertNotClosed(_closed, nameof(AmqpSender));
 
-            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromMessages(messages, sendOptions?.PartitionKey);
-            await SendAsync(messageFactory, sendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
-        }
-
-        ///// <summary>
-        /////   Sends a set of events to the associated Event Hub using a batched approach.
-        ///// </summary>
-        /////
-        ///// <param name="eventBatch">The event batch to send.</param>
-        ///// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        /////
-        ///// <returns>A task to be resolved on when the operation has completed.</returns>
-        /////
-        ///// <remarks>
-        /////   The caller is assumed to retain ownership of the <paramref name="eventBatch" /> and
-        /////   is responsible for managing its lifespan, including disposal.
-        ///// </remarks>
-        /////
-        //public override async Task SendAsync(EventDataBatch eventBatch,
-        //                                     CancellationToken cancellationToken)
-        //{
-        //    Argument.AssertNotNull(eventBatch, nameof(eventBatch));
-        //    Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
-
-        //    // Make a defensive copy of the messages in the batch.
-
-        //    AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(eventBatch.AsEnumerable<EventData>(), eventBatch.SendOptions?.PartitionKey);
-        //    await SendAsync(messageFactory, eventBatch.SendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
-        //}
-
-        /// <summary>
-        ///   Creates a size-constraint batch to which <see cref="EventData" /> may be added using a try-based pattern.  If an event would
-        ///   exceed the maximum allowable size of the batch, the batch will not allow adding the event and signal that scenario using its
-        ///   return value.
-        ///
-        ///   Because events that would violate the size constraint cannot be added, publishing a batch will not trigger an exception when
-        ///   attempting to send the events to the Event Hubs service.
-        /// </summary>
-        ///
-        /// <param name="options">The set of options to consider when creating this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>An <see cref="EventDataBatch" /> with the requested <paramref name="options"/>.</returns>
-        ///
-        public override async ValueTask<TransportEventBatch> CreateBatchAsync(CreateBatchOptions options,
-                                                                              CancellationToken cancellationToken)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            // Ensure that maximum message size has been determined; this depends on the underlying
-            // AMQP link, so if not set, requesting the link will ensure that it is populated.
-
-            if (!MaximumMessageSize.HasValue)
-            {
-                await SendLink.GetOrCreateAsync(RetryPolicy.CalculateTryTimeout(0)).ConfigureAwait(false);
-            }
-
-            // Ensure that there was a maximum size populated; if none was provided,
-            // default to the maximum size allowed by the link.
-
-            options.MaximumSizeInBytes ??= MaximumMessageSize;
-
-            Argument.AssertInRange(options.MaximumSizeInBytes.Value, ServiceBusSenderClient.MinimumBatchSizeLimit, MaximumMessageSize.Value, nameof(options.MaximumSizeInBytes));
-            return new AmqpEventBatch(MessageConverter, options);
+            AmqpMessage messageFactory() => AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages);
+            await SendAsync(messageFactory, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -268,15 +187,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="messageFactory">A factory which can be used to produce an AMQP message containing the batch of events to be sent.</param>
-        /// <param name="partitionKey">The hashing key to use for influencing the partition to which events should be routed.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         protected virtual async Task SendAsync(Func<AmqpMessage> messageFactory,
-                                               string partitionKey,
                                                CancellationToken cancellationToken)
         {
             var failedAttemptCount = 0;
-            var logPartition = PartitionId ?? partitionKey;
             var retryDelay = default(TimeSpan?);
             var messageHash = default(string);
             var stopWatch = Stopwatch.StartNew();
@@ -294,7 +210,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         using AmqpMessage batchMessage = messageFactory();
                         messageHash = batchMessage.GetHashCode().ToString();
 
-                        ServiceBusEventSource.Log.EventPublishStart(EventHubName, logPartition, messageHash);
+                        //ServiceBusEventSource.Log.EventPublishStart(EventHubName, logPartition, messageHash);
 
                         link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -335,7 +251,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            ServiceBusEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, activeEx.Message);
+                            //ServiceBusEventSource.Log.EventPublishError(EventHubName, messageHash, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -357,15 +273,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 throw new TaskCanceledException();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ServiceBusEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
+                //ServiceBusEventSource.Log.EventPublishError(EventHubName, logPartition, messageHash, ex.Message);
                 throw;
             }
             finally
             {
                 stopWatch.Stop();
-                ServiceBusEventSource.Log.EventPublishComplete(EventHubName, logPartition, messageHash);
+                //ServiceBusEventSource.Log.EventPublishComplete(EventHubName, logPartition, messageHash);
             }
         }
 

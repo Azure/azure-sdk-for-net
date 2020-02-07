@@ -32,25 +32,25 @@ namespace Azure.Messaging.ServiceBus.Core
         public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
 
         /// <summary>
-        ///   The most recent event received from the Event Hubs service by this consumer instance.
+        ///   The most recent message received from the entity by this consumer instance.
         /// </summary>
         ///
         /// <value>
         ///   <c>null</c>, if the tracking of the last enqueued event information was not requested; otherwise,
-        ///   the most recently received event.
+        ///   the most recently received message.
         /// </value>
         ///
-        public ServiceBusMessage LastReceivedEvent { get; protected set; }
+        public ServiceBusMessage LastReceivedMessage { get; protected set; }
 
         /// <summary>
-        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
+        ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
         /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public abstract Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(int maximumMessageCount,
                                                                   TimeSpan? maximumWaitTime,

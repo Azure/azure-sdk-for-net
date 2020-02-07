@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         ///
         public SessionReceiverClient(string connectionString, string sessionId, ReceiveMode receiveMode)
-            : base(connectionString, receiveMode, default(SessionReceiverClientOptions))
+            : base(connectionString, null, receiveMode, sessionId, new SessionReceiverClientOptions())
         {
             SessionId = SessionId;
         }
@@ -73,8 +73,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public SessionReceiverClient(string connectionString,
             string sessionId,
             ReceiveMode receiveMode,
-                                      SessionReceiverClientOptions clientOptions)
-            : base(connectionString, receiveMode, clientOptions)
+            SessionReceiverClientOptions clientOptions)
+            : base(connectionString, null, receiveMode, sessionId, clientOptions)
         {
         }
 
@@ -94,10 +94,13 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public SessionReceiverClient(string connectionString, string entityName,
+        public SessionReceiverClient(
+            string connectionString,
+            string entityName,
             string sessionId,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock, SessionReceiverClientOptions clientOptions = default)
-            : base(connectionString, entityName, receiveMode, clientOptions)
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            SessionReceiverClientOptions clientOptions = default)
+            : base(connectionString, entityName, receiveMode, null, clientOptions)
         {
         }
 
@@ -113,12 +116,12 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public SessionReceiverClient(
-                                      string fullyQualifiedNamespace,
-                                      string entityName,
-                                      string sessionId,
-                                      TokenCredential credential,
-                                      ReceiveMode receiveMode = ReceiveMode.PeekLock,
-                                      SessionReceiverClientOptions clientOptions = default)
+            string fullyQualifiedNamespace,
+            string entityName,
+            string sessionId,
+            TokenCredential credential,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            SessionReceiverClientOptions clientOptions = default)
             : base(fullyQualifiedNamespace, entityName, credential, receiveMode)
         {
         }

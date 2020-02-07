@@ -228,7 +228,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Opens an AMQP link for use with consumer operations.
         /// </summary>
         ///
-        /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
@@ -241,7 +240,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(
             //string consumerGroup,
                                                                            //string partitionId,
-                                                                           EventPosition eventPosition,
                                                                            TimeSpan timeout,
                                                                            uint prefetchCount,
                                                                            long? ownerLevel,
@@ -265,7 +263,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var link = await CreateReceivingLinkAsync(
                 connection,
                 consumerEndpoint,
-                eventPosition,
                 timeout.CalculateRemaining(stopWatch.Elapsed),
                 prefetchCount,
                 ownerLevel,
@@ -483,7 +480,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="connection">The active and opened AMQP connection to use for this link.</param>
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
-        /// <param name="eventPosition">The position of the event in the partition where the link should be filtered to.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
@@ -495,7 +491,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(AmqpConnection connection,
                                                                                  Uri endpoint,
-                                                                                 EventPosition eventPosition,
                                                                                  TimeSpan timeout,
                                                                                  uint prefetchCount,
                                                                                  long? ownerLevel,

@@ -35,34 +35,6 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual Uri ServiceEndpoint { get; }
 
         /// <summary>
-        ///   Retrieves information about an Event Hub, including the number of partitions present
-        ///   and their identifiers.
-        /// </summary>
-        ///
-        /// <param name="retryPolicy">The retry policy to use as the basis for retrieving the information.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
-        ///
-        public abstract Task<EventHubProperties> GetPropertiesAsync(ServiceBusRetryPolicy retryPolicy,
-                                                                    CancellationToken cancellationToken);
-
-        /// <summary>
-        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
-        ///   events in the partition event stream.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="retryPolicy">The retry policy to use as the basis for retrieving the information.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
-        ///
-        public abstract Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                              ServiceBusRetryPolicy retryPolicy,
-                                                                              CancellationToken cancellationToken);
-
-        /// <summary>
         ///
         /// </summary>
         /// <param name="retryPolicy"></param>
@@ -80,9 +52,38 @@ namespace Azure.Messaging.ServiceBus.Core
             string receiveLinkName = null,
             CancellationToken cancellationToken = default);
 
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="retryPolicy"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task<long> ScheduleMessageAsync(
+            ServiceBusMessage message,
+            ServiceBusRetryPolicy retryPolicy,
+            string receiveLinkName = null,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sequenceNumber"></param>
+        /// <param name="retryPolicy"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task CancelScheduledMessageAsync(
+            long sequenceNumber,
+            ServiceBusRetryPolicy retryPolicy,
+            string receiveLinkName = null,
+            CancellationToken cancellationToken = default);
+
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
+        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the entity.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
@@ -95,8 +96,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="EventData" /> from a specific Event Hub partition, in the context
-        ///   of a specific consumer group.
+        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         ///
         ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
         ///   group to ensure that only one consumer from that group is reading the from the partition.

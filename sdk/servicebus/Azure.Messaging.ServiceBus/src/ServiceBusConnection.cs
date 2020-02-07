@@ -252,58 +252,6 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        /// Schedules a message to appear on Service Bus at a later time.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing</param>
-        /// <returns>The sequence number of the message that was scheduled.</returns>
-        public virtual Task<long> ScheduleMessageAsync(ServiceBusMessage message, DateTimeOffset scheduleEnqueueTimeUtc)
-        {
-            return Task.FromResult((long)5);
-        }
-
-        /// <summary>
-        /// Cancels a message that was scheduled.
-        /// </summary>
-        /// <param name="sequenceNumber">The <see cref="ServiceBusMessage.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
-        public async Task CancelScheduledMessageAsync(long sequenceNumber)
-        {
-            await Task.Run(() => sequenceNumber + 1).ConfigureAwait(false);
-            //this.ThrowIfClosed();
-            //if (Transaction.Current != null)
-            //{
-            //    throw new ServiceBusException(false, $"{nameof(CancelScheduledMessageAsync)} method is not supported within a transaction.");
-            //}
-
-            //MessagingEventSource.Log.CancelScheduledMessageStart(this.ClientId, sequenceNumber);
-
-            //bool isDiagnosticSourceEnabled = ServiceBusDiagnosticSource.IsEnabled();
-            //Activity activity = isDiagnosticSourceEnabled ? this.diagnosticSource.CancelStart(sequenceNumber) : null;
-            //Task cancelTask = null;
-
-            //try
-            //{
-            //    cancelTask = this.RetryPolicy.RunOperation(() => this.OnCancelScheduledMessageAsync(sequenceNumber),
-            //        this.OperationTimeout);
-            //    await cancelTask.ConfigureAwait(false);
-            //}
-            //catch (Exception exception)
-            //{
-            //    if (isDiagnosticSourceEnabled)
-            //    {
-            //        this.diagnosticSource.ReportException(exception);
-            //    }
-
-            //    MessagingEventSource.Log.CancelScheduledMessageException(this.ClientId, exception);
-            //    throw;
-            //}
-            //finally
-            //{
-            //    this.diagnosticSource.CancelStop(activity, sequenceNumber, cancelTask?.Status);
-            //}
-            //MessagingEventSource.Log.CancelScheduledMessageStop(this.ClientId);
-        }
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusConnection" />,
@@ -344,53 +292,6 @@ namespace Azure.Messaging.ServiceBus
         public override string ToString() => base.ToString();
 
         /// <summary>
-        ///   Retrieves information about the Event Hub that the connection is associated with, including
-        ///   the number of partitions present and their identifiers.
-        /// </summary>
-        ///
-        /// <param name="retryPolicy">The retry policy to use as the basis for retrieving the information.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the Event Hub that this connection is associated with.</returns>
-        ///
-        internal virtual Task<EventHubProperties> GetPropertiesAsync(ServiceBusRetryPolicy retryPolicy,
-                                                                     CancellationToken cancellationToken = default) => InnerClient.GetPropertiesAsync(retryPolicy, cancellationToken);
-
-        /// <summary>
-        ///   Retrieves the set of identifiers for the partitions of an Event Hub.
-        /// </summary>
-        ///
-        /// <param name="retryPolicy">The retry policy to use as the basis for retrieving the information.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of identifiers for the partitions within the Event Hub that this connection is associated with.</returns>
-        ///
-        /// <remarks>
-        ///   This method is synonymous with invoking <see cref="GetPropertiesAsync(ServiceBusRetryPolicy, CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
-        ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
-        ///   No new or extended information is presented.
-        /// </remarks>
-        ///
-        internal virtual async Task<string[]> GetPartitionIdsAsync(ServiceBusRetryPolicy retryPolicy,
-                                                                   CancellationToken cancellationToken = default) =>
-            (await GetPropertiesAsync(retryPolicy, cancellationToken).ConfigureAwait(false)).PartitionIds;
-
-        /// <summary>
-        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
-        ///   events in the partition event stream.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="retryPolicy">The retry policy to use as the basis for retrieving the information.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the requested partition under the Event Hub this connection is associated with.</returns>
-        ///
-        internal virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                               ServiceBusRetryPolicy retryPolicy,
-                                                                               CancellationToken cancellationToken = default) => InnerClient.GetPartitionPropertiesAsync(partitionId, retryPolicy, cancellationToken);
-
-        /// <summary>
         ///
         /// </summary>
         /// <param name="retryPolicy"></param>
@@ -410,9 +311,42 @@ namespace Azure.Messaging.ServiceBus
             await InnerClient.PeekAsync(retryPolicy, fromSequenceNumber, messageCount, sessionId, receiveLinkName, cancellationToken)
             .ConfigureAwait(false);
 
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="retryPolicy"></param>
+        /// <param name="sendLinkName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async Task<long> ScheduleMessageAsync(
+            ServiceBusMessage message,
+            ServiceBusRetryPolicy retryPolicy,
+            string sendLinkName = null,
+            CancellationToken cancellationToken = default) =>
+            await InnerClient.ScheduleMessageAsync(message, retryPolicy, sendLinkName, cancellationToken)
+            .ConfigureAwait(false);
+
+
+        /// <summary>
+        /// Cancels a message that was scheduled.
+        /// </summary>
+        /// <param name="sequenceNumber">The <see cref="ServiceBusMessage.SystemPropertiesCollection.SequenceNumber"/> of the message to be cancelled.</param>
+        /// <param name="retryPolicy"></param>
+        /// <param name="sendLinkName"></param>
+        /// <param name="cancellationToken"></param>
+        public async Task CancelScheduledMessageAsync(
+            long sequenceNumber,
+            ServiceBusRetryPolicy retryPolicy,
+            string sendLinkName = null,
+            CancellationToken cancellationToken = default) =>
+            await InnerClient.CancelScheduledMessageAsync(sequenceNumber, retryPolicy, sendLinkName, cancellationToken)
+            .ConfigureAwait(false);
+
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="EventData" /> to the Event Hub.
+        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Event Hub.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
@@ -429,7 +363,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="EventData" /> from a specific Event Hub partition, in the context
+        ///   for reading <see cref="ServiceBusMessage" /> from a specific Event Hub partition, in the context
         ///   of a specific consumer group.
         ///
         ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer

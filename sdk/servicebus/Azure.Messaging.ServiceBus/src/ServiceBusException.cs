@@ -189,7 +189,7 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>An operation has been attempted using an Event Hubs client instance which has already been closed.</summary>
             ClientClosed,
 
-            /// <summary>A client was forcefully disconnected from an Event Hub instance.  This typically occurs when another consumer with higher <see cref="ReadEventOptions.OwnerLevel" /> asserts ownership over the partition and consumer group.</summary>
+            /// <summary>A client was forcefully disconnected from an Event Hub instance.</summary>
             ConsumerDisconnected,
 
             /// <summary>An Event Hubs resource, such as an Event Hub, consumer group, or partition cannot be found by the Event Hubs service.</summary>

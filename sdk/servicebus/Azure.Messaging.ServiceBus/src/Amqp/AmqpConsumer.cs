@@ -62,19 +62,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string PartitionId { get; }
 
         /// <summary>
-        ///   The current position for the consumer, updated as events are received from the
-        ///   partition.
-        /// </summary>
-        ///
-        /// <remarks>
-        ///   When creating or recovering the associated AMQP link, this value is used
-        ///   to set the position.  It is intended to primarily support recreating links
-        ///   transparently to callers, allowing progress in the stream to be remembered.
-        /// </remarks>
-        ///
-        private EventPosition CurrentEventPosition { get; set; }
-
-        /// <summary>
         ///   Indicates whether or not the consumer should request information on the last enqueued event on the partition
         ///   associated with a given event, and track that information as events are received.
         /// </summary>
@@ -161,7 +148,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     ConnectionScope.OpenConsumerLinkAsync(
                         //consumerGroup,
                         //partitionId,
-                        CurrentEventPosition,
                         timeout,
                         prefetchCount ?? DefaultPrefetchCount,
                         ownerLevel,
@@ -176,14 +162,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
+        ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Event Hub partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
         /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public override async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(int maximumMessageCount,
                                                                         TimeSpan? maximumWaitTime,
@@ -251,7 +237,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                                 if (TrackLastEnqueuedEventProperties)
                                 {
-                                    LastReceivedEvent = lastReceivedEvent;
+                                    LastReceivedMessage = lastReceivedEvent;
                                 }
                             }
 

@@ -8,7 +8,7 @@ namespace Azure.Messaging.ServiceBus.Core
     ///   class.
     /// </summary>
     ///
-    internal static class EventHubConnectionOptionsExtensions
+    internal static class ServiceBusConnectionOptionsExtensions
     {
         /// <summary>
         ///   Creates a new copy of the current <see cref="ServiceBusConnectionOptions" />, cloning its attributes into a new instance.

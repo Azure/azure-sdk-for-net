@@ -21,7 +21,7 @@ using Microsoft.Azure.Amqp;
 namespace Azure.Messaging.ServiceBus.Receiver
 {
     /// <summary>
-    ///   A client responsible for reading <see cref="EventData" /> from a specific Event Hub
+    ///   A client responsible for reading <see cref="ServiceBusMessage" /> from a specific entity
     ///   as a member of a specific consumer group.
     ///
     ///   A consumer may be exclusive, which asserts ownership over associated partitions for the consumer
@@ -120,55 +120,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
-        /// <param name="receiveMode"></param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public ServiceBusReceiverClient(string connectionString, ReceiveMode receiveMode)
-            : this(connectionString, receiveMode, default(ServiceBusReceiverClientOptions))
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
-        /// <param name="receiveMode"></param>
-        /// <param name="clientOptions">The set of options to use for this consumer.</param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public ServiceBusReceiverClient(string connectionString,
-            ReceiveMode receiveMode,
-            ServiceBusReceiverClientOptions clientOptions)
-            : this(connectionString, null, receiveMode, clientOptions)
-        {
-        }
-
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
-        /// </summary>
-        ///
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="entityName">The name of the specific Event Hub to associate the consumer with.</param>
         /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        /// <param name="sessionId"></param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
@@ -180,6 +136,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
                                       string connectionString,
                                       string entityName,
                                       ReceiveMode receiveMode = ReceiveMode.PeekLock,
+                                      string sessionId = null,
                                       ServiceBusReceiverClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
@@ -189,7 +146,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            Consumer = Connection.CreateTransportConsumer(RetryPolicy);
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, sessionId: sessionId);
         }
 
         /// <summary>
@@ -245,59 +202,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         protected ServiceBusReceiverClient()
         {
             OwnsConnection = false;
-        }
-
-        /// <summary>
-        ///   Retrieves information about the Event Hub that the connection is associated with, including
-        ///   the number of partitions present and their identifiers.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the Event Hub that this client is associated with.</returns>
-        ///
-        internal virtual Task<EventHubProperties> GetEventHubPropertiesAsync(CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
-            return Connection.GetPropertiesAsync(RetryPolicy, cancellationToken);
-        }
-
-        /// <summary>
-        ///   Retrieves the set of identifiers for the partitions of an Event Hub.
-        /// </summary>
-        ///
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of identifiers for the partitions within the Event Hub that this client is associated with.</returns>
-        ///
-        /// <remarks>
-        ///   This method is synonymous with invoking <see cref="GetEventHubPropertiesAsync(CancellationToken)" /> and reading the <see cref="EventHubProperties.PartitionIds"/>
-        ///   property that is returned. It is offered as a convenience for quick access to the set of partition identifiers for the associated Event Hub.
-        ///   No new or extended information is presented.
-        /// </remarks>
-        ///
-        internal virtual Task<string[]> GetPartitionIdsAsync(CancellationToken cancellationToken = default)
-        {
-
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
-            return Connection.GetPartitionIdsAsync(RetryPolicy, cancellationToken);
-        }
-
-        /// <summary>
-        ///   Retrieves information about a specific partition for an Event Hub, including elements that describe the available
-        ///   events in the partition event stream.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The unique identifier of a partition associated with the Event Hub.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>The set of information for the requested partition under the Event Hub this client is associated with.</returns>
-        ///
-        internal virtual Task<PartitionProperties> GetPartitionPropertiesAsync(string partitionId,
-                                                                             CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
-            return Connection.GetPartitionPropertiesAsync(partitionId, RetryPolicy, cancellationToken);
         }
 
         /// <summary>
@@ -372,7 +276,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceAsync(fromSequenceNumber: 1);
+            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceAsync(fromSequenceNumber: 1, maxMessages);
             await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
             {
                 yield return msg;

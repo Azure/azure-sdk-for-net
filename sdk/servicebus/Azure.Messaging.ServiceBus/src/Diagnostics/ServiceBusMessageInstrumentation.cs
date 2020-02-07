@@ -7,11 +7,11 @@ using Azure.Core.Pipeline;
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
     /// <summary>
-    ///   Enables diagnostics instrumentation to be applied to <see cref="EventData" />
+    ///   Enables diagnostics instrumentation to be applied to <see cref="ServiceBusMessage" />
     ///   instances.
     /// </summary>
     ///
-    internal static class EventDataInstrumentation
+    internal static class ServiceBusMessageInstrumentation
     {
         /// <summary>The client diagnostics instance responsible for managing scope.</summary>
         public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics("Azure.Messaging.EventHubs", true);
@@ -47,16 +47,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Extracts a diagnostic id from the given event.
         /// </summary>
         ///
-        /// <param name="eventData">The event to instrument.</param>
+        /// <param name="message">The event to instrument.</param>
         /// <param name="id">The value of the diagnostics identifier assigned to the event. </param>
         ///
         /// <returns><c>true</c> if the event was contained the diagnostic id; otherwise, <c>false</c>.</returns>
         ///
-        public static bool TryExtractDiagnosticId(EventData eventData, out string id)
+        public static bool TryExtractDiagnosticId(ServiceBusMessage message, out string id)
         {
             id = null;
 
-            if (eventData.Properties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
+            if (message.UserProperties.TryGetValue(DiagnosticProperty.DiagnosticIdAttribute, out var objectId) && objectId is string stringId)
             {
                 id = stringId;
                 return true;

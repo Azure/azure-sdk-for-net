@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         ///
         public SubscriptionClient(string connectionString, ReceiveMode receiveMode)
-            : base(connectionString, receiveMode, default(SubscriptionClientOptions))
+            : base(connectionString, null, receiveMode, null, default(SubscriptionClientOptions))
         {
         }
 
@@ -76,10 +76,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public SubscriptionClient(string connectionString,
+        public SubscriptionClient(
+            string connectionString,
             ReceiveMode receiveMode,
-                                      SubscriptionClientOptions clientOptions)
-            : base(connectionString, receiveMode, clientOptions)
+            SubscriptionClientOptions clientOptions)
+            : base(connectionString, null, receiveMode, null, clientOptions)
         {
         }
 
@@ -98,9 +99,12 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public SubscriptionClient(string connectionString, string subscriptionName,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock, SubscriptionClientOptions clientOptions = default)
-            : base(connectionString, subscriptionName, receiveMode, clientOptions)
+        public SubscriptionClient(
+            string connectionString,
+            string subscriptionName,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
+            SubscriptionClientOptions clientOptions = default)
+            : base(connectionString, subscriptionName, receiveMode, null, clientOptions)
         {
         }
 
