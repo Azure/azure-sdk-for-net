@@ -121,7 +121,7 @@ namespace Azure.Identity
 
             foreach (Exception ex in exceptions)
             {
-                errorMsg.Append(" ").Append(ex.Message);
+                errorMsg.Append(Environment.NewLine).Append(ex.Message);
             }
 
             throw scope.Failed(new CredentialUnavailableException(errorMsg.ToString()));
