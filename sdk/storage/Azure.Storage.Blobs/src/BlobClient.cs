@@ -1041,7 +1041,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// Performs an asyncronous transform on the data for uploads. It is a no-op by default.
+        /// Performs an asynchronous transform on the data for uploads. It is a no-op by default.
         /// </summary>
         /// <param name="content">Content to transform.</param>
         /// <param name="cancellationToken">
