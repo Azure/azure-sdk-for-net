@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                ServiceBusEventSource.Log.ServiceBusClientCreateStart(host, entityName);
+                //ServiceBusEventSource.Log.ClientCreateStart(host, entityName);
 
                 ServiceEndpoint = new UriBuilder
                 {
@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                ServiceBusEventSource.Log.ServiceBusClientCreateComplete(host, entityName);
+                //ServiceBusEventSource.Log.ServiceBusClientCreateComplete(host, entityName);
             }
         }
 
@@ -215,7 +215,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
                         }
 
-                        var messages = new List<ServiceBusMessage>();
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
@@ -246,6 +245,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
                         // Process the response.
 
+                        var messages = new List<ServiceBusMessage>();
                         //AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
                         if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                         {
@@ -638,7 +638,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                ServiceBusEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
+                //ServiceBusEventSource.Log.ClientCloseStart(clientType, EntityName, clientId);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (ManagementLink?.TryGetOpenedObject(out var _) == true)
@@ -650,16 +650,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ManagementLink?.Dispose();
                 ConnectionScope?.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _closed = false;
-                ServiceBusEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
+                //ServiceBusEventSource.Log.ClientCloseError(clientType, EntityName, clientId, ex.Message);
 
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
+                //ServiceBusEventSource.Log.ClientCloseComplete(clientType, EntityName, clientId);
             }
         }
 
