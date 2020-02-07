@@ -58,6 +58,15 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public void DetectLanguageWithErrorCountryHintTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Este documento está en español";
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(input, "COLOMBIA"));
+        }
+
+        [Test]
         public async Task DetectLanguageBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
