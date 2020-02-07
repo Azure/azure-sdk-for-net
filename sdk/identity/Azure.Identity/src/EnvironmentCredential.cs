@@ -19,10 +19,10 @@ namespace Azure.Identity
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
     /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
     /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
-    /// <item><term>AZURE_AUTH_LOCATION</term><description>The path to an SDK Auth file which contains configuration information.</description></item>
     /// </list>
-    /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="UsernamePasswordCredential"/> or <see cref="AuthFileCredential"/>
-    /// perform the authentication using these details. Please consult the documentation of that class for more details.
+    /// This credential ultimately uses a <see cref="ClientSecretCredential"/> or <see cref="UsernamePasswordCredential"/> to
+    /// perform the authentication using these details. Please consult the
+    /// documentation of that class for more details.
     /// </summary>
     public class EnvironmentCredential : TokenCredential, IExtendedTokenCredential
     {
@@ -32,7 +32,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
-        /// If the expected environment variables are not found at this time, the GetToken method will throw <see cref="CredentialUnavailableException"/>.
+        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         public EnvironmentCredential()
             : this(CredentialPipeline.GetInstance(null))
@@ -41,7 +41,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
-        /// If the expected environment variables are not found at this time, the GetToken method will throw <see cref="CredentialUnavailableException"/>.
+        /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
         /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
         public EnvironmentCredential(TokenCredentialOptions options)
@@ -58,7 +58,6 @@ namespace Azure.Identity
             string clientSecret = EnvironmentVariables.ClientSecret;
             string username = EnvironmentVariables.Username;
             string password = EnvironmentVariables.Password;
-            string sdkAuthLocation = EnvironmentVariables.SdkAuthLocation;
 
             if (tenantId != null && clientId != null)
             {
@@ -72,9 +71,6 @@ namespace Azure.Identity
                 }
             }
 
-            if (_credential is null && sdkAuthLocation != null)
-            {
-                _credential = new AuthFileCredential(sdkAuthLocation);
             }
         }
 
@@ -87,13 +83,11 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
-        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate. Alternately,
-        /// if AZURE_AUTH_LOCATION is set, that information is used.
+        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <remarks>
-        /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_AUTH_LOCATION are not specified,
-        /// this method throws <see cref="CredentialUnavailableException"/>.
+        /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specified, the default <see cref="AccessToken"/>
         /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -105,13 +99,11 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
-        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate. Alternately,
-        /// if AZURE_AUTH_LOCATION is set, that information is used.
+        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// This method is called by Azure SDK clients. It isn't intended for use in application code.
         /// </summary>
         /// <remarks>
-        /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_AUTH_LOCATION are not specified,
-        /// this method throws <see cref="CredentialUnavailableException"/>.
+        /// If the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET are not specifeid, the default <see cref="AccessToken"/>
         /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
