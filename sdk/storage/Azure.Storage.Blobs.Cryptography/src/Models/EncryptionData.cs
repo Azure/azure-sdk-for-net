@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -62,7 +63,8 @@ namespace Azure.Storage.Blobs.Specialized.Models
             string keyWrapAlgorithm,
             byte[] contentEncryptionKey,
             IKeyEncryptionKey keyEncryptionKey,
-            bool async)
+            bool async,
+            CancellationToken cancellationToken)
             => new EncryptionData()
             {
                 EncryptionMode = EncryptionConstants.EncryptionMode,
@@ -80,8 +82,8 @@ namespace Azure.Storage.Blobs.Specialized.Models
                 {
                     Algorithm = keyWrapAlgorithm,
                     EncryptedKey = async
-                        ? await keyEncryptionKey.WrapKeyAsync(keyWrapAlgorithm, contentEncryptionKey).ConfigureAwait(false)
-                        : keyEncryptionKey.WrapKey(keyWrapAlgorithm, contentEncryptionKey),
+                        ? await keyEncryptionKey.WrapKeyAsync(keyWrapAlgorithm, contentEncryptionKey, cancellationToken).ConfigureAwait(false)
+                        : keyEncryptionKey.WrapKey(keyWrapAlgorithm, contentEncryptionKey, cancellationToken),
                     KeyId = keyEncryptionKey.KeyId
                 }
             };

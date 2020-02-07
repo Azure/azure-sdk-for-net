@@ -1010,17 +1010,17 @@ namespace Azure.Storage.Blobs
                 singleUploadThreshold,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
-            (content, metadata) = async
-                ? await TransformContentAsync(content, metadata).ConfigureAwait(false)
-                : TransformContent(content, metadata);
+            UploadContent transformedContent = async
+                ? await TransformUploadContentAsync(new UploadContent() { ContentStream = content, Metadata = metadata }, cancellationToken).ConfigureAwait(false)
+                : TransformUploadContent(new UploadContent() { ContentStream = content, Metadata = metadata }, cancellationToken);
 
             if (async)
             {
-                return await uploader.UploadAsync(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
+                return await uploader.UploadAsync(transformedContent.ContentStream, blobHttpHeaders, transformedContent.Metadata, conditions, progressHandler, accessTier, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                return uploader.Upload(content, blobHttpHeaders, metadata, conditions, progressHandler, accessTier, cancellationToken);
+                return uploader.Upload(transformedContent.ContentStream, blobHttpHeaders, transformedContent.Metadata, conditions, progressHandler, accessTier, cancellationToken);
             }
         }
         #endregion Upload
@@ -1029,22 +1029,46 @@ namespace Azure.Storage.Blobs
         /// Performs a transform on the data for uploads. It is a no-op by default.
         /// </summary>
         /// <param name="content">Content to transform.</param>
-        /// <param name="metadata">Content metadata to transform.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>Transformed content stream and metadata.</returns>
-        protected virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        [ForwardsClientCalls]
+        protected virtual UploadContent TransformUploadContent(UploadContent content, CancellationToken cancellationToken = default)
         {
-            return (content, metadata); // no-op
+            return content; // no-op
         }
 
         /// <summary>
         /// Performs an asyncronous transform on the data for uploads. It is a no-op by default.
         /// </summary>
         /// <param name="content">Content to transform.</param>
-        /// <param name="metadata">Content metadata to transform.</param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>Transformed content stream and metadata.</returns>
-        protected virtual Task<(Stream, Metadata)> TransformContentAsync(Stream content, Metadata metadata)
+        [ForwardsClientCalls]
+        protected virtual Task<UploadContent> TransformUploadContentAsync(UploadContent content, CancellationToken cancellationToken = default)
         {
-            return Task.FromResult((content, metadata)); // no-op
+            return Task.FromResult(content); // no-op
+        }
+
+        /// <summary>
+        /// Blob content to be uploaded by this <see cref="BlobClient"/>.
+        /// </summary>
+        protected struct UploadContent
+        {
+            /// <summary>
+            /// Content stream to upload.
+            /// </summary>
+            public Stream ContentStream { get; set; }
+
+            /// <summary>
+            /// Content metadata to upload.
+            /// </summary>
+            public Metadata Metadata { get; set; }
         }
     }
 }
