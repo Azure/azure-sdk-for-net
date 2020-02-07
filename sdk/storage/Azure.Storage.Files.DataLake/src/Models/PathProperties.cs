@@ -77,17 +77,17 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// When a path is leased, specifies whether the lease is of infinite or fixed duration.
         /// </summary>
-        public LeaseDurationType LeaseDuration { get; internal set; }
+        public DataLakeLeaseDuration LeaseDuration { get; internal set; }
 
         /// <summary>
         /// Lease state of the path.
         /// </summary>
-        public LeaseState LeaseState { get; internal set; }
+        public DataLakeLeaseState LeaseState { get; internal set; }
 
         /// <summary>
         /// The current lease status of the path.
         /// </summary>
-        public LeaseStatus LeaseStatus { get; internal set; }
+        public DataLakeLeaseStatus LeaseStatus { get; internal set; }
 
         /// <summary>
         /// The number of bytes present in the response body.
