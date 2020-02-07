@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
@@ -13,22 +14,21 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     ///
     internal static class ServiceBusMessageInstrumentation
     {
-        /// <summary>The client diagnostics instance responsible for managing scope.</summary>
-        public static ClientDiagnostics ClientDiagnostics { get; } = new ClientDiagnostics("Azure.Messaging.EventHubs", true);
 
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
         /// </summary>
+        /// <param name="clientDiagnostics"></param>
         ///
         /// <param name="message">The event to instrument.</param>
         ///
         /// <returns><c>true</c> if the event was instrumented in response to this request; otherwise, <c>false</c>.</returns>
         ///
-        public static bool InstrumentEvent(ServiceBusMessage message)
+        public static bool InstrumentEvent(ClientDiagnostics clientDiagnostics, ServiceBusMessage message)
         {
             if (!message.UserProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
             {
-                using DiagnosticScope messageScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
+                using DiagnosticScope messageScope = clientDiagnostics.CreateScope(DiagnosticProperty.EventActivityName);
                 messageScope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.InternalKind);
                 messageScope.Start();
 

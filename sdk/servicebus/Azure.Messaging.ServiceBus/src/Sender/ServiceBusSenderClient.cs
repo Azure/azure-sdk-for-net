@@ -90,6 +90,8 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///
         private TransportSender InnerSender { get; }
 
+        private ClientDiagnostics ClientDiagnostics { get; set; }
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
         /// </summary>
@@ -169,7 +171,7 @@ namespace Azure.Messaging.ServiceBus.Sender
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             // interesting.. I assume this is done for immutability?
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
-
+            ClientDiagnostics = new ClientDiagnostics(clientOptions);
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
@@ -196,6 +198,7 @@ namespace Azure.Messaging.ServiceBus.Sender
             Argument.AssertNotNull(credential, nameof(credential));
 
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
+            ClientDiagnostics = new ClientDiagnostics(clientOptions);
 
             OwnsConnection = true;
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
@@ -215,6 +218,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         {
             Argument.AssertNotNull(connection, nameof(connection));
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
+            ClientDiagnostics = new ClientDiagnostics(clientOptions);
 
             OwnsConnection = false;
             Connection = connection;
@@ -472,7 +476,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///
         private DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = ServiceBusMessageInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
             scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EntityName);

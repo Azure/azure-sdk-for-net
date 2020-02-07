@@ -44,7 +44,10 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="SharedSource\Azure.Core\Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="SharedSource\Azure.Core\HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="SharedSource\Azure.Core\DiagnosticScope.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="SharedSource\Azure.Core\DiagnosticScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="SharedSource\Azure.Core\HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\Azure.Core\ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="SharedSource\Azure.Core\ContentTypeUtilities.cs" />
   </ItemGroup>
 
   <!--Embed the shared resources -->
