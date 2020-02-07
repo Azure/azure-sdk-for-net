@@ -461,9 +461,9 @@ namespace Azure.Storage.Files.Shares.Test
                 conditions: conditions);
 
             // Assert
-            Assert.AreEqual(LeaseDurationType.Infinite, getPropertiesResponse.Value.LeaseDuration);
-            Assert.AreEqual(LeaseStateType.Leased, getPropertiesResponse.Value.LeaseState);
-            Assert.AreEqual(LeaseStatusType.Locked, getPropertiesResponse.Value.LeaseStatus);
+            Assert.AreEqual(ShareLeaseDuration.Infinite, getPropertiesResponse.Value.LeaseDuration);
+            Assert.AreEqual(ShareLeaseState.Leased, getPropertiesResponse.Value.LeaseState);
+            Assert.AreEqual(ShareLeaseStatus.Locked, getPropertiesResponse.Value.LeaseStatus);
         }
 
         [Test]
@@ -1393,9 +1393,9 @@ namespace Azure.Storage.Files.Shares.Test
                     conditions: conditions);
 
                 // Assert
-                Assert.AreEqual(LeaseDurationType.Infinite, downloadResponse.Value.Details.LeaseDuration);
-                Assert.AreEqual(LeaseStateType.Leased, downloadResponse.Value.Details.LeaseState);
-                Assert.AreEqual(LeaseStatusType.Locked, downloadResponse.Value.Details.LeaseStatus);
+                Assert.AreEqual(ShareLeaseDuration.Infinite, downloadResponse.Value.Details.LeaseDuration);
+                Assert.AreEqual(ShareLeaseState.Leased, downloadResponse.Value.Details.LeaseState);
+                Assert.AreEqual(ShareLeaseStatus.Locked, downloadResponse.Value.Details.LeaseStatus);
             }
         }
 

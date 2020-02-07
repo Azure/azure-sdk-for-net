@@ -817,6 +817,39 @@ directive:
     $["x-ms-enum"]["name"] = "PermissionCopyMode";
 ```
 
+### LeaseDuration
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+    $.get.responses["206"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+    $.head.responses["200"].headers["x-ms-lease-duration"]["x-ms-enum"].name = "ShareLeaseDuration";
+```
+
+### LeaseState
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+    $.get.responses["206"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+    $.head.responses["200"].headers["x-ms-lease-state"]["x-ms-enum"].name = "ShareLeaseState";
+```
+
+### LeaseStatus
+``` yaml
+directive:
+- from: swagger-document
+  where: $["x-ms-paths"]["/{shareName}/{directory}/{fileName}"]
+  transform: >
+    $.get.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+    $.get.responses["206"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+    $.head.responses["200"].headers["x-ms-lease-status"]["x-ms-enum"].name = "ShareLeaseStatus";
+```
+
 ### Treat the API version as a parameter instead of a constant
 ``` yaml
 directive:

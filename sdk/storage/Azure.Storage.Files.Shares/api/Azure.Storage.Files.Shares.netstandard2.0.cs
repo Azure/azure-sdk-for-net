@@ -287,24 +287,6 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileItem StorageFileItem(bool isDirectory, string name, long? fileSize) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
     }
-    public enum LeaseDurationType
-    {
-        Infinite = 0,
-        Fixed = 1,
-    }
-    public enum LeaseStateType
-    {
-        Available = 0,
-        Leased = 1,
-        Expired = 2,
-        Breaking = 3,
-        Broken = 4,
-    }
-    public enum LeaseStatusType
-    {
-        Locked = 0,
-        Unlocked = 1,
-    }
     [System.FlagsAttribute]
     public enum NtfsFileAttributes
     {
@@ -470,9 +452,9 @@ namespace Azure.Storage.Files.Shares.Models
         public byte[] FileContentHash { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
-        public Azure.Storage.Files.Shares.Models.LeaseDurationType LeaseDuration { get { throw null; } }
-        public Azure.Storage.Files.Shares.Models.LeaseStateType LeaseState { get { throw null; } }
-        public Azure.Storage.Files.Shares.Models.LeaseStatusType LeaseStatus { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseDuration LeaseDuration { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseState LeaseState { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseStatus LeaseStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
@@ -553,9 +535,9 @@ namespace Azure.Storage.Files.Shares.Models
         public Azure.ETag ETag { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
-        public Azure.Storage.Files.Shares.Models.LeaseDurationType LeaseDuration { get { throw null; } }
-        public Azure.Storage.Files.Shares.Models.LeaseStateType LeaseState { get { throw null; } }
-        public Azure.Storage.Files.Shares.Models.LeaseStatusType LeaseStatus { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseDuration LeaseDuration { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseState LeaseState { get { throw null; } }
+        public Azure.Storage.Files.Shares.Models.ShareLeaseStatus LeaseStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public Azure.Storage.Files.Shares.Models.FileSmbProperties SmbProperties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } [System.Runtime.CompilerServices.CompilerGeneratedAttribute] set { } }
     }
@@ -592,6 +574,24 @@ namespace Azure.Storage.Files.Shares.Models
         public string Name { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public Azure.Storage.Files.Shares.Models.ShareProperties Properties { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
         public string Snapshot { [System.Runtime.CompilerServices.CompilerGeneratedAttribute] get { throw null; } }
+    }
+    public enum ShareLeaseDuration
+    {
+        Infinite = 0,
+        Fixed = 1,
+    }
+    public enum ShareLeaseState
+    {
+        Available = 0,
+        Leased = 1,
+        Expired = 2,
+        Breaking = 3,
+        Broken = 4,
+    }
+    public enum ShareLeaseStatus
+    {
+        Locked = 0,
+        Unlocked = 1,
     }
     public partial class ShareMetrics
     {
