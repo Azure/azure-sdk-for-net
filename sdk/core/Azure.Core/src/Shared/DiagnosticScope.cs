@@ -140,7 +140,7 @@ namespace Azure.Core.Pipeline
 
             object? result = s_getIdFormatMethod.Invoke(activity, Array.Empty<object>());
 
-            return result is int format && format == 2 /* ActivityIdFormat.W3C */;
+            return result != null && (int)result == 2 /* ActivityIdFormat.W3C */;
         }
 
         public static bool TryGetTraceState(this Activity activity, out string? traceState)
