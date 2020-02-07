@@ -1,7 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core.Cryptography;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Specialized.Models
@@ -9,7 +13,7 @@ namespace Azure.Storage.Blobs.Specialized.Models
     /// <summary>
     /// Represents the encryption data that is stored on the service.
     /// </summary>
-    public class EncryptionData
+    internal class EncryptionData
     {
         /// <summary>
         /// The blob encryption mode.
@@ -52,5 +56,34 @@ namespace Azure.Storage.Blobs.Specialized.Models
         /// <returns></returns>
         public static EncryptionData Deserialize(string json)
             => JsonSerializer.Deserialize<EncryptionData>(json);
+
+        internal static async Task<EncryptionData> CreateAsync(
+            byte[] contentEncryptionIv,
+            string keyWrapAlgorithm,
+            byte[] contentEncryptionKey,
+            IKeyEncryptionKey keyEncryptionKey,
+            bool async)
+            => new EncryptionData()
+            {
+                EncryptionMode = EncryptionConstants.EncryptionMode,
+                ContentEncryptionIV = contentEncryptionIv,
+                EncryptionAgent = new EncryptionAgent()
+                {
+                    EncryptionAlgorithm = Enum.GetName(typeof(ClientsideEncryptionAlgorithm), ClientsideEncryptionAlgorithm.AES_CBC_256),
+                    Protocol = EncryptionConstants.EncryptionProtocolV1
+                },
+                KeyWrappingMetadata = new Dictionary<string, string>()
+                {
+                    { EncryptionConstants.AgentMetadataKey, EncryptionConstants.AgentMetadataValue }
+                },
+                WrappedContentKey = new WrappedKey()
+                {
+                    Algorithm = keyWrapAlgorithm,
+                    EncryptedKey = async
+                        ? await keyEncryptionKey.WrapKeyAsync(keyWrapAlgorithm, contentEncryptionKey).ConfigureAwait(false)
+                        : keyEncryptionKey.WrapKey(keyWrapAlgorithm, contentEncryptionKey),
+                    KeyId = keyEncryptionKey.KeyId
+                }
+            };
     }
 }

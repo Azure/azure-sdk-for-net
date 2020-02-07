@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
@@ -243,50 +244,68 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="content">Content to transform.</param>
         /// <param name="metadata">Content metadata to transform.</param>
         /// <returns>Transformed content stream.</returns>
-        public override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        protected override (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            (Stream encryptionStream, EncryptionData encryptionData) = EncryptStream(content);
+            (Stream encryptionStream, EncryptionData encryptionData) = EncryptStreamAsync(content, false).EnsureCompleted();
             metadata.Add(EncryptionConstants.EncryptionDataKey, encryptionData.Serialize());
 
             return (encryptionStream, metadata);
         }
 
-        private (Stream, EncryptionData) EncryptStream(Stream plaintext)
+        /// <summary>
+        /// Encrypts the upload stream.
+        /// </summary>
+        /// <param name="content">Content to transform.</param>
+        /// <param name="metadata">Content metadata to transform.</param>
+        /// <returns>Transformed content stream.</returns>
+        protected override async Task<(Stream, Metadata)> TransformContentAsync(Stream content, Metadata metadata)
+        {
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            (Stream encryptionStream, EncryptionData encryptionData) = await EncryptStreamAsync(content, true).ConfigureAwait(false);
+            metadata.Add(EncryptionConstants.EncryptionDataKey, encryptionData.Serialize());
+
+            return (encryptionStream, metadata);
+        }
+
+        private async Task<(Stream, EncryptionData)> EncryptStreamAsync(Stream plaintext, bool async)
         {
             var generatedKey = CreateKey(EncryptionConstants.EncryptionKeySizeBits);
 
             using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider() { Key = generatedKey })
             {
 
-                var encryptionData = new EncryptionData()
-                {
-                    EncryptionMode = EncryptionConstants.EncryptionMode,
-                    ContentEncryptionIV = aesProvider.IV,
-                    EncryptionAgent = new EncryptionAgent()
-                    {
-                        EncryptionAlgorithm = Enum.GetName(typeof(ClientsideEncryptionAlgorithm), ClientsideEncryptionAlgorithm.AES_CBC_256),
-                        Protocol = EncryptionConstants.EncryptionProtocolV1
-                    },
-                    KeyWrappingMetadata = new Dictionary<string, string>()
-                    {
-                        { EncryptionConstants.AgentMetadataKey, EncryptionConstants.AgentMetadataValue }
-                    },
-                    WrappedContentKey = new WrappedKey()
-                    {
-                        Algorithm = KeyWrapAlgorithm,
-                        EncryptedKey = KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey), // TODO async-branching
-                        KeyId = KeyWrapper.KeyId
-                    }
-                };
+                var encryptionData = async
+                    ? await EncryptionData.CreateAsync(aesProvider.IV, KeyWrapAlgorithm, generatedKey, KeyWrapper, true).ConfigureAwait(false)
+                    : EncryptionData.CreateAsync(aesProvider.IV, KeyWrapAlgorithm, generatedKey, KeyWrapper, false).EnsureCompleted();
+                //    new EncryptionData()
+                //{
+                //    EncryptionMode = EncryptionConstants.EncryptionMode,
+                //    ContentEncryptionIV = aesProvider.IV,
+                //    EncryptionAgent = new EncryptionAgent()
+                //    {
+                //        EncryptionAlgorithm = Enum.GetName(typeof(ClientsideEncryptionAlgorithm), ClientsideEncryptionAlgorithm.AES_CBC_256),
+                //        Protocol = EncryptionConstants.EncryptionProtocolV1
+                //    },
+                //    KeyWrappingMetadata = new Dictionary<string, string>()
+                //    {
+                //        { EncryptionConstants.AgentMetadataKey, EncryptionConstants.AgentMetadataValue }
+                //    },
+                //    WrappedContentKey = new WrappedKey()
+                //    {
+                //        Algorithm = KeyWrapAlgorithm,
+                //        EncryptedKey = KeyWrapper.WrapKey(KeyWrapAlgorithm, generatedKey), // TODO async-branching
+                //        KeyId = KeyWrapper.KeyId
+                //    }
+                //};
 
-                return (
-                    new RollingBufferStream(
-                        new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Read),
-                        EncryptionConstants.DefaultRollingBufferSize,
-                        plaintext.Length + (EncryptionConstants.EncryptionBlockSize - plaintext.Length % EncryptionConstants.EncryptionBlockSize)),
-                    encryptionData);
+                var encryptedContent = new RollingBufferStream(
+                    new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Read),
+                    EncryptionConstants.DefaultRollingBufferSize,
+                    plaintext.Length + (EncryptionConstants.EncryptionBlockSize - plaintext.Length % EncryptionConstants.EncryptionBlockSize));
+                return (encryptedContent, encryptionData);
             }
         }
 

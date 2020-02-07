@@ -1010,7 +1010,9 @@ namespace Azure.Storage.Blobs
                 singleUploadThreshold,
                 operationName: $"{nameof(BlobClient)}.{nameof(Upload)}");
 
-            (content, metadata) = TransformContent(content, metadata);
+            (content, metadata) = async
+                ? await TransformContentAsync(content, metadata).ConfigureAwait(false)
+                : TransformContent(content, metadata);
 
             if (async)
             {
@@ -1023,20 +1025,26 @@ namespace Azure.Storage.Blobs
         }
         #endregion Upload
 
-        // NOTE: TransformContent is no longer called by the new implementation
-        // of parallel upload.  Leaving the virtual stub in for now to avoid
-        // any confusion.  Will need to be added back for encryption work per
-        // #7127.
-
         /// <summary>
         /// Performs a transform on the data for uploads. It is a no-op by default.
         /// </summary>
         /// <param name="content">Content to transform.</param>
         /// <param name="metadata">Content metadata to transform.</param>
         /// <returns>Transformed content stream and metadata.</returns>
-        public virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
+        protected virtual (Stream, Metadata) TransformContent(Stream content, Metadata metadata)
         {
             return (content, metadata); // no-op
+        }
+
+        /// <summary>
+        /// Performs an asyncronous transform on the data for uploads. It is a no-op by default.
+        /// </summary>
+        /// <param name="content">Content to transform.</param>
+        /// <param name="metadata">Content metadata to transform.</param>
+        /// <returns>Transformed content stream and metadata.</returns>
+        protected virtual Task<(Stream, Metadata)> TransformContentAsync(Stream content, Metadata metadata)
+        {
+            return Task.FromResult((content, metadata)); // no-op
         }
     }
 }

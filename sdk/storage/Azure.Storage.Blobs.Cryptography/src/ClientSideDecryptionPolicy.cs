@@ -66,31 +66,6 @@ namespace Azure.Storage.Blobs.Specialized
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessImpl(message, pipeline, false).EnsureCompleted();
-            //EncryptedBlobRange encryptedRange = default;
-            //if (message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range))
-            //{
-            //    encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-            //    message.Request.Headers.SetValue(HttpHeader.Names.Range, encryptedRange.AdjustedRange.ToString());
-            //}
-            //else if (message.Request.Headers.TryGetValue(EncryptionConstants.XMsRange, out range))
-            //{
-            //    encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-            //    message.Request.Headers.SetValue(EncryptionConstants.XMsRange, encryptedRange.AdjustedRange.ToString());
-            //}
-
-            //ProcessNext(message, pipeline);
-
-            //if (message.Request.Method == RequestMethod.Get &&
-            //    message.Response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength) &&
-            //    long.Parse(contentLength, System.Globalization.CultureInfo.InvariantCulture) > 0)
-            //{
-            //    message.Response.ContentStream = DecryptBlobAsync(
-            //        message.Response.ContentStream,
-            //        ExtractMetadata(message.Response.Headers),
-            //        encryptedRange,
-            //        CanIgnorePadding(message.Response.Headers),
-            //        false).EnsureCompleted();
-            //}
         }
 
         /// <summary>
@@ -103,31 +78,6 @@ namespace Azure.Storage.Blobs.Specialized
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessImpl(message, pipeline, false).ConfigureAwait(false);
-            //EncryptedBlobRange encryptedRange = default;
-            //if (message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range))
-            //{
-            //    encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-            //    message.Request.Headers.SetValue(HttpHeader.Names.Range, encryptedRange.AdjustedRange.ToString());
-            //}
-            //else if (message.Request.Headers.TryGetValue(EncryptionConstants.XMsRange, out range))
-            //{
-            //    encryptedRange = new EncryptedBlobRange(ParseHttpRange(range));
-            //    message.Request.Headers.SetValue(EncryptionConstants.XMsRange, encryptedRange.AdjustedRange.ToString());
-            //}
-
-            //await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-
-            //if (message.Request.Method != RequestMethod.Head &&
-            //    message.Response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out var contentLength) &&
-            //    long.Parse(contentLength, System.Globalization.CultureInfo.InvariantCulture) > 0)
-            //{
-            //    message.Response.ContentStream = await DecryptBlobAsync(
-            //        message.Response.ContentStream,
-            //        ExtractMetadata(message.Response.Headers),
-            //        encryptedRange,
-            //        CanIgnorePadding(message.Response.Headers),
-            //        true).ConfigureAwait(false);
-            //}
         }
 
         private async ValueTask ProcessImpl(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -199,6 +149,10 @@ namespace Azure.Storage.Blobs.Specialized
             // parse header value (e.g. "bytes <start>-<end>/<blobSize>")
             // end is the inclusive last byte; e.g. header "bytes 0-7/8" is the entire 8-byte blob
             var tokens = contentRange.Split(new char[] { ' ', '-', '/' }); // ["bytes", "<start>", "<end>", "<blobSize>"]
+            if (tokens.Length < 4)
+            {
+                throw Errors.ParsingHttpRangeFailed();
+            }
 
             // did we request the last block?
             if (long.Parse(tokens[3], System.Globalization.CultureInfo.InvariantCulture) -
@@ -393,7 +347,12 @@ namespace Azure.Storage.Blobs.Specialized
 
         private static HttpRange ParseHttpRange(string serializedRange)
         {
-            var rangeValues = serializedRange.Split('=')[1].Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+            var rangeHeaderTokens = serializedRange.Split('=');
+            if (rangeHeaderTokens.Length < 2)
+            {
+                throw Errors.ParsingHttpRangeFailed();
+            }
+            var rangeValues = rangeHeaderTokens[1].Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
 
             switch (rangeValues.Length)
             {
