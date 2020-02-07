@@ -71,7 +71,6 @@ namespace Azure.Identity
                 }
             }
 
-            }
         }
 
         internal EnvironmentCredential(CredentialPipeline pipeline, TokenCredential credential)
@@ -134,7 +133,7 @@ namespace Azure.Identity
 
             try
             {
-                AccessToken token =  _credential.GetToken(requestContext, cancellationToken);
+                AccessToken token = _credential.GetToken(requestContext, cancellationToken);
 
                 return new ExtendedAccessToken(scope.Succeeded(token));
             }
