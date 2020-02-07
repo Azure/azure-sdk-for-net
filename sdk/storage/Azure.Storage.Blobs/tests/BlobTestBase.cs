@@ -17,8 +17,7 @@ using Azure.Storage.Sas;
 namespace Azure.Storage.Test.Shared
 {
     [ClientTestFixture(
-        BlobClientOptions.ServiceVersion.V2019_02_02,
-        BlobClientOptions.ServiceVersion.V2019_07_07)]
+        BlobClientOptions.ServiceVersion.V2019_02_02)]
     public abstract class BlobTestBase : StorageTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
