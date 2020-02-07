@@ -16,7 +16,9 @@ using Azure.Storage.Sas;
 
 namespace Azure.Storage.Test.Shared
 {
-    [ClientTestFixture(BlobClientOptions.ServiceVersion.V2019_02_02)]
+    [ClientTestFixture(
+        BlobClientOptions.ServiceVersion.V2019_02_02,
+        BlobClientOptions.ServiceVersion.V2019_07_07)]
     public abstract class BlobTestBase : StorageTestBase
     {
         private readonly BlobClientOptions.ServiceVersion _serviceVersion;
@@ -46,7 +48,7 @@ namespace Azure.Storage.Test.Shared
 
         public BlobClientOptions GetOptions(bool parallelRange = false)
         {
-            var options = new BlobClientOptions()
+            var options = new BlobClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =

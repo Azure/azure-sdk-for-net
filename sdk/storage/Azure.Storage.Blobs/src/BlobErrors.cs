@@ -35,7 +35,7 @@ namespace Azure.Storage.Blobs
         {
             if (customerProvidedKey.HasValue && encryptionScope != null)
             {
-                throw new ArgumentException("Customer provided key and encryption scope cannot both be set");
+                throw new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set");
             }
         }
 

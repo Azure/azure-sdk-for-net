@@ -347,7 +347,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -365,7 +365,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set for the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -386,7 +386,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
                 maxSize,
@@ -406,7 +406,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -463,7 +463,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -481,7 +481,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set for the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -502,7 +502,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await CreateInternal(
                 maxSize,
@@ -522,7 +522,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -579,7 +579,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -597,7 +597,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set on the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -716,7 +716,7 @@ namespace Azure.Storage.Files.Shares
         /// overrides or a source file state.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -739,7 +739,7 @@ namespace Azure.Storage.Files.Shares
             PermissionCopyMode? filePermissionCopyMode = default,
             bool? ignoreReadOnly = default,
             bool? setArchiveAttribute = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             StartCopyInternal(
                 sourceUri,
@@ -829,7 +829,7 @@ namespace Azure.Storage.Files.Shares
         /// overrides or a source file state.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -852,7 +852,7 @@ namespace Azure.Storage.Files.Shares
             PermissionCopyMode? filePermissionCopyMode = default,
             bool? ignoreReadOnly = default,
             bool? setArchiveAttribute = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await StartCopyInternal(
                 sourceUri,
@@ -942,7 +942,7 @@ namespace Azure.Storage.Files.Shares
         /// overrides or a source file state.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -968,7 +968,7 @@ namespace Azure.Storage.Files.Shares
             PermissionCopyMode? filePermissionCopyMode,
             bool? ignoreReadOnly,
             bool? setArchiveAttribute,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1027,7 +1027,7 @@ namespace Azure.Storage.Files.Shares
         /// String identifier for the copy operation.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1043,7 +1043,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response AbortCopy(
             string copyId,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             AbortCopyInternal(
                 copyId,
@@ -1093,7 +1093,7 @@ namespace Azure.Storage.Files.Shares
         /// String identifier for the copy operation.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1109,7 +1109,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual async Task<Response> AbortCopyAsync(
             string copyId,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await AbortCopyInternal(
                 copyId,
@@ -1159,7 +1159,7 @@ namespace Azure.Storage.Files.Shares
         /// String identifier for the copy operation.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -1178,7 +1178,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response> AbortCopyInternal(
             string copyId,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1218,7 +1218,7 @@ namespace Azure.Storage.Files.Shares
 
         #region Download
         /// <summary>
-        /// The <see cref="Download(HttpRange, bool, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="Download(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
         /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
         /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
@@ -1236,7 +1236,7 @@ namespace Azure.Storage.Files.Shares
         /// is thrown.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1255,7 +1255,7 @@ namespace Azure.Storage.Files.Shares
         public virtual Response<ShareFileDownloadInfo> Download(
             HttpRange range = default,
             bool rangeGetContentHash = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DownloadInternal(
                 range,
@@ -1312,7 +1312,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DownloadAsync(HttpRange, bool, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="DownloadAsync(HttpRange, bool, ShareFileRequestConditions, CancellationToken)"/>
         /// operation reads or downloads a file from the system, including its metadata and properties.
         ///
         /// For more information <see href="https://docs.microsoft.com/rest/api/storageservices/get-file"/>.
@@ -1330,7 +1330,7 @@ namespace Azure.Storage.Files.Shares
         /// is thrown.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1349,7 +1349,7 @@ namespace Azure.Storage.Files.Shares
         public virtual async Task<Response<ShareFileDownloadInfo>> DownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await DownloadInternal(
                 range,
@@ -1423,7 +1423,7 @@ namespace Azure.Storage.Files.Shares
         /// is thrown.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -1445,7 +1445,7 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareFileDownloadInfo>> DownloadInternal(
             HttpRange range,
             bool rangeGetContentHash,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1532,7 +1532,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional. Starting offset to request - in the event of a retry.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -1551,7 +1551,7 @@ namespace Azure.Storage.Files.Shares
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1581,13 +1581,13 @@ namespace Azure.Storage.Files.Shares
 
         #region Delete
         /// <summary>
-        /// The <see cref="Delete(FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="Delete(ShareFileRequestConditions, CancellationToken)"/>
         /// operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1602,7 +1602,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response Delete(
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
                 conditions,
@@ -1639,13 +1639,13 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DeleteAsync(FileShareRequestConditions, CancellationToken)"/> operation
+        /// The <see cref="DeleteAsync(ShareFileRequestConditions, CancellationToken)"/> operation
         /// immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1660,7 +1660,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteInternal(
                 conditions,
@@ -1702,7 +1702,7 @@ namespace Azure.Storage.Files.Shares
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -1720,7 +1720,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response> DeleteInternal(
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1757,7 +1757,7 @@ namespace Azure.Storage.Files.Shares
 
         #region GetProperties
         /// <summary>
-        /// The <see cref="GetProperties(FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="GetProperties(ShareFileRequestConditions, CancellationToken)"/>
         /// operation returns all user-defined metadata, standard HTTP properties,
         /// and system properties for the file. It does not return the content of the
         /// file.
@@ -1765,7 +1765,7 @@ namespace Azure.Storage.Files.Shares
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1781,7 +1781,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileProperties> GetProperties(
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
                 conditions,
@@ -1821,14 +1821,14 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync(FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="GetPropertiesAsync(ShareFileRequestConditions, CancellationToken)"/>
         /// operation returns all user-defined metadata, standard HTTP properties, and system
         /// properties for the file. It does not return the content of the file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1844,7 +1844,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareFileProperties>> GetPropertiesAsync(
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetPropertiesInternal(
                 conditions,
@@ -1892,7 +1892,7 @@ namespace Azure.Storage.Files.Shares
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/get-file-properties"/>
         /// </summary>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -1911,7 +1911,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileProperties>> GetPropertiesInternal(
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1954,7 +1954,7 @@ namespace Azure.Storage.Files.Shares
 
         #region SetHttpHeaders
         /// <summary>
-        /// The <see cref="SetHttpHeaders(long?, ShareFileHttpHeaders, FileSmbProperties, string, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="SetHttpHeaders(long?, ShareFileHttpHeaders, FileSmbProperties, string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation sets system properties on the file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
@@ -1975,7 +1975,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set for the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1995,7 +1995,7 @@ namespace Azure.Storage.Files.Shares
             ShareFileHttpHeaders httpHeaders = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetHttpHeadersInternal(
                 newSize,
@@ -2061,7 +2061,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetHttpHeadersAsync(long?, ShareFileHttpHeaders, FileSmbProperties, string, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="SetHttpHeadersAsync(long?, ShareFileHttpHeaders, FileSmbProperties, string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation sets system properties on the file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-properties"/>.
@@ -2082,7 +2082,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set for the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2102,7 +2102,7 @@ namespace Azure.Storage.Files.Shares
             ShareFileHttpHeaders httpHeaders = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetHttpHeadersInternal(
                 newSize,
@@ -2188,7 +2188,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set ofr the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -2211,7 +2211,7 @@ namespace Azure.Storage.Files.Shares
             ShareFileHttpHeaders httpHeaders,
             FileSmbProperties smbProperties,
             string filePermission,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2273,7 +2273,7 @@ namespace Azure.Storage.Files.Shares
 
         #region SetMetadata
         /// <summary>
-        /// The <see cref="SetMetadata(Metadata, FileShareRequestConditions, CancellationToken)"/> operation sets user-defined
+        /// The <see cref="SetMetadata(Metadata, ShareFileRequestConditions, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>.
@@ -2282,7 +2282,7 @@ namespace Azure.Storage.Files.Shares
         /// Custom metadata to set for this file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2299,7 +2299,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareFileInfo> SetMetadata(
             Metadata metadata,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetMetadataInternal(
                 metadata,
@@ -2343,7 +2343,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync(Metadata, FileShareRequestConditions, CancellationToken)"/> operation sets user-defined
+        /// The <see cref="SetMetadataAsync(Metadata, ShareFileRequestConditions, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified file as one or more name-value pairs.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-file-metadata"/>.
@@ -2352,7 +2352,7 @@ namespace Azure.Storage.Files.Shares
         /// Custom metadata to set for this file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2369,7 +2369,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual async Task<Response<ShareFileInfo>> SetMetadataAsync(
             Metadata metadata,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetMetadataInternal(
                 metadata,
@@ -2422,7 +2422,7 @@ namespace Azure.Storage.Files.Shares
         /// Custom metadata to set for this file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -2442,7 +2442,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileInfo>> SetMetadataInternal(
             Metadata metadata,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2491,7 +2491,7 @@ namespace Azure.Storage.Files.Shares
         /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2508,7 +2508,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareFileUploadInfo> ClearRange(
             HttpRange range,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
                 ClearRangeInternal(
                     range: range,
@@ -2528,7 +2528,7 @@ namespace Azure.Storage.Files.Shares
         /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2545,7 +2545,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual async Task<Response<ShareFileUploadInfo>> ClearRangeAsync(
             HttpRange range,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
                 await ClearRangeInternal(
                     range: range,
@@ -2565,7 +2565,7 @@ namespace Azure.Storage.Files.Shares
         /// Specifies the range of bytes to be cleated. Both the start and end of the range must be specified.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -2585,7 +2585,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileUploadInfo>> ClearRangeInternal(
             HttpRange range,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2630,7 +2630,7 @@ namespace Azure.Storage.Files.Shares
 
         #region UploadRange
         /// <summary>
-        /// The <see cref="UploadRange(HttpRange, Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="UploadRange(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
@@ -2655,7 +2655,7 @@ namespace Azure.Storage.Files.Shares
         /// progress updates about data transfers.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2675,7 +2675,7 @@ namespace Azure.Storage.Files.Shares
             Stream content,
             byte[] transactionalContentHash = null,
             IProgress<long> progressHandler = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             UploadRangeInternal(
                 range,
@@ -2688,7 +2688,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
@@ -2713,7 +2713,7 @@ namespace Azure.Storage.Files.Shares
         /// progress updates about data transfers.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2733,7 +2733,7 @@ namespace Azure.Storage.Files.Shares
             Stream content,
             byte[] transactionalContentHash = default,
             IProgress<long> progressHandler = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await UploadRangeInternal(
                 range,
@@ -2886,7 +2886,7 @@ namespace Azure.Storage.Files.Shares
         /// progress updates about data transfers.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -2909,7 +2909,7 @@ namespace Azure.Storage.Files.Shares
             Stream content,
             byte[] transactionalContentHash,
             IProgress<long> progressHandler,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2952,7 +2952,7 @@ namespace Azure.Storage.Files.Shares
 
         #region UploadRangeFromUrl
         /// <summary>
-        /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="UploadRangeFromUri(Uri, HttpRange, HttpRange, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
@@ -2967,7 +2967,7 @@ namespace Azure.Storage.Files.Shares
         /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2986,7 +2986,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             this.UploadRangeFromUriInternal(
                 sourceUri,
@@ -3042,7 +3042,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="UploadRangeFromUriAsync(Uri, HttpRange, HttpRange, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes a range from an Azure File to another Azure file. This API is supported only for version 2019-02-02 and higher.
         /// </summary>
         /// <param name="sourceUri">
@@ -3057,7 +3057,7 @@ namespace Azure.Storage.Files.Shares
         /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -3076,7 +3076,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await this.UploadRangeFromUriInternal(
                 sourceUri,
@@ -3149,7 +3149,7 @@ namespace Azure.Storage.Files.Shares
         /// Specifies the range of bytes to be written from. Both the start and end of the range must be specified.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -3171,7 +3171,7 @@ namespace Azure.Storage.Files.Shares
             Uri sourceUri,
             HttpRange range,
             HttpRange sourceRange,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3222,7 +3222,7 @@ namespace Azure.Storage.Files.Shares
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(Stream, IProgress{long}, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
@@ -3235,7 +3235,7 @@ namespace Azure.Storage.Files.Shares
         /// progress updates about data transfers.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -3254,7 +3254,7 @@ namespace Azure.Storage.Files.Shares
         public virtual Response<ShareFileUploadInfo> Upload(
             Stream content,
             IProgress<long> progressHandler = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             UploadInternal(
                 content,
@@ -3266,7 +3266,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="Upload(Stream, IProgress{long}, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>
         /// operation writes <paramref name="content"/> to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
@@ -3308,7 +3308,7 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, IProgress{long}, FileShareRequestConditions, CancellationToken)"/> operation writes
+        /// The <see cref="UploadAsync(Stream, IProgress{long}, ShareFileRequestConditions, CancellationToken)"/> operation writes
         /// <paramref name="content"/> to a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
@@ -3321,7 +3321,7 @@ namespace Azure.Storage.Files.Shares
         /// progress updates about data transfers.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -3340,7 +3340,7 @@ namespace Azure.Storage.Files.Shares
         public virtual async Task<Response<ShareFileUploadInfo>> UploadAsync(
             Stream content,
             IProgress<long> progressHandler = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await UploadInternal(
                 content,
@@ -3407,7 +3407,7 @@ namespace Azure.Storage.Files.Shares
         /// progress updates about data transfers.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="singleRangeThreshold">
@@ -3432,7 +3432,7 @@ namespace Azure.Storage.Files.Shares
         internal async Task<Response<ShareFileUploadInfo>> UploadInternal(
             Stream content,
             IProgress<long> progressHandler,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             int singleRangeThreshold,
             bool async,
             CancellationToken cancellationToken)
@@ -3530,7 +3530,7 @@ namespace Azure.Storage.Files.Shares
         /// If omitted, then all ranges for the file are returned.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -3547,7 +3547,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual Response<ShareFileRangeInfo> GetRangeList(
             HttpRange range,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetRangeListInternal(
                 range,
@@ -3600,7 +3600,7 @@ namespace Azure.Storage.Files.Shares
         /// If omitted, then all ranges for the file are returned.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -3617,7 +3617,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         public virtual async Task<Response<ShareFileRangeInfo>> GetRangeListAsync(
             HttpRange range,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetRangeListInternal(
                 range,
@@ -3670,7 +3670,7 @@ namespace Azure.Storage.Files.Shares
         /// If omitted, then all ranges for the file are returned.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="async">
@@ -3690,7 +3690,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         private async Task<Response<ShareFileRangeInfo>> GetRangeListInternal(
             HttpRange range,
-            FileShareRequestConditions conditions,
+            ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
         {

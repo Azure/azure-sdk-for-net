@@ -1749,7 +1749,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRange(HttpRange, System.IO.Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadRange(HttpRange, System.IO.Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1768,7 +1768,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set for the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1790,7 +1790,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1873,7 +1873,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(HttpRange, System.IO.Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(HttpRange, System.IO.Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1892,7 +1892,7 @@ namespace Azure.Storage.Files.Shares
         /// Optional file permission to set for the file.
         /// </param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -1914,7 +1914,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata = default,
             FileSmbProperties smbProperties = default,
             string filePermission = default,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
             ShareFileClient file = GetFileClient(fileName);
@@ -1936,7 +1936,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(HttpRange, System.IO.Stream, byte[], IProgress{long}, FileShareRequestConditions, CancellationToken)"/>.
+        /// To add content, use <see cref="ShareFileClient.UploadRangeAsync(HttpRange, System.IO.Stream, byte[], IProgress{long}, ShareFileRequestConditions, CancellationToken)"/>.
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
@@ -1993,14 +1993,14 @@ namespace Azure.Storage.Files.Shares
 
         #region DeleteFile
         /// <summary>
-        /// The <see cref="DeleteFile(string, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="DeleteFile(string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2017,7 +2017,7 @@ namespace Azure.Storage.Files.Shares
         [ForwardsClientCalls]
         public virtual Response DeleteFile(
             string fileName,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetFileClient(fileName).Delete(
                 conditions,
@@ -2053,14 +2053,14 @@ namespace Azure.Storage.Files.Shares
                 cancellationToken);
 
         /// <summary>
-        /// The <see cref="DeleteFile(string, FileShareRequestConditions, CancellationToken)"/>
+        /// The <see cref="DeleteFile(string, ShareFileRequestConditions, CancellationToken)"/>
         /// operation immediately removes the file from the storage account.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/delete-file2"/>.
         /// </summary>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="conditions">
-        /// Optional <see cref="FileShareRequestConditions"/> to add conditions
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
         /// </param>
         /// <param name="cancellationToken">
@@ -2077,7 +2077,7 @@ namespace Azure.Storage.Files.Shares
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteFileAsync(
             string fileName,
-            FileShareRequestConditions conditions = default,
+            ShareFileRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetFileClient(fileName)
                 .DeleteAsync(

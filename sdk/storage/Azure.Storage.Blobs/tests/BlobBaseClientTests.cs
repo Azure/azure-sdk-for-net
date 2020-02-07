@@ -115,7 +115,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             TestHelper.AssertExpectedException(
                 () => new BlobBaseClient(new Uri(TestConfigDefault.BlobServiceEndpoint), blobClientOptions),
-                new ArgumentException("Customer provided key and encryption scope cannot both be set"));
+                new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
         #region Sequential Download

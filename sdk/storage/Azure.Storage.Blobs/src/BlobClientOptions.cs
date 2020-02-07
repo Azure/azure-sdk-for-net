@@ -81,8 +81,8 @@ namespace Azure.Storage.Blobs
         public BlobClientOptions(ServiceVersion version = LatestVersion)
 #pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
-            if (version == ServiceVersion.V2019_07_07
-                || version == ServiceVersion.V2019_02_02)
+            if (ServiceVersion.V2019_02_02 <= version
+                && version <= LatestVersion)
             {
                 Version = version;
             }

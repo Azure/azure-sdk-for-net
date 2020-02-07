@@ -15,8 +15,8 @@ namespace Azure.Storage.Files.Shares.Test
 {
     public class ServiceClientTests : FileTestBase
     {
-        public ServiceClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ServiceClientTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

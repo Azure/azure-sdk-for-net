@@ -288,8 +288,8 @@ namespace Azure.Storage.Blobs
             _clientDiagnostics = new ClientDiagnostics(options);
             _customerProvidedKey = options.CustomerProvidedKey;
             _encryptionScope = options.EncryptionScope;
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
             BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
+            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_customerProvidedKey, _encryptionScope);
         }
 
         /// <summary>

@@ -15,15 +15,19 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Tests
 {
+    [ClientTestFixture(
+        ShareClientOptions.ServiceVersion.V2019_02_02,
+        ShareClientOptions.ServiceVersion.V2019_07_07)]
     public class FileTestBase : StorageTestBase
     {
+        private readonly ShareClientOptions.ServiceVersion _serviceVersion;
+
         public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 
-        public FileTestBase(bool async) : this(async, null) { }
-
-        public FileTestBase(bool async, RecordedTestMode? mode = null)
+        public FileTestBase(bool async, ShareClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public string GetNewShareName() => $"test-share-{Recording.Random.NewGuid()}";
@@ -43,7 +47,7 @@ namespace Azure.Storage.Files.Shares.Tests
                     MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
                 },
                 Transport = GetTransport()
-        };
+            };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
