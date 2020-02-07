@@ -215,8 +215,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         private static string ReadEnvironmentConnectionString()
         {
-            var envConnectionString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
-                //Environment.GetEnvironmentVariable(TestConstants.ConnectionStringEnvironmentVariable);
+            var envConnectionString = Environment.GetEnvironmentVariable(TestConstants.ConnectionStringEnvironmentVariable);
 
             if (string.IsNullOrWhiteSpace(envConnectionString))
             {

@@ -3,12 +3,8 @@
 
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {
-    using Microsoft.Azure.ServiceBus.Core;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -25,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task PeekLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task PeekLockTest(bool partitioned, bool sessionEnabled,  int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -39,168 +35,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await queueClient.CloseAsync();
                 }
             });
-        }
-
-        [LiveTest]
-        [DisplayTestMethodName]
-        [Fact]
-        public void Track1Receive_ReceiveAndDelete()
-        {
-            var queueName = "josh";
-            var connString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
-
-            // default ReceiveMode of PeekLock is used
-            var queueClient = new QueueClient(connString, queueName, ReceiveMode.ReceiveAndDelete);
-
-            // Set the message handler options and register the Exception handler
-            var messageHandlerOptions = new MessageHandlerOptions(ExceptionHandlerAsync)
-            {
-                MaxConcurrentCalls = 1,
-                AutoComplete = false
-            };
-
-            // Register the function that will process messages
-            queueClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
-        }
-
-        [LiveTest]
-        [DisplayTestMethodName]
-        [Fact]
-        public async Task Track1Receive_ReceiveAndDeleteSession()
-        {
-            var queueName = "josh";
-            var connString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
-
-            var messageSender = new MessageSender(connString, queueName);
-            Message message = GetMessage();
-            long sequenceNumber = await messageSender.ScheduleMessageAsync(message, DateTimeOffset.Now.AddDays(1));
-
-            var messageReceiver = new MessageReceiver(connString, queueName);
-            Message message = await messageReceiver.ReceiveAsync();
-
-            IList<long> deferredSequences = new List<long>();
-            foreach (Message message in messages)
-            {
-                if (SomeDeferralLogic(message))
-                {
-                    deferredSequences.Add(message.SystemProperties.SequenceNumber);
-                    await messageReceiver.DeferAsync(message.SystemProperties.LockToken);
-                }
-            }
-
-            // later on
-            messages = await messageReceiver.ReceiveDeferredMessageAsync(deferredSequences)
-
-            Message message = GetMessage();
-
-            var topicName = "joshtopic";
-            var topicClient = new TopicClient(connString, topicName);
-            ServiceBusConnection connection = topicClient.ServiceBusConnection;
-            var queueClient = new QueueClient(connString, queueName);
-            
-            Message message = GetMessage();
-            long sequenceNumber = await queueClient.ScheduleMessageAsync(message, DateTimeOffset.Now.AddDays(1));
-
-            await queueClient.CancelScheduledMessageAsync(sequenceNumber);
-            queueClient.CompleteAsync()
-            var sessionId = "1";
-
-            var sessionClient = new SessionClient(connString, queueName);
-            IMessageSession sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
-            var state = "some state";
-            await sessionReceiver.SetStateAsync(state.GetBytes());
-            byte[] receivedState = await sessionReceiver.GetStateAsync();
-
-            Message receivedMessage = await sessionReceiver.ReceiveAsync();
-            await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
-
-            IList<Message> peekedMessages = await sessionReceiver.PeekAsync(maxMessageCount: 10);
-
-
-            Message message = GetMessages();
-            await queueClient.SendAsync(message);
-
-            // Set the message handler options and register the Exception handler
-            var sessionHandlerOptions = new SessionHandlerOptions(ExceptionHandlerAsync)
-            {
-                MaxConcurrentSessions = 1,
-                AutoComplete = false
-            };
-
-            // Register the function that will process messages
-            queueClient.RegisterSessionHandler(ProcessMessagesAsync, sessionHandlerOptions);
-
-            await TestUtility.SendMessagesAsync(messageSender, messageCount);
-
-            // Receive messages
-            var receivedMessages = await TestUtility.ReceiveMessagesAsync(messageReceiver, messageCount);
-
-            var message = receivedMessages.First();
-            var firstLockedUntilUtcTime = message.SystemProperties.LockedUntilUtc;
-            TestUtility.Log($"MessageLockedUntil: {firstLockedUntilUtcTime}");
-
-            TestUtility.Log("Sleeping 10 seconds...");
-            await Task.Delay(TimeSpan.FromSeconds(10));
-
-            var messageReceiver = new MessageReceiver(connString, queueName);
-            Message message = await messageReceiver.ReceiveAsync();
-            
-            await messageReceiver.RenewLockAsync(message);
-            DateTime lockedUntil = message.SystemProperties.LockedUntilUtc;
-            
-            // can also pass lock token
-            lockedUntil = await messageReceiver.RenewLockAsync(message.SystemProperties.LockToken);
-
-            TestUtility.Log($"After First Renewal: {message.SystemProperties.LockedUntilUtc}");
-            Assert.True(message.SystemProperties.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
-
-            TestUtility.Log("Sleeping 5 seconds...");
-            await Task.Delay(TimeSpan.FromSeconds(5));
-
-            await messageReceiver.RenewLockAsync(message.SystemProperties.LockToken);
-            TestUtility.Log($"After Second Renewal: {message.SystemProperties.LockedUntilUtc}");
-            Assert.True(message.SystemProperties.LockedUntilUtc >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(5));
-
-        }
-
-
-        [LiveTest]
-        [DisplayTestMethodName]
-        [Fact]
-        public async Task Track1Receive_ReceiveByPull()
-        {
-            var queueName = "josh";
-            var connString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONN_STRING");
-
-            // default ReceiveMode of PeekLock is used
-            var receiverClient = new MessageReceiver(connString, queueName, ReceiveMode.ReceiveAndDelete);
-
-            Message messages = await receiverClient.ReceiveAsync();
-
-            // Set the message handler options and register the Exception handler
-            var sessionHandlerOptions = new SessionHandlerOptions(ExceptionHandlerAsync)
-            {
-                MaxConcurrentSessions = 1,
-                AutoComplete = false
-            };
-
-            // Register the function that will process messages
-            queueClient.RegisterSessionHandler(ProcessMessagesAsync, sessionHandlerOptions);
-        }
-
-        static Task ExceptionHandlerAsync(ExceptionReceivedEventArgs args)
-        {
-            return Task.CompletedTask;
-        }
-
-        static async Task ProcessMessagesAsync(IMessageSession session, Message message, CancellationToken token)
-        {
-            // Process the message
-            
-            Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
-            var queueClient = new QueueClient(connString, queueName, ReceiveMode.ReceiveAndDelete);
-            // Complete the message so that it is not received again.
-            await queueClient.CompleteAsync(message.SystemProperties.LockToken);
         }
 
         [Theory]
