@@ -1,5 +1,12 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.12.0-preview
+
+- Added support for `developerPortal` endpoint in apimanagement service resource.
+- Added support for overriding the `common` tenant when configuring AAD identity provider.
+- Added support for specifying `httpCorrelationProtocol` and `verbosity` when configuring diagnostics on global and api level.
+- Added support for importing OpenApi 3.0 document in Json format.
+
 ### Changes in 4.11.0-preview
 
 - Removed id validation on `groups`, `apis`, `products`, `users` and `backend` to unblock existing customers to onboard to new sdks
