@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus
     {
         /// <summary>
         ///   The name of the Event Hub where the partitions reside, specific to the
-        ///   Event Hubs namespace that contains it.
+        ///   Service Bus namespace that contains it.
         /// </summary>
         ///
         public string EventHubName { get; }

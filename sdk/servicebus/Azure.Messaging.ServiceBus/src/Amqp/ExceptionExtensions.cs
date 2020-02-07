@@ -21,28 +21,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="instance">The instance that this method was invoked on.</param>
-        /// <param name="eventHubName">The name of the Event Hub that the service operation was targeting.</param>
+        /// <param name="entityName">The name of the Event Hub that the service operation was targeting.</param>
         ///
         /// <returns>The <see cref="Exception" /> that corresponds to the <paramref name="instance" /> and which represents the service error.</returns>
         ///
         public static Exception TranslateServiceException(this Exception instance,
-                                                          string eventHubName)
+                                                          string entityName)
         {
             Argument.AssertNotNull(instance, nameof(instance));
 
             switch (instance)
             {
                 case AmqpException amqpEx:
-                    return AmqpError.CreateExceptionForError(amqpEx.Error, eventHubName);
+                    return AmqpError.CreateExceptionForError(amqpEx.Error, entityName);
 
                 case OperationCanceledException operationEx when (operationEx.InnerException is AmqpException):
-                    return AmqpError.CreateExceptionForError(((AmqpException)operationEx.InnerException).Error, eventHubName);
+                    return AmqpError.CreateExceptionForError(((AmqpException)operationEx.InnerException).Error, entityName);
 
                 case OperationCanceledException operationEx when (operationEx.InnerException != null):
                     return operationEx.InnerException;
 
                 case OperationCanceledException operationEx when (!(operationEx is TaskCanceledException)):
-                    return new ServiceBusException(eventHubName, operationEx.Message, ServiceBusException.FailureReason.ServiceTimeout);
+                    return new ServiceBusException(entityName, operationEx.Message, ServiceBusException.FailureReason.ServiceTimeout);
 
                 default:
                     return instance;

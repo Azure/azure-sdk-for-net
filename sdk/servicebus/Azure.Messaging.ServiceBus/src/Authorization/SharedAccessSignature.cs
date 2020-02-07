@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus.Authorization
 {
     /// <summary>
-    ///   A shared access signature, which can be used for authorization to an Event Hubs namespace
+    ///   A shared access signature, which can be used for authorization to an Service Bus namespace
     ///   or a specific Event Hub.
     /// </summary>
     ///
@@ -54,14 +54,14 @@ namespace Azure.Messaging.ServiceBus.Authorization
         private static readonly DateTimeOffset Epoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
         /// <summary>
-        ///   The name of the shared access key, either for the Event Hubs namespace
+        ///   The name of the shared access key, either for the Service Bus namespace
         ///   or the Event Hub.
         /// </summary>
         ///
         public string SharedAccessKeyName { get; private set; }
 
         /// <summary>
-        ///   The value of the shared access key, either for the Event Hubs namespace
+        ///   The value of the shared access key, either for the Service Bus namespace
         ///   or the Event Hub.
         /// </summary>
         ///
@@ -81,7 +81,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         public string Resource { get; private set; }
 
         /// <summary>
-        ///   The shared access signature to be used for authorization, either for the Event Hubs namespace
+        ///   The shared access signature to be used for authorization, either for the Service Bus namespace
         ///   or the Event Hub.
         /// </summary>
         ///
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
+        /// <param name="eventHubResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signature.</param>
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
@@ -151,7 +151,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///   Initializes a new instance of the <see cref="SharedAccessSignature" /> class.
         /// </summary>
         ///
-        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
+        /// <param name="eventHubResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signature.</param>
         /// <param name="value">The shared access signature to be used for authorization.</param>
@@ -324,7 +324,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   Builds the shared access signature value, which can be used as a token for
-        ///   access to the Event Hubs service.
+        ///   access to the Service Bus service.
         /// </summary>
         ///
         /// <param name="audience">The audience scope to which this signature applies.</param>

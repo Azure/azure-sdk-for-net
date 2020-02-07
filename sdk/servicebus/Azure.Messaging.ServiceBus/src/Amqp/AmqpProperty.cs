@@ -20,7 +20,7 @@ namespace Azure.Messaging.ServiceBus
         public static AmqpSymbol OwnerLevel { get; } = AmqpConstants.Vendor + ":epoch";
 
         /// <summary>
-        ///   The type of Event Hubs entity to associate with a link.
+        ///   The type of Service Bus entity to associate with a link.
         /// </summary>
         ///
         public static AmqpSymbol EntityType { get; } = AmqpConstants.Vendor + ":entity-type";
@@ -114,13 +114,13 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Represents the entity mapping for AMQP properties between the client library and
-        ///   the Event Hubs service.
+        ///   the Service Bus service.
         /// </summary>
         ///
         /// <remarks>
         ///   WARNING:
-        ///     These values are synchronized between the Event Hubs service and the client
-        ///     library.  You must consult with the Event Hubs service team before making
+        ///     These values are synchronized between the Service Bus service and the client
+        ///     library.  You must consult with the Service Bus service team before making
         ///     changes, including adding a new member.
         ///
         ///     When adding a new member, remember to always do so before the Unknown
@@ -139,13 +139,13 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Represents the type mapping for AMQP properties between the client library and
-        ///   the Event Hubs service.
+        ///   the Service Bus service.
         /// </summary>
         ///
         /// <remarks>
         ///   WARNING:
-        ///     These values are synchronized between the Event Hubs service and the client
-        ///     library.  You must consult with the Event Hubs service team before making
+        ///     These values are synchronized between the Service Bus service and the client
+        ///     library.  You must consult with the Service Bus service team before making
         ///     changes, including adding a new member.
         ///
         ///     When adding a new member, remember to always do so before the Unknown

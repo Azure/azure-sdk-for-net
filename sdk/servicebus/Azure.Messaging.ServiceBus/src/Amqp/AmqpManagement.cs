@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The type to specify for an AMQP link used for management operations.</summary>
         public const string LinkType = "svc";
 
-        /// <summary>The key to use for specifying an Event Hubs resource name.</summary>
+        /// <summary>The key to use for specifying an Service Bus resource name.</summary>
         public const string ResourceNameKey = "name";
 
         /// <summary>The key to use for specifying a partition. </summary>
@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The key to use for specifying an operation.</summary>
         public const string OperationKey = "operation";
 
-        /// <summary>The key to use for specifying the type of Event Hubs resource.</summary>
+        /// <summary>The key to use for specifying the type of Service Bus resource.</summary>
         public const string ResourceTypeKey = "type";
 
         /// <summary>The key to use for specifying a security token.</summary>
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   The set of property mappings to use for reading management-related
-        ///   responses from the Event Hubs service.
+        ///   responses from the Service Bus service.
         /// </summary>
         ///
         public static class ResponseMap
@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus
             public static MapKey PartitionLastEnqueuedTimeUtc { get; } = new MapKey("last_enqueued_time_utc");
 
             /// <summary>
-            ///   The message property that identifies the date and time, in UTC, that partition information was sent from the Event Hubs service.
+            ///   The message property that identifies the date and time, in UTC, that partition information was sent from the Service Bus service.
             /// </summary>
             ///
             public static MapKey PartitionRuntimeInfoRetrievalTimeUtc { get; } = new MapKey("runtime_info_retrieval_time_utc");

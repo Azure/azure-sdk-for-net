@@ -20,13 +20,13 @@ namespace Azure.Messaging.ServiceBus.Authorization
         private const string DefaultScope = "https://servicebus.azure.net/.default";
 
         /// <summary>
-        ///   The Event Hubs resource to which the token is intended to serve as authorization.
+        ///   The Service Bus resource to which the token is intended to serve as authorization.
         /// </summary>
         ///
         public string Resource { get; }
 
         /// <summary>
-        ///   Indicates whether the credential is based on an Event Hubs
+        ///   Indicates whether the credential is based on an Service Bus
         ///   shared access signature.
         /// </summary>
         ///
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// </summary>
         ///
         /// <param name="tokenCredential">The <see cref="TokenCredential" /> on which to base the token.</param>
-        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
+        /// <param name="eventHubResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         ///
         public ServiceBusTokenCredential(TokenCredential tokenCredential,
                                        string eventHubResource)

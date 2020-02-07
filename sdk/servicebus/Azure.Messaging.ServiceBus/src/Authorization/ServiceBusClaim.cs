@@ -4,7 +4,7 @@
 namespace Azure.Messaging.ServiceBus.Authorization
 {
     /// <summary>
-    ///   The set of claims for operations associated with the Event Hubs service.
+    ///   The set of claims for operations associated with the Service Bus service.
     /// </summary>
     ///
     internal static class ServiceBusClaim

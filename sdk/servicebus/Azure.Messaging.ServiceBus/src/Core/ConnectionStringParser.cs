@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
-    ///   Allows for parsing Event Hubs connection strings.
+    ///   Allows for parsing Service Bus connection strings.
     /// </summary>
     ///
     internal static class ConnectionStringParser
@@ -18,10 +18,10 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>The character used to mark the beginning of a new token/value pair in the connection string.</summary>
         private const char TokenValuePairDelimiter = ';';
 
-        /// <summary>The formatted protocol used by an Event Hubs endpoint. </summary>
+        /// <summary>The formatted protocol used by an Service Bus endpoint. </summary>
         private const string EventHubsEndpointScheme = "sb://";
 
-        /// <summary>The token that identifies the endpoint address for the Event Hubs namespace.</summary>
+        /// <summary>The token that identifies the endpoint address for the Service Bus namespace.</summary>
         private const string EndpointToken = "Endpoint";
 
         /// <summary>The token that identifies the name of a specific Event Hub under the namespace.</summary>
@@ -34,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Core
         private const string SharedAccessKeyValueToken = "SharedAccessKey";
 
         /// <summary>
-        ///   Parses the specified Event Hubs connection string into its component properties.
+        ///   Parses the specified Service Bus connection string into its component properties.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to parse.</param>

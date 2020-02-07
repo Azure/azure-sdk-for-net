@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         private readonly TimeSpan BackgroundPublishingWaitTime = TimeSpan.FromMilliseconds(250);
 
         /// <summary>
-        ///   The fully qualified Event Hubs namespace that the consumer is associated with.  This is likely
+        ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
 
         /// <summary>
         ///   The name of the Event Hub that the consumer is connected to, specific to the
-        ///   Event Hubs namespace that contains it.
+        ///   Service Bus namespace that contains it.
         /// </summary>
         ///
         internal string EntityName => Connection.EntityName;
@@ -96,7 +96,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         internal ServiceBusRetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
-        ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
+        ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
         ///   about the associated Event Hub and access to transport-aware consumers.
         /// </summary>
         ///
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="entityName">The name of the specific Event Hub to associate the consumer with.</param>
         /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
@@ -153,10 +153,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="entityName">The name of the specific Event Hub to associate the consumer with.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="receiveMode"></param>
+        /// <param name="sessionId"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public ServiceBusReceiverClient(
@@ -164,6 +165,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
                                       string entityName,
                                       TokenCredential credential,
                                       ReceiveMode receiveMode = ReceiveMode.PeekLock,
+                                      string sessionId = null,
                                       ServiceBusReceiverClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
@@ -175,13 +177,14 @@ namespace Azure.Messaging.ServiceBus.Receiver
             OwnsConnection = true;
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Event Hubs service.</param>
+        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         internal ServiceBusReceiverClient(ServiceBusConnection connection,
@@ -287,26 +290,45 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///
         /// </summary>
         /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <param name="sessionId"></param>
+        /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceAsync(
             long fromSequenceNumber,
-            int messageCount = 1,
-            string sessionId = null,
+            int maxMessages = 1,
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
+            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(
+                fromSequenceNumber: fromSequenceNumber,
+                maxMessages: maxMessages,
+                cancellationToken: cancellationToken);
+            await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
+            {
+                yield return msg;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="maxMessages"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceInternal(
+                    long fromSequenceNumber,
+                    int maxMessages = 1,
+                    string sessionId = null,
+                    [EnumeratorCancellation]
+            CancellationToken cancellationToken = default)
+        {
             string receiveLinkName = null;
-            TransportConsumer consumer = null;
 
             if (sessionId != null)
             {
-                consumer = Connection.CreateTransportConsumer(
-                    RetryPolicy,
-                    sessionId: sessionId);
-                ReceivingAmqpLink openedLink = await consumer.ReceiveLink.GetOrCreateAsync(TimeSpan.FromSeconds(60)).ConfigureAwait(false);
+                ReceivingAmqpLink openedLink = await Consumer.ReceiveLink.GetOrCreateAsync(TimeSpan.FromSeconds(60)).ConfigureAwait(false);
                 if (openedLink != null)
                 {
                     receiveLinkName = openedLink.Name;
@@ -316,18 +338,13 @@ namespace Azure.Messaging.ServiceBus.Receiver
             foreach (ServiceBusMessage message in await Connection.PeekAsync(
                 RetryPolicy,
                 fromSequenceNumber,
-                messageCount,
+                maxMessages,
                 sessionId,
                 receiveLinkName,
                 cancellationToken)
                 .ConfigureAwait(false))
             {
                 yield return message;
-            }
-
-            if (consumer != null)
-            {
-                await consumer.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -454,7 +471,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             string lockToken,
             CancellationToken cancellationToken = default)
         {
-           return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
+            return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
         }
 
 
@@ -634,7 +651,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
         /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
         /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
-        public void RegisterMessageHandler(Func<ServiceBusMessage, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
+        protected void RegisterMessageHandler(Func<ServiceBusMessage, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
         }
 

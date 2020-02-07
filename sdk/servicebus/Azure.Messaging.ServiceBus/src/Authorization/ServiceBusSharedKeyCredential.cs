@@ -103,7 +103,7 @@ namespace Azure.Messaging.ServiceBus
         ///   It retains a reference to the generated SharedAccessSignatureCredential.
         /// </summary>
         ///
-        /// <param name="eventHubResource">The Event Hubs resource to which the token is intended to serve as authorization.</param>
+        /// <param name="eventHubResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
         ///
         /// <returns>A new <see cref="SharedAccessSignatureCredential" /> based on the requested shared access key.</returns>

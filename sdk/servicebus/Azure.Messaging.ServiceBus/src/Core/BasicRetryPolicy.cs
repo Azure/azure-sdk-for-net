@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
-    ///   The default retry policy for the Event Hubs client library, respecting the
+    ///   The default retry policy for the Service Bus client library, respecting the
     ///   configuration specified as a set of <see cref="ServiceBusRetryOptions" />.
     /// </summary>
     ///

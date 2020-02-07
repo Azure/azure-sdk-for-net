@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     ///
     internal sealed class CbsTokenProvider : ICbsTokenProvider
     {
-        /// <summary>The type to consider a token if it is based on an Event Hubs shared access signature.</summary>
+        /// <summary>The type to consider a token if it is based on an Service Bus shared access signature.</summary>
         private const string SharedAccessSignatureTokenType = "servicebus.windows.net:sastoken";
 
         /// <summary>The type to consider a token if not based on a shared access signature.</summary>

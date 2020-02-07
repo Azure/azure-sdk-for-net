@@ -5,7 +5,7 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   Specifies the type of protocol and transport that will be used for communicating with
-    ///   Azure Event Hubs.
+    ///   Azure Service Bus.
     /// </summary>
     ///
     public enum ServiceBusTransportType

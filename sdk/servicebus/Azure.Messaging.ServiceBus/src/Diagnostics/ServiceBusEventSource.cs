@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="entityName">The name of the Entity associated with the client.</param>
         ///
         [Event(1, Level = EventLevel.Verbose, Message = "Creating EventHubClient (Namespace '{0}'; EventHub '{1}').")]
-        public void EventHubClientCreateStart(string eventHubsNamespace,
+        public void ServiceBusClientCreateStart(string eventHubsNamespace,
                                               string entityName)
         {
             if (IsEnabled())
@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="entityName">The name of the Entity associated with the client.</param>
         ///
         [Event(2, Level = EventLevel.Verbose, Message = "EventHubClient created (Namespace '{0}'; EventHub '{1}').")]
-        public void EventHubClientCreateComplete(string eventHubsNamespace,
+        public void ServiceBusClientCreateComplete(string eventHubsNamespace,
                                                  string entityName)
         {
             if (IsEnabled())
@@ -80,7 +80,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="eventHash">The hash of the event or set of events being published.</param>
         ///
         [Event(3, Level = EventLevel.Informational, Message = "Publishing events for Entity: {0} (Partition Id/Key: '{1}', Event Hash: '{2}').")]
-        public void EventPublishStart(string entityName,
+        public void MessageSendStart(string entityName,
                                       string partitionIdOrKey,
                                       string eventHash)
         {
@@ -99,7 +99,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="eventHash">The hash of the event or set of events being published.</param>
         ///
         [Event(4, Level = EventLevel.Informational, Message = "Completed publishing events for Entity: {0} (Partition Id/Key: '{1}', Event Hash: '{2}').")]
-        public void EventPublishComplete(string entityName,
+        public void MessageSendComplete(string entityName,
                                          string partitionIdOrKey,
                                          string eventHash)
         {
@@ -119,7 +119,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(5, Level = EventLevel.Error, Message = "An exception occurred while publishing events for Entity: {0} (Partition Id/Key: '{1}', Event Hash: '{2}'). Error Message: '{3}'")]
-        public void EventPublishError(string entityName,
+        public void MessageSendError(string entityName,
                                       string partitionIdOrKey,
                                       string eventHash,
                                       string errorMessage)
@@ -135,17 +135,13 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// </summary>
         ///
         /// <param name="entityName">The name of the Entity being received from.</param>
-        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
-        /// <param name="partitionId">The identifier of the partition events are being received from.</param>
         ///
         [Event(6, Level = EventLevel.Informational, Message = "Receiving events for Entity: {0} (Consumer Group: '{1}', Partition Id: '{2}').")]
-        public void EventReceiveStart(string entityName,
-                                      string consumerGroup,
-                                      string partitionId)
+        public void MessageReceiveStart(string entityName)
         {
             if (IsEnabled())
             {
-                WriteEvent(6, entityName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty);
+                WriteEvent(6, entityName ?? string.Empty);
             }
         }
 
@@ -154,19 +150,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// </summary>
         ///
         /// <param name="entityName">The name of the Entity being received from.</param>
-        /// <param name="partitionId">The identifier of the partition events are being received from.</param>
-        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="eventCount">The number of events that were received in the batch.</param>
         ///
         [Event(7, Level = EventLevel.Informational, Message = "Completed receiving events for Entity: {0} (Consumer Group: '{1}', Partition Id: '{2}').  Event Count: '{3}'")]
-        public void EventReceiveComplete(string entityName,
-                                         string consumerGroup,
-                                         string partitionId,
-                                         int eventCount)
+        public void MessageReceiveComplete(
+            string entityName,
+            int eventCount)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, entityName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, eventCount);
+                WriteEvent(7, entityName ?? string.Empty, eventCount);
             }
         }
 
@@ -175,19 +168,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// </summary>
         ///
         /// <param name="entityName">The name of the Entity being received from.</param>
-        /// <param name="partitionId">The identifier of the partition events are being received from.</param>
-        /// <param name="consumerGroup">The consumer group associated with the receive operation.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(8, Level = EventLevel.Error, Message = "An exception occurred while receiving events for Entity: {0} (Consumer Group: '{1}', Partition Id: '{2}'). Error Message: '{3}'")]
-        public void EventReceiveError(string entityName,
-                                      string consumerGroup,
-                                      string partitionId,
-                                      string errorMessage)
+        public void MessageReceiveError(
+            string entityName,
+            string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(8, entityName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(8, entityName ?? string.Empty, errorMessage ?? string.Empty);
             }
         }
 
@@ -275,7 +265,37 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
         ///
         [Event(13, Level = EventLevel.Informational, Message = "Completed retrieving properties for Entity: {0}.")]
-        public void GetPropertiesComplete(string entityName)
+        public void ScheduleMessageComplete(string entityName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(13, entityName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that retrieval of the Entity properties has completed.
+        /// </summary>
+        ///
+        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
+        ///
+        [Event(13, Level = EventLevel.Informational, Message = "Completed retrieving properties for Entity: {0}.")]
+        public void PeekMessagesComplete(string entityName)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(13, entityName ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that retrieval of the Entity properties has completed.
+        /// </summary>
+        ///
+        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
+        ///
+        [Event(13, Level = EventLevel.Informational, Message = "Completed retrieving properties for Entity: {0}.")]
+        public void CancelScheduledMessageComplete(string entityName)
         {
             if (IsEnabled())
             {
@@ -291,7 +311,25 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
         [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Entity: {0}. Error Message: '{2}'")]
-        public void GetPropertiesError(string entityName,
+        public void ScheduleMessageError(string entityName,
+                                       string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(14, entityName ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while retrieving Entity properties.
+        /// </summary>
+        ///
+        /// <param name="entityName">The name of the Entity that properties are being retrieved for.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(14, Level = EventLevel.Error, Message = "An exception occurred while retrieving properties for Entity: {0}. Error Message: '{2}'")]
+        public void CancelScheduledMessageError(string entityName,
                                        string errorMessage)
         {
             if (IsEnabled())

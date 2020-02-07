@@ -14,7 +14,7 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusConnectionOptions
     {
         /// <summary>
-        ///   The type of protocol and transport that will be used for communicating with the Event Hubs
+        ///   The type of protocol and transport that will be used for communicating with the Service Bus
         ///   service.
         /// </summary>
         ///

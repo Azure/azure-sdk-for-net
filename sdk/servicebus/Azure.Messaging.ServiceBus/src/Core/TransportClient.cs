@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual bool IsClosed { get; }
 
         /// <summary>
-        ///   The endpoint for the Event Hubs service to which the client is associated.
+        ///   The endpoint for the Service Bus service to which the client is associated.
         /// </summary>
         ///
         public virtual Uri ServiceEndpoint { get; }
@@ -86,13 +86,11 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   responsible for publishing <see cref="ServiceBusMessage" /> to the entity.
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the partition to which the transport producer should be bound; if <c>null</c>, the producer is unbound.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         ///
-        public abstract TransportSender CreateSender(string partitionId,
-                                                         ServiceBusRetryPolicy retryPolicy);
+        public abstract TransportSender CreateSender(ServiceBusRetryPolicy retryPolicy);
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible

@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Core
     internal struct ConnectionStringProperties
     {
         /// <summary>
-        ///   The endpoint to be used for connecting to the Event Hubs namespace.
+        ///   The endpoint to be used for connecting to the Service Bus namespace.
         /// </summary>
         ///
         /// <value>The endpoint address, including protocol, from the connection string.</value>
@@ -21,20 +21,20 @@ namespace Azure.Messaging.ServiceBus.Core
         public Uri Endpoint { get; }
 
         /// <summary>
-        ///   The name of the specific Event Hub instance under the associated Event Hubs namespace.
+        ///   The name of the specific Event Hub instance under the associated Service Bus namespace.
         /// </summary>
         ///
         public string EntityName { get; }
 
         /// <summary>
-        ///   The name of the shared access key, either for the Event Hubs namespace
+        ///   The name of the shared access key, either for the Service Bus namespace
         ///   or the Event Hub.
         /// </summary>
         ///
         public string SharedAccessKeyName { get; }
 
         /// <summary>
-        ///   The value of the shared access key, either for the Event Hubs namespace
+        ///   The value of the shared access key, either for the Service Bus namespace
         ///   or the Event Hub.
         /// </summary>
         ///
@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   Initializes a new instance of the <see cref="ConnectionStringProperties"/> structure.
         /// </summary>
         ///
-        /// <param name="endpoint">The endpoint of the Event Hubs namespace.</param>
+        /// <param name="endpoint">The endpoint of the Service Bus namespace.</param>
         /// <param name="entityName">The name of the specific Event Hub under the namespace.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>

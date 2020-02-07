@@ -36,13 +36,13 @@ namespace Azure.Messaging.ServiceBus
         public static AmqpSymbol ServerBusyError { get; } = AmqpConstants.Vendor + ":server-busy";
 
         /// <summary>
-        ///   Indicates that an argument provided to the Event Hubs service was incorrect.
+        ///   Indicates that an argument provided to the Service Bus service was incorrect.
         /// </summary>
         ///
         public static AmqpSymbol ArgumentError { get; } = AmqpConstants.Vendor + ":argument-error";
 
         /// <summary>
-        ///   Indicates that an argument provided to the Event Hubs service was incorrect.
+        ///   Indicates that an argument provided to the Service Bus service was incorrect.
         /// </summary>
         ///
         public static AmqpSymbol ArgumentOutOfRangeError { get; } = AmqpConstants.Vendor + ":argument-out-of-range";
@@ -72,7 +72,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="response">The response to consider.</param>
-        /// <param name="eventHubsResource">The Event Hubs resource associated with the request.</param>
+        /// <param name="eventHubsResource">The Service Bus resource associated with the request.</param>
         ///
         /// <returns>The exception that most accurately represents the response failure.</returns>
         ///
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="error">The AMQP error to consider.</param>
-        /// <param name="eventHubsResource">The Event Hubs resource associated with the operation.</param>
+        /// <param name="eventHubsResource">The Service Bus resource associated with the operation.</param>
         ///
         /// <returns>The exception that most accurately represents the error that was encountered.</returns>
         ///
@@ -138,7 +138,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="condition">The error condition that represents the failure scenario.</param>
         /// <param name="description">The descriptive text to use for messaging the scenario.</param>
-        /// <param name="eventHubsResource">The Event Hubs resource associated with the failure.</param>
+        /// <param name="eventHubsResource">The Service Bus resource associated with the failure.</param>
         ///
         /// <returns>The exception that most accurately represents the failure scenario.</returns>
         ///
@@ -153,14 +153,14 @@ namespace Azure.Messaging.ServiceBus
                 return new ServiceBusException(eventHubsResource, description, ServiceBusException.FailureReason.ServiceTimeout);
             }
 
-            // The Event Hubs service was busy.
+            // The Service Bus service was busy.
 
             if (string.Equals(condition, ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new ServiceBusException(eventHubsResource, description, ServiceBusException.FailureReason.ServiceBusy);
             }
 
-            // An argument was rejected by the Event Hubs service.
+            // An argument was rejected by the Service Bus service.
 
             if (string.Equals(condition, ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -205,7 +205,7 @@ namespace Azure.Messaging.ServiceBus
                 return new NotSupportedException(description);
             }
 
-            // The Event Hubs resource was not valid or communication with the service was interrupted.
+            // The Service Bus resource was not valid or communication with the service was interrupted.
 
             if (string.Equals(condition, AmqpErrorCode.NotFound.Value, StringComparison.InvariantCultureIgnoreCase))
             {

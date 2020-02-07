@@ -8,7 +8,7 @@ using Azure.Messaging.ServiceBus.Receiver;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    ///   Serves as a basis for exceptions produced within the Event Hubs
+    ///   Serves as a basis for exceptions produced within the Service Bus
     ///   context.
     /// </summary>
     ///
@@ -25,14 +25,14 @@ namespace Azure.Messaging.ServiceBus
         public bool IsTransient { get; }
 
         /// <summary>
-        ///   The reason for the failure of an Event Hubs operation that resulted
+        ///   The reason for the failure of an Service Bus operation that resulted
         ///   in the exception.
         /// </summary>
         ///
         public FailureReason Reason { get; }
 
         /// <summary>
-        ///   The name of the Event Hubs to which the exception is associated.
+        ///   The name of the Service Bus to which the exception is associated.
         /// </summary>
         ///
         /// <value>The name of the Event Hub, if available; otherwise, <c>null</c>.</value>
@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   The set of well-known reasons for an Event Hubs operation failure that
+        ///   The set of well-known reasons for an Service Bus operation failure that
         ///   was the cause of an exception.
         /// </summary>
         ///
@@ -186,28 +186,28 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>The exception was the result of a general error within the client library.</summary>
             GeneralError,
 
-            /// <summary>An operation has been attempted using an Event Hubs client instance which has already been closed.</summary>
+            /// <summary>An operation has been attempted using an Service Bus client instance which has already been closed.</summary>
             ClientClosed,
 
             /// <summary>A client was forcefully disconnected from an Event Hub instance.</summary>
             ConsumerDisconnected,
 
-            /// <summary>An Event Hubs resource, such as an Event Hub, consumer group, or partition cannot be found by the Event Hubs service.</summary>
+            /// <summary>An Service Bus resource, such as an Event Hub, consumer group, or partition cannot be found by the Service Bus service.</summary>
             ResourceNotFound,
 
             /// <summary>A message is larger than the maximum size allowed for its transport.</summary>
             MessageSizeExceeded,
 
-            /// <summary>The quota applied to an Event Hubs resource has been exceeded while interacting with the Azure Event Hubs service.</summary>
+            /// <summary>The quota applied to an Service Bus resource has been exceeded while interacting with the Azure Service Bus service.</summary>
             QuotaExceeded,
 
-            /// <summary>The Azure Event Hubs service reports that it is busy in response to a client request to perform an operation.</summary>
+            /// <summary>The Azure Service Bus service reports that it is busy in response to a client request to perform an operation.</summary>
             ServiceBusy,
 
-            /// <summary>An operation or other request timed out while interacting with the Azure Event Hubs service.</summary>
+            /// <summary>An operation or other request timed out while interacting with the Azure Service Bus service.</summary>
             ServiceTimeout,
 
-            /// <summary>There was a general communications error encountered when interacting with the Azure Event Hubs service.</summary>
+            /// <summary>There was a general communications error encountered when interacting with the Azure Service Bus service.</summary>
             ServiceCommunicationProblem
         }
     }

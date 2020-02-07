@@ -4,12 +4,12 @@
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
     /// <summary>
-    ///   The set of well-known properties associated with Event Hubs diagnostics.
+    ///   The set of well-known properties associated with Service Bus diagnostics.
     /// </summary>
     ///
     internal static class DiagnosticProperty
     {
-        /// <summary>The common root for activity names in the Event Hubs context.</summary>
+        /// <summary>The common root for activity names in the Service Bus context.</summary>
         public const string BaseActivityName = "Azure.Messaging.EventHubs";
 
         /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
@@ -24,10 +24,10 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>The attribute which represents the Event Hub instance to associate with diagnostics information.</summary>
         public const string EventHubAttribute = "message_bus.destination";
 
-        /// <summary>The attribute which represents the fully-qualified endpoint address of the Event Hubs namespace to associate with diagnostics information.</summary>
+        /// <summary>The attribute which represents the fully-qualified endpoint address of the Service Bus namespace to associate with diagnostics information.</summary>
         public const string EndpointAttribute = "peer.address";
 
-        /// <summary>The value which identifies the Event Hubs diagnostics context.</summary>
+        /// <summary>The value which identifies the Service Bus diagnostics context.</summary>
         public const string EventHubsServiceContext = "eventhubs";
 
         /// <summary>The value which identifies an Event Hub producer as the type associated with the diagnostics information.</summary>

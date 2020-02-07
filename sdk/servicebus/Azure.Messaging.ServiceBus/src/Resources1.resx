@@ -151,7 +151,7 @@
     <value>The connection string could not be parsed; either it was malformed or contains no well-known tokens.</value>
   </data>
   <data name="MissingConnectionInformation" xml:space="preserve">
-    <value>The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
+    <value>The connection string used for an Event Hub client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
   </data>
   <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
     <value>The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.</value>
@@ -205,7 +205,7 @@
     <value>Unable to acquire an access token using the provided credential.</value>
   </data>
   <data name="UnknownCommunicationException" xml:space="preserve">
-    <value>An unknown error was encountered while communicating with the Event Hubs service.</value>
+    <value>An unknown error was encountered while communicating with the Service Bus service.</value>
   </data>
   <data name="InvalidMessageBody" xml:space="preserve">
     <value>An invalid message body was encountered.  Either the body was null or an incorrect type. Expected: {0}</value>
@@ -214,7 +214,7 @@
     <value>The event position is not valid for filtering.  It must have an offset, sequence number, or enqueued time available to filter against.</value>
   </data>
   <data name="CouldNotCreateLink" xml:space="preserve">
-    <value>Unable to create the items needed to communicate with the Event Hubs service.</value>
+    <value>Unable to create the items needed to communicate with the Service Bus service.</value>
   </data>
   <data name="ClosedConnectionCannotPerformOperation" xml:space="preserve">
     <value>{0} has already been closed and cannot perform the requested operation.</value>
@@ -259,7 +259,7 @@
     <value>Attempting to renew all of the processor's partition ownership in the storage service.</value>
   </data>
   <data name="OperationReadEvents" xml:space="preserve">
-    <value>Reading events from the Event Hubs service.</value>
+    <value>Reading events from the Service Bus service.</value>
   </data>
   <data name="CannotReadLastEnqueuedEventPropertiesWithoutEvent" xml:space="preserve">
     <value>The last enqueued event properties cannot be read when an event is not available.</value>

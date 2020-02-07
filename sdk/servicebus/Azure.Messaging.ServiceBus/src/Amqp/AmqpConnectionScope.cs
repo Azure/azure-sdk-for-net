@@ -114,7 +114,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string Id { get; }
 
         /// <summary>
-        ///   The endpoint for the Event Hubs service to which the scope is associated.
+        ///   The endpoint for the Service Bus service to which the scope is associated.
         /// </summary>
         ///
         private Uri ServiceEndpoint { get; }
@@ -126,7 +126,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string EntityName { get; }
 
         /// <summary>
-        ///   The provider to use for obtaining a token for authorization with the Event Hubs service.
+        ///   The provider to use for obtaining a token for authorization with the Service Bus service.
         /// </summary>
         ///
         private CbsTokenProvider TokenProvider { get; }
@@ -153,9 +153,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpConnectionScope"/> class.
         /// </summary>
         ///
-        /// <param name="serviceEndpoint">Endpoint for the Event Hubs service to which the scope is associated.</param>
+        /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
         /// <param name="entityName"> The name of the Event Hub to which the scope is associated</param>
-        /// <param name="credential">The credential to use for authorization with the Event Hubs service.</param>
+        /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="identifier">The identifier to assign this scope; if not provided, one will be generated.</param>
@@ -284,21 +284,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Opens an AMQP link for use with producer operations.
         /// </summary>
         ///
-        /// <param name="partitionId">The identifier of the Event Hub partition to which the link should be bound; if unbound, <c>null</c>.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with producer operations.</returns>
         ///
-        public virtual async Task<SendingAmqpLink> OpenProducerLinkAsync(string partitionId,
-                                                                         TimeSpan timeout,
-                                                                         CancellationToken cancellationToken)
+        public virtual async Task<SendingAmqpLink> OpenProducerLinkAsync(
+            TimeSpan timeout,
+            CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
-            var path = (string.IsNullOrEmpty(partitionId)) ? EntityName : string.Format(PartitionProducerPathSuffixMask, EntityName, partitionId);
-            var producerEndpoint = new Uri(ServiceEndpoint, path);
+            var producerEndpoint = new Uri(ServiceEndpoint, EntityName);
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -337,13 +335,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="amqpVersion">The version of AMQP to use for the connection.</param>
-        /// <param name="serviceEndpoint">The endpoint for the Event Hubs service to which the scope is associated.</param>
+        /// <param name="serviceEndpoint">The endpoint for the Service Bus service to which the scope is associated.</param>
         /// <param name="transportType">The type of transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>
         /// <param name="scopeIdentifier">The unique identifier for the associated scope.</param>
         /// <param name="timeout">The timeout to consider when creating the connection.</param>
         ///
-        /// <returns>An AMQP connection that may be used for communicating with the Event Hubs service.</returns>
+        /// <returns>An AMQP connection that may be used for communicating with the Service Bus service.</returns>
         ///
         protected virtual async Task<AmqpConnection> CreateAndOpenConnectionAsync(Version amqpVersion,
                                                                                   Uri serviceEndpoint,
@@ -759,7 +757,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connection">The AMQP connection to which the link being refreshed is bound to.</param>
         /// <param name="amqpLink">The AMQO link to refresh authorization for.</param>
         /// <param name="tokenProvider">The <see cref="CbsTokenProvider" /> to use for obtaining access tokens.</param>
-        /// <param name="endpoint">The Event Hubs service endpoint that the AMQP link is communicating with.</param>
+        /// <param name="endpoint">The Service Bus service endpoint that the AMQP link is communicating with.</param>
         /// <param name="audience">The audience associated with the authorization.  This is likely the <paramref name="endpoint"/> absolute URI.</param>
         /// <param name="resource">The resource associated with the authorization.  This is likely the <paramref name="endpoint"/> absolute URI.</param>
         /// <param name="requiredClaims">The set of claims required to support the operations of the AMQP link.</param>
@@ -839,7 +837,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="connection">The AMQP connection for which the authorization is associated.</param>
         /// <param name="tokenProvider">The <see cref="CbsTokenProvider" /> to use for obtaining access tokens.</param>
-        /// <param name="endpoint">The Event Hubs service endpoint that the authorization is requested for.</param>
+        /// <param name="endpoint">The Service Bus service endpoint that the authorization is requested for.</param>
         /// <param name="audience">The audience associated with the authorization.  This is likely the <paramref name="endpoint"/> absolute URI.</param>
         /// <param name="resource">The resource associated with the authorization.  This is likely the <paramref name="endpoint"/> absolute URI.</param>
         /// <param name="requiredClaims">The set of claims required to support the operations of the AMQP link.</param>
@@ -871,7 +869,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="amqpVersion">The version of AMQP to be used.</param>
         ///
-        /// <returns>The settings for AMQP to use for communication with the Event Hubs service.</returns>
+        /// <returns>The settings for AMQP to use for communication with the Service Bus service.</returns>
         ///
         private static AmqpSettings CreateAmpqSettings(Version amqpVersion)
         {
@@ -893,7 +891,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///  Creates the transport settings for use with TCP.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
+        /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
         /// <param name="port">The port to use for connecting to the endpoint.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
@@ -919,7 +917,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///  Creates the transport settings for use with web sockets.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
+        /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
         /// <param name="proxy">The proxy to use for connecting to the endpoint.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
@@ -942,11 +940,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Creates the AMQP connection settings to use when communicating with the Event Hubs service.
+        ///   Creates the AMQP connection settings to use when communicating with the Service Bus service.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
-        /// <param name="identifier">unique identifier of the current Event Hubs scope.</param>
+        /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
+        /// <param name="identifier">unique identifier of the current Service Bus scope.</param>
         ///
         /// <returns>The settings to apply to the connection.</returns>
         ///

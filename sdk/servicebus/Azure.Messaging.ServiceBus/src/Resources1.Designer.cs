@@ -155,7 +155,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Unable to create the items needed to communicate with the Event Hubs service..
+        ///   Looks up a localized string similar to Unable to create the items needed to communicate with the Service Bus service..
         /// </summary>
         internal static string CouldNotCreateLink
         {
@@ -276,7 +276,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Event Hubs namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately..
+        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately..
         /// </summary>
         internal static string MissingConnectionInformation
         {
@@ -397,7 +397,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to An unknown error was encountered while communicating with the Event Hubs service..
+        ///   Looks up a localized string similar to An unknown error was encountered while communicating with the Service Bus service..
         /// </summary>
         internal static string UnknownCommunicationException
         {
@@ -584,7 +584,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Reading events from the Event Hubs service..
+        ///   Looks up a localized string similar to Reading events from the Service Bus service..
         /// </summary>
         internal static string OperationReadEvents
         {

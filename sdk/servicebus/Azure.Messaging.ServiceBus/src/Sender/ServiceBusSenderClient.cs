@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Sender
     ///
     ///   If no partition is specified, the following rules are used for automatically selecting one:
     ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-    ///   <para>2) If a partition becomes unavailable, the Event Hubs service will automatically detect it and forward the message to another available partition.</para>
+    ///   <para>2) If a partition becomes unavailable, the Service Bus service will automatically detect it and forward the message to another available partition.</para>
     /// </remarks>
     ///
     public class ServiceBusSenderClient : IAsyncDisposable
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         private ServiceBusRetryPolicy RetryPolicy { get; }
 
         /// <summary>
-        ///   The active connection to the Azure Event Hubs service, enabling client communications for metadata
+        ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
         ///   about the associated Event Hub and access to a transport-aware producer.
         /// </summary>
         ///
@@ -91,20 +91,13 @@ namespace Azure.Messaging.ServiceBus.Sender
         private TransportSender InnerSender { get; }
 
         /// <summary>
-        ///   The set of active Event Hub transport-specific producers created by this client which are specific to
-        ///   a given partition; intended to perform delegated operations.
-        /// </summary>
-        ///
-        private ConcurrentDictionary<string, TransportSender> PartitionProducers { get; } = new ConcurrentDictionary<string, TransportSender>();
-
-        /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
@@ -120,11 +113,11 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="clientOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
@@ -141,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="entityName">The name of the specific Event Hub to associate the producer with.</param>
         ///
         /// <remarks>
@@ -159,7 +152,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="entityName">The name of the specific Event Hub to associate the producer with.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
@@ -180,16 +173,16 @@ namespace Azure.Messaging.ServiceBus.Sender
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            InnerSender = Connection.CreateTransportProducer(null, RetryPolicy);
+            InnerSender = Connection.CreateTransportProducer(RetryPolicy);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="entityName">The name of the specific Event Hub to associated the producer with.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         public ServiceBusSenderClient(string fullyQualifiedNamespace,
@@ -207,14 +200,14 @@ namespace Azure.Messaging.ServiceBus.Sender
             OwnsConnection = true;
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            InnerSender = Connection.CreateTransportProducer(null, RetryPolicy);
+            InnerSender = Connection.CreateTransportProducer(RetryPolicy);
         }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSenderClient"/> class.
         /// </summary>
         ///
-        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Event Hubs service.</param>
+        /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
         internal ServiceBusSenderClient(ServiceBusConnection connection,
@@ -226,7 +219,7 @@ namespace Azure.Messaging.ServiceBus.Sender
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            InnerSender = Connection.CreateTransportProducer(null, RetryPolicy);
+            InnerSender = Connection.CreateTransportProducer(RetryPolicy);
         }
 
         /// <summary>
@@ -260,6 +253,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         {
             OwnsConnection = false;
         }
+
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
@@ -276,6 +270,7 @@ namespace Azure.Messaging.ServiceBus.Sender
             ServiceBusMessage message,
             CancellationToken cancellationToken = default) =>
             await SendAsync(new ServiceBusMessage[] { message }, cancellationToken).ConfigureAwait(false);
+
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
@@ -291,7 +286,6 @@ namespace Azure.Messaging.ServiceBus.Sender
         public virtual async Task SendRangeAsync(IEnumerable<ServiceBusMessage> messages, CancellationToken cancellationToken = default) =>
             await SendAsync(messages, cancellationToken).ConfigureAwait(false);
 
-
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
         /// </summary>
@@ -303,13 +297,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         {
             //this.ThrowIfClosed();
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
-            SendingAmqpLink openedLink = await InnerSender.SendLink.GetOrCreateAsync(RetryPolicy.CalculateTryTimeout(0)).ConfigureAwait(false);
-            string sendLinkName = null;
-            if (openedLink != null)
-            {
-                sendLinkName = openedLink.Name;
-            }
-            return await Connection.ScheduleMessageAsync(message, RetryPolicy, sendLinkName, cancellationToken).ConfigureAwait(false);
+            return await Connection.ScheduleMessageAsync(message, RetryPolicy, GetSendLinkName(), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -320,14 +308,26 @@ namespace Azure.Messaging.ServiceBus.Sender
         public virtual async Task CancelScheduledMessageAsync(long sequenceNumber, CancellationToken cancellationToken = default)
         {
             //this.ThrowIfClosed();
-            SendingAmqpLink openedLink = await InnerSender.SendLink.GetOrCreateAsync(RetryPolicy.CalculateTryTimeout(0)).ConfigureAwait(false);
-            string sendLinkName = null;
-            if (openedLink != null)
-            {
-                sendLinkName = openedLink.Name;
-            }
-            await Connection.CancelScheduledMessageAsync(sequenceNumber, RetryPolicy, sendLinkName, cancellationToken).ConfigureAwait(false);
+            await Connection.CancelScheduledMessageAsync(sequenceNumber, RetryPolicy, GetSendLinkName(), cancellationToken).ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// Get the send link name if the send link is already open.
+        /// </summary>
+        /// <returns></returns>
+        private string GetSendLinkName()
+        {
+            string sendLinkName = null;
+            if (InnerSender.SendLink.TryGetOpenedObject(out SendingAmqpLink openedLink))
+            {
+                if (openedLink != null)
+                {
+                    sendLinkName = openedLink.Name;
+                }
+            }
+            return sendLinkName;
+        }
+
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
@@ -388,16 +388,6 @@ namespace Azure.Messaging.ServiceBus.Sender
             try
             {
                 await InnerSender.CloseAsync(cancellationToken).ConfigureAwait(false);
-
-                var pendingCloses = new List<Task>();
-
-                foreach (var producer in PartitionProducers.Values)
-                {
-                    pendingCloses.Add(producer.CloseAsync(CancellationToken.None));
-                }
-
-                PartitionProducers.Clear();
-                await Task.WhenAll(pendingCloses).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

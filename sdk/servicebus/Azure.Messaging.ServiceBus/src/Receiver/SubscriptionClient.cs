@@ -42,11 +42,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="receiveMode"></param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
@@ -63,12 +63,12 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
         /// <param name="receiveMode"></param>
         /// <param name="clientOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
         /// <param name="subscriptionName">The name of the specific Event Hub to associate the consumer with.</param>
         /// <param name="receiveMode"></param>
         /// <param name="clientOptions"></param>
@@ -112,9 +112,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="subscriptionName">The name of the specific Event Hub to associate the consumer with.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///

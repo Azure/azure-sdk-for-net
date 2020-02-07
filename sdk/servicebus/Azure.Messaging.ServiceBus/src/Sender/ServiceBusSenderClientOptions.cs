@@ -14,14 +14,14 @@ namespace Azure.Messaging.ServiceBus.Sender
     ///
     public class ServiceBusSenderClientOptions
     {
-        /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
+        /// <summary>The set of options to use for configuring the connection to the Service Bus service.</summary>
         private ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
         private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
 
         /// <summary>
-        ///   Gets or sets the options used for configuring the connection to the Event Hubs service.
+        ///   Gets or sets the options used for configuring the connection to the Service Bus service.
         /// </summary>
         ///
         public ServiceBusConnectionOptions ConnectionOptions
@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         /// <summary>
         ///   The set of options to use for determining whether a failed operation should be retried and,
         ///   if so, the amount of time to wait between retry attempts.  These options also control the
-        ///   amount of time allowed for publishing events and other interactions with the Event Hubs service.
+        ///   amount of time allowed for publishing events and other interactions with the Service Bus service.
         /// </summary>
         ///
         public ServiceBusRetryOptions RetryOptions

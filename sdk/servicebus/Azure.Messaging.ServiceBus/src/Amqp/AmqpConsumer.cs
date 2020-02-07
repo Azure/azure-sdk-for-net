@@ -48,13 +48,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string EntityName { get; }
 
         /// <summary>
-        ///   The name of the consumer group that this consumer is associated with.  Events will be read
-        ///   only in the context of this group.
-        /// </summary>
-        ///
-        private string ConsumerGroup { get; }
-
-        /// <summary>
         ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
         ///   only from this partition.
         /// </summary>
@@ -178,15 +171,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
             Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
 
-            var receivedEventCount = 0;
+            var receivedMessageCount = 0;
             var failedAttemptCount = 0;
             var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
             var waitTime = (maximumWaitTime ?? tryTimeout);
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
-            var receivedEvents = default(List<ServiceBusMessage>);
-            var lastReceivedEvent = default(ServiceBusMessage);
+            var receivedMessages = default(List<ServiceBusMessage>);
+            var lastReceivedMessage = default(ServiceBusMessage);
 
             var stopWatch = Stopwatch.StartNew();
 
@@ -196,7 +189,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     try
                     {
-                        ServiceBusEventSource.Log.EventReceiveStart(EntityName, ConsumerGroup, PartitionId);
+                        ServiceBusEventSource.Log.MessageReceiveStart(EntityName);
 
                         link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -215,20 +208,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if ((messagesReceived) && (amqpMessages != null))
                         {
-                            receivedEvents ??= new List<ServiceBusMessage>();
+                            receivedMessages ??= new List<ServiceBusMessage>();
 
                             foreach (AmqpMessage message in amqpMessages)
                             {
                                 //link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
-                                receivedEvents.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
+                                receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
                                 message.Dispose();
                             }
 
-                            receivedEventCount = receivedEvents.Count;
+                            receivedMessageCount = receivedMessages.Count;
 
-                            if (receivedEventCount > 0)
+                            if (receivedMessageCount > 0)
                             {
-                                lastReceivedEvent = receivedEvents[receivedEventCount - 1];
+                                lastReceivedMessage = receivedMessages[receivedMessageCount - 1];
 
                                 //if (lastReceivedEvent.Offset > long.MinValue)
                                 //{
@@ -237,11 +230,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                                 if (TrackLastEnqueuedEventProperties)
                                 {
-                                    LastReceivedMessage = lastReceivedEvent;
+                                    LastReceivedMessage = lastReceivedMessage;
                                 }
                             }
 
-                            return receivedEvents;
+                            return receivedMessages;
                         }
 
                         // No events were available.
@@ -268,7 +261,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            ServiceBusEventSource.Log.EventReceiveError(EntityName, ConsumerGroup, PartitionId, activeEx.Message);
+                            ServiceBusEventSource.Log.MessageReceiveError(EntityName, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -291,13 +284,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.EventReceiveError(EntityName, ConsumerGroup, PartitionId, ex.Message);
+                ServiceBusEventSource.Log.MessageReceiveError(EntityName, ex.Message);
                 throw;
             }
             finally
             {
                 stopWatch.Stop();
-                ServiceBusEventSource.Log.EventReceiveComplete(EntityName, ConsumerGroup, PartitionId, receivedEventCount);
+                ServiceBusEventSource.Log.MessageReceiveComplete(EntityName, receivedMessageCount);
             }
         }
 
