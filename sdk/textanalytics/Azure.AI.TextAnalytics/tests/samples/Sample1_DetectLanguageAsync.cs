@@ -23,8 +23,7 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:DetectLanguageAsync
             string input = "Este documento está en español.";
 
-            DetectLanguageResult result = await client.DetectLanguageAsync(input);
-            DetectedLanguage language = result.PrimaryLanguage;
+            DetectedLanguage language = await client.DetectLanguageAsync(input);
 
             Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
             #endregion

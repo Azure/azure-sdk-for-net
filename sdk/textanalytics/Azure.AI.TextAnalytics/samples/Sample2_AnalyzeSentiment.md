@@ -19,8 +19,7 @@ To analyze the sentiment of a single text input, pass the input string to the cl
 ```C# Snippet:AnalyzeSentiment
 string input = "That was the best day of my life!";
 
-AnalyzeSentimentResult result = client.AnalyzeSentiment(input);
-DocumentSentiment docSentiment = result.DocumentSentiment;
+DocumentSentiment docSentiment = client.AnalyzeSentiment(input);
 
 Console.WriteLine($"Sentiment was {docSentiment.Sentiment}, with scores: ");
 Console.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");

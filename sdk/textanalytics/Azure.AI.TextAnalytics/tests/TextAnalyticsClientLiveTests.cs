@@ -39,8 +39,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "This is written in English.";
 
-            DetectLanguageResult result = await client.DetectLanguageAsync(input);
-            DetectedLanguage language = result.PrimaryLanguage;
+            DetectedLanguage language = await client.DetectLanguageAsync(input);
 
             Assert.AreEqual("English", language.Name);
             Assert.AreEqual("en", language.Iso6391Name);
@@ -53,10 +52,29 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Este documento está en español";
 
-            DetectLanguageResult result = await client.DetectLanguageAsync(input, "CO");
-            DetectedLanguage language = result.PrimaryLanguage;
+            DetectedLanguage language = await client.DetectLanguageAsync(input, "CO");
 
             Assert.AreEqual("Spanish", language.Name);
+        }
+
+        [Test]
+        public async Task DetectLanguageBatchWithErrorTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Hello world",
+                "",
+                "Hola mundo"
+            };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(inputs);
+
+            Assert.IsTrue(!results[0].HasError);
+            Assert.IsTrue(!results[2].HasError);
+
+            Assert.IsTrue(results[1].HasError);
+            Assert.Throws<InvalidOperationException>(() => results[1].PrimaryLanguage.GetType());
         }
 
         [Test]
@@ -65,8 +83,7 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "That was the best day of my life!";
 
-            AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input);
-            DocumentSentiment docSentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(input);
 
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
             Assert.IsNotNull(docSentiment.SentimentScores.Positive);
@@ -91,10 +108,29 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "El mejor test del mundo!";
 
-            AnalyzeSentimentResult result = await client.AnalyzeSentimentAsync(input, "es");
-            DocumentSentiment docSentiment = result.DocumentSentiment;
+            DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(input, "es");
 
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchWithErrorTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "That was the best day of my life!",
+                "",
+                "I'm not sure how I feel about this product."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(inputs);
+
+            Assert.IsTrue(!results[0].HasError);
+            Assert.IsTrue(!results[2].HasError);
+
+            Assert.IsTrue(results[1].HasError);
+            Assert.Throws<InvalidOperationException>(() => results[1].DocumentSentiment.GetType());
         }
 
         [Test]
@@ -103,8 +139,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "My cat might need to see a veterinarian.";
 
-            ExtractKeyPhrasesResult result = await client.ExtractKeyPhrasesAsync(input);
-            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+            Response<IReadOnlyCollection<string>> response = await client.ExtractKeyPhrasesAsync(input);
+            IReadOnlyCollection<string> keyPhrases = response.Value;
 
             Assert.AreEqual(2, keyPhrases.Count);
             Assert.IsTrue(keyPhrases.Contains("cat"));
@@ -117,10 +153,30 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Mi perro está en el veterinario";
 
-            ExtractKeyPhrasesResult result = await client.ExtractKeyPhrasesAsync(input, "es");
-            IReadOnlyCollection<string> keyPhrases = result.KeyPhrases;
+            Response<IReadOnlyCollection<string>> response = await client.ExtractKeyPhrasesAsync(input, "es");
+            IReadOnlyCollection<string> keyPhrases = response.Value;
 
             Assert.AreEqual(2, keyPhrases.Count);
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchWithErrorTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                 "",
+                "My cat might need to see a veterinarian."
+            };
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(inputs);
+
+            Assert.IsTrue(!results[0].HasError);
+            Assert.IsTrue(!results[2].HasError);
+
+            Assert.IsTrue(results[1].HasError);
+            Assert.Throws<InvalidOperationException>(() => results[1].KeyPhrases.GetType());
         }
 
         [Test]
@@ -129,8 +185,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
+            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(input);
+            IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
             Assert.AreEqual(3, entities.Count);
 
@@ -151,8 +207,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input, "es");
-            IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
+            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(input, "es");
+            IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
             Assert.AreEqual(3, entities.Count);
         }
@@ -163,8 +219,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "I had a wonderful trip to Seattle last week.";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            IReadOnlyCollection<CategorizedEntity> entities = result.Entities;
+            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(input);
+            IReadOnlyCollection<CategorizedEntity> entities = response.Value;
 
             Assert.AreEqual(2, entities.Count);
 
@@ -176,13 +232,33 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task RecognizeEntitiesBatchWithErrorTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                 "",
+                "My cat might need to see a veterinarian."
+            };
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(inputs);
+
+            Assert.IsTrue(!results[0].HasError);
+            Assert.IsTrue(!results[2].HasError);
+
+            Assert.IsTrue(results[1].HasError);
+            Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+        }
+
+        [Test]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
-            RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input);
-            IReadOnlyCollection<PiiEntity> entities = result.Entities;
+            Response<IReadOnlyCollection<PiiEntity>> response = await client.RecognizePiiEntitiesAsync(input);
+            IReadOnlyCollection<PiiEntity> entities = response.Value;
 
             Assert.AreEqual(2, entities.Count);
 
@@ -203,10 +279,30 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "A developer with SSN 555-55-5555 whose phone number is 800-102-1100 is building tools with our APIs.";
 
-            RecognizePiiEntitiesResult result = await client.RecognizePiiEntitiesAsync(input, "en");
-            IReadOnlyCollection<PiiEntity> entities = result.Entities;
+            Response<IReadOnlyCollection<PiiEntity>> response = await client.RecognizePiiEntitiesAsync(input, "en");
+            IReadOnlyCollection<PiiEntity> entities = response.Value;
 
             Assert.AreEqual(2, entities.Count);
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesBatchWithErrorTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
+                "",
+                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.",
+            };
+
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(inputs);
+
+            Assert.IsTrue(!results[0].HasError);
+            Assert.IsTrue(!results[2].HasError);
+
+            Assert.IsTrue(results[1].HasError);
+            Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
         }
 
         [Test]
@@ -215,15 +311,13 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            RecognizeLinkedEntitiesResult result = await client.RecognizeLinkedEntitiesAsync(input);
+            Response<IReadOnlyCollection<LinkedEntity>> response = await client.RecognizeLinkedEntitiesAsync(input);
+            IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
 
-            Assert.IsNotNull(result.Id);
-            Assert.AreEqual(3, result.LinkedEntities.Count);
-            Assert.IsNotNull(result.Statistics.CharacterCount);
-            Assert.IsNotNull(result.Statistics.TransactionCount);
+            Assert.AreEqual(3, linkedEntities.Count);
 
             var entitiesList = new List<string> { "Bill Gates", "Microsoft", "Paul Allen" };
-            foreach (LinkedEntity entity in result.LinkedEntities)
+            foreach (LinkedEntity entity in linkedEntities)
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Name));
                 Assert.IsNotNull(entity.DataSource);
@@ -244,10 +338,30 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Microsoft fue fundado por Bill Gates y Paul Allen.";
 
-            RecognizeLinkedEntitiesResult result = await client.RecognizeLinkedEntitiesAsync(input, "es");
+            Response<IReadOnlyCollection<LinkedEntity>> response = await client.RecognizeLinkedEntitiesAsync(input, "es");
+            IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
 
-            Assert.IsNotNull(result.Id);
-            Assert.AreEqual(3, result.LinkedEntities.Count);
+            Assert.AreEqual(3, linkedEntities.Count);
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchWithErrorTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "",
+                "Pike place market is my favorite Seattle attraction.",
+            };
+
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(inputs);
+
+            Assert.IsTrue(!results[0].HasError);
+            Assert.IsTrue(!results[2].HasError);
+
+            Assert.IsTrue(results[1].HasError);
+            Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
         }
 
         [Test]
@@ -256,8 +370,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             const string input = "Bill Gates | Microsoft | New Mexico | 800-102-1100 | help@microsoft.com | April 4, 1975 12:34 | April 4, 1975 | 12:34 | five seconds | 9 | third | 120% | €30 | 11m | 22 °C";
 
-            RecognizeEntitiesResult result = await client.RecognizeEntitiesAsync(input);
-            List<CategorizedEntity> entities = result.Entities.ToList();
+            Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(input);
+            List<CategorizedEntity> entities = response.Value.ToList();
 
             Assert.AreEqual(15, entities.Count);
 
@@ -328,6 +442,15 @@ namespace Azure.AI.TextAnalytics.Tests
             // Re-rotate the API key and make sure it succeeds again
             credential.UpdateCredential(apiKey);
             await client.DetectLanguageAsync(input);
+        }
+
+        [Test]
+        public void ThrowExceptionTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var input = new List<string>();
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageBatchAsync(input));
         }
     }
 }
