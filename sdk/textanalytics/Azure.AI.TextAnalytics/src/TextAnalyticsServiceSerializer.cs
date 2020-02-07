@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics
             return default;
         }
 
-        private static IEnumerable<TextAnalyticsResult> ReadDocumentErrors(JsonElement documentElement)
+        internal static IEnumerable<TextAnalyticsResult> ReadDocumentErrors(JsonElement documentElement)
         {
             List<TextAnalyticsResult> errors = new List<TextAnalyticsResult>();
 
@@ -97,23 +97,60 @@ namespace Azure.AI.TextAnalytics
                 foreach (JsonElement errorElement in errorsValue.EnumerateArray())
                 {
                     string id = default;
-                    string message = default;
 
                     if (errorElement.TryGetProperty("id", out JsonElement idValue))
                         id = idValue.ToString();
                     if (errorElement.TryGetProperty("error", out JsonElement errorValue))
                     {
-                        if (errorValue.TryGetProperty("message", out JsonElement messageValue))
-                        {
-                            message = messageValue.ToString();
-                        }
+                        errors.Add(new TextAnalyticsResult(id, ReadTextAnalyticsError(errorValue)));
                     }
-
-                    errors.Add(new TextAnalyticsResult(id, message));
                 }
             }
 
             return errors;
+        }
+
+        private static TextAnalyticsError ReadTextAnalyticsError(JsonElement element)
+        {
+            string errorCode = default;
+            string message = default;
+            string target = default;
+            TextAnalyticsError innerError = default;
+
+            foreach (JsonProperty property in element.EnumerateObject())
+            {
+                if (property.NameEquals("code"))
+                {
+                    errorCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("message"))
+                {
+                    message = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("target"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("innerError"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    innerError = ReadTextAnalyticsError(property.Value);
+                    continue;
+                }
+            }
+
+            // Return the innermost error, which should be only one level down.
+            return innerError.Code == default ? new TextAnalyticsError(errorCode, message, target) : innerError;
         }
 
         private static string ReadModelVersion(JsonElement documentElement)
@@ -181,7 +218,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new DetectLanguageResult(error.Id, error.ErrorMessage));
+                collection.Add(new DetectLanguageResult(error.Id, error.Error));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
@@ -256,7 +293,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new RecognizeEntitiesResult(error.Id, error.ErrorMessage));
+                collection.Add(new RecognizeEntitiesResult(error.Id, error.Error));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
@@ -345,7 +382,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new AnalyzeSentimentResult(error.Id, error.ErrorMessage));
+                collection.Add(new AnalyzeSentimentResult(error.Id, error.Error));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
@@ -367,14 +404,14 @@ namespace Azure.AI.TextAnalytics
 
         private static DocumentSentiment ReadDocumentSentiment(JsonElement documentElement, string scoresElementName)
         {
-            TextSentimentLabel sentiment = default;
+            SentimentLabel sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (TextSentimentLabel)Enum.Parse(typeof(TextSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (SentimentLabel)Enum.Parse(typeof(SentimentLabel), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -389,21 +426,21 @@ namespace Azure.AI.TextAnalytics
                     negativeValue.TryGetDouble(out negativeScore);
             }
 
-            var sentenceSentiments = new List<TextSentiment>();
+            var sentenceSentiments = new List<SentenceSentiment>();
             if (documentElement.TryGetProperty("sentences", out JsonElement sentencesElement))
             {
                 foreach (JsonElement sentenceElement in sentencesElement.EnumerateArray())
                 {
-                    sentenceSentiments.Add(ReadTextSentiment(sentenceElement, "sentenceScores"));
+                    sentenceSentiments.Add(ReadSentenceSentiment(sentenceElement, "sentenceScores"));
                 }
             }
 
             return new DocumentSentiment(sentiment, positiveScore, neutralScore, negativeScore, sentenceSentiments);
         }
 
-        private static TextSentiment ReadTextSentiment(JsonElement documentElement, string scoresElementName)
+        private static SentenceSentiment ReadSentenceSentiment(JsonElement documentElement, string scoresElementName)
         {
-            TextSentimentLabel sentiment = default;
+            SentimentLabel sentiment = default;
             double positiveScore = default;
             double neutralScore = default;
             double negativeScore = default;
@@ -412,7 +449,7 @@ namespace Azure.AI.TextAnalytics
 
             if (documentElement.TryGetProperty("sentiment", out JsonElement sentimentValue))
             {
-                sentiment = (TextSentimentLabel)Enum.Parse(typeof(TextSentimentLabel), sentimentValue.ToString(), ignoreCase: true);
+                sentiment = (SentimentLabel)Enum.Parse(typeof(SentimentLabel), sentimentValue.ToString(), ignoreCase: true);
             }
 
             if (documentElement.TryGetProperty(scoresElementName, out JsonElement scoreValues))
@@ -433,7 +470,7 @@ namespace Azure.AI.TextAnalytics
             if (documentElement.TryGetProperty("length", out JsonElement lengthValue))
                 lengthValue.TryGetInt32(out length);
 
-            return new TextSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
+            return new SentenceSentiment(sentiment, positiveScore, neutralScore, negativeScore, offset, length);
         }
 
         #endregion
@@ -467,7 +504,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new ExtractKeyPhrasesResult(error.Id, error.ErrorMessage));
+                collection.Add(new ExtractKeyPhrasesResult(error.Id, error.Error));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
@@ -526,7 +563,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.ErrorMessage));
+                collection.Add(new RecognizeLinkedEntitiesResult(error.Id, error.Error));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);
@@ -643,7 +680,7 @@ namespace Azure.AI.TextAnalytics
 
             foreach (var error in ReadDocumentErrors(root))
             {
-                collection.Add(new RecognizePiiEntitiesResult(error.Id, error.ErrorMessage));
+                collection.Add(new RecognizePiiEntitiesResult(error.Id, error.Error));
             }
 
             collection = SortHeterogeneousCollection(collection, idToIndexMap);

@@ -14,26 +14,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Tag Request for Patch operation.
+    /// Wrapper resource for tags patch API request only.
     /// </summary>
-    public partial class TagPatchRequest
+    public partial class TagsPatchResource
     {
         /// <summary>
-        /// Initializes a new instance of the TagPatchRequest class.
+        /// Initializes a new instance of the TagsPatchResource class.
         /// </summary>
-        public TagPatchRequest()
+        public TagsPatchResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TagPatchRequest class.
+        /// Initializes a new instance of the TagsPatchResource class.
         /// </summary>
-        /// <param name="operation">The operation type for the patch api.
+        /// <param name="operation">The operation type for the patch API.
         /// Possible values include: 'Replace', 'Merge', 'Delete'</param>
-        /// <param name="properties">tags object passing in the
-        /// request.</param>
-        public TagPatchRequest(string operation = default(string), Tags properties = default(Tags))
+        /// <param name="properties">The set of tags.</param>
+        public TagsPatchResource(string operation = default(string), Tags properties = default(Tags))
         {
             Operation = operation;
             Properties = properties;
@@ -46,14 +45,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the operation type for the patch api. Possible values
+        /// Gets or sets the operation type for the patch API. Possible values
         /// include: 'Replace', 'Merge', 'Delete'
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets tags object passing in the request.
+        /// Gets or sets the set of tags.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public Tags Properties { get; set; }

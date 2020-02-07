@@ -6,7 +6,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Lease state values.
     /// </summary>
-    public enum LeaseState
+    public enum DataLakeLeaseState
     {
         /// <summary>
         /// Available.

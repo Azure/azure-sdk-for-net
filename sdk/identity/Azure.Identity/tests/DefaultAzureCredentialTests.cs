@@ -217,7 +217,7 @@ namespace Azure.Identity.Tests
 
             var cred = new DefaultAzureCredential(credFactory, options);
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             if (!excludeEnvironmentCredential)
             {
@@ -304,38 +304,45 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            if (exPossition > 0)
-            {
-                Assert.True(ex.Message.Contains("EnvironmentCredential Unavailable"));
-            }
-
-            if (exPossition > 1)
-            {
-                Assert.True(ex.Message.Contains("ManagedIdentityCredential Unavailable"));
-            }
-
-            if (exPossition > 2)
-            {
-                Assert.True(ex.Message.Contains("SharedTokenCacheCredential Unavailable"));
-            }
-
             switch (exPossition)
             {
                 case 0:
-                    Assert.True(ex.Message.Contains("EnvironmentCredential unhandled exception"));
+                    Assert.AreEqual(ex.InnerException.Message, "EnvironmentCredential unhandled exception");
                     break;
                 case 1:
-                    Assert.True(ex.Message.Contains("ManagedIdentityCredential unhandled exception"));
+                    Assert.AreEqual(ex.InnerException.Message, "ManagedIdentityCredential unhandled exception");
                     break;
                 case 2:
-                    Assert.True(ex.Message.Contains("SharedTokenCacheCredential unhandled exception"));
+                    Assert.AreEqual(ex.InnerException.Message, "SharedTokenCacheCredential unhandled exception");
                     break;
                 case 3:
-                    Assert.True(ex.Message.Contains("InteractiveBrowserCredential unhandled exception"));
+                    Assert.AreEqual(ex.InnerException.Message, "InteractiveBrowserCredential unhandled exception");
                     break;
                 default:
                     Assert.Fail();
                     break;
+            }
+        }
+
+        internal class PartialMockDefaultAzureCredentialFactory : DefaultAzureCredentialFactory
+        {
+            private EnvironmentCredential _environmentCredential;
+            private ManagedIdentityCredential _managedIdentityCredential;
+
+            public PartialMockDefaultAzureCredentialFactory(CredentialPipeline pipeline=null, EnvironmentCredential environmentCredential = null, ManagedIdentityCredential managedIdentityCredential = null) : base(pipeline ?? CredentialPipeline.GetInstance(null))
+            {
+                _environmentCredential = environmentCredential;
+                _managedIdentityCredential = managedIdentityCredential;
+            }
+
+            public override IExtendedTokenCredential CreateEnvironmentCredential()
+            {
+                return _environmentCredential ?? base.CreateEnvironmentCredential();
+            }
+
+            public override IExtendedTokenCredential CreateManagedIdentityCredential(string clientId)
+            {
+                return _managedIdentityCredential ?? base.CreateManagedIdentityCredential(clientId);
             }
         }
     }

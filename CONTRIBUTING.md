@@ -165,17 +165,16 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 
 ### Standard Process
 
-1.  Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
-2.  Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-3.  Create your Swagger specification for your HTTP API. For more information see
-    [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
-4.  Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest,
-    see the [AutoRest repository](https://github.com/Azure/autorest)
-5.  Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
-6.  **MANDATORY**: Add or update tests for the newly generated code.
-7.  Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8.  A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
-9.  The pull requests will be reviewed and merged by the Azure SDK team
+1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
+2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+3. Create your Swagger specification for your HTTP API. For more information see [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
+4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, see the [AutoRest repository](https://github.com/Azure/autorest)
+5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others.
+6. **MANDATORY**: Add or update tests for the newly generated code.
+7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
+8. For management libraries run `eng\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+9. A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
+10. The pull requests will be reviewed and merged by the Azure SDK team
 
 ### New Resource Provider
 

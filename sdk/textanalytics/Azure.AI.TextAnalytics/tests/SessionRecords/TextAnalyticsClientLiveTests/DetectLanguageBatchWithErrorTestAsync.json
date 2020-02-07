@@ -1,0 +1,93 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://westus2.api.cognitive.microsoft.com/text/analytics/v3.0-preview.1/languages",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Content-Length": "156",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-081065231fffca40bae4fc1461457f2e-050ea6cd877bdf49-00",
+        "User-Agent": [
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200205.1\u002Bf8d73daa11c41f2bc0e09182d73b8ba9b5a9b924",
+          "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
+        ],
+        "x-ms-client-request-id": "657bba06d655a68e54d2efc01e358958",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "countryHint": "us",
+            "id": "0",
+            "text": "Hello world"
+          },
+          {
+            "countryHint": "us",
+            "id": "1",
+            "text": ""
+          },
+          {
+            "countryHint": "us",
+            "id": "2",
+            "text": "Hola mundo"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3da54340-3ec5-4d53-a5a8-9b55e1c55846",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
+        "Date": "Thu, 06 Feb 2020 04:36:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "4"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "0",
+            "detectedLanguages": [
+              {
+                "name": "English",
+                "iso6391Name": "en",
+                "score": 1.0
+              }
+            ]
+          },
+          {
+            "id": "2",
+            "detectedLanguages": [
+              {
+                "name": "Spanish",
+                "iso6391Name": "es",
+                "score": 1.0
+              }
+            ]
+          }
+        ],
+        "errors": [
+          {
+            "id": "1",
+            "error": {
+              "code": "InvalidArgument",
+              "innerError": {
+                "code": "InvalidDocument",
+                "message": "Document text is empty."
+              },
+              "message": "Invalid document in request."
+            }
+          }
+        ],
+        "modelVersion": "2019-10-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1638255384",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://westus2.api.cognitive.microsoft.com/"
+  }
+}

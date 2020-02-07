@@ -55,9 +55,10 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.HasError)
                 {
-                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error: {result.Error.Code}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
@@ -68,7 +69,7 @@ namespace Azure.AI.TextAnalytics.Samples
 
                     Debug.WriteLine($"    Sentence sentiment results:");
 
-                    foreach (TextSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
+                    foreach (SentenceSentiment sentenceSentiment in result.DocumentSentiment.Sentences)
                     {
                         Debug.WriteLine($"    On sentence \"{document.Text.Substring(sentenceSentiment.Offset, sentenceSentiment.Length)}\"");
 
