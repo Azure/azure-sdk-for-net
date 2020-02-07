@@ -17,7 +17,7 @@ namespace Azure.Core.Testing
         public void Intercept(IInvocation invocation)
         {
             var methodName = invocation.Method.Name;
-            if (methodName.EndsWith("Async"))
+            if (methodName.EndsWith("Async") && !invocation.Method.IsFamily) // TODO: Add a [NoClientCalls] attribute per https://github.com/Azure/azure-sdk-for-net/issues/9857
             {
                 Type declaringType = invocation.Method.DeclaringType;
                 var ns = declaringType.Namespace;

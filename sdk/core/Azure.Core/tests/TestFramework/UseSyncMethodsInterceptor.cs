@@ -150,7 +150,7 @@ namespace Azure.Core.Testing
                 ? invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.NonPublic | BindingFlags.Instance, null, types, null)
                 : invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
 
-        private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
+        private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamily || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
 
         private class SyncPageableWrapper<T> : AsyncPageable<T>
         {
