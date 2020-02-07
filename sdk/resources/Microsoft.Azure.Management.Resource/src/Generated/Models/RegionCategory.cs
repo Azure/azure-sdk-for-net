@@ -12,10 +12,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
-    /// Defines values for ManagedServiceIdentityType.
+    /// Defines values for RegionCategory.
     /// </summary>
-    public static class ManagedServiceIdentityType
+    public static class RegionCategory
     {
-        public const string UserAssigned = "UserAssigned";
+        public const string Recommended = "Recommended";
+        public const string Other = "Other";
     }
 }

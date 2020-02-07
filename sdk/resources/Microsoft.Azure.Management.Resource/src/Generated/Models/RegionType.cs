@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
-    /// Defines values for PolicyMode.
+    /// Defines values for RegionType.
     /// </summary>
-    public static class PolicyMode
+    public static class RegionType
     {
-        public const string NotSpecified = "NotSpecified";
-        public const string Indexed = "Indexed";
-        public const string All = "All";
+        public const string Physical = "Physical";
+        public const string Logical = "Logical";
     }
 }

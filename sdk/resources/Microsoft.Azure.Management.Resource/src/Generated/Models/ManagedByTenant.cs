@@ -11,30 +11,29 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Deployment script execution logs.
+    /// Information about a tenant managing the subscription.
     /// </summary>
-    public partial class ScriptLogsList
+    public partial class ManagedByTenant
     {
         /// <summary>
-        /// Initializes a new instance of the ScriptLogsList class.
+        /// Initializes a new instance of the ManagedByTenant class.
         /// </summary>
-        public ScriptLogsList()
+        public ManagedByTenant()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ScriptLogsList class.
+        /// Initializes a new instance of the ManagedByTenant class.
         /// </summary>
-        /// <param name="value">Deployment scripts logs.</param>
-        public ScriptLogsList(IList<ScriptLog> value = default(IList<ScriptLog>))
+        /// <param name="tenantId">The tenant ID of the managing tenant. This
+        /// is a GUID.</param>
+        public ManagedByTenant(string tenantId = default(string))
         {
-            Value = value;
+            TenantId = tenantId;
             CustomInit();
         }
 
@@ -44,10 +43,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets deployment scripts logs.
+        /// Gets the tenant ID of the managing tenant. This is a GUID.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ScriptLog> Value { get; set; }
+        [JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; private set; }
 
     }
 }
