@@ -54,8 +54,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// whether Azure Resource Manager is permitted to retrieve secrets
         /// from the key vault.</param>
         /// <param name="enableSoftDelete">Property to specify whether the
-        /// 'soft delete' functionality is enabled for this key vault. It does
-        /// not accept false value.</param>
+        /// 'soft delete' functionality is enabled for this key vault. If
+        /// omitted, assume true as default value. Once set to true, cannot be
+        /// reverted to false.</param>
         /// <param name="createMode">The vault's create mode to indicate
         /// whether the vault need to be recovered or not. Possible values
         /// include: 'recover', 'default'</param>
@@ -66,9 +67,11 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// irrecoverable deletion. The setting is effective only if soft
         /// delete is also enabled. Enabling this functionality is irreversible
         /// - that is, the property does not accept false as its value.</param>
-        /// <param name="networkAcls">A collection of rules governing the
-        /// accessibility of the vault from specific network locations.</param>
-        public VaultProperties(System.Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet))
+        /// <param name="networkAcls">Rules governing the accessibility of the
+        /// key vault from specific network locations.</param>
+        /// <param name="privateEndpointConnections">List of private endpoint
+        /// connections associated with the key vault.</param>
+        public VaultProperties(System.Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies = default(IList<AccessPolicyEntry>), string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?), bool? enableSoftDelete = default(bool?), CreateMode? createMode = default(CreateMode?), bool? enablePurgeProtection = default(bool?), NetworkRuleSet networkAcls = default(NetworkRuleSet), IList<PrivateEndpointConnectionItem> privateEndpointConnections = default(IList<PrivateEndpointConnectionItem>))
         {
             TenantId = tenantId;
             Sku = sku;
@@ -81,6 +84,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
             CreateMode = createMode;
             EnablePurgeProtection = enablePurgeProtection;
             NetworkAcls = networkAcls;
+            PrivateEndpointConnections = privateEndpointConnections;
             CustomInit();
         }
 
@@ -143,8 +147,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
 
         /// <summary>
         /// Gets or sets property to specify whether the 'soft delete'
-        /// functionality is enabled for this key vault. It does not accept
-        /// false value.
+        /// functionality is enabled for this key vault. If omitted, assume
+        /// true as default value. Once set to true, cannot be reverted to
+        /// false.
         /// </summary>
         [JsonProperty(PropertyName = "enableSoftDelete")]
         public bool? EnableSoftDelete { get; set; }
@@ -170,11 +175,18 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public bool? EnablePurgeProtection { get; set; }
 
         /// <summary>
-        /// Gets or sets a collection of rules governing the accessibility of
-        /// the vault from specific network locations.
+        /// Gets or sets rules governing the accessibility of the key vault
+        /// from specific network locations.
         /// </summary>
         [JsonProperty(PropertyName = "networkAcls")]
         public NetworkRuleSet NetworkAcls { get; set; }
+
+        /// <summary>
+        /// Gets list of private endpoint connections associated with the key
+        /// vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointConnections")]
+        public IList<PrivateEndpointConnectionItem> PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Validate the object.
