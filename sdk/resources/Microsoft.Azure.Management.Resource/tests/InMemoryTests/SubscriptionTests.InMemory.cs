@@ -35,15 +35,19 @@ namespace ResourceGroups.Tests
 		                'id': '/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/locations/eastasia',
 		                'name': 'eastasia',
 		                'displayName': 'East Asia',
-		                'longitude': '114.188',
-		                'latitude': '22.267'
+                        'metadata': {
+                            'longitude': '114.188',
+		                    'latitude': '22.267'
+                        },
 	                },
 	                {
 		                'id': '/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/locations/southeastasia',
 		                'name': 'southeastasia',
 		                'displayName': 'Southeast Asia',
-		                'longitude': '103.833',
-		                'latitude': '1.283'
+                        'metadata': {
+                            'longitude': '103.833',
+		                    'latitude': '1.283'
+                        },
 	                }]
                 }")
             };
@@ -67,8 +71,8 @@ namespace ResourceGroups.Tests
             Assert.Equal("/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/locations/eastasia", listLocationsResult.FirstOrDefault().Id);
             Assert.Equal("eastasia", listLocationsResult.FirstOrDefault().Name);
             Assert.Equal("East Asia", listLocationsResult.FirstOrDefault().DisplayName);
-            Assert.Equal("114.188", listLocationsResult.FirstOrDefault().Longitude);
-            Assert.Equal("22.267", listLocationsResult.FirstOrDefault().Latitude);
+            Assert.Equal("114.188", listLocationsResult.FirstOrDefault().Metadata.Longitude);
+            Assert.Equal("22.267", listLocationsResult.FirstOrDefault().Metadata.Latitude);
         }
 
         [Fact]
