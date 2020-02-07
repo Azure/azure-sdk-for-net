@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.Shares.Tests
         ShareClientOptions.ServiceVersion.V2019_07_07)]
     public class FileTestBase : StorageTestBase
     {
-        private readonly ShareClientOptions.ServiceVersion _serviceVersion;
+        protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
 
         public static Uri s_invalidUri = new Uri("https://error.file.core.windows.net");
 

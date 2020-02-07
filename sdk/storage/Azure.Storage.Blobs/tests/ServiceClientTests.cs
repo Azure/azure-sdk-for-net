@@ -135,14 +135,18 @@ namespace Azure.Storage.Blobs.Test
 
             Assert.IsNotNull(containers[0].Name);
             Assert.IsNotNull(containers[0].Properties);
-            Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
-            Assert.IsNotNull(containers[0].Properties.PreventEncryptionScopeOverride);
             Assert.IsNotNull(containers[0].Properties.ETag);
             Assert.IsNotNull(containers[0].Properties.HasImmutabilityPolicy);
             Assert.IsNotNull(containers[0].Properties.HasLegalHold);
             Assert.IsNotNull(containers[0].Properties.LastModified);
             Assert.IsNotNull(containers[0].Properties.LeaseState);
             Assert.IsNotNull(containers[0].Properties.LeaseStatus);
+
+            if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
+            {
+                Assert.IsNotNull(containers[0].Properties.DefaultEncryptionScope);
+                Assert.IsNotNull(containers[0].Properties.PreventEncryptionScopeOverride);
+            }
         }
 
         #region Secondary Storage

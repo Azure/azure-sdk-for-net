@@ -226,6 +226,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DownloadAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1413,6 +1414,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetPropertiesAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1950,6 +1952,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task SetMetadataAsync_EncryptionScope()
         {
             // Arrange
@@ -2060,6 +2063,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateSnapshotAsync_EncryptionScope()
         {
             // Arrange

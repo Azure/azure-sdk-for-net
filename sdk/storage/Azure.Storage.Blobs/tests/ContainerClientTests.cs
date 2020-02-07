@@ -444,6 +444,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateAsync_EncryptionScopeOptions()
         {
             // Arrange
@@ -733,10 +734,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.PublicAccess);
             Assert.IsNotNull(response.Value.HasImmutabilityPolicy);
             Assert.IsNotNull(response.Value.HasLegalHold);
-            Assert.IsNotNull(response.Value.DefaultEncryptionScope);
-            Assert.IsNotNull(response.Value.PreventEncryptionScopeOverride);
             Assert.IsNotNull(response.Value.ETag);
             Assert.IsNotNull(response.Value.Metadata);
+
+            if (_serviceVersion >= BlobClientOptions.ServiceVersion.V2019_07_07)
+            {
+                Assert.IsNotNull(response.Value.DefaultEncryptionScope);
+                Assert.IsNotNull(response.Value.PreventEncryptionScopeOverride);
+            }
         }
 
         [Test]
@@ -1566,6 +1571,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ListBlobsFlatSegmentAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1785,6 +1791,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ListBlobsHierarchySegmentAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

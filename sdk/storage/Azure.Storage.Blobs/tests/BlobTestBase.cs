@@ -21,7 +21,7 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2019_07_07)]
     public abstract class BlobTestBase : StorageTestBase
     {
-        private readonly BlobClientOptions.ServiceVersion _serviceVersion;
+        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
         public readonly string ReceivedETag = "\"received\"";
         public readonly string GarbageETag = "\"garbage\"";
         public readonly string ReceivedLeaseId = "received";

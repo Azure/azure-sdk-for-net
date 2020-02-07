@@ -155,6 +155,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -360,6 +361,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadPagesAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -641,6 +643,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ClearPagesAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1044,7 +1047,9 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync()
         {
             BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
@@ -1081,7 +1086,7 @@ namespace Azure.Storage.Blobs.Test
             Response<PageRangesInfo> result = await blob.GetManagedDiskPageRangesDiffAsync(
                 range: new HttpRange(0, 4 * Constants.KB),
                 snapshot,
-                previousSnapshotUrl: uriBuilder.Uri);
+                previousSnapshotUri: uriBuilder.Uri);
 
             // Assert
             Assert.AreEqual(1, result.Value.PageRanges.Count());
@@ -1091,7 +1096,9 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(3 * Constants.KB, range.Offset + range.Length);
         }
 
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_Error()
         {
             BlobServiceClient manageDiskService = GetServiceClient_ManagedDisk();
@@ -1111,7 +1118,9 @@ namespace Azure.Storage.Blobs.Test
                 });
         }
 
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1153,7 +1162,7 @@ namespace Azure.Storage.Blobs.Test
                 // Act
                 Response<PageRangesInfo> response = await blob.GetManagedDiskPageRangesDiffAsync(
                     range: new HttpRange(0, Constants.KB),
-                    previousSnapshotUrl: uriBuilder.Uri,
+                    previousSnapshotUri: uriBuilder.Uri,
                     conditions: accessConditions);
 
                 // Assert
@@ -1161,7 +1170,9 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Ignore("Not possible to programmatically create a Managed Disk account")]
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetManagedDiskPageRangesDiffAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1206,7 +1217,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         var _ = (await blob.GetManagedDiskPageRangesDiffAsync(
                             range: new HttpRange(0, Constants.KB),
-                            previousSnapshotUrl: uriBuilder.Uri,
+                            previousSnapshotUri: uriBuilder.Uri,
                             conditions: accessConditions)).Value;
                     });
             }
@@ -1250,6 +1261,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ResizeAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1807,6 +1819,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadPagesFromUriAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

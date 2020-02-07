@@ -69,9 +69,18 @@ namespace Azure.Storage.Files.Shares.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                service.GetPropertiesAsync(),
-                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+            if (_serviceVersion >= ShareClientOptions.ServiceVersion.V2019_07_07)
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    service.GetPropertiesAsync(),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    service.GetPropertiesAsync(),
+                    e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+            }
         }
 
         [Test]
@@ -117,9 +126,19 @@ namespace Azure.Storage.Files.Shares.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                fakeService.SetPropertiesAsync(properties),
-                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+            if (_serviceVersion >= ShareClientOptions.ServiceVersion.V2019_07_07)
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    fakeService.SetPropertiesAsync(properties),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    fakeService.SetPropertiesAsync(properties),
+                    e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+            }
+
         }
 
         [Test]
@@ -146,6 +165,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ListSharesSegmentAsync_Premium()
         {
             // Arrange
@@ -214,9 +234,18 @@ namespace Azure.Storage.Files.Shares.Test
                     GetOptions()));
 
             // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                service.GetSharesAsync().ToListAsync(),
-                e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+            if (_serviceVersion >= ShareClientOptions.ServiceVersion.V2019_07_07)
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    service.GetSharesAsync().ToListAsync(),
+                    e => Assert.AreEqual("InvalidHeaderValue", e.ErrorCode.Split('\n')[0]));
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    service.GetSharesAsync().ToListAsync(),
+                    e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+            }
         }
 
         [Test]

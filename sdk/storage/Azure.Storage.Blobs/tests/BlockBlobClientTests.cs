@@ -188,6 +188,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task StageBlockAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -428,6 +429,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task StageBlockFromUriAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -763,6 +765,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CommitBlockListAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1365,6 +1368,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadAsync_EncryptionScope()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

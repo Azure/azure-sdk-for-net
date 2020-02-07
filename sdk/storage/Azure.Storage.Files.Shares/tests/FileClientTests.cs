@@ -117,6 +117,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateAsync_Lease()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -139,6 +140,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateAsync_InvalidLease()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -344,6 +346,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task SetMetadataAsync_Lease()
         {
             // Arrange
@@ -367,6 +370,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task SetMetadataAsync_InvalidLease()
         {
             // Arrange
@@ -423,6 +427,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetPropertiesAsync_NoLease()
         {
             // Arrange
@@ -441,6 +446,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetPropertiesAsync_Lease()
         {
             // Arrange
@@ -467,6 +473,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetPropertiesAsync_InvalidLease()
         {
             // Arrange
@@ -641,6 +648,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task SetHttpHeadersAsync_Lease()
         {
             var constants = new TestConstants(this);
@@ -667,6 +675,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task SetHttpHeadersAsync_InvalidLease()
         {
             var constants = new TestConstants(this);
@@ -827,6 +836,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DeleteAsync_Lease()
         {
             await using DisposingFile test = await GetTestFileAsync();
@@ -845,6 +855,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DeleteAsync_InvalidLease()
         {
             await using DisposingFile test = await GetTestFileAsync();
@@ -900,6 +911,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task StartCopyAsync_IgnoreReadOnlyAndSetArchive()
         {
             // Arrange
@@ -927,6 +939,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task StartCopyAsync_FilePermission()
         {
             // Arrange
@@ -970,6 +983,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task StartCopyAsync_CopySmbPropertiesFilePermissionKey()
         {
             // Arrange
@@ -1012,6 +1026,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task StartCopyAsync_Lease()
         {
             // Arrange
@@ -1044,6 +1059,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task StartCopyAsync_InvalidLease()
         {
             // Arrange
@@ -1156,6 +1172,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AbortCopyAsync_Lease()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -1205,6 +1222,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AbortCopyAsync_InvalidLease()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -1339,6 +1357,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DownloadAsync_NoLease()
         {
             // Arrange
@@ -1366,6 +1385,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DownloadAsync_Lease()
         {
             // Arrange
@@ -1400,6 +1420,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task DownloadAsync_InvalidLease()
         {
             // Arrange
@@ -1488,6 +1509,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetRangeListAsync_NoLease()
         {
             // Arrange
@@ -1504,6 +1526,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetRangeListAsync_Lease()
         {
             // Arrange
@@ -1526,6 +1549,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetRangeListAsync_InvalidLease()
         {
             // Arrange
@@ -1580,6 +1604,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadRangeAsync_Lease()
         {
             var data = GetRandomBuffer(Constants.KB);
@@ -1604,6 +1629,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadRangeAsync_InvalidLease()
         {
             var data = GetRandomBuffer(Constants.KB);
@@ -1670,6 +1696,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadAsync_Lease()
         {
             // Arrange
@@ -1702,6 +1729,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task UploadAsync_InvalidLease()
         {
             // Arrange
@@ -1948,6 +1976,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [LiveOnly]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         // TODO: #7645
         public async Task UploadRangeFromUriAsync_Lease()
         {
@@ -1996,6 +2025,7 @@ namespace Azure.Storage.Files.Shares.Test
 
         [Test]
         [LiveOnly]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         // TODO: #7645
         public async Task UploadRangeFromUriAsync_InvalidLease()
         {
@@ -2163,6 +2193,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AcquireLeaseAsync()
         {
             // Arrange
@@ -2183,6 +2214,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AcquireLeaseAsync_Error()
         {
             // Arrange
@@ -2199,6 +2231,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ReleaseLeaseAsync()
         {
             // Arrange
@@ -2220,6 +2253,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ReleaseLeaseAsync_Error()
         {
             // Arrange
@@ -2236,6 +2270,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ChangeLeaseAsync()
         {
             // Arrange
@@ -2258,6 +2293,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task ChangeLeaseAsync_Error()
         {
             // Arrange
@@ -2275,6 +2311,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task BreakLeaseAsync()
         {
             // Arrange
@@ -2296,6 +2333,7 @@ namespace Azure.Storage.Files.Shares.Test
         }
 
         [Test]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         public async Task BreakLeaseAsync_Error()
         {
             // Arrange

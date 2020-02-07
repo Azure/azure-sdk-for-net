@@ -1265,7 +1265,7 @@ namespace Azure.Storage.Blobs.Specialized
                 range,
                 snapshot,
                 previousSnapshot,
-                previousSnapshotUrl: default,
+                previousSnapshotUri: default,
                 conditions,
                 async: false,
                 operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}",
@@ -1322,7 +1322,7 @@ namespace Azure.Storage.Blobs.Specialized
                 range,
                 snapshot,
                 previousSnapshot,
-                previousSnapshotUrl: default,
+                previousSnapshotUri: default,
                 conditions,
                 async: true,
                 operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}",
@@ -1353,13 +1353,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// snapshot, as long as the snapshot specified by
         /// <paramref name="previousSnapshot"/> is the older of the two.
         /// </param>
-        /// <param name="previousSnapshotUrl">
+        /// <param name="previousSnapshotUri">
         /// This parameter only works with managed disk storage accounts.
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
         /// snapshot, as long as the snapshot specified by
-        /// <paramref name="previousSnapshotUrl"/> is the older of the two.
+        /// <paramref name="previousSnapshotUri"/> is the older of the two.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1387,7 +1387,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpRange? range,
             string snapshot,
             string previousSnapshot,
-            Uri previousSnapshotUrl,
+            Uri previousSnapshotUri,
             PageBlobRequestConditions conditions,
             bool async,
             string operationName,
@@ -1401,7 +1401,7 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(previousSnapshot)}: {previousSnapshot}\n" +
-                    $"{nameof(previousSnapshotUrl)}: {previousSnapshotUrl}\n" +
+                    $"{nameof(previousSnapshotUri)}: {previousSnapshotUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
@@ -1412,7 +1412,7 @@ namespace Azure.Storage.Blobs.Specialized
                         version: Version.ToVersionString(),
                         snapshot: snapshot,
                         prevsnapshot: previousSnapshot,
-                        prevSnapshotUrl: previousSnapshotUrl,
+                        prevSnapshotUrl: previousSnapshotUri,
                         range: range?.ToString(),
                         leaseId: conditions?.LeaseId,
                         ifModifiedSince: conditions?.IfModifiedSince,
@@ -1446,7 +1446,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="GetManagedDiskPageRangesDiff"/>
         /// operation returns the list of page ranges that differ between a
-        /// <paramref name="previousSnapshotUrl"/> and this page blob. Changed pages
+        /// <paramref name="previousSnapshotUri"/> and this page blob. Changed pages
         /// include both updated and cleared pages.  This API only works with
         /// managed disk storage accounts.
         ///
@@ -1461,13 +1461,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// information from. For more information on working with blob snapshots,
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
         /// </param>
-        /// <param name="previousSnapshotUrl">
+        /// <param name="previousSnapshotUri">
         /// This parameter only works with managed disk storage accounts.
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
         /// snapshot, as long as the snapshot specified by
-        /// <paramref name="previousSnapshotUrl"/> is the older of the two.
+        /// <paramref name="previousSnapshotUri"/> is the older of the two.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1488,14 +1488,14 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual Response<PageRangesInfo> GetManagedDiskPageRangesDiff(
             HttpRange? range = default,
             string snapshot = default,
-            Uri previousSnapshotUrl = default,
+            Uri previousSnapshotUri = default,
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot: default,
-                previousSnapshotUrl,
+                previousSnapshotUri,
                 conditions,
                 async: false,
                 operationName: $"{nameof(PageBlobClient)}.{nameof(GetManagedDiskPageRangesDiff)}",
@@ -1505,7 +1505,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// The <see cref="GetManagedDiskPageRangesDiffAsync"/>
         /// operation returns the list of page ranges that differ between a
-        /// <paramref name="previousSnapshotUrl"/> and this page blob. Changed pages
+        /// <paramref name="previousSnapshotUri"/> and this page blob. Changed pages
         /// include both updated and cleared pages.  This API only works with
         /// managed disk storage accounts.
         ///
@@ -1520,13 +1520,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// information from. For more information on working with blob snapshots,
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/creating-a-snapshot-of-a-blob"/>.
         /// </param>
-        /// <param name="previousSnapshotUrl">
+        /// <param name="previousSnapshotUri">
         /// This parameter only works with managed disk storage accounts.
         /// Specifies that the response will contain only pages that were
         /// changed between target blob and previous snapshot.  Changed pages
         /// include both updated and cleared pages. The target blob may be a
         /// snapshot, as long as the snapshot specified by
-        /// <paramref name="previousSnapshotUrl"/> is the older of the two.
+        /// <paramref name="previousSnapshotUri"/> is the older of the two.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="PageBlobRequestConditions"/> to add
@@ -1547,14 +1547,14 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual async Task<Response<PageRangesInfo>> GetManagedDiskPageRangesDiffAsync(
             HttpRange? range = default,
             string snapshot = default,
-            Uri previousSnapshotUrl = default,
+            Uri previousSnapshotUri = default,
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot: default,
-                previousSnapshotUrl,
+                previousSnapshotUri,
                 conditions,
                 async: true,
                 operationName: $"{nameof(PageBlobClient)}.{nameof(GetManagedDiskPageRangesDiff)}",
