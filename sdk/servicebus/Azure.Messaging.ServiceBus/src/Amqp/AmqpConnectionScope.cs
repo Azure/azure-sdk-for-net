@@ -535,7 +535,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Target = new Target { Address = Guid.NewGuid().ToString() }
                 };
 
-                linkSettings.AddProperty(AmqpProperty.EntityType, "0,1,2,3");//(int)AmqpProperty.Entity.ConsumerGroup);
+                //linkSettings.AddProperty(AmqpProperty.EntityType, "0,1,2,3");//(int)AmqpProperty.Entity.ConsumerGroup);
 
                 if (ownerLevel.HasValue)
                 {
@@ -641,7 +641,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 };
 
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)timeout.CalculateRemaining(stopWatch.Elapsed).TotalMilliseconds);
-                linkSettings.AddProperty(AmqpProperty.EntityType, "0,1"); // MessagingEntityType
+                //linkSettings.AddProperty(AmqpProperty.EntityType, "0,1"); // MessagingEntityType
 
                 var link = new SendingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";

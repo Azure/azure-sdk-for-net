@@ -48,6 +48,8 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="SharedSource\Azure.Core\HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="SharedSource\Azure.Core\ClientDiagnostics.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="SharedSource\Azure.Core\ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="SharedSource\Azure.Core\ArrayBufferWriter.cs" />
+
   </ItemGroup>
 
   <!--Embed the shared resources -->
