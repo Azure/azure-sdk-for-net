@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Testing;
 using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Sender;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
+    [LiveOnly]
     public class SessionReceiverTests : ServiceBusTestBase
     {
         [Test]

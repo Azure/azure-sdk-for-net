@@ -11,9 +11,11 @@ using Azure.Messaging.ServiceBus.Tests;
 using System;
 using Azure.Messaging.ServiceBus.Receiver;
 using System.Xml.Schema;
+using Azure.Core.Testing;
 
 namespace Microsoft.Azure.Template.Tests
 {
+    [LiveOnly]
     public class SenderTests : ServiceBusTestBase
     {
         [Test]
