@@ -146,7 +146,7 @@ Run a model to identify a collection of significant phrases found in the passed-
 string input = "My cat might need to see a veterinarian.";
 
 Response<IReadOnlyCollection<string>> response = client.ExtractKeyPhrases(input);
-IReadOnlyCollection<string> keyPhrases = response.Value;
+IEnumerable<string> keyPhrases = response.Value;
 
 Console.WriteLine($"Extracted {keyPhrases.Count()} key phrases:");
 foreach (string keyPhrase in keyPhrases)
@@ -165,7 +165,7 @@ Run a predictive model to identify a collection of named entities in the passed-
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 Response<IReadOnlyCollection<CategorizedEntity>> response = client.RecognizeEntities(input);
-IReadOnlyCollection<CategorizedEntity> entities = response.Value;
+IEnumerable<CategorizedEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (CategorizedEntity entity in entities)
@@ -184,7 +184,7 @@ Run a predictive model to identify a collection of entities containing Personall
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
 Response<IReadOnlyCollection<PiiEntity>> response = client.RecognizePiiEntities(input);
-IReadOnlyCollection<PiiEntity> entities = response.Value;
+IEnumerable<PiiEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
@@ -202,7 +202,7 @@ Run a predictive model to identify a collection of entities found in the passed-
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 Response<IReadOnlyCollection<LinkedEntity>> response = client.RecognizeLinkedEntities(input);
-IReadOnlyCollection<LinkedEntity> linkedEntities = response.Value;
+IEnumerable<LinkedEntity> linkedEntities = response.Value;
 
 Console.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
 foreach (LinkedEntity linkedEntity in linkedEntities)
@@ -236,7 +236,7 @@ Run a predictive model to identify a collection of named entities in the passed-
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
 Response<IReadOnlyCollection<CategorizedEntity>> response = await client.RecognizeEntitiesAsync(input);
-IReadOnlyCollection<CategorizedEntity> entities = response.Value;
+IEnumerable<CategorizedEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
 foreach (CategorizedEntity entity in entities)

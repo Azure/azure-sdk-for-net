@@ -26,7 +26,7 @@ namespace Azure.AI.TextAnalytics.Samples
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
             Response<IReadOnlyCollection<CategorizedEntity>> response = client.RecognizeEntities(input);
-            IReadOnlyCollection<CategorizedEntity> entities = response.Value;
+            IEnumerable<CategorizedEntity> entities = response.Value;
 
             Console.WriteLine($"Recognized {entities.Count()} entities:");
             foreach (CategorizedEntity entity in entities)

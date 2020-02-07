@@ -443,5 +443,14 @@ namespace Azure.AI.TextAnalytics.Tests
             credential.UpdateCredential(apiKey);
             await client.DetectLanguageAsync(input);
         }
+
+        [Test]
+        public void ThrowExceptionTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var input = new List<string>();
+
+            Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageBatchAsync(input));
+        }
     }
 }

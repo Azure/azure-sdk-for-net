@@ -19,7 +19,7 @@ To recognize Personally Identifiable Information in a single text input, pass th
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
 Response<IReadOnlyCollection<PiiEntity>> response = client.RecognizePiiEntities(input);
-IReadOnlyCollection<PiiEntity> entities = response.Value;
+IEnumerable<PiiEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
 foreach (PiiEntity entity in entities)
