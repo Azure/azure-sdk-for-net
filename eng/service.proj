@@ -11,9 +11,11 @@
     <ExcludeMgmtLib Include="..\sdk\*\*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
+    <SampleApplications Include="..\samples\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
     <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
     <ProjectReference Include="@(SamplesProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'" />
+    <ProjectReference Include="@(SampleApplications)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'"/>
     <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
