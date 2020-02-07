@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Tests
         public const string EndpointEnvironmentVariable = "TEXT_ANALYTICS_ENDPOINT";
         public const string ApiKeyEnvironmentVariable = "TEXT_ANALYTICS_API_KEY";
 
-        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync)
+        public TextAnalyticsClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             Sanitizer = new TextAnalyticsRecordedTestSanitizer();
             Matcher = new RecordMatcher(Sanitizer);
@@ -55,6 +55,110 @@ namespace Azure.AI.TextAnalytics.Tests
             DetectedLanguage language = await client.DetectLanguageAsync(input, "CO");
 
             Assert.AreEqual("Spanish", language.Name);
+        }
+
+        [Test]
+        public async Task DetectLanguageBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Hello world",
+                "Bonjour tout le monde",
+                "Hola mundo"
+            };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(inputs);
+
+            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
+            Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
+            Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
+        }
+
+        [Test]
+        public async Task DetectLanguageBatchConvenienceWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Hello world",
+                "This is a test"
+            };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(inputs, "us", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
+            Assert.AreEqual("English", results[1].PrimaryLanguage.Name);
+            Assert.IsNotNull(results[0].Statistics);
+            Assert.IsNotNull(results[0].Statistics.CharacterCount);
+            Assert.IsNotNull(results[0].Statistics.TransactionCount);
+        }
+
+        [Test]
+        public async Task DetectLanguageBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<DetectLanguageInput>
+            {
+                new DetectLanguageInput("1", "Hello world")
+                {
+                     CountryHint = "us",
+                },
+                new DetectLanguageInput("2", "Bonjour tout le monde")
+                {
+                     CountryHint = "fr",
+                },
+                new DetectLanguageInput("3", "Hola mundo")
+                {
+                     CountryHint = "es",
+                },
+                new DetectLanguageInput("4", ":) :( :D")
+                {
+                     CountryHint = "us",
+                }
+            };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(inputs);
+
+            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
+            Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
+            Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
+            Assert.AreEqual("English", results[3].PrimaryLanguage.Name);
+        }
+
+        [Test]
+        public async Task DetectLanguageBatchWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<DetectLanguageInput>
+            {
+                new DetectLanguageInput("1", "Hello world")
+                {
+                     CountryHint = "us",
+                },
+                new DetectLanguageInput("2", "Bonjour tout le monde")
+                {
+                     CountryHint = "fr",
+                },
+                new DetectLanguageInput("3", "Hola mundo")
+                {
+                     CountryHint = "es",
+                },
+                new DetectLanguageInput("4", ":) :( :D")
+                {
+                     CountryHint = "us",
+                }
+            };
+
+            DetectLanguageResultCollection results = await client.DetectLanguageBatchAsync(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            Assert.AreEqual("English", results[0].PrimaryLanguage.Name);
+            Assert.AreEqual("French", results[1].PrimaryLanguage.Name);
+            Assert.AreEqual("Spanish", results[2].PrimaryLanguage.Name);
+            Assert.AreEqual("English", results[3].PrimaryLanguage.Name);
+            Assert.IsNotNull(results[0].Statistics);
+            Assert.IsNotNull(results[0].Statistics.CharacterCount);
+            Assert.IsNotNull(results[0].Statistics.TransactionCount);
         }
 
         [Test]
@@ -111,6 +215,126 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(input, "es");
 
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(inputs);
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                DocumentSentiment docSentiment = docs.DocumentSentiment;
+                Assert.IsNotNull(docSentiment.SentimentScores.Positive);
+                Assert.IsNotNull(docSentiment.SentimentScores.Neutral);
+                Assert.IsNotNull(docSentiment.SentimentScores.Negative);
+
+                foreach (var sentence in docSentiment.Sentences)
+                {
+                    Assert.IsNotNull(sentence.SentimentScores.Positive);
+                    Assert.IsNotNull(sentence.SentimentScores.Neutral);
+                    Assert.IsNotNull(sentence.SentimentScores.Negative);
+                    Assert.IsNotNull(sentence.Offset);
+                    Assert.IsNotNull(sentence.Length);
+                }
+            }
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchConvenienceWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "That was the best day of my life!. I had a lot of fun at the park.",
+                "I'm not sure how I feel about this product. It is complicated."
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(inputs, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Esta comida no me gusta. Siempre que la como me enfermo.")
+                {
+                     Language = "es",
+                }
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(inputs);
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                DocumentSentiment docSentiment = docs.DocumentSentiment;
+                Assert.IsNotNull(docSentiment.SentimentScores.Positive);
+                Assert.IsNotNull(docSentiment.SentimentScores.Neutral);
+                Assert.IsNotNull(docSentiment.SentimentScores.Negative);
+
+                foreach (var sentence in docSentiment.Sentences)
+                {
+                    Assert.IsNotNull(sentence.SentimentScores.Positive);
+                    Assert.IsNotNull(sentence.SentimentScores.Neutral);
+                    Assert.IsNotNull(sentence.SentimentScores.Negative);
+                    Assert.IsNotNull(sentence.Offset);
+                    Assert.IsNotNull(sentence.Length);
+                }
+            }
+        }
+
+        [Test]
+        public async Task AnalyzeSentimentBatchWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Pike Place Market is my favorite Seattle attraction.  We had so much fun there.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Esta comida no me gusta. Siempre que la como me enfermo.")
+                {
+                     Language = "es",
+                }
+            };
+
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
         }
 
         [Test]
@@ -177,6 +401,100 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(results[1].HasError);
             Assert.Throws<InvalidOperationException>(() => results[1].KeyPhrases.GetType());
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "My cat and my dog might need to see a veterinarian."
+            };
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(inputs);
+
+            foreach (ExtractKeyPhrasesResult result in results)
+            {
+                Assert.AreEqual(3, result.KeyPhrases.Count());
+            }
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchConvenienceWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "My cat and my dog might need to see a veterinarian."
+            };
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(inputs, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (ExtractKeyPhrasesResult result in results)
+            {
+                Assert.AreEqual(3, result.KeyPhrases.Count());
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+                {
+                     Language = "es",
+                }
+            };
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(inputs);
+
+            foreach (ExtractKeyPhrasesResult result in results)
+            {
+                Assert.AreEqual(3, result.KeyPhrases.Count());
+            }
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchWithSatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+                {
+                     Language = "es",
+                }
+            };
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (ExtractKeyPhrasesResult result in results)
+            {
+                Assert.AreEqual(3, result.KeyPhrases.Count());
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
         }
 
         [Test]
@@ -252,6 +570,100 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task RecognizeEntitiesBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "My cat and my dog might need to see a veterinarian."
+            };
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(inputs);
+
+            foreach (RecognizeEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 1);
+            }
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesBatchConvenienceWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "My cat and my dog might need to see a veterinarian."
+            };
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(inputs, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (RecognizeEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 1);
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+                {
+                     Language = "es",
+                }
+            };
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(inputs);
+
+            foreach (RecognizeEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 1);
+            }
+        }
+
+        [Test]
+        public async Task RecognizeEntitiesBatchWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Mi perro y mi gato tienen que ir al veterinario.")
+                {
+                     Language = "es",
+                }
+            };
+
+            RecognizeEntitiesResultCollection results = await client.RecognizeEntitiesBatchAsync(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (RecognizeEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 1);
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
         public async Task RecognizePiiEntitiesTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -262,7 +674,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.AreEqual(2, entities.Count);
 
-            var entitiesList = new List<string> { "555-55-5555", " 800-102-1100 " };
+            var entitiesList = new List<string> { "555-55-5555", "800-102-1100" };
             foreach (PiiEntity entity in entities)
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Text));
@@ -303,6 +715,100 @@ namespace Azure.AI.TextAnalytics.Tests
 
             Assert.IsTrue(results[1].HasError);
             Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
+                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
+            };
+
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(inputs);
+
+            foreach (RecognizePiiEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesBatchConvenienceWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.",
+                "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check."
+            };
+
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(inputs, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (RecognizePiiEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+                {
+                     Language = "en",
+                }
+            };
+
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(inputs);
+
+            foreach (RecognizePiiEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+        }
+
+        [Test]
+        public async Task RecognizePiiEntitiesBatchWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", "Your ABA number - 111000025 - is the first 9 digits in the lower left hand corner of your personal check.")
+                {
+                     Language = "en",
+                }
+            };
+
+            RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (RecognizePiiEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
         }
 
         [Test]
@@ -365,6 +871,100 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task RecognizeLinkedEntitiesBatchConvenienceTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "Pike place market is my favorite Seattle attraction.",
+            };
+
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(inputs);
+
+            foreach (RecognizeLinkedEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchConvenienceWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<string>
+            {
+                "Microsoft was founded by Bill Gates and Paul Allen.",
+                "Pike place market is my favorite Seattle attraction.",
+            };
+
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(inputs, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (RecognizeLinkedEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
+                {
+                     Language = "en",
+                }
+            };
+
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(inputs);
+
+            foreach (RecognizeLinkedEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            var inputs = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", "Pike place market is my favorite Seattle attraction.")
+                {
+                     Language = "en",
+                }
+            };
+
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            foreach (RecognizeLinkedEntitiesResult result in results)
+            {
+                Assert.GreaterOrEqual(result.Entities.Count(), 2);
+            }
+
+            Assert.IsNotNull(results.Statistics.DocumentCount);
+            Assert.IsNotNull(results.Statistics.InvalidDocumentCount);
+            Assert.IsNotNull(results.Statistics.TransactionCount);
+            Assert.IsNotNull(results.Statistics.ValidDocumentCount);
+        }
+
+        [Test]
         public async Task RecognizeEntitiesCategoriesSubCategories()
         {
             TextAnalyticsClient client = GetClient();
@@ -382,7 +982,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(EntitySubCategory.None, entities[1].SubCategory);
 
             Assert.AreEqual(EntityCategory.Location, entities[2].Category);
-            Assert.AreEqual(EntitySubCategory.None, entities[2].SubCategory);
+            Assert.AreEqual(EntitySubCategory.GPE, entities[2].SubCategory);
 
             Assert.AreEqual(EntityCategory.PhoneNumber, entities[3].Category);
             Assert.AreEqual(EntitySubCategory.None, entities[3].SubCategory);
