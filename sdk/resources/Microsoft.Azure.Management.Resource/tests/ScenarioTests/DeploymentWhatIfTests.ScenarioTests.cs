@@ -15,7 +15,7 @@ namespace ResourceGroups.Tests
 
     public class LiveDeploymentWhatIfTests : TestBase
     {
-        private static readonly ResourceGroup ResourceGroup = new ResourceGroup("eastus2euap");
+        private static readonly ResourceGroup ResourceGroup = new ResourceGroup("westus");
 
         private static readonly string BlankTemplate = LoadTemplateContent("blank_template.json");
 
@@ -305,7 +305,7 @@ namespace ResourceGroups.Tests
                 {
                     Assert.NotNull(change.ResourceId);
                     Assert.NotEmpty(change.ResourceId);
-                    Assert.Equal(ChangeType.Create, change.ChangeType);
+                    Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
                     Assert.Null(change.Before);
                     Assert.Null(change.After);
                     Assert.Null(change.Delta);
@@ -345,9 +345,14 @@ namespace ResourceGroups.Tests
                 Assert.NotEmpty(result.Changes);
                 result.Changes.ForEach(change =>
                 {
-                    Assert.Equal(
-                        change.ResourceId.EndsWith("SDK-test") ? ChangeType.Ignore : ChangeType.Create,
-                        change.ChangeType);
+                    if(change.ResourceId.EndsWith("SDK-test"))
+                    {
+                        Assert.Equal(ChangeType.Ignore, change.ChangeType);
+                    }
+                    else
+                    {
+                        Assert.True(change.ChangeType == ChangeType.Deploy || change.ChangeType == ChangeType.Create);
+                    }
                 });
             }
         }
@@ -367,7 +372,7 @@ namespace ResourceGroups.Tests
                     {
                         Mode = DeploymentMode.Incremental,
                         Template = SubscriptionTemplate,
-                        Parameters = JObject.Parse("{ 'storageAccountName': {'value': 'whatifnetsdktest2'}}"),
+                        Parameters = JObject.Parse("{ 'storageAccountName': {'value': 'whatifnetsdktest1'}}"),
                     }
                 };
 
@@ -382,7 +387,7 @@ namespace ResourceGroups.Tests
                     {
                         Mode = DeploymentMode.Incremental,
                         Template = newTemplate,
-                        Parameters = JObject.Parse("{ 'storageAccountName': {'value': 'whatifnetsdktest2'}}"),
+                        Parameters = JObject.Parse("{ 'storageAccountName': {'value': 'whatifnetsdktest1'}}"),
                         WhatIfSettings = new DeploymentWhatIfSettings(WhatIfResultFormat.FullResourcePayloads)
                     }
                 };

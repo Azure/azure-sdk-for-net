@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private const double RetryExponentialBackoffSeconds = 3.0;
 
         /// <summary>The number of seconds to use as the basis for applying jitter to retry back-off calculations.</summary>
-        private const double RetryBaseJitterSeconds = 30.0;
+        private const double RetryBaseJitterSeconds = 60.0;
 
         /// <summary>The buffer to apply when considering refreshing; credentials that expire less than this duration will be refreshed.</summary>
         private static readonly TimeSpan CredentialRefreshBuffer = TimeSpan.FromMinutes(5);
@@ -132,8 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                                     double exponentialBackoffSeconds = RetryExponentialBackoffSeconds,
                                                     double baseJitterSeconds = RetryBaseJitterSeconds) =>
            Policy<T>
-               .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-               .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+               .Handle<Exception>(ex => ShouldRetry(ex))
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         /// <summary>
@@ -150,8 +152,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                               double exponentialBackoffSeconds = RetryExponentialBackoffSeconds,
                                               double baseJitterSeconds = RetryBaseJitterSeconds) =>
             Policy
-                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
+                .Handle<Exception>(ex => ShouldRetry(ex))
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         /// <summary>
@@ -165,10 +166,62 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
             ((statusCode == HttpStatusCode.Unauthorized)
+                || (statusCode == ((HttpStatusCode)408))
+                || (statusCode == HttpStatusCode.Conflict)
+                || (statusCode == ((HttpStatusCode)429))
                 || (statusCode == HttpStatusCode.InternalServerError)
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
-                || (statusCode == HttpStatusCode.Conflict)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
+
+        /// <summary>
+        ///   Determines whether the specified exception is considered eligible to retry the associated
+        ///   operation.
+        /// </summary>
+        ///
+        /// <param name="ex">The exception to consider.</param>
+        ///
+        /// <returns><c>true</c> if the exception is eligible for retries; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool ShouldRetry(Exception ex) =>
+            ((IsRetriableException(ex)) || (IsRetriableException(ex?.InnerException)));
+
+        /// <summary>
+        ///   Determines whether the type of the specified exception is considered eligible to retry
+        ///   the associated operation.
+        /// </summary>
+        ///
+        /// <param name="ex">The exception to consider.</param>
+        ///
+        /// <returns><c>true</c> if the exception type is eligible for retries; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool IsRetriableException(Exception ex)
+        {
+            if (ex == null)
+            {
+                return false;
+            }
+
+            switch (ex)
+            {
+                case ErrorResponseException erEx:
+                    return IsRetriableStatus(erEx.Response.StatusCode);
+
+                case CloudException clEx:
+                    return IsRetriableStatus(clEx.Response.StatusCode);
+
+                case TimeoutException _:
+                case TaskCanceledException _:
+                case OperationCanceledException _:
+                case HttpRequestException _:
+                case WebException _:
+                case SocketException _:
+                case IOException _:
+                    return true;
+
+                default:
+                    return false;
+            };
+        }
 
         /// <summary>
         ///   Calculates the retry delay to use for management-related operations.

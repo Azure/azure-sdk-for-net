@@ -151,7 +151,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             Assert.That(listener.Scopes.Select(s => s.Name), Has.All.EqualTo(DiagnosticProperty.EventProcessorProcessingActivityName));
             Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id"));
             Assert.That(listener.Scopes.SelectMany(s => s.Links), Has.One.EqualTo("id2"));
-            Assert.That(listener.Scopes.SelectMany(s => s.Activity.Tags), Has.Exactly(2).EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ServerKind)), "The activities tag should be server.");
+            Assert.That(listener.Scopes.SelectMany(s => s.Activity.Tags), Has.Exactly(2).EqualTo(new KeyValuePair<string, string>(DiagnosticProperty.KindAttribute, DiagnosticProperty.ConsumerKind)), "The activities tag should be server.");
         }
 
         private class MockConnection : EventHubConnection

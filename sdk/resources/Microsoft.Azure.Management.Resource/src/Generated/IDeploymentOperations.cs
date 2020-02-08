@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets a deployments operation.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Gets all deployments operations for a deployment.
         /// </summary>
         /// <param name='scope'>
-        /// The scope of a deployment.
+        /// The resource scope.
         /// </param>
         /// <param name='deploymentName'>
         /// The name of the deployment.

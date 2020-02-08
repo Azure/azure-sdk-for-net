@@ -17,9 +17,10 @@ namespace Azure.AI.TextAnalytics.Samples
         public void ExtractKeyPhrasesBatchConvenience()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            // Instantiate a client that will be used to call the service.
+            var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyCredential(apiKey));
 
             var inputs = new List<string>
             {
@@ -29,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesConvenience
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs);
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Extracted key phrases for each input are:");

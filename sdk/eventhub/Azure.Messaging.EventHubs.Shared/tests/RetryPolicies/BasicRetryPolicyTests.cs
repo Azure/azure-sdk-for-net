@@ -221,6 +221,53 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayRespectsThrottleInterval()
+        {
+            var delaySeconds = 1;
+            var throttleException = new EventHubsException(true, "dummy", EventHubsException.FailureReason.ServiceBusy);
+
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 99,
+                Delay = TimeSpan.FromSeconds(delaySeconds),
+                MaximumDelay = TimeSpan.FromDays(1),
+                Mode = EventHubsRetryMode.Fixed
+            });
+
+            Assert.That(policy.CalculateRetryDelay(throttleException, 1),
+                Is.AtLeast(TimeSpan.FromSeconds(delaySeconds + policy.MinimumThrottleSeconds))
+                    .And.AtMost(TimeSpan.FromSeconds((delaySeconds * 2) + policy.MaximumThrottleSeconds)));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CalculateRetryDelayDoesNotTrottleGeneralExceptions()
+        {
+            var delaySeconds = 1;
+            var exception = new EventHubsException(true, "dummy", EventHubsException.FailureReason.GeneralError);
+
+            var policy = new BasicRetryPolicy(new EventHubsRetryOptions
+            {
+                MaximumRetries = 99,
+                Delay = TimeSpan.FromSeconds(delaySeconds),
+                MaximumDelay = TimeSpan.FromDays(1),
+                Mode = EventHubsRetryMode.Fixed
+            });
+
+            Assert.That(policy.CalculateRetryDelay(exception, 1),
+                Is.AtLeast(TimeSpan.FromSeconds(delaySeconds)).And.AtMost(TimeSpan.FromSeconds(delaySeconds * 2)));
+        }
+
+        /// <summary>
         ///  Verifies functionality of the <see cref="BasicRetryPolicy.CalculateRetryDelay" />
         ///  method.
         /// </summary>

@@ -89,7 +89,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("Azure.Identity.AuthorizationCodeCredential.GetToken");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AuthorizationCodeCredential)}.{nameof(GetToken)}");
 
             scope.Start();
 

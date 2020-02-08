@@ -79,7 +79,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// This indicates whether the queue supports the concept of session. Sessionful-messages follow FIFO ordering.
         /// </summary>
         /// <remarks>
-        /// If true, the receiver can only recieve messages using <see cref="SessionClient.AcceptMessageSessionAsync()"/>.
+        /// If true, the receiver can only receive messages using <see cref="SessionClient.AcceptMessageSessionAsync()"/>.
         /// Defaults to false.
         /// </remarks>
         public bool RequiresSession { get; set; } = false;

@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Test
 {
     public class BlobClientTests : BlobTestBase
     {
-        public BlobClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -594,12 +594,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(33 * Constants.MB, 8)]
         [TestCase(33 * Constants.MB, 16)]
         [TestCase(33 * Constants.MB, null)]
-        [TestCase(257 * Constants.MB, 1)]
-        [TestCase(257 * Constants.MB, 4)]
-        [TestCase(257 * Constants.MB, 8)]
-        [TestCase(257 * Constants.MB, 16)]
-        [TestCase(257 * Constants.MB, null)]
-        [TestCase(1 * Constants.GB, 16)]
         public async Task UploadStreamAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -608,11 +602,17 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
-        [Explicit("These tests are particularly slow and often hit our 20 minute per test time limit.")]
+        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
+        [TestCase(257 * Constants.MB, 1)]
+        [TestCase(257 * Constants.MB, 4)]
+        [TestCase(257 * Constants.MB, 8)]
+        [TestCase(257 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 16)]
         [TestCase(1 * Constants.GB, 1)]
         [TestCase(1 * Constants.GB, 4)]
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, null)]
+        [TestCase(1 * Constants.GB, 16)]
         public async Task UploadStreamAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -626,12 +626,6 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(33 * Constants.MB, 8)]
         [TestCase(33 * Constants.MB, 16)]
         [TestCase(33 * Constants.MB, null)]
-        [TestCase(257 * Constants.MB, 1)]
-        [TestCase(257 * Constants.MB, 4)]
-        [TestCase(257 * Constants.MB, 8)]
-        [TestCase(257 * Constants.MB, 16)]
-        [TestCase(257 * Constants.MB, null)]
-        [TestCase(1 * Constants.GB, 16)]
         public async Task UploadFileAsync_LargeBlobs(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -640,11 +634,17 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [LiveOnly]
-        [Explicit("These tests are particularly slow and often hit our 20 minute per test time limit.")]
+        [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
+        [TestCase(257 * Constants.MB, 1)]
+        [TestCase(257 * Constants.MB, 4)]
+        [TestCase(257 * Constants.MB, 8)]
+        [TestCase(257 * Constants.MB, null)]
+        [TestCase(257 * Constants.MB, 16)]
         [TestCase(1 * Constants.GB, 1)]
         [TestCase(1 * Constants.GB, 4)]
         [TestCase(1 * Constants.GB, 8)]
         [TestCase(1 * Constants.GB, null)]
+        [TestCase(1 * Constants.GB, 16)]
         public async Task UploadFileAsync_LargeBlobs_Explicit(long size, int? maximumThreadCount)
         {
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
@@ -872,26 +872,40 @@ namespace Azure.Storage.Blobs.Test
         {
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            // Upload a GB
+            // Upload 100MB
             var data = GetRandomBuffer(100 * Constants.MB);
             BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
             using var stream = new MemoryStream(data);
             await blob.UploadAsync(stream);
 
-            // Create a CancellationToken that times out after .01s
-            CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
-            CancellationToken token = source.Token;
+            await AssertDownloadAsync();
+            await AssertDownloadToAsync();
 
-            // Verifying downloading will cancel
-            try
+            async Task AssertDownloadAsync()
             {
-                using BlobDownloadInfo result = await blob.DownloadAsync(cancellationToken: token);
+                // Create a CancellationToken that is already cancelled
+                CancellationToken token = new CancellationToken(canceled: true);
+
+                // Verifying Download will cancel
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadAsync(cancellationToken: token));
             }
-            catch (OperationCanceledException)
+
+            async Task AssertDownloadToAsync()
             {
-                return; // Succeeded
+                // Create a CancellationToken that times out after .01s
+                // Intentionally not delaying here, as DownloadToAsync operation should always cancel
+                // since it buffers the full response.
+                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                CancellationToken token = source.Token;
+
+                // Verifying DownloadTo will cancel
+                using var downloadStream = new MemoryStream();
+                await TestHelper.CatchAsync<OperationCanceledException>(
+                    async () => await blob.DownloadToAsync(
+                        destination: downloadStream,
+                        cancellationToken: token));
             }
-            Assert.Fail("Not canceled!");
         }
     }
 }
