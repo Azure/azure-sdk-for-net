@@ -1054,21 +1054,5 @@ namespace Azure.Storage.Blobs
         {
             return Task.FromResult(content); // no-op
         }
-
-        /// <summary>
-        /// Blob content to be uploaded by this <see cref="BlobClient"/>.
-        /// </summary>
-        protected struct UploadContent
-        {
-            /// <summary>
-            /// Content stream to upload.
-            /// </summary>
-            public Stream ContentStream { get; set; }
-
-            /// <summary>
-            /// Content metadata to upload.
-            /// </summary>
-            public Metadata Metadata { get; set; }
-        }
     }
 }
