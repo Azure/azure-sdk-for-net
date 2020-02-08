@@ -2,7 +2,7 @@
 
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes
-- The TextAnalyticsError model has been simplified to an object with properties `Code`, `Message`, and `Target`.
+- The `TextAnalyticsError` model has been simplified to an object with properties `Code`, `Message`, and `Target`.
 - To use an API key as the credential for authenticating the client, a new credential class `TextAnalyticsApiKeyCredential("<api_key>")` must be passed in for the credential parameter.
 Passing the API key as a string is no longer supported.
 - Reference to `subcription key` changed to `API key`.
@@ -27,7 +27,7 @@ Passing the API key as a string is no longer supported.
 Credential class `TextAnalyticsApiKeyCredential` provides an `UpdateCredential()` method which allows you to update the API key for long-lived clients.
 
 ### Fixes and improvements
-A new `HasError` property has added to `xxColletion` types to allow you to check if an operation on a particular document succeeded or failed.
+A new `HasError` property has added to `<document>Collection` types to allow you to check if an operation on a particular document succeeded or failed.
 If you try to access a result attribute where the operation was unsuccesful, an `InvalidOperationException` is raised with a custom error message that provides information about the error.
 
 ## 1.0.0-preview.1 (2020-01-09)
