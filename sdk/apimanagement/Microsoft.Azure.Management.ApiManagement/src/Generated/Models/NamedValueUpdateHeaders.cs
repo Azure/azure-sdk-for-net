@@ -14,26 +14,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for CreateOrUpdate operation.
+    /// Defines headers for Update operation.
     /// </summary>
-    public partial class PropertyCreateOrUpdateHeaders
+    public partial class NamedValueUpdateHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyCreateOrUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the NamedValueUpdateHeaders class.
         /// </summary>
-        public PropertyCreateOrUpdateHeaders()
+        public NamedValueUpdateHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyCreateOrUpdateHeaders
-        /// class.
+        /// Initializes a new instance of the NamedValueUpdateHeaders class.
         /// </summary>
         /// <param name="eTag">Current entity state version. Should be treated
         /// as opaque and used to make conditional HTTP requests.</param>
-        public PropertyCreateOrUpdateHeaders(string eTag = default(string))
+        public NamedValueUpdateHeaders(string eTag = default(string))
         {
             ETag = eTag;
             CustomInit();

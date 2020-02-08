@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicySnippetOperations operations.
+    /// PolicyDescriptionOperations operations.
     /// </summary>
-    public partial interface IPolicySnippetOperations
+    public partial interface IPolicyDescriptionOperations
     {
         /// <summary>
-        /// Lists all policy snippets.
+        /// Lists all policy descriptions.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -51,6 +51,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PolicySnippetsCollection>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PolicyDescriptionCollection>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

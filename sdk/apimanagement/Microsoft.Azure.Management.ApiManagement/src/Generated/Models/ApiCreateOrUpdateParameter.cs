@@ -76,7 +76,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="format">Format of the Content in which the API is
         /// getting imported. Possible values include: 'wadl-xml',
         /// 'wadl-link-json', 'swagger-json', 'swagger-link-json', 'wsdl',
-        /// 'wsdl-link', 'openapi', 'openapi+json', 'openapi-link'</param>
+        /// 'wsdl-link', 'openapi', 'openapi+json', 'openapi-link',
+        /// 'openapi+json-link'</param>
         /// <param name="wsdlSelector">Criteria to limit import of WSDL to a
         /// subset of the document.</param>
         /// <param name="soapApiType">Type of Api to create.
@@ -243,7 +244,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets format of the Content in which the API is getting
         /// imported. Possible values include: 'wadl-xml', 'wadl-link-json',
         /// 'swagger-json', 'swagger-link-json', 'wsdl', 'wsdl-link',
-        /// 'openapi', 'openapi+json', 'openapi-link'
+        /// 'openapi', 'openapi+json', 'openapi-link', 'openapi+json-link'
         /// </summary>
         [JsonProperty(PropertyName = "properties.format")]
         public string Format { get; set; }

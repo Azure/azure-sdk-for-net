@@ -18,33 +18,38 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Property update Parameters.
+    /// NamedValue details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PropertyUpdateParameters
+    public partial class NamedValueContract : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyUpdateParameters class.
+        /// Initializes a new instance of the NamedValueContract class.
         /// </summary>
-        public PropertyUpdateParameters()
+        public NamedValueContract()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyUpdateParameters class.
+        /// Initializes a new instance of the NamedValueContract class.
         /// </summary>
-        /// <param name="tags">Optional tags that when provided can be used to
-        /// filter the property list.</param>
-        /// <param name="secret">Determines whether the value is a secret and
-        /// should be encrypted or not. Default value is false.</param>
-        /// <param name="displayName">Unique name of Property. It may contain
+        /// <param name="displayName">Unique name of NamedValue. It may contain
         /// only letters, digits, period, dash, and underscore
         /// characters.</param>
-        /// <param name="value">Value of the property. Can contain policy
+        /// <param name="value">Value of the NamedValue. Can contain policy
         /// expressions. It may not be empty or consist only of
         /// whitespace.</param>
-        public PropertyUpdateParameters(IList<string> tags = default(IList<string>), bool? secret = default(bool?), string displayName = default(string), string value = default(string))
+        /// <param name="id">Resource ID.</param>
+        /// <param name="name">Resource name.</param>
+        /// <param name="type">Resource type for API Management
+        /// resource.</param>
+        /// <param name="tags">Optional tags that when provided can be used to
+        /// filter the NamedValue list.</param>
+        /// <param name="secret">Determines whether the value is a secret and
+        /// should be encrypted or not. Default value is false.</param>
+        public NamedValueContract(string displayName, string value, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?))
+            : base(id, name, type)
         {
             Tags = tags;
             Secret = secret;
@@ -60,7 +65,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets optional tags that when provided can be used to filter
-        /// the property list.
+        /// the NamedValue list.
         /// </summary>
         [JsonProperty(PropertyName = "properties.tags")]
         public IList<string> Tags { get; set; }
@@ -73,15 +78,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public bool? Secret { get; set; }
 
         /// <summary>
-        /// Gets or sets unique name of Property. It may contain only letters,
-        /// digits, period, dash, and underscore characters.
+        /// Gets or sets unique name of NamedValue. It may contain only
+        /// letters, digits, period, dash, and underscore characters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets value of the property. Can contain policy expressions.
-        /// It may not be empty or consist only of whitespace.
+        /// Gets or sets value of the NamedValue. Can contain policy
+        /// expressions. It may not be empty or consist only of whitespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.value")]
         public string Value { get; set; }
@@ -94,6 +99,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (DisplayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
+            }
+            if (Value == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+            }
             if (Tags != null)
             {
                 if (Tags.Count > 32)
