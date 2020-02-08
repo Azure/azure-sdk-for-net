@@ -17,7 +17,7 @@ namespace Azure.Messaging.EventHubs.Core
     ///
     internal class TransportProducerPool : IAsyncDisposable
     {
-        /// <summary>The period in minutes after which <see cref="PerformExpiration" /> is run.</summary>
+        /// <summary>The period after which <see cref="PerformExpiration" /> is run.</summary>
         private static readonly TimeSpan DefaultPerformExpirationPeriod = TimeSpan.FromMinutes(10);
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventHubs.Core
             // the returned PoolItem if it had expired. The probability is very low and
             // possible exceptions should be handled by the invoking methods.
 
-            if (item.PartitionProducer.IsClosed == true || !item.ActiveInstances.TryAdd(identifier, 0))
+            if (item.PartitionProducer.IsClosed || !item.ActiveInstances.TryAdd(identifier, 0))
             {
                 identifier = Guid.NewGuid().ToString();
                 item = Pool.GetOrAdd(partitionId, id => new PoolItem(partitionId, Connection.CreateTransportProducer(id, RetryPolicy), removeAfterDuration));

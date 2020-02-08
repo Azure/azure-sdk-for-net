@@ -43,12 +43,12 @@ namespace Azure.Messaging.EventHubs.Tests
             };
             TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy, startingPool);
 
-            GetExpirationCallBack(transportProducerPool).Invoke(null);
+            (transportProducerPool.PerformExpiration())(null);
 
-            Assert.IsFalse(startingPool.TryGetValue("0", out _), "PerformExpiration should remove an expired producer from the pool.");
-            Assert.AreEqual(transportProducer.CloseCallCount, 1, "PerformExpiration should close an expired producer.");
-            Assert.IsTrue(startingPool.TryGetValue("1", out _), "PerformExpiration should not remove valid producers.");
-            Assert.IsTrue(startingPool.TryGetValue("2", out _), "PerformExpiration should not remove valid producers.");
+            Assert.That(startingPool.TryGetValue("0", out _), Is.False, "PerformExpiration should remove an expired producer from the pool.");
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1), "PerformExpiration should close an expired producer.");
+            Assert.That(startingPool.TryGetValue("1", out _), Is.True, "PerformExpiration should not remove valid producers.");
+            Assert.That(startingPool.TryGetValue("2", out _), Is.True, "PerformExpiration should not remove valid producers.");
         }
 
         /// <summary>
@@ -74,9 +74,9 @@ namespace Azure.Messaging.EventHubs.Tests
             _ = transportProducerPool.GetPooledProducer("0");
 
             // The expiration call back should not remove the item
-            GetExpirationCallBack(transportProducerPool).Invoke(null);
+            (transportProducerPool.PerformExpiration())(null);
 
-            Assert.IsTrue(startingPool.TryGetValue("0", out _), "The item in the pool should be refreshed and not have been removed.");
+            Assert.That(startingPool.TryGetValue("0", out _), Is.True, "The item in the pool should be refreshed and not have been removed.");
         }
 
         /// <summary>
@@ -96,14 +96,13 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new EventHubProducerClientOptions().RetryOptions.ToRetryPolicy();
             TransportProducerPool transportProducerPool = new TransportProducerPool(connection, retryPolicy);
             var expectedTime = DateTimeOffset.UtcNow.AddMinutes(10);
-            var expectedRemoveAfter = Is.InRange(expectedTime.AddMinutes(-1), expectedTime.AddMinutes(1));
 
             await using var pooledProducer = transportProducerPool.GetPooledProducer("0");
 
             // This call should refresh the timespan associated to an item in the pool
             await pooledProducer.DisposeAsync();
 
-            Assert.That(startingPool["0"].RemoveAfter, expectedRemoveAfter, $"The remove after of a pool item should be extended.");
+            Assert.That(startingPool["0"].RemoveAfter, Is.InRange(expectedTime.AddMinutes(-1), expectedTime.AddMinutes(1)), $"The remove after of a pool item should be extended.");
         }
 
         /// <summary>
@@ -129,10 +128,10 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (pooledProducer)
             {
-                Assert.IsTrue(poolItem.ActiveInstances.Count == 1, "The usage of a transport producer should be tracked.");
+                Assert.That(poolItem.ActiveInstances.Count, Is.EqualTo(1), "The usage of a transport producer should be tracked.");
             }
 
-            Assert.IsTrue(poolItem.ActiveInstances.Count == 0, "After usage an active instance should be removed from the pool.");
+            Assert.That(poolItem.ActiveInstances.Count, Is.EqualTo(0), "After usage an active instance should be removed from the pool.");
         }
 
         /// <summary>
@@ -157,14 +156,14 @@ namespace Azure.Messaging.EventHubs.Tests
             {
             };
 
-            GetExpirationCallBack(transportProducerPool).Invoke(null);
+            (transportProducerPool.PerformExpiration())(null);
 
-            Assert.That(transportProducer.CloseCallCount == 1);
+            Assert.That(transportProducer.CloseCallCount, Is.EqualTo(1));
         }
 
         /// <summary>
-        ///   The <see cref="TransportProducerPool"/> returns the right <see cref="TransportProducer" />
-        ///   matching the righ partition id.
+        ///   The <see cref="TransportProducerPool"/> returns the <see cref="TransportProducer" />
+        ///   matching the right partition id.
         /// </summary>
         ///
         [Test]
@@ -184,18 +183,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var returnedProducer = transportProducerPool.GetPooledProducer(partitionId).TransportProducer as ObservableTransportProducerMock;
 
-            Assert.That(returnedProducer.PartitionId == partitionId);
+            Assert.That(returnedProducer.PartitionId, Is.EqualTo(partitionId));
         }
-
-        /// <summary>
-        ///   Gets the routine responsible of finding expired producers.
-        /// </summary>
-        ///
-        private static TimerCallback GetExpirationCallBack(TransportProducerPool pool) =>
-            (TimerCallback)
-                typeof(TransportProducerPool)
-                    .GetMethod("PerformExpiration", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .Invoke(pool, null);
 
         /// <summary>
         ///   Serves as a non-functional connection for testing producer functionality.
@@ -227,7 +216,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             internal override Task<EventHubProperties> GetPropertiesAsync(EventHubsRetryPolicy retryPolicy,
-                                                                        CancellationToken cancellationToken = default)
+                                                                          CancellationToken cancellationToken = default)
             {
                 GetPropertiesInvokedWith = retryPolicy;
                 return Task.FromResult(new EventHubProperties(EventHubName, DateTimeOffset.Parse("2015-10-27T00:00:00Z"), new string[] { "0", "1" }));
@@ -251,7 +240,10 @@ namespace Azure.Messaging.EventHubs.Tests
             internal override TransportProducer CreateTransportProducer(string partitionId,
                                                                         EventHubsRetryPolicy retryPolicy) => TransportProducerFactory();
 
-            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace, string eventHubName, EventHubTokenCredential credential, EventHubConnectionOptions options)
+            internal override TransportClient CreateTransportClient(string fullyQualifiedNamespace,
+                                                                    string eventHubName,
+                                                                    EventHubTokenCredential credential,
+                                                                    EventHubConnectionOptions options)
             {
                 var client = new Mock<TransportClient>();
 
@@ -260,23 +252,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Returns(new Uri($"amgp://{ fullyQualifiedNamespace }.com/{ eventHubName }"));
 
                 return client.Object;
-            }
-        }
-
-        private class DelayedObservableTransportProducerMock : ObservableTransportProducerMock
-        {
-            public override async Task SendAsync(IEnumerable<EventData> events, SendEventOptions sendOptions, CancellationToken cancellationToken)
-            {
-                await Task.Delay(3000);
-
-                await base.SendAsync(events, sendOptions, cancellationToken);
-            }
-
-            public override async Task SendAsync(EventDataBatch batch, CancellationToken cancellationToken)
-            {
-                await Task.Delay(3000);
-
-                await base.SendAsync(batch, cancellationToken);
             }
         }
 

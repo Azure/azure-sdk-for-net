@@ -401,7 +401,6 @@ namespace Azure.Messaging.EventHubs.Producer
             Argument.AssertNotNull(events, nameof(events));
             AssertSinglePartitionReference(options.PartitionId, options.PartitionKey);
 
-            bool isMessageSent = false;
             int attempts = 0;
 
             using DiagnosticScope scope = CreateDiagnosticScope();
@@ -410,9 +409,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             TransportProducerPool.PooledProducer pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
 
-            while (!cancellationToken.IsCancellationRequested
-                   && ++attempts <= MaximumCreateProducerAttempts
-                   && !isMessageSent)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
@@ -420,12 +417,12 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     await pooledProducer.TransportProducer.SendAsync(events, options, cancellationToken).ConfigureAwait(false);
 
-                    isMessageSent = true;
+                    return;
                 }
                 catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                   && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
+                                                                    && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
                 {
-                    if (attempts >= MaximumCreateProducerAttempts)
+                    if (++attempts >= MaximumCreateProducerAttempts)
                     {
                         scope.Failed(eventHubException);
                         throw;
@@ -439,6 +436,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     throw;
                 }
             }
+
+            throw new TaskCanceledException();
         }
 
         /// <summary>
@@ -463,14 +462,11 @@ namespace Azure.Messaging.EventHubs.Producer
             AssertSinglePartitionReference(eventBatch.SendOptions.PartitionId, eventBatch.SendOptions.PartitionKey);
 
             int attempts = 0;
-            bool isMessageSent = false;
             using DiagnosticScope scope = CreateDiagnosticScope();
 
             var pooledProducer = PartitionProducerPool.GetPooledProducer(eventBatch.SendOptions.PartitionId, PartitionProducerLifespan);
 
-            while (!cancellationToken.IsCancellationRequested
-                   && ++attempts <= MaximumCreateProducerAttempts
-                   && !isMessageSent)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
@@ -478,12 +474,12 @@ namespace Azure.Messaging.EventHubs.Producer
 
                     await pooledProducer.TransportProducer.SendAsync(eventBatch, cancellationToken).ConfigureAwait(false);
 
-                    isMessageSent = true;
+                    return;
                 }
                 catch (EventHubsException eventHubException) when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
-                                                                   && ShouldRecreateProducer(pooledProducer.TransportProducer, eventBatch.SendOptions.PartitionId))
+                                                                    && ShouldRecreateProducer(pooledProducer.TransportProducer, eventBatch.SendOptions.PartitionId))
                 {
-                    if (attempts >= MaximumCreateProducerAttempts)
+                    if (++attempts >= MaximumCreateProducerAttempts)
                     {
                         scope.Failed(eventHubException);
                         throw;
@@ -497,6 +493,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     throw;
                 }
             }
+
+            throw new TaskCanceledException();
         }
 
         /// <summary>
