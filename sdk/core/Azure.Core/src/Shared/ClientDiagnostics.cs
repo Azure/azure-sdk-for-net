@@ -21,7 +21,7 @@ namespace Azure.Core.Pipeline
 
         private readonly HttpMessageSanitizer _sanitizer;
         public ClientDiagnostics(ClientOptions options) : base(
-            options.GetType().Namespace,
+            options.GetType().Namespace!,
             GetResourceProviderNamespace(options.GetType().Assembly),
             options.Diagnostics.IsDistributedTracingEnabled)
         {
