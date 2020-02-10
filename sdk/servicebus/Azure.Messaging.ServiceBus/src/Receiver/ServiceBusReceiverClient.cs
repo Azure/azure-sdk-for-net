@@ -319,17 +319,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
             CancellationToken cancellationToken = default)
         {
             string receiveLinkName = "";
-            if (sessionId != null)
+
+            if (Consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
             {
-
-                ReceivingAmqpLink openedLink = await Consumer.ReceiveLink.GetOrCreateAsync(TimeSpan.FromSeconds(60)).ConfigureAwait(false);
-                if (openedLink != null)
-                {
-                    receiveLinkName = openedLink.Name;
-                }
+                receiveLinkName = link.Name;
             }
-            //Consumer.SessionId = tempSessionId;
-
 
             foreach (ServiceBusMessage message in await Connection.PeekAsync(
                 RetryPolicy,

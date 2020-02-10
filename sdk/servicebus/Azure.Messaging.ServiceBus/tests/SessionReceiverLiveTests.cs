@@ -13,8 +13,7 @@ using NUnit.Framework.Internal;
 
 namespace Azure.Messaging.ServiceBus.Tests
 {
-    [LiveOnly]
-    public class SessionReceiverLiveTests : ServiceBusTestBase
+    public class SessionReceiverLiveTests : ServiceBusLiveTestBase
     {
         [Test]
         [TestCase(1, null)]

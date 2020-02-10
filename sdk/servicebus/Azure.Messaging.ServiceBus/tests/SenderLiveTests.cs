@@ -19,8 +19,7 @@ using Azure.Core.Pipeline;
 
 namespace Microsoft.Azure.Template.Tests
 {
-    [LiveOnly]
-    public class SenderLiveTests : ServiceBusTestBase
+    public class SenderLiveTests : ServiceBusLiveTestBase
     {
         [Test]
         public async Task Send_ConnString()
