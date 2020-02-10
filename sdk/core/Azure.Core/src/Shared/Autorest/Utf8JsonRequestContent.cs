@@ -24,9 +24,9 @@ namespace Azure.Core
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
-            await JsonWriter.FlushAsync(cancellation);
+            await JsonWriter.FlushAsync(cancellation).ConfigureAwait(false);
             using var content = Create(_writer.WrittenMemory);
-            await content.WriteToAsync(stream, cancellation);
+            await content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)

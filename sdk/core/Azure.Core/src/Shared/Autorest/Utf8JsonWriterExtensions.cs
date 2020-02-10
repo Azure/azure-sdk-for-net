@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+// Licensed under the MIT License.
 
 #nullable enable
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Azure.Core
@@ -18,7 +19,7 @@ namespace Azure.Core
             writer.WriteStringValue(TypeFormatters.ToString(value, format));
 
         public static void WriteStringValue(this Utf8JsonWriter writer, char value) =>
-            writer.WriteStringValue(value.ToString());
+            writer.WriteStringValue(value.ToString(CultureInfo.InvariantCulture));
 
         public static void WriteObjectValue(this Utf8JsonWriter writer, IUtf8JsonSerializable value)
         {

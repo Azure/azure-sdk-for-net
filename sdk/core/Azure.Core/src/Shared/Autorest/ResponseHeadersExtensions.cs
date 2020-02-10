@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+// Licensed under the MIT License.
 
 #nullable enable
 
 using System;
+using System.Globalization;
 using System.Xml;
 
 namespace Azure.Core
@@ -38,7 +39,7 @@ namespace Azure.Core
         {
             if (headers.TryGetValue(name, out string? stringValue))
             {
-                value = DateTimeOffset.Parse(stringValue);
+                value = DateTimeOffset.Parse(stringValue, CultureInfo.InvariantCulture);
                 return true;
             }
 
@@ -50,7 +51,7 @@ namespace Azure.Core
         {
             if (headers.TryGetValue(name, out string? stringValue))
             {
-                value = (T)Convert.ChangeType(stringValue, typeof(T));
+                value = (T)Convert.ChangeType(stringValue, typeof(T), CultureInfo.InvariantCulture);
                 return true;
             }
 
@@ -62,7 +63,7 @@ namespace Azure.Core
         {
             if (headers.TryGetValue(name, out string? stringValue))
             {
-                value = (T)Convert.ChangeType(stringValue, typeof(T));
+                value = (T)Convert.ChangeType(stringValue, typeof(T), CultureInfo.InvariantCulture);
                 return true;
             }
 

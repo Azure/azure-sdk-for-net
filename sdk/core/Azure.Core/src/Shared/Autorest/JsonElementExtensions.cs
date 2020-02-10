@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+// Licensed under the MIT License.
 
 #nullable enable
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using System.Xml;
 
@@ -58,8 +59,8 @@ namespace Azure.Core
         public static DateTimeOffset GetDateTimeOffset(in this JsonElement element, string format) => format switch
         {
             "D" => element.GetDateTimeOffset(),
-            "S" => DateTimeOffset.Parse(element.GetString()),
-            "R" => DateTimeOffset.Parse(element.GetString()),
+            "S" => DateTimeOffset.Parse(element.GetString(), CultureInfo.InvariantCulture),
+            "R" => DateTimeOffset.Parse(element.GetString(), CultureInfo.InvariantCulture),
             "U" => DateTimeOffset.FromUnixTimeSeconds(element.GetInt64()),
             _ => throw new ArgumentException("Format is not supported", nameof(format))
         };

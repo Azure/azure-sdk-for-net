@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+// Licensed under the MIT License.
 
 #nullable enable
 
@@ -17,10 +17,10 @@ namespace Azure.Core
 
         public static string ToString(DateTimeOffset value, string format) => format switch
         {
-            "D" => value.ToString("yyyy-MM-dd"),
-            "S" when value.Offset == TimeSpan.Zero => value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
-            "S" => value.ToString("O"),
-            "R" => value.ToString("R"),
+            "D" => value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+            "S" when value.Offset == TimeSpan.Zero => value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ", CultureInfo.InvariantCulture),
+            "S" => value.ToString("O", CultureInfo.InvariantCulture),
+            "R" => value.ToString("R", CultureInfo.InvariantCulture),
             "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
             _ => throw new ArgumentException("Format is not supported", nameof(format))
         };

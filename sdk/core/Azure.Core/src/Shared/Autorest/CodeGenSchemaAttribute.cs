@@ -7,6 +7,7 @@ using System;
 
 namespace Azure.Core
 {
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct)]
     internal class CodeGenSchemaAttribute : Attribute
     {
         public string SchemaName { get; }

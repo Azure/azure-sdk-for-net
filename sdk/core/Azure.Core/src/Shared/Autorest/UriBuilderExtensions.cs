@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
+// Licensed under the MIT License.
 
 #nullable enable
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 
 namespace Azure.Core
@@ -18,17 +19,17 @@ namespace Azure.Core
 
         public static void AppendPath(this RequestUriBuilder builder, float value, bool escape = true)
         {
-            builder.AppendPath(value.ToString(TypeFormatters.DefaultNumberFormat), escape);
+            builder.AppendPath(value.ToString(TypeFormatters.DefaultNumberFormat, CultureInfo.InvariantCulture), escape);
         }
 
         public static void AppendPath(this RequestUriBuilder builder, double value, bool escape = true)
         {
-            builder.AppendPath(value.ToString(TypeFormatters.DefaultNumberFormat), escape);
+            builder.AppendPath(value.ToString(TypeFormatters.DefaultNumberFormat, CultureInfo.InvariantCulture), escape);
         }
 
         public static void AppendPath(this RequestUriBuilder builder, int value, bool escape = true)
         {
-            builder.AppendPath(value.ToString(TypeFormatters.DefaultNumberFormat), escape);
+            builder.AppendPath(value.ToString(TypeFormatters.DefaultNumberFormat, CultureInfo.InvariantCulture), escape);
         }
 
         public static void AppendPath(this RequestUriBuilder builder, byte[] value, bool escape = true)
@@ -65,7 +66,7 @@ namespace Azure.Core
 
         public static void AppendQuery(this RequestUriBuilder builder, string name, float value, bool escape = true)
         {
-            builder.AppendQuery(name, value.ToString(TypeFormatters.DefaultNumberFormat), escape);
+            builder.AppendQuery(name, value.ToString(TypeFormatters.DefaultNumberFormat, CultureInfo.InvariantCulture), escape);
         }
 
         public static void AppendQuery(this RequestUriBuilder builder, string name, DateTimeOffset value, string format, bool escape = true)
@@ -80,12 +81,12 @@ namespace Azure.Core
 
         public static void AppendQuery(this RequestUriBuilder builder, string name, double value, bool escape = true)
         {
-            builder.AppendQuery(name, value.ToString(TypeFormatters.DefaultNumberFormat), escape);
+            builder.AppendQuery(name, value.ToString(TypeFormatters.DefaultNumberFormat, CultureInfo.InvariantCulture), escape);
         }
 
         public static void AppendQuery(this RequestUriBuilder builder, string name, int value, bool escape = true)
         {
-            builder.AppendQuery(name, value.ToString(TypeFormatters.DefaultNumberFormat), escape);
+            builder.AppendQuery(name, value.ToString(TypeFormatters.DefaultNumberFormat, CultureInfo.InvariantCulture), escape);
         }
 
         public static void AppendQuery(this RequestUriBuilder builder, string name, TimeSpan value, bool escape = true)

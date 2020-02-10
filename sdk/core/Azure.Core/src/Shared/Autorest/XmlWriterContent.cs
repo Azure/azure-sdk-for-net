@@ -27,7 +27,7 @@ namespace Azure.Core
             XmlWriter.Flush();
             _stream.Position = 0;
             using var content = Create(_stream);
-            await content.WriteToAsync(stream, cancellation);
+            await content.WriteToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellation)
