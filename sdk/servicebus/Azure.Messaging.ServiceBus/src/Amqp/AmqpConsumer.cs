@@ -126,7 +126,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             //Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-
             EntityName = entityName;
             //ConsumerGroup = consumerGroup;
             //PartitionId = partitionId;
@@ -149,9 +148,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         CancellationToken.None),
                 link =>
                 {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
+                    CloseLink(link);
                 });
+        }
+
+        private void CloseLink(ReceivingAmqpLink link)
+        {
+            link.Session?.SafeClose();
+            link.SafeClose();
         }
 
         /// <summary>

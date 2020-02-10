@@ -78,6 +78,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private FaultTolerantAmqpObject<RequestResponseAmqpLink> ManagementLink { get; }
+        private long LastPeekedSequenceNumber { get; set; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpClient"/> class.
@@ -136,7 +137,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                //ServiceBusEventSource.Log.ClientCreateStart(host, entityName);
+                //TODO add event ServiceBusEventSource.Log.ClientCreateStart(host, entityName);
 
                 ServiceEndpoint = new UriBuilder
                 {
@@ -159,32 +160,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             finally
             {
-                //ServiceBusEventSource.Log.ServiceBusClientCreateComplete(host, entityName);
+                // TODO add event  ServiceBusEventSource.Log.ServiceBusClientCreateComplete(host, entityName);
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="retryPolicy"></param>
-        /// <param name="fromSequenceNumber"></param>
-        /// <param name="messageCount"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="receiveLinkName"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public override async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
-            ServiceBusRetryPolicy retryPolicy,
-            long fromSequenceNumber,
-            int messageCount = 1,
-            string sessionId = null,
-            string receiveLinkName = null,
-            CancellationToken cancellationToken = default)
+        // TODO figure out a better place to put this and see if it can be improved to not have to pass Timespan, stopwatch to operation
+        public override async Task<T> RunOperation<T>(Func<TimeSpan, Stopwatch, Task<T>> operation, ServiceBusRetryPolicy retryPolicy, CancellationToken cancellationToken)
         {
             var failedAttemptCount = 0;
 
             var stopWatch = Stopwatch.StartNew();
-
             try
             {
                 TimeSpan tryTimeout = retryPolicy.CalculateTryTimeout(0);
@@ -194,84 +179,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                     try
                     {
-
-                        AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
-                                ManagementConstants.Operations.PeekMessageOperation,
-                                tryTimeout,
-                                null);
-                        string token = await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
-
-                        if (receiveLinkName != null)
-                        {
-                            // include associated link for service optimization
-                            amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLinkName;
-                        }
-
-                        amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber;
-                        amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
-
-                        if (!string.IsNullOrWhiteSpace(sessionId))
-                        {
-                            amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
-                        }
-
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
-                            UseMinimum(ConnectionScope.SessionTimeout,
-                            tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
-                            .ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-
-                        ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-
-                        // This is how Track 1 makes the request
-                        //var responseAmqpMessage = await Task.Factory.FromAsync(
-                        //(c, s) => link.BeginRequest(
-                        //    amqpRequestMessage.AmqpMessage,
-                        //    transactionId,
-                        //    TimeSpan.FromSeconds(30),
-                        //    c, s),
-                        //(a) => link.EndRequest(a),
-                        //this).ConfigureAwait(false);
-
-                        using AmqpMessage responseAmqpMessage = await link.RequestAsync(
-                            amqpRequestMessage.AmqpMessage,
-                            tryTimeout.CalculateRemaining(stopWatch.Elapsed))
-                            .ConfigureAwait(false);
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                        stopWatch.Stop();
-
-                        AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
-                        // Process the response.
-
-                        var messages = new List<ServiceBusMessage>();
-                        //AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
-                        if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
-                        {
-                            ServiceBusMessage message = null;
-                            IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
-                            foreach (AmqpMap entry in messageList)
-                            {
-                                var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
-                                var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                                message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
-                                messages.Add(message);
-                            }
-
-                            if (message != null)
-                            {
-                                //this.LastPeekedSequenceNumber = message.SystemProperties.SequenceNumber;
-                            }
-                            return messages;
-                        }
-
-                        if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
-                            (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
-                        {
-                            return messages;
-                        }
+                        return await operation(tryTimeout, stopWatch).ConfigureAwait(false);
                     }
+
                     catch (Exception ex)
                     {
                         Exception activeEx = ex.TranslateServiceException(EntityName);
@@ -306,13 +216,113 @@ namespace Azure.Messaging.ServiceBus.Amqp
             catch (Exception exception)
             {
                 throw exception;
-                //throw AmqpExceptionHelper.GetClientException(exception);
+                //TODO through correct exception throw AmqpExceptionHelper.GetClientException(exception);
             }
             finally
             {
                 stopWatch.Stop();
                 ServiceBusEventSource.Log.PeekMessagesComplete(EntityName);
             }
+        }
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="retryPolicy"></param>
+        /// <param name="fromSequenceNumber"></param>
+        /// <param name="timespan"></param>
+        /// <param name="stopWatch"></param>
+        /// <param name="messageCount"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="receiveLinkName"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
+            ServiceBusRetryPolicy retryPolicy,
+            long? fromSequenceNumber,
+            TimeSpan timespan,
+            Stopwatch stopWatch,
+            int messageCount = 1,
+            string sessionId = null,
+            string receiveLinkName = null,
+            CancellationToken cancellationToken = default)
+        {
+
+            AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.PeekMessageOperation,
+                    timespan,
+                    null);
+            await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+
+            if (receiveLinkName != null)
+            {
+                // include associated link for service optimization
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLinkName;
+            }
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.FromSequenceNumber] = fromSequenceNumber ?? LastPeekedSequenceNumber + 1;
+            amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+
+            if (!string.IsNullOrWhiteSpace(sessionId))
+            {
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = sessionId;
+            }
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
+                UseMinimum(ConnectionScope.SessionTimeout,
+                timespan.CalculateRemaining(stopWatch.Elapsed)))
+                .ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+
+            // This is how Track 1 makes the request
+            //var responseAmqpMessage = await Task.Factory.FromAsync(
+            //(c, s) => link.BeginRequest(
+            //    amqpRequestMessage.AmqpMessage,
+            //    transactionId,
+            //    TimeSpan.FromSeconds(30),
+            //    c, s),
+            //(a) => link.EndRequest(a),
+            //this).ConfigureAwait(false);
+
+            using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+                amqpRequestMessage.AmqpMessage,
+                timespan.CalculateRemaining(stopWatch.Elapsed))
+                .ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            stopWatch.Stop();
+
+            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+
+            var messages = new List<ServiceBusMessage>();
+            //AmqpError.ThrowIfErrorResponse(responseAmqpMessage, EntityName);
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                ServiceBusMessage message = null;
+                IEnumerable<AmqpMap> messageList = amqpResponseMessage.GetListValue<AmqpMap>(ManagementConstants.Properties.Messages);
+                foreach (AmqpMap entry in messageList)
+                {
+                    var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
+                    var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
+                    message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, true);
+                    messages.Add(message);
+                }
+
+                if (message != null)
+                {
+                    LastPeekedSequenceNumber = message.SystemProperties.SequenceNumber;
+                }
+                return messages;
+            }
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
+                (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+            {
+                return messages;
+            }
+            throw new Exception();
         }
 
         /// <summary>
@@ -591,8 +601,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
         public override TransportConsumer CreateConsumer(
-            //string consumerGroup,
-            //                                             string partitionId,
+                                                         //string consumerGroup,
+                                                         //                                             string partitionId,
                                                          //EventPosition eventPosition,
                                                          ServiceBusRetryPolicy retryPolicy,
                                                          bool trackLastEnqueuedEventProperties,

@@ -93,7 +93,7 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the entity name and the shared key properties are contained in this connection string.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
-        /// <param name="entityName">The name of the specific Event Hub to associate the connection with.</param>
+        /// <param name="entityName">The name of the specific entity to associate the connection with.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
@@ -303,13 +303,27 @@ namespace Azure.Messaging.ServiceBus
         /// <returns></returns>
         internal virtual async Task<IEnumerable<ServiceBusMessage>> PeekAsync(
             ServiceBusRetryPolicy retryPolicy,
-            long fromSequenceNumber,
+            long? fromSequenceNumber,
             int messageCount = 1,
             string sessionId = null,
             string receiveLinkName = null,
             CancellationToken cancellationToken = default) =>
-            await InnerClient.PeekAsync(retryPolicy, fromSequenceNumber, messageCount, sessionId, receiveLinkName, cancellationToken)
-            .ConfigureAwait(false);
+            await InnerClient.RunOperation(
+                async (timespan, stopwatch) => await InnerClient.PeekAsync(
+                    retryPolicy,
+                    fromSequenceNumber,
+                    timespan,
+                    stopwatch,
+                    messageCount,
+                    sessionId,
+                    receiveLinkName,
+                    cancellationToken)
+                .ConfigureAwait(false),
+                retryPolicy,
+                cancellationToken).ConfigureAwait(false);
+
+            //await InnerClient.PeekAsync(retryPolicy, fromSequenceNumber, messageCount, sessionId, receiveLinkName, cancellationToken)
+            //.ConfigureAwait(false);
 
 
         /// <summary>
@@ -385,23 +399,18 @@ namespace Azure.Messaging.ServiceBus
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
         internal virtual TransportConsumer CreateTransportConsumer(
-            //string consumerGroup,
-            //                                                       string partitionId,
-                                                                   ServiceBusRetryPolicy retryPolicy,
-                                                                   bool trackLastEnqueuedEventProperties = true,
-                                                                   long? ownerLevel = default,
-                                                                   uint? prefetchCount = default,
-                                                                   string sessionId = default)
+            ServiceBusRetryPolicy retryPolicy,
+            bool trackLastEnqueuedEventProperties = true,
+            long? ownerLevel = default,
+            uint? prefetchCount = default,
+            string sessionId = default)
         {
-            //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            //Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-
             return InnerClient.CreateConsumer(retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount, sessionId);
         }
 
         /// <summary>
-        ///   Builds an Event Hub client specific to the protocol and transport specified by the
+        ///   Builds a Service Bus client specific to the protocol and transport specified by the
         ///   requested connection type of the <paramref name="options" />.
         /// </summary>
         ///
@@ -420,10 +429,11 @@ namespace Azure.Messaging.ServiceBus
         ///   creation of clones or otherwise protecting the parameters is assumed to be the purview of the caller.
         /// </remarks>
         ///
-        internal virtual TransportClient CreateTransportClient(string fullyQualifiedNamespace,
-                                                               string entityName,
-                                                               ServiceBusTokenCredential credential,
-                                                               ServiceBusConnectionOptions options)
+        internal virtual TransportClient CreateTransportClient(
+            string fullyQualifiedNamespace,
+            string entityName,
+            ServiceBusTokenCredential credential,
+            ServiceBusConnectionOptions options)
         {
             switch (options.TransportType)
             {

@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.Messaging.ServiceBus.Tests
 {
     [LiveOnly]
-    public class ReceiverTests : ServiceBusTestBase
+    public class ReceiverLiveTests : ServiceBusTestBase
     {
         [Test]
         public async Task Peek()

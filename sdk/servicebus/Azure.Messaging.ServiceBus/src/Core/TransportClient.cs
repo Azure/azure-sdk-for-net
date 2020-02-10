@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,8 +37,19 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>
         ///
         /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="retryPolicy"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task<T> RunOperation<T>(Func<TimeSpan,Stopwatch, Task<T>> operation, ServiceBusRetryPolicy retryPolicy, CancellationToken cancellationToken);
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="retryPolicy"></param>
         /// <param name="fromSequenceNumber"></param>
+        /// <param name="timespan"></param>
+        /// <param name="stopWatch"></param>
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
         /// <param name="receiveLinkName"></param>
@@ -45,7 +57,9 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns></returns>
         public abstract Task<IEnumerable<ServiceBusMessage>> PeekAsync(
             ServiceBusRetryPolicy retryPolicy,
-            long fromSequenceNumber,
+            long? fromSequenceNumber,
+            TimeSpan timespan,
+            Stopwatch stopWatch,
             int messageCount = 1,
             string sessionId = null,
             string receiveLinkName = null,

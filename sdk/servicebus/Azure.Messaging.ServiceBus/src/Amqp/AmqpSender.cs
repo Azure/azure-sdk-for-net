@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpSender"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub to which events will be published.</param>
+        /// <param name="entityName">The name of the entity to which messages will be sent.</param>
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         ///
@@ -87,15 +87,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   caller.
         /// </remarks>
         ///
-        public AmqpSender(string eventHubName,
+        public AmqpSender(string entityName,
                             AmqpConnectionScope connectionScope,
                             ServiceBusRetryPolicy retryPolicy)
         {
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
-            EntityName = eventHubName;
+            EntityName = entityName;
             RetryPolicy = retryPolicy;
             ConnectionScope = connectionScope;
 

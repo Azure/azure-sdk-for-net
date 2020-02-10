@@ -17,6 +17,7 @@ using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Receiver
 {
@@ -101,7 +102,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Event Hub gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
         ///
-        private TransportConsumer Consumer { get; }
+        internal TransportConsumer Consumer { get; }
+
 
         /// <summary>
         ///   The set of active Event Hub transport-specific consumers created by this client for use with
@@ -213,9 +215,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            var consumer = Connection.CreateTransportConsumer(
-                RetryPolicy);
-            foreach (ServiceBusMessage message in await consumer.ReceiveAsync(maxMessages, TimeSpan.FromSeconds(100), cancellationToken).ConfigureAwait(false))
+            foreach (ServiceBusMessage message in await Consumer.ReceiveAsync(maxMessages, TimeSpan.FromSeconds(100), cancellationToken).ConfigureAwait(false))
             {
                 yield return message;
             }
@@ -229,9 +229,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public virtual async Task<ServiceBusMessage> ReceiveAsync(
             CancellationToken cancellationToken = default)
         {
-            var consumer = Connection.CreateTransportConsumer(
-                RetryPolicy);
-            var result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
+            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
             await result.MoveNextAsync().ConfigureAwait(false);
             return result.Current;
         }
@@ -243,7 +241,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <returns></returns>
         public virtual async Task<ServiceBusMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
-            var result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
+            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
             await result.MoveNextAsync().ConfigureAwait(false);
             return result.Current;
         }
@@ -313,22 +311,24 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceInternal(
-            long fromSequenceNumber,
+            long? fromSequenceNumber,
             int maxMessages = 1,
             string sessionId = null,
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            string receiveLinkName = null;
-
+            string receiveLinkName = "";
             if (sessionId != null)
             {
+
                 ReceivingAmqpLink openedLink = await Consumer.ReceiveLink.GetOrCreateAsync(TimeSpan.FromSeconds(60)).ConfigureAwait(false);
                 if (openedLink != null)
                 {
                     receiveLinkName = openedLink.Name;
                 }
             }
+            //Consumer.SessionId = tempSessionId;
+
 
             foreach (ServiceBusMessage message in await Connection.PeekAsync(
                 RetryPolicy,
@@ -393,6 +393,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public virtual async Task DeferAsync(string lockToken, IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
+            // TODO implement
             await Task.Delay(1).ConfigureAwait(false);
         }
 
@@ -411,6 +412,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         public virtual async Task DeadLetterAsync(string lockToken, IDictionary<string, object> propertiesToModify = null, CancellationToken cancellationToken = default)
         {
+            // TODO implement
+
             await Task.Delay(1).ConfigureAwait(false);
         }
 
@@ -431,6 +434,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public virtual async Task DeadLetterAsync(string lockToken, string deadLetterReason, string deadLetterErrorDescription = null,
             CancellationToken cancellationToken = default)
         {
+            // TODO implement
+
             await Task.Delay(1).ConfigureAwait(false);
         }
 
@@ -466,6 +471,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
             string lockToken,
             CancellationToken cancellationToken = default)
         {
+            // TODO implement
+
             return await Task.FromResult(DateTime.Now).ConfigureAwait(false);
         }
 
@@ -482,6 +489,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         public virtual async Task CompleteAsync(string lockToken, CancellationToken cancellationToken = default)
         {
+            // TODO implement
+
             await Task.Delay(1).ConfigureAwait(false);
         }
 
@@ -497,6 +506,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="cancellationToken"></param>
         public virtual async Task CompleteAsync(IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
+            // TODO implement
+
             await Task.Delay(1).ConfigureAwait(false);
         }
 
@@ -516,6 +527,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default)
         {
+            // TODO implement
+
             await Task.Delay(1).ConfigureAwait(false);
         }
         /// <summary>
@@ -636,6 +649,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
         /// <remarks>Enable prefetch to speed up the receive rate.
         /// Use  cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, MessageHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        ///
+        // TODO remove if won't be used
         public void RegisterMessageHandler(Func<ServiceBusMessage, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             this.RegisterMessageHandler(handler, new MessageHandlerOptions(exceptionReceivedHandler));
@@ -648,6 +663,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
         /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
         /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
+        // TODO remove if won't be used
         protected void RegisterMessageHandler(Func<ServiceBusMessage, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
         {
         }
@@ -662,6 +678,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
         /// <remarks>Enable prefetch to speed up the receive rate.
         /// Use  cref="RegisterSessionHandler(Func{IMessageSession,Message,CancellationToken,Task}, SessionHandlerOptions)"/> to configure the settings of the pump.</remarks>
+        // TODO remove if won't be used
+
         public void RegisterSessionHandler(Func<SessionReceiverClient, ServiceBusMessage, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             var sessionHandlerOptions = new SessionHandlerOptions(exceptionReceivedHandler);
@@ -678,6 +696,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <remarks>Enable prefetch to speed up the receive rate. </remarks>
         public void RegisterSessionHandler(Func<SessionReceiverClient, ServiceBusMessage, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
+            // TODO remove if won't be used
+
         }
     }
 }

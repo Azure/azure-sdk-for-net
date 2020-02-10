@@ -58,7 +58,7 @@ namespace Azure.Messaging.ServiceBus
         {
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
-                this.ParseConnectionString(connectionString);
+                ParseConnectionString(connectionString);
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="UriFormatException">Throws when the hostname cannot be parsed</exception>
         public string Endpoint
         {
-            get => this.endpoint;
+            get => endpoint;
             set
             {
                 if (!value.Contains("."))
@@ -194,7 +194,7 @@ namespace Azure.Messaging.ServiceBus
                 }
 
                 var uriBuilder = new UriBuilder(value.Trim());
-                this.endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
+                endpoint = (value.Contains("://") ? uriBuilder.Scheme : EndpointScheme) + "://" + uriBuilder.Host;
                 FullyQualifiedNamespace = uriBuilder.Host;
             }
         }
@@ -381,52 +381,52 @@ namespace Azure.Messaging.ServiceBus
                 var value = keyAndValue[1].Trim();
                 if (key.Equals(EndpointConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Endpoint = value;
+                    Endpoint = value;
                 }
                 else if (key.Equals(SharedAccessKeyNameConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasKeyName = value;
+                    SasKeyName = value;
                 }
                 else if (key.Equals(EntityPathConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.EntityName = value;
+                    EntityName = value;
                 }
                 else if (key.Equals(SharedAccessKeyConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasKey = value;
+                    SasKey = value;
                 }
                 else if (key.Equals(SharedAccessSignatureConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.SasToken = value;
+                    SasToken = value;
                 }
                 else if (key.Equals(TransportTypeConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     if (Enum.TryParse(value, true, out ServiceBusTransportType transportType))
                     {
-                        this.TransportType = transportType;
+                        TransportType = transportType;
                     }
                 }
                 else if (key.Equals(OperationTimeoutConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     if (int.TryParse(value, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out var timeoutInSeconds))
                     {
-                        this.OperationTimeout = TimeSpan.FromSeconds(timeoutInSeconds);
+                        OperationTimeout = TimeSpan.FromSeconds(timeoutInSeconds);
                     }
                     else if (TimeSpan.TryParse(value, NumberFormatInfo.InvariantInfo, out var operationTimeout))
                     {
-                        this.OperationTimeout = operationTimeout;
+                        OperationTimeout = operationTimeout;
                     }
                     else
                     {
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) format is invalid. It must be an integer representing a number of seconds.");
                     }
 
-                    if (this.OperationTimeout.TotalMilliseconds <= 0)
+                    if (OperationTimeout.TotalMilliseconds <= 0)
                     {
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be greater than zero.");
                     }
 
-                    if (this.OperationTimeout.TotalHours >= 1)
+                    if (OperationTimeout.TotalHours >= 1)
                     {
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be smaller than one hour.");
                     }
@@ -436,7 +436,7 @@ namespace Azure.Messaging.ServiceBus
                     value = value.Replace(" ", string.Empty);
                     if (!Enum.TryParse(value, true, out this._authType))
                     {
-                        this._authType = AuthenticationType.Other;
+                        _authType = AuthenticationType.Other;
                     }
                 }
                 else

@@ -1,103 +1,86 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
-using Azure.Messaging.ServiceBus.Sender;
-using Azure.Messaging.ServiceBus;
-using System.Threading.Tasks;
-using Azure.Identity;
-using System.Net;
-using Azure.Messaging.ServiceBus.Tests;
 using System;
-using Azure.Messaging.ServiceBus.Receiver;
-using System.Xml.Schema;
-using Azure.Core.Testing;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Pipeline;
+using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Sender;
+using Moq;
+using NUnit.Framework;
 
-namespace Microsoft.Azure.Template.Tests
+namespace Azure.Messaging.ServiceBus.Tests
 {
-    [LiveOnly]
     public class SenderTests : ServiceBusTestBase
     {
         [Test]
-        public async Task Send_ConnString()
+        public void Send_NullShouldThrow()
         {
-            var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            await sender.SendRangeAsync(GetMessages(10));
-        }
-
-        [Test]
-        public async Task Send_Token()
-        {
-            ClientSecretCredential credential = new ClientSecretCredential(
-                TenantId,
-                ClientId,
-                ClientSecret);
-
-            var sender = new ServiceBusSenderClient(Endpoint, QueueName, credential);
-            await sender.SendAsync(GetMessage());
-        }
-
-        [Test]
-        public async Task Send_Connection_Topic()
-        {
-            var conn = new ServiceBusConnection(ConnString, TopicName);
-            var options = new ServiceBusSenderClientOptions
+            var mock = new Mock<ServiceBusSenderClient>()
             {
-                RetryOptions = new ServiceBusRetryOptions(),
-                ConnectionOptions = new ServiceBusConnectionOptions()
-                {
-                    TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = new WebProxy("localHost")
-                }
+                CallBase = true
             };
-            options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
-            var sender = new ServiceBusSenderClient(conn, options);
-
-            await sender.SendAsync(GetMessage());
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(null));
         }
 
         [Test]
-        public async Task Send_Topic_Session()
+        public async Task Send_DelegatesToSendRange()
         {
-            var conn = new ServiceBusConnection(ConnString, "joshtopic");
-            var options = new ServiceBusSenderClientOptions
+            var mock = new Mock<ServiceBusSenderClient>()
             {
-                RetryOptions = new ServiceBusRetryOptions(),
-                ConnectionOptions = new ServiceBusConnectionOptions()
-                {
-                    TransportType = ServiceBusTransportType.AmqpWebSockets,
-                    Proxy = new WebProxy("localHost")
-                }
+                CallBase = true
             };
-            options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
-            var sender = new ServiceBusSenderClient(conn, options);
-            var message = GetMessage();
-            message.SessionId = "1";
-            await sender.SendAsync(message);
+            mock
+               .Setup(m => m.SendRangeAsync(
+                   It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
+                   It.IsAny<CancellationToken>()))
+               .Returns(Task.CompletedTask)
+               .Verifiable("The single send should delegate to the batch send.");
+
+            await mock.Object.SendAsync(new ServiceBusMessage());
+        }
+
+        [Test]
+        public void SendRange_NullShouldThrow()
+        {
+            var mock = new Mock<ServiceBusSenderClient>()
+            {
+                CallBase = true
+            };
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendRangeAsync(null));
+        }
+
+        [Test]
+        public async Task SendRange_DelegatesToInnerSender()
+        {
+            var mock = new Mock<ServiceBusSenderClient>()
+            {
+                CallBase = true
+            };
+
+            var msgs = GetMessages(10);
+            var mockSender = new Mock<TransportSender>();
+            mock.SetupGet(m => m.InnerSender).Returns(mockSender.Object);
+            mock.Setup(m => m.CreateDiagnosticScope()).Returns(default(DiagnosticScope));
+            await mock.Object.SendRangeAsync(msgs);
+            mockSender.Verify(m => m.SendAsync(msgs, default), "Send should delegate to Inner Sender");
+
         }
 
         [Test]
         public void ClientProperties()
         {
-            var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            Assert.AreEqual(QueueName, sender.EntityName);
-            Assert.AreEqual(Endpoint, sender.FullyQualifiedNamespace);
-        }
-
-        [Test]
-        public async Task Schedule()
-        {
-            var sender = new ServiceBusSenderClient(ConnString, QueueName);
-            var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
-            var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
-
-            var receiver = new QueueReceiverClient(ConnString, QueueName);
-            ServiceBusMessage msg = await receiver.PeekBySequenceAsync(sequenceNum);
-            Assert.AreEqual(0, Convert.ToInt32(new TimeSpan(scheduleTime.Ticks - msg.ScheduledEnqueueTimeUtc.Ticks).TotalSeconds));
-
-            await sender.CancelScheduledMessageAsync(sequenceNum);
-            msg = await receiver.PeekBySequenceAsync(sequenceNum);
-            Assert.IsNull(msg);
+            var account = Encoding.Default.GetString(GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
+            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
+            var sender = new ServiceBusSenderClient(connString, queueName);
+            Assert.AreEqual(queueName, sender.EntityName);
+            Assert.AreEqual(fullyQualifiedNamespace, sender.FullyQualifiedNamespace);
         }
     }
 }

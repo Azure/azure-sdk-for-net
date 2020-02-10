@@ -32,6 +32,11 @@ namespace Azure.Messaging.ServiceBus.Core
         public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
 
         /// <summary>
+        ///
+        /// </summary>
+        public string SessionId { get; set; }
+
+        /// <summary>
         ///   The most recent message received from the entity by this consumer instance.
         /// </summary>
         ///

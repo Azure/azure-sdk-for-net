@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///   Event Hub gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
         ///
-        private TransportSender InnerSender { get; }
+        internal virtual TransportSender InnerSender { get; }
 
         private ClientDiagnostics ClientDiagnostics { get; set; }
 
@@ -267,12 +267,15 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
+        /// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
         ///
         public virtual async Task SendAsync(
             ServiceBusMessage message,
-            CancellationToken cancellationToken = default) =>
-            await SendAsync(new ServiceBusMessage[] { message }, cancellationToken).ConfigureAwait(false);
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(message, nameof(message));
+            await SendRangeAsync(new ServiceBusMessage[] { message }, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
@@ -284,10 +287,10 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        /// <seealso cref="SendAsync(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
+        /// <seealso cref="SendRangeInternal(IEnumerable{ServiceBusMessage}, CancellationToken)"/>
         ///
         public virtual async Task SendRangeAsync(IEnumerable<ServiceBusMessage> messages, CancellationToken cancellationToken = default) =>
-            await SendAsync(messages, cancellationToken).ConfigureAwait(false);
+            await SendRangeInternal(messages, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Schedules a message to appear on Service Bus at a later time.
@@ -344,8 +347,9 @@ namespace Azure.Messaging.ServiceBus.Sender
 
         /// <seealso cref="SendRangeAsync(IEnumerable{ServiceBusMessage}, CancellationToken)" />
         ///
-        internal virtual async Task SendAsync(IEnumerable<ServiceBusMessage> messages,
-                                              CancellationToken cancellationToken = default)
+        internal virtual async Task SendRangeInternal(
+            IEnumerable<ServiceBusMessage> messages,
+            CancellationToken cancellationToken)
         {
 
             Argument.AssertNotNull(messages, nameof(messages));
@@ -473,7 +477,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///
         /// <returns>The requested <see cref="DiagnosticScope" />.</returns>
         ///
-        private DiagnosticScope CreateDiagnosticScope()
+        internal virtual DiagnosticScope CreateDiagnosticScope()
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
             scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.ServiceBusSenderType);
