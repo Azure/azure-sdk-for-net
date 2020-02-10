@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using System.Linq;
 
     /// <summary>
-    /// result of an image classification request.
+    /// Result of an image prediction request.
     /// </summary>
     public partial class StoredImagePrediction
     {

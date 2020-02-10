@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Security.Authentication;
@@ -211,21 +212,12 @@ namespace Microsoft.Azure.EventHubs.Tests
 
         private static IAsyncPolicy<T> CreateRetryPolicy<T>(int maxRetryAttempts = RetryMaximumAttempts, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
            Policy<T>
-               .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-               .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-               .Or<TaskCanceledException>()
-               .Or<OperationCanceledException>()
-               .Or<SocketException>()
-               .Or<IOException>()
+               .Handle<Exception>(ex => ShouldRetry(ex))
                .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static IAsyncPolicy CreateRetryPolicy(int maxRetryAttempts = RetryMaximumAttempts, double exponentialBackoffSeconds = RetryExponentialBackoffSeconds, double baseJitterSeconds = RetryBaseJitterSeconds) =>
             Policy
-                .Handle<ErrorResponseException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .Or<CloudException>(ex => IsRetriableStatus(ex.Response.StatusCode))
-                .Or<StorageException>(ex => IsRetriableStatus((HttpStatusCode)ex.RequestInformation.HttpStatusCode))
-                .Or<StorageException>(ex => IsRetriableExceptionType(ex.InnerException))
-                .Or<Exception>(ex => ((IsRetriableExceptionType(ex)) || (IsRetriableExceptionType(ex.InnerException))))
+                .Handle<Exception>(ex => ShouldRetry(ex))
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static bool IsRetriableStatus(HttpStatusCode statusCode) =>
@@ -237,13 +229,40 @@ namespace Microsoft.Azure.EventHubs.Tests
                 || (statusCode == HttpStatusCode.ServiceUnavailable)
                 || (statusCode == HttpStatusCode.GatewayTimeout));
 
-        public static bool IsRetriableExceptionType(Exception ex) =>
-            ((ex is TimeoutException)
-                || (ex is TaskCanceledException)
-                || (ex is OperationCanceledException)
-                || (ex is TimeoutException)
-                || (ex is SocketException)
-                || (ex is IOException));
+         private static bool ShouldRetry(Exception ex) =>
+            ((IsRetriableException(ex)) || (IsRetriableException(ex?.InnerException)));
+
+        private static bool IsRetriableException(Exception ex)
+        {
+            if (ex == null)
+            {
+                return false;
+            }
+
+            switch (ex)
+            {
+                case ErrorResponseException erEx:
+                    return IsRetriableStatus(erEx.Response.StatusCode);
+
+                case CloudException clEx:
+                    return IsRetriableStatus(clEx.Response.StatusCode);
+
+                case StorageException stEx:
+                    return IsRetriableStatus((HttpStatusCode)stEx.RequestInformation.HttpStatusCode);
+
+                case TimeoutException _:
+                case TaskCanceledException _:
+                case OperationCanceledException _:
+                case HttpRequestException _:
+                case WebException _:
+                case SocketException _:
+                case IOException _:
+                    return true;
+
+                default:
+                    return false;
+            };
+        }
 
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
             TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (RandomNumberGenerator.Value.NextDouble() * baseJitterSeconds));

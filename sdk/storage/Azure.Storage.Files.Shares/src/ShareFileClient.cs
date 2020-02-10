@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -345,7 +346,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRange"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -398,7 +399,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -451,7 +452,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <remarks>
         /// This method only initializes the file.
-        /// To add content, use <see cref="UploadRangeAsync"/>.
+        /// To add content, use <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>.
         /// </remarks>
         /// <param name="maxSize">
         /// Required. Specifies the maximum size for the file.
@@ -531,7 +532,7 @@ namespace Azure.Storage.Files.Shares
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.CreateOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(Create)}")
                         .ConfigureAwait(false);
 
                     return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
@@ -668,7 +669,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.StartCopyOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(StartCopy)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -787,7 +788,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.AbortCopyOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(AbortCopy)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1039,7 +1040,7 @@ namespace Azure.Storage.Files.Shares
                     rangeGetContentHash: rangeGetContentHash ? (bool?)true : null,
                     async: async,
                     cancellationToken: cancellationToken,
-                    operationName: Constants.File.DownloadOperationName)
+                    operationName: $"{nameof(ShareFileClient)}.{nameof(Download)}")
                     .ConfigureAwait(false);
             Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {response.Value.ContentLength}");
             return (response, stream);
@@ -1130,7 +1131,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.DeleteOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(Delete)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -1243,7 +1244,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetPropertiesOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetProperties)}")
                         .ConfigureAwait(false);
 
                     // Return an exploding Response on 304
@@ -1441,7 +1442,7 @@ namespace Azure.Storage.Files.Shares
                         fileLastWriteTime: smbProps.FileLastWriteTimeToString() ?? Constants.File.Preserve,
                         filePermissionKey: smbProps.FilePermissionKey,
                         async: async,
-                        operationName: Constants.File.SetHttpHeadersOperationName,
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(SetHttpHeaders)}",
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -1565,7 +1566,7 @@ namespace Azure.Storage.Files.Shares
                         metadata: metadata,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.SetMetadataOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(SetMetadata)}")
                         .ConfigureAwait(false);
 
                     return Response.FromValue(new ShareFileInfo(response.Value), response.GetRawResponse());
@@ -1583,15 +1584,143 @@ namespace Azure.Storage.Files.Shares
         }
         #endregion SetMetadata
 
-        #region UploadRange
+        #region ClearRange
         /// <summary>
-        /// The <see cref="UploadRange"/> operation writes
-        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        /// The <see cref="ClearRange(HttpRange, CancellationToken)"/>
+        /// operation clears the <paramref name="range"/> of a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
         /// </summary>
-        /// <param name="writeType">Required. Specifies whether to update or clear the range.
+        /// <param name="range">
+        /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
         /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileUploadInfo> ClearRange(
+            HttpRange range,
+            CancellationToken cancellationToken = default) =>
+                ClearRangeInternal(
+                    range: range,
+                    async: false,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+
+
+        /// <summary>
+        /// The <see cref="ClearRangeAsync(HttpRange, CancellationToken)"/>
+        /// operation clears the <paramref name="range"/> of a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be cleared. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileUploadInfo>> ClearRangeAsync(
+            HttpRange range,
+            CancellationToken cancellationToken = default) =>
+                await ClearRangeInternal(
+                    range: range,
+                    async: true,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRangeInternal"/> operation clears the
+        /// <paramref name="range"/> of a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+
+        /// <param name="range">
+        /// Specifies the range of bytes to be cleated. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileUploadInfo>> ClearRangeInternal(
+            HttpRange range,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(ClearRange)}");
+
+                Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}");
+                try
+                {
+                    scope.Start();
+                    return await FileRestClient.File.UploadRangeAsync(
+                        ClientDiagnostics,
+                        Pipeline,
+                        Uri,
+                        version: Version.ToVersionString(),
+                        range: range.ToString(),
+                        fileRangeWrite: ShareFileRangeWriteType.Clear,
+                        contentLength: 0,
+                        async: async,
+                        cancellationToken: cancellationToken,
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(UploadRange)}").ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    scope.Dispose();
+                    Pipeline.LogMethodExit(nameof(ShareFileClient));
+                }
+            }
+        }
+        #endregion ClearRange
+
+        #region UploadRange
+        /// <summary>
+        /// The <see cref="UploadRange(HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
         /// <param name="range">
         /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
         /// </param>
@@ -1599,7 +1728,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Stream"/> containing the content of the range to upload.
         /// </param>
         /// <param name="transactionalContentHash">
-        /// Optional MD5 hash of the range content.  Must not be used when <paramref name="writeType"/> is set to <see cref="ShareFileRangeWriteType.Clear"/>.
+        /// Optional MD5 hash of the range content.
         ///
         /// This hash is used to verify the integrity of the range during transport. When this hash
         /// is specified, the storage service compares the hash of the content
@@ -1616,7 +1745,7 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
         /// state of the file.
         /// </returns>
         /// <remarks>
@@ -1624,14 +1753,12 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareFileUploadInfo> UploadRange(
-            ShareFileRangeWriteType writeType,
             HttpRange range,
             Stream content,
             byte[] transactionalContentHash = null,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             UploadRangeInternal(
-                writeType,
                 range,
                 content,
                 transactionalContentHash,
@@ -1641,8 +1768,60 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadRangeAsync"/> operation writes
-        /// <paramref name="content"/> to a <paramref name="range"/> of a file.
+        /// The <see cref="UploadRangeAsync(HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transactionalContentHash">
+        /// Optional MD5 hash of the range content.
+        ///
+        /// This hash is used to verify the integrity of the range during transport. When this hash
+        /// is specified, the storage service compares the hash of the content
+        /// that has arrived with this value.  Note that this MD5 hash is not
+        /// stored with the file.  If the two hashes do not match, the
+        /// operation will fail with a <see cref="RequestFailedException"/>.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
+            HttpRange range,
+            Stream content,
+            byte[] transactionalContentHash = default,
+            IProgress<long> progressHandler = default,
+            CancellationToken cancellationToken = default) =>
+            await UploadRangeInternal(
+                range,
+                content,
+                transactionalContentHash,
+                progressHandler,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadRange(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
         /// </summary>
@@ -1672,22 +1851,78 @@ namespace Azure.Storage.Files.Shares
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{StorageFileUploadInfo}"/> describing the
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
         /// state of the file.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ShareFileUploadInfo> UploadRange(
+            ShareFileRangeWriteType writeType,
+            HttpRange range,
+            Stream content,
+            byte[] transactionalContentHash = default,
+            IProgress<long> progressHandler = default,
+            CancellationToken cancellationToken = default) =>
+            UploadRangeInternal(
+                range,
+                content,
+                transactionalContentHash,
+                progressHandler,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="UploadRange(ShareFileRangeWriteType, HttpRange, Stream, byte[], IProgress{long}, CancellationToken)"/>
+        /// operation writes <paramref name="content"/> to a <paramref name="range"/> of a file.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
+        /// </summary>
+        /// <param name="writeType">Required. Specifies whether to update or clear the range.
+        /// </param>
+        /// <param name="range">
+        /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
+        /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transactionalContentHash">
+        /// Optional MD5 hash of the range content.  Must not be used when <paramref name="writeType"/> is set to <see cref="ShareFileRangeWriteType.Clear"/>.
+        ///
+        /// This hash is used to verify the integrity of the range during transport. When this hash
+        /// is specified, the storage service compares the hash of the content
+        /// that has arrived with this value.  Note that this MD5 hash is not
+        /// stored with the file.  If the two hashes do not match, the
+        /// operation will fail with a <see cref="RequestFailedException"/>.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Optional <see cref="IProgress{Long}"/> to provide
+        /// progress updates about data transfers.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareFileUploadInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ShareFileUploadInfo>> UploadRangeAsync(
             ShareFileRangeWriteType writeType,
             HttpRange range,
             Stream content,
-            byte[] transactionalContentHash = null,
+            byte[] transactionalContentHash = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default) =>
             await UploadRangeInternal(
-                writeType,
                 range,
                 content,
                 transactionalContentHash,
@@ -1702,8 +1937,7 @@ namespace Azure.Storage.Files.Shares
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/put-range"/>
         /// </summary>
-        /// <param name="writeType">Required. Specifies whether to update or clear the range.
-        /// </param>
+
         /// <param name="range">
         /// Specifies the range of bytes to be written. Both the start and end of the range must be specified.
         /// </param>
@@ -1711,7 +1945,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Stream"/> containing the content of the range to upload.
         /// </param>
         /// <param name="transactionalContentHash">
-        /// Optional MD5 hash of the range content.  Must not be used when <paramref name="writeType"/> is set to <see cref="ShareFileRangeWriteType.Clear"/>.
+        /// Optional MD5 hash of the range content.
         ///
         /// This hash is used to verify the integrity of the range during transport. When this hash
         /// is specified, the storage service compares the hash of the content
@@ -1739,7 +1973,6 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         private async Task<Response<ShareFileUploadInfo>> UploadRangeInternal(
-            ShareFileRangeWriteType writeType,
             HttpRange range,
             Stream content,
             byte[] transactionalContentHash,
@@ -1747,15 +1980,12 @@ namespace Azure.Storage.Files.Shares
             bool async,
             CancellationToken cancellationToken)
         {
-            // TODO We should probably raise an exception if Stream is non-empty and writeType is Clear.
-
             using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 Pipeline.LogMethodEnter(
                     nameof(ShareFileClient),
                     message:
-                    $"{nameof(Uri)}: {Uri}\n" +
-                    $"{nameof(writeType)}: {writeType}");
+                    $"{nameof(Uri)}: {Uri}");
                 try
                 {
                     content = content.WithNoDispose().WithProgress(progressHandler);
@@ -1767,11 +1997,11 @@ namespace Azure.Storage.Files.Shares
                         optionalbody: content,
                         contentLength: content.Length,
                         range: range.ToString(),
-                        fileRangeWrite: writeType,
+                        fileRangeWrite: ShareFileRangeWriteType.Update,
                         contentHash: transactionalContentHash,
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.UploadRangeOperationName).ConfigureAwait(false);
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(UploadRange)}").ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -2072,7 +2302,6 @@ namespace Azure.Storage.Files.Shares
                 if (length <= singleRangeThreshold)
                 {
                     return await UploadRangeInternal(
-                        ShareFileRangeWriteType.Update,
                         new HttpRange(0, length),
                         content,
                         null,
@@ -2118,7 +2347,6 @@ namespace Azure.Storage.Files.Shares
                         () => buffer.Dispose(),
                         cancellationToken);
                     response = await UploadRangeInternal(
-                        ShareFileRangeWriteType.Update,
                         new HttpRange(partition.ParentPosition, partition.Length),
                         partition,
                         null,
@@ -2243,7 +2471,7 @@ namespace Azure.Storage.Files.Shares
                         range: range.ToString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: Constants.File.GetRangeListOperationName)
+                        operationName: $"{nameof(ShareFileClient)}.{nameof(GetRangeList)}")
                         .ConfigureAwait(false);
                     return Response.FromValue(new ShareFileRangeInfo(response.Value), response.GetRawResponse());
                 }
@@ -2421,7 +2649,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 false, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                $"{nameof(ShareFileClient)}.{nameof(ForceCloseHandle)}")
                 .EnsureCompleted();
 
             return Response.FromValue(
@@ -2468,7 +2696,7 @@ namespace Azure.Storage.Files.Shares
                 null,
                 true, // async,
                 cancellationToken,
-                Constants.File.ForceCloseHandleOperationName)
+                $"{nameof(ShareFileClient)}.{nameof(ForceCloseHandle)}")
                 .ConfigureAwait(false);
 
             return Response.FromValue(
@@ -2637,7 +2865,7 @@ namespace Azure.Storage.Files.Shares
             string marker,
             bool async,
             CancellationToken cancellationToken,
-            string operationName = Constants.File.ForceCloseAllHandlesOperationName)
+            string operationName = null)
         {
             using (Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -2658,7 +2886,7 @@ namespace Azure.Storage.Files.Shares
                         version: Version.ToVersionString(),
                         async: async,
                         cancellationToken: cancellationToken,
-                        operationName: operationName)
+                        operationName: operationName ?? $"{nameof(ShareFileClient)}.{nameof(ForceCloseAllHandles)}")
                         .ConfigureAwait(false);
                 }
                 catch (Exception ex)

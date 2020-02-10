@@ -36,17 +36,17 @@ namespace Azure.AI.TextAnalytics.Samples
             }
 
             #region Snippet:TextAnalyticsSample2AnalyzeSentimentConvenience
-            AnalyzeSentimentResultCollection results = client.AnalyzeSentiment(inputs);
+            AnalyzeSentimentResultCollection results = client.AnalyzeSentimentBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Predicted sentiments are:");
             foreach (AnalyzeSentimentResult result in results)
             {
-                TextSentiment sentiment = result.DocumentSentiment;
-                Debug.WriteLine($"Document sentiment is {sentiment.SentimentClass.ToString()}, with scores: ");
-                Debug.WriteLine($"    Positive score: {sentiment.PositiveScore:0.00}.");
-                Debug.WriteLine($"    Neutral score: {sentiment.NeutralScore:0.00}.");
-                Debug.WriteLine($"    Negative score: {sentiment.NegativeScore:0.00}.");
+                DocumentSentiment docSentiment = result.DocumentSentiment;
+                Debug.WriteLine($"Document sentiment is {docSentiment.Sentiment}, with scores: ");
+                Debug.WriteLine($"    Positive score: {docSentiment.SentimentScores.Positive:0.00}.");
+                Debug.WriteLine($"    Neutral score: {docSentiment.SentimentScores.Neutral:0.00}.");
+                Debug.WriteLine($"    Negative score: {docSentiment.SentimentScores.Negative:0.00}.");
             }
         }
     }

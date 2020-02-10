@@ -13,30 +13,30 @@ var client = new TextAnalyticsClient(new Uri(endpoint), new TextAnalyticsApiKeyC
 
 ## Recognizing entities in a single input
 
-To recognize entities in a single text input, pass the input string to the client's `RecognizeEntities` method.  The returned `RecognizeEntitiesResult` contains a collection of `NamedEntities` that were recognized in the input text.
+To recognize entities in a single text input, pass the input string to the client's `RecognizeEntities` method.  The returned `RecognizeEntitiesResult` contains a collection of `CategorizedEntity` that were recognized in the input text.
 
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-RecognizeEntitiesResult result = client.RecognizeEntities(input);
-IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+Response<IReadOnlyCollection<CategorizedEntity>> response = client.RecognizeEntities(input);
+IEnumerable<CategorizedEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} entities:");
-foreach (NamedEntity entity in entities)
+foreach (CategorizedEntity entity in entities)
 {
-    Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+    Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
 ```
 
 ## Recognizing entities in multiple inputs
 
-To recognize entities in multiple text inputs as a batch, call `RecognizeEntities` on an `IEnumerable` of strings.  The results are returned as a `RecognizeEntitiesResultCollection`.
+To recognize entities in multiple text inputs as a batch, call `RecognizeEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
+RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs);
 ```
 
-To recognize entities in a collection of text inputs in different languages, call `RecognizeEntities` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To recognize entities in a collection of text inputs in different languages, call `RecognizeEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample4RecognizeEntitiesBatch
 var inputs = new List<TextDocumentInput>
@@ -55,7 +55,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

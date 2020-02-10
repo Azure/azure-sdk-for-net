@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -48,17 +48,18 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.HasError)
                 {
-                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error code: {result.Error.Code}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Recognized the following {result.NamedEntities.Count()} PII entit{(result.NamedEntities.Count() > 1 ? "ies" : "y ")}:");
+                    Debug.WriteLine($"    Recognized the following {result.Entities.Count()} PII entit{(result.Entities.Count() > 1 ? "ies" : "y ")}:");
 
-                    foreach (NamedEntity entity in result.NamedEntities)
+                    foreach (PiiEntity entity in result.Entities)
                     {
-                        Debug.WriteLine($"        Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
+                        Debug.WriteLine($"        Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                     }
 
                     Debug.WriteLine($"    Document statistics:");

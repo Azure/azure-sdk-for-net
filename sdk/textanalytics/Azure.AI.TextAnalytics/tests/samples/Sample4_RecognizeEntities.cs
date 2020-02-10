@@ -25,13 +25,13 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizeEntities
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            RecognizeEntitiesResult result = client.RecognizeEntities(input);
-            IReadOnlyCollection<NamedEntity> entities = result.NamedEntities;
+            Response<IReadOnlyCollection<CategorizedEntity>> response = client.RecognizeEntities(input);
+            IEnumerable<CategorizedEntity> entities = response.Value;
 
             Console.WriteLine($"Recognized {entities.Count()} entities:");
-            foreach (NamedEntity entity in entities)
+            foreach (CategorizedEntity entity in entities)
             {
-                Console.WriteLine($"Text: {entity.Text}, Type: {entity.Type}, SubType: {entity.SubType}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
+                Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
             }
             #endregion
         }

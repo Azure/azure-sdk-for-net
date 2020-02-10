@@ -2317,7 +2317,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task DownloadToAsync_PathOverloads()
+        public async Task ReadToAsync_PathOverloads()
         {
             // Arrange
             var path = System.IO.Path.GetTempFileName();
@@ -2332,11 +2332,11 @@ namespace Azure.Storage.Files.DataLake.Tests
                 await file.AppendAsync(stream, 0);
                 await file.FlushAsync(size);
 
-                await Verify(await file.DownloadToAsync(path));
-                await Verify(await file.DownloadToAsync(
+                await Verify(await file.ReadToAsync(path));
+                await Verify(await file.ReadToAsync(
                     path,
                     cancellationToken: CancellationToken.None));
-                await Verify(await file.DownloadToAsync(
+                await Verify(await file.ReadToAsync(
                     path,
                     new DataLakeRequestConditions() { IfModifiedSince = default }));
 
@@ -2359,7 +2359,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        public async Task DownloadToAsync_StreamOverloads()
+        public async Task ReadToAsync_StreamOverloads()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
@@ -2372,19 +2372,19 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             using (var resultStream = new MemoryStream(data))
             {
-                await file.DownloadToAsync(resultStream);
+                await file.ReadToAsync(resultStream);
                 Verify(resultStream);
             }
             using (var resultStream = new MemoryStream())
             {
-                await file.DownloadToAsync(
+                await file.ReadToAsync(
                     resultStream,
                     cancellationToken: CancellationToken.None);
                 Verify(resultStream);
             }
             using (var resultStream = new MemoryStream())
             {
-                await file.DownloadToAsync(
+                await file.ReadToAsync(
                     resultStream,
                     new DataLakeRequestConditions() { IfModifiedSince = default });
                 Verify(resultStream);

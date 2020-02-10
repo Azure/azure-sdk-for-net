@@ -50,7 +50,7 @@ jobs:
     dependsOn:
       - Build
     pool:
-      vmImage: "ubuntu-16.04"
+      vmImage: "windows-2019"
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
@@ -77,12 +77,12 @@ jobs:
           artifact: packages
           path: $(Pipeline.Workspace)/packages
           patterns: "*.nupkg"
-      - task: PowerShell@2
+      - pwsh: |
+          mkdir "$(Build.ArtifactStagingDirectory)/reports"
+          Copy-Item -Path "$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html" -Destination "$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html"
+          & "tools/AnalyzeDeps/AnalyzeDeps.ps1" -PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" `
+          -OutPath "$(Build.ArtifactStagingDirectory)/reports/dependencies.html" -DumpPath "$(Build.ArtifactStagingDirectory)/reports/data.js"
         displayName: "Analyze dependencies"
-        inputs:
-          filePath: "tools/AnalyzeDeps/AnalyzeDeps.ps1"
-          arguments: '-PackagesPath "$(Pipeline.Workspace)/packages/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" -OutPath "$(Build.ArtifactStagingDirectory)/dependencies.html"'
-          pwsh: true
       - template: eng/pipelines/templates/scripts/verify-path-length.yml@azure-sdk-tools
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
@@ -113,7 +113,7 @@ jobs:
         displayName: "Publish Report Artifacts"
         inputs:
           artifactName: reports
-          path: $(Build.ArtifactStagingDirectory)/dependencies.html
+          path: $(Build.ArtifactStagingDirectory)/reports
   - job: "Test"
     condition: ne(variables['Skip.Test'], true)
     variables:

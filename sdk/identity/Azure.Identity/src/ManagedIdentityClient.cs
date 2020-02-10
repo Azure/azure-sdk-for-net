@@ -18,8 +18,8 @@ namespace Azure.Identity
     {
         private const string AuthenticationResponseInvalidFormatError = "Invalid response, the authentication response was not in the expected format.";
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
-        internal const string MsiUnavailableError = "No managed identity endpoint found.";
-        internal const string IdentityUnavailableError = "The requested identity has not been assigned to this resource.";
+        internal const string MsiUnavailableError = "ManagedIdentityCredential authentication unavailable, no managed identity endpoint found.";
+        internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable, the requested identity has not been assigned to this resource.";
 
         // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
@@ -75,17 +75,12 @@ namespace Azure.Identity
             {
                 _msiType = MsiType.Unavailable;
 
-                ValueTask<string> messageTask = ResponseExceptionExtensions.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, false);
-
-                // TODO: this should use TaskExtensions EnsureCompleted from Azure.Core shared source when it gets move into shared source.
-                Debug.Assert(messageTask.IsCompleted);
-
-                string message = messageTask.GetAwaiter().GetResult();
+                string message = _pipeline.Diagnostics.CreateRequestFailedMessage(response, message: IdentityUnavailableError);
 
                 return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }
 
-            throw response.CreateRequestFailedException();
+            throw _pipeline.Diagnostics.CreateRequestFailedException(response);
         }
 
         public async virtual Task<ExtendedAccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
@@ -113,12 +108,12 @@ namespace Azure.Identity
             {
                 _msiType = MsiType.Unavailable;
 
-                string message = await ResponseExceptionExtensions.CreateRequestFailedMessageAsync(IdentityUnavailableError, response, null, true).ConfigureAwait(false);
+                string message = await _pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, message: IdentityUnavailableError, errorCode: null).ConfigureAwait(false);
 
                 return new ExtendedAccessToken(new CredentialUnavailableException(message));
             }
 
-            throw await response.CreateRequestFailedExceptionAsync().ConfigureAwait(false);
+            throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
         }
 
         protected virtual MsiType GetMsiType(CancellationToken cancellationToken)

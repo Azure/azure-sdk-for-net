@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+            RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Linked entities for each input are:\n");
@@ -38,11 +38,11 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (RecognizeLinkedEntitiesResult result in results)
             {
                 Debug.Write($"For input: \"{inputs[i++]}\", ");
-                Debug.WriteLine($"extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
+                Debug.WriteLine($"extracted {result.Entities.Count()} linked entit{(result.Entities.Count() > 1 ? "ies" : "y")}:");
 
-                foreach (LinkedEntity linkedEntity in result.LinkedEntities)
+                foreach (LinkedEntity linkedEntity in result.Entities)
                 {
-                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
+                    Debug.WriteLine($"    Name: \"{linkedEntity.Name}\", Id: \"{linkedEntity.Id}\", Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}");
                     foreach (LinkedEntityMatch match in linkedEntity.Matches)
                     {
                         Debug.WriteLine($"        Match Text: \"{match.Text}\", Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");

@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 }
             };
 
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrases(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
             #endregion
 
             int i = 0;
@@ -52,9 +52,10 @@ namespace Azure.AI.TextAnalytics.Samples
 
                 Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
 
-                if (result.ErrorMessage != default)
+                if (result.HasError)
                 {
-                    Debug.WriteLine($"Document error: {result.ErrorMessage}.");
+                    Debug.WriteLine($"    Document error: {result.Error.Code}.");
+                    Debug.WriteLine($"    Message: {result.Error.Message}.");
                 }
                 else
                 {

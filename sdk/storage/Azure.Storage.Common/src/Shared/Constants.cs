@@ -70,7 +70,7 @@ namespace Azure.Storage
         public const string Http = "http";
 
         /// <summary>
-        /// Storage Connection Strings
+        /// Storage Connection String constant values.
         /// </summary>
         internal static class ConnectionStrings
         {
@@ -109,7 +109,7 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// Header Request Names
+        /// Header Name constant values.
         /// </summary>
         internal static class HeaderNames
         {
@@ -142,42 +142,17 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// Blob constant values
+        /// Blob constant values.
         /// </summary>
         internal static class Blob
         {
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
 
-            /// <summary>
-            ///  Error code for blobs
-            /// </summary>
-            public const string AlreadyExists = "BlobAlreadyExists";
-            public const string NotFound = "BlobNotFound";
-
-            public const string UploadOperationName =
-                "BlobClient.Upload";
-
             internal static class Append
             {
                 public const int MaxAppendBlockBytes = 4 * Constants.MB; // 4MB
                 public const int MaxBlocks = 50000;
-                public const string CreateOperationName =
-                    "AppendBlobClient.Create";
-                public const string CreateIfNotExistsOperationName =
-                    "AppendBlobClient.CreateIfNotExists";
-            }
-
-            internal static class Base
-            {
-                public const string Delete =
-                    "BlobBaseClient.Delete";
-                public const string DeleteIfExists =
-                    "BlobBaseClient.DeleteIfExists";
-                public const string SetTierOperationName =
-                    "BlobBaseClient.SetTier";
-                public const string ExistsOperationName =
-                    "BlobBaseClient.Exists";
             }
 
             internal static class Block
@@ -187,20 +162,6 @@ namespace Azure.Storage
                 public const int MaxDownloadBytes = 256 * Constants.MB; // 256MB
                 public const int MaxStageBytes = 100 * Constants.MB; // 100MB
                 public const int MaxBlocks = 50000;
-
-                /// <summary>
-                /// The Azure Storage Operation Names for Block Blob Client.
-                /// </summary>
-                public const string UploadOperationName =
-                    "BlockBlobClient.Upload";
-                public const string StageBlockOperationName =
-                    "BlockBlobClient.StageBlock";
-                public const string StageBlockFromUriOperationName =
-                    "BlockBlobClient.StageBlockFromUri";
-                public const string CommitBlockListOperationName =
-                    "BlockBlobClient.CommitBlockList";
-                public const string GetBlockListOperationName =
-                    "BlockBlobClient.GetBlockList";
             }
 
             internal static class Container
@@ -219,34 +180,6 @@ namespace Azure.Storage
                 /// The Azure Storage name used to identify a storage account's web content container.
                 /// </summary>
                 public const string WebName = "$web";
-
-                /// <summary>
-                /// The Azure Storage error codes for Blob Container Client.
-                /// </summary>
-                public const string AlreadyExists = "ContainerAlreadyExists";
-                public const string NotFound = "ContainerNotFound";
-
-                /// <summary>
-                /// The Azure Storage Operation Names for Blob Container Client.
-                /// </summary>
-                public const string CreateOperationName =
-                    "BlobContainerClient.Create";
-                public const string CreateIfNotExistsOperationName =
-                    "BlobContainerClient.CreateIfNotExists";
-                public const string DeleteOperationName =
-                    "BlobContainerClient.Delete";
-                public const string DeleteIfExistsOperationName =
-                    "BlobContainerClient.DeleteIfExists";
-                public const string ExistsOperationName =
-                    "BlobContainerClient.Exists";
-                public const string GetPropertiesOperationName =
-                    "BlobContainerClient.GetProperties";
-                public const string SetMetaDataOperationName =
-                    "BlobContainerClient.SetMetadata";
-                public const string GetAccessPolicyOperationName =
-                    "BlobContainerClient.GetAccessPolicy";
-                public const string SetAccessPolicyOperationName =
-                    "BlobContainerClient.SetAccessPolicy";
             }
 
             internal static class Lease
@@ -255,66 +188,11 @@ namespace Azure.Storage
                 /// Lease Duration is set as infinite when passed -1
                 /// </summary>
                 public const int InfiniteLeaseDuration = -1;
-                /// <summary>
-                /// The Azure Storage Operation Names for Blob Lease Client.
-                /// </summary>
-                public const string AcquireOperationName =
-                    "BlobLeaseClient.Acquire";
-                public const string RenewOperationName =
-                    "BlobLeaseClient.Renew";
-                public const string ReleaseOperationName =
-                    "BlobLeaseClient.Release";
-                public const string ChangeOperationName =
-                    "BlobLeaseClient.Change";
-                public const string BreakOperationName =
-                    "BlobLeaseClient.Break";
             }
-
-            internal static class Page
-            {
-                public const string CreateOperationName =
-                    "PageBlobClient.Create";
-                public const string CreateIfNotExistsOperationName =
-                    "PageBlobClient.CreateIfNotExists";
-                public const string UploadOperationName =
-                    "PageBlobClient.UploadPages";
-                public const string ClearOperationName =
-                    "PageBlobClient.ClearPages";
-                public const string GetPageRangesOperationName =
-                    "PageBlobClient.GetPageRanges";
-                public const string GetPageRangesDiffOperationName =
-                    "PageBlobClient.GetPageRangesDiff";
-                public const string ResizeOperationName =
-                    "PageBlobClient.Resize";
-                public const string UpdateSequenceNumberOperationName =
-                    "PageBlobClient.UpdateSequenceNumber";
-                public const string StartCopyIncrementalOperationName =
-                    "PageBlobClient.StartCopyIncremental";
-                public const string UploadPagesFromUriOperationName =
-                    "PageBlobClient.UploadPagesFromUri";
-            }
-
-            internal static class Service
-            {
-                /// <summary>
-                /// The Azure Storage Operation Names for Blob Service Client.
-                /// </summary>
-                public const string GetAccountInfoOperationName =
-                    "BlobServiceClient.GetAccountInfo";
-                public const string GetPropertiesOperationName =
-                    "BlobServiceClient.GetProperties";
-                public const string SetPropertiesOperationName =
-                    "BlobServiceClient.SetProperties";
-                public const string GetStatisticsOperationName =
-                    "BlobServiceClient.GetStatistics";
-                public const string GetUserDelegationKeyOperationName =
-                    "BlobServiceClient.GetUserDelegationKey";
-            }
-
         }
 
         /// <summary>
-        /// File constant values
+        /// File constant values.
         /// </summary>
         internal static class File
         {
@@ -327,86 +205,6 @@ namespace Azure.Storage
             public const int MaxFileUpdateRange = 4 * MB;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
 
-            public const string SetHttpHeadersOperationName =
-                "ShareFileClient.SetHttpHeaders";
-            public const string ForceCloseAllHandlesOperationName =
-                "ShareFileClient.ForceCloseAllHandles";
-            public const string ForceCloseHandleOperationName =
-                "ShareFileClient.ForceCloseHandle";
-            public const string CreateOperationName =
-                "ShareFileClient.Create";
-            public const string UploadRangeOperationName =
-                "ShareFileClient.UploadRange";
-            public const string StartCopyOperationName =
-                "ShareFileClient.StartCopy";
-            public const string AbortCopyOperationName =
-                "ShareFileClient.AbortCopy";
-            public const string DownloadOperationName =
-                "ShareFileClient.Download";
-            public const string GetPropertiesOperationName =
-                "ShareFileClient.GetProperties";
-            public const string DeleteOperationName =
-                "ShareFileClient.Delete";
-            public const string SetMetadataOperationName =
-                "ShareFileClient.SetMetadata";
-            public const string GetRangeListOperationName =
-                "ShareFileClient.GetRangeList";
-            internal static class Directory
-            {
-                public const string CreateOperationName =
-                    "ShareDirectoryClient.Create";
-                public const string DeleteOperationName =
-                    "ShareDirectoryClient.Delete";
-                public const string GetPropertiesOperationName =
-                    "ShareDirectoryClient.GetProperties";
-                public const string SetHttpHeadersOperationName =
-                    "ShareDirectoryClient.SetHttpHeaders";
-                public const string SetMetadataOperationName =
-                    "ShareDirectoryClient.SetMetadata";
-                public const string ListFilesAndDirectoriesSegmentOperationName =
-                    "ShareDirectoryClient.ListFilesAndDirectoriesSegment";
-                public const string GetHandlesOperationName =
-                    "ShareDirectoryClient.ListHandles";
-                public const string ForceCloseAllHandlesOperationName =
-                    "ShareDirectoryClient.ForceCloseAllHandles";
-                public const string ForceCloseHandleOperationName =
-                    "ShareDirectoryClient.ForceCloseHandle";
-            }
-
-            internal static class Service
-            {
-                public const string GetPropertiesOperationName =
-                    "ShareServiceClient.GetProperties";
-                public const string SetPropertiesOperationName =
-                    "ShareServiceClient.SetProperties";
-            }
-
-            internal static class Share
-            {
-                public const string CreateOperationName =
-                    "ShareClient.Create";
-                public const string CreateSnapshotOperationName =
-                    "ShareClient.CreateSnapshot";
-                public const string DeleteOperationName =
-                    "ShareClient.Delete";
-                public const string GetPropertiesOperationName =
-                    "ShareClient.GetProperties";
-                public const string SetQuotaOperationName =
-                    "ShareClient.SetQuota";
-                public const string SetMetadataOperationName =
-                    "ShareClient.SetMetadata";
-                public const string GetAccessPolicyOperationName =
-                    "ShareClient.GetAccessPolicy";
-                public const string SetAccessPolicyOperationName =
-                    "ShareClient.SetAccessPolicy";
-                public const string GetStatisticsOperationName =
-                    "ShareClient.GetStatistics";
-                public const string GetPermissionOperationName =
-                    "ShareClient.GetPermission";
-                public const string CreatePermissionOperationName =
-                    "ShareClient.CreatePermission";
-            }
-
             internal static class Errors
             {
                 public const string ShareUsageBytesOverflow =
@@ -415,11 +213,10 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// Data Lake constant values;
+        /// Data Lake constant values.
         /// </summary>
         internal static class DataLake
         {
-
             /// <summary>
             /// The blob URI suffix.
             /// </summary>
@@ -444,15 +241,10 @@ namespace Azure.Storage
             /// The key of the error message returned for errors.
             /// </summary>
             public const string ErrorMessageKey = "message";
-
-            /// <summary>
-            /// The Azure Storage error codes for Datalake Client.
-            /// </summary>
-            public const string AlreadyExists = "ContainerAlreadyExists";
         }
 
         /// <summary>
-        /// Queue constant values
+        /// Queue constant values.
         /// </summary>
         internal static class Queue
         {
@@ -470,23 +262,10 @@ namespace Azure.Storage
             public const string MessagesUri = "messages";
 
             public const string UriSubDomain = "queue";
-
-            public const string ClearMessagesOperationName =
-                "QueueClient.ClearMessages";
-            public const string SendMessageOperationName =
-                "QueueClient.SendMessage";
-            public const string ReceiveMessagesOperationName =
-                "QueueClient.ReceiveMessages";
-            public const string PeekMessagesOperationName =
-                "QueueClient.PeekMessages";
-            public const string DeleteMessageOperationName =
-                "QueueClient.DeleteMessage";
-            public const string UpdateMessageOperationName =
-                 "QueueClient.UpdateMessage";
         }
 
         /// <summary>
-        /// Sas constant values
+        /// Sas constant values.
         /// </summary>
         internal static class Sas
         {
@@ -576,7 +355,7 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// XML strings to parse for elements
+        /// XML Element Name constant values.
         /// </summary>
         internal static class Xml
         {

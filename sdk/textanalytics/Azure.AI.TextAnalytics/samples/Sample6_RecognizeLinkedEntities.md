@@ -18,12 +18,13 @@ To recognize linked entities in a single text input, pass the input string to th
 ```C# Snippet:RecognizeLinkedEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-RecognizeLinkedEntitiesResult result = client.RecognizeLinkedEntities(input);
+Response<IReadOnlyCollection<LinkedEntity>> response = client.RecognizeLinkedEntities(input);
+IEnumerable<LinkedEntity> linkedEntities = response.Value;
 
-Console.WriteLine($"Extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
-foreach (LinkedEntity linkedEntity in result.LinkedEntities)
+Console.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
+foreach (LinkedEntity linkedEntity in linkedEntities)
 {
-    Console.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Uri: {linkedEntity.Uri.ToString()}");
+    Console.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}");
     foreach (LinkedEntityMatch match in linkedEntity.Matches)
     {
         Console.WriteLine($"    Match Text: {match.Text}, Score: {match.Score:0.00}, Offset: {match.Offset}, Length: {match.Length}.");
@@ -33,13 +34,13 @@ foreach (LinkedEntity linkedEntity in result.LinkedEntities)
 
 ## Recognizing linked entities in multiple inputs
 
-To recognize linked entities in multiple text inputs as a batch, call `RecognizeLinkedEntities` on an `IEnumerable` of strings.  The results are returned as a `RecognizeLinkedEntitiesResultCollection`.
+To recognize linked entities in multiple text inputs as a batch, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeLinkedEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs);
+RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs);
 ```
 
-To recognize linked entities in a collection of text inputs in different languages, call `RecognizeLinkedEntities` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To recognize linked entities in a collection of text inputs in different languages, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
 var inputs = new List<TextDocumentInput>
@@ -58,7 +59,7 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizeLinkedEntitiesResultCollection results = client.RecognizeLinkedEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:

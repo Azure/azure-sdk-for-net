@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure SDK Client Library for Azure Identity</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <Version>1.2.0-preview.1</Version>
+    <Version>1.1.1</Version>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
 
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -24,9 +24,10 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
-    <Compile Include="$(AzureCoreSharedSources)ResponseExceptionExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
   </ItemGroup>
 
   <!-- Import the Azure.Base project -->

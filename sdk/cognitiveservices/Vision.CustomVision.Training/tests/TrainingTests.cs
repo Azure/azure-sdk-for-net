@@ -22,7 +22,7 @@
         {
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void CreateUpdateDeleteProject()
         {
             var updatedProjName = "Another Name";
@@ -39,6 +39,13 @@
                     Assert.Contains(projName, newProject.Name);
                     Assert.Equal(projDescription, newProject.Description);
                     Assert.NotEqual(Guid.Empty, newProject.Id);
+                    Assert.False(newProject.DrModeEnabled);
+                    Assert.NotNull(newProject.Settings);
+                    Assert.True(newProject.Settings.UseNegativeSet);
+                    Assert.Null(newProject.Settings.DetectionParameters);
+                    Assert.NotEqual(Guid.Empty, newProject.Settings.DomainId);
+                    Assert.NotNull(newProject.Settings.ImageProcessingSettings);
+                    Assert.Equal(Classifier.Multilabel, newProject.Settings.ClassificationType);
 
                     var updatedProject = client.UpdateProjectAsync(newProject.Id, new Project()
                     {
@@ -56,7 +63,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void CreateDeleteProjectWithDomain()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -77,7 +84,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void CreateImageFromUrl()
         {
             string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Hemlock/hemlock_1.jpg";
@@ -110,7 +117,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void CreateImagesFromFiles()
         {
             var dataFileName = "hemlock_1.jpg";
@@ -144,7 +151,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void CreateImagesFromData()
         {
             var dataFileName = "hemlock_1.jpg";
@@ -177,7 +184,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void ProjectRetrieval()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -206,7 +213,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void TagRetrieval()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -240,7 +247,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public void DomainsApiTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -265,7 +272,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void CreateUpdateDeleteTag()
         {
             var updatedName = "New Tag Name";
@@ -304,7 +311,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void GetIterations()
         {
             var updatedName = "New Iteration Name";
@@ -333,6 +340,7 @@
                     Assert.Equal(TrainingType.Regular, iteration.TrainingType);
                     Assert.Equal(0, iteration.ReservedBudgetInHours);
                     Assert.NotEmpty(iteration.PublishName);
+                    Assert.Equal(1, iteration.TrainingTimeInMinutes);
                     Assert.Equal(BaseTests.PredictionResourceId, iteration.OriginalPublishResourceId);
 
                     var updatedIteration = await client.UpdateIterationAsync(project.ProjectId, iteration.Id, new Iteration()
@@ -346,7 +354,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void GetIterationPerformance()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -381,7 +389,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void ExportTests()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -416,7 +424,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void TrainAndPublishProject()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -460,7 +468,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void GetTaggedImages()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -495,7 +503,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void GetUntaggedImages()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -512,7 +520,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void ImageTagManipulation()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -547,7 +555,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void DeleteImages()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -570,7 +578,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void QuickTests()
         {
             var dataFileName = "test_image.jpg";
@@ -605,7 +613,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void CreateImagesFromPredictions()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -628,7 +636,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void QueryPredictionResults()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -660,7 +668,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void DeletePrediction()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -683,7 +691,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void GetImagesByIds()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -717,7 +725,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void ImageCounts()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -741,7 +749,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void DownloadRegions()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -766,7 +774,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void RegionManipulation()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -818,7 +826,7 @@
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6217")]
+        [Fact]
         public async void ObjDetectionPrediction()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -840,6 +848,144 @@
                     Assert.InRange(imageResult.Predictions[0].BoundingBox.Top, 0, 1);
                     Assert.InRange(imageResult.Predictions[0].BoundingBox.Width, 0, 1);
                     Assert.InRange(imageResult.Predictions[0].BoundingBox.Height, 0, 1);
+                }
+            }
+        }
+
+        [Fact]
+        public async void SuggestTagAndRegions()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "SuggestTagAndRegions", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    // Add an untagged image we expect to be classified as tag1
+                    var images = new ImageFileCreateEntry[] {
+                        new ImageFileCreateEntry("suggest_ic.jpg", File.ReadAllBytes(Path.Combine("TestImages", "suggest_ic.jpg")))
+                    };
+                    var imageResult = await client.CreateImagesFromFilesAsync(project.ProjectId, new ImageFileCreateBatch(images));
+                    Assert.True(imageResult.IsBatchSuccessful);
+                    Assert.Equal(1, imageResult.Images.Count);
+
+                    // Ask for suggestions
+                    var suggestions = client.SuggestTagsAndRegions(project.ProjectId, project.IterationId, new Guid[] { imageResult.Images[0].Image.Id });
+
+                    // Validate result
+                    Assert.Equal(1, suggestions.Count);
+                    Assert.Equal(project.ProjectId, suggestions[0].Project);
+                    Assert.Equal(project.IterationId, suggestions[0].Iteration);
+                    Assert.NotEqual(0, suggestions[0].Predictions.Count);
+
+                    foreach (var prediction in suggestions[0].Predictions)
+                    {
+                        var tag = await client.GetTagAsync(project.ProjectId, prediction.TagId, project.IterationId);
+                        Assert.Equal(tag.Name, prediction.TagName);
+                        Assert.Equal(tag.Id, prediction.TagId);
+                        Assert.InRange(prediction.Probability, 0, 1);
+                    }
+
+                    // We expect Tag1 to have the highest probability
+                    Assert.Equal("Tag1", suggestions[0].Predictions.OrderByDescending(p => p.Probability).First().TagName);
+                }
+            }
+        }
+
+        [Fact]
+        public async void QuerySuggestedImageCount()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "QuerySuggestedImageCount", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    // Add an untagged image we expect to be classified as tag1
+                    var images = new ImageFileCreateEntry[] {
+                        new ImageFileCreateEntry("suggest_ic.jpg", File.ReadAllBytes(Path.Combine("TestImages", "suggest_ic.jpg")))
+                    };
+                    var imageResult = await client.CreateImagesFromFilesAsync(project.ProjectId, new ImageFileCreateBatch(images));
+                    Assert.True(imageResult.IsBatchSuccessful);
+                    Assert.Equal(1, imageResult.Images.Count);
+
+                    // Ask for suggestions
+                    var suggestions = client.SuggestTagsAndRegions(project.ProjectId, project.IterationId, new Guid[] { imageResult.Images[0].Image.Id });
+
+                    // Validate result
+                    Assert.Equal(1, suggestions.Count);
+
+                    var tags = await client.GetTagsAsync(project.ProjectId, project.IterationId);
+
+                    // We expect to get Tag1 as the primary suggestion, so query with a high prediction
+                    var countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
+                    {
+                        Threshold = 0.75,
+                        TagIds = new Guid[] { tags[0].Id }
+                    });
+                    Assert.Equal(1, countMapping.Count);
+                    Assert.Equal(1, countMapping[tags[0].Id.ToString()]);
+
+                    // We expect to get Tag2 to have a low probabilty, make sure we don't find it with a high threshold
+                    countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
+                    {
+                        Threshold = 0.75,
+                        TagIds = new Guid[] { tags[1].Id }
+                    });
+                    Assert.Equal(1, countMapping.Count);
+                    Assert.Equal(0, countMapping[tags[1].Id.ToString()]);
+
+                    // Get results for all tags with a high threshold.
+                    countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
+                    {
+                        Threshold = 0.75,
+                        TagIds = tags.Select(t => t.Id).ToList()
+                    });
+                    Assert.Equal(2, countMapping.Count);
+                    Assert.Equal(1, countMapping[tags[0].Id.ToString()]);
+                    Assert.Equal(0, countMapping[tags[1].Id.ToString()]);
+                }
+            }
+        }
+
+        [Fact]
+        public async void QuerySuggestedImages()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "QuerySuggestedImages", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    // Add an untagged image we expect to be classified as tag1
+                    var images = new ImageFileCreateEntry[] {
+                        new ImageFileCreateEntry("suggest_ic.jpg", File.ReadAllBytes(Path.Combine("TestImages", "suggest_ic.jpg")))
+                    };
+                    var imageResult = await client.CreateImagesFromFilesAsync(project.ProjectId, new ImageFileCreateBatch(images));
+                    Assert.True(imageResult.IsBatchSuccessful);
+                    Assert.Equal(1, imageResult.Images.Count);
+
+                    // Ask for suggestions
+                    var suggestions = client.SuggestTagsAndRegions(project.ProjectId, project.IterationId, new Guid[] { imageResult.Images[0].Image.Id });
+
+                    // Validate result
+                    Assert.Equal(1, suggestions.Count);
+
+                    // Get tags and build a query
+                    var tags = await client.GetTagsAsync(project.ProjectId, project.IterationId);
+                    var query = new SuggestedTagAndRegionQueryToken()
+                    {
+                        MaxCount = 10,
+                        TagIds = tags.Select(t => t.Id).ToList(),
+                        Threshold = 0
+                    };
+
+                    // This will return all suggested images (1 in this case)
+                    var suggestedImages = await client.QuerySuggestedImagesAsync(project.ProjectId, project.IterationId, query);
+                    Assert.Equal(1, suggestedImages.Results.Count);
                 }
             }
         }
