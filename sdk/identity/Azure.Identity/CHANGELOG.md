@@ -5,8 +5,8 @@
 ### Fixes and improvements
 - Fixed `UsernamePasswordCredential` constructor parameter mishandling
 - Updated `ManagedIdentityCredential` endpoint discovery to avoid throwing
-- Fixed 'ManagedIdentityCredential' to raise CredentialUnavailableException on 400 return from the service where no identity has been assigned
-- Updated error messaging from `DefaultAzureCredential`to more easily root cause
+- Fixed `ManagedIdentityCredential` to raise `CredentialUnavailableException` on 400 return from the service where no identity has been assigned
+- Updated error messaging from `DefaultAzureCredential` to more easily root cause failures
 
 ## 1.1.0
 
