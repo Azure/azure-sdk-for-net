@@ -13,8 +13,8 @@ namespace Azure.Storage.Files.Shares.Test
     {
         private const string Permissions = "rcwd";
 
-        public FileSasBuilderTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public FileSasBuilderTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

@@ -21,7 +21,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2019-02-02";
+        public const string DefaultSasVersion = "2019-07-07";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -185,7 +185,7 @@ namespace Azure.Storage
             internal static class Lease
             {
                 /// <summary>
-                /// Lease Duration is set as infinite when passed -1
+                /// Lease Duration is set as infinite when passed -1.
                 /// </summary>
                 public const int InfiniteLeaseDuration = -1;
             }
@@ -205,10 +205,21 @@ namespace Azure.Storage
             public const int MaxFileUpdateRange = 4 * MB;
             public const string FileTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffff'Z'";
 
+            internal static class Lease
+            {
+                /// <summary>
+                /// Lease Duration is set as infinite when passed -1.
+                /// </summary>
+                public const int InfiniteLeaseDuration = -1;
+            }
+
             internal static class Errors
             {
                 public const string ShareUsageBytesOverflow =
                     "ShareUsageBytes exceeds int.MaxValue. Use ShareUsageInBytes instead.";
+
+                public const string LeaseNotPresentWithFileOperation =
+                    "LeaseNotPresentWithFileOperation";
             }
         }
 
