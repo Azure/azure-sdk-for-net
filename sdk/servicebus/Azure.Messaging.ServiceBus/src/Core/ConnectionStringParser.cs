@@ -24,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <summary>The token that identifies the endpoint address for the Service Bus namespace.</summary>
         private const string EndpointToken = "Endpoint";
 
-        /// <summary>The token that identifies the name of a specific Event Hub under the namespace.</summary>
+        /// <summary>The token that identifies the name of a specific Service Bus entity under the namespace.</summary>
         private const string EventHubNameToken = "EntityPath";
 
         /// <summary>The token that identifies the name of a shared access key.</summary>

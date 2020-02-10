@@ -20,8 +20,8 @@ namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///   A connection to the Azure Service Bus service, enabling client communications with a specific
-    ///   Event Hub instance within an Service Bus namespace.  A single connection may be shared among multiple
-    ///   Event Hub producers and/or consumers, or may be used as a dedicated connection for a single
+    ///   Service Bus entity instance within an Service Bus namespace.  A single connection may be shared among multiple
+    ///   Service Bus entity producers and/or consumers, or may be used as a dedicated connection for a single
     ///   producer or consumer client.
     /// </summary>
     ///
@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus
         private ServiceBusConnectionOptions Options { get; set; }
 
         /// <summary>
-        ///   An abstracted Event Hub Client specific to the active protocol and transport intended to perform delegated operations.
+        ///   An abstracted Service Bus entity Client specific to the active protocol and transport intended to perform delegated operations.
         /// </summary>
         ///
         private TransportClient InnerClient { get; set; }
@@ -75,15 +75,15 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Event Hub name and the shared key properties are contained in this connection string.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Event Hub,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
-        ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the name.
+        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
+        ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
         public ServiceBusConnection(string connectionString) : this(connectionString, null, connectionOptions: null)
@@ -98,12 +98,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Event Hub,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
-        ///   If you have defined a shared access policy directly on the Event Hub itself, then copying the connection string from that
-        ///   Event Hub will result in a connection string that contains the name.
+        ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
+        ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
         public ServiceBusConnection(string connectionString,
@@ -115,12 +115,12 @@ namespace Azure.Messaging.ServiceBus
         ///   Initializes a new instance of the <see cref="ServiceBusConnection"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
         /// <param name="entityName">The name of the specific entity to associate the connection with.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
-        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Event Hub should be
+        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
@@ -134,12 +134,12 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace.</param>
-        /// <param name="entityName">The name of the specific Event Hub to associate the connection with (if not contained in connectionString).</param>
+        /// <param name="entityName">The name of the specific Service Bus entity to associate the connection with (if not contained in connectionString).</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
-        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Event Hub should be
+        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
@@ -182,8 +182,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="entityName">The name of the specific Event Hub to associate the connection with.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="entityName">The name of the specific Service Bus entity to associate the connection with.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
         public ServiceBusConnection(string fullyQualifiedNamespace,
@@ -226,7 +226,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Closes the connection to the Service Bus namespace and associated Event Hub.
+        ///   Closes the connection to the Service Bus namespace and associated Service Bus entity.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -346,7 +346,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Event Hub.
+        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Service Bus entity.
         /// </summary>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
@@ -361,7 +361,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="ServiceBusMessage" /> from a specific Event Hub partition, in the context
+        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity partition, in the context
         ///   of a specific consumer group.
         ///
         ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
@@ -401,7 +401,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="entityName">The name of a specific Event Hub.</param>
+        /// <param name="entityName">The name of a specific Service Bus entity.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.</param>
         /// <param name="options">The set of options to use for the client.</param>
         ///
@@ -480,7 +480,7 @@ namespace Azure.Messaging.ServiceBus
         //private static void ValidateConnectionProperties(ConnectionStringProperties properties,
         //                                                 string connectionStringArgumentName)
         //{
-        //    // The Event Hub name may only be specified in one of the possible forms, either as part of the
+        //    // The Service Bus entity name may only be specified in one of the possible forms, either as part of the
         //    // connection string or as a stand-alone parameter, but not both.  If specified in both to the same
         //    // value, then do not consider this a failure.
 

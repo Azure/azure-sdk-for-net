@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>The value to specify when requesting a read-based operation.</summary>
         public const string ReadOperationValue = "READ";
 
-        /// <summary>The value to specify when identifying an Event Hub resource.</summary>
+        /// <summary>The value to specify when identifying an Service Bus entity resource.</summary>
         public const string EventHubResourceTypeValue = AmqpConstants.Vendor + ":queue";
 
         /// <summary>The value to specify when identifying a partition resource.</summary>
@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus
             public static MapKey PartitionIdentifier { get; } = new MapKey("partition");
 
             /// <summary>
-            ///   The message property that identifies the set of unique identifiers for each partition of an Event Hub.
+            ///   The message property that identifies the set of unique identifiers for each partition of an Service Bus entity.
             /// </summary>
             ///
             public static MapKey PartitionIdentifiers { get; } = new MapKey("partition_ids");

@@ -95,7 +95,7 @@ namespace Azure.Messaging.ServiceBus.Management
             SubscriptionsExceeded = 40503,
             /// <summary>A conflict during updating occurred.</summary>
             UpdateConflict = 40504,
-            /// <summary>The Event Hub is at full capacity.</summary>
+            /// <summary>The Service Bus entity is at full capacity.</summary>
             EventHubAtFullCapacity = 40505,
             /// <summary>A generic conflict error.</summary>
             ConflictGeneric = 40900,

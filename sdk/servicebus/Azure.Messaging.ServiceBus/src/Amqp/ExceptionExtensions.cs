@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="instance">The instance that this method was invoked on.</param>
-        /// <param name="entityName">The name of the Event Hub that the service operation was targeting.</param>
+        /// <param name="entityName">The name of the Service Bus entity that the service operation was targeting.</param>
         ///
         /// <returns>The <see cref="Exception" /> that corresponds to the <paramref name="instance" /> and which represents the service error.</returns>
         ///

@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus
         ///   The name of the Service Bus to which the exception is associated.
         /// </summary>
         ///
-        /// <value>The name of the Event Hub, if available; otherwise, <c>null</c>.</value>
+        /// <value>The name of the Service Bus entity, if available; otherwise, <c>null</c>.</value>
         ///
         public string EntityName { get; }
 
@@ -61,7 +61,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         ///
         public ServiceBusException(bool isTransient,
                                   string entityName) : this(isTransient, entityName, null, FailureReason.GeneralError, null)
@@ -73,12 +73,12 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         ///
         public ServiceBusException(bool isTransient,
-                                  string eventHubName,
-                                  FailureReason reason) : this(isTransient, eventHubName, null, reason, null)
+                                  string entityName,
+                                  FailureReason reason) : this(isTransient, entityName, null, reason, null)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         ///
         public ServiceBusException(bool isTransient,
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         ///
@@ -117,13 +117,13 @@ namespace Azure.Messaging.ServiceBus
         ///   to detect whether or not it should be transient.
         /// </summary>
         ///
-        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         ///
-        public ServiceBusException(string eventHubName,
+        public ServiceBusException(string entityName,
                                   string message,
-                                  FailureReason reason) : this(default, eventHubName, message, reason, null)
+                                  FailureReason reason) : this(default, entityName, message, reason, null)
         {
             switch (reason)
             {
@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="entityName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         ///
@@ -160,19 +160,19 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="isTransient"><c>true</c> if the exception should be considered transient; otherwise, <c>false</c>.</param>
-        /// <param name="eventHubName">The name of the Event Hub to which the exception is associated.</param>
+        /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
         ///
         public ServiceBusException(bool isTransient,
-                                  string eventHubName,
+                                  string entityName,
                                   string message,
                                   FailureReason reason,
                                   Exception innerException) : base(message, innerException)
         {
             IsTransient = isTransient;
-            EntityName = eventHubName;
+            EntityName = entityName;
             Reason = reason;
         }
 
@@ -189,10 +189,10 @@ namespace Azure.Messaging.ServiceBus
             /// <summary>An operation has been attempted using an Service Bus client instance which has already been closed.</summary>
             ClientClosed,
 
-            /// <summary>A client was forcefully disconnected from an Event Hub instance.</summary>
+            /// <summary>A client was forcefully disconnected from an Service Bus entity instance.</summary>
             ConsumerDisconnected,
 
-            /// <summary>An Service Bus resource, such as an Event Hub, consumer group, or partition cannot be found by the Service Bus service.</summary>
+            /// <summary>An Service Bus resource, such as an Service Bus entity, consumer group, or partition cannot be found by the Service Bus service.</summary>
             ResourceNotFound,
 
             /// <summary>A message is larger than the maximum size allowed for its transport.</summary>

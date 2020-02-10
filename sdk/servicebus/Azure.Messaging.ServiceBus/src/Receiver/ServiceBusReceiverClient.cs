@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public string FullyQualifiedNamespace => Connection.FullyQualifiedNamespace;
 
         /// <summary>
-        ///   The name of the Event Hub that the consumer is connected to, specific to the
+        ///   The name of the Service Bus entity that the consumer is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
@@ -92,21 +93,21 @@ namespace Azure.Messaging.ServiceBus.Receiver
 
         /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
-        ///   about the associated Event Hub and access to transport-aware consumers.
+        ///   about the associated Service Bus entity and access to transport-aware consumers.
         /// </summary>
         ///
         internal ServiceBusConnection Connection { get; set; }
 
         /// <summary>
-        ///   An abstracted Event Hub transport-specific producer that is associated with the
-        ///   Event Hub gateway rather than a specific partition; intended to perform delegated operations.
+        ///   An abstracted Service Bus entity transport-specific producer that is associated with the
+        ///   Service Bus entity gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
         ///
         internal TransportConsumer Consumer { get; }
 
 
         /// <summary>
-        ///   The set of active Event Hub transport-specific consumers created by this client for use with
+        ///   The set of active Service Bus entity transport-specific consumers created by this client for use with
         ///   delegated operations.
         /// </summary>
         ///
@@ -116,15 +117,15 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Event Hub name.</param>
-        /// <param name="entityName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
+        /// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
         /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId"></param>
         ///
         /// <remarks>
-        ///   If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
-        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Event Hub should be
+        ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        ///   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
@@ -150,8 +151,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="entityName">The name of the specific Event Hub to associate the consumer with.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="receiveMode"></param>
         /// <param name="sessionId"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
@@ -699,5 +700,13 @@ namespace Azure.Messaging.ServiceBus.Receiver
             // TODO remove if won't be used
 
         }
+
+        internal RetriableContext CreateRetriableContext(CancellationToken cancellationToken) =>
+             new RetriableContext(
+                Consumer.ConnectionScope,
+                new Stopwatch(),
+                RetryPolicy,
+                EntityName,
+                cancellationToken);
     }
 }

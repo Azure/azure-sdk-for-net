@@ -10,7 +10,7 @@ using Microsoft.Azure.Amqp;
 namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
-    ///   Provides an abstraction for generalizing an Event Hub Producer so that a dedicated instance may provide operations
+    ///   Provides an abstraction for generalizing an Service Bus entity Producer so that a dedicated instance may provide operations
     ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusSenderClient" /> employ
     ///   a transport producer via containment and delegate operations to it rather than understanding protocol-specific details
     ///   for different transports.
@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual bool IsClosed { get; }
 
         /// <summary>
-        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
+        ///   Sends a set of events to the associated Service Bus entity using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///

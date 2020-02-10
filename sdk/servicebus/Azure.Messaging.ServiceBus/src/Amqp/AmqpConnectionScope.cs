@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private Uri ServiceEndpoint { get; }
 
         /// <summary>
-        ///   The name of the Event Hub to which the scope is associated.
+        ///   The name of the Service Bus entity to which the scope is associated.
         /// </summary>
         ///
         private string EntityName { get; }
@@ -154,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="serviceEndpoint">Endpoint for the Service Bus service to which the scope is associated.</param>
-        /// <param name="entityName"> The name of the Event Hub to which the scope is associated</param>
+        /// <param name="entityName"> The name of the Service Bus entity to which the scope is associated</param>
         /// <param name="credential">The credential to use for authorization with the Service Bus service.</param>
         /// <param name="transport">The transport to use for communication.</param>
         /// <param name="proxy">The proxy, if any, to use for communication.</param>

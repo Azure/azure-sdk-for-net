@@ -56,7 +56,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override Uri ServiceEndpoint { get; }
 
         /// <summary>
-        ///   The name of the Event Hub to which the client is bound.
+        ///   The name of the Service Bus entity to which the client is bound.
         /// </summary>
         ///
         private string EntityName { get; }
@@ -85,8 +85,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="host">The fully qualified host name for the Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="entityName">The name of the specific Event Hub to connect the client to.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="entityName">The name of the specific Service Bus entity to connect the client to.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         ///
         /// <remarks>
@@ -110,8 +110,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="host">The fully qualified host name for the Service Bus namespace.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
-        /// <param name="entityName">The name of the specific Event Hub to connect the client to.</param>
-        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="entityName">The name of the specific Service Bus entity to connect the client to.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the client.</param>
         /// <param name="connectionScope">The optional scope to use for AMQP connection management.  If <c>null</c>, a new scope will be created.</param>
         ///
@@ -250,7 +250,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 cancellationToken);
 
             return await context.RunOperation(
-                async (context) => await PeekInternal(
+                async () => await PeekInternal(
                     context,
                     fromSequenceNumber,
                     messageCount,
@@ -573,7 +573,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>
         ///   Creates a producer strongly aligned with the active protocol and transport,
-        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Event Hub.
+        ///   responsible for publishing <see cref="ServiceBusMessage" /> to the Service Bus entity.
         /// </summary>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
@@ -594,7 +594,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="ServiceBusMessage" /> from a specific Event Hub partition, in the context
+        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity partition, in the context
         ///   of a specific consumer group.
         ///
         ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer

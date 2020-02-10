@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
-    ///   Provides an abstraction for generalizing an Event Hub client so that a dedicated instance may provide operations
+    ///   Provides an abstraction for generalizing an Service Bus entity client so that a dedicated instance may provide operations
     ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusConnection" /> employ
     ///   a transport client via containment and delegate operations to it rather than understanding protocol-specific details
     ///   for different transports.

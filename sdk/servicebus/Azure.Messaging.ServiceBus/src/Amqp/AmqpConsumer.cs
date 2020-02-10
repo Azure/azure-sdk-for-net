@@ -42,13 +42,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override bool IsClosed => _closed;
 
         /// <summary>
-        ///   The name of the Event Hub to which the client is bound.
+        ///   The name of the Service Bus entity to which the client is bound.
         /// </summary>
         ///
         private string EntityName { get; }
 
         /// <summary>
-        ///   The identifier of the Event Hub partition that this consumer is associated with.  Events will be read
+        ///   The identifier of the Service Bus entity partition that this consumer is associated with.  Events will be read
         ///   only from this partition.
         /// </summary>
         ///
@@ -75,11 +75,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///// </summary>
         //private AmqpMessageConverter MessageConverter { get; }
 
-        /// <summary>
-        ///   The AMQP connection scope responsible for managing transport constructs for this instance.
-        /// </summary>
-        ///
-        private AmqpConnectionScope ConnectionScope { get; }
+        ///// <summary>
+        /////   The AMQP connection scope responsible for managing transport constructs for this instance.
+        ///// </summary>
+        /////
+        //internal AmqpConnectionScope ConnectionScope { get; }
 
         ///// <summary>
         /////   The AMQP link intended for use with receiving operations.
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
         /// </summary>
         ///
-        /// <param name="entityName">The name of the Event Hub from which events will be consumed.</param>
+        /// <param name="entityName">The name of the Service Bus entity from which events will be consumed.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
@@ -159,14 +159,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Event Hub partition.
+        ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition.
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
         /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public override async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(int maximumMessageCount,
                                                                         TimeSpan? maximumWaitTime,

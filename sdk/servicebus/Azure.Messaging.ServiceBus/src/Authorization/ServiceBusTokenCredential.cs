@@ -9,7 +9,7 @@ using Azure.Messaging.ServiceBus;
 namespace Azure.Messaging.ServiceBus.Authorization
 {
     /// <summary>
-    ///   Provides a generic token-based credential for a given Event Hub instance.
+    ///   Provides a generic token-based credential for a given Service Bus entity instance.
     /// </summary>
     ///
     /// <seealso cref="Azure.Core.TokenCredential" />
@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
-        ///   use in authorization against an Event Hub.
+        ///   use in authorization against an Service Bus entity.
         /// </summary>
         ///
         /// <param name="requestContext">The details of the authentication request.</param>
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
-        ///   use in authorization against an Event Hub.
+        ///   use in authorization against an Service Bus entity.
         /// </summary>
         ///
         /// <param name="requestContext">The details of the authentication request.</param>
@@ -90,7 +90,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
-        ///   use in authorization against an Event Hub. It provides a default value for the Token Request Context.
+        ///   use in authorization against an Service Bus entity. It provides a default value for the Token Request Context.
         /// </summary>
         ///
         /// <param name="cancellationToken">The token used to request cancellation of the operation.</param>

@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>The attribute which represents the Azure service to associate with diagnostics information.</summary>
         public const string ServiceContextAttribute = "component";
 
-        /// <summary>The attribute which represents the Event Hub instance to associate with diagnostics information.</summary>
+        /// <summary>The attribute which represents the Service Bus entity instance to associate with diagnostics information.</summary>
         public const string ServiceBusAttribute = "message_bus.destination";
 
         /// <summary>The attribute which represents the fully-qualified endpoint address of the Service Bus namespace to associate with diagnostics information.</summary>
@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>The value which identifies the Service Bus diagnostics context.</summary>
         public const string ServiceBusServiceContext = "servicebus";
 
-        /// <summary>The value which identifies an Event Hub producer as the type associated with the diagnostics information.</summary>
+        /// <summary>The value which identifies an Service Bus entity producer as the type associated with the diagnostics information.</summary>
         public const string ServiceBusSenderType = "sender";
 
         /// <summary>The attribute which represents the kind of diagnostic scope.</summary>
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         public static string EventActivityName { get; } = $"{ BaseActivityName }.Message";
 
         /// <summary>
-        ///   The activity name associated with Event Hub producers.
+        ///   The activity name associated with Service Bus entity producers.
         /// </summary>
         ///
         public static string ProducerActivityName { get; } = $"{ BaseActivityName }.EventHubProducerClient.Send";

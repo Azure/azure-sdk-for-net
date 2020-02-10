@@ -118,7 +118,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="response">The AMQP response message to consider.</param>
-        /// <param name="eventHubName">The name of the Event Hub associated with the request.</param>
+        /// <param name="eventHubName">The name of the Service Bus entity associated with the request.</param>
         ///
         public static void ThrowIfErrorResponse(AmqpMessage response,
                                                 string eventHubName)

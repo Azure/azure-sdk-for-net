@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Receiver;
 using Microsoft.Azure.Amqp;
 
@@ -31,6 +32,9 @@ namespace Azure.Messaging.ServiceBus.Core
 
         public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
 
+        public AmqpConnectionScope ConnectionScope { get; set; }
+
+
         /// <summary>
         ///
         /// </summary>
@@ -55,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
+        /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public abstract Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(int maximumMessageCount,
                                                                   TimeSpan? maximumWaitTime,

@@ -21,21 +21,21 @@ namespace Azure.Messaging.ServiceBus.Core
         public Uri Endpoint { get; }
 
         /// <summary>
-        ///   The name of the specific Event Hub instance under the associated Service Bus namespace.
+        ///   The name of the specific Service Bus entity instance under the associated Service Bus namespace.
         /// </summary>
         ///
         public string EntityName { get; }
 
         /// <summary>
         ///   The name of the shared access key, either for the Service Bus namespace
-        ///   or the Event Hub.
+        ///   or the Service Bus entity.
         /// </summary>
         ///
         public string SharedAccessKeyName { get; }
 
         /// <summary>
         ///   The value of the shared access key, either for the Service Bus namespace
-        ///   or the Event Hub.
+        ///   or the Service Bus entity.
         /// </summary>
         ///
         public string SharedAccessKey { get; }
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         /// <param name="endpoint">The endpoint of the Service Bus namespace.</param>
-        /// <param name="entityName">The name of the specific Event Hub under the namespace.</param>
+        /// <param name="entityName">The name of the specific Service Bus entity under the namespace.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>
         ///

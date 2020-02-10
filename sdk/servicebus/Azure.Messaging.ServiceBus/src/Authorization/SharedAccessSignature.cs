@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 {
     /// <summary>
     ///   A shared access signature, which can be used for authorization to an Service Bus namespace
-    ///   or a specific Event Hub.
+    ///   or a specific Service Bus entity.
     /// </summary>
     ///
     internal class SharedAccessSignature
@@ -55,14 +55,14 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   The name of the shared access key, either for the Service Bus namespace
-        ///   or the Event Hub.
+        ///   or the Service Bus entity.
         /// </summary>
         ///
         public string SharedAccessKeyName { get; private set; }
 
         /// <summary>
         ///   The value of the shared access key, either for the Service Bus namespace
-        ///   or the Event Hub.
+        ///   or the Service Bus entity.
         /// </summary>
         ///
         public string SharedAccessKey { get; private set; }
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   The shared access signature to be used for authorization, either for the Service Bus namespace
-        ///   or the Event Hub.
+        ///   or the Service Bus entity.
         /// </summary>
         ///
         public string Value { get; private set; }

@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override bool IsClosed => _closed;
 
         /// <summary>
-        ///   The name of the Event Hub to which the producer is bound.
+        ///   The name of the Service Bus entity to which the producer is bound.
         /// </summary>
         ///
         private string EntityName { get; }
@@ -109,7 +109,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Sends a set of events to the associated Event Hub using a batched approach.  If the size of events exceed the
+        ///   Sends a set of events to the associated Service Bus entity using a batched approach.  If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///
@@ -171,7 +171,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        ///   Sends an AMQP message that contains a batch of events to the associated Event Hub. If the size of events exceed the
+        ///   Sends an AMQP message that contains a batch of events to the associated Service Bus entity. If the size of events exceed the
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///

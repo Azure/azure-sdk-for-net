@@ -151,10 +151,10 @@
     <value>The connection string could not be parsed; either it was malformed or contains no well-known tokens.</value>
   </data>
   <data name="MissingConnectionInformation" xml:space="preserve">
-    <value>The connection string used for an Event Hub client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately.</value>
+    <value>The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately.</value>
   </data>
   <data name="OnlyOneEventHubNameMayBeSpecified" xml:space="preserve">
-    <value>The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both.</value>
+    <value>The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both.</value>
   </data>
   <data name="UnknownConnectionType" xml:space="preserve">
     <value>The specified connection type, "{0}", is not recognized as valid in this context.</value>
@@ -178,7 +178,7 @@
     <value>The credential is not a known and supported credential type. Please use a JWT credential or shared key credential.</value>
   </data>
   <data name="SharedKeyCredentialCannotGenerateTokens" xml:space="preserve">
-    <value>A shared key credential is unable to generate a token directly. Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens.</value>
+    <value>A shared key credential is unable to generate a token directly. Please use this credential when creating an Service Bus entity Client, for proper generation of shared key tokens.</value>
   </data>
   <data name="CannotParseIntegerType" xml:space="preserve">
     <value>The {0} value is expected to be a {1} bit signed integer. Actual value: '{2}'.</value>
@@ -193,7 +193,7 @@
     <value>The requested transport event type, '{0}', is not supported by the active transport client.</value>
   </data>
   <data name="FailedToCreateReader" xml:space="preserve">
-    <value>Could not create a reader of events for Event Hub: '{0}', partition: '{1}', consumer group: '{2}'.</value>
+    <value>Could not create a reader of events for Service Bus entity: '{0}', partition: '{1}', consumer group: '{2}'.</value>
   </data>
   <data name="UnrecoverableException" xml:space="preserve">
     <value>An unrecoverable exception was encountered that left the environment in a bad state.</value>
@@ -220,7 +220,7 @@
     <value>{0} has already been closed and cannot perform the requested operation.</value>
   </data>
   <data name="TrackLastEnqueuedEventPropertiesNotSet" xml:space="preserve">
-    <value>This information is only available when TrackLastEnqueuedEventProperties is set on the Event Hub consumer options.</value>
+    <value>This information is only available when TrackLastEnqueuedEventProperties is set on the Service Bus entity consumer options.</value>
   </data>
   <data name="CannotStartEventProcessorWithoutHandler" xml:space="preserve">
     <value>Cannot begin processing without {0} handler set.</value>
@@ -229,7 +229,7 @@
     <value>The event processor is already running and needs to be stopped in order to perform this operation.</value>
   </data>
   <data name="ClientNeededForThisInformation" xml:space="preserve">
-    <value>The Event Hub client responsible for this information</value>
+    <value>The Service Bus entity client responsible for this information</value>
   </data>
   <data name="BlobsResourceDoesNotExist" xml:space="preserve">
     <value>The Azure Storage Blobs container or blob used by the Event Processor Client does not exist.</value>

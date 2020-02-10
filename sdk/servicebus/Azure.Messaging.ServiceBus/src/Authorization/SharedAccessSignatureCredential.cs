@@ -10,7 +10,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 {
     /// <summary>
     ///   Provides a credential based on a shared access signature for a given
-    ///   Event Hub instance.
+    ///   Service Bus entity instance.
     /// </summary>
     ///
     /// <seealso cref="SharedAccessSignature" />
@@ -47,7 +47,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
-        ///   use in authorization against an Event Hub.
+        ///   use in authorization against an Service Bus entity.
         /// </summary>
         ///
         /// <param name="requestContext">The details of the authentication request.</param>
@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
-        ///   use in authorization against an Event Hub.
+        ///   use in authorization against an Service Bus entity.
         /// </summary>
         ///
         /// <param name="requestContext">The details of the authentication request.</param>

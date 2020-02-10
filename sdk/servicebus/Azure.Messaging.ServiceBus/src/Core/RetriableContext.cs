@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Core
             EntityName = entityName;
         }
 
-        public async Task<T> RunOperation<T>(Func<RetriableContext, Task<T>> operation)
+        public async Task<T> RunOperation<T>(Func<Task<T>> operation)
         {
             var failedAttemptCount = 0;
 
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
                     try
                     {
-                        return await operation(this).ConfigureAwait(false);
+                        return await operation().ConfigureAwait(false);
                     }
 
                     catch (Exception ex)

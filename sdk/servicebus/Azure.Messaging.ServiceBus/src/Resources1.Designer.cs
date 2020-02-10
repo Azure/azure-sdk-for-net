@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The Event Hub client responsible for this information.
+        ///   Looks up a localized string similar to The Service Bus entity client responsible for this information.
         /// </summary>
         internal static string ClientNeededForThisInformation
         {
@@ -166,7 +166,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Could not create a reader of events for Event Hub: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
+        ///   Looks up a localized string similar to Could not create a reader of events for Service Bus entity: &apos;{0}&apos;, partition: &apos;{1}&apos;, consumer group: &apos;{2}&apos;..
         /// </summary>
         internal static string FailedToCreateReader
         {
@@ -276,7 +276,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The connection string used for an Event Hub client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Event Hub must be included in the connection string or specified separately..
+        ///   Looks up a localized string similar to The connection string used for an Service Bus entity client must specify the Service Bus namespace host, and a Shared Access Signature (both the name and value) to be valid. The path to an Service Bus entity must be included in the connection string or specified separately..
         /// </summary>
         internal static string MissingConnectionInformation
         {
@@ -287,7 +287,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The path to an Event Hub may be specified as part of the connection string or as a separate value, but not both..
+        ///   Looks up a localized string similar to The path to an Service Bus entity may be specified as part of the connection string or as a separate value, but not both..
         /// </summary>
         internal static string OnlyOneEventHubNameMayBeSpecified
         {
@@ -353,7 +353,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to A shared key credential is unable to generate a token directly. Please use this credential when creating an Event Hub Client, for proper generation of shared key tokens..
+        ///   Looks up a localized string similar to A shared key credential is unable to generate a token directly. Please use this credential when creating an Service Bus entity Client, for proper generation of shared key tokens..
         /// </summary>
         internal static string SharedKeyCredentialCannotGenerateTokens
         {
@@ -386,7 +386,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to This information is only available when TrackLastEnqueuedEventProperties is set on the Event Hub consumer options..
+        ///   Looks up a localized string similar to This information is only available when TrackLastEnqueuedEventProperties is set on the Service Bus entity consumer options..
         /// </summary>
         internal static string TrackLastEnqueuedEventPropertiesNotSet
         {
