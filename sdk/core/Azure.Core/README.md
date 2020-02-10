@@ -8,6 +8,8 @@ A more complete list of client libraries using Azure.Core can be found [here](ht
 Azure.Core allows client libraries to expose common functionality in a consistent fashion, 
 so that once you learn how to use these APIs in one client library, you will know how to use them in other client libraries.
 
+[Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs]
+
 ## Getting started
 
 Typically, you will not need to install Azure.Core; 
@@ -218,3 +220,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcore%2FAzure.Core%2FREADME.png)
+
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src
+[package]: https://www.nuget.org/packages/Azure.Core/
+[docs]: https://docs.microsoft.com/en-us/dotnet/api/overview/azure/core/client
