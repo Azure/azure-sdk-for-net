@@ -63,7 +63,8 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string input = "Este documento está en español";
 
-            Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(input, "COLOMBIA"));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(input, "COLOMBIA"));
+            Assert.AreEqual("InvalidCountryHint", ex.ErrorCode);
         }
 
         [Test]
@@ -186,8 +187,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(!results[0].HasError);
             Assert.IsTrue(!results[2].HasError);
 
+            var exceptionMessage = "Cannot access result for this document, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
-            Assert.Throws<InvalidOperationException>(() => results[1].PrimaryLanguage.GetType());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].PrimaryLanguage.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]
@@ -362,8 +365,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(!results[0].HasError);
             Assert.IsTrue(!results[2].HasError);
 
+            var exceptionMessage = "Cannot access result for this document, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
-            Assert.Throws<InvalidOperationException>(() => results[1].DocumentSentiment.GetType());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].DocumentSentiment.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]
@@ -408,8 +413,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(!results[0].HasError);
             Assert.IsTrue(!results[2].HasError);
 
+            var exceptionMessage = "Cannot access result for this document, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
-            Assert.Throws<InvalidOperationException>(() => results[1].KeyPhrases.GetType());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].KeyPhrases.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]
@@ -574,8 +581,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(!results[0].HasError);
             Assert.IsTrue(!results[2].HasError);
 
+            var exceptionMessage = "Cannot access result for this document, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
-            Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]
@@ -722,8 +731,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(!results[0].HasError);
             Assert.IsTrue(!results[2].HasError);
 
+            var exceptionMessage = "Cannot access result for this document, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
-            Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]
@@ -875,8 +886,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.IsTrue(!results[0].HasError);
             Assert.IsTrue(!results[2].HasError);
 
+            var exceptionMessage = "Cannot access result for this document, due to error InvalidDocument: Document text is empty.";
             Assert.IsTrue(results[1].HasError);
-            Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => results[1].Entities.GetType());
+            Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
         [Test]

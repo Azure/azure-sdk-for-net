@@ -7,9 +7,9 @@
         "Content-Length": "217",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-f2df7df4a44c78439c721e35f8a447d6-05c790afc960ff44-00",
+        "traceparent": "00-803ff57176870947be9f62827a3eaf52-9c9ecebb8f91924d-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200205.1\u002Bf8d73daa11c41f2bc0e09182d73b8ba9b5a9b924",
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200210.1\u002Bf017dde75d485c30727bc915900307aaa7aa8f3e",
           "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "e3f1ecf4efc6a209650b9e605228fe76",
@@ -36,14 +36,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "25ff1417-749d-4325-8349-7c625fdc8eb9",
+        "apim-request-id": "796f29be-6c4b-4dc2-88c1-f35dc09360c8",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Thu, 06 Feb 2020 04:36:05 GMT",
+        "Date": "Mon, 10 Feb 2020 17:48:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
+        "x-envoy-upstream-service-time": "5094"
       },
       "ResponseBody": {
         "documents": [
@@ -55,27 +55,35 @@
                 "type": "Organization",
                 "offset": 0,
                 "length": 9,
-                "score": 0.99993896484375
+                "score": 1.0
               },
               {
                 "text": "Bill Gates",
                 "type": "Person",
                 "offset": 25,
                 "length": 10,
-                "score": 0.99974066019058228
+                "score": 0.67
               },
               {
                 "text": "Paul Allen",
                 "type": "Person",
                 "offset": 40,
                 "length": 10,
-                "score": 0.99951183795928955
+                "score": 0.81
               }
             ]
           },
           {
             "id": "2",
-            "entities": []
+            "entities": [
+              {
+                "text": "veterinarian",
+                "type": "PersonType",
+                "offset": 27,
+                "length": 12,
+                "score": 0.88
+              }
+            ]
           }
         ],
         "errors": [
@@ -83,15 +91,15 @@
             "id": "1",
             "error": {
               "code": "InvalidArgument",
+              "message": "Invalid document in request.",
               "innerError": {
                 "code": "InvalidDocument",
                 "message": "Document text is empty."
-              },
-              "message": "Invalid document in request."
+              }
             }
           }
         ],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-02-01"
       }
     }
   ],
