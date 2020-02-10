@@ -50,6 +50,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="quantity">The purchased product quantity.</param>
         /// <param name="skuId">Sku Id.</param>
         /// <param name="skuDescription">Sku description.</param>
+        /// <param name="tenantId">The id of the tenant in which the product is
+        /// used.</param>
         /// <param name="availabilityId">Availability Id.</param>
         /// <param name="parentProductId">Parent Product Id.</param>
         /// <param name="invoiceSectionId">Invoice section id to which this
@@ -65,7 +67,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="customerDisplayName">Display name of customer to which
         /// this product belongs.</param>
         /// <param name="reseller">Reseller for this product.</param>
-        public Product(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.DateTime? purchaseDate = default(System.DateTime?), string productTypeId = default(string), string productType = default(string), string status = default(string), System.DateTime? endDate = default(System.DateTime?), string billingFrequency = default(string), Amount lastCharge = default(Amount), System.DateTime? lastChargeDate = default(System.DateTime?), double? quantity = default(double?), string skuId = default(string), string skuDescription = default(string), string availabilityId = default(string), string parentProductId = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), Reseller reseller = default(Reseller))
+        public Product(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.DateTime? purchaseDate = default(System.DateTime?), string productTypeId = default(string), string productType = default(string), string status = default(string), System.DateTime? endDate = default(System.DateTime?), string billingFrequency = default(string), Amount lastCharge = default(Amount), System.DateTime? lastChargeDate = default(System.DateTime?), double? quantity = default(double?), string skuId = default(string), string skuDescription = default(string), string tenantId = default(string), string availabilityId = default(string), string parentProductId = default(string), string invoiceSectionId = default(string), string invoiceSectionDisplayName = default(string), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string customerId = default(string), string customerDisplayName = default(string), Reseller reseller = default(Reseller))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -80,6 +82,7 @@ namespace Microsoft.Azure.Management.Billing.Models
             Quantity = quantity;
             SkuId = skuId;
             SkuDescription = skuDescription;
+            TenantId = tenantId;
             AvailabilityId = availabilityId;
             ParentProductId = parentProductId;
             InvoiceSectionId = invoiceSectionId;
@@ -171,6 +174,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.skuDescription")]
         public string SkuDescription { get; private set; }
+
+        /// <summary>
+        /// Gets the id of the tenant in which the product is used.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tenantId")]
+        public string TenantId { get; private set; }
 
         /// <summary>
         /// Gets availability Id.

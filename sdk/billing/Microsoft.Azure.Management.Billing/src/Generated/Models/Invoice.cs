@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="invoiceDate">The date when invoice was
         /// created.</param>
         /// <param name="status">Invoice status. Possible values include:
-        /// 'PastDue', 'Due', 'Paid', 'Void'</param>
+        /// 'Due', 'OverDue', 'Paid'</param>
         /// <param name="amountDue">Amount due.</param>
         /// <param name="billedAmount">Amount billed.</param>
         /// <param name="invoicePeriodStartDate">The start date of the billing
@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="documents">List of documents available to download
         /// including invoice and tax documents.</param>
         /// <param name="payments">List of payments.</param>
-        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount billedAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), object invoiceType = default(object), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>))
+        /// <param name="subscriptionId">The subscription id this invoice
+        /// belongs to.</param>
+        public Invoice(string id = default(string), string name = default(string), string type = default(string), System.DateTime? dueDate = default(System.DateTime?), System.DateTime? invoiceDate = default(System.DateTime?), string status = default(string), Amount amountDue = default(Amount), Amount billedAmount = default(Amount), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), object invoiceType = default(object), string billingProfileId = default(string), string billingProfileDisplayName = default(string), string purchaseOrderNumber = default(string), IList<Document> documents = default(IList<Document>), IList<PaymentProperties> payments = default(IList<PaymentProperties>), string subscriptionId = default(string))
             : base(id, name, type)
         {
             DueDate = dueDate;
@@ -74,6 +76,7 @@ namespace Microsoft.Azure.Management.Billing.Models
             PurchaseOrderNumber = purchaseOrderNumber;
             Documents = documents;
             Payments = payments;
+            SubscriptionId = subscriptionId;
             CustomInit();
         }
 
@@ -95,8 +98,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         public System.DateTime? InvoiceDate { get; private set; }
 
         /// <summary>
-        /// Gets invoice status. Possible values include: 'PastDue', 'Due',
-        /// 'Paid', 'Void'
+        /// Gets invoice status. Possible values include: 'Due', 'OverDue',
+        /// 'Paid'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -161,6 +164,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.payments")]
         public IList<PaymentProperties> Payments { get; private set; }
+
+        /// <summary>
+        /// Gets the subscription id this invoice belongs to.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subscriptionId")]
+        public string SubscriptionId { get; private set; }
 
     }
 }
