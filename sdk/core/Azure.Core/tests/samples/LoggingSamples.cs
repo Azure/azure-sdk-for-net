@@ -22,6 +22,14 @@ namespace Azure.Core.Samples
         }
 
         [Test]
+        public void LoggingCallback()
+        {
+            #region Snippet:LoggingCallback
+            using AzureEventSourceListener listener = new AzureEventSourceListener((e, message) => Console.WriteLine($"{DateTime.Now} {message}"));
+            #endregion
+        }
+
+        [Test]
         public static void LoggingContent()
         {
             #region Snippet:LoggingContent
