@@ -14,9 +14,9 @@ namespace Azure.Generated.Template
     /// </summary>
     public class TemplateClient
     {
-        private ClientDiagnostics _diagnostics;
-        private HttpPipeline _pipeline;
-        private AllOperations _operations;
+        private readonly ClientDiagnostics _diagnostics;
+        private readonly HttpPipeline _pipeline;
+        private readonly AllOperations _operations;
 
         /// <summary>
         /// Mocking ctor only.
