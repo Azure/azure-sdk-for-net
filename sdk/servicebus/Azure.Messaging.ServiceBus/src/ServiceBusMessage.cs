@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using Azure.Messaging.ServiceBus.Primitives;
+
 namespace Azure.Messaging.ServiceBus
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using Azure.Messaging.ServiceBus.Primitives;
-
     /// <summary>
     /// The message object used to communicate and transfer data with Service Bus.
     /// </summary>

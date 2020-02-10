@@ -14,6 +14,7 @@ using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -308,23 +309,8 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = null,
             string receiveLinkName = null,
             CancellationToken cancellationToken = default) =>
-            await InnerClient.RunOperation(
-                async (timespan, stopwatch) => await InnerClient.PeekAsync(
-                    retryPolicy,
-                    fromSequenceNumber,
-                    timespan,
-                    stopwatch,
-                    messageCount,
-                    sessionId,
-                    receiveLinkName,
-                    cancellationToken)
-                .ConfigureAwait(false),
-                retryPolicy,
-                cancellationToken).ConfigureAwait(false);
-
-            //await InnerClient.PeekAsync(retryPolicy, fromSequenceNumber, messageCount, sessionId, receiveLinkName, cancellationToken)
-            //.ConfigureAwait(false);
-
+             await InnerClient.PeekAsync(retryPolicy, fromSequenceNumber, messageCount, sessionId, receiveLinkName, cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         ///
