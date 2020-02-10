@@ -15,16 +15,16 @@ it will be installed for you when you install one of the client libraries using 
 In case you want to install it explicitly (to implement your own client library, for example), 
 you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core).
 
-# Key concepts
+## Key concepts
 
 The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.Core) include:
 
 - Configuring service clients, e.g. configuring retries, logging (`ClientOptions`).
 - Accessing HTTP response details (`Response`, `Response<T>`).
 - Calling long-running operations (`Operation<T>`).
-- Paging and asynchronous streams (```AsyncPageable<T>```) 
-- Exceptions for reporting errors from service requests in a consistent fashion. (`RequestFailedException`)
-- Abstractions for representing Azure SDK credentials. (`TokenCredentials`)
+- Paging and asynchronous streams (```AsyncPageable<T>```).
+- Exceptions for reporting errors from service requests in a consistent fashion. (`RequestFailedException`).
+- Abstractions for representing Azure SDK credentials. (`TokenCredentials`).
 
 Below, you will find sections explaining these shared concepts in more detail.
 
@@ -112,7 +112,7 @@ More on logging in [diagnostics samples](samples/Diagnostics.md)
 
 ### Reporting Errors ```RequestFailedException```
 
-When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides `Status` property with an HTTP status code and `ErrorCode` property with a service-specific error code.
+When a service call fails `Azure.RequestFailedException` would get thrown. The exception type provides a Status property with an HTTP status code an an ErrorCode property with a service-specific error code.
 
 ```C# Snippet:RequestFailedException
 try
@@ -203,7 +203,7 @@ More on mocking in [mocking samples](samples/Mocking.md)
 
 ## Troubleshooting
 
-Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#Enabling exceptions), enabling [logging](samples/Diagnostics.md#Logging) and [distributed tracing](samples/Diagnostics.md#Distributed-tracing)
+Three main ways of troubleshooting failures are [inspecting exceptions](samples/Response.md#Enabling exceptions), enabling [logging](samples/Diagnostics.md#Logging), and [distributed tracing](samples/Diagnostics.md#Distributed-tracing)
 
 ## Next steps
 
