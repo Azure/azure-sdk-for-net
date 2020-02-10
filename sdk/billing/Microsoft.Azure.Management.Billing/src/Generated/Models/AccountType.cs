@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.Billing.Models
 {
 
     /// <summary>
-    /// Defines values for Status.
+    /// Defines values for AccountType.
     /// </summary>
-    public static class Status
+    public static class AccountType
     {
-        public const string Approved = "Approved";
-        public const string Rejected = "Rejected";
+        public const string Enterprise = "Enterprise";
+        public const string Individual = "Individual";
+        public const string Partner = "Partner";
     }
 }
