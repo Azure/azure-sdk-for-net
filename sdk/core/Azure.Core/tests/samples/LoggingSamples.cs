@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.Tracing;
 using System.Net.Http;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
@@ -25,7 +26,9 @@ namespace Azure.Core.Samples
         public void LoggingCallback()
         {
             #region Snippet:LoggingCallback
-            using AzureEventSourceListener listener = new AzureEventSourceListener((e, message) => Console.WriteLine($"{DateTime.Now} {message}"));
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (e, message) => Console.WriteLine($"{DateTime.Now} {message}"),
+                level: EventLevel.Verbose);
             #endregion
         }
 

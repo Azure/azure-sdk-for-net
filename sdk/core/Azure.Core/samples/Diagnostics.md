@@ -68,7 +68,9 @@ If you are using Azure SDK libraries in ASP.NET Core application consider using 
 The `AzureEventSourceListener` class can also be used with a custom callback tha allows log messages to be written to destination of your choice.
 
 ```C# Snippet:LoggingCallback
-using AzureEventSourceListener listener = new AzureEventSourceListener((e, message) => Console.WriteLine($"{DateTime.Now} {message}"));
+using AzureEventSourceListener listener = new AzureEventSourceListener(
+    (e, message) => Console.WriteLine($"{DateTime.Now} {message}"),
+    level: EventLevel.Verbose);
 ```
 
 ## Distributed tracing
