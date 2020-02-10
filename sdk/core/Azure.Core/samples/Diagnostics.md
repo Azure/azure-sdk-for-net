@@ -4,7 +4,10 @@
 
 ## Logging
 
-Azure SDKs produce logs messages of different levels
+Azure SDKs produce various log messages that include information about:
+1. Requests and reponses
+2. Authentication attempts
+3. Retries
 
 The simplest way to see the logs is to enable the console logging.
 
@@ -65,6 +68,7 @@ If you are using Azure SDK libraries in ASP.NET Core application consider using 
 The `AzureEventSourceListener` class can also be used with a custom callback tha allows log messages to be written to destination of your choice.
 
 ```C# Snippet:LoggingCallback
+using AzureEventSourceListener listener = new AzureEventSourceListener((e, message) => Console.WriteLine($"{DateTime.Now} {message}"));
 ```
 
 ## Distributed tracing
@@ -79,7 +83,6 @@ If you application already uses ApplicationInsights automatic collection of Azur
 
 To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/en-us/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
 
-### OpenTelemetry with Azure Monitor, Zipkin and other.
-
+### OpenTelemetry with Azure Monitor, Zipkin and others
 
 Follow the [OpenTelemetry configuration guide](https://github.com/open-telemetry/opentelemetry-dotnet#configuration-with-microsoftextensionsdependencyinjection) to configure collecting distribute tracing event collection using the OpenTelemetry library.
