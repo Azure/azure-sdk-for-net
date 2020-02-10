@@ -55,15 +55,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private string PartitionId { get; }
 
         /// <summary>
-        ///   Indicates whether or not the consumer should request information on the last enqueued event on the partition
-        ///   associated with a given event, and track that information as events are received.
-        /// </summary>
-        ///
-        /// <value><c>true</c> if information about a partition's last event should be requested and tracked; otherwise, <c>false</c>.</value>
-        ///
-        private bool TrackLastEnqueuedEventProperties { get; }
-
-        /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
@@ -94,7 +85,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityName">The name of the Service Bus entity from which events will be consumed.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
-        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="sessionId"></param>
@@ -108,32 +98,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   caller.
         /// </remarks>
         ///
-        public AmqpConsumer(string entityName,
-                            //string consumerGroup,
-                            //string partitionId,
-                            //EventPosition eventPosition,
-                            bool trackLastEnqueuedEventProperties,
-                            long? ownerLevel,
-                            uint? prefetchCount,
-                            AmqpConnectionScope connectionScope,
-                            //AmqpMessageConverter messageConverter,
-                            ServiceBusRetryPolicy retryPolicy,
-                            string sessionId)
+        public AmqpConsumer(
+            string entityName,
+            long? ownerLevel,
+            uint? prefetchCount,
+            AmqpConnectionScope connectionScope,
+            ServiceBusRetryPolicy retryPolicy,
+            string sessionId)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
-            //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            //Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
-            //Argument.AssertNotNull(messageConverter, nameof(messageConverter));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
             EntityName = entityName;
-            //ConsumerGroup = consumerGroup;
-            //PartitionId = partitionId;
-            //CurrentEventPosition = eventPosition;
-            TrackLastEnqueuedEventProperties = trackLastEnqueuedEventProperties;
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;
-            //MessageConverter = messageConverter;
 
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
@@ -143,7 +121,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         timeout,
                         prefetchCount ?? DefaultPrefetchCount,
                         ownerLevel,
-                        trackLastEnqueuedEventProperties,
                         sessionId,
                         CancellationToken.None),
                 link =>
@@ -168,9 +145,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public override async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(int maximumMessageCount,
-                                                                        TimeSpan? maximumWaitTime,
-                                                                        CancellationToken cancellationToken)
+        public override async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
+            int maximumMessageCount,
+            TimeSpan? maximumWaitTime,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
             Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
@@ -183,7 +161,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var retryDelay = default(TimeSpan?);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = default(List<ServiceBusMessage>);
-            var lastReceivedMessage = default(ServiceBusMessage);
 
             var stopWatch = Stopwatch.StartNew();
 
@@ -222,22 +199,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             }
 
                             receivedMessageCount = receivedMessages.Count;
-
-                            if (receivedMessageCount > 0)
-                            {
-                                lastReceivedMessage = receivedMessages[receivedMessageCount - 1];
-
-                                //if (lastReceivedEvent.Offset > long.MinValue)
-                                //{
-                                //    CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
-                                //}
-
-                                if (TrackLastEnqueuedEventProperties)
-                                {
-                                    LastReceivedMessage = lastReceivedMessage;
-                                }
-                            }
-
                             return receivedMessages;
                         }
 
@@ -351,7 +312,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The smaller of the two specified intervals.</returns>
         ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
+        private static TimeSpan UseMinimum(
+            TimeSpan firstOption,
+            TimeSpan secondOption) =>
+            (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

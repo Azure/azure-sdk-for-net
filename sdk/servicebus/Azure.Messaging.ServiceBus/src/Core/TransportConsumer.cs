@@ -30,26 +30,20 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         public virtual bool IsClosed { get; }
 
+        /// <summary>
+        ///
+        /// </summary>
         public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
 
+        /// <summary>
+        ///
+        /// </summary>
         public AmqpConnectionScope ConnectionScope { get; set; }
-
 
         /// <summary>
         ///
         /// </summary>
         public string SessionId { get; set; }
-
-        /// <summary>
-        ///   The most recent message received from the entity by this consumer instance.
-        /// </summary>
-        ///
-        /// <value>
-        ///   <c>null</c>, if the tracking of the last enqueued event information was not requested; otherwise,
-        ///   the most recently received message.
-        /// </value>
-        ///
-        public ServiceBusMessage LastReceivedMessage { get; protected set; }
 
         /// <summary>
         ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.
@@ -61,9 +55,10 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
-        public abstract Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(int maximumMessageCount,
-                                                                  TimeSpan? maximumWaitTime,
-                                                                  CancellationToken cancellationToken);
+        public abstract Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
+            int maximumMessageCount,
+            TimeSpan? maximumWaitTime,
+            CancellationToken cancellationToken);
 
         /// <summary>
         ///   Closes the connection to the transport producer instance.

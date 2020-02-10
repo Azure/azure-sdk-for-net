@@ -23,11 +23,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <summary>
         ///
         /// </summary>
-        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
-
-        /// <summary>
-        ///
-        /// </summary>
         public int PrefetchCount = 0;
 
         /// <summary>

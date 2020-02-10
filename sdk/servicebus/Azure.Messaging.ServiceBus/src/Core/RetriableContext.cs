@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Core
             finally
             {
                 stopWatch.Stop();
-                ServiceBusEventSource.Log.PeekMessagesComplete(EntityName);
+                //TODO log correct completion event ServiceBusEventSource.Log.PeekMessagesComplete(EntityName);
             }
         }
 

@@ -230,32 +230,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
-        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="sessionId"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A link for use with consumer operations.</returns>
         ///
-        public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(
-            //string consumerGroup,
-                                                                           //string partitionId,
-                                                                           TimeSpan timeout,
+        public virtual async Task<ReceivingAmqpLink> OpenConsumerLinkAsync(TimeSpan timeout,
                                                                            uint prefetchCount,
                                                                            long? ownerLevel,
-                                                                           bool trackLastEnqueuedEventProperties,
                                                                            string sessionId,
                                                                            CancellationToken cancellationToken)
         {
-            //Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            //Argument.AssertNotNullOrEmpty(partitionId, nameof(partitionId));
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             var stopWatch = Stopwatch.StartNew();
             var consumerEndpoint = new Uri(ServiceEndpoint, EntityName);
-
-//consumerGroup, partitionId));
 
             var connection = await ActiveConnection.GetOrCreateAsync(timeout).ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -266,7 +257,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 timeout.CalculateRemaining(stopWatch.Elapsed),
                 prefetchCount,
                 ownerLevel,
-                trackLastEnqueuedEventProperties,
                 sessionId,
                 cancellationToken
             ).ConfigureAwait(false);
@@ -480,7 +470,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="endpoint">The fully qualified endpoint to open the link for.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
-        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="sessionId"></param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
@@ -492,7 +481,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                                                                                  TimeSpan timeout,
                                                                                  uint prefetchCount,
                                                                                  long? ownerLevel,
-                                                                                 bool trackLastEnqueuedEventProperties,
                                                                                  string sessionId,
                                                                                  CancellationToken cancellationToken)
         {
@@ -547,14 +535,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (ownerLevel.HasValue)
                 {
                     linkSettings.AddProperty(AmqpProperty.OwnerLevel, ownerLevel.Value);
-                }
-
-                if (trackLastEnqueuedEventProperties)
-                {
-                    linkSettings.DesiredCapabilities = new Multiple<AmqpSymbol>(new List<AmqpSymbol>
-                    {
-                        AmqpProperty.TrackLastEnqueuedEventProperties
-                    });
                 }
 
                 var link = new ReceivingAmqpLink(linkSettings);

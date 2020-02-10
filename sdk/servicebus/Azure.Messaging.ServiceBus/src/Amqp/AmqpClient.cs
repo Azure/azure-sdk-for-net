@@ -78,6 +78,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private FaultTolerantAmqpObject<RequestResponseAmqpLink> ManagementLink { get; }
+
+        /// <summary>
+        /// The last peeked sequence number. This is used for the <see cref="PeekAsync"/> operation
+        /// that does not specify a specific sequence number.
+        /// </summary>
         private long LastPeekedSequenceNumber { get; set; }
 
         /// <summary>
@@ -164,66 +169,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        //// TODO figure out a better place to put this and see if it can be improved to not have to pass Timespan, stopwatch to operation
-        //public override async Task<T> RunOperation<T>(Func<RetriableContext, Task<T>> operation, ServiceBusRetryPolicy retryPolicy, CancellationToken cancellationToken)
-        //{
-        //    var failedAttemptCount = 0;
-
-        //    var stopWatch = Stopwatch.StartNew();
-        //    try
-        //    {
-        //        TimeSpan tryTimeout = retryPolicy.CalculateTryTimeout(0);
-
-        //        while (!cancellationToken.IsCancellationRequested)
-        //        {
-
-        //            try
-        //            {
-        //                return await operation(new RetriableContext(tryTimeout, stopWatch)).ConfigureAwait(false);
-        //            }
-
-        //            catch (Exception ex)
-        //            {
-        //                Exception activeEx = ex.TranslateServiceException(EntityName);
-
-        //                // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-        //                // Otherwise, mark the exception as active and break out of the loop.
-
-        //                ++failedAttemptCount;
-        //                TimeSpan? retryDelay = retryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
-        //                if (retryDelay.HasValue && !ConnectionScope.IsDisposed && !cancellationToken.IsCancellationRequested)
-        //                {
-        //                    //EventHubsEventSource.Log.GetPropertiesError(EventHubName, activeEx.Message);
-        //                    await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-
-        //                    tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
-        //                    stopWatch.Reset();
-        //                }
-        //                else if (ex is AmqpException)
-        //                {
-        //                    throw activeEx;
-        //                }
-        //                else
-        //                {
-        //                    throw;
-        //                }
-        //            }
-        //        }
-        //        // If no value has been returned nor exception thrown by this point,
-        //        // then cancellation has been requested.
-        //        throw new TaskCanceledException();
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        throw exception;
-        //        //TODO through correct exception throw AmqpExceptionHelper.GetClientException(exception);
-        //    }
-        //    finally
-        //    {
-        //        stopWatch.Stop();
-        //        ServiceBusEventSource.Log.PeekMessagesComplete(EntityName);
-        //    }
-        //}
         /// <summary>
         ///
         /// </summary>
@@ -610,19 +555,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="sessionId"></param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
-        public override TransportConsumer CreateConsumer(
-                                                         //string consumerGroup,
-                                                         //                                             string partitionId,
-                                                         //EventPosition eventPosition,
-                                                         ServiceBusRetryPolicy retryPolicy,
-                                                         bool trackLastEnqueuedEventProperties,
+        public override TransportConsumer CreateConsumer(ServiceBusRetryPolicy retryPolicy,
                                                          long? ownerLevel,
                                                          uint? prefetchCount,
                                                          string sessionId = default)
@@ -632,14 +571,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new AmqpConsumer
             (
                 EntityName,
-                //consumerGroup,
-                //partitionId,
-                //eventPosition,
-                trackLastEnqueuedEventProperties,
                 ownerLevel,
                 prefetchCount,
                 ConnectionScope,
-                //MessageConverter,
                 retryPolicy,
                 sessionId
             );

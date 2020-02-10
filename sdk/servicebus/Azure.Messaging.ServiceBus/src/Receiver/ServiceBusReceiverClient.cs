@@ -52,13 +52,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         internal string EntityName => Connection.EntityName;
 
         /// <summary>
-        ///   The name of the consumer group that this consumer is associated with.  Events will be read
-        ///   only in the context of this group.
-        /// </summary>
-        ///
-        internal string ConsumerGroup { get; }
-
-        /// <summary>
         ///
         /// </summary>
         public ReceiveMode ReceiveMode { get; private set; }

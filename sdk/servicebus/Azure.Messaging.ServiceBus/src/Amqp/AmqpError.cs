@@ -72,16 +72,17 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="response">The response to consider.</param>
-        /// <param name="eventHubsResource">The Service Bus resource associated with the request.</param>
+        /// <param name="serviceBusResource">The Service Bus resource associated with the request.</param>
         ///
         /// <returns>The exception that most accurately represents the response failure.</returns>
         ///
-        public static Exception CreateExceptionForResponse(AmqpMessage response,
-                                                           string eventHubsResource)
+        public static Exception CreateExceptionForResponse(
+            AmqpMessage response,
+            string serviceBusResource)
         {
             if (response == null)
             {
-                return new ServiceBusException(eventHubsResource, Resources1.UnknownCommunicationException, ServiceBusException.FailureReason.ServiceCommunicationProblem);
+                return new ServiceBusException(serviceBusResource, Resources1.UnknownCommunicationException, ServiceBusException.FailureReason.ServiceCommunicationProblem);
             }
 
             if (!response.ApplicationProperties.Map.TryGetValue<string>(AmqpResponse.StatusDescription, out var description))
@@ -89,7 +90,7 @@ namespace Azure.Messaging.ServiceBus
                 description = Resources1.UnknownCommunicationException;
             }
 
-            return CreateException(DetermineErrorCondition(response).Value, description, eventHubsResource);
+            return CreateException(DetermineErrorCondition(response).Value, description, serviceBusResource);
         }
 
         /// <summary>
@@ -97,19 +98,20 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="error">The AMQP error to consider.</param>
-        /// <param name="eventHubsResource">The Service Bus resource associated with the operation.</param>
+        /// <param name="serviceBusResource">The Service Bus resource associated with the operation.</param>
         ///
         /// <returns>The exception that most accurately represents the error that was encountered.</returns>
         ///
-        public static Exception CreateExceptionForError(Error error,
-                                                        string eventHubsResource)
+        public static Exception CreateExceptionForError(
+            Error error,
+            string serviceBusResource)
         {
             if (error == null)
             {
-                return new ServiceBusException(true, eventHubsResource, Resources1.UnknownCommunicationException);
+                return new ServiceBusException(true, serviceBusResource, Resources1.UnknownCommunicationException);
             }
 
-            return CreateException(error.Condition.Value, error.Description, eventHubsResource);
+            return CreateException(error.Condition.Value, error.Description, serviceBusResource);
         }
 
         /// <summary>
@@ -118,17 +120,18 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="response">The AMQP response message to consider.</param>
-        /// <param name="eventHubName">The name of the Service Bus entity associated with the request.</param>
+        /// <param name="entityName">The name of the Service Bus entity associated with the request.</param>
         ///
-        public static void ThrowIfErrorResponse(AmqpMessage response,
-                                                string eventHubName)
+        public static void ThrowIfErrorResponse(
+            AmqpMessage response,
+            string entityName)
         {
             var statusCode = default(int);
 
             if ((response?.ApplicationProperties?.Map.TryGetValue(AmqpResponse.StatusCode, out statusCode) == false)
                 || (!AmqpResponse.IsSuccessStatus((AmqpResponseStatusCode)statusCode)))
             {
-                throw CreateExceptionForResponse(response, eventHubName);
+                throw CreateExceptionForResponse(response, entityName);
             }
         }
 
@@ -142,9 +145,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The exception that most accurately represents the failure scenario.</returns>
         ///
-        private static Exception CreateException(string condition,
-                                                 string description,
-                                                 string eventHubsResource)
+        private static Exception CreateException(
+            string condition,
+            string description,
+            string eventHubsResource)
         {
             // The request timed out.
 
@@ -233,7 +237,6 @@ namespace Azure.Messaging.ServiceBus
         ///
         private static AmqpSymbol DetermineErrorCondition(AmqpMessage response)
         {
-
             // If there was an error condition present, use that.
 
             if (response.ApplicationProperties.Map.TryGetValue(AmqpResponse.ErrorCondition, out AmqpSymbol condition))

@@ -51,8 +51,9 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns><c>true</c>, if the two sets of options are structurally equivalent; otherwise, <c>false</c>.</returns>
         ///
-        public static bool IsEquivalentTo(this ServiceBusRetryOptions instance,
-                                          ServiceBusRetryOptions other)
+        public static bool IsEquivalentTo(
+            this ServiceBusRetryOptions instance,
+            ServiceBusRetryOptions other)
         {
             // If the events are the same instance, they're equal.  This should only happen
             // if both are null or they are the exact same instance.

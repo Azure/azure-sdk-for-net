@@ -91,19 +91,20 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///   Initializes a new instance of the <see cref="SharedAccessSignature"/> class.
         /// </summary>
         ///
-        /// <param name="eventHubResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
+        /// <param name="serviceBusResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         /// <param name="sharedAccessKeyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signature.</param>
         /// <param name="signatureValidityDuration">The duration that the signature should be considered valid; if not specified, a default will be assumed.</param>
         ///
-        public SharedAccessSignature(string eventHubResource,
-                                     string sharedAccessKeyName,
-                                     string sharedAccessKey,
-                                     TimeSpan? signatureValidityDuration = default)
+        public SharedAccessSignature(
+            string serviceBusResource,
+            string sharedAccessKeyName,
+            string sharedAccessKey,
+            TimeSpan? signatureValidityDuration = default)
         {
             signatureValidityDuration ??= DefaultSignatureValidityDuration;
 
-            Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
+            Argument.AssertNotNullOrEmpty(serviceBusResource, nameof(serviceBusResource));
             Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
             Argument.AssertNotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
 
@@ -114,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
             SharedAccessKeyName = sharedAccessKeyName;
             SharedAccessKey = sharedAccessKey;
             SignatureExpiration = DateTimeOffset.UtcNow.Add(signatureValidityDuration.Value);
-            Resource = eventHubResource;
+            Resource = serviceBusResource;
             Value = BuildSignature(Resource, sharedAccessKeyName, sharedAccessKey, SignatureExpiration);
         }
 
@@ -125,8 +126,9 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// <param name="sharedAccessSignature">The shared access signature that will be parsed as the basis of this instance.</param>
         /// <param name="sharedAccessKey">The value of the shared access key for the signature.</param>
         ///
-        public SharedAccessSignature(string sharedAccessSignature,
-                                     string sharedAccessKey)
+        public SharedAccessSignature(
+            string sharedAccessSignature,
+            string sharedAccessKey)
         {
             Argument.AssertNotNullOrEmpty(sharedAccessSignature, nameof(sharedAccessSignature));
             Argument.AssertNotTooLong(sharedAccessKey, MaximumKeyLength, nameof(sharedAccessKey));
@@ -157,11 +159,12 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// <param name="value">The shared access signature to be used for authorization.</param>
         /// <param name="signatureExpiration">The date and time that the shared access signature expires, in UTC.</param>
         ///
-        public SharedAccessSignature(string eventHubResource,
-                                     string sharedAccessKeyName,
-                                     string sharedAccessKey,
-                                     string value,
-                                     DateTimeOffset signatureExpiration)
+        public SharedAccessSignature(
+            string eventHubResource,
+            string sharedAccessKeyName,
+            string sharedAccessKey,
+            string value,
+            DateTimeOffset signatureExpiration)
         {
             Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
             Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
@@ -334,10 +337,11 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///
         /// <returns>The value of the shared access signature.</returns>
         ///
-        private static string BuildSignature(string audience,
-                                             string sharedAccessKeyName,
-                                             string sharedAccessKey,
-                                             DateTimeOffset expirationTime)
+        private static string BuildSignature(
+            string audience,
+            string sharedAccessKeyName,
+            string sharedAccessKey,
+            DateTimeOffset expirationTime)
         {
             using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(sharedAccessKey)))
             {

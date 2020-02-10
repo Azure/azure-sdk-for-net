@@ -377,7 +377,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="sessionId"></param>
@@ -386,13 +385,12 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal virtual TransportConsumer CreateTransportConsumer(
             ServiceBusRetryPolicy retryPolicy,
-            bool trackLastEnqueuedEventProperties = true,
             long? ownerLevel = default,
             uint? prefetchCount = default,
             string sessionId = default)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateConsumer(retryPolicy, trackLastEnqueuedEventProperties, ownerLevel, prefetchCount, sessionId);
+            return InnerClient.CreateConsumer(retryPolicy, ownerLevel, prefetchCount, sessionId);
         }
 
         /// <summary>

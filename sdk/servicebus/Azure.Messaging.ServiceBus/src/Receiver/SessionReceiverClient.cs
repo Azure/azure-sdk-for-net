@@ -53,7 +53,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public SessionReceiverClient(string connectionString, string entityName, ReceiveMode receiveMode, SessionReceiverClientOptions options)
+        public SessionReceiverClient(
+            string connectionString,
+            string entityName,
+            ReceiveMode receiveMode,
+            SessionReceiverClientOptions options)
             : base(connectionString, entityName, receiveMode, null, new SessionReceiverClientOptions())
         {
         }
@@ -81,7 +85,10 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public SessionReceiverClient(string connectionString, string entityName, ReceiveMode receiveMode)
+        public SessionReceiverClient(
+            string connectionString,
+            string entityName,
+            ReceiveMode receiveMode)
             : base(connectionString, entityName, receiveMode, null, new SessionReceiverClientOptions())
         {
         }
@@ -104,7 +111,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public SessionReceiverClient(string connectionString, string entityName, string sessionId, ReceiveMode receiveMode)
+        public SessionReceiverClient(
+            string connectionString,
+            string entityName,
+            string sessionId,
+            ReceiveMode receiveMode)
             : base(connectionString, entityName, receiveMode, sessionId, new SessionReceiverClientOptions())
         {
             SessionId = sessionId;

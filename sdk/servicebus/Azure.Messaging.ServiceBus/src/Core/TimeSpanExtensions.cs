@@ -22,8 +22,9 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The amount of time remaining in the time period.</returns>
         ///
-        public static TimeSpan CalculateRemaining(this TimeSpan instance,
-                                                  TimeSpan elapsed)
+        public static TimeSpan CalculateRemaining(
+            this TimeSpan instance,
+            TimeSpan elapsed)
         {
             if ((instance == TimeSpan.Zero) || (elapsed >= instance))
             {

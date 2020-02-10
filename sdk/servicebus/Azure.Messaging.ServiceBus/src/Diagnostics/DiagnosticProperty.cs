@@ -52,6 +52,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   The activity name associated with Service Bus entity producers.
         /// </summary>
         ///
-        public static string ProducerActivityName { get; } = $"{ BaseActivityName }.EventHubProducerClient.Send";
+        public static string SenderActivityName { get; } = $"{ BaseActivityName }.ServiceBusSenderClient.Send";
     }
 }

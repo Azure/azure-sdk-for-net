@@ -14,7 +14,6 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     ///
     internal static class ServiceBusMessageInstrumentation
     {
-
         /// <summary>
         ///   Applies diagnostics instrumentation to a given event.
         /// </summary>

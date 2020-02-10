@@ -1,7 +1,4 @@
 # Release History
 
-## 1.0.2-preview.4 (2019-12-17)
-- Version Bump
-
-## 1.0.2-preview.3 (2019-12-17)
+## 5.0.0-preview.1 (2020-03)
 - Started changelog to capture release notes.

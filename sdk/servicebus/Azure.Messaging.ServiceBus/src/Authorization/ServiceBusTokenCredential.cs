@@ -45,16 +45,17 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// </summary>
         ///
         /// <param name="tokenCredential">The <see cref="TokenCredential" /> on which to base the token.</param>
-        /// <param name="eventHubResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
+        /// <param name="serviceBusResource">The Service Bus resource to which the token is intended to serve as authorization.</param>
         ///
-        public ServiceBusTokenCredential(TokenCredential tokenCredential,
-                                       string eventHubResource)
+        public ServiceBusTokenCredential(
+            TokenCredential tokenCredential,
+            string serviceBusResource)
         {
             Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
-            Argument.AssertNotNullOrEmpty(eventHubResource, nameof(eventHubResource));
+            Argument.AssertNotNullOrEmpty(serviceBusResource, nameof(serviceBusResource));
 
             Credential = tokenCredential;
-            Resource = eventHubResource;
+            Resource = serviceBusResource;
 
             IsSharedAccessSignatureCredential =
                 (tokenCredential is ServiceBusSharedKeyCredential)
@@ -72,8 +73,10 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(TokenRequestContext requestContext,
-                                             CancellationToken cancellationToken) => Credential.GetToken(requestContext, cancellationToken);
+        public override AccessToken GetToken(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken) =>
+            Credential.GetToken(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -85,8 +88,10 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
-                                                             CancellationToken cancellationToken) => Credential.GetTokenAsync(requestContext, cancellationToken);
+        public override ValueTask<AccessToken> GetTokenAsync(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken) =>
+            Credential.GetTokenAsync(requestContext, cancellationToken);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -97,6 +102,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public ValueTask<AccessToken> GetTokenUsingDefaultScopeAsync(CancellationToken cancellationToken) => GetTokenAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
+        public ValueTask<AccessToken> GetTokenUsingDefaultScopeAsync(CancellationToken cancellationToken) =>
+            GetTokenAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
     }
 }

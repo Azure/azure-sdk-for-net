@@ -87,9 +87,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   caller.
         /// </remarks>
         ///
-        public AmqpSender(string entityName,
-                            AmqpConnectionScope connectionScope,
-                            ServiceBusRetryPolicy retryPolicy)
+        public AmqpSender(
+            string entityName,
+            AmqpConnectionScope connectionScope,
+            ServiceBusRetryPolicy retryPolicy)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));

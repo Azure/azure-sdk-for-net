@@ -45,8 +45,9 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="sharedAccessKeyName">The name of the shared access key to be used for authorization, as reported by the Azure portal.</param>
         /// <param name="sharedAccessKey">The value of the shared access key to be used for authorization, as reported by the Azure portal.</param>
         ///
-        public ServiceBusSharedKeyCredential(string sharedAccessKeyName,
-                                           string sharedAccessKey)
+        public ServiceBusSharedKeyCredential(
+            string sharedAccessKeyName,
+            string sharedAccessKey)
         {
             Argument.AssertNotNullOrEmpty(sharedAccessKeyName, nameof(sharedAccessKeyName));
             Argument.AssertNotNullOrEmpty(sharedAccessKey, nameof(sharedAccessKey));
@@ -65,7 +66,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) => throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
+        public override AccessToken GetToken(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken) =>
+            throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         ///   Retrieves the token that represents the shared access signature credential, for
@@ -77,7 +81,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) => throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
+        public override ValueTask<AccessToken> GetTokenAsync(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken) =>
+            throw new InvalidOperationException(Resources1.SharedKeyCredentialCannotGenerateTokens);
 
         /// <summary>
         ///   Allows the rotation of Shared Access Signatures.
@@ -86,8 +93,9 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="keyName">The name of the shared access key that the signature should be based on.</param>
         /// <param name="keyValue">The value of the shared access key for the signature.</param>
         ///
-        public void UpdateSharedAccessKey(string keyName,
-                                          string keyValue)
+        public void UpdateSharedAccessKey(
+            string keyName,
+            string keyValue)
         {
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNullOrEmpty(keyValue, nameof(keyValue));
@@ -108,8 +116,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <returns>A new <see cref="SharedAccessSignatureCredential" /> based on the requested shared access key.</returns>
         ///
-        internal SharedAccessSignatureCredential AsSharedAccessSignatureCredential(string eventHubResource,
-                                                                                   TimeSpan? signatureValidityDuration = default)
+        internal SharedAccessSignatureCredential AsSharedAccessSignatureCredential(
+            string eventHubResource,
+            TimeSpan? signatureValidityDuration = default)
         {
             SharedAccessSignatureCredential = new SharedAccessSignatureCredential(new SharedAccessSignature(eventHubResource, SharedAccessKeyName, SharedAccessKey, signatureValidityDuration));
 

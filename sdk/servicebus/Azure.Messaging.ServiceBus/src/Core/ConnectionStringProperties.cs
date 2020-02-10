@@ -49,10 +49,11 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="sharedAccessKeyName">The name of the shared access key, to use authorization.</param>
         /// <param name="sharedAccessKey">The shared access key to use for authorization.</param>
         ///
-        public ConnectionStringProperties(Uri endpoint,
-                                          string entityName,
-                                          string sharedAccessKeyName,
-                                          string sharedAccessKey)
+        public ConnectionStringProperties(
+            Uri endpoint,
+            string entityName,
+            string sharedAccessKeyName,
+            string sharedAccessKey)
         {
             Endpoint = endpoint;
             EntityName = entityName;

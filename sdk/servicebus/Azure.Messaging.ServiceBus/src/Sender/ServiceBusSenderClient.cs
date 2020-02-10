@@ -18,26 +18,11 @@ using Microsoft.Azure.Amqp;
 namespace Azure.Messaging.ServiceBus.Sender
 {
     /// <summary>
-    ///   A client responsible for publishing <see cref="ServiceBusMessage" /> to a specific Service Bus entity,
-    ///   grouped together in batches.  Depending on the options specified when sending, events data
-    ///   may be automatically routed to an available partition or sent to a specifically requested partition.
+    ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity (queue or topic).
     /// </summary>
-    ///
-    /// <remarks>
-    ///   Allowing automatic routing of partitions is recommended when:
-    ///   <para>- The sending of events needs to be highly available.</para>
-    ///   <para>- The event data should be evenly distributed among all available partitions.</para>
-    ///
-    ///   If no partition is specified, the following rules are used for automatically selecting one:
-    ///   <para>1) Distribute the events equally amongst all available partitions using a round-robin approach.</para>
-    ///   <para>2) If a partition becomes unavailable, the Service Bus service will automatically detect it and forward the message to another available partition.</para>
-    /// </remarks>
     ///
     public class ServiceBusSenderClient : IAsyncDisposable
     {
-        /// <summary>The minimum allowable size, in bytes, for a batch to be sent.</summary>
-        internal const int MinimumBatchSizeLimit = 24;
-
         /// <summary>
         ///   The fully qualified Service Bus namespace that the producer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -77,18 +62,21 @@ namespace Azure.Messaging.ServiceBus.Sender
 
         /// <summary>
         ///   The active connection to the Azure Service Bus service, enabling client communications for metadata
-        ///   about the associated Service Bus entity and access to a transport-aware producer.
+        ///   about the associated Service Bus entity and access to a transport-aware sender.
         /// </summary>
         ///
         private ServiceBusConnection Connection { get; }
 
         /// <summary>
-        ///   An abstracted Service Bus entity transport-specific producer that is associated with the
+        ///   An abstracted Service Bus entity transport-specific sender that is associated with the
         ///   Service Bus entity gateway rather than a specific partition; intended to perform delegated operations.
         /// </summary>
         ///
         internal virtual TransportSender InnerSender { get; }
 
+        /// <summary>
+        ///
+        /// </summary>
         private ClientDiagnostics ClientDiagnostics { get; set; }
 
         /// <summary>
@@ -100,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///   connection string.  For example, ";EntityPath=orders-queue".
         ///
         ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
         ///   Service Bus entity will result in a connection string that contains the name.
@@ -120,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///   connection string.  For example, ";EntityPath=orders-queue".
         ///
         ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
         ///   Service Bus entity will result in a connection string that contains the name.
@@ -163,9 +151,10 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusSenderClient(string connectionString,
-                                      string entityName,
-                                      ServiceBusSenderClientOptions clientOptions)
+        public ServiceBusSenderClient(
+            string connectionString,
+            string entityName,
+            ServiceBusSenderClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             // interesting.. I assume this is done for immutability?
@@ -186,10 +175,11 @@ namespace Azure.Messaging.ServiceBus.Sender
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
-        public ServiceBusSenderClient(string fullyQualifiedNamespace,
-                                      string entityName,
-                                      TokenCredential credential,
-                                      ServiceBusSenderClientOptions clientOptions = default)
+        public ServiceBusSenderClient(
+            string fullyQualifiedNamespace,
+            string entityName,
+            TokenCredential credential,
+            ServiceBusSenderClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
@@ -212,8 +202,9 @@ namespace Azure.Messaging.ServiceBus.Sender
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
-        internal ServiceBusSenderClient(ServiceBusConnection connection,
-                                      ServiceBusSenderClientOptions clientOptions = default)
+        internal ServiceBusSenderClient(
+            ServiceBusConnection connection,
+            ServiceBusSenderClientOptions clientOptions = default)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
@@ -237,8 +228,9 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///   testing only.
         /// </remarks>
         ///
-        internal ServiceBusSenderClient(ServiceBusConnection connection,
-                                        TransportSender transportProducer)
+        internal ServiceBusSenderClient(
+            ServiceBusConnection connection,
+            TransportSender transportProducer)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(transportProducer, nameof(transportProducer));
@@ -299,9 +291,13 @@ namespace Azure.Messaging.ServiceBus.Sender
         /// <param name="scheduleEnqueueTimeUtc">The UTC time at which the message should be available for processing</param>
         /// <param name="cancellationToken"></param>
         /// <returns>The sequence number of the message that was scheduled.</returns>
-        public virtual async Task<long> ScheduleMessageAsync(ServiceBusMessage message, DateTimeOffset scheduleEnqueueTimeUtc, CancellationToken cancellationToken = default)
+        public virtual async Task<long> ScheduleMessageAsync(
+            ServiceBusMessage message,
+            DateTimeOffset scheduleEnqueueTimeUtc,
+            CancellationToken cancellationToken = default)
         {
             //this.ThrowIfClosed();
+            Argument.AssertNotNull(message, nameof(message));
             message.ScheduledEnqueueTimeUtc = scheduleEnqueueTimeUtc.UtcDateTime;
             return await Connection.ScheduleMessageAsync(message, RetryPolicy, GetSendLinkName(), cancellationToken).ConfigureAwait(false);
         }
@@ -351,12 +347,9 @@ namespace Azure.Messaging.ServiceBus.Sender
             IEnumerable<ServiceBusMessage> messages,
             CancellationToken cancellationToken)
         {
-
             Argument.AssertNotNull(messages, nameof(messages));
 
-
             using DiagnosticScope scope = CreateDiagnosticScope();
-
             messages = messages.ToList();
             InstrumentMessages(messages);
 
@@ -479,7 +472,7 @@ namespace Azure.Messaging.ServiceBus.Sender
         ///
         internal virtual DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
+            DiagnosticScope scope = ClientDiagnostics.CreateScope(DiagnosticProperty.SenderActivityName);
             scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.ServiceBusSenderType);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.ServiceBusServiceContext);
             scope.AddAttribute(DiagnosticProperty.ServiceBusAttribute, EntityName);
@@ -500,22 +493,6 @@ namespace Azure.Messaging.ServiceBus.Sender
             foreach (ServiceBusMessage message in messages)
             {
                 //EventDataInstrumentation.InstrumentEvent(message);
-            }
-        }
-
-        /// <summary>
-        ///   Ensures that no more than a single partition reference is active.
-        /// </summary>
-        ///
-        /// <param name="partitionId">The identifier of the partition to which the producer is bound.</param>
-        /// <param name="partitionKey">The hash key for partition routing that was requested for a publish operation.</param>
-        ///
-        private static void AssertSinglePartitionReference(string partitionId,
-                                                           string partitionKey)
-        {
-            if ((!string.IsNullOrEmpty(partitionId)) && (!string.IsNullOrEmpty(partitionKey)))
-            {
-                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotSendWithPartitionIdAndPartitionKey, partitionId));
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Azure.Messaging.ServiceBus.Core
         private const char TokenValuePairDelimiter = ';';
 
         /// <summary>The formatted protocol used by an Service Bus endpoint. </summary>
-        private const string EventHubsEndpointScheme = "sb://";
+        private const string ServiceBusEndpointScheme = "sb://";
 
         /// <summary>The token that identifies the endpoint address for the Service Bus namespace.</summary>
         private const string EndpointToken = "Endpoint";
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus.Core
                     {
                         parsedValues.EndpointToken = new UriBuilder(value)
                         {
-                            Scheme = EventHubsEndpointScheme
+                            Scheme = ServiceBusEndpointScheme
                         };
                     }
                     else if (string.Compare(EventHubNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)

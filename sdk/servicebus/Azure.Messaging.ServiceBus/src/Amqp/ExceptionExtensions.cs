@@ -25,8 +25,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The <see cref="Exception" /> that corresponds to the <paramref name="instance" /> and which represents the service error.</returns>
         ///
-        public static Exception TranslateServiceException(this Exception instance,
-                                                          string entityName)
+        public static Exception TranslateServiceException(
+            this Exception instance,
+            string entityName)
         {
             Argument.AssertNotNull(instance, nameof(instance));
 

@@ -41,16 +41,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         ///   Indicates that an <see cref="ServiceBusConnection" /> is being created.
         /// </summary>
         ///
-        /// <param name="eventHubsNamespace">The Entitys namespace associated with the client.</param>
+        /// <param name="serviceBusNamespace">The Entitys namespace associated with the client.</param>
         /// <param name="entityName">The name of the Entity associated with the client.</param>
         ///
         [Event(1, Level = EventLevel.Verbose, Message = "Creating EventHubClient (Namespace '{0}'; EventHub '{1}').")]
-        public void ServiceBusClientCreateStart(string eventHubsNamespace,
-                                              string entityName)
+        public void ServiceBusClientCreateStart(string serviceBusNamespace,
+                                                string entityName)
         {
             if (IsEnabled())
             {
-                WriteEvent(1, eventHubsNamespace ?? string.Empty, entityName ?? string.Empty);
+                WriteEvent(1, serviceBusNamespace ?? string.Empty, entityName ?? string.Empty);
             }
         }
 

@@ -55,8 +55,9 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override AccessToken GetToken(TokenRequestContext requestContext,
-                                             CancellationToken cancellationToken)
+        public override AccessToken GetToken(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken)
         {
             if (SharedAccessSignature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
             {
@@ -82,8 +83,10 @@ namespace Azure.Messaging.ServiceBus.Authorization
         ///
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
-        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
-                                                             CancellationToken cancellationToken) => new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
+        public override ValueTask<AccessToken> GetTokenAsync(
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken) =>
+            new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
 
         /// <summary>
         ///   It creates a new shared signature using the key name and the key value passed as

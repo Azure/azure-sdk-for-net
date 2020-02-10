@@ -36,8 +36,9 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="messages">The set of event data to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        public abstract Task SendAsync(IEnumerable<ServiceBusMessage> messages,
-                                       CancellationToken cancellationToken);
+        public abstract Task SendAsync(
+            IEnumerable<ServiceBusMessage> messages,
+            CancellationToken cancellationToken);
 
         /// <summary>
         ///   Closes the connection to the transport producer instance.

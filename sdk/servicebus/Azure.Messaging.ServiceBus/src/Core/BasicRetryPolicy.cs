@@ -72,8 +72,9 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The amount of time to delay before retrying the associated operation; if <c>null</c>, then the operation is no longer eligible to be retried.</returns>
         ///
-        public override TimeSpan? CalculateRetryDelay(Exception lastException,
-                                                      int attemptCount)
+        public override TimeSpan? CalculateRetryDelay(
+            Exception lastException,
+            int attemptCount)
         {
             if ((Options.MaximumRetries <= 0)
                 || (Options.Delay == TimeSpan.Zero)
@@ -151,10 +152,11 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The recommended duration to delay before retrying; this value does not take the maximum delay or eligibility for retry into account.</returns>
         ///
-        private static TimeSpan CalculateExponentialDelay(int attemptCount,
-                                                          double baseDelaySeconds,
-                                                          double baseJitterSeconds,
-                                                          Random random) =>
+        private static TimeSpan CalculateExponentialDelay(
+            int attemptCount,
+            double baseDelaySeconds,
+            double baseJitterSeconds,
+            Random random) =>
             TimeSpan.FromSeconds((Math.Pow(2, attemptCount) * baseDelaySeconds) + (random.NextDouble() * baseJitterSeconds));
 
         /// <summary>
@@ -167,9 +169,10 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         /// <returns>The recommended duration to delay before retrying; this value does not take the maximum delay or eligibility for retry into account.</returns>
         ///
-        private static TimeSpan CalculateFixedDelay(double baseDelaySeconds,
-                                                    double baseJitterSeconds,
-                                                    Random random) =>
+        private static TimeSpan CalculateFixedDelay(
+            double baseDelaySeconds,
+            double baseJitterSeconds,
+            Random random) =>
             TimeSpan.FromSeconds(baseDelaySeconds + (random.NextDouble() * baseJitterSeconds));
     }
 }
