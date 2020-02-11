@@ -973,7 +973,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task StopProcessingAsyncStopsLoadbalancer()
         {
             var mockLoadbalancer = new Mock<PartitionLoadBalancer>();
-            mockLoadbalancer.SetupGet(m => m.LoadBalanceInterval).Returns(TimeSpan.FromSeconds(1));
+            mockLoadbalancer.SetupAllProperties();
+            mockLoadbalancer.Object.LoadBalanceInterval = TimeSpan.FromSeconds(1);
             Func<EventHubConnection> connectionFactory = () => new MockConnection();
             var connection = connectionFactory();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
@@ -1000,7 +1001,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             const int NumberOfPartitions = 3;
             var mockLoadbalancer = new Mock<PartitionLoadBalancer>();
-            mockLoadbalancer.SetupGet(m => m.LoadBalanceInterval).Returns(TimeSpan.FromSeconds(1));
+            mockLoadbalancer.SetupAllProperties();
+            mockLoadbalancer.Object.LoadBalanceInterval = TimeSpan.FromSeconds(1);
             Func<EventHubConnection> connectionFactory = () => new MockConnection();
             var connection = connectionFactory();
             var partitionManager = new MockCheckPointStorage((s) => Console.WriteLine(s));
