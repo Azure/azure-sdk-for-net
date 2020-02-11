@@ -259,7 +259,7 @@ namespace Azure.Messaging.EventHubs
         ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private PartitionManager StorageManager { get; }
+        private StorageManager StorageManager { get; }
 
         /// <summary>
         ///   The set of options to use for consumers responsible for partition processing.
@@ -500,7 +500,7 @@ namespace Azure.Messaging.EventHubs
         ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
         /// </remarks>
         ///
-        internal EventProcessorClient(PartitionManager storageManager,
+        internal EventProcessorClient(StorageManager storageManager,
                                       string consumerGroup,
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
@@ -789,14 +789,14 @@ namespace Azure.Messaging.EventHubs
                                                                EventHubConsumerClientOptions options) => new EventHubConsumerClient(consumerGroup, connection, options);
 
         /// <summary>
-        ///   Creates a <see cref="PartitionManager" /> to use for interacting with durable storage.
+        ///   Creates a <see cref="StorageManager" /> to use for interacting with durable storage.
         /// </summary>
         ///
         /// <param name="checkpointStore">The client responsible for interaction with durable storage, responsible for persisting checkpoints and load-balancing state.</param>
         ///
-        /// <returns>A <see cref="PartitionManager" /> with the requested configuration.</returns>
+        /// <returns>A <see cref="StorageManager" /> with the requested configuration.</returns>
         ///
-        internal virtual PartitionManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore, RetryPolicy);
+        internal virtual StorageManager CreateStorageManager(BlobContainerClient checkpointStore) => new BlobsCheckpointStore(checkpointStore, RetryPolicy);
 
         /// <summary>
         ///   Starts running a task responsible for receiving and processing events in the context of a specified partition.

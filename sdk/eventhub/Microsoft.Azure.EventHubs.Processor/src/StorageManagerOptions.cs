@@ -8,7 +8,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     /// <summary>
     /// Options to control various aspects of partition distribution happening within <see cref="EventProcessorHost"/> instance.
     /// </summary> 
-    public class PartitionManagerOptions
+    public class StorageManagerOptions
     {
         const int MinLeaseDurationInSeconds = 15;
         const int MaxLeaseDurationInSeconds = 60;

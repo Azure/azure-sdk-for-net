@@ -78,9 +78,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public void InvalidPartitionManagerOptions()
+        public void InvalidStorageManagerOptions()
         {
-            var pmo = new PartitionManagerOptions()
+            var pmo = new StorageManagerOptions()
             {
                 LeaseDuration = TimeSpan.FromSeconds(30),
                 RenewInterval = TimeSpan.FromSeconds(20)

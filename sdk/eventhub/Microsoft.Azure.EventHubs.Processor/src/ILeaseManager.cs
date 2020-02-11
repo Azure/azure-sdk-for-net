@@ -21,7 +21,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     public interface ILeaseManager
     {
         /// <summary>
-        /// Allows a lease manager implementation to specify to PartitionManager how often it should
+        /// Allows a lease manager implementation to specify to StorageManager how often it should
         /// scan leases and renew them. In order to redistribute leases in a timely fashion after a host
         /// ceases operating, we recommend a relatively short interval, such as ten seconds. Obviously it
         /// should be less than half of the lease length, to prevent accidental expiration.

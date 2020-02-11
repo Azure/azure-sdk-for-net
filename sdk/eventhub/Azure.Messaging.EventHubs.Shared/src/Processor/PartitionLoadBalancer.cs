@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private readonly PartitionManager StorageManager;
+        private readonly StorageManager StorageManager;
 
         /// <summary>
         ///   A partition distribution dictionary, mapping an owner's identifier to the amount of partitions it owns and its list of partitions.
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="ownershipExpiration">The minimum amount of time for an ownership to be considered expired without further updates.</param>
         ///
-        public PartitionLoadBalancer(PartitionManager storageManager,
+        public PartitionLoadBalancer(StorageManager storageManager,
                                      string identifier,
                                      string consumerGroup,
                                      string fullyQualifiedNamespace,

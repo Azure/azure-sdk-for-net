@@ -137,7 +137,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             this.TransportType = csb.TransportType;
             this.OperationTimeout = csb.OperationTimeout;
             this.EndpointAddress = csb.Endpoint;
-            this.PartitionManager = new PartitionManager(this);
+            this.StorageManager = new StorageManager(this);
             ProcessorEventSource.Log.EventProcessorHostCreated(this.HostName, this.EventHubPath);
         }
 
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             this.LeaseManager = leaseManager;
             this.TransportType = transportType;
             this.OperationTimeout = operationTimeout ?? ClientConstants.DefaultOperationTimeout;
-            this.PartitionManager = new PartitionManager(this);
+            this.StorageManager = new StorageManager(this);
             ProcessorEventSource.Log.EventProcessorHostCreated(this.HostName, this.EventHubPath);
         }
 
@@ -353,10 +353,10 @@ namespace Microsoft.Azure.EventHubs.Processor
         public TimeSpan OperationTimeout { get; internal set; }
 
         /// <summary>Gets or sets the
-        /// <see cref="PartitionManagerOptions" /> instance used by the
+        /// <see cref="StorageManagerOptions" /> instance used by the
         /// <see cref="EventProcessorHost" /> object.</summary>
-        /// <value>The <see cref="PartitionManagerOptions" /> instance.</value>
-        public PartitionManagerOptions PartitionManagerOptions { get; set; }
+        /// <value>The <see cref="StorageManagerOptions" /> instance.</value>
+        public StorageManagerOptions StorageManagerOptions { get; set; }
 
         // All of these accessors are for internal use only.
         internal ICheckpointManager CheckpointManager { get; }
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         internal IEventProcessorFactory ProcessorFactory { get; private set; }
 
-        internal PartitionManager PartitionManager { get; private set; }
+        internal StorageManager StorageManager { get; private set; }
 
         /// <summary>
         /// This registers <see cref="IEventProcessor"/> implementation with the host using <see cref="DefaultEventProcessorFactory{T}"/>.
@@ -422,11 +422,11 @@ namespace Microsoft.Azure.EventHubs.Processor
             Guard.ArgumentNotNull(nameof(factory), factory);
             Guard.ArgumentNotNull(nameof(processorOptions), processorOptions);
 
-            // Initialize partition manager options with default values if not already set by the client.
-            if (this.PartitionManagerOptions == null)
+            // Initialize storage manager options with default values if not already set by the client.
+            if (this.StorageManagerOptions == null)
             {
-                // Assign partition manager with default options.
-                this.PartitionManagerOptions = new PartitionManagerOptions();
+                // Assign storage manager with default options.
+                this.StorageManagerOptions = new StorageManagerOptions();
             }
 
             ProcessorEventSource.Log.EventProcessorHostOpenStart(this.HostName, factory.GetType().ToString());
@@ -453,7 +453,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
                 this.ProcessorFactory = factory;
                 this.EventProcessorOptions = processorOptions;
-                await this.PartitionManager.StartAsync().ConfigureAwait(false);
+                await this.StorageManager.StartAsync().ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             ProcessorEventSource.Log.EventProcessorHostCloseStart(this.HostName);
             try
             {
-                await this.PartitionManager.StopAsync().ConfigureAwait(false);
+                await this.StorageManager.StopAsync().ConfigureAwait(false);
             }
             catch (Exception e)
             {

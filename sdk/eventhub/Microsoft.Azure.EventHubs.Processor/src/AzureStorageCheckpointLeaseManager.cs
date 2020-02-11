@@ -64,9 +64,9 @@ namespace Microsoft.Azure.EventHubs.Processor
         {
             this.host = host;
 
-            // Assign partition manager options.
-            this.leaseDuration = host.PartitionManagerOptions.LeaseDuration;
-            this.leaseRenewInterval = host.PartitionManagerOptions.RenewInterval;
+            // Assign storage manager options.
+            this.leaseDuration = host.StorageManagerOptions.LeaseDuration;
+            this.leaseRenewInterval = host.StorageManagerOptions.RenewInterval;
 
             // Set storage renew request options.
             // Lease renew calls shouldn't wait more than leaseRenewInterval

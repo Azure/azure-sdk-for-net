@@ -12,7 +12,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     using System.Threading.Tasks;
     using Microsoft.Azure.EventHubs.Primitives;
 
-    class PartitionManager
+    class StorageManager
     {
         readonly EventProcessorHost host;
         readonly ConcurrentDictionary<string, PartitionPump> partitionPumps;
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         CancellationTokenSource cancellationTokenSource;
         Task runTask;
 
-        internal PartitionManager(EventProcessorHost host)
+        internal StorageManager(EventProcessorHost host)
         {
             this.host = host;
             this.cancellationTokenSource = new CancellationTokenSource();
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         {
             if (this.runTask != null)
             {
-                throw new InvalidOperationException("A PartitionManager cannot be started multiple times.");
+                throw new InvalidOperationException("A StorageManager cannot be started multiple times.");
             }
 
             await this.InitializeStoresAsync().ConfigureAwait(false);
@@ -93,8 +93,8 @@ namespace Microsoft.Azure.EventHubs.Processor
             catch (Exception e)
             {
                 // Ideally RunLoop should never throw.
-                ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, "Exception from partition manager main loop, shutting down", e.ToString());
-                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.PartitionManagerMainLoop);
+                ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, "Exception from storage manager main loop, shutting down", e.ToString());
+                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.StorageManagerMainLoop);
             }
 
             try
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             catch (Exception e)
             {
                 ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, "Failure during shutdown", e.ToString());
-                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.PartitionManagerCleanup);
+                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.StorageManagerCleanup);
             }
         }
 
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                     }
 
                     // Loop should not exit unless signalled via cancellation token. Log any failures and continue.
-                    ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, "Exception from partition manager main loop, continuing", e.Message);
+                    ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, "Exception from storage manager main loop, continuing", e.Message);
                     this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.PartitionPumpManagement);
                 }
             }
