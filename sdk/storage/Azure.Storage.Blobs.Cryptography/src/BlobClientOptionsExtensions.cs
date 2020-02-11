@@ -13,9 +13,7 @@ namespace Azure.Storage.Blobs.Specialized
            HttpPipelinePolicy policy,
            HttpPipelinePosition position = HttpPipelinePosition.PerCall)
         {
-            options = options == default
-                 ? new BlobClientOptions()
-                 : new BlobClientOptions(options);
+            options ??= new BlobClientOptions();
             options.AddPolicy(policy, position);
             return options;
         }

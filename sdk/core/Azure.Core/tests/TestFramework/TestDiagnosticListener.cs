@@ -82,7 +82,7 @@ namespace Azure.Core.Tests
             }
         }
 
-        private class InternalListener : IObserver<KeyValuePair<string, object>>
+        private class InternalListener: IObserver<KeyValuePair<string, object>>
         {
             private readonly Queue<(string, object, DiagnosticListener)> _queue;
 

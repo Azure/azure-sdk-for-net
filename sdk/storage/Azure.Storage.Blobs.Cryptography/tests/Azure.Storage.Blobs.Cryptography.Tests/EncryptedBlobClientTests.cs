@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Testing;
 using Azure.Security.KeyVault.Keys.Cryptography;
@@ -48,6 +49,24 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
             return new CryptographyClient(key.Id, GetTokenCredential_TargetKeyClient());
         }
 
+        /// <summary>
+        /// Creates an encrypted blob client from a container client. Note that this method does not copy over any
+        /// client options from the container client. You must pass in your own options. These options will be mutated.
+        /// </summary>
+        public EncryptedBlobClient GetEncryptedBlobClient(
+            BlobContainerClient containerClient,
+            string blobName,
+            StorageSharedKeyCredential credential,
+            ClientsideEncryptionOptions encryptionOptions,
+            BlobClientOptions options)
+        {
+            return InstrumentClient(new EncryptedBlobClient(
+                containerClient.Uri.AppendToPath(blobName),
+                credential,
+                encryptionOptions,
+                options));
+        }
+
         #endregion
 
         [TestCase(16)] // a single cipher block
@@ -63,13 +82,16 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
             await using (var disposable = await GetTestContainerAsync())
             {
                 var blobName = GetNewBlobName();
-                var blob = disposable.Container.GetEncryptedBlobClient(
+                var blob = GetEncryptedBlobClient(
+                    disposable.Container,
                     blobName,
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     new ClientsideEncryptionOptions()
                     {
                         KeyEncryptionKey = mockKey,
                         KeyResolver = mockKey
-                    });
+                    },
+                    GetOptions());
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
@@ -105,13 +127,16 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
             var mockKey = new MockKeyEncryptionKey();
             await using (var disposable = await GetTestContainerAsync())
             {
-                var blob = disposable.Container.GetEncryptedBlobClient(
+                var blob = GetEncryptedBlobClient(
+                    disposable.Container,
                     GetNewBlobName(),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     new ClientsideEncryptionOptions()
                     {
                         KeyEncryptionKey = mockKey,
                         KeyResolver = mockKey
-                    });
+                    },
+                    GetOptions());
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
@@ -146,13 +171,16 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
             var mockKey = new MockKeyEncryptionKey();
             await using (var disposable = await GetTestContainerAsync())
             {
-                var blob = disposable.Container.GetEncryptedBlobClient(
+                var blob = GetEncryptedBlobClient(
+                    disposable.Container,
                     GetNewBlobName(),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     new ClientsideEncryptionOptions()
                     {
                         KeyEncryptionKey = mockKey,
                         KeyResolver = mockKey
-                    });
+                    },
+                    GetOptions());
 
                 // upload with encryption
                 await blob.UploadAsync(new MemoryStream(data));
@@ -189,13 +217,16 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
             var mockKey = new MockKeyEncryptionKey();
             await using (var disposable = await GetTestContainerAsync())
             {
-                var track2Blob = disposable.Container.GetEncryptedBlobClient(
+                var track2Blob = GetEncryptedBlobClient(
+                    disposable.Container,
                     GetNewBlobName(),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     new ClientsideEncryptionOptions()
                     {
                         KeyEncryptionKey = mockKey,
                         KeyResolver = mockKey
-                    });
+                    },
+                    GetOptions());
 
                 // upload with track 1
                 var creds = GetNewSharedKeyCredentials();
@@ -227,13 +258,16 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
             var mockKey = new MockKeyEncryptionKey();
             await using (var disposable = await GetTestContainerAsync())
             {
-                var track2Blob = disposable.Container.GetEncryptedBlobClient(
+                var track2Blob = GetEncryptedBlobClient(
+                    disposable.Container,
                     GetNewBlobName(),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     new ClientsideEncryptionOptions()
                     {
                         KeyEncryptionKey = mockKey,
                         KeyResolver = mockKey
-                    });
+                    },
+                    GetOptions());
 
                 // upload with track 2
                 await track2Blob.UploadAsync(new MemoryStream(data));
@@ -309,11 +343,16 @@ namespace Azure.Storage.Blobs.Cryptography.Tests
                 var downloadTasks = new List<Task<byte[]>>();
                 foreach (var _ in Enumerable.Range(0, 10))
                 {
-                    var blob = disposable.Container.GetEncryptedBlobClient(GetNewBlobName(), new ClientsideEncryptionOptions()
-                    {
-                        KeyEncryptionKey = key,
-                        KeyResolver = key
-                    });
+                    var blob = GetEncryptedBlobClient(
+                        disposable.Container,
+                        GetNewBlobName(),
+                        new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
+                        new ClientsideEncryptionOptions()
+                        {
+                            KeyEncryptionKey = key,
+                            KeyResolver = key
+                        },
+                        GetOptions());
 
                     downloadTasks.Add(RoundTripDataHelper(blob, data));
                 }

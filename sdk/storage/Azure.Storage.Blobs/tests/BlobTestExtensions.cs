@@ -25,39 +25,42 @@ namespace Azure.Storage
 
         public static AppendBlobClient WithCustomerProvidedKey(
             this AppendBlobClient blob,
-            CustomerProvidedKey customerProvidedKey) =>
-            new AppendBlobClient(
+            CustomerProvidedKey customerProvidedKey)
+        {
+            // this technically corrupts the field. But this is test-only code, we so we can get away with it.
+            blob.SourceOptions.CustomerProvidedKey = customerProvidedKey;
+            return new AppendBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
                 blob.AuthenticationPolicy,
-                new BlobClientOptions(blob.SourceOptions)
-                {
-                    CustomerProvidedKey = customerProvidedKey
-                });
+                blob.SourceOptions);
+        }
 
         public static BlockBlobClient WithCustomerProvidedKey(
             this BlockBlobClient blob,
-            CustomerProvidedKey customerProvidedKey) =>
-            new BlockBlobClient(
+            CustomerProvidedKey customerProvidedKey)
+        {
+            // this technically corrupts the field. But this is test-only code, we so we can get away with it.
+            blob.SourceOptions.CustomerProvidedKey = customerProvidedKey;
+            return new BlockBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
                 blob.AuthenticationPolicy,
-                new BlobClientOptions(blob.SourceOptions)
-                {
-                    CustomerProvidedKey = customerProvidedKey
-                });
+                blob.SourceOptions);
+        }
 
         public static PageBlobClient WithCustomerProvidedKey(
             this PageBlobClient blob,
-            CustomerProvidedKey customerProvidedKey) =>
-            new PageBlobClient(
+            CustomerProvidedKey customerProvidedKey)
+        {
+            // this technically corrupts the field. But this is test-only code, we so we can get away with it.
+            blob.SourceOptions.CustomerProvidedKey = customerProvidedKey;
+            return new PageBlobClient(
                 ToHttps(blob.Uri),
                 blob.Pipeline,
                 blob.AuthenticationPolicy,
-                new BlobClientOptions(blob.SourceOptions)
-                {
-                    CustomerProvidedKey = customerProvidedKey
-                });
+                blob.SourceOptions);
+        }
 
         /// <summary>
         /// Convert a base RequestConditions to BlobRequestConditions.

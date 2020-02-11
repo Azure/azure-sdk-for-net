@@ -50,9 +50,7 @@ namespace Azure.Storage.Blobs
         /// A deep copy of the <see cref="BlobClientOptions"/> used to make this client. Every call to this property
         /// will return a new deep copy of the original, free to safely mutate.
         /// </summary>
-        internal virtual BlobClientOptions SourceOptions => _sourceOptions == default
-            ? default
-            : new BlobClientOptions(_sourceOptions);
+        internal virtual BlobClientOptions SourceOptions => _sourceOptions;
 
         /// <summary>
         /// The version of the service to use when sending requests.
@@ -291,9 +289,7 @@ namespace Azure.Storage.Blobs
             _authenticationPolicy = authentication;
 
             // save the actual options passed in before any modifications made for construction
-            _sourceOptions = options == default
-                ? default
-                : new BlobClientOptions(options);
+            _sourceOptions = options;
             options ??= new BlobClientOptions();
 
             _pipeline = pipeline;

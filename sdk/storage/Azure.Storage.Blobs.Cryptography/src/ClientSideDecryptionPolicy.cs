@@ -319,29 +319,26 @@ namespace Azure.Storage.Blobs.Specialized
         private static Stream WrapStream(Stream contentStream, byte[] contentEncryptionKey,
             EncryptionData encryptionData, byte[] iv, bool noPadding)
         {
-            if (!Enum.TryParse(encryptionData.EncryptionAgent.EncryptionAlgorithm, out ClientsideEncryptionAlgorithm algorithm))
+            if (encryptionData.EncryptionAgent.EncryptionAlgorithm == ClientSideEncryptionAlgorithm.AesCbc256)
+            {
+                using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider())
+                {
+                    aesProvider.IV = iv ?? encryptionData.ContentEncryptionIV;
+                    aesProvider.Key = contentEncryptionKey;
+
+                    if (noPadding)
+                    {
+                        aesProvider.Padding = PaddingMode.None;
+                    }
+
+                    return new RollingBufferStream(
+                        new CryptoStream(contentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read),
+                        EncryptionConstants.DefaultRollingBufferSize);
+                }
+            }
+            else
             {
                 throw EncryptionErrors.BadEncryptionAlgorithm();
-            }
-            switch (algorithm)
-            {
-                case ClientsideEncryptionAlgorithm.AES_CBC_256:
-                    using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider())
-                    {
-                        aesProvider.IV = iv ?? encryptionData.ContentEncryptionIV;
-                        aesProvider.Key = contentEncryptionKey;
-
-                        if (noPadding)
-                        {
-                            aesProvider.Padding = PaddingMode.None;
-                        }
-
-                        return new RollingBufferStream(
-                            new CryptoStream(contentStream, aesProvider.CreateDecryptor(), CryptoStreamMode.Read),
-                            EncryptionConstants.DefaultRollingBufferSize);
-                    }
-                default:
-                    throw EncryptionErrors.BadEncryptionAlgorithm();
             }
         }
 

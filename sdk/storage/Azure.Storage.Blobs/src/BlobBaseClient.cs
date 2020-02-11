@@ -53,9 +53,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A deep copy of the <see cref="BlobClientOptions"/> used to make this client. Every call to this property
         /// will return a new deep copy of the original, free to safely mutate.
         /// </summary>
-        internal virtual BlobClientOptions SourceOptions => _sourceOptions == default
-            ? default
-            : new BlobClientOptions(_sourceOptions);
+        internal virtual BlobClientOptions SourceOptions => _sourceOptions;
 
         /// <summary>
         /// The authentication policy for our pipeline.  We cache it here in
@@ -209,21 +207,6 @@ namespace Azure.Storage.Blobs.Specialized
                 blobName,
                 options)
         {
-            //options ??= new BlobClientOptions();
-            //var conn = StorageConnectionString.Parse(connectionString);
-            //var builder =
-            //    new BlobUriBuilder(conn.BlobEndpoint)
-            //    {
-            //        BlobContainerName = blobContainerName,
-            //        BlobName = blobName
-            //    };
-            //_uri = builder.ToUri();
-            //_pipeline = options.Build(conn.Credentials);
-            //_version = options.Version;
-            //_clientDiagnostics = new ClientDiagnostics(options);
-            //_customerProvidedKey = options.CustomerProvidedKey;
-            //_sourceOptions = new BlobClientOptions(options);
-            //BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _customerProvidedKey);
         }
 
         /// <summary>
@@ -381,7 +364,6 @@ namespace Azure.Storage.Blobs.Specialized
         internal BlobBaseClient(
             Uri blobUri,
             HttpPipeline pipeline,
-            /*BlobClientOptions.ServiceVersion version, ClientDiagnostics clientDiagnostics, CustomerProvidedKey? customerProvidedKey*/
             HttpPipelinePolicy authentication,
             BlobClientOptions options)
         {
@@ -389,9 +371,7 @@ namespace Azure.Storage.Blobs.Specialized
             _authenticationPolicy = authentication;
 
             // save the actual options passed in before any modifications made for construction
-            _sourceOptions = options == default
-                ? default
-                : new BlobClientOptions(options);
+            _sourceOptions = options;
             options ??= new BlobClientOptions();
 
             _pipeline = pipeline;

@@ -48,7 +48,7 @@ namespace Azure.Storage.Blobs.Specialized.Models
         /// </summary>
         /// <returns></returns>
         public string Serialize()
-            => JsonSerializer.Serialize(this);
+            => EncryptionDataSerializer.Serialize(this);
 
         /// <summary>
         /// Deserializes an <see cref="EncryptionData"/> from JSON.
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Specialized.Models
         /// <param name="json">JSON to deserialize.</param>
         /// <returns></returns>
         public static EncryptionData Deserialize(string json)
-            => JsonSerializer.Deserialize<EncryptionData>(json);
+            => EncryptionDataSerializer.Deserialize(json);
 
         internal static async Task<EncryptionData> CreateAsync(
             byte[] contentEncryptionIv,
@@ -71,7 +71,7 @@ namespace Azure.Storage.Blobs.Specialized.Models
                 ContentEncryptionIV = contentEncryptionIv,
                 EncryptionAgent = new EncryptionAgent()
                 {
-                    EncryptionAlgorithm = Enum.GetName(typeof(ClientsideEncryptionAlgorithm), ClientsideEncryptionAlgorithm.AES_CBC_256),
+                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
                     Protocol = EncryptionConstants.EncryptionProtocolV1
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()

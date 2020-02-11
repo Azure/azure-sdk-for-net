@@ -25,19 +25,6 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Copy constructor.
-        /// </summary>
-        /// <param name="other">Options to copy.</param>
-        protected ClientOptions(ClientOptions other)
-        {
-            Transport = other.Transport;
-            Diagnostics = new DiagnosticsOptions(other.Diagnostics);
-            Retry = new RetryOptions(other.Retry);
-            PerCallPolicies = new List<HttpPipelinePolicy>(other.PerCallPolicies);
-            PerRetryPolicies = new List<HttpPipelinePolicy>(other.PerRetryPolicies);
-        }
-
-        /// <summary>
         /// The <see cref="HttpPipelineTransport"/> to be used for this client. Defaults to an instance of <see cref="HttpClientTransport"/>.
         /// </summary>
         public HttpPipelineTransport Transport
