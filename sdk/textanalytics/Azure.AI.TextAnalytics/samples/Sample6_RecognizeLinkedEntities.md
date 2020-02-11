@@ -1,5 +1,5 @@
 # Recognizing Linked Entities in Text Inputs
-This sample demonstrates how to recognize linked entities in one or more text inputs using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to recognize linked entities in one or more text inputs. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 

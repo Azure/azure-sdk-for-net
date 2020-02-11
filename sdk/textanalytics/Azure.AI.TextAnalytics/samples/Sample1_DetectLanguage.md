@@ -1,6 +1,6 @@
 # Detecting the Language of Text Inputs
 
-This sample demonstrates how to detect the language that one or more text inputs are written in using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
+This sample demonstrates how to detect the language that one or more text inputs are written in. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 

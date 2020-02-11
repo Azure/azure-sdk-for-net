@@ -343,7 +343,7 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Sample4_RecognizeEntities.cs][recognize_entities_sample0] - Recognize entities in a single text input.
 * [Sample4_RecognizeEntitiesBatchConvenience.cs][recognize_entities_sample1] - Recognize entities in each input in a collection of text input strings.
 * [Sample4_RecognizeEntitiesBatch.cs][recognize_entities_sample2] - Recognize entities in each input in a collection of text document inputs.
-* [Sample4_Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
+* [Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
 
 ### Recognize PII Entities
 * [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a single text input.
