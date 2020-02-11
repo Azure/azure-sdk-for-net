@@ -1,5 +1,8 @@
 # Release History
 
+## 12.3.0-preview.1 (Unreleased)
+
+
 ## 12.2.0 (2020-02)
 - Added support for service version 2019-07-07.
 - Update StorageSharedKeyPipelinePolicy to upload the request date header each retry.
