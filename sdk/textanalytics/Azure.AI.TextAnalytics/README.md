@@ -13,33 +13,55 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
-* An existing [Cognitive Services][cognitive_resource] or Text Analytics resource. If you need to create the resource, you can use the [Azure Portal][azure_portal] or [Azure CLI][azure_cli].
+* An existing Cognitive Services or Text Analytics resource.
 
-If you use the Azure CLI, replace `<your-resource-group-name>`, `<your-resource-name>`, `<location>`, and `<sku>` with your values:
+### Create a Cognitive Services or Text Analytics resource
+Text Analytics supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Text Analytics access only, create a Text Analytics resource.
+
+You can create either resource using: 
+
+**Option 1:** [Azure Portal][cognitive_resource_portal].
+
+**Option 2:** [Azure CLI][cognitive_resource_cli]. 
+
+Below is an example of how you can create a Text Analytics resource using the CLI:
 
 ```PowerShell
-az cognitiveservices account create --kind TextAnalytics --resource-group <your-resource-group-name> --name <your-resource-name> --location <location> --sku <sku>
+# Create a new resource group to hold the text analytics resource -
+# if using an existing resource group, skip this step
+az group create --name <your-resource-name> --location <location>
 ```
+
+```PowerShell
+# Create text analytics
+az cognitiveservices account create \
+    --name <your-resource-name> \
+    --resource-group <your-resource-group-name> \
+    --kind TextAnalytics \
+    --sku <sku> \
+    --location <location> \
+    --yes
+```
+For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
 ### Install the package
 Install the Azure Text Analytics client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.AI.TextAnalytics
+Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.2
 ```
 
 ### Authenticate the client
 In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get API Key
+You can get the `endpoint` and `API key` from the Cognitive Services resource or Text Analytics resource information in the [Azure Portal][azure_portal].
 
-Use the [Azure CLI][azure_cli] snippet below to get the API key from the Text Analytics resource.
+Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key from the Text Analytics resource.
 
 ```PowerShell
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
-
-Alternatively, you can get the endpoint and API key from the resource information in the [Azure Portal][azure_portal].
 
 #### Create TextAnalyticsClient with API Key Credential
 Once you have the value for the API key, create a `TextAnalyticsApiKeyCredential`. This will allow you to
@@ -81,12 +103,13 @@ A `TextAnalyticsClient` is the primary interface for developers using the Text A
 
 ### Text Input
 A **text input**, sometimes called a **document**, is a single unit of input to be analyzed by the predictive models in the Text Analytics service.  Operations on `TextAnalyticsClient` may take a single text input or a collection of inputs to be analyzed as a batch.
+For text input length limits, maximum batch size, and supported text encoding see [here][data_limits].
 
-### Operation Result
-An operation result, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single text input.  An operation's result type also may optionally include information about the input document and how it was processed.
+### Return value
+Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single text input.  An operation's return value also may optionally include information about the input document and how it was processed.
 
-### Operation Result Collection
-An operation result collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections.  An operation result collection may optionally include information about the input batch and how it was processed.
+### Return value Collection
+A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given text input. It may optionally include information about the input batch and how it was processed.
 
  ### Operation on multiple text inputs
 For each supported operation, `TextAnalyticsClient` provides a method that accepts a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects. This methods allow callers to give each document a unique ID, indicate that the documents in the batch are written in different languages, or provide a country hint about the language of the document.
@@ -159,7 +182,7 @@ For samples on using the production recommended option `ExtractKeyPhrasesBatch` 
 Please refer to the service documentation for a conceptual discussion of [key phrase extraction][key_phrase_extraction].
 
 ### Recognize Entities
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
+Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
 
 ```C# Snippet:RecognizeEntities
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
@@ -230,7 +253,7 @@ Console.WriteLine($"Detected language {language.Name} with confidence {language.
 ```
 
 ### Recognize Entities Asynchronously
-Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories](https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types).
+Run a predictive model to identify a collection of named entities in the passed-in input text or batch of input text documents and categorize those entities into categories such as person, location, or organization.  For more information on available categories, see [Text Analytics Named Entity Categories][named_entities_categories].
 
 ```C# Snippet:RecognizeEntitiesAsync
 string input = "Microsoft was founded by Bill Gates and Paul Allen.";
@@ -284,6 +307,17 @@ Headers:
     Content-Type: application/json; charset=utf-8
 ```
 
+### Setting up console logging
+The simplest way to see the logs is to enable the console logging.
+To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
+
+```
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [here][logging].
+
 ## Next steps
 
 Samples showing how to use the Cognitive Services Text Analytics library are available in this GitHub repository.
@@ -334,26 +368,29 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [textanalytics_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src
-[textanalytics_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/
+[textanalytics_docs]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
 [textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples
 [textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-Preview-1/operations/Languages
-[cognitive_resource]: https://docs.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account
+[cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 
-[language_detection]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
-[sentiment_analysis]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
-[key_phrase_extraction]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
-[named_entity_recognition]: https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-entity-linking
-
+[language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
+[sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis
+[key_phrase_extraction]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-keyword-extraction
+[named_entity_recognition]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-entity-linking
+[named_entities_categories]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types
 
 [textanalytics_client_class]: src/TextAnalyticsClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
-[cognitive_auth]: https://docs.microsoft.com/en-us/azure/cognitive-services/authentication
+[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
+[logging]:https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
+[data_limits]:https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
 
 [detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
 [detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs
