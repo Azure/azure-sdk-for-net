@@ -4,9 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="nunit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +14,9 @@
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Management.ServiceBus" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />
