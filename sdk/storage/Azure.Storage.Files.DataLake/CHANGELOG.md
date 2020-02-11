@@ -4,6 +4,7 @@
 - Added support for service version 2019-07-07.
 - Added DataLakeFileClient.ReadTo() and .ReadToAsync() APIs, providing support for parallel downloads to Stream and Files.
 - Added progress reporting to DataLakeFileClient.Append() and .AppendAsync().
+- Added DataLakeFileSysteClient.GetRootDirectoryClient().
 - Fixed issue where SAS didn't work with signed identifiers.
 - Renamed LeaseDurationType, LeaseState, and LeaseStatus to DataLakeLeaseDuration, DataLakeLeaseState, and DataLakeLeaseStatus
 - Sanitized header values in exceptions.
