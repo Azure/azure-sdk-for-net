@@ -343,17 +343,16 @@ Samples are provided for each main functional area, and for each area, samples a
 * [Sample4_RecognizeEntities.cs][recognize_entities_sample0] - Recognize entities in a single text input.
 * [Sample4_RecognizeEntitiesBatchConvenience.cs][recognize_entities_sample1] - Recognize entities in each input in a collection of text input strings.
 * [Sample4_RecognizeEntitiesBatch.cs][recognize_entities_sample2] - Recognize entities in each input in a collection of text document inputs.
-* [Sample4_DetectLanguageAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
+* [Sample4_RecognizeEntitiesAsync.cs][recognize_entities_sample_async] - Make an asynchronous call to detect the language of a single text input.
 
 ### Recognize PII Entities
 * [Sample5_RecognizePiiEntities.cs][recognize_pii_entities_sample0] - Recognize entities containing Personally Identifiable Information in a single text input.
-* [Sample5_DetectLanguageBatchConvenience.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information in each input in a collection of text input strings.
-* [Sample5_DetectLanguageBatch.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each input in a collection of text document inputs.
-
+* [Sample5_RecognizePiiEntitiesBatch.cs][recognize_pii_entities_sample1] - Recognize entities containing Personally Identifiable Information in each input in a collection of document strings.
+* [Sample5_RecognizePiiEntitiesBatchConvenience.cs][recognize_pii_entities_sample2] - Recognize entities containing Personally Identifiable Information in each input in a collection of text input string.
 ### Recognize Linked Entities
 * [Sample6_RecognizeLinkedEntities.cs][recognize_linked_entities_sample0] - Recognize linked entities in a single text input.
-* [Sample6_DetectLanguageBatchConvenience.cs][recognize_linked_entities_sample1] - Recognize linked entities in each input in a collection of text input strings.
-* [Sample6_DetectLanguageBatch.cs][recognize_linked_entities_sample2] - Recognize linked entities in each input in a collection of text document inputs.
+* [Sample6_RecognizeLinkedEntitiesBatchConvenience.cs][recognize_linked_entities_sample1] - Recognize linked entities in each input in a collection of text input strings.
+* [Sample6_RecognizeLinkedEntitiesBatch.cs][recognize_linked_entities_sample2] - Recognize linked entities in each input in a collection of text document inputs.
 
 ## Contributing
 
@@ -367,11 +366,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 
 <!-- LINKS -->
-[textanalytics_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/src
+[textanalytics_client_src]: src
 [textanalytics_docs]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/
 [textanalytics_refdocs]: https://aka.ms/azsdk-net-textanalytics-ref-docs
 [textanalytics_nuget_package]: https://www.nuget.org/packages/Azure.AI.TextAnalytics
-[textanalytics_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples
+[textanalytics_samples]: tests/samples
 [textanalytics_rest_api]: https://westus.dev.cognitive.microsoft.com/docs/services/TextAnalytics-v3-0-Preview-1/operations/Languages
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
@@ -383,14 +382,14 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [named_entities_categories]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types
 
 [textanalytics_client_class]: src/TextAnalyticsClient.cs
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
+[azure_identity]: ../../identity/Azure.Identity
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: ../../identity/Azure.Identity/README.md
-[logging]:https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
-[data_limits]:https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
+[logging]: ../../core/Azure.Core/samples/Diagnostics.md
+[data_limits]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/overview#data-limits
 
 [detect_language_sample0]: tests/samples/Sample1_DetectLanguage.cs
 [detect_language_sample1]: tests/samples/Sample1_DetectLanguageBatchConvenience.cs

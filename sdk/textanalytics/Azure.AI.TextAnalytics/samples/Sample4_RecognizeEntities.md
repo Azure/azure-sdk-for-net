@@ -1,5 +1,5 @@
 # Recognizing Entities from Text Inputs
-This sample demonstrates how to recognize entities in one or more text inputs using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README](../README.md) for links and instructions.
+This sample demonstrates how to recognize entities in one or more text inputs. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -60,9 +60,10 @@ RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs
 
 To see the full example source files, see:
 
-* [Synchronously Sample4_RecognizeEntities.cs](../tests/samples/Sample4_RecognizeEntities.cs)
-* [Asynchronously Sample4_RecognizeEntitiesAsync.cs](../tests/samples/Sample4_RecognizeEntitiesAsync.cs)
-* [Synchronously Sample4_RecognizeEntitiesBatch.cs](../tests/samples/Sample4_RecognizeEntitiesBatch.cs)
-* [Synchronously Sample4_RecognizeEntitiesBatchConvenience.cs](../tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs)
+* [Synchronously Sample4_RecognizeEntities.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntities.cs)
+* [Asynchronously Sample4_RecognizeEntitiesAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesAsync.cs)
+* [Synchronously Sample4_RecognizeEntitiesBatch.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatch.cs)
+* [Synchronously Sample4_RecognizeEntitiesBatchConvenience.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample4_RecognizeEntitiesBatchConvenience.cs)
 
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md
