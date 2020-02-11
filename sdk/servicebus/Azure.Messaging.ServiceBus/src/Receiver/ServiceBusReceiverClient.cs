@@ -2,23 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Receiver
 {
@@ -97,14 +91,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         internal TransportConsumer Consumer { get; }
-
-
-        /// <summary>
-        ///   The set of active Service Bus entity transport-specific consumers created by this client for use with
-        ///   delegated operations.
-        /// </summary>
-        ///
-        private ConcurrentDictionary<string, TransportConsumer> ActiveConsumers { get; } = new ConcurrentDictionary<string, TransportConsumer>();
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
@@ -187,6 +173,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy);
         }
 
         /// <summary>
@@ -214,6 +201,22 @@ namespace Azure.Messaging.ServiceBus.Receiver
                 yield return message;
             }
         }
+
+        /// <summary>
+        /// Get a SessionReceiverClient scoped to the ServiceBusReceiverClient entity and a specified session.
+        /// Note once the SessionReceiverClient is created it will be scoped to only the specified session for its lifetime.
+        /// </summary>
+        /// <param name="sessionId">Session to receive messages from.</param>
+        /// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and specified session.</returns>
+        public SessionReceiverClient GetSessionReceiverClient(string sessionId) =>
+            new SessionReceiverClient(Connection, sessionId);
+
+        /// <summary>
+        /// Get a SessionReceiverClient scoped to the current entity without specifying a particular session. The broker will decide what session to use for operations. Note once the SessionReceiverClient is created it will be scoped to only one session for its lifetime.
+        /// </summary>
+        /// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and session determined by the broker.</returns>
+        public SessionReceiverClient GetSessionReceiverClient() =>
+            GetSessionReceiverClient(null);
 
         /// <summary>
         ///
@@ -535,22 +538,14 @@ namespace Azure.Messaging.ServiceBus.Receiver
             var clientHash = GetHashCode().ToString();
             ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiverClient), EntityName, clientHash);
 
-            // Attempt to close the active transport consumers.  In the event that an exception is encountered,
+            // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
 
             var transportConsumerException = default(Exception);
 
             try
             {
-                var pendingCloses = new List<Task>();
-
-                foreach (var consumer in ActiveConsumers.Values)
-                {
-                    pendingCloses.Add(consumer.CloseAsync(CancellationToken.None));
-                }
-
-                ActiveConsumers.Clear();
-                await Task.WhenAll(pendingCloses).ConfigureAwait(false);
+                await Consumer.CloseAsync(CancellationToken.None).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

@@ -64,9 +64,11 @@ namespace Azure.Messaging.ServiceBus.Receiver
 
         internal SessionReceiverClient(
             ServiceBusConnection connection,
+            string sessionId = null,
             ServiceBusReceiverClientOptions clientOptions = default)
             : base(connection, clientOptions ?? new SessionReceiverClientOptions())
         {
+            SessionId = sessionId;
         }
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.

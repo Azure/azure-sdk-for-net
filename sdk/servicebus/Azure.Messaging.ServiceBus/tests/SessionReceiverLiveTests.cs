@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core.Testing;
 using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Sender;
 using NUnit.Framework;
@@ -157,44 +156,39 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
         }
 
-        //[Test]
-        //public async Task NextSession()
-        //{
-        //    var sender = new ServiceBusSenderClient(ConnString, SessionQueueName);
-        //    var messageCt = 10;
-        //    HashSet<string> sessions = new HashSet<string>() { "1", "2", "3" };
+        [Test]
+        public async Task RoundRobinSessions()
+        {
+            var sender = new ServiceBusSenderClient(ConnString, SessionQueueName);
+            var messageCt = 10;
+            HashSet<string> sessions = new HashSet<string>() { "1", "2", "3" };
 
-        //    // send the messages
-        //    foreach (string session in sessions)
-        //    {
-        //        await sender.SendRangeAsync(GetMessages(messageCt, session));
-        //    }
+            // send the messages
+            foreach (string session in sessions)
+            {
+                await sender.SendRangeAsync(GetMessages(messageCt, session));
+            }
 
-        //    // create receiver not scoped to a specific session
-        //    var sessionClient = new SessionReceiverClient(ConnString, SessionQueueName, ReceiveMode.PeekLock);
-        //    for (int i = 0; i < 30; i++)
-        //    {
-        //        IAsyncEnumerable<ServiceBusMessage> peekedMessages = sessionClient.PeekRangeBySequenceAsync(
-        //            fromSequenceNumber: 1,
-        //            maxMessages: 10);
-        //        //var ct = 0;
+            var receiverClient = new QueueReceiverClient(ConnString, SessionQueueName, ReceiveMode.PeekLock);
+            var sessionId = "";
+            // create receiver not scoped to a specific session
+            for (int i = 0; i < 10; i++)
+            {
+                SessionReceiverClient sessionClient = receiverClient.GetSessionReceiverClient();
+                IAsyncEnumerable<ServiceBusMessage> peekedMessages = sessionClient.PeekRangeBySequenceAsync(
+                    fromSequenceNumber: 1,
+                    maxMessages: 10);
 
-        //        await foreach (ServiceBusMessage peekedMessage in peekedMessages)
-        //        {
-        //            //TestContext.Progress.WriteLine($"{++ct}-{peekedMessage.MessageId}-{peekedMessage.SessionId}");
-        //            Assert.AreEqual(sessionClient.SessionId, peekedMessage.SessionId);
-        //        }
-        //        string prevSession = sessionClient.SessionId;
-        //        sessions.Remove(prevSession);
-        //        TestContext.Progress.WriteLine($"{i}-{prevSession}");
-        //        await sessionClient.NextSessionAsync();
+                await foreach (ServiceBusMessage peekedMessage in peekedMessages)
+                {
+                    Assert.AreEqual(sessionClient.SessionId, peekedMessage.SessionId);
+                }
+                TestContext.Progress.WriteLine(sessionId);
+                sessionId = sessionClient.SessionId;
 
-        //        //Assert.AreNotEqual(prevSession, sessionClient.SessionId);
-
-
-        //        // verify that broker is alternating sessions
-        //    }
-        //    Assert.AreEqual(0, sessions.Count);
-        //}
+                // Close the session client when we are done with it. Since the sessionClient doesn't own the underlying connection, the connection remains open, but the session link will be closed.
+                await sessionClient.CloseAsync();
+            }
+        }
     }
 }
