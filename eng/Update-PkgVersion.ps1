@@ -23,13 +23,13 @@ Use this to overide version incement logic and set a version specified by this p
 
 .EXAMPLE
 Updating package version for Azure.Core
-Version-Increment.ps1 -RepoRoot "C:\Git\azure-sdk-for-net" -ServiceDirectory core -PackageName Azure.Core
+Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core
 
 Updating package version for Azure.Core with a specified verion
-Version-Increment.ps1 -RepoRoot "C:\Git\azure-sdk-for-net" -ServiceDirectory core -PackageName Azure.Core -NewVersionString 2.0.5
+Update-PkgVersion.ps1 -ServiceDirectory core -PackageName Azure.Core -NewVersionString 2.0.5
 
 Updating package version for Microsoft.Azure.CognitiveServices.AnomalyDetector
-Version-Increment.ps1 -RepoRoot "C:\Git\azure-sdk-for-net" -ServiceDirectory cognitiveservices -PackageName Microsoft.Azure.CognitiveServices.AnomalyDetector -PackageDirName AnomalyDetector
+Update-PkgVersion.ps1 -ServiceDirectory cognitiveservices -PackageName Microsoft.Azure.CognitiveServices.AnomalyDetector -PackageDirName AnomalyDetector
 
 #>
 
@@ -48,14 +48,14 @@ Param (
 $VERSION_REGEX = "^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
 
 # Updated Version in csproj and changelog using computed or set NewVersionString
-function Update-Version($ReplaceVersion=$False)
+function Update-Version($Unreleased=$True, $ReplaceVersion=$False)
 {
     Write-Verbose "New Version: ${NewPackageVersion}"
     ${PackageVersion}.Node.InnerText = $NewPackageVersion
     $CsprojData.Save($PackageCsprojPath)
 
     # Increment Version in ChangeLog file
-    & "${PSScriptRoot}/common/Update-Change-Log.ps1" -Version $NewPackageVersion -ChangeLogPath $ChangelogPath -ReplaceVersion $ReplaceVersion
+    & "${PSScriptRoot}/common/Update-Change-Log.ps1" -Version $NewPackageVersion -ChangeLogPath $ChangelogPath -Unreleased $Unreleased -ReplaceVersion $ReplaceVersion
 }
 
 # Parse a VersionString to verify that it is right
@@ -102,6 +102,7 @@ function Parse-Version($VerisionString)
 # Obtain Current Package Version
 if ([System.String]::IsNullOrEmpty($PackageDirName)) {$PackageDirName = $PackageName}
 $CsprojData = New-Object -TypeName XML
+$CsprojData.PreserveWhitespace = $True
 $PackageCsprojPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "src" "${PackageName}.csproj"
 $ChangelogPath = Join-Path $RepoRoot "sdk" $ServiceDirectory $PackageDirName "CHANGELOG.md"
 $CsprojData.Load($PackageCsprojPath)
@@ -140,5 +141,5 @@ else
     {
         $NewPackageVersion = "{0}.{1}.{2}-{3}.{4}" -F $VersionTable['major'], $VersionTable['minor'], $VersionTable['patch'], $VersionTable['pretag'], $VersionTable['prever']
     }
-    Update-Version -ReplaceVersion $True
+    Update-Version -Unreleased $False -ReplaceVersion $True
 }
