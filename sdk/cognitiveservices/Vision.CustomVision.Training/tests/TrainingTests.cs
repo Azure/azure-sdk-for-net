@@ -920,11 +920,19 @@
                     var tags = await client.GetTagsAsync(project.ProjectId, project.IterationId);
 
                     // We expect to get Tag1 as the primary suggestion, so query with a high prediction
-                    var countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
+                    IDictionary<string, int?> countMapping;
+                    var loopCount = 0;
+                    do
                     {
-                        Threshold = 0.75,
-                        TagIds = new Guid[] { tags[0].Id }
-                    });
+                        Thread.Sleep(5000);
+                        countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
+                        {
+                            Threshold = 0.75,
+                            TagIds = new Guid[] { tags[0].Id }
+                        });
+                        loopCount++;
+                    } while (countMapping.Count == 0 && loopCount < 5);
+
                     Assert.Equal(1, countMapping.Count);
                     Assert.Equal(1, countMapping[tags[0].Id.ToString()]);
 
@@ -984,8 +992,45 @@
                     };
 
                     // This will return all suggested images (1 in this case)
-                    var suggestedImages = await client.QuerySuggestedImagesAsync(project.ProjectId, project.IterationId, query);
+                    SuggestedTagAndRegionQuery suggestedImages;
+                    var loopCount = 0;
+                    do
+                    {
+                        Thread.Sleep(5000);
+                        suggestedImages = await client.QuerySuggestedImagesAsync(project.ProjectId, project.IterationId, query); loopCount++;
+                    } while (suggestedImages.Results.Count == 0 && loopCount < 5);
+
                     Assert.Equal(1, suggestedImages.Results.Count);
+                }
+            }
+        }
+
+        [Fact]
+        public async void ImportExportProject()
+        {
+            using (MockContext context = new MockContext())// MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "ImportExportProject", RecorderMode);
+
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var exportInfo = await client.ExportProjectAsync(project.ProjectId);
+                    Assert.NotEmpty(exportInfo.Token);
+
+                    var importProject = await client.ImportProjectAsync(exportInfo.Token);
+                    int loopCount = 0;
+                    while (loopCount < 5 && importProject.Status != ProjectStatus.Succeeded)
+                    {
+                        Thread.Sleep(20000);
+                        importProject = await client.GetProjectAsync(importProject.Id);
+                        loopCount++;
+                    }
+
+                    Assert.Equal(ProjectStatus.Succeeded, importProject.Status);
+                    Assert.Equal(client.GetTaggedImageCount(importProject.Id), client.GetTaggedImageCount(project.ProjectId));
+                    Assert.Equal(client.GetTags(importProject.Id).Count, client.GetTags(project.ProjectId).Count);
+                    Assert.Equal(client.GetIterations(importProject.Id).Count, client.GetIterations(project.ProjectId).Count);
                 }
             }
         }
