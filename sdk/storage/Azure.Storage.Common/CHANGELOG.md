@@ -1,9 +1,8 @@
 # Release History
 
 ## 12.2.0 (2020-02)
-- Bumped to service version 2019-07-07.
-- Updated StorageSharedKeyPipelinePolicy to upload the request date header each retry.
-- Shortened Diagnostic Scope names.
+- Added support for service version 2019-07-07.
+- Update StorageSharedKeyPipelinePolicy to upload the request date header each retry.
 - Sanitized header values in exceptions.
 
 ## 12.1.1 (2020-01)

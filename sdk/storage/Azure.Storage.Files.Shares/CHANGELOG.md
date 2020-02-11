@@ -1,14 +1,13 @@
 # Release History
 
 ## 12.1.0 (2020-02)
-- Bumped to service version 2019-07-07.
+- Added support for service version 2019-07-07.
 - Added support for file leases.
 - Added FailedHandlesCount to CloseHandlesResult.
 - Added SMB parameters to File Copy APIs.
 - Added premium file share properties.
 - Added ShareFileClient.ClearRangesAsync() API.
 - Fixed issue where SAS didn't work with signed identifiers.
-- Shortened Diagnostic Scope names.
 - Sanitized header values in exceptions.
 
 ## 12.0.1 (2020-01)

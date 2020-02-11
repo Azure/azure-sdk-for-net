@@ -1,12 +1,10 @@
 # Release History
 
 ## 12.3.0 (2020-02)
-- Bumped to service version 2019-07-07.
+- Added support for service version 2019-07-07.
 - Added support for Encryption Scopes.
 - Modified BlockBlobClient.Upload() and .UploadAsync() to support parallel and multi-part uploads.
-- Add PageBlobClient.GetManagedDiskPageRangesDiff() and .GetManagedDiskPageRangesDiffAsync()
 - Fixed issue where SAS didn't work with signed identifiers.
-- Shortened Diagnostic Scope names.
 - Sanitized header values in exceptions.
 
 ## 12.2.0 (2020-01)
