@@ -1,0 +1,26 @@
+<Project>
+
+  <PropertyGroup>
+    <_AutoRestVersion>https://github.com/Azure/autorest/releases/download/autorest-3.0.6173/autorest-3.0.6173.tgz</_AutoRestVersion>
+    <_AutoRestCoreVersion>3.0.6212</_AutoRestCoreVersion>
+    <_AutoRestCSharpVersion>https://github.com/Azure/autorest.csharp/releases/download/1.0.0-dev.20200210.1/autorest-csharp-v3-1.0.0-dev.20200210.1.tgz</_AutoRestCSharpVersion>
+    <_SupportsCodeGeneration Condition="'$(IsClientLibrary)' == 'true'">true</_SupportsCodeGeneration>
+    <AutoRestConfiguration>autorest.md</AutoRestConfiguration>
+
+    <_SharedCodeDirectory>$(MSBuildThisFileDirectory)../sdk/core/Azure.Core/src/Shared/</_SharedCodeDirectory>
+    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)Autorest/</_AutoRestSharedCodeDirectory>
+
+    <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND Exists('$(AutoRestConfiguration)')">true</_GenerateCode>
+    <UsesJsonSerialization Condition="'$(UsesJsonSerialization)' == ''">true</UsesJsonSerialization>
+  </PropertyGroup>
+
+  <Target Name="GenerateCode" Condition="'$(_GenerateCode)' == 'true'" >
+    <RemoveDir Directories="$(MSBuildProjectDirectory)/Generated"/>
+    <Exec Command="npx autorest@$(_AutoRestVersion) --version=$(_AutoRestCoreVersion) --input=$(AutoRestConfiguration) --use=$(_AutoRestCSharpVersion) --output-folder=$(MSBuildProjectDirectory) --title=$(RootNamespace) --namespace=$(RootNamespace) --shared-source-folder=$(_SharedCodeDirectory) --verbose" />
+  </Target>
+
+  <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
+    <Compile Include="$(_AutoRestSharedCodeDirectory)/**/*.cs" />
+  </ItemGroup>
+
+</Project>

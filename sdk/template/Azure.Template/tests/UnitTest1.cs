@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Data;
 using System;
+using Azure.Template;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.Template.Tests
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Template.Tests
         [Test]
         public void Test1()
         {
-            var c = new Class1();
+            var c = new TemplateClient(new Uri("http://localhost:3000/"));
 
             Assert.NotNull(c);
         }
