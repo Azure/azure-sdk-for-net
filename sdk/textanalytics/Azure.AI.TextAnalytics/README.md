@@ -18,7 +18,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 ### Create a Cognitive Services or Text Analytics resource
 Text Analytics supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Text Analytics access only, create a Text Analytics resource.
 
-You can create either resource using the [Azure Portal][cognitive_resource_portal] or [Azure CLI][cognitive_resource_cli]. Below is an example of how you can create a Text Analytics resource using the CLI:
+You can create either resource using the **Option 1:** [Azure Portal][cognitive_resource_portal] or **Option 2:** [Azure CLI][cognitive_resource_cli]. Below is an example of how you can create a Text Analytics resource using the CLI:
 
 ```PowerShell
 # Create a new resource group to hold the text analytics resource -
