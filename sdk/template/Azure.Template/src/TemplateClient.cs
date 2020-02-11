@@ -5,9 +5,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Generated.Template.Models;
+using Azure.Template;
+using Azure.Template.Models;
 
-namespace Azure.Generated.Template
+namespace Azure.Template
 {
     /// <summary>
     /// The sample client.

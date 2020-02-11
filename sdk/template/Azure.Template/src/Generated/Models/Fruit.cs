@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Generated.Template.Models
+namespace Azure.Template.Models
 {
     /// <summary> Fruit. </summary>
     public readonly partial struct Fruit : IEquatable<Fruit>

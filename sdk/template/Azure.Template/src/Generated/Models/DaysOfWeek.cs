@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Generated.Template.Models
+namespace Azure.Template.Models
 {
     /// <summary> Day of week. </summary>
     public readonly partial struct DaysOfWeek : IEquatable<DaysOfWeek>

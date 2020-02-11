@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generated.Template.Models;
+using Azure.Template.Models;
 
-namespace Azure.Generated.Template
+namespace Azure.Template
 {
     internal partial class AllOperations
     {

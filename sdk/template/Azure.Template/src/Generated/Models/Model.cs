@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.Generated.Template.Models
+namespace Azure.Template.Models
 {
     /// <summary> The Model. </summary>
     public partial class Model

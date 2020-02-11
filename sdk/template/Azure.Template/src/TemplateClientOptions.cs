@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Generated.Template
+namespace Azure.Template
 {
     /// <summary>
     /// The options for <see cref="TemplateClient"/>

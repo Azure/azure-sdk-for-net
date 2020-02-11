@@ -6,7 +6,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Generated.Template.Models
+namespace Azure.Template.Models
 {
     public partial class Model : IUtf8JsonSerializable
     {
