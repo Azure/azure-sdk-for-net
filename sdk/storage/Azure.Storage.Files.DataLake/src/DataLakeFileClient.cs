@@ -2379,18 +2379,13 @@ namespace Azure.Storage.Files.DataLake
 
         #region Upload
         /// <summary>
-        /// The <see cref="Upload(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
         /// operation updates the content of an existing file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
-        /// </param>
-        /// <param name="offset">
-        /// Optional offset within the file to upload the data to.
-        /// If not provided, the data will be written at the beginning of
-        /// the file.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2420,7 +2415,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<PathInfo> Upload(
             Stream content,
-            long offset = default,
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
@@ -2428,7 +2422,6 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
-                offset,
                 httpHeaders,
                 conditions,
                 progressHandler,
@@ -2438,18 +2431,13 @@ namespace Azure.Storage.Files.DataLake
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="UploadAsync(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
         /// operation updates the content of anexisting file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
-        /// </param>
-        /// <param name="offset">
-        /// Optional offset within the file to upload the data to.
-        /// If not provided, the data will be written at the beginning of
-        /// the file.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2480,7 +2468,6 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
-            long offset = default,
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
@@ -2488,7 +2475,6 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default) =>
             StagedUploadAsync(
                 content,
-                offset,
                 httpHeaders,
                 conditions,
                 progressHandler,
@@ -2497,7 +2483,7 @@ namespace Azure.Storage.Files.DataLake
                 cancellationToken: cancellationToken);
 
         /// <summary>
-        /// The <see cref="Upload(string, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="Upload(string, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
         /// operation updates the content of anexisting file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
@@ -2505,11 +2491,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="path">
         /// A file path containing the content to upload.
         /// </param> of this new block blob.
-        /// <param name="offset">
-        /// Optional offset within the file to upload the data to.
-        /// If not provided, the data will be written at the beginning of
-        /// the file.
-        /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
         ///</param>
@@ -2538,7 +2519,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         public virtual Response<PathInfo> Upload(
             string path,
-            long offset = default,
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
@@ -2549,7 +2529,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 return StagedUploadAsync(
                     stream,
-                    offset,
                     httpHeaders,
                     conditions,
                     progressHandler,
@@ -2561,18 +2540,13 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="UploadAsync(string, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="UploadAsync(string, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
         /// operation updates the content of anexisting file.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
         /// <param name="path">
         /// A file path containing the content to upload.
-        /// </param>
-        /// <param name="offset">
-        /// Optional offset within the file to upload the data to.
-        /// If not provided, the data will be written at the beginning of
-        /// the file.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2603,7 +2577,6 @@ namespace Azure.Storage.Files.DataLake
         [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
-            long offset = default,
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
@@ -2614,7 +2587,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 return await StagedUploadAsync(
                     stream,
-                    offset,
                     httpHeaders,
                     conditions,
                     progressHandler,
@@ -2632,9 +2604,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
-        /// </param>
-        /// <param name="offset">
-        /// The offset within the file to upload the data to.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2670,7 +2639,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal async Task<Response<PathInfo>> StagedUploadAsync(
             Stream content,
-            long offset = default,
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             IProgress<long> progressHandler = default,

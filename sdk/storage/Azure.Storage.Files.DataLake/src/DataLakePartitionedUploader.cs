@@ -76,12 +76,15 @@ namespace Azure.Storage.Files.DataLake
 
         public async Task<Response<PathInfo>> UploadAsync(
             Stream content,
-            long offset,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
+            await _client.CreateAsync(
+                httpHeaders,
+                conditions: conditions).ConfigureAwait(false);
+
             // If we can compute the size and it's small enough
             if (PartitionedUploadExtensions.TryGetLength(content, out long contentLength)
                 && contentLength < _singleUploadThreshold)
@@ -89,17 +92,14 @@ namespace Azure.Storage.Files.DataLake
                 // Append data
                 await _client.AppendAsync(
                     content,
-                    offset,
+                    offset: 0,
                     leaseId: conditions?.LeaseId,
                     progressHandler: progressHandler,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                // Calculate flush position
-                long flushPosition = offset + contentLength;
-
                 // Flush data
                 return await _client.FlushAsync(
-                    position: flushPosition,
+                    position: contentLength,
                     httpHeaders: httpHeaders,
                     conditions: conditions)
                     .ConfigureAwait(false);
@@ -118,7 +118,6 @@ namespace Azure.Storage.Files.DataLake
             return await UploadInParallelAsync(
                 content,
                 blockSize,
-                offset,
                 httpHeaders,
                 conditions,
                 progressHandler,
@@ -127,12 +126,14 @@ namespace Azure.Storage.Files.DataLake
 
         public Response<PathInfo> Upload(
             Stream content,
-            long offset,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
+            _client.Create(httpHeaders,
+                conditions: conditions);
+
             // If we can compute the size and it's small enough
             if (PartitionedUploadExtensions.TryGetLength(content, out long contentLength)
                 && contentLength < _singleUploadThreshold)
@@ -140,13 +141,13 @@ namespace Azure.Storage.Files.DataLake
                 // Upload it in a single request
                 _client.Append(
                     content,
-                    offset,
+                    offset: 0,
                     leaseId: conditions?.LeaseId,
                     progressHandler: progressHandler,
                     cancellationToken: cancellationToken);
 
                 // Calculate flush position
-                long flushPosition = offset + contentLength;
+                long flushPosition = contentLength;
 
                 return _client.Flush(
                     position: flushPosition,
@@ -168,7 +169,6 @@ namespace Azure.Storage.Files.DataLake
             return UploadInSequence(
                 content,
                 blockSize,
-                offset,
                 httpHeaders,
                 conditions,
                 progressHandler,
@@ -178,7 +178,6 @@ namespace Azure.Storage.Files.DataLake
         private Response<PathInfo> UploadInSequence(
             Stream content,
             int blockSize,
-            long offset,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
@@ -220,7 +219,7 @@ namespace Azure.Storage.Files.DataLake
                     // Append the next block
                     _client.Append(
                         new MemoryStream(block.Bytes, 0, block.Length, writable: false),
-                        offset: offset + appendedBytes,
+                        offset: appendedBytes,
                         leaseId: conditions?.LeaseId,
                         progressHandler: progressHandler,
                         cancellationToken: cancellationToken);
@@ -231,7 +230,7 @@ namespace Azure.Storage.Files.DataLake
                 // Commit the block list after everything has been staged to
                 // complete the upload
                 return _client.Flush(
-                    position: offset + appendedBytes,
+                    position: appendedBytes,
                     httpHeaders: httpHeaders,
                     conditions: conditions,
                     cancellationToken: cancellationToken);
@@ -250,7 +249,6 @@ namespace Azure.Storage.Files.DataLake
         private async Task<Response<PathInfo>> UploadInParallelAsync(
             Stream content,
             int blockSize,
-            long offset,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
@@ -289,7 +287,7 @@ namespace Azure.Storage.Files.DataLake
                     // Start appending the next block (but don't await the Task!)
                     Task task = AppendBlockAsync(
                         block,
-                        offset + appendedBytes,
+                        appendedBytes,
                         conditions?.LeaseId,
                         progressHandler,
                         cancellationToken);
@@ -325,7 +323,7 @@ namespace Azure.Storage.Files.DataLake
                 // commit the block list to complete the upload
                 await Task.WhenAll(runningTasks).ConfigureAwait(false);
                 return await _client.FlushAsync(
-                    position: offset + appendedBytes,
+                    position: appendedBytes,
                     httpHeaders: httpHeaders,
                     conditions: conditions,
                     cancellationToken: cancellationToken)
