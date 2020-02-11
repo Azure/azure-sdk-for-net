@@ -14,26 +14,28 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the Azure resource that was assessed
+    /// Data regarding 3rd party partner integration
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Azure")]
-    public partial class AzureResourceDetails : ResourceDetails
+    public partial class SecurityAssessmentPartnerData
     {
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the SecurityAssessmentPartnerData
+        /// class.
         /// </summary>
-        public AzureResourceDetails()
+        public SecurityAssessmentPartnerData()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the SecurityAssessmentPartnerData
+        /// class.
         /// </summary>
-        /// <param name="id">Azure resource Id of the assessed resource</param>
-        public AzureResourceDetails(string id = default(string))
+        /// <param name="secret">secret to authenticate the partner - write
+        /// only</param>
+        public SecurityAssessmentPartnerData(string secret = default(string))
         {
-            Id = id;
+            Secret = secret;
             CustomInit();
         }
 
@@ -43,10 +45,10 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets azure resource Id of the assessed resource
+        /// Gets or sets secret to authenticate the partner - write only
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "secret")]
+        public string Secret { get; set; }
 
     }
 }
