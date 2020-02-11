@@ -1,5 +1,12 @@
 # Release History
 
+## 12.3.0 (2020-02)
+- Added support for service version 2019-07-07.
+- Added support for Encryption Scopes.
+- Modified BlockBlobClient.Upload() and .UploadAsync() to support parallel and multi-part uploads.
+- Fixed issue where SAS didn't work with signed identifiers.
+- Sanitized header values in exceptions.
+
 ## 12.2.0 (2020-01)
  - Added Exists API to BlobBaseClient and BlobContainerClient
  - Fixed issue where SAS content headers were not URL encoded when using BlobSasBuilder.
