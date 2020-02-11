@@ -49,7 +49,7 @@ Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.2
 In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get API Key
-You can get the `endpoin`t and `API key` from the Cognitive Servicesresource or Text Analytics resource information in the [Azure Portal][azure_portal].
+You can get the `endpoint` and `API key` from the Cognitive Services resource or Text Analytics resource information in the [Azure Portal][azure_portal].
 
 Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key from the Text Analytics resource.
 
@@ -99,11 +99,11 @@ A `TextAnalyticsClient` is the primary interface for developers using the Text A
 A **text input**, sometimes called a **document**, is a single unit of input to be analyzed by the predictive models in the Text Analytics service.  Operations on `TextAnalyticsClient` may take a single text input or a collection of inputs to be analyzed as a batch.
 For text input length limits, maximum batch size, and supported text encoding see [here][data_limits].
 
-### Operation Result
-An operation result, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single text input.  An operation's result type also may optionally include information about the input document and how it was processed.
+### Return value
+Return values, such as `AnalyzeSentimentResult`, is the result of a Text Analytics operation, containing a prediction or predictions about a single text input.  An operation's return value also may optionally include information about the input document and how it was processed.
 
-### Operation Result Collection
-An operation result collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections.  An operation result collection contains a `HasError` property that allows to identify if an operetation executed was succesful or unsuccesful for the given text input. It may optionally include information about the input batch and how it was processed.
+### Return value Collection
+A Return value collection, such as `AnalyzeSentimentResultCollection`, is a collection of operation results, where each corresponds to one of the text inputs provided in the input batch.  A text input and its result will have the same index in the input and result collections. The return value also contains a `HasError` property that allows to identify if an operation executed was succesful or unsuccesful for the given text input. It may optionally include information about the input batch and how it was processed.
 
  ### Operation on multiple text inputs
 For each supported operation, `TextAnalyticsClient` provides a method that accepts a batch of text inputs as strings, or a batch of either `TextDocumentInput` or `DetectLanguageInput` objects. This methods allow callers to give each document a unique ID, indicate that the documents in the batch are written in different languages, or provide a country hint about the language of the document.
