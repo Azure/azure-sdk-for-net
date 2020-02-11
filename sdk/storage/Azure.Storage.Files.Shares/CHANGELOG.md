@@ -1,5 +1,8 @@
 # Release History
 
+## 12.2.0-preview.1 (Unreleased)
+
+
 ## 12.1.0 (2020-02)
 - Added support for service version 2019-07-07.
 - Added support for file leases.
