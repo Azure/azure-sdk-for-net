@@ -118,6 +118,9 @@ known_presence_issues:
   - ['sdk/search/Microsoft.Azure.Search.Service/CHANGELOG.md','#5499']
   - ['sdk/template/Azure.Template/CHANGELOG.md','#5499']
 
+# Disabling the files at the root of the skd as those readme files have a different
+# structure (Storage, appconfiguration)
+# Disabling the readme file for the shared source folder for EventHubs
 known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
@@ -129,6 +132,9 @@ known_content_issues:
   - ['sdk/cognitiveservices/Personalizer/src/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','#5499']
+  - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','#5499']
+  - ['sdk/storage/README.md','azure-sdk-tools/issues/42'] 
+  - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
