@@ -6,7 +6,8 @@
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <NoWarn>$(NoWarn);AZC0001;CA1507;CA1812</NoWarn>
+    <!-- These supressions should be removed in a production library -->
+    <NoWarn>$(NoWarn);AZC0001; CA1507;CA1812</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
