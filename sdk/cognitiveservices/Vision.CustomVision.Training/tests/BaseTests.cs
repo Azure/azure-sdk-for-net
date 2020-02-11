@@ -54,7 +54,7 @@
             var credentials = new ApiKeyServiceClientCredentials(TrainingKey);
             ICustomVisionTrainingClient client = (addHandler) ?
                 new CustomVisionTrainingClient(credentials, handlers: HttpMockServer.CreateInstance()) :
-                new CustomVisionTrainingClient(credentials, );
+                new CustomVisionTrainingClient(credentials);
 
             client.Endpoint = Endpoint;
 

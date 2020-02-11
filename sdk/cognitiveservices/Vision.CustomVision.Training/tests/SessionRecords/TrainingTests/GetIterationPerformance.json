@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0e035e2e-79a8-4dcb-820f-57349b9b3ad8/iterations",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wZTAzNWUyZS03OWE4LTRkY2ItODIwZi01NzM0OWI5YjNhZDgvaXRlcmF0aW9ucw==",
+      "RequestUri": "//customvision/v3.2/training/projects/0ffe2af9-c7aa-4462-a406-466daab7416c/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy8wZmZlMmFmOS1jN2FhLTQ0NjItYTQwNi00NjZkYWFiNzQxNmMvaXRlcmF0aW9ucw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,15 +10,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "0e7e0a1f-5505-4be7-8f01-f7c7e44dc5c1"
+        ],
         "apim-request-id": [
-          "6e93db5e-055c-452d-9aa0-749faea87824"
+          "0e7e0a1f-5505-4be7-8f01-f7c7e44dc5c1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -27,21 +30,21 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 14:59:20 GMT"
+          "Tue, 11 Feb 2020 16:39:27 GMT"
         ],
         "Content-Length": [
-          "656"
+          "684"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"5b1e6fa5-b0c7-4b46-b39d-5a0cfda25b62\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-09-16T14:59:11.756Z\",\r\n    \"lastModified\": \"2019-09-16T14:59:20.414Z\",\r\n    \"trainedAt\": \"2019-09-16T14:59:19.415Z\",\r\n    \"projectId\": \"0e035e2e-79a8-4dcb-820f-57349b9b3ad8\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"trainingTimeInMinutes\": 1,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/84f34372-f4a7-4cd4-a77d-9f81df31682b/resourceGroups/All/providers/Microsoft.CognitiveServices/accounts/Allpred\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"8586a54e-2e98-4f19-a187-1a0f95f2f5c1\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2020-02-11T16:39:20.653Z\",\r\n    \"lastModified\": \"2020-02-11T16:39:27.322Z\",\r\n    \"trainedAt\": \"2020-02-11T16:39:26.075Z\",\r\n    \"projectId\": \"0ffe2af9-c7aa-4462-a406-466daab7416c\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"trainingTimeInMinutes\": 1,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/f7b4a5ce-d3bd-4a03-84fe-8bcad772c8c1/resourceGroups/areddish-eastus/providers/Microsoft.CognitiveServices/accounts/areddisheast-Prediction\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "//customvision/v3.1/training/projects/0e035e2e-79a8-4dcb-820f-57349b9b3ad8/iterations/5b1e6fa5-b0c7-4b46-b39d-5a0cfda25b62/performance?threshold=0.9",
-      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMS90cmFpbmluZy9wcm9qZWN0cy8wZTAzNWUyZS03OWE4LTRkY2ItODIwZi01NzM0OWI5YjNhZDgvaXRlcmF0aW9ucy81YjFlNmZhNS1iMGM3LTRiNDYtYjM5ZC01YTBjZmRhMjViNjIvcGVyZm9ybWFuY2U/dGhyZXNob2xkPTAuOQ==",
+      "RequestUri": "//customvision/v3.2/training/projects/0ffe2af9-c7aa-4462-a406-466daab7416c/iterations/8586a54e-2e98-4f19-a187-1a0f95f2f5c1/performance?threshold=0.9",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMi90cmFpbmluZy9wcm9qZWN0cy8wZmZlMmFmOS1jN2FhLTQ0NjItYTQwNi00NjZkYWFiNzQxNmMvaXRlcmF0aW9ucy84NTg2YTU0ZS0yZTk4LTRmMTktYTE4Ny0xYTBmOTVmMmY1YzEvcGVyZm9ybWFuY2U/dGhyZXNob2xkPTAuOQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -49,15 +52,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.28207.04",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.1.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Request-Id": [
+          "e0af8d23-883b-4853-a066-ccf448e87c4f"
+        ],
         "apim-request-id": [
-          "8c9b4310-598f-4491-9285-199bfe21818e"
+          "e0af8d23-883b-4853-a066-ccf448e87c4f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -66,7 +72,7 @@
           "nosniff"
         ],
         "Date": [
-          "Mon, 16 Sep 2019 14:59:20 GMT"
+          "Tue, 11 Feb 2020 16:39:27 GMT"
         ],
         "Content-Length": [
           "458"
@@ -75,7 +81,7 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"perTagPerformance\": [\r\n    {\r\n      \"id\": \"6470f255-7414-4d47-82e6-da61eb19d59c\",\r\n      \"name\": \"Tag1\",\r\n      \"precision\": 1.0,\r\n      \"precisionStdDeviation\": 0.0,\r\n      \"recall\": 1.0,\r\n      \"recallStdDeviation\": 0.0,\r\n      \"averagePrecision\": 1.0\r\n    },\r\n    {\r\n      \"id\": \"e315e5d1-96e4-4b11-9e71-0b0e5eb7fbbb\",\r\n      \"name\": \"Tag2\",\r\n      \"precision\": 1.0,\r\n      \"precisionStdDeviation\": 0.0,\r\n      \"recall\": 1.0,\r\n      \"recallStdDeviation\": 0.0,\r\n      \"averagePrecision\": 1.0\r\n    }\r\n  ],\r\n  \"precision\": 1.0,\r\n  \"precisionStdDeviation\": 0.0,\r\n  \"recall\": 1.0,\r\n  \"recallStdDeviation\": 0.0,\r\n  \"averagePrecision\": 1.0\r\n}",
+      "ResponseBody": "{\r\n  \"perTagPerformance\": [\r\n    {\r\n      \"id\": \"db3d0205-8822-433b-8736-2233cf27fd8f\",\r\n      \"name\": \"Tag1\",\r\n      \"precision\": 1.0,\r\n      \"precisionStdDeviation\": 0.0,\r\n      \"recall\": 1.0,\r\n      \"recallStdDeviation\": 0.0,\r\n      \"averagePrecision\": 1.0\r\n    },\r\n    {\r\n      \"id\": \"dd3ba379-3cc0-4f97-a04c-60f8e5e4873c\",\r\n      \"name\": \"Tag2\",\r\n      \"precision\": 1.0,\r\n      \"precisionStdDeviation\": 0.0,\r\n      \"recall\": 1.0,\r\n      \"recallStdDeviation\": 0.0,\r\n      \"averagePrecision\": 1.0\r\n    }\r\n  ],\r\n  \"precision\": 1.0,\r\n  \"precisionStdDeviation\": 0.0,\r\n  \"recall\": 1.0,\r\n  \"recallStdDeviation\": 0.0,\r\n  \"averagePrecision\": 1.0\r\n}",
       "StatusCode": 200
     }
   ],

@@ -417,7 +417,9 @@
                         Assert.Equal(1, exports.Count);
                         export = exports.Where(e => e.Platform == ExportPlatform.TensorFlow).FirstOrDefault();
                         Assert.NotNull(export);
+#if RECORD_MODE
                         Thread.Sleep(1000);
+#endif
                     }
                     Assert.NotEmpty(export.DownloadUri);
                 }
@@ -444,7 +446,9 @@
 
                     // Need to ensure we wait 1 second between training calls from the previous project.Or
                     // We get 429s.
+#if RECORD_MODE
                     Thread.Sleep(1000);
+#endif
                     var trainedIteration = await client.TrainProjectAsync(project.ProjectId);
 
                     Assert.NotEqual(iterationToDelete.Name, trainedIteration.Name);
@@ -457,7 +461,9 @@
                     // Wait for training to complete.
                     while (trainedIteration.Status != "Completed")
                     {
+#if RECORD_MODE
                         Thread.Sleep(1000);
+#endif
                         trainedIteration = client.GetIteration(project.ProjectId, trainedIteration.Id);
                     }
 
@@ -924,7 +930,9 @@
                     var loopCount = 0;
                     do
                     {
+#if RECORD_MODE
                         Thread.Sleep(5000);
+#endif
                         countMapping = await client.QuerySuggestedImageCountAsync(project.ProjectId, project.IterationId, new TagFilter()
                         {
                             Threshold = 0.75,
@@ -996,7 +1004,9 @@
                     var loopCount = 0;
                     do
                     {
+#if RECORD_MODE
                         Thread.Sleep(5000);
+#endif
                         suggestedImages = await client.QuerySuggestedImagesAsync(project.ProjectId, project.IterationId, query); loopCount++;
                     } while (suggestedImages.Results.Count == 0 && loopCount < 5);
 
@@ -1008,7 +1018,7 @@
         [Fact]
         public async void ImportExportProject()
         {
-            using (MockContext context = new MockContext())// MockContext.Start(this.GetType()))
+            using (MockContext context = MockContext.Start(this.GetType()))
             {
                 HttpMockServer.Initialize(this.GetType(), "ImportExportProject", RecorderMode);
 
@@ -1022,7 +1032,9 @@
                     int loopCount = 0;
                     while (loopCount < 5 && importProject.Status != ProjectStatus.Succeeded)
                     {
+#if RECORD_MODE
                         Thread.Sleep(20000);
+#endif
                         importProject = await client.GetProjectAsync(importProject.Id);
                         loopCount++;
                     }
