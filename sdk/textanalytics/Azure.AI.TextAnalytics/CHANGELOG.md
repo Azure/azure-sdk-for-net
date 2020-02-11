@@ -1,5 +1,8 @@
 # Release History
 
+## 1.0.0-preview.3 (Unreleased)
+
+
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes
 - The `TextAnalyticsError` model has been simplified to an object with properties `Code`, `Message`, and `Target`.
