@@ -49,7 +49,7 @@ Install-Package Azure.AI.TextAnalytics -Version 1.0.0-preview.2
 In order to interact with the Text Analytics service, you'll need to create an instance of the [TextAnalyticsClient][textanalytics_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get API Key
-You can get the `endpoin`t and `API key` from the [Cognitive Servicesresource or Text Analytics resource information in the [Azure Portal][azure_portal].
+You can get the `endpoin`t and `API key` from the Cognitive Servicesresource or Text Analytics resource information in the [Azure Portal][azure_portal].
 
 Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key from the Text Analytics resource.
 
