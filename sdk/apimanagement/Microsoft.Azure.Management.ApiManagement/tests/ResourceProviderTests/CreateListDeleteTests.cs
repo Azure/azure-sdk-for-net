@@ -17,6 +17,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
+        [Trait("owner", "kjoshi")]
         public void CreateListDelete()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -55,7 +56,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName);
 
                 Assert.NotNull(listServiceResponse);
-                Assert.True(listServiceResponse.Any());
+                Assert.True(listServiceResponse.Any(), $"Service in rg {testBase.rgName} does not exist");
 
                 var serviceResponse = listServiceResponse.FirstOrDefault();
 
