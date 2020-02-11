@@ -37,43 +37,43 @@ namespace Azure.Messaging.EventHubs.Processor
         private readonly Dictionary<string, List<PartitionOwnership>> ActiveOwnershipWithDistribution = new Dictionary<string, List<PartitionOwnership>>();
 
         /// <summary>
+        ///   The minimum amount of time for an ownership to be considered expired without further updates.
+        /// </summary>
+        ///
+        private TimeSpan OwnershipExpiration;
+
+        /// <summary>
         ///   The fully qualified Event Hubs namespace that the processor is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public readonly string FullyQualifiedNamespace;
+        public string FullyQualifiedNamespace { get; private set; }
 
         /// <summary>
         ///   The name of the Event Hub that the processor is connected to, specific to the
         ///   Event Hubs namespace that contains it.
         /// </summary>
         ///
-        public readonly string EventHubName;
+        public string EventHubName { get; private set; }
 
         /// <summary>
         ///   The name of the consumer group this load balancer is associated with.  Events will be
         ///   read only in the context of this group.
         /// </summary>
         ///
-        public readonly string ConsumerGroup;
+        public string ConsumerGroup { get; private set; }
 
         /// <summary>
         ///   The identifier of the EventProcessorClient that owns this load balancer.
         /// </summary>
         ///
-        public readonly string OwnerIdentifier;
+        public string OwnerIdentifier { get; private set; }
 
         /// <summary>
         ///   The minimum amount of time to be elapsed between two load balancing verifications.
         /// </summary>
         ///
-        public virtual TimeSpan LoadBalanceInterval { get; set; } = TimeSpan.FromSeconds(10);
-
-        /// <summary>
-        ///   The minimum amount of time for an ownership to be considered expired without further updates.
-        /// </summary>
-        ///
-        private TimeSpan OwnershipExpiration;
+        public TimeSpan LoadBalanceInterval { get; set; } = TimeSpan.FromSeconds(10);
 
         /// <summary>
         ///   The partitionIds currently owned by the associated event processor.
@@ -82,16 +82,17 @@ namespace Azure.Messaging.EventHubs.Processor
         public IEnumerable<string> OwnedPartitionIds => InstanceOwnership.Keys;
 
         /// <summary>
+        ///   The instance of <see cref="PartitionLoadBalancerEventSource" /> which can be mocked for testing.
+        /// </summary>
+        ///
+        internal PartitionLoadBalancerEventSource Logger { get; set; } = PartitionLoadBalancerEventSource.Log;
+
+        /// <summary>
         ///   The set of partition ownership the associated event processor owns.  Partition ids are used as keys.
         /// </summary>
         ///
         private Dictionary<string, PartitionOwnership> InstanceOwnership { get; set; } = new Dictionary<string, PartitionOwnership>();
 
-        /// <summary>
-        ///   The instance of <see cref="PartitionLoadBalancerEventSource" /> which can be mocked for testing.
-        /// </summary>
-        ///
-        internal PartitionLoadBalancerEventSource Logger { get; set; } = PartitionLoadBalancerEventSource.Log;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="PartitionLoadBalancer"/> class.
