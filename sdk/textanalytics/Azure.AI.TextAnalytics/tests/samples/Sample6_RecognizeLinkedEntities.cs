@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.Testing;
 using NUnit.Framework;
@@ -24,10 +26,11 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:RecognizeLinkedEntities
             string input = "Microsoft was founded by Bill Gates and Paul Allen.";
 
-            RecognizeLinkedEntitiesResult result = client.RecognizeLinkedEntities(input);
+            Response<IReadOnlyCollection<LinkedEntity>> response = client.RecognizeLinkedEntities(input);
+            IEnumerable<LinkedEntity> linkedEntities = response.Value;
 
-            Console.WriteLine($"Extracted {result.LinkedEntities.Count()} linked entit{(result.LinkedEntities.Count() > 1 ? "ies" : "y")}:");
-            foreach (LinkedEntity linkedEntity in result.LinkedEntities)
+            Console.WriteLine($"Extracted {linkedEntities.Count()} linked entit{(linkedEntities.Count() > 1 ? "ies" : "y")}:");
+            foreach (LinkedEntity linkedEntity in linkedEntities)
             {
                 Console.WriteLine($"Name: {linkedEntity.Name}, Id: {linkedEntity.Id}, Language: {linkedEntity.Language}, Data Source: {linkedEntity.DataSource}, Url: {linkedEntity.Url.ToString()}");
                 foreach (LinkedEntityMatch match in linkedEntity.Matches)

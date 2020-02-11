@@ -1134,6 +1134,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="defaultEncryptionScope">Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes.</param>
+            /// <param name="denyEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1147,6 +1149,8 @@ namespace Azure.Storage.Blobs
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
+                string defaultEncryptionScope = default,
+                bool? denyEncryptionScopeOverride = default,
                 bool async = true,
                 string operationName = "ContainerClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1163,7 +1167,9 @@ namespace Azure.Storage.Blobs
                         version,
                         timeout,
                         metadata,
-                        requestId))
+                        requestId,
+                        defaultEncryptionScope,
+                        denyEncryptionScopeOverride))
                     {
                         if (async)
                         {
@@ -1202,6 +1208,8 @@ namespace Azure.Storage.Blobs
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
+            /// <param name="defaultEncryptionScope">Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes.</param>
+            /// <param name="denyEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
             /// <returns>The Container.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1210,7 +1218,9 @@ namespace Azure.Storage.Blobs
                 string version,
                 int? timeout = default,
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
-                string requestId = default)
+                string requestId = default,
+                string defaultEncryptionScope = default,
+                bool? denyEncryptionScopeOverride = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1242,6 +1252,12 @@ namespace Azure.Storage.Blobs
                     }
                 }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
+                if (defaultEncryptionScope != null) { _request.Headers.SetValue("x-ms-default-encryption-scope", defaultEncryptionScope); }
+                if (denyEncryptionScopeOverride != null) {
+                #pragma warning disable CA1308 // Normalize strings to uppercase
+                _request.Headers.SetValue("x-ms-deny-encryption-scope-override", denyEncryptionScopeOverride.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                #pragma warning restore CA1308 // Normalize strings to uppercase
+                }
 
                 return _message;
             }
@@ -1462,6 +1478,14 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-has-legal-hold", out _header))
                         {
                             _value.HasLegalHold = bool.Parse(_header);
+                        }
+                        if (response.Headers.TryGetValue("x-ms-default-encryption-scope", out _header))
+                        {
+                            _value.DefaultEncryptionScope = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out _header))
+                        {
+                            _value.DenyEncryptionScopeOverride = bool.Parse(_header);
                         }
 
                         // Create the response
@@ -3749,6 +3773,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
                             _value.BlobContentHash = System.Convert.FromBase64String(_header);
@@ -3876,6 +3904,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-content-md5", out _header))
                         {
@@ -4196,6 +4228,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-access-tier", out _header))
                         {
@@ -5481,6 +5517,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -5501,6 +5538,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -5525,6 +5563,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -5570,6 +5609,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -5586,6 +5626,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -5624,6 +5665,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -5668,6 +5710,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
 
                         // Create the response
@@ -6652,6 +6698,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -6672,6 +6719,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -6696,6 +6744,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -6741,6 +6790,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -6757,6 +6807,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -6795,6 +6846,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -7690,6 +7742,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7720,6 +7773,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -7754,6 +7808,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -7809,6 +7864,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -7835,6 +7891,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -7883,6 +7940,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -7929,6 +7987,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -7967,6 +8029,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -7994,6 +8057,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -8025,6 +8089,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
                         ifSequenceNumberEqualTo,
@@ -8077,6 +8142,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -8100,6 +8166,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -8144,6 +8211,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8203,6 +8271,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -8234,6 +8306,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -8258,6 +8331,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -8286,6 +8360,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
                         ifSequenceNumberEqualTo,
@@ -8335,6 +8410,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
             /// <param name="ifSequenceNumberEqualTo">Specify this header value to operate only on a blob if it has the specified sequence number.</param>
@@ -8355,6 +8431,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
                 long? ifSequenceNumberEqualTo = default,
@@ -8393,6 +8470,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-eq", ifSequenceNumberEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8483,6 +8561,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
@@ -8515,6 +8594,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
@@ -8551,6 +8631,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         leaseId,
                         ifSequenceNumberLessThanOrEqualTo,
                         ifSequenceNumberLessThan,
@@ -8608,6 +8689,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifSequenceNumberLessThanOrEqualTo">Specify this header value to operate only on a blob if it has a sequence number less than or equal to the specified.</param>
             /// <param name="ifSequenceNumberLessThan">Specify this header value to operate only on a blob if it has a sequence number less than the specified.</param>
@@ -8636,6 +8718,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? ifSequenceNumberLessThanOrEqualTo = default,
                 long? ifSequenceNumberLessThan = default,
@@ -8694,6 +8777,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifSequenceNumberLessThanOrEqualTo != null) { _request.Headers.SetValue("x-ms-if-sequence-number-le", ifSequenceNumberLessThanOrEqualTo.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifSequenceNumberLessThan != null) { _request.Headers.SetValue("x-ms-if-sequence-number-lt", ifSequenceNumberLessThan.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -8754,6 +8838,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
 
                         // Create the response
@@ -8999,6 +9087,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="prevsnapshot">Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016.</param>
+            /// <param name="prevSnapshotUrl">Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot.</param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
@@ -9018,6 +9107,7 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 int? timeout = default,
                 string prevsnapshot = default,
+                System.Uri prevSnapshotUrl = default,
                 string range = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -9041,6 +9131,7 @@ namespace Azure.Storage.Blobs
                         snapshot,
                         timeout,
                         prevsnapshot,
+                        prevSnapshotUrl,
                         range,
                         leaseId,
                         ifModifiedSince,
@@ -9085,6 +9176,7 @@ namespace Azure.Storage.Blobs
             /// <param name="snapshot">The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob">Creating a Snapshot of a Blob.</a></param>
             /// <param name="timeout">The timeout parameter is expressed in seconds. For more information, see <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations">Setting Timeouts for Blob Service Operations.</a></param>
             /// <param name="prevsnapshot">Optional in version 2015-07-08 and newer. The prevsnapshot parameter is a DateTime value that specifies that the response will contain only pages that were changed between target blob and previous snapshot. Changed pages include both updated and cleared pages. The target blob may be a snapshot, as long as the snapshot specified by prevsnapshot is the older of the two. Note that incremental snapshots are currently supported only for blobs created on or after January 1, 2016.</param>
+            /// <param name="prevSnapshotUrl">Optional. This header is only supported in service versions 2019-04-19 and after and specifies the URL of a previous snapshot of the target blob. The response will only contain pages that were changed between the target blob and its previous snapshot.</param>
             /// <param name="range">Return only the bytes of the blob in the specified range.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
@@ -9100,6 +9192,7 @@ namespace Azure.Storage.Blobs
                 string snapshot = default,
                 int? timeout = default,
                 string prevsnapshot = default,
+                System.Uri prevSnapshotUrl = default,
                 string range = default,
                 string leaseId = default,
                 System.DateTimeOffset? ifModifiedSince = default,
@@ -9132,6 +9225,7 @@ namespace Azure.Storage.Blobs
 
                 // Add request headers
                 _request.Headers.SetValue("x-ms-version", version);
+                if (prevSnapshotUrl != null) { _request.Headers.SetValue("x-ms-previous-snapshot-url", prevSnapshotUrl.ToString()); }
                 if (range != null) { _request.Headers.SetValue("x-ms-range", range); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -9211,6 +9305,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9231,6 +9326,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -9255,6 +9351,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -9300,6 +9397,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9316,6 +9414,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -9349,6 +9448,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -9825,6 +9925,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9852,6 +9953,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -9883,6 +9985,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -9935,6 +10038,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -9958,6 +10062,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -10003,6 +10108,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -10048,6 +10154,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -10087,6 +10197,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -10112,6 +10223,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -10141,6 +10253,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         ifModifiedSince,
                         ifUnmodifiedSince,
                         ifMatch,
@@ -10191,6 +10304,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
             /// <param name="ifMatch">Specify an ETag value to operate only on blobs with a matching value.</param>
@@ -10212,6 +10326,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
                 Azure.ETag? ifMatch = default,
@@ -10253,6 +10368,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifMatch != null) { _request.Headers.SetValue("If-Match", ifMatch.Value.ToString()); }
@@ -10317,6 +10433,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -10351,6 +10471,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
@@ -10382,6 +10503,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
@@ -10417,6 +10539,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         leaseId,
                         maxSize,
                         appendPosition,
@@ -10473,6 +10596,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="maxSize">Optional conditional header. The max length in bytes permitted for the append blob. If the Append Block operation would cause the blob to exceed that limit or if the blob size is already greater than the value specified in this header, the request will fail with MaxBlobSizeConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
             /// <param name="appendPosition">Optional conditional header, used only for the Append Block operation. A number indicating the byte offset to compare. Append Block will succeed only if the append position is equal to this number. If it is not, the request will fail with the AppendPositionConditionNotMet error (HTTP status code 412 - Precondition Failed).</param>
@@ -10500,6 +10624,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 long? maxSize = default,
                 long? appendPosition = default,
@@ -10548,6 +10673,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (maxSize != null) { _request.Headers.SetValue("x-ms-blob-condition-maxsize", maxSize.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
                 if (appendPosition != null) { _request.Headers.SetValue("x-ms-blob-condition-appendpos", appendPosition.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10611,6 +10737,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-request-server-encrypted", out _header))
                         {
@@ -10677,6 +10807,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10707,6 +10838,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -10741,6 +10873,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         tier,
                         ifModifiedSince,
                         ifUnmodifiedSince,
@@ -10796,6 +10929,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -10822,6 +10956,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -10873,6 +11008,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -10922,6 +11058,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
                             _value.BlobSequenceNumber = long.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
@@ -10960,6 +11100,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
@@ -10980,6 +11121,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string requestId = default,
                 bool async = true,
                 string operationName = "BlockBlobClient.StageBlock",
@@ -11004,6 +11146,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         requestId))
                     {
                         if (async)
@@ -11049,6 +11192,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <returns>The BlockBlob.StageBlockAsync Message.</returns>
             internal static Azure.Core.HttpMessage StageBlockAsync_CreateMessage(
@@ -11065,6 +11209,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string requestId = default)
             {
                 // Validation
@@ -11105,6 +11250,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
 
                 // Create the body
@@ -11145,6 +11291,10 @@ namespace Azure.Storage.Blobs
                         {
                             _value.EncryptionKeySha256 = _header;
                         }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
+                        }
 
                         // Create the response
                         return Response.FromValue(_value, response);
@@ -11179,6 +11329,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11204,6 +11355,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -11233,6 +11385,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         leaseId,
                         sourceIfModifiedSince,
                         sourceIfUnmodifiedSince,
@@ -11283,6 +11436,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="leaseId">If specified, the operation only succeeds if the resource's lease is active and matches this ID.</param>
             /// <param name="sourceIfModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="sourceIfUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11304,6 +11458,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 string leaseId = default,
                 System.DateTimeOffset? sourceIfModifiedSince = default,
                 System.DateTimeOffset? sourceIfUnmodifiedSince = default,
@@ -11350,6 +11505,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (leaseId != null) { _request.Headers.SetValue("x-ms-lease-id", leaseId); }
                 if (sourceIfModifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-modified-since", sourceIfModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (sourceIfUnmodifiedSince != null) { _request.Headers.SetValue("x-ms-source-if-unmodified-since", sourceIfUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -11391,6 +11547,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
 
                         // Create the response
@@ -11445,6 +11605,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11475,6 +11636,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -11509,6 +11671,7 @@ namespace Azure.Storage.Blobs
                         encryptionKey,
                         encryptionKeySha256,
                         encryptionAlgorithm,
+                        encryptionScope,
                         tier,
                         ifModifiedSince,
                         ifUnmodifiedSince,
@@ -11564,6 +11727,7 @@ namespace Azure.Storage.Blobs
             /// <param name="encryptionKey">Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="encryptionKeySha256">The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided.</param>
             /// <param name="encryptionAlgorithm">The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided.</param>
+            /// <param name="encryptionScope">Optional. Version 2019-07-07 and later.  Specifies the name of the encryption scope to use to encrypt the data provided in the request. If not specified, encryption is performed with the default account encryption scope.  For more information, see Encryption at Rest for Azure Storage Services.</param>
             /// <param name="tier">Optional. Indicates the tier to be set on the blob.</param>
             /// <param name="ifModifiedSince">Specify this header value to operate only on a blob if it has been modified since the specified date/time.</param>
             /// <param name="ifUnmodifiedSince">Specify this header value to operate only on a blob if it has not been modified since the specified date/time.</param>
@@ -11590,6 +11754,7 @@ namespace Azure.Storage.Blobs
                 string encryptionKey = default,
                 string encryptionKeySha256 = default,
                 Azure.Storage.Blobs.Models.EncryptionAlgorithmType? encryptionAlgorithm = default,
+                string encryptionScope = default,
                 Azure.Storage.Blobs.Models.AccessTier? tier = default,
                 System.DateTimeOffset? ifModifiedSince = default,
                 System.DateTimeOffset? ifUnmodifiedSince = default,
@@ -11641,6 +11806,7 @@ namespace Azure.Storage.Blobs
                 if (encryptionKey != null) { _request.Headers.SetValue("x-ms-encryption-key", encryptionKey); }
                 if (encryptionKeySha256 != null) { _request.Headers.SetValue("x-ms-encryption-key-sha256", encryptionKeySha256); }
                 if (encryptionAlgorithm != null) { _request.Headers.SetValue("x-ms-encryption-algorithm", Azure.Storage.Blobs.BlobRestClient.Serialization.ToString(encryptionAlgorithm.Value)); }
+                if (encryptionScope != null) { _request.Headers.SetValue("x-ms-encryption-scope", encryptionScope); }
                 if (tier != null) { _request.Headers.SetValue("x-ms-access-tier", tier.ToString()); }
                 if (ifModifiedSince != null) { _request.Headers.SetValue("If-Modified-Since", ifModifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
                 if (ifUnmodifiedSince != null) { _request.Headers.SetValue("If-Unmodified-Since", ifUnmodifiedSince.Value.ToString("R", System.Globalization.CultureInfo.InvariantCulture)); }
@@ -11693,6 +11859,10 @@ namespace Azure.Storage.Blobs
                         if (response.Headers.TryGetValue("x-ms-encryption-key-sha256", out _header))
                         {
                             _value.EncryptionKeySha256 = _header;
+                        }
+                        if (response.Headers.TryGetValue("x-ms-encryption-scope", out _header))
+                        {
+                            _value.EncryptionScope = _header;
                         }
                         if (response.Headers.TryGetValue("x-ms-blob-sequence-number", out _header))
                         {
@@ -13682,6 +13852,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlobAppendInfo instances.
         /// You can use BlobsModelFactory.BlobAppendInfo instead.
         /// </summary>
@@ -13704,7 +13879,8 @@ namespace Azure.Storage.Blobs.Models
             string blobAppendOffset,
             int blobCommittedBlockCount,
             bool isServerEncrypted,
-            string encryptionKeySha256)
+            string encryptionKeySha256,
+            string encryptionScope)
         {
             return new BlobAppendInfo()
             {
@@ -13716,6 +13892,7 @@ namespace Azure.Storage.Blobs.Models
                 BlobCommittedBlockCount = blobCommittedBlockCount,
                 IsServerEncrypted = isServerEncrypted,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
             };
         }
     }
@@ -14111,6 +14288,16 @@ namespace Azure.Storage.Blobs.Models
         public bool? HasLegalHold { get; internal set; }
 
         /// <summary>
+        /// DefaultEncryptionScope
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// DenyEncryptionScopeOverride
+        /// </summary>
+        public bool? PreventEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag ETag { get; internal set; }
@@ -14185,6 +14372,16 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.HasLegalHold = bool.Parse(_child.Value);
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("DefaultEncryptionScope", ""));
+            if (_child != null)
+            {
+                _value.DefaultEncryptionScope = _child.Value;
+            }
+            _child = element.Element(System.Xml.Linq.XName.Get("DenyEncryptionScopeOverride", ""));
+            if (_child != null)
+            {
+                _value.PreventEncryptionScopeOverride = bool.Parse(_child.Value);
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -14217,25 +14414,29 @@ namespace Azure.Storage.Blobs.Models
         public static BlobContainerProperties BlobContainerProperties(
             System.DateTimeOffset lastModified,
             Azure.ETag eTag,
-            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             Azure.Storage.Blobs.Models.LeaseState? leaseState = default,
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             Azure.Storage.Blobs.Models.PublicAccessType? publicAccess = default,
-            bool? hasImmutabilityPolicy = default,
+            Azure.Storage.Blobs.Models.LeaseStatus? leaseStatus = default,
             bool? hasLegalHold = default,
-            System.Collections.Generic.IDictionary<string, string> metadata = default)
+            string defaultEncryptionScope = default,
+            bool? preventEncryptionScopeOverride = default,
+            System.Collections.Generic.IDictionary<string, string> metadata = default,
+            bool? hasImmutabilityPolicy = default)
         {
             return new BlobContainerProperties()
             {
                 LastModified = lastModified,
                 ETag = eTag,
-                LeaseStatus = leaseStatus,
                 LeaseState = leaseState,
                 LeaseDuration = leaseDuration,
                 PublicAccess = publicAccess,
-                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                LeaseStatus = leaseStatus,
                 HasLegalHold = hasLegalHold,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
                 Metadata = metadata,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
             };
         }
     }
@@ -14388,6 +14589,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// The current sequence number for the page blob.  This is only returned for page blobs.
         /// </summary>
         public long BlobSequenceNumber { get; internal set; }
@@ -14412,6 +14618,7 @@ namespace Azure.Storage.Blobs.Models
             System.DateTimeOffset lastModified,
             byte[] contentHash,
             string encryptionKeySha256,
+            string encryptionScope,
             long blobSequenceNumber)
         {
             return new BlobContentInfo()
@@ -14420,6 +14627,7 @@ namespace Azure.Storage.Blobs.Models
                 LastModified = lastModified,
                 ContentHash = contentHash,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
                 BlobSequenceNumber = blobSequenceNumber,
             };
         }
@@ -15054,6 +15262,11 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode MaxBlobSizeConditionNotMet { get; } = new BlobErrorCode(@"MaxBlobSizeConditionNotMet");
 
         /// <summary>
+        /// NoAuthenticationInformation
+        /// </summary>
+        public static Azure.Storage.Blobs.Models.BlobErrorCode NoAuthenticationInformation { get; } = new BlobErrorCode(@"NoAuthenticationInformation");
+
+        /// <summary>
         /// NoPendingCopyOperation
         /// </summary>
         public static Azure.Storage.Blobs.Models.BlobErrorCode NoPendingCopyOperation { get; } = new BlobErrorCode(@"NoPendingCopyOperation");
@@ -15670,6 +15883,11 @@ namespace Azure.Storage.Blobs.Models
         public string CustomerProvidedKeySha256 { get; internal set; }
 
         /// <summary>
+        /// The name of the encryption scope under which the blob is encrypted.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// ETag
         /// </summary>
         public Azure.ETag? ETag { get; internal set; }
@@ -15840,6 +16058,11 @@ namespace Azure.Storage.Blobs.Models
             {
                 _value.CustomerProvidedKeySha256 = _child.Value;
             }
+            _child = element.Element(System.Xml.Linq.XName.Get("EncryptionScope", ""));
+            if (_child != null)
+            {
+                _value.EncryptionScope = _child.Value;
+            }
             _child = element.Element(System.Xml.Linq.XName.Get("Etag", ""));
             if (_child != null)
             {
@@ -15882,7 +16105,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobItemProperties BlobItemProperties(
             bool accessTierInferred,
-            System.Uri copySource = default,
+            string copyProgress = default,
             string contentType = default,
             string contentEncoding = default,
             string contentLanguage = default,
@@ -15896,8 +16119,8 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.LeaseDurationType? leaseDuration = default,
             string copyId = default,
             Azure.Storage.Blobs.Models.CopyStatus? copyStatus = default,
+            System.Uri copySource = default,
             long? contentLength = default,
-            string copyProgress = default,
             string copyStatusDescription = default,
             bool? serverEncrypted = default,
             bool? incrementalCopy = default,
@@ -15907,6 +16130,7 @@ namespace Azure.Storage.Blobs.Models
             System.DateTimeOffset? lastModified = default,
             Azure.Storage.Blobs.Models.ArchiveStatus? archiveStatus = default,
             string customerProvidedKeySha256 = default,
+            string encryptionScope = default,
             Azure.ETag? eTag = default,
             System.DateTimeOffset? createdOn = default,
             System.DateTimeOffset? copyCompletedOn = default,
@@ -15916,7 +16140,7 @@ namespace Azure.Storage.Blobs.Models
             return new BlobItemProperties()
             {
                 AccessTierInferred = accessTierInferred,
-                CopySource = copySource,
+                CopyProgress = copyProgress,
                 ContentType = contentType,
                 ContentEncoding = contentEncoding,
                 ContentLanguage = contentLanguage,
@@ -15930,8 +16154,8 @@ namespace Azure.Storage.Blobs.Models
                 LeaseDuration = leaseDuration,
                 CopyId = copyId,
                 CopyStatus = copyStatus,
+                CopySource = copySource,
                 ContentLength = contentLength,
-                CopyProgress = copyProgress,
                 CopyStatusDescription = copyStatusDescription,
                 ServerEncrypted = serverEncrypted,
                 IncrementalCopy = incrementalCopy,
@@ -15941,6 +16165,7 @@ namespace Azure.Storage.Blobs.Models
                 LastModified = lastModified,
                 ArchiveStatus = archiveStatus,
                 CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
                 ETag = eTag,
                 CreatedOn = createdOn,
                 CopyCompletedOn = copyCompletedOn,
@@ -16324,6 +16549,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// The tier of page blob on a premium storage account or tier of block blob on blob storage LRS accounts. For a list of allowed premium page blob tiers, see https://docs.microsoft.com/en-us/azure/virtual-machines/windows/premium-storage#features. For blob storage LRS accounts, valid values are Hot/Cool/Archive.
         /// </summary>
         public string AccessTier { get; internal set; }
@@ -16362,28 +16592,29 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public static BlobProperties BlobProperties(
             System.DateTimeOffset lastModified,
-            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             Azure.Storage.Blobs.Models.LeaseState leaseState,
             Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
             long contentLength,
-            string destinationSnapshot,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
             Azure.ETag eTag,
             byte[] contentHash,
             string contentEncoding,
             string contentDisposition,
             string contentLanguage,
-            bool isIncrementalCopy,
+            string destinationSnapshot,
             string cacheControl,
-            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            bool isIncrementalCopy,
             long blobSequenceNumber,
-            System.Uri copySource,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
             string acceptRanges,
-            string copyProgress,
+            System.Uri copySource,
             int blobCommittedBlockCount,
-            string copyId,
+            string copyProgress,
             bool isServerEncrypted,
-            string copyStatusDescription,
+            string copyId,
             string encryptionKeySha256,
+            string copyStatusDescription,
+            string encryptionScope,
             System.DateTimeOffset copyCompletedOn,
             string accessTier,
             Azure.Storage.Blobs.Models.BlobType blobType,
@@ -16397,28 +16628,29 @@ namespace Azure.Storage.Blobs.Models
             return new BlobProperties()
             {
                 LastModified = lastModified,
-                LeaseDuration = leaseDuration,
                 LeaseState = leaseState,
                 LeaseStatus = leaseStatus,
                 ContentLength = contentLength,
-                DestinationSnapshot = destinationSnapshot,
+                LeaseDuration = leaseDuration,
                 ETag = eTag,
                 ContentHash = contentHash,
                 ContentEncoding = contentEncoding,
                 ContentDisposition = contentDisposition,
                 ContentLanguage = contentLanguage,
-                IsIncrementalCopy = isIncrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
                 CacheControl = cacheControl,
-                CopyStatus = copyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
                 BlobSequenceNumber = blobSequenceNumber,
-                CopySource = copySource,
+                CopyStatus = copyStatus,
                 AcceptRanges = acceptRanges,
-                CopyProgress = copyProgress,
+                CopySource = copySource,
                 BlobCommittedBlockCount = blobCommittedBlockCount,
-                CopyId = copyId,
+                CopyProgress = copyProgress,
                 IsServerEncrypted = isServerEncrypted,
-                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
                 EncryptionKeySha256 = encryptionKeySha256,
+                CopyStatusDescription = copyStatusDescription,
+                EncryptionScope = encryptionScope,
                 CopyCompletedOn = copyCompletedOn,
                 AccessTier = accessTier,
                 BlobType = blobType,
@@ -17365,6 +17597,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlockInfo instances.
         /// You can use BlobsModelFactory.BlockInfo instead.
         /// </summary>
@@ -17382,13 +17619,15 @@ namespace Azure.Storage.Blobs.Models
         public static BlockInfo BlockInfo(
             byte[] contentHash,
             byte[] contentCrc64,
-            string encryptionKeySha256)
+            string encryptionKeySha256,
+            string encryptionScope)
         {
             return new BlockInfo()
             {
                 ContentHash = contentHash,
                 ContentCrc64 = contentCrc64,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
             };
         }
     }
@@ -18174,6 +18413,16 @@ namespace Azure.Storage.Blobs.Models
         public bool HasLegalHold { get; internal set; }
 
         /// <summary>
+        /// The default encryption scope for the container.
+        /// </summary>
+        public string DefaultEncryptionScope { get; internal set; }
+
+        /// <summary>
+        /// Indicates whether the container's default encryption scope can be overriden.
+        /// </summary>
+        public bool DenyEncryptionScopeOverride { get; internal set; }
+
+        /// <summary>
         /// Creates a new FlattenedContainerItem instance
         /// </summary>
         public FlattenedContainerItem()
@@ -18330,6 +18579,11 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
 
         /// <summary>
         /// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range
@@ -18831,6 +19085,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PageInfo instances.
         /// You can use BlobsModelFactory.PageInfo instead.
         /// </summary>
@@ -18851,7 +19110,8 @@ namespace Azure.Storage.Blobs.Models
             byte[] contentHash,
             byte[] contentCrc64,
             long blobSequenceNumber,
-            string encryptionKeySha256)
+            string encryptionKeySha256,
+            string encryptionScope)
         {
             return new PageInfo()
             {
@@ -18861,6 +19121,7 @@ namespace Azure.Storage.Blobs.Models
                 ContentCrc64 = contentCrc64,
                 BlobSequenceNumber = blobSequenceNumber,
                 EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
             };
         }
     }
@@ -19317,6 +19578,11 @@ namespace Azure.Storage.Blobs.Models
         /// The SHA-256 hash of the encryption key used to encrypt the metadata. This header is only returned when the metadata was encrypted with a customer-provided key.
         /// </summary>
         public string EncryptionKeySha256 { get; internal set; }
+
+        /// <summary>
+        /// Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope.
+        /// </summary>
+        public string EncryptionScope { get; internal set; }
 
         /// <summary>
         /// Prevent direct instantiation of SetMetadataOperation instances.

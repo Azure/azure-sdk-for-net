@@ -1009,8 +1009,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Assert
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
 
-            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
-            Assert.AreEqual(LeaseState.Available, response.Value.LeaseState);
+            Assert.AreEqual(DataLakeLeaseStatus.Unlocked, response.Value.LeaseStatus);
+            Assert.AreEqual(DataLakeLeaseState.Available, response.Value.LeaseState);
         }
 
         [Test]
@@ -1210,8 +1210,8 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
-            Assert.AreEqual(LeaseStatus.Unlocked, response.Value.LeaseStatus);
-            Assert.AreEqual(LeaseState.Broken, response.Value.LeaseState);
+            Assert.AreEqual(DataLakeLeaseStatus.Unlocked, response.Value.LeaseStatus);
+            Assert.AreEqual(DataLakeLeaseState.Broken, response.Value.LeaseState);
         }
 
         [Test]

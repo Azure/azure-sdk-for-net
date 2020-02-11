@@ -1,5 +1,38 @@
 # Release History
 
+## 1.0.0-preview.3 (Unreleased)
+
+
+## 1.0.0-preview.2 (2020-02-11)
+### Breaking changes
+- The `TextAnalyticsError` model has been simplified to an object with properties `Code`, `Message`, and `Target`.
+- To use an API key as the credential for authenticating the client, a new credential class `TextAnalyticsApiKeyCredential("<api_key>")` must be passed in for the credential parameter.
+Passing the API key as a string is no longer supported.
+- Reference to `subcription key` changed to `API key`.
+- `DetectLanguages` has been renamed to `DetectLanguage`. Same applies for `DetectLanguagesAsync` to `DetectLanguageAsync`.
+- All batch overload methods have been renamed by adding the suffix `Batch` or `BatchAsync` accordingly. For example, instead of `AnalyzeSentimentAsync` now we have `AnalyzeSentimentBatchAsync`.
+- Added a new parameter `TextAnalyticsRequestOptions` options to batch method overloads accepting a list of text inputs for allowing the users to opt for batch operation statistics.
+- All single text operation methods now return an atomic type of the operation result. For example `DetectLanguage(String text)` returns a `DetectedLanguage` rather than a `DetectLanguageResult`.
+- `NamedEntity.Type` and `NamedEntity.SubType` have been renamed to `NamedEntity.Category` and `NamedEntity.SubCategory`.
+- `NamedEntity` has been renamed to `CategorizedEntity`.
+- `RecognizeEntitiesResult` property `NamedEntities` has been renamed to `Entities`.
+- `RecognizePiiEntitiesResult` now contains a list of `PiiEntity` instead of `NamedEntity`.
+- `RecognizePiiEntitiesResult` property `NamedEntities` has been renamed to `Entities`.
+- `RecognizeLinkedEntitiesResult` property `LinkedEntities` has been renamed to `Entities`.
+- `DetectLanguageResult` no longer has a property `DetectedLanguages`. Use `PrimaryLanguage` to access the detected language in text.
+- Created class `DocumentSentiment` that includes a list of `SentenceSentiment`.
+- Sentiment label and sentiment scores are now part of `DocumentSentiment` and `SentenceSentiment`.
+- Renamed `TextSentiment` to `SentenceSentiment`.
+- Renamed `SentimentClass` to `SentimentLabel`.
+- Extandable ENUMs created for `Category`, and `SubCategory`.
+
+### New Features
+Credential class `TextAnalyticsApiKeyCredential` provides an `UpdateCredential()` method which allows you to update the API key for long-lived clients.
+
+### Fixes and improvements
+A new `HasError` property has added to `<document>Collection` types to allow you to check if an operation on a particular document succeeded or failed.
+If you try to access a result attribute where the operation was unsuccesful, an `InvalidOperationException` is raised with a custom error message that provides information about the error.
+
 ## 1.0.0-preview.1 (2020-01-09)
 This is the first preview of the `Azure.AI.TextAnalytics` client library. It is not a direct replacement for `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`, as applications currently using that library would require code changes to use `Azure.AI.TextAnalytics`.
 

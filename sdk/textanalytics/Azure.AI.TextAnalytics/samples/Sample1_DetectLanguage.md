@@ -1,6 +1,6 @@
 # Detecting the Language of Text Inputs
 
-This sample demonstrates how to detect the language that one or more text inputs are written in using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README](../README.md) for links and instructions.
+This sample demonstrates how to detect the language that one or more text inputs are written in. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -19,8 +19,7 @@ To detect the language of a single text input, pass the input string to the clie
 ```C# Snippet:DetectLanguage
 string input = "Este documento está en español.";
 
-DetectLanguageResult result = client.DetectLanguage(input);
-DetectedLanguage language = result.PrimaryLanguage;
+DetectedLanguage language = client.DetectLanguage(input);
 
 Console.WriteLine($"Detected language {language.Name} with confidence {language.Score:0.00}.");
 ```
@@ -61,9 +60,10 @@ DetectLanguageResultCollection results = client.DetectLanguageBatch(inputs, new 
 
 To see the full example source files, see:
 
-* [Synchronous Sample1_DetectLanguage.cs](../tests/samples/Sample1_DetectLanguage.cs)
-* [Asynchronous Sample1_DetectLanguage.cs](../tests/samples/Sample1_DetectLanguageAsync.cs)
-* [Synchronous Sample1_DetectLanguageBatch.cs](../tests/samples/Sample1_DetectLanguageBatch.cs)
-* [Synchronous Sample1_DetectLanguageBatchConvenience.cs](../tests/samples/Sample1_DetectLanguageBatchConvenience.cs)
+* [Synchronous Sample1_DetectLanguage.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics//tests/samples/Sample1_DetectLanguage.cs)
+* [Asynchronous Sample1_DetectLanguage.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample1_DetectLanguageAsync.cs)
+* [Synchronous Sample1_DetectLanguageBatch.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample1_DetectLanguageBatch.cs)
+* [Synchronous Sample1_DetectLanguageBatchConvenience.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample1_DetectLanguageBatchConvenience.cs)
 
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

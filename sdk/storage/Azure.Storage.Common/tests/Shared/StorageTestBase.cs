@@ -131,6 +131,14 @@ namespace Azure.Storage.Test.Shared
                 () => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant);
 
         /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigManagedDisk => GetTestConfig(
+                "Storage_TestConfigManagedDisk",
+                () => TestConfigurations.DefaultTargetManagedDiskTenant);
+
+        /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
         /// not get values from this directly; use GetTestConfig.
         /// </summary>

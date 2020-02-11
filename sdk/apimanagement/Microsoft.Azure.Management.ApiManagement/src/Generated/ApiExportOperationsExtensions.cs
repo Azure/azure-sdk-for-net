@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='format'>
             /// Format in which to export the Api Details to the Storage Blob with Sas Key
             /// valid for 5 minutes. Possible values include: 'Swagger', 'Wsdl', 'Wadl',
-            /// 'Openapi'
+            /// 'Openapi', 'OpenapiJson'
             /// </param>
             public static ApiExportResult Get(this IApiExportOperations operations, string resourceGroupName, string serviceName, string apiId, string format)
             {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='format'>
             /// Format in which to export the Api Details to the Storage Blob with Sas Key
             /// valid for 5 minutes. Possible values include: 'Swagger', 'Wsdl', 'Wadl',
-            /// 'Openapi'
+            /// 'Openapi', 'OpenapiJson'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

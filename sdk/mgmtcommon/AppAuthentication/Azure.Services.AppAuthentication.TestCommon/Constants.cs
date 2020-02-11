@@ -49,6 +49,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string NotSupportedInNetCoreError = "not supported for .NET Core";
 
         // Connection strings
+        //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="Secret is used for tests only")]
         public static readonly string ClientSecret = "Secret";
         public static readonly string IntegratedAuthConnectionString = "RunAs = CurrentUser;";
         public static readonly string AzureCliConnectionString = "RunAs=Developer; DeveloperTool=AzureCli";

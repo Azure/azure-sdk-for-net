@@ -10,6 +10,16 @@ description: Samples for the Azure.AI.TextAnalytics client library
 ---
 
 # Azure Text Analytics client SDK Samples
+Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes six main functions: 
+* Language Detection
+* Sentiment Analysis
+* Key Phrase Extraction
+* Named Entity Recognition
+* Recognition of Personally Identifiable Information 
+* Linked Entity Recognition
+
+You can find samples for each of this main functions below.
+To get started you'll need a Text Analytics endpoint and credentials. See Text Analytics Client Library [Readme][README] for more information and instructions.
 
 - [Detect Language](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md)
 - [Analyze Sentiment](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md)
@@ -17,3 +27,5 @@ description: Samples for the Azure.AI.TextAnalytics client library
 - [Recognize Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md)
 - [Recognize PII Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md)
 - [Recognize Linked Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md)
+
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

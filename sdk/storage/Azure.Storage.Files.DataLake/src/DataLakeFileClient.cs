@@ -2133,9 +2133,9 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Read Data
 
-        #region Download Data
+        #region Read To
         /// <summary>
-        /// The <see cref="DownloadTo(Stream, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="ReadTo(Stream, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads an entire file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
@@ -2161,14 +2161,14 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DownloadTo(
+        public virtual Response ReadTo(
             Stream destination,
             DataLakeRequestConditions conditions = default,
             //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
             try
             {
@@ -2195,7 +2195,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DownloadTo(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="ReadTo(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads an entire file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
@@ -2221,14 +2221,14 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response DownloadTo(
+        public virtual Response ReadTo(
             string path,
             DataLakeRequestConditions conditions = default,
             //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
             try
             {
@@ -2255,7 +2255,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(Stream, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="ReadToAsync(Stream, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads an entire file using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
         /// </summary>
@@ -2281,14 +2281,14 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(
+        public virtual async Task<Response> ReadToAsync(
             Stream destination,
             DataLakeRequestConditions conditions = default,
             //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
             try
             {
@@ -2316,7 +2316,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DownloadToAsync(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
+        /// The <see cref="ReadToAsync(string, DataLakeRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads an entire file using parallel requests,
         /// and writes the content to <paramref name="path"/>.
         /// </summary>
@@ -2342,14 +2342,14 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DownloadToAsync(
+        public virtual async Task<Response> ReadToAsync(
             string path,
             DataLakeRequestConditions conditions = default,
             //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($".{nameof(DataLakeFileClient)}.{nameof(DownloadTo)}");
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($".{nameof(DataLakeFileClient)}.{nameof(ReadTo)}");
 
             try
             {
@@ -2375,7 +2375,7 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
-        #endregion Download Data
+        #endregion Read To
 
         #region Upload
         /// <summary>
@@ -2781,6 +2781,6 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
             }
         }
-        #endregion
+        #endregion Upload
     }
 }
