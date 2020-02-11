@@ -8,7 +8,7 @@
     <AutoRestConfiguration>autorest.md</AutoRestConfiguration>
 
     <_SharedCodeDirectory>$(MSBuildThisFileDirectory)../sdk/core/Azure.Core/src/Shared/</_SharedCodeDirectory>
-    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)Autorest</_AutoRestSharedCodeDirectory>
+    <_AutoRestSharedCodeDirectory>$(_SharedCodeDirectory)Autorest/</_AutoRestSharedCodeDirectory>
 
     <_GenerateCode Condition="'$(_SupportsCodeGeneration)' == 'true' AND Exists('$(AutoRestConfiguration)')">true</_GenerateCode>
     <UsesJsonSerialization Condition="'$(UsesJsonSerialization)' == ''">true</UsesJsonSerialization>

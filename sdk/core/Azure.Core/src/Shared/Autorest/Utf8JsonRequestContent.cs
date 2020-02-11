@@ -14,13 +14,13 @@ namespace Azure.Core
     {
         private readonly ArrayBufferWriter<byte> _writer;
 
+        public Utf8JsonWriter JsonWriter { get; }
+
         public Utf8JsonRequestContent()
         {
             _writer = new ArrayBufferWriter<byte>();
             JsonWriter = new Utf8JsonWriter(_writer);
         }
-
-        public Utf8JsonWriter JsonWriter { get; }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {

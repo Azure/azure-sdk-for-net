@@ -15,7 +15,7 @@ namespace Azure.Core
         public static byte[] GetBytesFromBase64Value(this XElement element, string format) => format switch
         {
             "U" => TypeFormatters.FromBase64UrlString(element.Value),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
         public static DateTimeOffset GetDateTimeOffsetValue(this XElement element, string format) => format switch
@@ -24,16 +24,15 @@ namespace Azure.Core
             "S" => DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture),
             "R" => DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture),
             "U" => DateTimeOffset.FromUnixTimeSeconds((long)element),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
         public static TimeSpan GetTimeSpanValue(this XElement element, string format) => format switch
         {
             "P" => XmlConvert.ToTimeSpan(element.Value),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
-        // Parameter format of method GetObjectValue is never used. Remove the parameter or use it in the method body.
         #pragma warning disable CA1801 //Parameter format of method GetObjectValue is never used. Remove the parameter or use it in the method body.
         public static object GetObjectValue(this XElement element, string format)
         #pragma warning restore

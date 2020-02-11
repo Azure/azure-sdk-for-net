@@ -22,13 +22,13 @@ namespace Azure.Core
             "S" => value.ToString("O", CultureInfo.InvariantCulture),
             "R" => value.ToString("R", CultureInfo.InvariantCulture),
             "U" => value.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
         public static string ToString(TimeSpan value, string format) => format switch
         {
             "P" => XmlConvert.ToString(value),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
         public static string ToBase64UrlString(byte[] value)

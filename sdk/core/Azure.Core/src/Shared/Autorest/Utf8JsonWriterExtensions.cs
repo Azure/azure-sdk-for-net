@@ -34,7 +34,7 @@ namespace Azure.Core
                     writer.WriteStringValue(TypeFormatters.ToBase64UrlString(value));
                     break;
                 default:
-                    throw new ArgumentException("Format is not supported", nameof(format));
+                    throw new ArgumentException($"Format is not supported: '{format}'", nameof(format));
             }
         }
 

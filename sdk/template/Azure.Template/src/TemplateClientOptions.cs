@@ -28,7 +28,7 @@ namespace Azure.Template
             /// <summary>
             /// The V1 of the template service.
             /// </summary>
-            V1 = 0
+            V1 = 1
         }
     }
 }

@@ -20,15 +20,20 @@ namespace Azure.Core
                 case JsonValueKind.String:
                     return element.GetString();
                 case JsonValueKind.Number:
-                    if (element.TryGetInt32(out var value))
+                    if (element.TryGetInt32(out int intValue))
                     {
-                        return value;
+                        return intValue;
+                    }
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
                     }
                     return element.GetDouble();
                 case JsonValueKind.True:
                     return true;
                 case JsonValueKind.False:
                     return false;
+                case JsonValueKind.Undefined:
                 case JsonValueKind.Null:
                     return null;
                 case JsonValueKind.Object:
@@ -53,7 +58,7 @@ namespace Azure.Core
         public static byte[] GetBytesFromBase64(in this JsonElement element, string format) => format switch
         {
             "U" => TypeFormatters.FromBase64UrlString(element.GetString()),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
         public static DateTimeOffset GetDateTimeOffset(in this JsonElement element, string format) => format switch
@@ -62,13 +67,13 @@ namespace Azure.Core
             "S" => DateTimeOffset.Parse(element.GetString(), CultureInfo.InvariantCulture),
             "R" => DateTimeOffset.Parse(element.GetString(), CultureInfo.InvariantCulture),
             "U" => DateTimeOffset.FromUnixTimeSeconds(element.GetInt64()),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
         public static TimeSpan GetTimeSpan(in this JsonElement element, string format) => format switch
         {
             "P" => XmlConvert.ToTimeSpan(element.GetString()),
-            _ => throw new ArgumentException("Format is not supported", nameof(format))
+            _ => throw new ArgumentException($"Format is not supported: '{format}'", nameof(format))
         };
 
         public static char GetChar(this in JsonElement element)
@@ -78,13 +83,13 @@ namespace Azure.Core
                 var text = element.GetString();
                 if (text == null || text.Length != 1)
                 {
-                    throw new NotSupportedException("Cannot convert \"" + text + "\" to a Char");
+                    throw new NotSupportedException($"Cannot convert \"{text}\" to a Char");
                 }
                 return text[0];
             }
             else
             {
-                throw new NotSupportedException("Cannot convert " + element.ValueKind + " to a Char");
+                throw new NotSupportedException($"Cannot convert {element.ValueKind} to a Char");
             }
         }
     }

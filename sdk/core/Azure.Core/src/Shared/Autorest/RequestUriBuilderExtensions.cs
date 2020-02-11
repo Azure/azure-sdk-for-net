@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace Azure.Core
 {
-    internal static class UriBuilderExtensions
+    internal static class RequestUriBuilderExtensions
     {
         public static void AppendPath(this RequestUriBuilder builder, bool value, bool escape = false)
         {
