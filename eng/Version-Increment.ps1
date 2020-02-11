@@ -18,7 +18,7 @@ The Name of the Package
 Used in the case where the package directory name is different from the package name. e.g in cognitiveservice packages
 
 .PARAMETER NewVersionString
-Use this to overide version incement logic and set a version specified by parameter
+Use this to overide version incement logic and set a version specified by this parameter
 
 
 .EXAMPLE
