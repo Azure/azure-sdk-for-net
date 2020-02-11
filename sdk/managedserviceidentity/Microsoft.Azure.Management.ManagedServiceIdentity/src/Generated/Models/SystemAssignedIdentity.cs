@@ -13,26 +13,24 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Describes an identity resource.
+    /// Describes a system assigned identity resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Identity : Resource
+    public partial class SystemAssignedIdentity : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the SystemAssignedIdentity class.
         /// </summary>
-        public Identity()
+        public SystemAssignedIdentity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the SystemAssignedIdentity class.
         /// </summary>
         /// <param name="location">The Azure region where the resource
         /// lives.</param>
@@ -42,21 +40,22 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="tags">Resource tags</param>
         /// <param name="tenantId">The id of the tenant which the identity
         /// belongs to.</param>
         /// <param name="principalId">The id of the service principal object
         /// associated with the created identity.</param>
         /// <param name="clientId">The id of the app associated with the
         /// identity. This is a random generated UUID by MSI.</param>
-        public Identity(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?))
+        /// <param name="clientSecretUrl"> The ManagedServiceIdentity DataPlane
+        /// URL that can be queried to obtain the identity credentials.</param>
+        public SystemAssignedIdentity(string location, string id = default(string), string name = default(string), string type = default(string), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?), string clientSecretUrl = default(string))
             : base(id, name, type)
         {
             Location = location;
-            Tags = tags;
             TenantId = tenantId;
             PrincipalId = principalId;
             ClientId = clientId;
+            ClientSecretUrl = clientSecretUrl;
             CustomInit();
         }
 
@@ -70,12 +69,6 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets resource tags
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets the id of the tenant which the identity belongs to.
@@ -96,6 +89,13 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientId")]
         public System.Guid? ClientId { get; private set; }
+
+        /// <summary>
+        /// Gets  The ManagedServiceIdentity DataPlane URL that can be queried
+        /// to obtain the identity credentials.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecretUrl")]
+        public string ClientSecretUrl { get; private set; }
 
         /// <summary>
         /// Validate the object.

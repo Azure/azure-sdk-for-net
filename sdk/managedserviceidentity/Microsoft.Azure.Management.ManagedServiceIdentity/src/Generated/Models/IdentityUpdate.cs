@@ -21,27 +21,27 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
     /// Describes an identity resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Identity : Resource
+    public partial class IdentityUpdate : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the IdentityUpdate class.
         /// </summary>
-        public Identity()
+        public IdentityUpdate()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Identity class.
+        /// Initializes a new instance of the IdentityUpdate class.
         /// </summary>
-        /// <param name="location">The Azure region where the resource
-        /// lives.</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource. Ex-
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="location">The Azure region where the resource
+        /// lives.</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="tenantId">The id of the tenant which the identity
         /// belongs to.</param>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// associated with the created identity.</param>
         /// <param name="clientId">The id of the app associated with the
         /// identity. This is a random generated UUID by MSI.</param>
-        public Identity(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?))
+        public IdentityUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), System.Guid? tenantId = default(System.Guid?), System.Guid? principalId = default(System.Guid?), System.Guid? clientId = default(System.Guid?))
             : base(id, name, type)
         {
             Location = location;
@@ -97,18 +97,5 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         [JsonProperty(PropertyName = "properties.clientId")]
         public System.Guid? ClientId { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Location == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
-            }
-        }
     }
 }
