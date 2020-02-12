@@ -139,6 +139,8 @@ namespace Azure.Identity
                     _credential = _sources[i];
 
                     _sources = null;
+
+                    return token;
                 }
                 catch (CredentialUnavailableException e)
                 {
