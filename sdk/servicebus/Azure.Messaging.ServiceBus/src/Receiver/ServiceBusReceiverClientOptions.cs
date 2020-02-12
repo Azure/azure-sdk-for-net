@@ -15,15 +15,20 @@ namespace Azure.Messaging.ServiceBus.Receiver
     public abstract class ServiceBusReceiverClientOptions
     {
         /// <summary>The set of options to use for configuring the connection to the Service Bus service.</summary>
-        private ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
+        internal ServiceBusConnectionOptions _connectionOptions = new ServiceBusConnectionOptions();
 
         /// <summary>The set of options to govern retry behavior and try timeouts.</summary>
-        private ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
+        internal ServiceBusRetryOptions _retryOptions = new ServiceBusRetryOptions();
 
         /// <summary>
         ///
         /// </summary>
         public int PrefetchCount = 0;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public ReceiveMode ReceiveMode { get; set; } = ReceiveMode.PeekLock;
 
         /// <summary>
         ///   Gets or sets the options used for configuring the connection to the Service Bus service.

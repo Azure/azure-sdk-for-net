@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             }
 
             // peek the messages
-            var receiver = new SessionReceiverClient(ConnString, SessionQueueName, sessionId, ReceiveMode.PeekLock);
+            var receiver = new SessionReceiverClient(sessionId, ConnString, SessionQueueName);
 
             sequenceNumber ??= 1;
             IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeBySequenceAsync(
@@ -72,8 +72,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
             await sender.SendRangeAsync(sentMessages);
 
-            var receiver1 = new SessionReceiverClient(ConnString, SessionQueueName, sessionId, ReceiveMode.PeekLock);
-            var receiver2 = new SessionReceiverClient(ConnString, SessionQueueName, sessionId, ReceiveMode.PeekLock);
+            var receiver1 = new SessionReceiverClient(sessionId, ConnString, SessionQueueName);
+            var receiver2 = new SessionReceiverClient(sessionId, ConnString, SessionQueueName);
             Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
 
             // peek the messages
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
             await sender.SendRangeAsync(sentMessages);
 
-            var receiver = new SessionReceiverClient(ConnString, SessionQueueName, sessionId, ReceiveMode.PeekLock);
+            var receiver = new SessionReceiverClient(sessionId, ConnString, SessionQueueName);
 
 
             long seq = 0;
@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus.Tests
             IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
             await sender.SendRangeAsync(sentMessages);
 
-            var receiver = new SessionReceiverClient(ConnString, SessionQueueName, sessionId, ReceiveMode.PeekLock);
+            var receiver = new SessionReceiverClient(sessionId, ConnString, SessionQueueName);
 
 
             long seq = 0;
@@ -169,7 +169,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await sender.SendRangeAsync(GetMessages(messageCt, session));
             }
 
-            var receiverClient = new QueueReceiverClient(ConnString, SessionQueueName, ReceiveMode.PeekLock);
+            var receiverClient = new QueueReceiverClient(ConnString, SessionQueueName);
             var sessionId = "";
             // create receiver not scoped to a specific session
             for (int i = 0; i < 10; i++)

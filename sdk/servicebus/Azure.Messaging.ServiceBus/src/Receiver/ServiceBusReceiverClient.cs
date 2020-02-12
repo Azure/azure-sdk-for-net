@@ -98,7 +98,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
         /// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId"></param>
         ///
@@ -108,20 +107,19 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiverClient(
             string connectionString,
             string entityName,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            string sessionId = default,
-            ServiceBusReceiverClientOptions clientOptions = default)
+            string sessionId,
+            ServiceBusReceiverClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-
-            //clientOptions = clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions();
+            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
 
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+            ReceiveMode = clientOptions.ReceiveMode;
             Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, sessionId: sessionId);
         }
 
@@ -132,28 +130,26 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="sessionId"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        public ServiceBusReceiverClient(
+        internal ServiceBusReceiverClient(
             string fullyQualifiedNamespace,
             string entityName,
             TokenCredential credential,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            string sessionId = default,
-            ServiceBusReceiverClientOptions clientOptions = default)
+            string sessionId,
+            ServiceBusReceiverClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(credential, nameof(credential));
-
-            //clientOptions = clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions();
+            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
 
             OwnsConnection = true;
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy);
+            ReceiveMode = clientOptions.ReceiveMode;
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, sessionId:sessionId);
         }
 
         /// <summary>
@@ -161,19 +157,22 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
+        /// <param name="sessionId"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         internal ServiceBusReceiverClient(
             ServiceBusConnection connection,
-            ServiceBusReceiverClientOptions clientOptions = default)
+            string sessionId,
+            ServiceBusReceiverClientOptions clientOptions)
         {
             Argument.AssertNotNull(connection, nameof(connection));
-            //clientOptions = clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions();
+            Argument.AssertNotNull(clientOptions, nameof(clientOptions));
 
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy);
+            ReceiveMode = clientOptions.ReceiveMode;
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, sessionId: sessionId);
         }
 
         /// <summary>
@@ -212,7 +211,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
             new SessionReceiverClient(Connection, sessionId);
 
         /// <summary>
-        /// Get a SessionReceiverClient scoped to the current entity without specifying a particular session. The broker will decide what session to use for operations. Note once the SessionReceiverClient is created it will be scoped to only one session for its lifetime.
+        /// Get a SessionReceiverClient scoped to the current entity without specifying a particular session.
+        /// The broker will decide what session to use for operations. Note once the SessionReceiverClient is created,
+        /// it will be scoped to only one session for its lifetime.
         /// </summary>
         /// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and session determined by the broker.</returns>
         public SessionReceiverClient GetSessionReceiverClient() =>

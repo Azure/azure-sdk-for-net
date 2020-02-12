@@ -24,16 +24,54 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <summary>
         /// Gets the time that the session identified by see cref="SessionId"/> is locked until for this client.
         /// </summary>
-        public DateTime LockedUntilUtc { get; }
+        public virtual DateTime LockedUntilUtc { get; }
+
+        /// <summary>
+        /// The session Id for the session that the receiver is scoped to.
+        /// </summary>
+        public virtual string SessionId { get; set; }
+
+        /// <summary>
+        /// Constructor for mocking.
+        /// </summary>
+        protected SessionReceiverClient() { }
 
         /// <summary>
         ///
         /// </summary>
-        public string SessionId { get; set; }
+        /// <param name="connection"></param>
+        /// <param name="sessionId"></param>
+        /// <param name="clientOptions"></param>
+        internal SessionReceiverClient(
+            ServiceBusConnection connection,
+            string sessionId = null,
+            SessionReceiverClientOptions clientOptions = default)
+            : base(connection, sessionId, clientOptions?.Clone() ?? new SessionReceiverClientOptions())
+        {
+            SessionId = sessionId;
+        }
         /// <summary>
-        ///
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
-        protected SessionReceiverClient() { }
+        ///
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /// <param name="entityName"></param>
+        ///
+        /// <remarks>
+        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
+        ///   connection string.  For example, ";EntityPath=telemetry-hub".
+        ///
+        ///   If you have defined a shared access policy directly on the Service Bus itself, then copying the connection string from that
+        ///   Service Bus entity will result in a connection string that contains the name.
+        /// </remarks>
+        ///
+        public SessionReceiverClient(
+            string connectionString,
+            string entityName)
+            : base(connectionString, entityName, null, new SessionReceiverClientOptions())
+        {
+        }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
@@ -41,8 +79,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the entity name and the shared key properties are contained in this connection string.</param>
         /// <param name="entityName"></param>
-        /// <param name="receiveMode"></param>
-        /// <param name="options"></param>
+        /// <param name="clientOptions"></param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
@@ -56,42 +93,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public SessionReceiverClient(
             string connectionString,
             string entityName,
-            ReceiveMode receiveMode,
-            SessionReceiverClientOptions options)
-            : base(connectionString, entityName, receiveMode, null, new SessionReceiverClientOptions())
-        {
-        }
-
-        internal SessionReceiverClient(
-            ServiceBusConnection connection,
-            string sessionId = null,
-            ServiceBusReceiverClientOptions clientOptions = default)
-            : base(connection, clientOptions ?? new SessionReceiverClientOptions())
-        {
-            SessionId = sessionId;
-        }
-        /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
-        /// </summary>
-        ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="entityName"></param>
-        /// <param name="receiveMode"></param>
-        ///
-        /// <remarks>
-        ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
-        ///   connection string.  For example, ";EntityPath=telemetry-hub".
-        ///
-        ///   If you have defined a shared access policy directly on the Service Bus itself, then copying the connection string from that
-        ///   Service Bus entity will result in a connection string that contains the name.
-        /// </remarks>
-        ///
-        public SessionReceiverClient(
-            string connectionString,
-            string entityName,
-            ReceiveMode receiveMode)
-            : base(connectionString, entityName, receiveMode, null, new SessionReceiverClientOptions())
+            SessionReceiverClientOptions clientOptions)
+            : base(connectionString, entityName, null, clientOptions?.Clone() ?? new SessionReceiverClientOptions())
         {
         }
 
@@ -99,10 +102,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
-        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="entityName"></param>
         /// <param name="sessionId"></param>
-        /// <param name="receiveMode"></param>
+        /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
+        /// <param name="entityName"></param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired entity,
@@ -114,11 +116,10 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </remarks>
         ///
         public SessionReceiverClient(
-            string connectionString,
-            string entityName,
             string sessionId,
-            ReceiveMode receiveMode)
-            : base(connectionString, entityName, receiveMode, sessionId, new SessionReceiverClientOptions())
+            string connectionString,
+            string entityName)
+            : base(connectionString, entityName, sessionId, new SessionReceiverClientOptions())
         {
             SessionId = sessionId;
         }
@@ -127,10 +128,9 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
         /// </summary>
         ///
+        /// <param name="sessionId"></param>
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
         /// <param name="entityName"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
@@ -142,37 +142,54 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public SessionReceiverClient(string connectionString, string entityName,
+        public SessionReceiverClient(
             string sessionId,
-            ReceiveMode receiveMode,
+            string connectionString,
+            string entityName,
             SessionReceiverClientOptions clientOptions)
-            : base(connectionString, entityName, receiveMode, sessionId, clientOptions)
+            : base(connectionString, entityName, sessionId, clientOptions?.Clone() ?? new SessionReceiverClientOptions())
         {
             SessionId = sessionId;
         }
 
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="SessionReceiverClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="sessionId"></param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="entityName">The name of the specific entity to associate the receiver with.</param>
+        /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        public SessionReceiverClient(
+            string sessionId,
+            string fullyQualifiedNamespace,
+            string entityName,
+            TokenCredential credential,
+            SessionReceiverClientOptions clientOptions = default)
+            : base(fullyQualifiedNamespace, entityName, credential, sessionId, clientOptions?.Clone() ?? new SessionReceiverClientOptions())
+        {
+            SessionId = sessionId;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="SessionReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="entityName">The name of the specific entity to associate the receiver with.</param>
-        /// <param name="sessionId"></param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public SessionReceiverClient(
             string fullyQualifiedNamespace,
             string entityName,
-            string sessionId,
             TokenCredential credential,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
             SessionReceiverClientOptions clientOptions = default)
-            : base(fullyQualifiedNamespace, entityName, credential, receiveMode, sessionId, clientOptions)
+            : base(fullyQualifiedNamespace, entityName, credential, null, clientOptions?.Clone() ?? new SessionReceiverClientOptions())
         {
-            SessionId = sessionId;
         }
 
         /// <summary>
@@ -244,8 +261,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
             }
         }
 
-
-
         /// <summary>
         ///
         /// </summary>
@@ -270,6 +285,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             var source = (Source)openedLink.Settings.Source;
             if (source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
             {
+                // If one of the constructors not accepting a SessionId was used, the broker will determine which session to send messages from.
                 SessionId = tempSessionId;
             }
             IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(

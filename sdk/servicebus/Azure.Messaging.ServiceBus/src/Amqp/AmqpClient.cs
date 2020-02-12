@@ -363,6 +363,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
                             stopWatch.Reset();
                         }
+                        else
+                        {
+                            throw ex;
+                        }
                     }
                 }
                 // If no value has been returned nor exception thrown by this point,

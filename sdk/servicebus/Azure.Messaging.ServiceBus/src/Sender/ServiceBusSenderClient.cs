@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -157,7 +157,6 @@ namespace Azure.Messaging.ServiceBus.Sender
             ServiceBusSenderClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
-            // interesting.. I assume this is done for immutability?
             clientOptions = clientOptions?.Clone() ?? new ServiceBusSenderClientOptions();
             ClientDiagnostics = new ClientDiagnostics(clientOptions);
             OwnsConnection = true;

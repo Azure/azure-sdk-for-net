@@ -186,10 +186,11 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
         /// <param name="connectionOptions">A set of options to apply when configuring the connection.</param>
         ///
-        public ServiceBusConnection(string fullyQualifiedNamespace,
-                                  string entityName,
-                                  TokenCredential credential,
-                                  ServiceBusConnectionOptions connectionOptions = default)
+        public ServiceBusConnection(
+            string fullyQualifiedNamespace,
+            string entityName,
+            TokenCredential credential,
+            ServiceBusConnectionOptions connectionOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
