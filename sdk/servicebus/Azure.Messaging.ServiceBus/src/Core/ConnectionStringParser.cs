@@ -25,7 +25,7 @@ namespace Azure.Messaging.ServiceBus.Core
         private const string EndpointToken = "Endpoint";
 
         /// <summary>The token that identifies the name of a specific Service Bus entity under the namespace.</summary>
-        private const string EventHubNameToken = "EntityPath";
+        private const string EntityName = "EntityPath";
 
         /// <summary>The token that identifies the name of a shared access key.</summary>
         private const string SharedAccessKeyNameToken = "SharedAccessKeyName";
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Core
             var parsedValues =
             (
                 EndpointToken: default(UriBuilder),
-                EventHubNameToken: default(string),
+                EntityNameToken: default(string),
                 SharedAccessKeyNameToken: default(string),
                 SharedAccessKeyValueToken: default(string)
             );
@@ -118,9 +118,9 @@ namespace Azure.Messaging.ServiceBus.Core
                             Scheme = ServiceBusEndpointScheme
                         };
                     }
-                    else if (string.Compare(EventHubNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
+                    else if (string.Compare(EntityName, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        parsedValues.EventHubNameToken = value;
+                        parsedValues.EntityNameToken = value;
                     }
                     else if (string.Compare(SharedAccessKeyNameToken, token, StringComparison.OrdinalIgnoreCase) == 0)
                     {
@@ -146,7 +146,7 @@ namespace Azure.Messaging.ServiceBus.Core
             return new ConnectionStringProperties
             (
                 parsedValues.EndpointToken?.Uri,
-                parsedValues.EventHubNameToken,
+                parsedValues.EntityNameToken,
                 parsedValues.SharedAccessKeyNameToken,
                 parsedValues.SharedAccessKeyValueToken
             );
