@@ -18,8 +18,8 @@ namespace Microsoft.Azure.EventHubs.Processor
         internal static readonly string CreatingLeaseStore = "Creating Lease Store";
         internal static readonly string InitializingStores = "Initializing Stores";
         internal static readonly string OpeningEventProcessor = "Opening Event Processor";
-        internal static readonly string StorageManagerCleanup = "Storage Manager Cleanup";
-        internal static readonly string StorageManagerMainLoop = "Storage Manager Main Loop";
+        internal static readonly string PartitionManagerCleanup = "Partition Manager Cleanup";
+        internal static readonly string PartitionManagerMainLoop = "Partition Manager Main Loop";
         internal static readonly string PartitionPumpManagement = "Managing Partition Pumps";
     }
 }
