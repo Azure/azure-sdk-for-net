@@ -112,7 +112,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             string connectionString,
             string entityName,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            string sessionId = null,
+            string sessionId = default,
             ServiceBusReceiverClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             string entityName,
             TokenCredential credential,
             ReceiveMode receiveMode = ReceiveMode.PeekLock,
-            string sessionId = null,
+            string sessionId = default,
             ServiceBusReceiverClientOptions clientOptions = default)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));

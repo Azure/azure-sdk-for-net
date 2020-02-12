@@ -221,23 +221,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         }
 
         /// <summary>
-        /// Prototype for how to request a new session from the broker without having to create a new sessionReceiverClient
-        /// with no session Id passed in. TODO come up with a better name if we keep this.
-        /// </summary>
-        public virtual async Task NextSessionAsync(CancellationToken cancellationToken = default)
-        {
-            if (Consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
-            {
-                link.SafeClose();
-                var openedLink = await Consumer.ReceiveLink.GetOrCreateAsync(RetryPolicy.CalculateTryTimeout(0)).ConfigureAwait(false);
-                var source = (Source)openedLink.Settings.Source;
-                if (source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
-                {
-                    SessionId = tempSessionId;
-                }
-            }
-        }
-        /// <summary>
         ///
         /// </summary>
         /// <param name="fromSequenceNumber"></param>
