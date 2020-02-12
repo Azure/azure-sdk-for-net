@@ -1526,7 +1526,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionInitializingAsyncIsCalledWhenPartitionProcessingTaskFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             var partitionId = "0";
@@ -1588,7 +1588,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionInitializingAsyncTokenIsCanceledWhenStopProcessingAsyncIsCalled()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             mockConsumer
@@ -1819,7 +1819,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task PartitionClosingAsyncIsCalledWhenPartitionProcessingTaskFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             var partitionId = "0";
@@ -1882,7 +1882,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Ignore("Failing test.")]
         public async Task PartitionClosingAsyncTokenIsCanceledWhenStopProcessingAsyncIsCalled()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             mockConsumer
@@ -2050,7 +2050,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessEventAsyncTokenIsCanceledWhenStopProcessingAsyncIsCalled()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             mockConsumer
@@ -2111,7 +2111,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Ignore("Test is failing because there is no partition information being passed from the Partition Load Balancer to the processor.")]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenOwnershipClaimFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
@@ -2187,7 +2187,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenOwnershipRenewalFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
@@ -2268,7 +2268,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenListOwnershipFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
@@ -2334,7 +2334,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenGetPartitionIdsFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             var expectedExceptionReference = new Exception();
@@ -2391,7 +2391,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenListCheckpointsFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
@@ -2459,7 +2459,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenPartitionProcessingFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             var partitionId = "0";
@@ -2522,7 +2522,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsNotTriggeredWhenRelinquishingOwnershipFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
@@ -2609,7 +2609,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsNotTriggeredWhenUpdateCheckpointFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockStorage = new Mock<MockCheckPointStorage>(default(Action<string>)) { CallBase = true };
             var mockProcessor = new InjectableEventSourceProcessorMock(mockStorage.Object, "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
@@ -2692,7 +2692,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task ProcessErrorAsyncIsNotTriggeredWhenPartitionInitializingAsyncFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             mockConsumer
@@ -2758,7 +2758,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Ignore("Not implemented yet. (Tracked by #9228)")]
         public async Task ProcessErrorAsyncIsNotTriggeredWhenProcessEventAsyncFails()
         {
-            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default) { CallBase = true };
+            var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
             var mockProcessor = new InjectableEventSourceProcessorMock(new MockCheckPointStorage(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, mockConsumer.Object);
 
             mockConsumer
