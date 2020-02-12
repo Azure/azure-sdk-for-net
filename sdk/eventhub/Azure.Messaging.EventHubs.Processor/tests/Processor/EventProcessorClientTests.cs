@@ -2947,18 +2947,6 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Serves as a mock <see cref="EventHubProperties" />.
-        /// </summary>
-        ///
-        private class MockEventHubProperties : EventHubProperties
-        {
-            public MockEventHubProperties(string name,
-                                          DateTimeOffset createdOn,
-                                          string[] partitionIds) : base(name, createdOn, partitionIds)
-            { }
-        }
-
-        /// <summary>
         ///   Serves as a mock <see cref="PartitionContext" />.
         /// </summary>
         ///
