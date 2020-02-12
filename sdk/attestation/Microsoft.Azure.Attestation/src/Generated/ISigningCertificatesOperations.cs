@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Attestation
     using System.Threading.Tasks;
 
     /// <summary>
-    /// CertsOperations operations.
+    /// SigningCertificatesOperations operations.
     /// </summary>
-    public partial interface ICertsOperations
+    public partial interface ISigningCertificatesOperations
     {
         /// <summary>
         /// Retrieves the OpenID Configuration data for the Azure Attestation
