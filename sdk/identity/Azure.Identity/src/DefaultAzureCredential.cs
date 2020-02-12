@@ -119,7 +119,7 @@ namespace Azure.Identity
             }
             catch (Exception e) when (!(e is CredentialUnavailableException))
             {
-                throw scope.Failed(new AuthenticationFailedException(UnhandledExceptionMessage, e));
+               throw scope.FailAndWrap(new AuthenticationFailedException(UnhandledExceptionMessage, e));
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.Identity
 
             int i;
 
-            List<Exception> exceptions = new List<Exception>();
+            List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
 
             for (i = 0; i < _sources.Length && _sources[i] != null; i++)
             {

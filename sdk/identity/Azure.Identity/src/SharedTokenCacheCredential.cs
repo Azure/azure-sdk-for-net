@@ -114,9 +114,15 @@ namespace Azure.Identity
             {
                 throw scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on."));
             }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
             catch (Exception e)
             {
-                throw scope.Failed(e);
+                throw scope.FailAndWrap(e);
             }
         }
 

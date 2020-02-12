@@ -101,7 +101,7 @@ namespace Azure.Identity
                     {
                         AuthenticationResult result = await _client.AcquireTokenSilentAsync(requestContext.Scopes, _account, cancellationToken).ConfigureAwait(false);
 
-                        return  scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                        return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
                     }
                     catch (MsalUiRequiredException)
                     {
@@ -125,7 +125,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.Failed(e);
+               throw scope.FailAndWrap(e);
             }
         }
 
