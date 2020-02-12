@@ -24,7 +24,7 @@ namespace Azure.Identity
     /// perform the authentication using these details. Please consult the
     /// documentation of that class for more details.
     /// </summary>
-    public class EnvironmentCredential : TokenCredential, IExtendedTokenCredential
+    public class EnvironmentCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
         private readonly TokenCredential _credential;
@@ -93,7 +93,7 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return GetTokenImpl(requestContext, cancellationToken).GetTokenOrThrow();
+            return GetTokenImplAsync(false, requestContext, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -109,33 +109,23 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls, or a default <see cref="AccessToken"/>.</returns>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            return (await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false)).GetTokenOrThrow();
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        ExtendedAccessToken IExtendedTokenCredential.GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return GetTokenImpl(requestContext, cancellationToken);
-        }
-
-        async ValueTask<ExtendedAccessToken> IExtendedTokenCredential.GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            return await GetTokenImplAsync(requestContext, cancellationToken).ConfigureAwait(false);
-        }
-
-        private ExtendedAccessToken GetTokenImpl(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("EnvironmentCredential.GetToken", requestContext);
 
             if (_credential is null)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage)));
+                throw scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage));
             }
 
             try
             {
-                AccessToken token = _credential.GetToken(requestContext, cancellationToken);
+                AccessToken token = isAsync ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _credential.GetToken(requestContext, cancellationToken);
 
-                return new ExtendedAccessToken(scope.Succeeded(token));
+                return scope.Succeeded(token);
             }
             catch (OperationCanceledException e)
             {
@@ -145,34 +135,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                return new ExtendedAccessToken(scope.Failed(e));
-            }
-        }
-
-        private async ValueTask<ExtendedAccessToken> GetTokenImplAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
-        {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("EnvironmentCredential.GetToken", requestContext);
-
-            if (_credential is null)
-            {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException(UnavailbleErrorMessage)));
-            }
-
-            try
-            {
-                AccessToken token = await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false);
-
-                return new ExtendedAccessToken(scope.Succeeded(token));
-            }
-            catch (OperationCanceledException e)
-            {
-                scope.Failed(e);
-
-                throw;
-            }
-            catch (Exception e)
-            {
-                return new ExtendedAccessToken(scope.Failed(e));
+                 throw scope.Failed(e);
             }
         }
     }

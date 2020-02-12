@@ -30,9 +30,9 @@ namespace Azure.Identity
     {
         private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials.";
         private const string UnhandledExceptionMessage = "DefaultAzureCredential authentication failed.";
-        private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
+        private static readonly TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
-        private readonly IExtendedTokenCredential[] _sources;
+        private readonly TokenCredential[] _sources;
         private readonly CredentialPipeline _pipeline;
 
         /// <summary>
@@ -100,23 +100,29 @@ namespace Azure.Identity
 
             for (i = 0; i < _sources.Length && _sources[i] != null; i++)
             {
-                ExtendedAccessToken exToken = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
+                try
+                {
+                    AccessToken token = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
 
-                if (exToken.Exception is null)
-                {
-                    return scope.Succeeded(exToken.AccessToken);
+                    return scope.Succeeded(token);
                 }
+                catch (CredentialUnavailableException e)
+                {
+                    exceptions.Add(e);
+                }
+                catch (OperationCanceledException e)
+                {
+                    scope.Failed(e);
 
-                if (exToken.Exception is CredentialUnavailableException)
-                {
-                    exceptions.Add(exToken.Exception);
+                    throw;
                 }
-                else
+                catch (Exception e)
                 {
-                    throw scope.Failed(new AuthenticationFailedException(UnhandledExceptionMessage, exToken.Exception));
+                    throw scope.Failed(new AuthenticationFailedException(UnhandledExceptionMessage, e));
                 }
             }
 
+            // build the credential unavailable message, this code is only reachable if all credentials throw CredentialUnavailableException
             StringBuilder errorMsg = new StringBuilder(DefaultExceptionMessage);
 
             foreach (Exception ex in exceptions)
@@ -128,7 +134,7 @@ namespace Azure.Identity
         }
 
 
-        private static IExtendedTokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
+        private static TokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
         {
             if (options is null)
             {
@@ -136,7 +142,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            IExtendedTokenCredential[] chain = new IExtendedTokenCredential[4];
+            TokenCredential[] chain = new TokenCredential[4];
 
             if (!options.ExcludeEnvironmentCredential)
             {
