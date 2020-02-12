@@ -111,7 +111,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.Failed(e);
+                throw scope.FailAndWrap(e);
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.Failed(e);
+                throw scope.FailAndWrap(e);
             }
         }
 

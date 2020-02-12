@@ -50,14 +50,14 @@ namespace Azure.Identity
 
         protected string ClientId { get; }
 
-        public virtual ExtendedAccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
+        public virtual AccessToken Authenticate(string[] scopes, CancellationToken cancellationToken)
         {
             MsiType msiType = GetMsiType(cancellationToken);
 
             // if msi is unavailable or we were unable to determine the type return CredentialUnavailable exception that no endpoint was found
             if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
             {
-                return new ExtendedAccessToken(new CredentialUnavailableException(MsiUnavailableError));
+                throw new CredentialUnavailableException(MsiUnavailableError);
             }
 
             using Request request = CreateAuthRequest(msiType, scopes);
@@ -68,7 +68,7 @@ namespace Azure.Identity
             {
                 AccessToken result = Deserialize(response.ContentStream);
 
-                return new ExtendedAccessToken(result);
+                return result;
             }
 
             if (response.Status == 400 && msiType == MsiType.Imds)
@@ -77,20 +77,20 @@ namespace Azure.Identity
 
                 string message = _pipeline.Diagnostics.CreateRequestFailedMessage(response, message: IdentityUnavailableError);
 
-                return new ExtendedAccessToken(new CredentialUnavailableException(message));
+                throw new CredentialUnavailableException(message);
             }
 
             throw _pipeline.Diagnostics.CreateRequestFailedException(response);
         }
 
-        public async virtual Task<ExtendedAccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
+        public async virtual Task<AccessToken> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
         {
             MsiType msiType = await GetMsiTypeAsync(cancellationToken).ConfigureAwait(false);
 
             // if msi is unavailable or we were unable to determine the type return CredentialUnavailable exception that no endpoint was found
             if (msiType == MsiType.Unavailable || msiType == MsiType.Unknown)
             {
-                return new ExtendedAccessToken(new CredentialUnavailableException(MsiUnavailableError));
+                throw new CredentialUnavailableException(MsiUnavailableError);
             }
 
             using Request request = CreateAuthRequest(msiType, scopes);
@@ -101,7 +101,7 @@ namespace Azure.Identity
             {
                 AccessToken result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                return new ExtendedAccessToken(result);
+                return result;
             }
 
             if (response.Status == 400 && msiType == MsiType.Imds)
@@ -110,7 +110,7 @@ namespace Azure.Identity
 
                 string message = await _pipeline.Diagnostics.CreateRequestFailedMessageAsync(response, message: IdentityUnavailableError, errorCode: null).ConfigureAwait(false);
 
-                return new ExtendedAccessToken(new CredentialUnavailableException(message));
+                throw new CredentialUnavailableException(message);
             }
 
             throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
