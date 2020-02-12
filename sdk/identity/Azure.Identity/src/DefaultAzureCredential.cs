@@ -32,8 +32,10 @@ namespace Azure.Identity
         private const string UnhandledExceptionMessage = "DefaultAzureCredential authentication failed.";
         private static readonly TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
-        private readonly TokenCredential[] _sources;
         private readonly CredentialPipeline _pipeline;
+
+        private TokenCredential[] _sources;
+        private TokenCredential _credential;
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
@@ -90,13 +92,43 @@ namespace Azure.Identity
             return await GetTokenAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DefaultAzureCredential.GetToken", requestContext);
 
-            List<Exception> exceptions = new List<Exception>();
+            try
+            {
+                AccessToken token;
+
+                if (_credential != null)
+                {
+                    token = isAsync ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _credential.GetToken(requestContext, cancellationToken);
+                }
+                else
+                {
+                    token = isAsync ? await GetTokenFromSourcesAsync(isAsync, requestContext, cancellationToken).ConfigureAwait(false) : GetTokenFromSourcesAsync(isAsync, requestContext, cancellationToken).GetAwaiter().GetResult();
+                }
+
+                return scope.Succeeded(token);
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
+            catch (Exception e) when (!(e is CredentialUnavailableException))
+            {
+                throw scope.Failed(new AuthenticationFailedException(UnhandledExceptionMessage, e));
+            }
+        }
+
+        private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
 
             int i;
+
+            List<Exception> exceptions = new List<Exception>();
 
             for (i = 0; i < _sources.Length && _sources[i] != null; i++)
             {
@@ -104,21 +136,13 @@ namespace Azure.Identity
                 {
                     AccessToken token = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
 
-                    return scope.Succeeded(token);
+                    _credential = _sources[i];
+
+                    _sources = null;
                 }
                 catch (CredentialUnavailableException e)
                 {
                     exceptions.Add(e);
-                }
-                catch (OperationCanceledException e)
-                {
-                    scope.Failed(e);
-
-                    throw;
-                }
-                catch (Exception e)
-                {
-                    throw scope.Failed(new AuthenticationFailedException(UnhandledExceptionMessage, e));
                 }
             }
 
@@ -130,9 +154,8 @@ namespace Azure.Identity
                 errorMsg.Append(Environment.NewLine).Append(ex.Message);
             }
 
-            throw scope.Failed(new CredentialUnavailableException(errorMsg.ToString()));
+            throw new CredentialUnavailableException(errorMsg.ToString());
         }
-
 
         private static TokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
         {
