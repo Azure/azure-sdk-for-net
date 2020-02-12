@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"isEnabled\": true\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4d432736-50e1-467c-b211-f150ec13d67f"
+          "1193ca19-38bd-4371-9cbf-56674b67411e"
         ],
         "accept-language": [
           "en-US"
@@ -16,7 +16,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.1.0.0"
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/1.1.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -30,7 +30,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 10 Feb 2020 14:04:05 GMT"
+          "Wed, 12 Feb 2020 06:48:44 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -42,13 +42,13 @@
           "4999"
         ],
         "x-ms-request-id": [
-          "251e7983-0fb6-4a1e-a96c-a9851c281295"
+          "fb9249b1-0953-4dfe-9f7b-8d984be2d41e"
         ],
         "x-ms-correlation-request-id": [
-          "251e7983-0fb6-4a1e-a96c-a9851c281295"
+          "fb9249b1-0953-4dfe-9f7b-8d984be2d41e"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH2:20200210T140405Z:251e7983-0fb6-4a1e-a96c-a9851c281295"
+          "UKSOUTH2:20200212T064844Z:fb9249b1-0953-4dfe-9f7b-8d984be2d41e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
