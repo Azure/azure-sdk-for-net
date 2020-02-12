@@ -199,7 +199,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(Stream content) =>
             Upload(content, CancellationToken.None);
@@ -228,7 +227,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(string path) =>
             Upload(path, CancellationToken.None);
@@ -257,7 +255,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
             await UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
@@ -286,7 +283,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(string path) =>
             await UploadAsync(path, CancellationToken.None).ConfigureAwait(false);
@@ -320,7 +316,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
@@ -359,7 +354,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Response<BlobContentInfo> Upload(
             string path,
@@ -398,7 +392,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
@@ -437,7 +430,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // Client method should have cancellationToken as the last optional parameter
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             string path,
@@ -481,7 +473,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             Stream content,
             bool overwrite = false,
@@ -523,7 +514,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> Upload(
             string path,
             bool overwrite = false,
@@ -565,7 +555,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             bool overwrite = false,
@@ -607,7 +596,6 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadAsync(
             string path,
             bool overwrite = false,

@@ -2447,7 +2447,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<PathInfo> Upload(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2481,7 +2480,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Response<PathInfo> Upload(
             Stream content,
             bool overwrite = false,
@@ -2526,7 +2524,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
             PathHttpHeaders httpHeaders = default,
@@ -2560,7 +2557,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Task<Response<PathInfo>> UploadAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
@@ -2594,7 +2590,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual Task<Response<PathInfo>> UploadAsync(
             Stream content,
             bool overwrite = false,
@@ -2755,7 +2750,6 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        [ForwardsClientCalls]
         public virtual async Task<Response<PathInfo>> UploadAsync(
             string path,
             PathHttpHeaders httpHeaders = default,
@@ -2887,7 +2881,7 @@ namespace Azure.Storage.Files.DataLake
             DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
                 client,
                 transferOptions,
-                operationName: "BlobClient.Upload");
+                operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             if (async)
             {
