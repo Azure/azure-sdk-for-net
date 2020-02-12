@@ -83,12 +83,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             SetupAsyncStaging(clientMock, sink);
 
             DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
-                clientMock.Object, default, singleUploadThreshold: 20, arrayPool: testPool);
+                clientMock.Object, new StorageTransferOptions { MaximumTransferLength = 20 }, arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
 
             Assert.AreEqual(1, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }

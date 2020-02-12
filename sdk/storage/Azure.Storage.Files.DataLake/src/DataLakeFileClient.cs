@@ -2840,7 +2840,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// This operation will upload data as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="singleUploadThreshold"/>.
+        /// <paramref name="transferOptions"/> MaximumTransferLength.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
@@ -2854,10 +2854,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
-        /// </param>
-        /// <param name="singleUploadThreshold">
-        /// The maximum size stream that we'll upload as a single block.  The
-        /// default value is 100MB.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -2882,19 +2878,15 @@ namespace Azure.Storage.Files.DataLake
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
             IProgress<long> progressHandler = default,
-            long? singleUploadThreshold = default,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
             DataLakeFileClient client = new DataLakeFileClient(Uri, Pipeline, Version, ClientDiagnostics);
-            singleUploadThreshold ??= client.MaxUploadBytes;
-            Debug.Assert(singleUploadThreshold <= client.MaxUploadBytes);
 
             DataLakePartitionedUploader uploader = new DataLakePartitionedUploader(
                 client,
                 transferOptions,
-                singleUploadThreshold,
                 operationName: "BlobClient.Upload");
 
             if (async)
@@ -2921,7 +2913,7 @@ namespace Azure.Storage.Files.DataLake
         /// <summary>
         /// This operation will upload data it as individually staged
         /// blocks if it's larger than the
-        /// <paramref name="singleUploadThreshold"/>.
+        /// <paramref name="transferOptions"/> MaximumTransferLength.
         /// </summary>
         /// <param name="path">
         /// A file path of the file to upload.
@@ -2935,10 +2927,6 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="progressHandler">
         /// Optional <see cref="IProgress{Long}"/> to provide
         /// progress updates about data transfers.
-        /// </param>
-        /// <param name="singleUploadThreshold">
-        /// The maximum size stream that we'll upload as a single block.  The
-        /// default value is 100MB.
         /// </param>
         /// <param name="transferOptions">
         /// Optional <see cref="StorageTransferOptions"/> to configure
@@ -2963,7 +2951,6 @@ namespace Azure.Storage.Files.DataLake
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            long? singleUploadThreshold = default,
             StorageTransferOptions transferOptions = default,
             bool async = true,
             CancellationToken cancellationToken = default)
@@ -2975,7 +2962,6 @@ namespace Azure.Storage.Files.DataLake
                     httpHeaders,
                     conditions,
                     progressHandler,
-                    singleUploadThreshold: singleUploadThreshold,
                     transferOptions: transferOptions,
                     async: async,
                     cancellationToken: cancellationToken)

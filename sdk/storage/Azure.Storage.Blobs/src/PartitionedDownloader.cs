@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Threading;
@@ -30,20 +31,40 @@ namespace Azure.Storage.Blobs
 
         public PartitionedDownloader(
             BlobBaseClient client,
-            StorageTransferOptions transferOptions = default,
-            long? initialTransferLength = null)
+            StorageTransferOptions transferOptions = default)
         {
             _client = client;
-            _maxWorkerCount =
-                transferOptions.MaximumConcurrency ??
-                Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            _initialRangeSize =
-                initialTransferLength ??
-                ((long?)transferOptions.MaximumTransferLength) ??
-                Constants.DefaultBufferSize;
-            _rangeSize = Math.Min(
-                Constants.Blob.Block.MaxDownloadBytes,
-                transferOptions.MaximumTransferLength ?? Constants.DefaultBufferSize);
+
+            if (transferOptions.MaximumConcurrency.HasValue)
+            {
+                Debug.Assert(transferOptions.MaximumConcurrency > 0);
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+            }
+            else
+            {
+                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+            }
+
+            if (transferOptions.MaximumTransferLength.HasValue)
+            {
+                Debug.Assert(transferOptions.MaximumTransferLength > 0);
+                _initialRangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.DefaultBufferSize);
+            }
+            else
+            {
+                _initialRangeSize = Constants.DefaultBufferSize;
+            }
+
+            if (transferOptions.MaximumTransferLength.HasValue)
+            {
+                Debug.Assert(transferOptions.MaximumTransferLength.Value > 0);
+                _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
+            }
+            else
+            {
+                _rangeSize = Constants.DefaultBufferSize;
+            }
+
         }
 
         public async Task<Response> DownloadToAsync(

@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -52,16 +53,32 @@ namespace Azure.Storage.Blobs
         public PartitionedUploader(
             BlockBlobClient client,
             StorageTransferOptions transferOptions,
-            long? singleUploadThreshold = null,
             ArrayPool<byte> arrayPool = null,
             string operationName = null)
         {
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
-            _maxWorkerCount =
-                transferOptions.MaximumConcurrency ??
-                Constants.Blob.Block.DefaultConcurrentTransfersCount;
-            _singleUploadThreshold = singleUploadThreshold ?? Constants.Blob.Block.MaxUploadBytes;
+
+            if (transferOptions.MaximumConcurrency.HasValue)
+            {
+                Debug.Assert(transferOptions.MaximumConcurrency > 0);
+                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+            }
+            else
+            {
+                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+            }
+
+            if (transferOptions.MaximumTransferLength.HasValue)
+            {
+                Debug.Assert(transferOptions.MaximumTransferLength > 0);
+                _singleUploadThreshold = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
+            }
+            else
+            {
+                _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
+            }
+
             _blockSize = null;
             if (transferOptions.MaximumTransferLength != null)
             {

@@ -463,7 +463,6 @@ namespace Azure.Storage.Blobs.Test
                 {
                     await downloadingBlob.StagedDownloadAsync(
                         file,
-                        initialTransferLength: singleBlockThreshold,
                         transferOptions: transferOptions);
                 }
 
@@ -576,7 +575,6 @@ namespace Azure.Storage.Blobs.Test
                                     await blob.UploadAsync(newStream, overwrite: true);
                                 }
                             }),
-                        initialTransferLength: Constants.KB,
                         transferOptions:
                             new StorageTransferOptions
                             {
