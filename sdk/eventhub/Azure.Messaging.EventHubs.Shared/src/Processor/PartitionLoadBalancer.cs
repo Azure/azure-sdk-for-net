@@ -167,9 +167,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
-                // without an updated ownership list.
+                // without an updated ownership list.  Set the EventHubName to null so it doesn't modify the exception
+                // message.
 
-                throw new EventHubsException(true, EventHubName, Resources.OperationListOwnership, ex);
+                throw new EventHubsException(true, null, Resources.OperationListOwnership, ex);
             }
 
             // There's no point in continuing the current cycle if we failed to fetch the completeOwnershipList.
@@ -192,7 +193,7 @@ namespace Azure.Messaging.EventHubs.Processor
 
             foreach (PartitionOwnership ownership in completeOwnershipList)
             {
-                if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrWhiteSpace(ownership.OwnerIdentifier))
+                if (utcNow.Subtract(ownership.LastModifiedTime.Value) < OwnershipExpiration && !string.IsNullOrEmpty(ownership.OwnerIdentifier))
                 {
                     if (ActiveOwnershipWithDistribution.ContainsKey(ownership.OwnerIdentifier))
                     {
@@ -416,7 +417,10 @@ namespace Azure.Messaging.EventHubs.Processor
                 // end up losing some of its ownership.
 
                 Logger.RenewOwnershipError(OwnerIdentifier, ex.Message);
-                throw new EventHubsException(true, EventHubName, Resources.OperationRenewOwnership, ex);
+
+                // Set the EventHubName to null so it doesn't modify the exception message.
+
+                throw new EventHubsException(true, null, Resources.OperationRenewOwnership, ex);
             }
             finally
             {
@@ -472,7 +476,9 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 Logger.ClaimOwnershipError(partitionId, ex.Message);
 
-                throw new EventHubsException(true, EventHubName, Resources.OperationClaimOwnership, ex);
+                // Set the EventHubName to null so it doesn't modify the exception message.
+
+                throw new EventHubsException(true, null, Resources.OperationClaimOwnership, ex);
             }
 
             // We are expecting an enumerable with a single element if the claim attempt succeeds.

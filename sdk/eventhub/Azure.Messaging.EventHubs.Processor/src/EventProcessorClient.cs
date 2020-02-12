@@ -952,7 +952,7 @@ namespace Azure.Messaging.EventHubs
                     }
                     catch (EventHubsException ex)
                     {
-                        var errorEventArgs = new ProcessErrorEventArgs(null, ex.Message, ex, cancellationToken);
+                        var errorEventArgs = new ProcessErrorEventArgs(null, ex.Message, ex.InnerException ?? ex, cancellationToken);
                         _ = OnProcessErrorAsync(errorEventArgs);
                     }
                     catch (Exception ex)
