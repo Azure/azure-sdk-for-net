@@ -94,7 +94,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             {
                 // Ideally RunLoop should never throw.
                 ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, "Exception from storage manager main loop, shutting down", e.ToString());
-                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.StorageManagerMainLoop);
+                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.PartitionManagerMainLoop);
             }
 
             try
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             catch (Exception e)
             {
                 ProcessorEventSource.Log.EventProcessorHostError(this.host.HostName, "Failure during shutdown", e.ToString());
-                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.StorageManagerCleanup);
+                this.host.EventProcessorOptions.NotifyOfException(this.host.HostName, "N/A", e, EventProcessorHostActionStrings.PartitionManagerCleanup);
             }
         }
 
