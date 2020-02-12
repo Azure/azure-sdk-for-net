@@ -27,6 +27,10 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Security.KeyVault.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.Extensions.Configuration", "Azure.Security.KeyVault.Secrets.Extensions.Configuration\src\Azure.Security.KeyVault.Secrets.Extensions.Configuration.csproj", "{9D38074E-D5D3-4036-AD85-8885E139F821}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests", "Azure.Security.KeyVault.Secrets.Extensions.Configuration\test\Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests.csproj", "{F245603B-24FC-4F8C-A667-5069CD351BFA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Azure.Security.KeyVault.Shared\src\Azure.Security.KeyVault.Shared.projitems*{1198491f-d3cd-4d23-b536-e89d65b9d965}*SharedItemsImports = 13
@@ -77,6 +81,14 @@ Global
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C00A76-5F21-4664-A7B1-BE2DA201BF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D38074E-D5D3-4036-AD85-8885E139F821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D38074E-D5D3-4036-AD85-8885E139F821}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D38074E-D5D3-4036-AD85-8885E139F821}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D38074E-D5D3-4036-AD85-8885E139F821}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F245603B-24FC-4F8C-A667-5069CD351BFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F245603B-24FC-4F8C-A667-5069CD351BFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F245603B-24FC-4F8C-A667-5069CD351BFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F245603B-24FC-4F8C-A667-5069CD351BFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
