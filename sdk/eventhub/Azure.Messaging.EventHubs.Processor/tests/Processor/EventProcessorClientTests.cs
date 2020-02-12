@@ -1693,7 +1693,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await mockProcessor.StartProcessingAsync(cancellationSource.Token);
 
             while (!completionSource.Task.IsCompleted
-                && !cancellationSource.Token.IsCancellationRequested)
+                && !cancellationSource.IsCancellationRequested)
             {
                 await Task.Delay(25);
             }
