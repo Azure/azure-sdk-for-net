@@ -1,5 +1,5 @@
 # Recognizing Personally Identifiable Information in Text Inputs
-This sample demonstrates how to recognize Personally Identifiable Information (PII) in one or more text inputs using Azure Text Analytics.  To get started you'll need a Text Analytics endpoint and credentials.  See [README](../README.md) for links and instructions.
+This sample demonstrates how to recognize Personally Identifiable Information (PII) in one or more text inputs. To get started you'll need a Text Analytics endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `TextAnalyticsClient`
 
@@ -18,11 +18,11 @@ To recognize Personally Identifiable Information in a single text input, pass th
 ```C# Snippet:RecognizePiiEntities
 string input = "A developer with SSN 555-55-5555 whose phone number is 555-555-5555 is building tools with our APIs.";
 
-RecognizePiiEntitiesResult result = client.RecognizePiiEntities(input);
-IReadOnlyCollection<CategorizedEntity> entities = result.CategorizedEntities;
+Response<IReadOnlyCollection<PiiEntity>> response = client.RecognizePiiEntities(input);
+IEnumerable<PiiEntity> entities = response.Value;
 
 Console.WriteLine($"Recognized {entities.Count()} PII entit{(entities.Count() > 1 ? "ies" : "y")}:");
-foreach (CategorizedEntity entity in entities)
+foreach (PiiEntity entity in entities)
 {
     Console.WriteLine($"Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score}, Offset: {entity.Offset}, Length: {entity.Length}");
 }
@@ -30,13 +30,13 @@ foreach (CategorizedEntity entity in entities)
 
 ## Recognizing Personally Identifiable Information in multiple inputs
 
-To recognize Personally Identifiable Information in multiple text inputs as a batch, call `RecognizePiiEntities` on an `IEnumerable` of strings.  The results are returned as a `RecognizePiiEntitiesResultCollection`.
+To recognize Personally Identifiable Information in multiple text inputs as a batch, call `RecognizePiiEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizePiiEntitiesResultCollection`.
 
 ```C# Snippet:TextAnalyticsSample5RecognizePiiEntitiesConvenience
-RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs);
+RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs);
 ```
 
-To recognize Personally Identifiable Information in a collection of text inputs in different languages, call `RecognizePiiEntities` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
+To recognize Personally Identifiable Information in a collection of text inputs in different languages, call `RecognizePiiEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each input.
 
 ```C# Snippet:TextAnalyticsSample5RecognizePiiEntitiesBatch
 var inputs = new List<TextDocumentInput>
@@ -51,13 +51,14 @@ var inputs = new List<TextDocumentInput>
     }
 };
 
-RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntities(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+RecognizePiiEntitiesResultCollection results = client.RecognizePiiEntitiesBatch(inputs, new TextAnalyticsRequestOptions { IncludeStatistics = true });
 ```
 
 To see the full example source files, see:
 
-* [Sample5_RecognizePiiEntities.cs](../tests/samples/Sample5_RecognizePiiEntities.cs)
-* [Sample5_RecognizePiiEntitiesBatch.cs](../tests/samples/Sample5_RecognizePiiEntitiesBatch.cs)
-* [Sample5_RecognizePiiEntitiesBatchConvenience.cs](../tests/samples/Sample5_RecognizePiiEntitiesBatchConvenience.cs)
+* [Sample5_RecognizePiiEntities.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntities.cs)
+* [Sample5_RecognizePiiEntitiesBatch.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesBatch.cs)
+* [Sample5_RecognizePiiEntitiesBatchConvenience.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/tests/samples/Sample5_RecognizePiiEntitiesBatchConvenience.cs)
 
-[DefaultAzureCredential]: ../../../identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

@@ -19,6 +19,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public void CreateMultiHostNameService()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
@@ -53,11 +54,20 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     CertificatePassword = testBase.testCertificatePassword
                 };
 
+                var hostnameConfig4 = new HostnameConfiguration()
+                {
+                    Type = HostnameType.DeveloperPortal,
+                    HostName = "devportal1.msitesting.net",
+                    EncodedCertificate = testBase.base64EncodedTestCertificateData,
+                    CertificatePassword = testBase.testCertificatePassword
+                };
+
                 testBase.serviceProperties.HostnameConfigurations = new List<HostnameConfiguration>
                 {
                     hostnameConfig1,
                     hostnameConfig2,
-                    hostnameConfig3
+                    hostnameConfig3,
+                    hostnameConfig4
                 };
 
                 var base64ArrayCertificate = Convert.FromBase64String(testBase.base64EncodedTestCertificateData);
@@ -79,7 +89,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.tags);
 
                 Assert.NotNull(createdService.HostnameConfigurations);
-                Assert.Equal(4, createdService.HostnameConfigurations.Count()); // customhostname config + 1 default proxy
+                Assert.Equal(5, createdService.HostnameConfigurations.Count()); // customhostname config + 1 default proxy
                 var defaultHostname = new Uri(createdService.GatewayUrl).Host;
                 var hostnameConfigurationToValidate = createdService.HostnameConfigurations
                     .Where(h => !h.HostName.Equals(defaultHostname, StringComparison.InvariantCultureIgnoreCase));
@@ -122,7 +132,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 Assert.NotNull(updatedService);
                 Assert.NotEmpty(updatedService.Tags);
                 Assert.Equal(intialTagsCount + 1, updatedService.Tags.Count);
-                Assert.Equal(4, updatedService.HostnameConfigurations.Count());
+                Assert.Equal(5, updatedService.HostnameConfigurations.Count());
 
                 hostnameConfigurationToValidate = updatedService.HostnameConfigurations
                     .Where(h => !h.HostName.Equals(defaultHostname, StringComparison.InvariantCultureIgnoreCase));

@@ -24,8 +24,14 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial interface ITagsOperations
     {
         /// <summary>
-        /// Deletes a tag value.
+        /// Deletes a predefined tag value for a predefined tag name.
         /// </summary>
+        /// <remarks>
+        /// This operation allows deleting a value from the list of predefined
+        /// values for an existing predefined tag name. The value being deleted
+        /// must not be in use as a tag value for the given tag name for any
+        /// resource.
+        /// </remarks>
         /// <param name='tagName'>
         /// The name of the tag.
         /// </param>
@@ -46,8 +52,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse> DeleteValueWithHttpMessagesAsync(string tagName, string tagValue, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a tag value. The name of the tag must already exist.
+        /// Creates a predefined value for a predefined tag name.
         /// </summary>
+        /// <remarks>
+        /// This operation allows adding a value to the list of predefined
+        /// values for an existing predefined tag name. A tag value can have a
+        /// maximum of 256 characters.
+        /// </remarks>
         /// <param name='tagName'>
         /// The name of the tag.
         /// </param>
@@ -71,13 +82,14 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<TagValue>> CreateOrUpdateValueWithHttpMessagesAsync(string tagName, string tagValue, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a tag in the subscription.
+        /// Creates a predefined tag name.
         /// </summary>
         /// <remarks>
-        /// The tag name can have a maximum of 512 characters and is case
-        /// insensitive. Tag names created by Azure have prefixes of microsoft,
-        /// azure, or windows. You cannot create tags with one of these
-        /// prefixes.
+        /// This operation allows adding a name to the list of predefined tag
+        /// names for the given subscription. A tag name can have a maximum of
+        /// 512 characters and is case-insensitive. Tag names cannot have the
+        /// following prefixes which are reserved for Azure use: 'microsoft',
+        /// 'azure', 'windows'.
         /// </remarks>
         /// <param name='tagName'>
         /// The name of the tag to create.
@@ -99,11 +111,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<TagDetails>> CreateOrUpdateWithHttpMessagesAsync(string tagName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a tag from the subscription.
+        /// Deletes a predefined tag name.
         /// </summary>
         /// <remarks>
-        /// You must remove all values from a resource tag before you can
-        /// delete it.
+        /// This operation allows deleting a name from the list of predefined
+        /// tag names for the given subscription. The name being deleted must
+        /// not be in use as a tag name for any resource. All predefined values
+        /// for the given name must have already been deleted.
         /// </remarks>
         /// <param name='tagName'>
         /// The name of the tag.
@@ -122,9 +136,15 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string tagName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the names and values of all resource tags that are defined in
-        /// a subscription.
+        /// Gets a summary of tag usage under the subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation performs a union of predefined tags, resource tags,
+        /// resource group tags and subscription tags, and returns a summary of
+        /// usage for each tag name and value under the given subscription. In
+        /// case of a large number of tags, this operation may return a
+        /// previously cached result.
+        /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -142,13 +162,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </exception>
         Task<AzureOperationResponse<IPage<TagDetails>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or Replace existing tags with passing in tags.
+        /// Creates or updates the entire set of tags on a resource or
+        /// subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation allows adding or replacing the entire set of tags on
+        /// the specified resource or subscription. The specified entity can
+        /// have a maximum of 50 tags.
+        /// </remarks>
         /// <param name='scope'>
         /// The resource scope.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for creating multiple tags.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,16 +190,24 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TagsResource>> ResourceCreateWithHttpMessagesAsync(string scope, TagsResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagsResource>> CreateOrUpdateAtScopeWithHttpMessagesAsync(string scope, TagsResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update multiple tags: if the tagKey exists, update tagValue with
-        /// the new value; if not, insert the new record.
+        /// Selectively updates the set of tags on a resource or subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation allows replacing, merging or selectively deleting
+        /// tags on the specified resource or subscription. The specified
+        /// entity can have a maximum of 50 tags at the end of the operation.
+        /// The 'replace' option replaces the entire set of existing tags with
+        /// a new set. The 'merge' option allows adding tags with new names and
+        /// updating the values of tags with existing names. The 'delete'
+        /// option allows selectively deleting tags based on given names or
+        /// name/value pairs.
+        /// </remarks>
         /// <param name='scope'>
         /// The resource scope.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for updating multiple tags.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -191,9 +224,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TagsResource>> ResourceUpdateWithHttpMessagesAsync(string scope, TagPatchRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagsResource>> UpdateAtScopeWithHttpMessagesAsync(string scope, TagsPatchResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the tags for the resource.
+        /// Gets the entire set of tags on a resource or subscription.
         /// </summary>
         /// <param name='scope'>
         /// The resource scope.
@@ -213,9 +246,9 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TagsResource>> ResourceGetWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TagsResource>> GetAtScopeWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes all the tags for the resource.
+        /// Deletes the entire set of tags on a resource or subscription.
         /// </summary>
         /// <param name='scope'>
         /// The resource scope.
@@ -232,11 +265,17 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> ResourceDeleteWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteAtScopeWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the names and values of all resource tags that are defined in
-        /// a subscription.
+        /// Gets a summary of tag usage under the subscription.
         /// </summary>
+        /// <remarks>
+        /// This operation performs a union of predefined tags, resource tags,
+        /// resource group tags and subscription tags, and returns a summary of
+        /// usage for each tag name and value under the given subscription. In
+        /// case of a large number of tags, this operation may return a
+        /// previously cached result.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

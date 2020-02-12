@@ -1,11 +1,11 @@
-2019-07-23 23:04:04 UTC
+2020-02-11 05:53:16 UTC
 
 1) azure-rest-api-specs repository information
 GitHub user: Azure
 Branch:      master
-Commit:      2fcd0139889b923094b39a6aae015e1ea3604b68
+Commit:      26bdb0c40d9403e07980e41f054ec75f72225d52
 
 2) AutoRest information
 Requested version: latest
-Bootstrapper version:    C:\Users\sasolank\AppData\Roaming\npm `-- autorest@2.0.4283  
+Bootstrapper version:    C:\Users\sasolank\AppData\Roaming\npm `-- autorest@2.0.4413  
 Latest installed version:    

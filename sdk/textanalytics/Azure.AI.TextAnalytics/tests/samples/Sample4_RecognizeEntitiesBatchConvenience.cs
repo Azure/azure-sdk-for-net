@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Samples
             };
 
             #region Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-            RecognizeEntitiesResultCollection results = client.RecognizeEntities(inputs);
+            RecognizeEntitiesResultCollection results = client.RecognizeEntitiesBatch(inputs);
             #endregion
 
             Debug.WriteLine($"Recognized entities for each input are:");
@@ -38,9 +38,9 @@ namespace Azure.AI.TextAnalytics.Samples
             foreach (RecognizeEntitiesResult result in results)
             {
                 Debug.WriteLine($"For input: \"{inputs[i++]}\",");
-                Debug.WriteLine($"the following {result.CategorizedEntities.Count()} entities were found: ");
+                Debug.WriteLine($"the following {result.Entities.Count()} entities were found: ");
 
-                foreach (CategorizedEntity entity in result.CategorizedEntities)
+                foreach (CategorizedEntity entity in result.Entities)
                 {
                     Debug.WriteLine($"    Text: {entity.Text}, Category: {entity.Category}, SubCategory: {entity.SubCategory}, Score: {entity.Score:0.00}, Offset: {entity.Offset}, Length: {entity.Length}");
                 }

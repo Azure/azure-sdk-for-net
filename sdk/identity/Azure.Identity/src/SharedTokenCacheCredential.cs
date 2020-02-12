@@ -19,10 +19,10 @@ namespace Azure.Identity
     /// </summary>
     public class SharedTokenCacheCredential : TokenCredential, IExtendedTokenCredential
     {
-        internal const string NoAccountsInCacheMessage = "No accounts were found in thecache.  To authenticate with the SharedTokenCacheCredential, login an account through developer tooling supporting Azure single sign on.";
-        internal const string MultipleAccountsInCacheMessage = "Multiple accounts were found in the cache. To authenticate with the SharedTokenCacheCredential, set the AZURE_USERNAME and AZURE_TENANT_ID environment variables to the preferred username and tenantId, or specify them to the constructor. {0}";
-        internal const string NoMatchingAccountsInCacheMessage = "No account matching the specified{0}{1} was found in the cache. To authenticate with the SharedTokenCacheCredential, login an account through developer tooling supporting Azure single sign on. {2}";
-        internal const string MultipleMatchingAccountsInCacheMessage = "Multiple accounts matching the specified{0}{1} were found in the cache. To authenticate with the SharedTokenCacheCredential, set the AZURE_USERNAME and AZURE_TENANT_ID environment variables to the preferred username and tenantId, or specify them to the constructor. {2}";
+        internal const string NoAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No accounts were found in the cache.";
+        internal const string MultipleAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts were found in the cache. Use username and tenant id to disambiguate.";
+        internal const string NoMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. No account matching the specified{0}{1} was found in the cache.";
+        internal const string MultipleMatchingAccountsInCacheMessage = "SharedTokenCacheCredential authentication unavailable. Multiple accounts matching the specified{0}{1} were found in the cache.";
 
         private readonly MsalPublicClient _client;
         private readonly CredentialPipeline _pipeline;
@@ -133,7 +133,7 @@ namespace Azure.Identity
             }
             catch (MsalUiRequiredException)
             {
-                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"Token acquisition failed for user {_username}. To fix, re-authenticate through developer tooling supporting Azure single sign on.")));
+                return new ExtendedAccessToken(scope.Failed(new CredentialUnavailableException($"{nameof(SharedTokenCacheCredential)} authentication unavailable. Token acquisition failed for user {_username}. Ensure that you have authenticated with a developer tool that supports Azure single sign on.")));
             }
             catch (Exception e)
             {
@@ -162,11 +162,9 @@ namespace Azure.Identity
                 return NoAccountsInCacheMessage;
             }
 
-            var discoveredAccountsStr = $"[ {{{string.Join("}, {", accounts.Select(a => $"username: {a.Username} tenantId: {a.HomeAccountId?.TenantId}"))}}} ]";
-
             if (string.IsNullOrEmpty(_username) && string.IsNullOrEmpty(_tenantId))
             {
-                return string.Format(CultureInfo.InvariantCulture, MultipleAccountsInCacheMessage, discoveredAccountsStr);
+                return string.Format(CultureInfo.InvariantCulture, MultipleAccountsInCacheMessage);
             }
 
             var usernameStr = string.IsNullOrEmpty(_username) ? string.Empty : $" username: {_username}";
@@ -174,10 +172,10 @@ namespace Azure.Identity
 
             if (filteredAccounts.Count == 0)
             {
-                return string.Format(CultureInfo.InvariantCulture, NoMatchingAccountsInCacheMessage, usernameStr, tenantIdStr, discoveredAccountsStr);
+                return string.Format(CultureInfo.InvariantCulture, NoMatchingAccountsInCacheMessage, usernameStr, tenantIdStr);
             }
 
-            return string.Format(CultureInfo.InvariantCulture, MultipleMatchingAccountsInCacheMessage, usernameStr, tenantIdStr, discoveredAccountsStr);
+            return string.Format(CultureInfo.InvariantCulture, MultipleMatchingAccountsInCacheMessage, usernameStr, tenantIdStr);
         }
     }
 }

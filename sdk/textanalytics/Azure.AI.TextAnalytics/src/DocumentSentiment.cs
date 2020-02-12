@@ -14,18 +14,18 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DocumentSentiment
     {
-        internal DocumentSentiment(TextSentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<TextSentiment> sentenceSentiments)
+        internal DocumentSentiment(SentimentLabel sentiment, double positiveScore, double neutralScore, double negativeScore, List<SentenceSentiment> sentenceSentiments)
         {
             Sentiment = sentiment;
             SentimentScores = new SentimentScorePerLabel(positiveScore, neutralScore, negativeScore);
-            Sentences = new ReadOnlyCollection<TextSentiment>(sentenceSentiments);
+            Sentences = new ReadOnlyCollection<SentenceSentiment>(sentenceSentiments);
         }
 
         /// <summary>
         /// Gets the predicted sentiment for the analyzed input document
         /// or substring.
         /// </summary>
-        public TextSentimentLabel Sentiment { get; }
+        public SentimentLabel Sentiment { get; }
 
         /// <summary>
         /// Gets the sentiment confidence score between 0 and 1,
@@ -37,6 +37,6 @@ namespace Azure.AI.TextAnalytics
         /// Gets the predicted sentiment for each sentence in the corresponding
         /// document.
         /// </summary>
-        public IReadOnlyCollection<TextSentiment> Sentences { get; }
+        public IReadOnlyCollection<SentenceSentiment> Sentences { get; }
     }
 }

@@ -11,15 +11,14 @@
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Tags for the resource.
+    /// Wrapper resource for tags API requests and responses.
     /// </summary>
-    public partial class TagsResource : Resource
+    public partial class TagsResource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the TagsResource class.
@@ -32,15 +31,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TagsResource class.
         /// </summary>
-        /// <param name="properties">tags property.</param>
-        /// <param name="id">Resource ID</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
-        /// <param name="location">Resource location</param>
-        /// <param name="tags">Resource tags</param>
-        public TagsResource(Tags properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
-            : base(id, name, type, location, tags)
+        /// <param name="properties">The set of tags.</param>
+        /// <param name="id">The ID of the tags wrapper resource.</param>
+        /// <param name="name">The name of the tags wrapper resource.</param>
+        /// <param name="type">The type of the tags wrapper resource.</param>
+        public TagsResource(Tags properties, string id = default(string), string name = default(string), string type = default(string))
         {
+            Id = id;
+            Name = name;
+            Type = type;
             Properties = properties;
             CustomInit();
         }
@@ -51,7 +50,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags property.
+        /// Gets the ID of the tags wrapper resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the name of the tags wrapper resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the tags wrapper resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the set of tags.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public Tags Properties { get; set; }

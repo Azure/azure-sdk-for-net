@@ -1,13 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Description>This is a template project to demonstrate how to create a package as well as use for testing our build and release pipelines</Description>
+    <Description>This is a template project to demonstrate how to create a package that uses code generation as well as use for testing our build and release pipelines</Description>
     <AssemblyTitle>Azure SDK Template</AssemblyTitle>
-    <Version>1.0.2-preview.4</Version>
+    <Version>1.0.2-preview.5</Version>
     <PackageTags>Azure Template</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
+    <!-- These supressions should be removed in a production library -->
+    <NoWarn>$(NoWarn);AZC0001; CA1507;CA1812</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+
 </Project>

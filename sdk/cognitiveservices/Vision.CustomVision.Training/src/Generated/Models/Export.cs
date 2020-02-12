@@ -33,7 +33,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// 'Exporting', 'Failed', 'Done'</param>
         /// <param name="downloadUri">URI used to download the model.</param>
         /// <param name="flavor">Flavor of the export. Possible values include:
-        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12', 'ARM'</param>
+        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12', 'ARM', 'TensorFlowNormal',
+        /// 'TensorFlowLite'</param>
         /// <param name="newerVersionAvailable">Indicates an updated version of
         /// the export package is available and should be re-exported for the
         /// latest changes.</param>
@@ -74,7 +75,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// Gets flavor of the export. Possible values include: 'Linux',
-        /// 'Windows', 'ONNX10', 'ONNX12', 'ARM'
+        /// 'Windows', 'ONNX10', 'ONNX12', 'ARM', 'TensorFlowNormal',
+        /// 'TensorFlowLite'
         /// </summary>
         [JsonProperty(PropertyName = "flavor")]
         public string Flavor { get; private set; }

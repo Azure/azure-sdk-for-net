@@ -84,6 +84,8 @@
 
   <Import Project="ApiListing.targets" />
 
+  <Import Project="CodeGeneration.targets" />
+
   <!-- CentralPackageVersions properties -->
   <PropertyGroup>
     <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
@@ -126,7 +128,7 @@
            Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
   </Target>
 
-   <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(EnableApiCompat)' == 'true'">
+   <Target Name="RunApiCompat" AfterTargets="CoreBuild" Condition="'$(EnableApiCompat)' == 'true' and '$(DesignTimeBuild)' != 'true'">
     <MSBuild
       Projects="$(MSBuildThisFileDirectory)/ApiCompat/ApiCompat.csproj"
       Properties="TargetPackageName=$(PackageId);TargetOutputPath=$(IntermediateOutputPath)"

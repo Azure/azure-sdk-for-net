@@ -10,8 +10,8 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Data.AppConfiguration" Version="1.0.0" />
-    <PackageReference Update="Azure.Core" Version="1.0.1" />
-    <PackageReference Update="Azure.Identity" Version="1.1.0" />
+    <PackageReference Update="Azure.Core" Version="1.0.2" />
+    <PackageReference Update="Azure.Identity" Version="1.1.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.1" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.0.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.1" />
@@ -58,7 +58,7 @@
     <PackageReference Update="Microsoft.Identity.Client" Version="4.1.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Update="Microsoft.NETCore.Platforms" Version="2.2.1" />
-    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" />
+    <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.7, 2.0.0)" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="[3.3.18, 4.0.0)" />
     <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="[2.3.20, 3.0.0)" />

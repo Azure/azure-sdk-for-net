@@ -1,5 +1,14 @@
 # Release History
 
+## 12.0.0-preview.9
+- Added support for service version 2019-07-07.
+- Added DataLakeFileClient.ReadTo() and .ReadToAsync() APIs, providing support for parallel downloads to Stream and Files.
+- Added progress reporting to DataLakeFileClient.Append() and .AppendAsync().
+- Added DataLakeFileSystemClient.GetRootDirectoryClient().
+- Fixed issue where SAS didn't work with signed identifiers.
+- Renamed LeaseDurationType, LeaseState, and LeaseStatus to DataLakeLeaseDuration, DataLakeLeaseState, and DataLakeLeaseStatus
+- Sanitized header values in exceptions.
+
 ## 12.0.0-preview.8
  - Fixed issue where SAS content headers were not URL encoded when using DataLakeSasBuilder.
  - Fixed issue where certain query parameters were not being logged.
