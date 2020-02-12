@@ -34,7 +34,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             LeaseId = "MyImportantLease"
         };
-        private static readonly long s_offset = 0;
         private static readonly Progress<long> s_progress = new Progress<long>();
         private static readonly Response<PathInfo> s_response = Response.FromValue(
             new PathInfo(),
@@ -213,11 +212,11 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             if (_async)
             {
-                return await uploader.UploadAsync(content, s_offset, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
+                return await uploader.UploadAsync(content, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
             }
             else
             {
-                return uploader.Upload(content, s_offset, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
+                return uploader.Upload(content, s_pathHttpHeaders, s_conditions, s_progress, s_cancellationToken);
             }
         }
 
@@ -225,6 +224,16 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             if (_async)
             {
+                clientMock.Setup(
+                    c => c.CreateAsync(
+                        s_pathHttpHeaders,
+                        default,
+                        default,
+                        default,
+                        s_conditions,
+                        s_cancellationToken
+                    )).Returns<PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, CancellationToken>(sink.CreateAsync);
+
                 clientMock.Setup(
                     c => c.AppendAsync(
                         IsAny<Stream>(),
@@ -241,12 +250,22 @@ namespace Azure.Storage.Files.DataLake.Tests
                         IsAny<bool?>(),
                         IsAny<bool?>(),
                         s_pathHttpHeaders,
-                        s_conditions,
+                        IsAny<DataLakeRequestConditions>(),
                         s_cancellationToken
                     )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken>(sink.FlushAsync);
             }
             else
             {
+                clientMock.Setup(
+                    c => c.Create(
+                        s_pathHttpHeaders,
+                        default,
+                        default,
+                        default,
+                        s_conditions,
+                        s_cancellationToken
+                    )).Returns<PathHttpHeaders, IDictionary<string, string>, string, string, DataLakeRequestConditions, CancellationToken>(sink.Create);
+
                 clientMock.Setup(
                     c => c.Append(
                         IsAny<Stream>(),
@@ -263,7 +282,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                         IsAny<bool?>(),
                         IsAny<bool?>(),
                         s_pathHttpHeaders,
-                        s_conditions,
+                        IsAny<DataLakeRequestConditions>(),
                         s_cancellationToken
                     )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, CancellationToken>(sink.Flush);
             }
@@ -284,6 +303,29 @@ namespace Azure.Storage.Files.DataLake.Tests
             public AppendSink()
             {
                 Appended = new Dictionary<long, byte[]>();
+            }
+
+            public async Task<Response<PathInfo>> CreateAsync(
+                PathHttpHeaders httpHeaders,
+                IDictionary<string, string> metadata,
+                string permissions,
+                string umask,
+                DataLakeRequestConditions conditions,
+                CancellationToken cancellationToken)
+            {
+                await Task.Delay(25);
+                return Create(httpHeaders, metadata, permissions, umask, conditions, cancellationToken);
+            }
+
+            public Response<PathInfo> Create(
+                PathHttpHeaders httpHeaders,
+                IDictionary<string, string> metadata,
+                string permissions,
+                string umask,
+                DataLakeRequestConditions conditions,
+                CancellationToken cancellationToken)
+            {
+                return s_response;
             }
 
             public async Task<Response<PathInfo>> FlushAsync(

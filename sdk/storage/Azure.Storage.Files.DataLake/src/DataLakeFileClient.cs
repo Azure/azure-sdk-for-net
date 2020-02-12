@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake
     {
         /// <summary>
         /// Gets the maximum number of bytes that can be sent in a call
-        /// to <see cref="UploadAsync(Stream, long, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
+        /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// </summary>
         public virtual int MaxUploadBytes => Constants.DataLake.MaxUploadBytes;
 
@@ -2380,7 +2380,7 @@ namespace Azure.Storage.Files.DataLake
         #region Upload
         /// <summary>
         /// The <see cref="Upload(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation updates the content of an existing file.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2431,8 +2431,69 @@ namespace Azure.Storage.Files.DataLake
                 .EnsureCompleted();
 
         /// <summary>
+        /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// state of the updated file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<PathInfo> Upload(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Stream content) =>
+            Upload(
+                content,
+                overwrite: true);
+
+        /// <summary>
+        /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite an existing file.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// state of the updated file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<PathInfo> Upload(
+            Stream content,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+            Upload(
+                content,
+                conditions: overwrite ? null : new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                cancellationToken: cancellationToken);
+
+        /// <summary>
         /// The <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation updates the content of anexisting file.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2483,8 +2544,69 @@ namespace Azure.Storage.Files.DataLake
                 cancellationToken: cancellationToken);
 
         /// <summary>
+        /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Task<Response<PathInfo>> UploadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Stream content) =>
+            UploadAsync(
+                content,
+                overwrite: true);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite an existing file.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Task<Response<PathInfo>> UploadAsync(
+            Stream content,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+            UploadAsync(
+                content,
+                conditions: overwrite ? null : new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                cancellationToken: cancellationToken);
+
+        /// <summary>
         /// The <see cref="Upload(string, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation updates the content of anexisting file.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2540,8 +2662,67 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
+        /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param> of this new block blob.
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<PathInfo> Upload(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string path) =>
+            Upload(
+                path,
+                overwrite: true);
+
+        /// <summary>
+        /// The <see cref="Upload(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param> of this new block blob.
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite an existing file.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> Upload(
+            string path,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+            Upload(
+                path,
+                conditions: overwrite ? null : new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                cancellationToken: cancellationToken);
+
+        /// <summary>
         /// The <see cref="UploadAsync(string, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>
-        /// operation updates the content of anexisting file.
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
         /// </summary>
@@ -2596,6 +2777,65 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
             }
         }
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<PathInfo>> UploadAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            string path) =>
+                await UploadAsync(
+                    path,
+                    overwrite: true).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadAsync(Stream, bool, CancellationToken)"/>
+        /// operation creates and uploads content to a file.  If the file already exists, its content will be overwriten.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/update" />.
+        /// </summary>
+        /// <param name="path">
+        /// A file path containing the content to upload.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite an existing file.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> UploadAsync(
+            string path,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default) =>
+                await UploadAsync(
+                    path,
+                    conditions: overwrite ? null : new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// This operation will upload data as indiviually staged
@@ -2661,7 +2901,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 return await uploader.UploadAsync(
                     content,
-                    offset,
                     httpHeaders,
                     conditions,
                     progressHandler,
@@ -2672,7 +2911,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 return uploader.Upload(
                     content,
-                    offset,
                     httpHeaders,
                     conditions,
                     progressHandler,
@@ -2687,9 +2925,6 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         /// <param name="path">
         /// A file path of the file to upload.
-        /// </param>
-        /// <param name="offset">
-        /// The offset within the file to upload the data to.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2725,7 +2960,6 @@ namespace Azure.Storage.Files.DataLake
         /// </remarks>
         internal async Task<Response<PathInfo>> StagedUploadAsync(
             string path,
-            long offset,
             PathHttpHeaders httpHeaders,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
@@ -2738,7 +2972,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 return await StagedUploadAsync(
                     stream,
-                    offset,
                     httpHeaders,
                     conditions,
                     progressHandler,

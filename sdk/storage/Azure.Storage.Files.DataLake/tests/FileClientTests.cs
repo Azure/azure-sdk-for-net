@@ -2399,16 +2399,16 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [Ignore("Live tests will run out of memory")]
-        public async Task UploadAsync_Stream()
+        public async Task UploadAsync_StreamLarge()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
-            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
 
             var data = GetRandomBuffer(200 * Constants.MB);
 
             // Act
-            using (var stream = new System.IO.MemoryStream(data))
+            using (var stream = new MemoryStream(data))
             {
                 await file.UploadAsync(stream);
             }
@@ -2420,37 +2420,219 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [Ignore("Live tests will run out of memory")]
-        public async Task UploadAsync_File()
+        public async Task UploadAsync_MinStream()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Assert
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_MinStreamNoOverride()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream, overwrite: false);
+            }
+
+            // Assert
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+
+            // Act - Attempt to Upload again with override = false
+            using (var stream = new System.IO.MemoryStream(data))
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.UploadAsync(stream, overwrite: false),
+                    e => Assert.AreEqual("PathAlreadyExists", e.ErrorCode.Split('\n')[0]));
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_MinStreamOverride()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
             DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
 
+            var data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream, overwrite: true);
+            }
+
+            // Assert
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        [Ignore("Live tests will run out of memory")]
+        public async Task UploadAsync_FileLarge()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
             var data = GetRandomBuffer(200 * Constants.MB);
 
 
-            using (var stream = new System.IO.MemoryStream(data))
+            using (var stream = new MemoryStream(data))
             {
                 var path = System.IO.Path.GetTempFileName();
 
                 try
                 {
-                    System.IO.File.WriteAllBytes(path, data);
+                    File.WriteAllBytes(path, data);
 
                     await file.UploadAsync(path);
                 }
                 finally
                 {
-                    if (System.IO.File.Exists(path))
+                    if (File.Exists(path))
                     {
-                        System.IO.File.Delete(path);
+                        File.Delete(path);
                     }
                 }
             }
 
             // Assert
-            using var actual = new System.IO.MemoryStream();
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_MinFile()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            var data = GetRandomBuffer(Constants.KB);
+
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = System.IO.Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    await file.UploadAsync(path);
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+            }
+
+            // Assert
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [Test]
+        public async Task UploadAsync_MinFileNoOverride()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            var data = GetRandomBuffer(Constants.KB);
+
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = System.IO.Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    // Act
+                    await file.UploadAsync(path, overwrite: false);
+
+                    // Assert
+                    using var actual = new MemoryStream();
+                    await file.ReadToAsync(actual);
+                    TestHelper.AssertSequenceEqual(data, actual.ToArray());
+
+                    // Act - Attempt to Upload again with override = false
+                    await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                        file.UploadAsync(path, overwrite: false),
+                        e => Assert.AreEqual("PathAlreadyExists", e.ErrorCode.Split('\n')[0]));
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+            }
+        }
+
+        [Test]
+        public async Task UploadAsync_MinFileOverride()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            var data = GetRandomBuffer(Constants.KB);
+
+
+            using (var stream = new MemoryStream(data))
+            {
+                var path = System.IO.Path.GetTempFileName();
+
+                try
+                {
+                    File.WriteAllBytes(path, data);
+
+                    await file.UploadAsync(path, overwrite: true);
+                }
+                finally
+                {
+                    if (File.Exists(path))
+                    {
+                        File.Delete(path);
+                    }
+                }
+            }
+
+            // Assert
+            using var actual = new MemoryStream();
             await file.ReadToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }

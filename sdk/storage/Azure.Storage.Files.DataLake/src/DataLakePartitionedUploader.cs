@@ -82,8 +82,12 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken)
         {
             await _client.CreateAsync(
-                httpHeaders,
-                conditions: conditions).ConfigureAwait(false);
+                httpHeaders: httpHeaders,
+                conditions: conditions,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+
+            // After the File is Create, Lease ID is the only valid request parameter.
+            conditions = new DataLakeRequestConditions { LeaseId = conditions?.LeaseId };
 
             // If we can compute the size and it's small enough
             if (PartitionedUploadExtensions.TryGetLength(content, out long contentLength)
@@ -131,8 +135,13 @@ namespace Azure.Storage.Files.DataLake
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
-            _client.Create(httpHeaders,
-                conditions: conditions);
+            _client.Create(
+                httpHeaders: httpHeaders,
+                conditions: conditions,
+                cancellationToken: cancellationToken);
+
+            // After the File is Create, Lease ID is the only valid request parameter.
+            conditions = new DataLakeRequestConditions { LeaseId = conditions?.LeaseId };
 
             // If we can compute the size and it's small enough
             if (PartitionedUploadExtensions.TryGetLength(content, out long contentLength)
@@ -151,7 +160,9 @@ namespace Azure.Storage.Files.DataLake
 
                 return _client.Flush(
                     position: flushPosition,
-                    httpHeaders: httpHeaders);
+                    httpHeaders: httpHeaders,
+                    conditions: conditions,
+                    cancellationToken: cancellationToken);
             }
 
             // If the caller provided an explicit block size, we'll use it.

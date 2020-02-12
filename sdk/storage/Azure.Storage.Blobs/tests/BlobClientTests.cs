@@ -719,6 +719,22 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public async Task UploadAsync_OverwritesDeliberately_StreamLarge()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Upload one blob
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.MB));
+            await blob.UploadAsync(stream);
+
+            // Overwriting works if allowed
+            using var stream2 = new MemoryStream(GetRandomBuffer(300 * Constants.MB));
+            await blob.UploadAsync(stream2, overwrite: true);
+        }
+
+        [Test]
         public async Task UploadAsync_DoesNotOverwriteDefault_Path()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
