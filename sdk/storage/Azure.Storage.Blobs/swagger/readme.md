@@ -31,6 +31,7 @@ directive:
     $["x-az-skip-path-components"] = true;
     $["x-az-include-sync-methods"] = true;
     $["x-az-public"] = false;
+    $["x-az-trace-failure-check"] = "Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure";
 ```
 
 ### Move directory operations last

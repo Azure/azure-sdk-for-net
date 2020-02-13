@@ -41,5 +41,25 @@ namespace Azure.Storage.Blobs
 
         public static ArgumentException ParsingFullHttpRangeFailed(string range)
             => new ArgumentException("Could not obtain the total length from HTTP range " + range);
+
+        /// <summary>
+        /// Determine if an exception should be treated as a failure for our
+        /// client diagnostics.  This lets us allow list a select few error
+        /// cases - like precondition failures - to avoid cluttering customer
+        /// logs.
+        /// </summary>
+        /// <param name="ex">The exception.</param>
+        /// <returns>Whether the exception should be treated as a failure.</returns>
+        public static bool IsDiagnosticFailure(Exception ex) =>
+            // Any exception other than RequestFailedException is a failure
+            !(ex is RequestFailedException e) ||
+
+            // Any status code other than 412 is a failure
+            e.Status != 412 ||
+
+            // The following 412s are not considered failures
+            (e.ErrorCode != BlobErrorCode.ConditionNotMet &&
+             e.ErrorCode != BlobErrorCode.SourceConditionNotMet &&
+             e.ErrorCode != BlobErrorCode.TargetConditionNotMet);
     }
 }

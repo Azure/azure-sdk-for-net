@@ -8,6 +8,7 @@ We support a number of extensions including using the vendor prefix `x-az-`:
 - `x-az-response-schema-name`: If we combine headers and a schema into a response type, this allows you to provide the name of the scehma property.  The default value is `Body`.
 - `x-az-create-exception`: `true` denotes that this partial type will provide an implementation of the method `Exception CreateException()` to turn an error object into something that can be thrown.  The default value is `false`.
 - `x-az-trace`: Indicates whether a parameter will be logged as part of our distributed tracing.  The default value is `false`.
+- `x-az-trace-failure-check`: The name of a static method to determine whether exceptions should be ignored as failures for distributed tracing.  This is set on x-ms-code-generation-settings.
 - `x-az-enum-skip-value`: The name of a default value to skip while serializing.
 - `x-az-disable-warnings`: Wraps a declaration in a `#pragma disable` when specified.
 - `x-az-skip-path-components`: Whether to skip any path components and always assume a fully formed URL to the resource (this currently must be set to `true`).

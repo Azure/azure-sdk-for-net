@@ -244,7 +244,11 @@ function generateOperation(w: IndentWriter, serviceModel: IServiceModel, group: 
                 }
             });
         });
-        w.line(`catch (System.Exception ex)`);
+        w.write(`catch (System.Exception ex)`);
+        if (serviceModel.info.traceFailureCheck) {
+            w.write(` when (${serviceModel.info.traceFailureCheck}(ex))`);
+        }
+        w.line();
         w.scope('{', '}', () => {
             w.line(`${scopeName}.Failed(ex);`);
             w.line(`throw;`);

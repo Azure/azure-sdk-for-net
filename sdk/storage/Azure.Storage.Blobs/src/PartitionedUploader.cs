@@ -227,7 +227,7 @@ namespace Azure.Storage.Blobs
                     accessTier,
                     cancellationToken);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (BlobErrors.IsDiagnosticFailure(ex))
             {
                 scope.Failed(ex);
                 throw;
@@ -320,7 +320,7 @@ namespace Azure.Storage.Blobs
                     cancellationToken)
                     .ConfigureAwait(false);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (BlobErrors.IsDiagnosticFailure(ex))
             {
                 scope.Failed(ex);
                 throw;

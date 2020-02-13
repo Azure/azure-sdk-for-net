@@ -286,7 +286,8 @@ function createServiceInfo(project: IProject): IServiceInfo {
             name: 'MIT',
             header: `Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the MIT License.`
-        }
+        },
+        traceFailureCheck: project.swagger.info[`x-ms-code-generation-settings`][`x-az-trace-failure-check`]
     };
 }
 

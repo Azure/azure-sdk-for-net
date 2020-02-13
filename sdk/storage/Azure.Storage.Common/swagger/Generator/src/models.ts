@@ -92,7 +92,8 @@ export interface IServiceInfo {
         parameters: IParameters,
         useSchemePrefix: boolean,
         position: string
-    }
+    },
+    traceFailureCheck?: string
 }
 
 export interface IService {

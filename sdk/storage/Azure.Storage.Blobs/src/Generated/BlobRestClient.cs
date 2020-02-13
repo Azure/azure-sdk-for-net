@@ -78,7 +78,7 @@ namespace Azure.Storage.Blobs
                         return SetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -228,7 +228,7 @@ namespace Azure.Storage.Blobs
                         return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -374,7 +374,7 @@ namespace Azure.Storage.Blobs
                         return GetStatisticsAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -532,7 +532,7 @@ namespace Azure.Storage.Blobs
                         return ListBlobContainersSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -692,7 +692,7 @@ namespace Azure.Storage.Blobs
                         return GetUserDelegationKeyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -841,7 +841,7 @@ namespace Azure.Storage.Blobs
                         return GetAccountInfoAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -1000,7 +1000,7 @@ namespace Azure.Storage.Blobs
                         return SubmitBatchAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -1135,7 +1135,7 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="defaultEncryptionScope">Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes.</param>
-            /// <param name="denyEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
+            /// <param name="preventEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
             /// <param name="async">Whether to invoke the operation asynchronously.  The default value is true.</param>
             /// <param name="operationName">Operation name.</param>
             /// <param name="cancellationToken">Cancellation token.</param>
@@ -1150,7 +1150,7 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 string defaultEncryptionScope = default,
-                bool? denyEncryptionScopeOverride = default,
+                bool? preventEncryptionScopeOverride = default,
                 bool async = true,
                 string operationName = "ContainerClient.Create",
                 System.Threading.CancellationToken cancellationToken = default)
@@ -1169,7 +1169,7 @@ namespace Azure.Storage.Blobs
                         metadata,
                         requestId,
                         defaultEncryptionScope,
-                        denyEncryptionScopeOverride))
+                        preventEncryptionScopeOverride))
                     {
                         if (async)
                         {
@@ -1187,7 +1187,7 @@ namespace Azure.Storage.Blobs
                         return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -1209,7 +1209,7 @@ namespace Azure.Storage.Blobs
             /// <param name="metadata">Optional. Specifies a user-defined name-value pair associated with the blob. If no name-value pairs are specified, the operation will copy the metadata from the source blob or file to the destination blob. If one or more name-value pairs are specified, the destination blob is created with the specified metadata, and metadata is not copied from the source blob or file. Note that beginning with version 2009-09-19, metadata names must adhere to the naming rules for C# identifiers. See Naming and Referencing Containers, Blobs, and Metadata for more information.</param>
             /// <param name="requestId">Provides a client-generated, opaque value with a 1 KB character limit that is recorded in the analytics logs when storage analytics logging is enabled.</param>
             /// <param name="defaultEncryptionScope">Optional.  Version 2019-07-07 and later.  Specifies the default encryption scope to set on the container and use for all future writes.</param>
-            /// <param name="denyEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
+            /// <param name="preventEncryptionScopeOverride">Optional.  Version 2019-07-07 and newer.  If true, prevents any request from specifying a different encryption scope than the scope set on the container.</param>
             /// <returns>The Container.CreateAsync Message.</returns>
             internal static Azure.Core.HttpMessage CreateAsync_CreateMessage(
                 Azure.Core.Pipeline.HttpPipeline pipeline,
@@ -1220,7 +1220,7 @@ namespace Azure.Storage.Blobs
                 System.Collections.Generic.IDictionary<string, string> metadata = default,
                 string requestId = default,
                 string defaultEncryptionScope = default,
-                bool? denyEncryptionScopeOverride = default)
+                bool? preventEncryptionScopeOverride = default)
             {
                 // Validation
                 if (resourceUri == null)
@@ -1253,9 +1253,9 @@ namespace Azure.Storage.Blobs
                 }
                 if (requestId != null) { _request.Headers.SetValue("x-ms-client-request-id", requestId); }
                 if (defaultEncryptionScope != null) { _request.Headers.SetValue("x-ms-default-encryption-scope", defaultEncryptionScope); }
-                if (denyEncryptionScopeOverride != null) {
+                if (preventEncryptionScopeOverride != null) {
                 #pragma warning disable CA1308 // Normalize strings to uppercase
-                _request.Headers.SetValue("x-ms-deny-encryption-scope-override", denyEncryptionScopeOverride.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
+                _request.Headers.SetValue("x-ms-deny-encryption-scope-override", preventEncryptionScopeOverride.Value.ToString(System.Globalization.CultureInfo.InvariantCulture).ToLowerInvariant());
                 #pragma warning restore CA1308 // Normalize strings to uppercase
                 }
 
@@ -1362,7 +1362,7 @@ namespace Azure.Storage.Blobs
                         return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -1569,7 +1569,7 @@ namespace Azure.Storage.Blobs
                         return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -1723,7 +1723,7 @@ namespace Azure.Storage.Blobs
                         return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -1892,7 +1892,7 @@ namespace Azure.Storage.Blobs
                         return GetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -2076,7 +2076,7 @@ namespace Azure.Storage.Blobs
                         return SetAccessPolicyAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -2268,7 +2268,7 @@ namespace Azure.Storage.Blobs
                         return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -2446,7 +2446,7 @@ namespace Azure.Storage.Blobs
                         return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -2621,7 +2621,7 @@ namespace Azure.Storage.Blobs
                         return RenewLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -2800,7 +2800,7 @@ namespace Azure.Storage.Blobs
                         return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -2978,7 +2978,7 @@ namespace Azure.Storage.Blobs
                         return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -3167,7 +3167,7 @@ namespace Azure.Storage.Blobs
                         return ListBlobsFlatSegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -3340,7 +3340,7 @@ namespace Azure.Storage.Blobs
                         return ListBlobsHierarchySegmentAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -3547,7 +3547,7 @@ namespace Azure.Storage.Blobs
                         return (DownloadAsync_CreateResponse(clientDiagnostics, _response), _message.ExtractResponseContent());
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -4013,7 +4013,7 @@ namespace Azure.Storage.Blobs
                         return GetPropertiesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -4349,7 +4349,7 @@ namespace Azure.Storage.Blobs
                         return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -4532,7 +4532,7 @@ namespace Azure.Storage.Blobs
                         return SetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -4728,7 +4728,7 @@ namespace Azure.Storage.Blobs
                         return GetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -4981,7 +4981,7 @@ namespace Azure.Storage.Blobs
                         return RenameAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -5199,7 +5199,7 @@ namespace Azure.Storage.Blobs
                         return UndeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -5368,7 +5368,7 @@ namespace Azure.Storage.Blobs
                         return SetHttpHeadersAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -5586,7 +5586,7 @@ namespace Azure.Storage.Blobs
                         return SetMetadataAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -5802,7 +5802,7 @@ namespace Azure.Storage.Blobs
                         return AcquireLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -5991,7 +5991,7 @@ namespace Azure.Storage.Blobs
                         return ReleaseLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -6177,7 +6177,7 @@ namespace Azure.Storage.Blobs
                         return RenewLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -6370,7 +6370,7 @@ namespace Azure.Storage.Blobs
                         return ChangeLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -6567,7 +6567,7 @@ namespace Azure.Storage.Blobs
                         return BreakLeaseAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -6768,7 +6768,7 @@ namespace Azure.Storage.Blobs
                         return CreateSnapshotAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -7001,7 +7001,7 @@ namespace Azure.Storage.Blobs
                         return StartCopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -7246,7 +7246,7 @@ namespace Azure.Storage.Blobs
                         return CopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -7459,7 +7459,7 @@ namespace Azure.Storage.Blobs
                         return AbortCopyFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -7615,7 +7615,7 @@ namespace Azure.Storage.Blobs
                         return SetAccessTierAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -7832,7 +7832,7 @@ namespace Azure.Storage.Blobs
                         return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -8115,7 +8115,7 @@ namespace Azure.Storage.Blobs
                         return UploadPagesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -8386,7 +8386,7 @@ namespace Azure.Storage.Blobs
                         return ClearPagesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -8662,7 +8662,7 @@ namespace Azure.Storage.Blobs
                         return UploadPagesFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -8947,7 +8947,7 @@ namespace Azure.Storage.Blobs
                         return GetPageRangesAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -9156,7 +9156,7 @@ namespace Azure.Storage.Blobs
                         return GetPageRangesDiffAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -9374,7 +9374,7 @@ namespace Azure.Storage.Blobs
                         return ResizeAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -9580,7 +9580,7 @@ namespace Azure.Storage.Blobs
                         return UpdateSequenceNumberAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -9771,7 +9771,7 @@ namespace Azure.Storage.Blobs
                         return CopyIncrementalAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -10008,7 +10008,7 @@ namespace Azure.Storage.Blobs
                         return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -10276,7 +10276,7 @@ namespace Azure.Storage.Blobs
                         return AppendBlockAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -10569,7 +10569,7 @@ namespace Azure.Storage.Blobs
                         return AppendBlockFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -10897,7 +10897,7 @@ namespace Azure.Storage.Blobs
                         return UploadAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -11165,7 +11165,7 @@ namespace Azure.Storage.Blobs
                         return StageBlockAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -11409,7 +11409,7 @@ namespace Azure.Storage.Blobs
                         return StageBlockFromUriAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -11695,7 +11695,7 @@ namespace Azure.Storage.Blobs
                         return CommitBlockListAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -11946,7 +11946,7 @@ namespace Azure.Storage.Blobs
                         return GetBlockListAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -12167,7 +12167,7 @@ namespace Azure.Storage.Blobs
                         return CreateAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -12424,7 +12424,7 @@ namespace Azure.Storage.Blobs
                         return RenameAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -12670,7 +12670,7 @@ namespace Azure.Storage.Blobs
                         return DeleteAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -12868,7 +12868,7 @@ namespace Azure.Storage.Blobs
                         return SetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;
@@ -13064,7 +13064,7 @@ namespace Azure.Storage.Blobs
                         return GetAccessControlAsync_CreateResponse(clientDiagnostics, _response);
                     }
                 }
-                catch (System.Exception ex)
+                catch (System.Exception ex) when (Azure.Storage.Blobs.BlobErrors.IsDiagnosticFailure(ex))
                 {
                     _scope.Failed(ex);
                     throw;

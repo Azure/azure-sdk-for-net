@@ -159,7 +159,7 @@ namespace Azure.Storage.Blobs
                         .ConfigureAwait(false);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (BlobErrors.IsDiagnosticFailure(ex))
             {
                 scope.Failed(ex);
                 throw;
@@ -233,7 +233,7 @@ namespace Azure.Storage.Blobs
 
                 return initialResponse.GetRawResponse();
             }
-            catch (Exception ex)
+            catch (Exception ex) when (BlobErrors.IsDiagnosticFailure(ex))
             {
                 scope.Failed(ex);
                 throw;

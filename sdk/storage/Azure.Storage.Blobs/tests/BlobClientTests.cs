@@ -8,12 +8,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Core.Tests;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Tests;
-using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -923,6 +923,57 @@ namespace Azure.Storage.Blobs.Test
                         destination: downloadStream,
                         cancellationToken: token));
             }
+        }
+
+        [Test]
+        public async Task ExceptionsAreDistributedTracingFailures()
+        {
+            // Get a reference to a blob that doesn't exist
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+
+            // Listen for diagnostic events
+            using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
+
+            // Do something erroneous that should be logged as a failure
+            try
+            {
+                await blob.SetMetadataAsync(new Dictionary<string, string>());
+            }
+            catch (RequestFailedException)
+            {
+            }
+
+            string operationName = $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.SetMetadata)}";
+            var scope = diagnosticListener.Scopes.FirstOrDefault(e => e.Name == operationName);
+            Assert.IsTrue(scope.IsFailed);
+        }
+
+        [Test]
+        public async Task PreconditionsAreNotDistributedTracingFailures()
+        {
+            // Get a reference to a blob that doesn't exist
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(GetNewBlobName()));
+            using var stream = new MemoryStream(GetRandomBuffer(Constants.KB));
+            await blob.UploadAsync(stream);
+
+            // Listen for diagnostic events
+            using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."));
+
+            // Make sure preconditions aren't treated as failures
+            try
+            {
+                await blob.SetMetadataAsync(new Dictionary<string, string>(), new BlobRequestConditions { IfNoneMatch = new ETag("*") });
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(412, ex.Status);
+            }
+
+            string operationName = $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.SetMetadata)}";
+            var scope = diagnosticListener.Scopes.FirstOrDefault(e => e.Name == operationName);
+            Assert.IsFalse(scope.IsFailed);
         }
     }
 }
