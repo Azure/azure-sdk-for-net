@@ -31,7 +31,9 @@ namespace Azure.Storage.Blobs.Specialized
         private IKeyEncryptionKey KeyWrapper { get; }
 
         /// <summary>
-        /// The algorithm identifier to use with <see cref="KeyWrapper"/>.
+        /// The algorithm identifier to use with the <see cref="KeyWrapper"/>. Value to pass into
+        /// <see cref="IKeyEncryptionKey.WrapKey(string, ReadOnlyMemory{byte}, CancellationToken)"/>
+        /// and it's async counterpart.
         /// </summary>
         private string KeyWrapAlgorithm { get; }
 
@@ -248,16 +250,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>Transformed content stream.</returns>
-        protected override UploadContent TransformUploadContent(UploadContent content, CancellationToken cancellationToken = default)
+        protected override BlobUploadContent TransformUploadContent(BlobUploadContent content, CancellationToken cancellationToken = default)
         {
-            (Stream encryptionStream, EncryptionData encryptionData) = EncryptStreamAsync(content.ContentStream, false, cancellationToken).EnsureCompleted();
+            (Stream encryptionStream, EncryptionData encryptionData) = EncryptStreamAsync(content.Content, false, cancellationToken).EnsureCompleted();
 
-            var updatedMetadata = new Dictionary<string, string>(content.Metadata ?? new Dictionary<string, string>(), StringComparer.OrdinalIgnoreCase);
-            updatedMetadata.Add(EncryptionConstants.EncryptionDataKey, encryptionData.Serialize());
-
-            return new UploadContent
+            var updatedMetadata = new Dictionary<string, string>(content.Metadata ?? new Dictionary<string, string>(), StringComparer.OrdinalIgnoreCase)
             {
-                ContentStream = encryptionStream,
+                { EncryptionConstants.EncryptionDataKey, encryptionData.Serialize() }
+            };
+
+            return new BlobUploadContent
+            {
+                Content = encryptionStream,
                 Metadata = updatedMetadata
             };
         }
@@ -271,18 +275,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>Transformed content stream.</returns>
-        protected override async Task<UploadContent> TransformUploadContentAsync(UploadContent content, CancellationToken cancellationToken = default)
+        protected override async Task<BlobUploadContent> TransformUploadContentAsync(BlobUploadContent content, CancellationToken cancellationToken = default)
         {
-            (Stream encryptionStream, EncryptionData encryptionData) = await EncryptStreamAsync(content.ContentStream, true, cancellationToken).ConfigureAwait(false);
+            (Stream encryptionStream, EncryptionData encryptionData) = await EncryptStreamAsync(content.Content, true, cancellationToken).ConfigureAwait(false);
 
             var updatedMetadata = new Dictionary<string, string>(content.Metadata ?? new Dictionary<string, string>(), StringComparer.OrdinalIgnoreCase)
             {
                 { EncryptionConstants.EncryptionDataKey, encryptionData.Serialize() }
             };
 
-            return new UploadContent
+            return new BlobUploadContent
             {
-                ContentStream = encryptionStream,
+                Content = encryptionStream,
                 Metadata = updatedMetadata
             };
         }
@@ -295,8 +299,8 @@ namespace Azure.Storage.Blobs.Specialized
             {
 
                 var encryptionData = async
-                    ? await EncryptionData.CreateAsync(aesProvider.IV, KeyWrapAlgorithm, generatedKey, KeyWrapper, true, cancellationToken).ConfigureAwait(false)
-                    : EncryptionData.CreateAsync(aesProvider.IV, KeyWrapAlgorithm, generatedKey, KeyWrapper, false, cancellationToken).EnsureCompleted();
+                    ? await EncryptionData.CreateInternal(aesProvider.IV, KeyWrapAlgorithm, generatedKey, KeyWrapper, true, cancellationToken).ConfigureAwait(false)
+                    : EncryptionData.CreateInternal(aesProvider.IV, KeyWrapAlgorithm, generatedKey, KeyWrapper, false, cancellationToken).EnsureCompleted();
 
                 var encryptedContent = new RollingBufferStream(
                     new CryptoStream(plaintext, aesProvider.CreateEncryptor(), CryptoStreamMode.Read),

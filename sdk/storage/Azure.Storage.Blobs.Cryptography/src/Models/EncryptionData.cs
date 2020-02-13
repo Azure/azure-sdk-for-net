@@ -3,7 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
@@ -58,7 +59,7 @@ namespace Azure.Storage.Blobs.Specialized.Models
         public static EncryptionData Deserialize(string json)
             => EncryptionDataSerializer.Deserialize(json);
 
-        internal static async Task<EncryptionData> CreateAsync(
+        internal static async Task<EncryptionData> CreateInternal(
             byte[] contentEncryptionIv,
             string keyWrapAlgorithm,
             byte[] contentEncryptionKey,
@@ -76,7 +77,7 @@ namespace Azure.Storage.Blobs.Specialized.Models
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
                 {
-                    { EncryptionConstants.AgentMetadataKey, EncryptionConstants.AgentMetadataValue }
+                    { EncryptionConstants.AgentMetadataKey, AgentString }
                 },
                 WrappedContentKey = new WrappedKey()
                 {
@@ -87,5 +88,15 @@ namespace Azure.Storage.Blobs.Specialized.Models
                     KeyId = keyEncryptionKey.KeyId
                 }
             };
+
+        /// <summary>
+        /// Singleton string identifying this encryption library.
+        /// </summary>
+        private static string AgentString { get; } = new Func<string>(() =>
+        {
+            Assembly assembly = typeof(EncryptionData).Assembly;
+            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
+            return $"azsdk-net-{assembly.GetName().Name}/{assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion} {platformInformation}";
+        }).Invoke();
     }
 }

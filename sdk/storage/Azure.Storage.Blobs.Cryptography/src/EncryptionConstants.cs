@@ -15,8 +15,6 @@ namespace Azure.Storage.Blobs.Specialized
 
         public const string Aes = "AES";
 
-        public const string AgentMetadataValue = ".NETTrack22019-02-02"; // TODO determine proper value
-
         public const string EncryptionDataKey = "encryptiondata";
 
         public const string EncryptionMode = "FullBlob";

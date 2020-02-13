@@ -9,12 +9,12 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Blob content to be uploaded by a <see cref="Specialized.BlobBaseClient"/>.
     /// </summary>
-    public class UploadContent
+    public class BlobUploadContent
     {
         /// <summary>
         /// Content stream to upload.
         /// </summary>
-        public Stream ContentStream { get; set; }
+        public Stream Content { get; set; }
 
         /// <summary>
         /// Content metadata to upload.

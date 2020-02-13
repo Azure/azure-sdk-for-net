@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="pipeline">The set of <see cref="HttpPipelinePolicy"/> to execute after current one.</param>
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessImpl(message, pipeline, false).EnsureCompleted();
+            ProcessInternal(message, pipeline, false).EnsureCompleted();
         }
 
         /// <summary>
@@ -77,10 +77,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns></returns>
         public override async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            await ProcessImpl(message, pipeline, false).ConfigureAwait(false);
+            await ProcessInternal(message, pipeline, false).ConfigureAwait(false);
         }
 
-        private async ValueTask ProcessImpl(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        private async ValueTask ProcessInternal(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             EncryptedBlobRange encryptedRange = default;
             if (message.Request.Headers.TryGetValue(HttpHeader.Names.Range, out var range))
@@ -338,7 +338,7 @@ namespace Azure.Storage.Blobs.Specialized
             }
             else
             {
-                throw EncryptionErrors.BadEncryptionAlgorithm();
+                throw EncryptionErrors.BadEncryptionAlgorithm(encryptionData.EncryptionAgent.EncryptionAlgorithm.ToString());
             }
         }
 

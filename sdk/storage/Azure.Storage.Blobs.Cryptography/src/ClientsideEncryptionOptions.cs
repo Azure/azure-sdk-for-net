@@ -28,7 +28,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// Required for upload operations.
         /// The algorithm identifier to use when wrapping the content encryption key. This is passed into
-        /// <see cref="IKeyEncryptionKey.WrapKey(string, ReadOnlyMemory{byte}, System.Threading.CancellationToken)"/>.
+        /// <see cref="IKeyEncryptionKey.WrapKey(string, ReadOnlyMemory{byte}, System.Threading.CancellationToken)"/>
+        /// and its async counterpart.
         /// </summary>
         public string EncryptionKeyWrapAlgorithm { get; set; }
     }

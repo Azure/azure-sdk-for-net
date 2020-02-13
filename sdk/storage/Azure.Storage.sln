@@ -75,8 +75,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{6EEF
 		Azure.Storage.Queues\swagger\readme.md = Azure.Storage.Queues\swagger\readme.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Identity", "..\identity\Azure.Identity\src\Azure.Identity.csproj", "{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Samples.Tests", "Azure.Storage.Blobs\samples\Azure.Storage.Blobs.Samples.Tests.csproj", "{3CB9895E-D5CC-4F30-B122-68A5522A51AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Samples.Tests", "Azure.Storage.Queues\samples\Azure.Storage.Queues.Samples.Tests.csproj", "{1CDEBFBF-280D-4618-B52A-238EE6751A33}"
@@ -111,9 +109,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batch", "Batch", "{610DBA57
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.Tests", "Azure.Storage.Blobs.Batch\tests\Azure.Storage.Blobs.Batch.Tests.csproj", "{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.KeyVault.Keys", "..\keyvault\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj", "{CCEBC6A7-FC9A-40A5-AC18-8609AC457A81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Cryptography.Tests", "Azure.Storage.Blobs.Cryptography\tests\Azure.Storage.Blobs.Cryptography.Tests\Azure.Storage.Blobs.Cryptography.Tests.csproj", "{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.Cryptography.Tests", "Azure.Storage.Blobs.Cryptography\tests\Azure.Storage.Blobs.Cryptography.Tests\Azure.Storage.Blobs.Cryptography.Tests.csproj", "{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{16260507-C87E-44D2-883F-8E338B7A519F}"
 EndProject
 Global
@@ -158,10 +155,6 @@ Global
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA7C46F4-DE70-467F-802E-024063083F66}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C76281E-AE1A-4C0D-9945-CDB9D8CBF61B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CB9895E-D5CC-4F30-B122-68A5522A51AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -202,10 +195,6 @@ Global
 		{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C48AA18-94E2-4B8E-9345-DCA941B13EB1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CCEBC6A7-FC9A-40A5-AC18-8609AC457A81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCEBC6A7-FC9A-40A5-AC18-8609AC457A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCEBC6A7-FC9A-40A5-AC18-8609AC457A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCEBC6A7-FC9A-40A5-AC18-8609AC457A81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{416B42AD-4EBB-45D5-8DF6-27BB13D5BB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
