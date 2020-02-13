@@ -14,26 +14,26 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the Azure resource that was assessed
+    /// Links relevant to the assessment
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Azure")]
-    public partial class AzureResourceDetails : ResourceDetails
+    public partial class AssessmentLinks
     {
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the AssessmentLinks class.
         /// </summary>
-        public AzureResourceDetails()
+        public AssessmentLinks()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureResourceDetails class.
+        /// Initializes a new instance of the AssessmentLinks class.
         /// </summary>
-        /// <param name="id">Azure resource Id of the assessed resource</param>
-        public AzureResourceDetails(string id = default(string))
+        /// <param name="azurePortalUri">Link to assessment in Azure
+        /// Portal</param>
+        public AssessmentLinks(string azurePortalUri = default(string))
         {
-            Id = id;
+            AzurePortalUri = azurePortalUri;
             CustomInit();
         }
 
@@ -43,10 +43,10 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets azure resource Id of the assessed resource
+        /// Gets link to assessment in Azure Portal
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "azurePortalUri")]
+        public string AzurePortalUri { get; private set; }
 
     }
 }
