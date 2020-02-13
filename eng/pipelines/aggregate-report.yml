@@ -1,0 +1,48 @@
+trigger: none
+pr: none
+
+jobs:
+  - job: Generate
+    variables:
+      - template: templates/variables/globals.yml
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+      - pwsh: mkdir $(System.ArtifactsDirectory)/BuildArtifacts
+        displayName: Create Directory
+
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download Pipeline Artifact'
+        inputs:
+          buildType: specific
+          project: $(TargetPipelineProjectId)
+          definition: $(TargetPipelineDefinition)
+          buildVersionToDownload: latestFromBranch
+          tags: scheduled
+          artifactName: packages
+          targetPath: '$(System.ArtifactsDirectory)/BuildArtifacts'
+
+      - pwsh: Remove-Item Microsoft.Azure.*
+        workingDirectory: $(System.ArtifactsDirectory)/BuildArtifacts
+        displayName: Remove Track 1 Packages
+
+      - pwsh: |
+          mkdir "$(Build.ArtifactStagingDirectory)/reports"
+          Copy-Item -Path "$(Build.SourcesDirectory)/eng/common/InterdependencyGraph.html" -Destination "$(Build.ArtifactStagingDirectory)/reports/InterdependencyGraph.html"
+          & "tools/AnalyzeDeps/AnalyzeDeps.ps1" -PackagesPath "$(System.ArtifactsDirectory)/BuildArtifacts/*.nupkg" -LockfilePath "$(Build.SourcesDirectory)/eng/Packages.Data.props" `
+          -OutPath "$(Build.ArtifactStagingDirectory)/reports/dependencies.html" -DumpPath "$(Build.ArtifactStagingDirectory)/reports/data.js"
+        displayName: "Analyze dependencies"
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish Report Artifacts"
+        inputs:
+          artifactName: reports
+          path: $(Build.ArtifactStagingDirectory)/reports
+      - task: AzureFileCopy@2
+        displayName: 'Upload dependency report'
+        inputs:
+          sourcePath: '$(Build.ArtifactStagingDirectory)/reports'
+          azureSubscription: 'Azure SDK Artifacts'
+          destination: AzureBlob
+          storage: azuresdkartifacts
+          containerName: 'azure-sdk-for-net'
+          blobPrefix: dependencies
