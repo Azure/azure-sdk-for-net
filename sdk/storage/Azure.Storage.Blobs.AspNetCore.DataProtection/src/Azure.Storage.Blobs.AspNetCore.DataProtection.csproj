@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <Description>Microsoft Azure Blob storage support as key store.</Description>
+    <PackageTags>aspnetcore;dataprotection;azure;blob</PackageTags>
+    <Version>1.0.0-preview.1</Version>
+    <EnableApiCompat>false</EnableApiCompat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+
+</Project>
