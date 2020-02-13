@@ -50,12 +50,15 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// the Azure Dev Spaces Controller.</param>
         /// <param name="dataPlaneFqdn">DNS name for accessing DataPlane
         /// services</param>
-        public Controller(string targetContainerHostResourceId, string targetContainerHostCredentialsBase64, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string provisioningState = default(string), string hostSuffix = default(string), string dataPlaneFqdn = default(string))
+        /// <param name="targetContainerHostApiServerFqdn">DNS of the target
+        /// container host's API server</param>
+        public Controller(string targetContainerHostResourceId, string targetContainerHostCredentialsBase64, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string provisioningState = default(string), string hostSuffix = default(string), string dataPlaneFqdn = default(string), string targetContainerHostApiServerFqdn = default(string))
             : base(id, name, type, tags, location)
         {
             ProvisioningState = provisioningState;
             HostSuffix = hostSuffix;
             DataPlaneFqdn = dataPlaneFqdn;
+            TargetContainerHostApiServerFqdn = targetContainerHostApiServerFqdn;
             TargetContainerHostResourceId = targetContainerHostResourceId;
             TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
             Sku = sku;
@@ -87,6 +90,12 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataPlaneFqdn")]
         public string DataPlaneFqdn { get; private set; }
+
+        /// <summary>
+        /// Gets DNS of the target container host's API server
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetContainerHostApiServerFqdn")]
+        public string TargetContainerHostApiServerFqdn { get; private set; }
 
         /// <summary>
         /// Gets or sets resource ID of the target container host
