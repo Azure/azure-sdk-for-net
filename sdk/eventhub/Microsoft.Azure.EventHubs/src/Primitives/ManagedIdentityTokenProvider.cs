@@ -22,7 +22,7 @@ namespace Microsoft.Azure.EventHubs
         /// <summary>
         /// Initializes new instance of <see cref="ManagedIdentityTokenProvider"/> class with <see cref="AzureServiceTokenProvider"/>.
         /// </summary>
-        /// <param name="azureServiceTokenProvider"><see cref="AzureServiceTokenProvider"/> to be used to fetch access token.</param>
+        /// <param name="azureServiceTokenProvider">The <see cref="AzureServiceTokenProvider"/> to be used to fetch access tokens.</param>
         public ManagedIdentityTokenProvider(AzureServiceTokenProvider azureServiceTokenProvider)
         {
             this.azureServiceTokenProvider = azureServiceTokenProvider;
