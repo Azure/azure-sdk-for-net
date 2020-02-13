@@ -72,10 +72,6 @@ namespace Azure.Identity
                 var environment = Environment.FromName(environmentName);
 
                 var storedCredentials = _vscAdapter.GetCredentials(CredentialsSection, environment.Name);
-                var builder = ConfidentialClientApplicationBuilder.Create(ClientId)
-                    .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
-                    .WithAuthority(environment.CloudInstance, _tenantId);
-
                 AuthenticationResult result;
 
                 try
@@ -85,7 +81,7 @@ namespace Azure.Identity
                     var authorizationCode = parsedCredentials.GetProperty("code").GetString();
                     var client =  ConfidentialClientApplicationBuilder.Create(ClientId)
                         .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
-                        .WithAuthority(environment.CloudInstance, _tenantId)
+                        .WithAuthority(environment.CloudInstance, tenant)
                         .WithRedirectUri(redirectUri).Build();
 
                     var parameterBuilder = client.AcquireTokenByAuthorizationCode(requestContext.Scopes, authorizationCode);
@@ -98,7 +94,7 @@ namespace Azure.Identity
                 {
                     var client = (IByRefreshToken)PublicClientApplicationBuilder.Create(ClientId)
                         .WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline))
-                        .WithAuthority(environment.CloudInstance, _tenantId)
+                        .WithAuthority(environment.CloudInstance, tenant)
                         .Build();
 
                     var parameterBuilder = client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials);

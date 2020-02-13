@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Azure.Core;
@@ -11,10 +12,10 @@ namespace Azure.Identity
 {
     internal sealed class MacosVisualStudioCodeAdapter : IVisualStudioCodeAdapter
     {
-        public string GetUserSettingsPath()
-        {
-            throw new System.NotImplementedException();
-        }
+        private static readonly string s_userSettingsJsonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Library", "Application Support", "Code", "User", "settings.json");
+
+        public string GetUserSettingsPath() => s_userSettingsJsonPath;
+
 
         public string GetCredentials(string serviceName, string accountName)
         {
@@ -35,7 +36,7 @@ namespace Azure.Identity
 
                 if (code == MacosNativeMethods.SecStatusCodeSuccess && passwordLength > 0)
                 {
-                    result =  Marshal.PtrToStringAuto(credentialsPtr, passwordLength);
+                    result =  Marshal.PtrToStringAnsi(credentialsPtr, passwordLength);
                 }
             }
             finally
