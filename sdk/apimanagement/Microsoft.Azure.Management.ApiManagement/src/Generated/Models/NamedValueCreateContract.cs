@@ -18,37 +18,38 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Property details.
+    /// NamedValue details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PropertyContract : Resource
+    public partial class NamedValueCreateContract : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyContract class.
+        /// Initializes a new instance of the NamedValueCreateContract class.
         /// </summary>
-        public PropertyContract()
+        public NamedValueCreateContract()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyContract class.
+        /// Initializes a new instance of the NamedValueCreateContract class.
         /// </summary>
-        /// <param name="displayName">Unique name of Property. It may contain
+        /// <param name="displayName">Unique name of NamedValue. It may contain
         /// only letters, digits, period, dash, and underscore
         /// characters.</param>
-        /// <param name="value">Value of the property. Can contain policy
-        /// expressions. It may not be empty or consist only of
-        /// whitespace.</param>
+        /// <param name="value">Value of the NamedValue. Can contain policy
+        /// expressions. It may not be empty or consist only of whitespace.
+        /// This property will not be filled on 'GET' operations! Use
+        /// '/listSecrets' POST request to get the value.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
         /// <param name="tags">Optional tags that when provided can be used to
-        /// filter the property list.</param>
+        /// filter the NamedValue list.</param>
         /// <param name="secret">Determines whether the value is a secret and
         /// should be encrypted or not. Default value is false.</param>
-        public PropertyContract(string displayName, string value, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?))
+        public NamedValueCreateContract(string displayName, string value, string id = default(string), string name = default(string), string type = default(string), IList<string> tags = default(IList<string>), bool? secret = default(bool?))
             : base(id, name, type)
         {
             Tags = tags;
@@ -65,7 +66,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets optional tags that when provided can be used to filter
-        /// the property list.
+        /// the NamedValue list.
         /// </summary>
         [JsonProperty(PropertyName = "properties.tags")]
         public IList<string> Tags { get; set; }
@@ -78,15 +79,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public bool? Secret { get; set; }
 
         /// <summary>
-        /// Gets or sets unique name of Property. It may contain only letters,
-        /// digits, period, dash, and underscore characters.
+        /// Gets or sets unique name of NamedValue. It may contain only
+        /// letters, digits, period, dash, and underscore characters.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets value of the property. Can contain policy expressions.
-        /// It may not be empty or consist only of whitespace.
+        /// Gets or sets value of the NamedValue. Can contain policy
+        /// expressions. It may not be empty or consist only of whitespace.
+        /// This property will not be filled on 'GET' operations! Use
+        /// '/listSecrets' POST request to get the value.
         /// </summary>
         [JsonProperty(PropertyName = "properties.value")]
         public string Value { get; set; }

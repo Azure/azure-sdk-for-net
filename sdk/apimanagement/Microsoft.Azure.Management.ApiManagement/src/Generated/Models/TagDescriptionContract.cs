@@ -41,13 +41,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// describing the tag.</param>
         /// <param name="externalDocsDescription">Description of the external
         /// resources describing the tag.</param>
+        /// <param name="tagId">Identifier of the tag in the form of
+        /// /tags/{tagId}</param>
         /// <param name="displayName">Tag name.</param>
-        public TagDescriptionContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string externalDocsUrl = default(string), string externalDocsDescription = default(string), string displayName = default(string))
+        public TagDescriptionContract(string id = default(string), string name = default(string), string type = default(string), string description = default(string), string externalDocsUrl = default(string), string externalDocsDescription = default(string), string tagId = default(string), string displayName = default(string))
             : base(id, name, type)
         {
             Description = description;
             ExternalDocsUrl = externalDocsUrl;
             ExternalDocsDescription = externalDocsDescription;
+            TagId = tagId;
             DisplayName = displayName;
             CustomInit();
         }
@@ -75,6 +78,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.externalDocsDescription")]
         public string ExternalDocsDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets identifier of the tag in the form of /tags/{tagId}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tagId")]
+        public string TagId { get; set; }
 
         /// <summary>
         /// Gets or sets tag name.

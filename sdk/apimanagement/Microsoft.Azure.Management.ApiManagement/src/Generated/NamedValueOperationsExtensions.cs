@@ -18,12 +18,13 @@ namespace Microsoft.Azure.Management.ApiManagement
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for SubscriptionOperations.
+    /// Extension methods for NamedValueOperations.
     /// </summary>
-    public static partial class SubscriptionOperationsExtensions
+    public static partial class NamedValueOperationsExtensions
     {
             /// <summary>
-            /// Lists all subscriptions of the API Management service instance.
+            /// Lists a collection of NamedValues defined within a service instance.
+            /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,13 +38,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<SubscriptionContract> List(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, ODataQuery<SubscriptionContract> odataQuery = default(ODataQuery<SubscriptionContract>))
+            public static IPage<NamedValueContract> ListByService(this INamedValueOperations operations, string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>))
             {
-                return operations.ListAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all subscriptions of the API Management service instance.
+            /// Lists a collection of NamedValues defined within a service instance.
+            /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,17 +62,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionContract>> ListAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, ODataQuery<SubscriptionContract> odataQuery = default(ODataQuery<SubscriptionContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamedValueContract>> ListByServiceAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, ODataQuery<NamedValueContract> odataQuery = default(ODataQuery<NamedValueContract>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Gets the entity state (Etag) version of the apimanagement subscription
-            /// specified by its identifier.
+            /// Gets the entity state (Etag) version of the NamedValue specified by its
+            /// identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -81,18 +83,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
-            public static SubscriptionGetEntityTagHeaders GetEntityTag(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid)
+            public static NamedValueGetEntityTagHeaders GetEntityTag(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
             {
-                return operations.GetEntityTagAsync(resourceGroupName, serviceName, sid).GetAwaiter().GetResult();
+                return operations.GetEntityTagAsync(resourceGroupName, serviceName, namedValueId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the entity state (Etag) version of the apimanagement subscription
-            /// specified by its identifier.
+            /// Gets the entity state (Etag) version of the NamedValue specified by its
+            /// identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,23 +104,22 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionGetEntityTagHeaders> GetEntityTagAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamedValueGetEntityTagHeaders> GetEntityTagAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, sid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
             }
 
             /// <summary>
-            /// Gets the specified Subscription entity.
+            /// Gets the details of the NamedValue specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -130,17 +130,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
-            public static SubscriptionContract Get(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid)
+            public static NamedValueContract Get(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
             {
-                return operations.GetAsync(resourceGroupName, serviceName, sid).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, namedValueId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Gets the specified Subscription entity.
+            /// Gets the details of the NamedValue specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -151,24 +150,22 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionContract> GetAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamedValueContract> GetAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, sid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates or updates the subscription of specified user to the specified
-            /// product.
+            /// Creates or updates a NamedValue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -179,31 +176,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
             /// <param name='parameters'>
             /// Create parameters.
-            /// </param>
-            /// <param name='notify'>
-            /// Notify change in Subscription State.
-            /// - If false, do not send any email notification for change of state of
-            /// subscription
-            /// - If true, send email notification of change of state of subscription
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static SubscriptionContract CreateOrUpdate(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string))
+            public static NamedValueContract CreateOrUpdate(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, sid, parameters, notify, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or updates the subscription of specified user to the specified
-            /// product.
+            /// Creates or updates a NamedValue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -214,18 +203,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
             /// <param name='parameters'>
             /// Create parameters.
-            /// </param>
-            /// <param name='notify'>
-            /// Notify change in Subscription State.
-            /// - If false, do not send any email notification for change of state of
-            /// subscription
-            /// - If true, send email notification of change of state of subscription
             /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. Not required when creating an entity, but required when
@@ -234,16 +216,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionContract> CreateOrUpdateAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamedValueContract> CreateOrUpdateAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, sid, parameters, notify, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates the details of a subscription specified by its identifier.
+            /// Updates the specific NamedValue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -254,9 +236,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
             /// <param name='parameters'>
             /// Update parameters.
@@ -266,19 +247,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            /// <param name='notify'>
-            /// Notify change in Subscription State.
-            /// - If false, do not send any email notification for change of state of
-            /// subscription
-            /// - If true, send email notification of change of state of subscription
-            /// </param>
-            public static void Update(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionUpdateParameters parameters, string ifMatch, bool? notify = default(bool?))
+            public static NamedValueContract Update(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, sid, parameters, ifMatch, notify).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates the details of a subscription specified by its identifier.
+            /// Updates the specific NamedValue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -289,9 +264,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
             /// </param>
             /// <param name='parameters'>
             /// Update parameters.
@@ -301,219 +275,241 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            /// <param name='notify'>
-            /// Notify change in Subscription State.
-            /// - If false, do not send any email notification for change of state of
-            /// subscription
-            /// - If true, send email notification of change of state of subscription
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, SubscriptionUpdateParameters parameters, string ifMatch, bool? notify = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamedValueContract> UpdateAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, sid, parameters, ifMatch, notify, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Deletes the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            public static void Delete(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, string ifMatch)
-            {
-                operations.DeleteAsync(resourceGroupName, serviceName, sid, ifMatch).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the specified subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, sid, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Regenerates primary key of existing subscription of the API Management
-            /// service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            public static void RegeneratePrimaryKey(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid)
-            {
-                operations.RegeneratePrimaryKeyAsync(resourceGroupName, serviceName, sid).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates primary key of existing subscription of the API Management
-            /// service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RegeneratePrimaryKeyAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RegeneratePrimaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, sid, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Regenerates secondary key of existing subscription of the API Management
-            /// service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            public static void RegenerateSecondaryKey(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid)
-            {
-                operations.RegenerateSecondaryKeyAsync(resourceGroupName, serviceName, sid).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Regenerates secondary key of existing subscription of the API Management
-            /// service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task RegenerateSecondaryKeyAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.RegenerateSecondaryKeyWithHttpMessagesAsync(resourceGroupName, serviceName, sid, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the subscription keys.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            public static SubscriptionKeysContract ListSecrets(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid)
-            {
-                return operations.ListSecretsAsync(resourceGroupName, serviceName, sid).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the subscription keys.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='sid'>
-            /// Subscription entity Identifier. The entity represents the association
-            /// between a user and a product in API Management.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SubscriptionKeysContract> ListSecretsAsync(this ISubscriptionOperations operations, string resourceGroupName, string serviceName, string sid, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, sid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all subscriptions of the API Management service instance.
+            /// Deletes specific NamedValue from the API Management service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            public static void Delete(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, string ifMatch)
+            {
+                operations.DeleteAsync(resourceGroupName, serviceName, namedValueId, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes specific NamedValue from the API Management service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the secret value of the NamedValue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            public static PropertyValueContract ListValue(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId)
+            {
+                return operations.ListValueAsync(resourceGroupName, serviceName, namedValueId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the secret value of the NamedValue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PropertyValueContract> ListValueAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListValueWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates or updates a NamedValue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static NamedValueContract BeginCreateOrUpdate(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string))
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a NamedValue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NamedValueContract> BeginCreateOrUpdateAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueCreateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the specific NamedValue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            public static NamedValueContract BeginUpdate(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch)
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the specific NamedValue.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='namedValueId'>
+            /// Identifier of the NamedValue.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<NamedValueContract> BeginUpdateAsync(this INamedValueOperations operations, string resourceGroupName, string serviceName, string namedValueId, NamedValueUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, namedValueId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists a collection of NamedValues defined within a service instance.
+            /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -521,13 +517,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SubscriptionContract> ListNext(this ISubscriptionOperations operations, string nextPageLink)
+            public static IPage<NamedValueContract> ListByServiceNext(this INamedValueOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByServiceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all subscriptions of the API Management service instance.
+            /// Lists a collection of NamedValues defined within a service instance.
+            /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-properties" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -538,9 +535,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionContract>> ListNextAsync(this ISubscriptionOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamedValueContract>> ListByServiceNextAsync(this INamedValueOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

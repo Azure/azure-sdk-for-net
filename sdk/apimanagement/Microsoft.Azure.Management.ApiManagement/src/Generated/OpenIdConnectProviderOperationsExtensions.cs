@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static OpenidConnectProviderContract CreateOrUpdate(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderContract parameters, string ifMatch = default(string))
+            public static OpenidConnectProviderContract CreateOrUpdate(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderCreateContract parameters, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, opid, parameters, ifMatch).GetAwaiter().GetResult();
             }
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OpenidConnectProviderContract> CreateOrUpdateAsync(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OpenidConnectProviderContract> CreateOrUpdateAsync(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, OpenidConnectProviderCreateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, opid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -334,6 +334,52 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task DeleteAsync(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, opid, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the OpenID Connect Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='opid'>
+            /// Identifier of the OpenID Connect Provider.
+            /// </param>
+            public static ClientSecretContract ListSecrets(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid)
+            {
+                return operations.ListSecretsAsync(resourceGroupName, serviceName, opid).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the client secret details of the OpenID Connect Provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='opid'>
+            /// Identifier of the OpenID Connect Provider.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ClientSecretContract> ListSecretsAsync(this IOpenIdConnectProviderOperations operations, string resourceGroupName, string serviceName, string opid, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListSecretsWithHttpMessagesAsync(resourceGroupName, serviceName, opid, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
