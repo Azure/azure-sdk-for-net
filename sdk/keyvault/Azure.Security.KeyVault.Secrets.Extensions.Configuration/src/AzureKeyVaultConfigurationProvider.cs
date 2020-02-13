@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
         /// </summary>
         /// <param name="client">The <see cref="SecretClient"/> to use for retrieving values.</param>
         /// <param name="manager">The <see cref="IKeyVaultSecretManager"/> to use in managing values.</param>
-        /// <param name="reloadInterval">The timespan to wait in between each attempt at polling the Azure KeyVault for changes. Default is null which indicates no reloading.</param>
+        /// <param name="reloadInterval">The timespan to wait in between each attempt at polling the Azure Key Vault for changes. Default is null which indicates no reloading.</param>
         public AzureKeyVaultConfigurationProvider(SecretClient client, IKeyVaultSecretManager manager, TimeSpan? reloadInterval = null)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));

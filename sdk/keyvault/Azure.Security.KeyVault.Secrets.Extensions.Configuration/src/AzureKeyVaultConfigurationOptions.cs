@@ -23,13 +23,13 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
         /// <summary>
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationOptions"/>.
         /// </summary>
-        /// <param name="vault">Azure KeyVault uri.</param>
+        /// <param name="vaultUri">Azure Key Vault uri.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> to use for authentication.</param>
         public AzureKeyVaultConfigurationOptions(
-            Uri vault,
+            Uri vaultUri,
             TokenCredential credential) : this()
         {
-            Client = new SecretClient(vault, credential);
+            Client = new SecretClient(vaultUri, credential);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
         public IKeyVaultSecretManager Manager { get; set; }
 
         /// <summary>
-        /// Gets or sets the timespan to wait between attempts at polling the Azure KeyVault for changes. <code>null</code> to disable reloading.
+        /// Gets or sets the timespan to wait between attempts at polling the Azure Key Vault for changes. <code>null</code> to disable reloading.
         /// </summary>
         public TimeSpan? ReloadInterval { get; set; }
     }

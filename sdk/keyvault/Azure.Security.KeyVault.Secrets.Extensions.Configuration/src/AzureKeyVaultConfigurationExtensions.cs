@@ -20,60 +20,60 @@ namespace Microsoft.Extensions.Configuration
         /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
-        /// <param name="vault">The Azure KeyVault uri.</param>
+        /// <param name="vaultUri">The Azure Key Vault uri.</param>
         /// <param name="credential">The credential to to use for authentication.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(
             this IConfigurationBuilder configurationBuilder,
-            Uri vault,
+            Uri vaultUri,
             TokenCredential credential)
         {
-            return AddAzureKeyVault(configurationBuilder, vault, credential, new DefaultKeyVaultSecretManager());
+            return AddAzureKeyVault(configurationBuilder, vaultUri, credential, new DefaultKeyVaultSecretManager());
         }
 
         /// <summary>
         /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
-        /// <param name="vault">Azure KeyVault uri.</param>
+        /// <param name="vaultUri">Azure Key Vault uri.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(
             this IConfigurationBuilder configurationBuilder,
-            Uri vault)
+            Uri vaultUri)
         {
-            return AddAzureKeyVault(configurationBuilder, vault, new DefaultAzureCredential());
+            return AddAzureKeyVault(configurationBuilder, vaultUri, new DefaultAzureCredential());
         }
 
         /// <summary>
         /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
-        /// <param name="vault">Azure KeyVault uri.</param>
+        /// <param name="vaultUri">Azure Key Vault uri.</param>
         /// <param name="manager">The <see cref="IKeyVaultSecretManager"/> instance used to control secret loading.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(
             this IConfigurationBuilder configurationBuilder,
-            Uri vault,
+            Uri vaultUri,
             IKeyVaultSecretManager manager)
         {
-            return AddAzureKeyVault(configurationBuilder, vault, new DefaultAzureCredential(), manager);
+            return AddAzureKeyVault(configurationBuilder, vaultUri, new DefaultAzureCredential(), manager);
         }
 
         /// <summary>
         /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
-        /// <param name="vault">Azure KeyVault uri.</param>
+        /// <param name="vaultUri">Azure Key Vault uri.</param>
         /// <param name="credential">The credential to to use for authentication.</param>
         /// <param name="manager">The <see cref="IKeyVaultSecretManager"/> instance used to control secret loading.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(
             this IConfigurationBuilder configurationBuilder,
-            Uri vault,
+            Uri vaultUri,
             TokenCredential credential,
             IKeyVaultSecretManager manager)
         {
-            return AddAzureKeyVault(configurationBuilder, new AzureKeyVaultConfigurationOptions(vault, credential)
+            return AddAzureKeyVault(configurationBuilder, new AzureKeyVaultConfigurationOptions(vaultUri, credential)
             {
                 Manager = manager
             });

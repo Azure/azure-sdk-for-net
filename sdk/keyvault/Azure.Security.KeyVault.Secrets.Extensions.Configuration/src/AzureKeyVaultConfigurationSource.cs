@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
 {
     /// <summary>
-    /// Represents Azure KeyVault secrets as an <see cref="IConfigurationSource"/>.
+    /// Represents Azure Key Vault secrets as an <see cref="IConfigurationSource"/>.
     /// </summary>
     internal class AzureKeyVaultConfigurationSource : IConfigurationSource
     {
