@@ -919,7 +919,7 @@ namespace Azure.Storage.Blobs
                         Uri,
                         access: publicAccessType,
                         defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
-                        denyEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride ,
+                        preventEncryptionScopeOverride: encryptionScopeOptions?.PreventEncryptionScopeOverride,
                         version: Version.ToVersionString(),
                         metadata: metadata,
                         async: async,
