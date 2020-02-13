@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Xml.Linq;
 using Azure.Core.Cryptography;
+using Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
