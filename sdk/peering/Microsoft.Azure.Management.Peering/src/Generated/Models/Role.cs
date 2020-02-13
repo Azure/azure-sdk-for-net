@@ -12,15 +12,14 @@ namespace Microsoft.Azure.Management.Peering.Models
 {
 
     /// <summary>
-    /// Defines values for DirectPeeringType.
+    /// Defines values for Role.
     /// </summary>
-    public static class DirectPeeringType
+    public static class Role
     {
-        public const string Edge = "Edge";
-        public const string Transit = "Transit";
-        public const string Cdn = "Cdn";
-        public const string Internal = "Internal";
-        public const string Ix = "Ix";
-        public const string IxRs = "IxRs";
+        public const string Noc = "Noc";
+        public const string Policy = "Policy";
+        public const string Technical = "Technical";
+        public const string Service = "Service";
+        public const string Other = "Other";
     }
 }

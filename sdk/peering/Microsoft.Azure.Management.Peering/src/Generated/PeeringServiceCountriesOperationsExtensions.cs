@@ -17,57 +17,40 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PeeringLocationsOperations.
+    /// Extension methods for PeeringServiceCountriesOperations.
     /// </summary>
-    public static partial class PeeringLocationsOperationsExtensions
+    public static partial class PeeringServiceCountriesOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available peering locations for the specified kind of
-            /// peering.
+            /// Lists all of the available countries for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='kind'>
-            /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
-            /// </param>
-            /// <param name='directPeeringType'>
-            /// The type of direct peering. Possible values include: 'Edge', 'Transit',
-            /// 'Cdn', 'Internal', 'Ix', 'IxRs'
-            /// </param>
-            public static IPage<PeeringLocation> List(this IPeeringLocationsOperations operations, string kind, string directPeeringType = default(string))
+            public static IPage<PeeringServiceCountry> List(this IPeeringServiceCountriesOperations operations)
             {
-                return operations.ListAsync(kind, directPeeringType).GetAwaiter().GetResult();
+                return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available peering locations for the specified kind of
-            /// peering.
+            /// Lists all of the available countries for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='kind'>
-            /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
-            /// </param>
-            /// <param name='directPeeringType'>
-            /// The type of direct peering. Possible values include: 'Edge', 'Transit',
-            /// 'Cdn', 'Internal', 'Ix', 'IxRs'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringLocation>> ListAsync(this IPeeringLocationsOperations operations, string kind, string directPeeringType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringServiceCountry>> ListAsync(this IPeeringServiceCountriesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(kind, directPeeringType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all of the available peering locations for the specified kind of
-            /// peering.
+            /// Lists all of the available countries for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,14 +58,13 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<PeeringLocation> ListNext(this IPeeringLocationsOperations operations, string nextPageLink)
+            public static IPage<PeeringServiceCountry> ListNext(this IPeeringServiceCountriesOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available peering locations for the specified kind of
-            /// peering.
+            /// Lists all of the available countries for peering service.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,7 +75,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringLocation>> ListNextAsync(this IPeeringLocationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringServiceCountry>> ListNextAsync(this IPeeringServiceCountriesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
