@@ -51,18 +51,9 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, IKeyEncryptionKeyResolver client, string keyIdentifier)
         {
-            if (builder == null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
-            if (string.IsNullOrEmpty(keyIdentifier))
-            {
-                throw new ArgumentException($"The key identifier should not be null or empty", nameof(keyIdentifier));
-            }
+            Argument.AssertNotNull(builder, nameof(builder));
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
 
             builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(client);
             builder.Services.Configure<KeyManagementOptions>(options =>
