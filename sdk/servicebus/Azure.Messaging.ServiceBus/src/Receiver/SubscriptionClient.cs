@@ -21,18 +21,18 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <summary>
         /// Gets the path of the corresponding topic.
         /// </summary>
-        public string TopicPath { get; }
+        public virtual string TopicPath { get; }
 
         /// <summary>
         /// Gets the formatted path of the subscription client.
         /// </summary>
         /// ="EntityNameHelper.FormatSubscriptionPath(string, string)"/>
-        public string Path { get; }
+        public virtual string Path { get; }
 
         /// <summary>
         /// Gets the name of the subscription.
         /// </summary>
-        public string SubscriptionName { get; }
+        public virtual string SubscriptionName { get; }
 
         /// <summary>
         ///
@@ -43,7 +43,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="receiveMode"></param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
@@ -54,8 +53,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public SubscriptionClient(string connectionString, ReceiveMode receiveMode)
-            : base(connectionString, null, receiveMode, null, default(SubscriptionClientOptions))
+        public SubscriptionClient(string connectionString)
+            : base(connectionString, null, null, default(SubscriptionClientOptions))
         {
         }
 
@@ -64,7 +63,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
@@ -78,9 +76,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///
         public SubscriptionClient(
             string connectionString,
-            ReceiveMode receiveMode,
             SubscriptionClientOptions clientOptions)
-            : base(connectionString, null, receiveMode, null, clientOptions)
+            : base(connectionString, null, null, clientOptions?.Clone() ?? new SubscriptionClientOptions())
         {
         }
 
@@ -90,7 +87,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
         /// <param name="subscriptionName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions"></param>
         ///
         /// <remarks>
@@ -102,9 +98,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public SubscriptionClient(
             string connectionString,
             string subscriptionName,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
             SubscriptionClientOptions clientOptions = default)
-            : base(connectionString, subscriptionName, receiveMode, null, clientOptions)
+            : base(connectionString, subscriptionName, null, clientOptions?.Clone() ?? new SubscriptionClientOptions())
         {
         }
 
@@ -115,16 +110,14 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="subscriptionName">The name of the specific Service Bus entity to associate the consumer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public SubscriptionClient(
             string fullyQualifiedNamespace,
             string subscriptionName,
             TokenCredential credential,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
             SubscriptionClientOptions clientOptions = default)
-            : base(fullyQualifiedNamespace, subscriptionName, credential, receiveMode)
+            : base(fullyQualifiedNamespace, subscriptionName, credential, null, clientOptions?.Clone() ?? new SubscriptionClientOptions())
         {
         }
 

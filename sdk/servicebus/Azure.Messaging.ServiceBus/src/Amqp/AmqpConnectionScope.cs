@@ -508,7 +508,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // Create and open the link.
                 var filters = new FilterSet();
-                //if (sessionId != null)
+                if (sessionId != null)
                 {
                     filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
                 }

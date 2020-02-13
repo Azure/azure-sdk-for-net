@@ -27,7 +27,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="receiveMode"></param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
@@ -38,8 +37,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public QueueReceiverClient(string connectionString, ReceiveMode receiveMode)
-            : base(connectionString, null, receiveMode, null, new QueueReceiverClientOptions())
+        public QueueReceiverClient(string connectionString)
+            : base(connectionString, null, null, new QueueReceiverClientOptions())
         {
         }
 
@@ -48,7 +47,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions">The set of options to use for this consumer.</param>
         ///
         /// <remarks>
@@ -60,10 +58,10 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   Service Bus entity will result in a connection string that contains the name.
         /// </remarks>
         ///
-        public QueueReceiverClient(string connectionString,
-            ReceiveMode receiveMode,
+        public QueueReceiverClient(
+            string connectionString,
             QueueReceiverClientOptions clientOptions)
-            : base(connectionString, null, receiveMode, null, clientOptions)
+            : base(connectionString, null, null, clientOptions?.Clone() ?? new QueueReceiverClientOptions())
         {
         }
 
@@ -73,7 +71,6 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
         /// <param name="queueName">The name of the specific Service Bus entity to associate the consumer with.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions"></param>
         ///
         /// <remarks>
@@ -85,9 +82,8 @@ namespace Azure.Messaging.ServiceBus.Receiver
         public QueueReceiverClient(
             string connectionString,
             string queueName,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
             QueueReceiverClientOptions clientOptions = default)
-            : base(connectionString, queueName, receiveMode, null, clientOptions ?? new QueueReceiverClientOptions())
+            : base(connectionString, queueName, null, clientOptions?.Clone() ?? new QueueReceiverClientOptions())
         {
         }
 
@@ -98,16 +94,14 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="queueName">The name of the specific Service Bus entity to associate the consumer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="receiveMode"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
         public QueueReceiverClient(
             string fullyQualifiedNamespace,
             string queueName,
             TokenCredential credential,
-            ReceiveMode receiveMode = ReceiveMode.PeekLock,
             QueueReceiverClientOptions clientOptions = default)
-            :base(fullyQualifiedNamespace, queueName, credential, receiveMode)
+            :base(fullyQualifiedNamespace, queueName, credential, null, clientOptions?.Clone() ?? new QueueReceiverClientOptions())
         {
         }
     }
