@@ -7,9 +7,9 @@
         "Content-Length": "229",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5ca4bd6ea4bb8a43b267c162329ace90-1b44158d97259945-00",
+        "traceparent": "00-bd58b62cb1ce1040a55fe83384bafadd-090ed6ea0880cc47-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200205.1\u002Bf8d73daa11c41f2bc0e09182d73b8ba9b5a9b924",
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200210.1\u002Be24b043d36f83d9f578fa70a08ce896f4e89c8ca",
           "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "a31c6139014927c10b81c58c3423ed27",
@@ -36,14 +36,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "13b51adf-6ec1-4643-b05e-43677a63d901",
+        "apim-request-id": "56ea1c52-9b2e-4250-bef4-8daf0c85160f",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Thu, 06 Feb 2020 04:36:05 GMT",
+        "Date": "Mon, 10 Feb 2020 21:20:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "12"
+        "x-envoy-upstream-service-time": "24"
       },
       "ResponseBody": {
         "documents": [
@@ -72,7 +72,7 @@
                     "text": "Paul Allen",
                     "offset": 40,
                     "length": 10,
-                    "score": 0.82665495321760041
+                    "score": 0.46860302900784023
                   }
                 ],
                 "language": "en",
@@ -138,15 +138,15 @@
             "id": "1",
             "error": {
               "code": "InvalidArgument",
+              "message": "Invalid document in request.",
               "innerError": {
                 "code": "InvalidDocument",
                 "message": "Document text is empty."
-              },
-              "message": "Invalid document in request."
+              }
             }
           }
         ],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-02-01"
       }
     }
   ],
