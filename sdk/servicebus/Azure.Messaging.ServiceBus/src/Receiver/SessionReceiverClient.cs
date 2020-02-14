@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
     public class SessionReceiverClient : ServiceBusReceiverClient
     {
         /// <summary>
-        /// Gets the time that the session identified by see cref="SessionId"/> is locked until for this client.
+        /// Gets the time that the session identified by <see cref="SessionId"/> is locked until for this client.
         /// </summary>
         public virtual DateTime LockedUntilUtc { get; }
 
