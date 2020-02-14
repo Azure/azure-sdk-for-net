@@ -15,7 +15,7 @@ using Moq;
 using NUnit.Framework;
 using static Moq.It;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Test
 {
     [TestFixture(true)]
     [TestFixture(false)]

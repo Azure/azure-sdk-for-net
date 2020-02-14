@@ -12,7 +12,7 @@ using Azure.Storage.Blobs.Specialized;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Storage.Blobs.Tests
+namespace Azure.Storage.Blobs.Test
 {
     [TestFixture(true)]
     [TestFixture(false)]

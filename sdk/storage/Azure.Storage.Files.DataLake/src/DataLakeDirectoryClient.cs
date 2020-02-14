@@ -365,6 +365,156 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Create
 
+        #region Create If Not Exists
+        /// <summary>
+        /// The <see cref="Create"/> operation creates a file or directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new file or directory..
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file or directory..
+        /// </param>
+        /// <param name="permissions">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
+        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
+        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
+        /// octal notation (e.g. 0766) are supported.
+        /// </param>
+        /// <param name="umask">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
+        /// When creating a file or directory and the parent folder does not have a default ACL,
+        /// the umask restricts the permissions of the file or directory to be created. The resulting
+        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
+        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
+        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
+        /// in 4-digit octal notation (e.g. 0766).
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> CreateIfNotExists(
+            PathHttpHeaders httpHeaders = default,
+            Metadata metadata = default,
+            string permissions = default,
+            string umask = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(CreateIfNotExists)}");
+            Response<PathInfo> response;
+            try
+            {
+                scope.Start();
+
+                return base.CreateIfNotExists(
+                    PathResourceType.Directory,
+                    httpHeaders,
+                    metadata,
+                    permissions,
+                    umask,
+                    cancellationToken);
+            }
+            catch (RequestFailedException storageRequestFailedException)
+            when (storageRequestFailedException.ErrorCode == "TODO")
+            {
+                response = default;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+            return response;
+        }
+
+        /// <summary>
+        /// The <see cref="Create"/> operation creates a file or directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="httpHeaders">
+        /// Optional standard HTTP header properties that can be set for the
+        /// new file or directory..
+        /// </param>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this file or directory..
+        /// </param>
+        /// <param name="permissions">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account. Sets POSIX access
+        /// permissions for the file owner, the file owning group, and others. Each class may be granted read,
+        /// write, or execute permission. The sticky bit is also supported. Both symbolic (rwxrw-rw-) and 4-digit
+        /// octal notation (e.g. 0766) are supported.
+        /// </param>
+        /// <param name="umask">
+        /// Optional and only valid if Hierarchical Namespace is enabled for the account.
+        /// When creating a file or directory and the parent folder does not have a default ACL,
+        /// the umask restricts the permissions of the file or directory to be created. The resulting
+        /// permission is given by p bitwise-and ^u, where p is the permission and u is the umask. For example,
+        /// if p is 0777 and u is 0057, then the resulting permission is 0720. The default permission is
+        /// 0777 for a directory and 0666 for a file. The default umask is 0027. The umask must be specified
+        /// in 4-digit octal notation (e.g. 0766).
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the
+        /// newly created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> CreateIfNotExistsAsync(
+            PathHttpHeaders httpHeaders = default,
+            Metadata metadata = default,
+            string permissions = default,
+            string umask = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(CreateIfNotExists)}");
+            try
+            {
+                scope.Start();
+
+                return await base.CreateIfNotExistsAsync(
+                    PathResourceType.Directory,
+                    httpHeaders,
+                    metadata,
+                    permissions,
+                    umask,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Create If Not Exists
+
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified path
@@ -463,6 +613,105 @@ namespace Azure.Storage.Files.DataLake
             }
         }
         #endregion Delete
+
+        #region Delete If Exists
+        /// <summary>
+        /// The <see cref="DeleteIfExists"/> operation marks the specified directory
+        /// for deletion, if the directory exists. The directory is later deleted during
+        /// garbage collection.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// deleting this path.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(DeleteIfExists)}");
+
+            try
+            {
+                scope.Start();
+
+                return base.DeleteIfExists(
+                    recursive: true,
+                    conditions,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified directory
+        /// for deletion, if the directory exists. The directory is later deleted during
+        /// garbage collection.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete" />.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
+        /// deleting this path.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            DataLakeRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(DeleteIfExists)}");
+
+            try
+            {
+                scope.Start();
+
+                return await base.DeleteIfExistsAsync(
+                    recursive: true,
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Delete If Exists
 
         #region Rename
         /// <summary>

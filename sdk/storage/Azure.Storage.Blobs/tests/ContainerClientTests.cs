@@ -506,15 +506,20 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
 
-            // Act
-            await container.CreateIfNotExistsAsync();
+            try
+            {
+                // Act
+                await container.CreateIfNotExistsAsync();
 
-            // Assert
-            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
-            Assert.IsNotNull(response.Value.ETag);
-
-            // Cleanup
-            await container.DeleteAsync();
+                // Assert
+                Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
+                Assert.IsNotNull(response.Value.ETag);
+            }
+            finally
+            {
+                // Cleanup
+                await container.DeleteAsync();
+            }
         }
 
         [Test]
@@ -523,17 +528,36 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobServiceClient service = GetServiceClient_SharedKey();
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
-            await container.CreateAsync();
+
+            try
+            {
+                await container.CreateAsync();
+
+                // Act
+                Response<BlobContainerInfo> response = await container.CreateIfNotExistsAsync();
+
+                // Assert
+                Assert.IsNull(response);
+            }
+            finally
+            {
+                // Cleanup
+                await container.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+            BlobContainerClient unauthorizedContainer = InstrumentClient(new BlobContainerClient(container.Uri, GetOptions()));
 
             // Act
-            await container.CreateIfNotExistsAsync();
-
-            // Assert
-            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
-            Assert.IsNotNull(response.Value.ETag);
-
-            // Cleanup
-            await container.DeleteAsync();
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedContainer.CreateIfNotExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
         [Test]
