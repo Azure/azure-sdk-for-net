@@ -506,24 +506,43 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            var conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
-            try
+            using (Pipeline.BeginLoggingScope(nameof(PageBlobClient)))
             {
-                return await CreateInternal(
-                    size,
-                    sequenceNumber,
-                    httpHeaders,
-                    metadata,
-                    conditions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}")
-                    .ConfigureAwait(false);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-            {
-                return default;
+                Pipeline.LogMethodEnter(
+                    nameof(PageBlobClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(size)}: {size}\n" +
+                    $"{nameof(sequenceNumber)}: {sequenceNumber}\n" +
+                    $"{nameof(httpHeaders)}: {httpHeaders}");
+                var conditions = new PageBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                try
+                {
+                    return await CreateInternal(
+                        size,
+                        sequenceNumber,
+                        httpHeaders,
+                        metadata,
+                        conditions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(PageBlobClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                {
+                    return default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(PageBlobClient));
+                }
             }
         }
 
