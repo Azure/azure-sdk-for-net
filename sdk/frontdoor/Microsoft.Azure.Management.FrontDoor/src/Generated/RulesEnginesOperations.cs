@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.FrontDoor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// FrontendEndpointsOperations operations.
+    /// RulesEnginesOperations operations.
     /// </summary>
-    internal partial class FrontendEndpointsOperations : IServiceOperations<FrontDoorManagementClient>, IFrontendEndpointsOperations
+    internal partial class RulesEnginesOperations : IServiceOperations<FrontDoorManagementClient>, IRulesEnginesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the FrontendEndpointsOperations class.
+        /// Initializes a new instance of the RulesEnginesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal FrontendEndpointsOperations(FrontDoorManagementClient client)
+        internal RulesEnginesOperations(FrontDoorManagementClient client)
         {
             if (client == null)
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         public FrontDoorManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all of the frontend endpoints within a Front Door.
+        /// Lists all of the Rules Engine Configurations within a Front Door.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FrontendEndpoint>>> ListByFrontDoorWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RulesEngine>>> ListByFrontDoorWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/frontendEndpoints").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<FrontendEndpoint>>();
+            var _result = new AzureOperationResponse<IPage<RulesEngine>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FrontendEndpoint>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RulesEngine>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -270,8 +270,8 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Gets a Frontend endpoint with the specified name within the specified Front
-        /// Door.
+        /// Gets a Rules Engine Configuration with the specified name within the
+        /// specified Front Door.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -279,8 +279,8 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='frontDoorName'>
         /// Name of the Front Door which is globally unique.
         /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front Door.
+        /// <param name='rulesEngineName'>
+        /// Name of the Rules Engine which is unique within the Front Door.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FrontendEndpoint>> GetWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RulesEngine>> GetWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string rulesEngineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -347,23 +347,23 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
                 }
             }
-            if (frontendEndpointName == null)
+            if (rulesEngineName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontendEndpointName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "rulesEngineName");
             }
-            if (frontendEndpointName != null)
+            if (rulesEngineName != null)
             {
-                if (frontendEndpointName.Length > 255)
+                if (rulesEngineName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontendEndpointName", 255);
+                    throw new ValidationException(ValidationRules.MaxLength, "rulesEngineName", 90);
                 }
-                if (frontendEndpointName.Length < 1)
+                if (rulesEngineName.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "frontendEndpointName", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "rulesEngineName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontendEndpointName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(rulesEngineName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "frontendEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "rulesEngineName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
             string apiVersion = "2020-01-01";
@@ -376,18 +376,18 @@ namespace Microsoft.Azure.Management.FrontDoor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("frontDoorName", frontDoorName);
-                tracingParameters.Add("frontendEndpointName", frontendEndpointName);
+                tracingParameters.Add("rulesEngineName", rulesEngineName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/frontendEndpoints/{frontendEndpointName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
-            _url = _url.Replace("{frontendEndpointName}", System.Uri.EscapeDataString(frontendEndpointName));
+            _url = _url.Replace("{rulesEngineName}", System.Uri.EscapeDataString(rulesEngineName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -481,7 +481,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FrontendEndpoint>();
+            var _result = new AzureOperationResponse<RulesEngine>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -494,7 +494,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<FrontendEndpoint>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RulesEngine>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -514,7 +514,8 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Enables a frontendEndpoint for HTTPS traffic
+        /// Creates a new Rules Engine Configuration with the specified name within the
+        /// specified Front Door.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -522,11 +523,12 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='frontDoorName'>
         /// Name of the Front Door which is globally unique.
         /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front Door.
+        /// <param name='rulesEngineName'>
+        /// Name of the Rules Engine which is unique within the Front Door.
         /// </param>
-        /// <param name='customHttpsConfiguration'>
-        /// The configuration specifying how to enable HTTPS
+        /// <param name='rulesEngineParameters'>
+        /// Rules Engine Configuration properties needed to create a new Rules Engine
+        /// Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -534,15 +536,16 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> EnableHttpsWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RulesEngine>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string rulesEngineName, RulesEngine rulesEngineParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            // Send request
-            AzureOperationResponse _response = await BeginEnableHttpsWithHttpMessagesAsync(resourceGroupName, frontDoorName, frontendEndpointName, customHttpsConfiguration, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+            // Send Request
+            AzureOperationResponse<RulesEngine> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, frontDoorName, rulesEngineName, rulesEngineParameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Disables a frontendEndpoint for HTTPS traffic
+        /// Deletes an existing Rules Engine Configuration with the specified
+        /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -550,8 +553,8 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='frontDoorName'>
         /// Name of the Front Door which is globally unique.
         /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front Door.
+        /// <param name='rulesEngineName'>
+        /// Name of the Rules Engine which is unique within the Front Door.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -559,15 +562,16 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse> DisableHttpsWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string rulesEngineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse _response = await BeginDisableHttpsWithHttpMessagesAsync(resourceGroupName, frontDoorName, frontendEndpointName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, frontDoorName, rulesEngineName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Enables a frontendEndpoint for HTTPS traffic
+        /// Creates a new Rules Engine Configuration with the specified name within the
+        /// specified Front Door.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -575,11 +579,12 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='frontDoorName'>
         /// Name of the Front Door which is globally unique.
         /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front Door.
+        /// <param name='rulesEngineName'>
+        /// Name of the Rules Engine which is unique within the Front Door.
         /// </param>
-        /// <param name='customHttpsConfiguration'>
-        /// The configuration specifying how to enable HTTPS
+        /// <param name='rulesEngineParameters'>
+        /// Rules Engine Configuration properties needed to create a new Rules Engine
+        /// Configuration.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -590,6 +595,9 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -599,7 +607,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginEnableHttpsWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, CustomHttpsConfiguration customHttpsConfiguration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RulesEngine>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string rulesEngineName, RulesEngine rulesEngineParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -643,32 +651,28 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
                 }
             }
-            if (frontendEndpointName == null)
+            if (rulesEngineName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontendEndpointName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "rulesEngineName");
             }
-            if (frontendEndpointName != null)
+            if (rulesEngineName != null)
             {
-                if (frontendEndpointName.Length > 255)
+                if (rulesEngineName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontendEndpointName", 255);
+                    throw new ValidationException(ValidationRules.MaxLength, "rulesEngineName", 90);
                 }
-                if (frontendEndpointName.Length < 1)
+                if (rulesEngineName.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "frontendEndpointName", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "rulesEngineName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontendEndpointName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(rulesEngineName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "frontendEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "rulesEngineName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
-            if (customHttpsConfiguration == null)
+            if (rulesEngineParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "customHttpsConfiguration");
-            }
-            if (customHttpsConfiguration != null)
-            {
-                customHttpsConfiguration.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "rulesEngineParameters");
             }
             string apiVersion = "2020-01-01";
             // Tracing
@@ -680,19 +684,19 @@ namespace Microsoft.Azure.Management.FrontDoor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("frontDoorName", frontDoorName);
-                tracingParameters.Add("frontendEndpointName", frontendEndpointName);
-                tracingParameters.Add("customHttpsConfiguration", customHttpsConfiguration);
+                tracingParameters.Add("rulesEngineName", rulesEngineName);
+                tracingParameters.Add("rulesEngineParameters", rulesEngineParameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginEnableHttps", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/frontendEndpoints/{frontendEndpointName}/enableHttps").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
-            _url = _url.Replace("{frontendEndpointName}", System.Uri.EscapeDataString(frontendEndpointName));
+            _url = _url.Replace("{rulesEngineName}", System.Uri.EscapeDataString(rulesEngineName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -705,7 +709,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("PUT");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -736,9 +740,9 @@ namespace Microsoft.Azure.Management.FrontDoor
 
             // Serialize Request
             string _requestContent = null;
-            if(customHttpsConfiguration != null)
+            if(rulesEngineParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(customHttpsConfiguration, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(rulesEngineParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -762,7 +766,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -792,12 +796,66 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new AzureOperationResponse<RulesEngine>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RulesEngine>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RulesEngine>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RulesEngine>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -807,7 +865,8 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Disables a frontendEndpoint for HTTPS traffic
+        /// Deletes an existing Rules Engine Configuration with the specified
+        /// parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -815,8 +874,8 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <param name='frontDoorName'>
         /// Name of the Front Door which is globally unique.
         /// </param>
-        /// <param name='frontendEndpointName'>
-        /// Name of the Frontend endpoint which is unique within the Front Door.
+        /// <param name='rulesEngineName'>
+        /// Name of the Rules Engine which is unique within the Front Door.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -836,7 +895,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> BeginDisableHttpsWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string frontendEndpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string frontDoorName, string rulesEngineName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -880,23 +939,23 @@ namespace Microsoft.Azure.Management.FrontDoor
                     throw new ValidationException(ValidationRules.Pattern, "frontDoorName", "^[a-zA-Z0-9]+([-a-zA-Z0-9]?[a-zA-Z0-9])*$");
                 }
             }
-            if (frontendEndpointName == null)
+            if (rulesEngineName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "frontendEndpointName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "rulesEngineName");
             }
-            if (frontendEndpointName != null)
+            if (rulesEngineName != null)
             {
-                if (frontendEndpointName.Length > 255)
+                if (rulesEngineName.Length > 90)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "frontendEndpointName", 255);
+                    throw new ValidationException(ValidationRules.MaxLength, "rulesEngineName", 90);
                 }
-                if (frontendEndpointName.Length < 1)
+                if (rulesEngineName.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "frontendEndpointName", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "rulesEngineName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(frontendEndpointName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(rulesEngineName, "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "frontendEndpointName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "rulesEngineName", "^[a-zA-Z0-9]+(-*[a-zA-Z0-9])*$");
                 }
             }
             string apiVersion = "2020-01-01";
@@ -909,18 +968,18 @@ namespace Microsoft.Azure.Management.FrontDoor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("frontDoorName", frontDoorName);
-                tracingParameters.Add("frontendEndpointName", frontendEndpointName);
+                tracingParameters.Add("rulesEngineName", rulesEngineName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginDisableHttps", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/frontendEndpoints/{frontendEndpointName}/disableHttps").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/frontDoors/{frontDoorName}/rulesEngines/{rulesEngineName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{frontDoorName}", System.Uri.EscapeDataString(frontDoorName));
-            _url = _url.Replace("{frontendEndpointName}", System.Uri.EscapeDataString(frontendEndpointName));
+            _url = _url.Replace("{rulesEngineName}", System.Uri.EscapeDataString(rulesEngineName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -933,7 +992,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("DELETE");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -984,7 +1043,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1029,7 +1088,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Lists all of the frontend endpoints within a Front Door.
+        /// Lists all of the Rules Engine Configurations within a Front Door.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1055,7 +1114,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FrontendEndpoint>>> ListByFrontDoorNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RulesEngine>>> ListByFrontDoorNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -1164,7 +1223,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<FrontendEndpoint>>();
+            var _result = new AzureOperationResponse<IPage<RulesEngine>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1177,7 +1236,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<FrontendEndpoint>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RulesEngine>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

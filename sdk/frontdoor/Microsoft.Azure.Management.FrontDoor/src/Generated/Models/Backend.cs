@@ -32,6 +32,15 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         /// <param name="address">Location of the backend (IP address or
         /// FQDN)</param>
+        /// <param name="privateLinkResourceId">If this backend is private,
+        /// provide the Private Link resource Id. Populating this optional
+        /// field indicates that this backend is 'Private'</param>
+        /// <param name="privateEndpointStatus">The Approval status for the
+        /// connection to the Private Link. Possible values include: 'Pending',
+        /// 'Approved', 'Rejected', 'Disconnected', 'Timeout'</param>
+        /// <param name="privateLinkApprovalMessage">A custom message to be
+        /// included in the approval request to connect to the Private
+        /// Link</param>
         /// <param name="httpPort">The HTTP TCP port number. Must be between 1
         /// and 65535.</param>
         /// <param name="httpsPort">The HTTPS TCP port number. Must be between
@@ -47,9 +56,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="backendHostHeader">The value to use as the host header
         /// sent to the backend. If blank or unspecified, this defaults to the
         /// incoming host.</param>
-        public Backend(string address = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string enabledState = default(string), int? priority = default(int?), int? weight = default(int?), string backendHostHeader = default(string))
+        public Backend(string address = default(string), string privateLinkResourceId = default(string), PrivateEndpointStatus? privateEndpointStatus = default(PrivateEndpointStatus?), string privateLinkApprovalMessage = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string enabledState = default(string), int? priority = default(int?), int? weight = default(int?), string backendHostHeader = default(string))
         {
             Address = address;
+            PrivateLinkResourceId = privateLinkResourceId;
+            PrivateEndpointStatus = privateEndpointStatus;
+            PrivateLinkApprovalMessage = privateLinkApprovalMessage;
             HttpPort = httpPort;
             HttpsPort = httpsPort;
             EnabledState = enabledState;
@@ -69,6 +81,29 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "address")]
         public string Address { get; set; }
+
+        /// <summary>
+        /// Gets or sets if this backend is private, provide the Private Link
+        /// resource Id. Populating this optional field indicates that this
+        /// backend is 'Private'
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkResourceId")]
+        public string PrivateLinkResourceId { get; set; }
+
+        /// <summary>
+        /// Gets the Approval status for the connection to the Private Link.
+        /// Possible values include: 'Pending', 'Approved', 'Rejected',
+        /// 'Disconnected', 'Timeout'
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpointStatus")]
+        public PrivateEndpointStatus? PrivateEndpointStatus { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a custom message to be included in the approval
+        /// request to connect to the Private Link
+        /// </summary>
+        [JsonProperty(PropertyName = "privateLinkApprovalMessage")]
+        public string PrivateLinkApprovalMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP TCP port number. Must be between 1 and 65535.
