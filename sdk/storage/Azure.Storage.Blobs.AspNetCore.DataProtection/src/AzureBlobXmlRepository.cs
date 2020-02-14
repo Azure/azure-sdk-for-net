@@ -28,8 +28,8 @@ namespace Azure.Storage.Blobs.AspNetCore.DataProtection
     {
         private const int ConflictMaxRetries = 5;
         private static readonly TimeSpan ConflictBackoffPeriod = TimeSpan.FromMilliseconds(200);
-
         private static readonly XName RepositoryElementName = "repository";
+        private static BlobHttpHeaders _blobHttpHeaders = new BlobHttpHeaders() { ContentType = "application/xml; charset=utf-8" };
 
         private readonly Random _random;
         private BlobData _cachedBlobData;
@@ -205,7 +205,6 @@ namespace Azure.Storage.Blobs.AspNetCore.DataProtection
                 // we believe data already exists in storage.
 
                 BlobRequestConditions requestConditions;
-                BlobHttpHeaders headers = null;
                 if (latestData != null)
                 {
                     requestConditions = new BlobRequestConditions() { IfMatch = latestData.ETag };
@@ -213,8 +212,6 @@ namespace Azure.Storage.Blobs.AspNetCore.DataProtection
                 else
                 {
                     requestConditions = new BlobRequestConditions() { IfNoneMatch = ETag.All };
-                    // set content type on first write
-                    headers = new BlobHttpHeaders() { ContentType = "application/xml; charset=utf-8" };
                 }
 
                 try
@@ -222,7 +219,7 @@ namespace Azure.Storage.Blobs.AspNetCore.DataProtection
                     // Send the request up to the server.
                     var response = await _blobClient.UploadAsync(
                         serializedDoc,
-                        httpHeaders: headers,
+                        httpHeaders: _blobHttpHeaders,
                         conditions: requestConditions).ConfigureAwait(false);
 
                     // If we got this far, success!

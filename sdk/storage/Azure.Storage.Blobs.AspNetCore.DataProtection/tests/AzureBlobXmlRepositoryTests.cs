@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure;
 using Azure.Core;
+using Azure.Core.Testing;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.AspNetCore.DataProtection;
