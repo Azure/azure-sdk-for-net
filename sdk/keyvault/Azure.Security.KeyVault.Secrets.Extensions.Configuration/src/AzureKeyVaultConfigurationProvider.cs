@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
@@ -30,8 +31,11 @@ namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
         /// <param name="reloadInterval">The timespan to wait in between each attempt at polling the Azure Key Vault for changes. Default is null which indicates no reloading.</param>
         public AzureKeyVaultConfigurationProvider(SecretClient client, IKeyVaultSecretManager manager, TimeSpan? reloadInterval = null)
         {
-            _client = client ?? throw new ArgumentNullException(nameof(client));
-            _manager = manager ?? throw new ArgumentNullException(nameof(manager));
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(manager, nameof(manager));
+
+            _client = client;
+            _manager = manager;
             if (reloadInterval != null && reloadInterval.Value <= TimeSpan.Zero)
             {
                 throw new ArgumentOutOfRangeException(nameof(reloadInterval), reloadInterval, nameof(reloadInterval) + " must be positive.");

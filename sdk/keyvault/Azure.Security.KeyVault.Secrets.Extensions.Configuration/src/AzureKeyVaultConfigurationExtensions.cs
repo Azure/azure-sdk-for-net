@@ -106,22 +106,10 @@ namespace Microsoft.Extensions.Configuration
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(this IConfigurationBuilder configurationBuilder, AzureKeyVaultConfigurationOptions options)
         {
-            if (configurationBuilder == null)
-            {
-                throw new ArgumentNullException(nameof(configurationBuilder));
-            }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-            if (options.Client == null)
-            {
-                throw new ArgumentNullException($"{nameof(options)}.{nameof(options.Client)}");
-            }
-            if (options.Manager == null)
-            {
-                throw new ArgumentNullException($"{nameof(options)}.{nameof(options.Manager)}");
-            }
+            Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
+            Argument.AssertNotNull(options, nameof(configurationBuilder));
+            Argument.AssertNotNull(options.Client, $"{nameof(options)}.{nameof(options.Client)}");
+            Argument.AssertNotNull(options.Manager, $"{nameof(options)}.{nameof(options.Manager)}");
 
             configurationBuilder.Add(new AzureKeyVaultConfigurationSource(options));
 
