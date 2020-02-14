@@ -413,7 +413,6 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeDirectoryClient)}.{nameof(CreateIfNotExists)}");
-            Response<PathInfo> response;
             try
             {
                 scope.Start();
@@ -426,11 +425,6 @@ namespace Azure.Storage.Files.DataLake
                     umask,
                     cancellationToken);
             }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == "TODO")
-            {
-                response = default;
-            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -440,7 +434,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-            return response;
         }
 
         /// <summary>

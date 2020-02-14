@@ -458,13 +458,12 @@ namespace Azure.Storage.Files.DataLake
             CancellationToken cancellationToken = default)
         {
             DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(CreateIfNotExists)}");
-            Response<PathInfo> response;
 
             try
             {
                 scope.Start();
 
-                response = await base.CreateIfNotExistsAsync(
+                return await base.CreateIfNotExistsAsync(
                     PathResourceType.File,
                     httpHeaders,
                     metadata,
@@ -472,11 +471,6 @@ namespace Azure.Storage.Files.DataLake
                     umask,
                     cancellationToken)
                     .ConfigureAwait(false);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == "TODO")
-            {
-                response = default;
             }
             catch (Exception ex)
             {
@@ -487,7 +481,6 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Dispose();
             }
-            return response;
         }
         #endregion Create If Not Exists
 
