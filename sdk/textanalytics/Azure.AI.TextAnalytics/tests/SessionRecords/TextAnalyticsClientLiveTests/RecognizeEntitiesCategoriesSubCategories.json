@@ -7,9 +7,9 @@
         "Content-Length": "233",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-4d4219468644864080f657dca87dffaf-fe6fc466ab3ae547-00",
+        "traceparent": "00-765793bef50ffc4ca5d18e01a09dce54-1380d555b6de7b49-00",
         "User-Agent": [
-          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200129.1\u002Bde158ae83419f2c1742186e0eeb82a6896a1fdd0",
+          "azsdk-net-AI.TextAnalytics/1.0.0-dev.20200207.1\u002Bf427f7f6e6223007c151309e618c247344d735a6",
           "(.NET Core 4.6.28207.04; Microsoft Windows 10.0.18363 )"
         ],
         "x-ms-client-request-id": "1b9410f26eb1499cb14b8145b1b99d7f",
@@ -26,14 +26,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4dfd3b69-7fb0-4286-91f1-d95b993709f6",
+        "apim-request-id": "59282271-5a9c-435e-9e72-cac04914a163",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Thu, 30 Jan 2020 05:53:56 GMT",
+        "Date": "Fri, 07 Feb 2020 19:13:31 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8282"
+        "x-envoy-upstream-service-time": "149"
       },
       "ResponseBody": {
         "documents": [
@@ -45,21 +45,22 @@
                 "type": "Person",
                 "offset": 0,
                 "length": 10,
-                "score": 1.0
+                "score": 0.6
               },
               {
                 "text": "Microsoft",
                 "type": "Organization",
                 "offset": 13,
                 "length": 9,
-                "score": 1.0
+                "score": 0.85
               },
               {
                 "text": "New Mexico",
                 "type": "Location",
+                "subtype": "GPE",
                 "offset": 25,
                 "length": 10,
-                "score": 0.77737605571746826
+                "score": 0.38
               },
               {
                 "text": "800-102-1100",
@@ -158,7 +159,7 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2019-10-01"
+        "modelVersion": "2020-02-01"
       }
     }
   ],

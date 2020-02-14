@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private PartitionManager StorageManager { get; }
+        private StorageManager StorageManager { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="MockEventProcessorClient" /> class.
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <param name="numberOfPartitions">The amount of partitions the associated Event Hub has.</param>
         /// <param name="loadBalancer">The <see cref="PartitionLoadBalancer" /> used to manage partition load balance operations.</param>
         ///
-        internal MockEventProcessorClient(PartitionManager storageManager,
+        internal MockEventProcessorClient(StorageManager storageManager,
                                           string consumerGroup = "consumerGroup",
                                           string fullyQualifiedNamespace = "somehost.com",
                                           string eventHubName = "somehub",

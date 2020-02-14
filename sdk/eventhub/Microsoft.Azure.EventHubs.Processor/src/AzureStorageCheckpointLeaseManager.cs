@@ -144,6 +144,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                 Offset = checkpoint.Offset,
                 SequenceNumber = checkpoint.SequenceNumber
             };
+
             await this.UpdateLeaseAsync(newLease).ConfigureAwait(false);
         }
 
@@ -377,16 +378,17 @@ namespace Microsoft.Azure.EventHubs.Processor
                     await this.RenewLeaseCoreAsync(lease).ConfigureAwait(false);
                 }
 
-                await leaseBlob.UploadTextAsync(
-                    JsonConvert.SerializeObject(lease),
-                    null,
+                // Update owner in the metadata first since clients get ownership information by looking at metadata.
+                lease.Blob.Metadata[MetaDataOwnerName] = lease.Owner;
+                await lease.Blob.SetMetadataAsync(
                     AccessCondition.GenerateLeaseCondition(lease.Token),
                     null,
                     this.operationContext).ConfigureAwait(false);
 
-                // Update owner in the metadata.
-                lease.Blob.Metadata[MetaDataOwnerName] = lease.Owner;
-                await lease.Blob.SetMetadataAsync(
+                // Then update deserialized lease content.
+                await leaseBlob.UploadTextAsync(
+                    JsonConvert.SerializeObject(lease),
+                    null,
                     AccessCondition.GenerateLeaseCondition(lease.Token),
                     null,
                     this.operationContext).ConfigureAwait(false);
@@ -489,9 +491,6 @@ namespace Microsoft.Azure.EventHubs.Processor
                 return false;
             }
 
-            // First, renew the lease to make sure the update will go through.
-            await this.RenewLeaseAsync(lease).ConfigureAwait(false);
-
             CloudBlockBlob leaseBlob = lease.Blob;
             try
             {
@@ -519,6 +518,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, partitionId, "Raw JSON downloaded: " + jsonLease);
             AzureBlobLease rehydrated = (AzureBlobLease)JsonConvert.DeserializeObject(jsonLease, typeof(AzureBlobLease));
             AzureBlobLease blobLease = new AzureBlobLease(rehydrated, blob);
+
             return blobLease;
         }
 

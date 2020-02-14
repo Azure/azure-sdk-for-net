@@ -586,11 +586,11 @@ namespace Azure.Messaging.EventHubs.Tests
                         }
                     }
 
-                    // Create a partition manager and add an ownership with a checkpoint in it.
+                    // Create a storage manager and add an ownership with a checkpoint in it.
 
-                    var partitionManager = new MockCheckPointStorage();
+                    var storageManager = new MockCheckPointStorage();
 
-                    await partitionManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
+                    await storageManager.ClaimOwnershipAsync(new List<PartitionOwnership>()
                     {
                         new PartitionOwnership(connection.FullyQualifiedNamespace, connection.EventHubName,
                             EventHubConsumerClient.DefaultConsumerGroupName, "ownerIdentifier", partitionId,
@@ -603,7 +603,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            partitionManager,
+                            storageManager,
                             onProcessEvent: eventArgs =>
                             {
                                 if (eventArgs.Data != null)
@@ -689,9 +689,9 @@ namespace Azure.Messaging.EventHubs.Tests
                         lastEvent = receivedEvents.Last();
                     }
 
-                    // Create a partition manager so we can retrieve the created checkpoint from it.
+                    // Create a storage manager so we can retrieve the created checkpoint from it.
 
-                    var partitionManager = new MockCheckPointStorage();
+                    var storageManager = new MockCheckPointStorage();
 
                     // Create the event processor manager to manage our event processors.
 
@@ -699,7 +699,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         (
                             EventHubConsumerClient.DefaultConsumerGroupName,
                             connectionString,
-                            partitionManager,
+                            storageManager,
                             onProcessEvent: eventArgs =>
                             {
                                 if (eventArgs.Data != null)
@@ -725,7 +725,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Validate results.
 
-                    IEnumerable<PartitionOwnership> ownershipEnumerable = await partitionManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, EventHubConsumerClient.DefaultConsumerGroupName);
+                    IEnumerable<PartitionOwnership> ownershipEnumerable = await storageManager.ListOwnershipAsync(connection.FullyQualifiedNamespace, connection.EventHubName, EventHubConsumerClient.DefaultConsumerGroupName);
 
                     Assert.That(ownershipEnumerable, Is.Not.Null);
                     Assert.That(ownershipEnumerable.Count, Is.EqualTo(1));

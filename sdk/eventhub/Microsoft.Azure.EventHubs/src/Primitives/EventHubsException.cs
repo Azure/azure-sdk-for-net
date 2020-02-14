@@ -63,6 +63,18 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="isTransient">Specifies whether or not the exception is transient.</param>
         /// <param name="message">The detailed message exception.</param>
         /// <param name="innerException">The inner exception.</param>
+        public EventHubsException(bool isTransient, string message, Exception innerException)
+            : base(message, innerException)
+        {
+            this.IsTransient = isTransient;
+        }
+
+        /// <summary>
+        /// Returns a new EventHubsException
+        /// </summary>
+        /// <param name="isTransient">Specifies whether or not the exception is transient.</param>
+        /// <param name="message">The detailed message exception.</param>
+        /// <param name="innerException">The inner exception.</param>
         /// <param name="errorSource">Error source of exception.</param>
         public EventHubsException(bool isTransient, string message, Exception innerException, ErrorSourceType errorSource)
             : base(message, innerException)
