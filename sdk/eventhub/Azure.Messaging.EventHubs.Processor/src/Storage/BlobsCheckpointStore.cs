@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///   A storage blob service that keeps track of checkpoints and ownership.
     /// </summary>
     ///
-    internal sealed class BlobsCheckpointStore : PartitionManager
+    internal sealed class BlobsCheckpointStore : StorageManager
     {
         /// <summary>A regular expression used to capture strings enclosed in double quotes.</summary>
         private static readonly Regex DoubleQuotesExpression = new Regex("\"(.*)\"", RegexOptions.Compiled);

@@ -119,6 +119,7 @@
 
     <!-- The set of tags that should be added to the packages -->
     <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>
+    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
