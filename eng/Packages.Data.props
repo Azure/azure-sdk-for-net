@@ -114,9 +114,23 @@
 
   <!-- Track 2 specific versions -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true'">
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200116.2" />
+
+    <!-- BCL packages -->
     <PackageReference Update="System.Memory" Version="4.5.3" />
+    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
+    <PackageReference Update="System.Threading.Channels" Version="4.6.0" />
+    <PackageReference Update="System.Text.Json" Version="4.6.0" />
+
+    <!-- Build time packages -->
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200116.2" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
+    <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" />
+    
+    <!-- Azure SDK packages -->
+    <PackageReference Update="Azure.Storage.Blobs" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
@@ -124,10 +138,5 @@
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
-    <PackageReference Update="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19552.1" />
-    <PackageReference Update="System.Threading.Channels" Version="4.6.0" />
-    <PackageReference Update="System.Text.Json" Version="4.6.0" />
-    <PackageReference Update="System.Diagnostics.DiagnosticSource" Version="4.6.0" />
-    <PackageReference Update="Azure.Storage.Blobs" Version="12.0.0" />
   </ItemGroup>
 </Project>

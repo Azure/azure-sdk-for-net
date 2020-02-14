@@ -6,6 +6,7 @@
     <PackageTags>aspnetcore;dataprotection;azure;blob;key store</PackageTags>
     <Version>1.0.0-preview.1</Version>
     <EnableApiCompat>false</EnableApiCompat>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
   <ItemGroup>
