@@ -1860,21 +1860,39 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            try
+            using (Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
-                Response response = await DeleteInternal(
-                    snapshotsOption,
-                    conditions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(BlobBaseClient)}.{nameof(DeleteIfExists)}")
-                    .ConfigureAwait(false);
-                return Response.FromValue(true, response);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
-            {
-                return Response.FromValue(false, default);
+                Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(snapshotsOption)}: {snapshotsOption}\n" +
+                    $"{nameof(conditions)}: {conditions}");
+                try
+                {
+                    Response response = await DeleteInternal(
+                        snapshotsOption,
+                        conditions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(BlobBaseClient)}.{nameof(DeleteIfExists)}")
+                        .ConfigureAwait(false);
+                    return Response.FromValue(true, response);
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobNotFound)
+                {
+                    return Response.FromValue(false, default);
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                }
             }
         }
 
