@@ -490,7 +490,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         [Test]
         [TestCaseSource(nameof(NonFatalRetriableExceptionTestCases))]
-        [Ignore("Failing test.")]
         public void ClaimOwnershipAsyncRetriesAndSurfacesRetriableExceptionsWhenETagIsNotNull(Exception exception)
         {
             const int maximumRetries = 2;
@@ -506,6 +505,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             mockRetryPolicy
                 .Setup(policy => policy.CalculateRetryDelay(It.Is<Exception>(value => value == exception), It.Is<int>(value => value <= maximumRetries)))
                 .Returns(TimeSpan.FromMilliseconds(5));
+
+            mockContainerClient.BlobInfo = Mock.Of<BlobInfo>();
 
             mockContainerClient.BlobClientSetMetadataAsyncCallback = (metadata, conditions, token) =>
             {
@@ -531,7 +532,6 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         [Test]
         [TestCaseSource(nameof(NonFatalNotRetriableExceptionTestCases))]
-        [Ignore("Failing test.")]
         public void ClaimOwnershipAsyncSurfacesNonRetriableExceptionsWhenETagIsNotNull(Exception exception)
         {
             var expectedServiceCalls = 1;
@@ -540,6 +540,8 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             var mockContainerClient = new MockBlobContainerClient();
             var checkpointStore = new BlobsCheckpointStore(mockContainerClient, new BasicRetryPolicy(new EventHubsRetryOptions()));
             var ownership = new PartitionOwnership("ns", "eh", "cg", "id", "pid", default, "eTag");
+
+            mockContainerClient.BlobInfo = Mock.Of<BlobInfo>();
 
             mockContainerClient.BlobClientSetMetadataAsyncCallback = (metadata, conditions, token) =>
             {
