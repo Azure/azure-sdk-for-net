@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task BlobPartitionManagerCanListOwnership()
+        public async Task BlobStorageManagerCanListOwnership()
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task BlobPartitionManagerCanListCheckpoints()
+        public async Task BlobStorageManagerCanListCheckpoints()
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         [Test]
         [TestCase(null)]
         [TestCase("ETag")]
-        public async Task BlobPartitionManagerCanClaimOwnership(string eTag)
+        public async Task BlobStorageManagerCanClaimOwnership(string eTag)
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
@@ -112,7 +112,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// </summary>
         ///
         [Test]
-        public async Task BlobPartitionManagerCanUpdateCheckpoint()
+        public async Task BlobStorageManagerCanUpdateCheckpoint()
         {
             await using (StorageScope storageScope = await StorageScope.CreateAsync())
             {
