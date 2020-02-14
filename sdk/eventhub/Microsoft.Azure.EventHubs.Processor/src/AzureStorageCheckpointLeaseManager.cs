@@ -229,7 +229,7 @@ namespace Microsoft.Azure.EventHubs.Processor
         {
             CloudBlockBlob leaseBlob = GetBlockBlobReference(partitionId);
 
-            await leaseBlob.FetchAttributesAsync().ConfigureAwait(false);
+            await leaseBlob.FetchAttributesAsync(null, defaultRequestOptions, this.operationContext).ConfigureAwait(false);
 
             return await DownloadLeaseAsync(partitionId, leaseBlob).ConfigureAwait(false);
         }
@@ -336,7 +336,9 @@ namespace Microsoft.Azure.EventHubs.Processor
             {
                 bool renewLease = false;
                 string newToken;
+
                 await leaseBlob.FetchAttributesAsync(null, this.defaultRequestOptions, this.operationContext).ConfigureAwait(false);
+
                 if (leaseBlob.Properties.LeaseState == LeaseState.Leased)
                 {
                     if (string.IsNullOrEmpty(lease.Token))
@@ -452,6 +454,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
                 // Remove owner in the metadata.
                 leaseBlob.Metadata.Remove(MetaDataOwnerName);
+
                 await leaseBlob.SetMetadataAsync(
                     AccessCondition.GenerateLeaseCondition(leaseId),
                     this.defaultRequestOptions,
@@ -463,7 +466,8 @@ namespace Microsoft.Azure.EventHubs.Processor
                     AccessCondition.GenerateLeaseCondition(leaseId),
                     this.defaultRequestOptions,
                     this.operationContext).ConfigureAwait(false);
-                await leaseBlob.ReleaseLeaseAsync(AccessCondition.GenerateLeaseCondition(leaseId)).ConfigureAwait(false);
+
+                await leaseBlob.ReleaseLeaseAsync(AccessCondition.GenerateLeaseCondition(leaseId), this.defaultRequestOptions, this.operationContext).ConfigureAwait(false);
             }
             catch (StorageException se)
             {
@@ -499,6 +503,7 @@ namespace Microsoft.Azure.EventHubs.Processor
             {
                 string jsonToUpload = JsonConvert.SerializeObject(lease);
                 ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, lease.PartitionId, $"Raw JSON uploading: {jsonToUpload}");
+
                 await leaseBlob.UploadTextAsync(
                     jsonToUpload,
                     null,
@@ -516,7 +521,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
         async Task<Lease> DownloadLeaseAsync(string partitionId, CloudBlockBlob blob) // throws StorageException, IOException
         {
-            string jsonLease = await blob.DownloadTextAsync().ConfigureAwait(false);
+            string jsonLease = await blob.DownloadTextAsync(null, null, this.defaultRequestOptions, this.operationContext).ConfigureAwait(false);
 
             ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, partitionId, "Raw JSON downloaded: " + jsonLease);
             AzureBlobLease rehydrated = (AzureBlobLease)JsonConvert.DeserializeObject(jsonLease, typeof(AzureBlobLease));
