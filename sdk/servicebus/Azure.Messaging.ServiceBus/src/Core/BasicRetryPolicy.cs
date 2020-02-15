@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///   behavior.
         /// </summary>
         ///
-        public ServiceBusRetryOptions Options { get; }
+        public override ServiceBusRetryOptions Options { get; }
 
         /// <summary>
         ///   The factor to apply to the base delay for use as a base jitter value.
