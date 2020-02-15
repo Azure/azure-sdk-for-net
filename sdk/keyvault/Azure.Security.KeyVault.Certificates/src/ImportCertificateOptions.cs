@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core;
@@ -27,7 +28,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// Initializes a new instance of the <see cref="ImportCertificateOptions"/> class.
         /// </summary>
         /// <param name="name">A name for the imported certificate.</param>
-        /// <param name="certificate">The PFX or PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
+        /// <param name="certificate">The PFX or ASCII PEM formatted value of the certificate containing both the X.509 certificates and the private key.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="certificate"/> is null.</exception>
         public ImportCertificateOptions(string name, byte[] certificate)
@@ -73,8 +74,15 @@ namespace Azure.Security.KeyVault.Certificates
         {
             if (Certificate != null)
             {
-                string encoded = Base64Url.Encode(Certificate);
-                json.WriteString(s_valuePropertyNameBytes, encoded);
+                if (Policy != null && Policy.ContentType == CertificateContentType.Pem)
+                {
+                    string value = Encoding.ASCII.GetString(Certificate);
+                    json.WriteString(s_valuePropertyNameBytes, value);
+                }
+                else
+                {
+                    json.WriteBase64String(s_valuePropertyNameBytes, Certificate);
+                }
             }
 
             if (!string.IsNullOrEmpty(Password))

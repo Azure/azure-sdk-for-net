@@ -1,5 +1,11 @@
 # Release History
 
+## 4.0.1 (Unreleased)
+
+### Fixed
+
+- Properly import PKCS12 or PEM-encoded certificate. (#9963)[https://github.com/Azure/azure-sdk-for-net/issues/9963]
+
 ## 4.0.0 (2019-01-08)
 
 ### Minor changes
