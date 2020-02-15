@@ -255,11 +255,6 @@ namespace Azure.Core
         /// <returns></returns>
         public override string ToString()
         {
-            return ToString(null, string.Empty);
-        }
-
-        internal string ToString(string[]? allowedQueryParameters, string redactedValue)
-        {
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(Scheme);
             stringBuilder.Append("://");
@@ -283,95 +278,10 @@ namespace Azure.Core
             else
             {
                 stringBuilder.Append(_pathAndQuery.ToString(0, _queryIndex));
-                if (allowedQueryParameters == null)
-                {
-                    stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));
-                }
-                else
-                {
-                    AppendRedactedQuery(stringBuilder, allowedQueryParameters, redactedValue);
-                }
+                stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));
             }
 
             return stringBuilder.ToString();
-        }
-
-        private void AppendRedactedQuery(StringBuilder stringBuilder, string[] allowedQueryParameters, string redactedValue)
-        {
-            string query = _pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex);
-            int queryIndex = 1;
-            stringBuilder.Append('?');
-
-            do
-            {
-                int endOfParameterValue = query.IndexOf('&', queryIndex);
-                int endOfParameterName = query.IndexOf('=', queryIndex);
-                bool noValue = false;
-
-                // Check if we have parameter without value
-                if ((endOfParameterValue == -1 && endOfParameterName == -1) ||
-                    (endOfParameterValue != -1 && (endOfParameterName == -1 || endOfParameterName > endOfParameterValue)))
-                {
-                    endOfParameterName = endOfParameterValue;
-                    noValue = true;
-                }
-
-                if (endOfParameterName == -1)
-                {
-                    endOfParameterName = query.Length;
-                }
-
-                if (endOfParameterValue == -1)
-                {
-                    endOfParameterValue = query.Length;
-                }
-                else
-                {
-                    // include the separator
-                    endOfParameterValue++;
-                }
-
-                ReadOnlySpan<char> parameterName = query.AsSpan(queryIndex, endOfParameterName - queryIndex);
-
-                bool isAllowed = false;
-                foreach (string name in allowedQueryParameters)
-                {
-                    if (parameterName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
-                    {
-                        isAllowed = true;
-                        break;
-                    }
-                }
-
-                int valueLength = endOfParameterValue - queryIndex;
-                int nameLength = endOfParameterName - queryIndex;
-
-                if (isAllowed)
-                {
-                    stringBuilder.Append(query, queryIndex, valueLength);
-                }
-                else
-                {
-                    if (noValue)
-                    {
-                        stringBuilder.Append(query, queryIndex, valueLength);
-                    }
-                    else
-                    {
-                        stringBuilder.Append(query, queryIndex, nameLength);
-                        stringBuilder.Append("=");
-                        stringBuilder.Append(redactedValue);
-                        if (query[endOfParameterValue - 1] == '&')
-                        {
-                            stringBuilder.Append("&");
-                        }
-                    }
-                }
-
-                queryIndex += valueLength;
-
-            } while (queryIndex < query.Length);
-
         }
 
         private bool HasDefaultPortForScheme =>

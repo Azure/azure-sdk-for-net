@@ -46,22 +46,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         internal readonly Dictionary<string, ConcurrentQueue<EventData>> EventPipeline = new Dictionary<string, ConcurrentQueue<EventData>>();
 
         /// <summary>
-        ///   The minimum amount of time to be elapsed between two load balancing verifications.
-        /// </summary>
-        ///
-        internal override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
-
-        /// <summary>
-        ///   The minimum amount of time for an ownership to be considered expired without further updates.
-        /// </summary>
-        ///
-        internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
-
-        /// <summary>
         ///   Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        private PartitionManager StorageManager { get; }
+        private StorageManager StorageManager { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="MockEventProcessorClient" /> class.
@@ -75,15 +63,17 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         /// <param name="fakePartitionProcessing"><c>true</c> if <see cref="RunPartitionProcessingAsync" /> should be overridden; otherwise, <c>false</c>.</param>
         /// <param name="numberOfPartitions">The amount of partitions the associated Event Hub has.</param>
+        /// <param name="loadBalancer">The <see cref="PartitionLoadBalancer" /> used to manage partition load balance operations.</param>
         ///
-        internal MockEventProcessorClient(PartitionManager storageManager,
+        internal MockEventProcessorClient(StorageManager storageManager,
                                           string consumerGroup = "consumerGroup",
                                           string fullyQualifiedNamespace = "somehost.com",
                                           string eventHubName = "somehub",
                                           Func<EventHubConnection> connectionFactory = default,
                                           EventProcessorClientOptions clientOptions = default,
                                           bool fakePartitionProcessing = true,
-                                          int numberOfPartitions = 3) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
+                                          int numberOfPartitions = 3,
+                                          PartitionLoadBalancer loadBalancer = default) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions, loadBalancer)
         {
             StorageManager = storageManager;
 

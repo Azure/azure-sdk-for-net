@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -293,7 +293,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -359,7 +359,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -376,7 +376,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Additional parameters supplied to the operation.
             /// </param>
-            public static DeploymentExtended CreateOrUpdateAtTenantScope(this IDeploymentsOperations operations, string deploymentName, Deployment parameters)
+            public static DeploymentExtended CreateOrUpdateAtTenantScope(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters)
             {
                 return operations.CreateOrUpdateAtTenantScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
             }
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExtended> CreateOrUpdateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentExtended> CreateOrUpdateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -617,7 +617,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Parameters to validate.
             /// </param>
-            public static DeploymentValidateResult ValidateAtTenantScope(this IDeploymentsOperations operations, string deploymentName, Deployment parameters)
+            public static DeploymentValidateResult ValidateAtTenantScope(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters)
             {
                 return operations.ValidateAtTenantScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
             }
@@ -638,7 +638,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentValidateResult> ValidateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentValidateResult> ValidateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ValidateAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -832,7 +832,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Additional parameters supplied to the operation.
             /// </param>
-            public static DeploymentExtended CreateOrUpdateAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, Deployment parameters)
+            public static DeploymentExtended CreateOrUpdateAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters)
             {
                 return operations.CreateOrUpdateAtManagementGroupScopeAsync(groupId, deploymentName, parameters).GetAwaiter().GetResult();
             }
@@ -859,7 +859,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExtended> CreateOrUpdateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentExtended> CreateOrUpdateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -972,7 +972,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Parameters to validate.
             /// </param>
-            public static DeploymentValidateResult ValidateAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, Deployment parameters)
+            public static DeploymentValidateResult ValidateAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters)
             {
                 return operations.ValidateAtManagementGroupScopeAsync(groupId, deploymentName, parameters).GetAwaiter().GetResult();
             }
@@ -996,7 +996,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentValidateResult> ValidateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentValidateResult> ValidateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ValidateAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1932,7 +1932,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -1960,7 +1960,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -1984,7 +1984,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -2008,7 +2008,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// The scope of a deployment.
+            /// The resource scope.
             /// </param>
             /// <param name='deploymentName'>
             /// The name of the deployment.
@@ -2096,7 +2096,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Additional parameters supplied to the operation.
             /// </param>
-            public static DeploymentExtended BeginCreateOrUpdateAtTenantScope(this IDeploymentsOperations operations, string deploymentName, Deployment parameters)
+            public static DeploymentExtended BeginCreateOrUpdateAtTenantScope(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters)
             {
                 return operations.BeginCreateOrUpdateAtTenantScopeAsync(deploymentName, parameters).GetAwaiter().GetResult();
             }
@@ -2120,7 +2120,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExtended> BeginCreateOrUpdateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentExtended> BeginCreateOrUpdateAtTenantScopeAsync(this IDeploymentsOperations operations, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateAtTenantScopeWithHttpMessagesAsync(deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2206,7 +2206,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Additional parameters supplied to the operation.
             /// </param>
-            public static DeploymentExtended BeginCreateOrUpdateAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, Deployment parameters)
+            public static DeploymentExtended BeginCreateOrUpdateAtManagementGroupScope(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters)
             {
                 return operations.BeginCreateOrUpdateAtManagementGroupScopeAsync(groupId, deploymentName, parameters).GetAwaiter().GetResult();
             }
@@ -2233,7 +2233,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExtended> BeginCreateOrUpdateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, Deployment parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DeploymentExtended> BeginCreateOrUpdateAtManagementGroupScopeAsync(this IDeploymentsOperations operations, string groupId, string deploymentName, ScopedDeployment parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateAtManagementGroupScopeWithHttpMessagesAsync(groupId, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

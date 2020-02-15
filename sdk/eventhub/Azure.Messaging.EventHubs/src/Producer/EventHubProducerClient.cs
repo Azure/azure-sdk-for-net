@@ -424,7 +424,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             using DiagnosticScope scope = CreateDiagnosticScope();
 
-            events = events.ToList();
+            events = (events as IList<EventData>) ?? events.ToList();
             InstrumentMessages(events);
 
             try
@@ -465,7 +465,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
             TransportProducer activeProducer;
 
-            if (String.IsNullOrEmpty(eventBatch.SendOptions.PartitionId))
+            if (string.IsNullOrEmpty(eventBatch.SendOptions.PartitionId))
             {
                 activeProducer = EventHubProducer;
             }
@@ -654,8 +654,8 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         private DiagnosticScope CreateDiagnosticScope()
         {
-            DiagnosticScope scope = EventDataInstrumentation.ClientDiagnostics.CreateScope(DiagnosticProperty.ProducerActivityName);
-            scope.AddAttribute(DiagnosticProperty.TypeAttribute, DiagnosticProperty.EventHubProducerType);
+            DiagnosticScope scope = EventDataInstrumentation.ScopeFactory.CreateScope(DiagnosticProperty.ProducerActivityName);
+            scope.AddAttribute(DiagnosticProperty.KindAttribute, DiagnosticProperty.ClientKind);
             scope.AddAttribute(DiagnosticProperty.ServiceContextAttribute, DiagnosticProperty.EventHubsServiceContext);
             scope.AddAttribute(DiagnosticProperty.EventHubAttribute, EventHubName);
             scope.AddAttribute(DiagnosticProperty.EndpointAttribute, Connection.ServiceEndpoint);

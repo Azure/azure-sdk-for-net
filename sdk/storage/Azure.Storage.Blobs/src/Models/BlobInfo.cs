@@ -205,6 +205,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionKeySha256 => _flattened.EncryptionKeySha256;
 
         /// <summary>
+        /// The encryption scope used to encrypt the blob.
+        /// </summary>
+        public string EncryptionScope => _flattened.EncryptionScope;
+
+        /// <summary>
         /// If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range
         /// </summary>
 #pragma warning disable CA1819 // Properties should not return arrays
@@ -245,11 +250,83 @@ namespace Azure.Storage.Blobs.Models
             bool isServerEncrypted = default,
             string contentType = default,
             string encryptionKeySha256 = default,
+            string encryptionScope = default,
             long contentLength = default,
             byte[] blobContentHash = default,
             System.Collections.Generic.IDictionary<string, string> metadata = default,
             System.IO.Stream content = default,
             System.DateTimeOffset copyCompletionTime = default)
+        {
+            return new BlobDownloadInfo(
+                new FlattenedDownloadProperties()
+                {
+                    LastModified = lastModified,
+                    BlobSequenceNumber = blobSequenceNumber,
+                    BlobType = blobType,
+                    ContentCrc64 = contentCrc64,
+                    ContentLanguage = contentLanguage,
+                    CopyStatusDescription = copyStatusDescription,
+                    CopyId = copyId,
+                    CopyProgress = copyProgress,
+                    CopySource = copySource,
+                    CopyStatus = copyStatus,
+                    ContentDisposition = contentDisposition,
+                    LeaseDuration = leaseDuration,
+                    CacheControl = cacheControl,
+                    LeaseState = leaseState,
+                    ContentEncoding = contentEncoding,
+                    LeaseStatus = leaseStatus,
+                    ContentHash = contentHash,
+                    AcceptRanges = acceptRanges,
+                    ETag = eTag,
+                    BlobCommittedBlockCount = blobCommittedBlockCount,
+                    ContentRange = contentRange,
+                    IsServerEncrypted = isServerEncrypted,
+                    ContentType = contentType,
+                    EncryptionKeySha256 = encryptionKeySha256,
+                    EncryptionScope = encryptionScope,
+                    ContentLength = contentLength,
+                    BlobContentHash = blobContentHash,
+                    Metadata = metadata,
+                    Content = content,
+                    CopyCompletionTime = copyCompletionTime
+                }
+            );
+        }
+
+        /// <summary>
+        /// Creates a new BlobDownloadInfo instance for mocking.
+        /// </summary>
+        public static BlobDownloadInfo BlobDownloadInfo(
+            System.DateTimeOffset lastModified,
+            long blobSequenceNumber,
+            Azure.Storage.Blobs.Models.BlobType blobType,
+            byte[] contentCrc64,
+            string contentLanguage,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            System.Uri copySource,
+            Azure.Storage.Blobs.Models.CopyStatus copyStatus,
+            string contentDisposition,
+            Azure.Storage.Blobs.Models.LeaseDurationType leaseDuration,
+            string cacheControl,
+            Azure.Storage.Blobs.Models.LeaseState leaseState,
+            string contentEncoding,
+            Azure.Storage.Blobs.Models.LeaseStatus leaseStatus,
+            byte[] contentHash,
+            string acceptRanges,
+            ETag eTag,
+            int blobCommittedBlockCount,
+            string contentRange,
+            bool isServerEncrypted,
+            string contentType,
+            string encryptionKeySha256,
+            long contentLength,
+            byte[] blobContentHash,
+            System.Collections.Generic.IDictionary<string, string> metadata,
+            System.IO.Stream content,
+            System.DateTimeOffset copyCompletionTime)
         {
             return new BlobDownloadInfo(
                 new FlattenedDownloadProperties()

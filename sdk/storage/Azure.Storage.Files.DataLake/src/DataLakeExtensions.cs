@@ -25,11 +25,11 @@ namespace Azure.Storage.Files.DataLake
                 {
                     LastModified = containerProperties.LastModified,
                     LeaseStatus = containerProperties.LeaseStatus.HasValue
-                        ? (Models.LeaseStatus)containerProperties.LeaseStatus : default,
+                        ? (Models.DataLakeLeaseStatus)containerProperties.LeaseStatus : default,
                     LeaseState = containerProperties.LeaseState.HasValue
-                        ? (Models.LeaseState)containerProperties.LeaseState : default,
+                        ? (Models.DataLakeLeaseState)containerProperties.LeaseState : default,
                     LeaseDuration = containerProperties.LeaseDuration.HasValue
-                        ? (Models.LeaseDurationType)containerProperties.LeaseDuration : default,
+                        ? (Models.DataLakeLeaseDuration)containerProperties.LeaseDuration : default,
                     PublicAccess = containerProperties.PublicAccess.HasValue
                         ? (Models.PublicAccessType)containerProperties.PublicAccess : default,
                     HasImmutabilityPolicy = containerProperties.HasImmutabilityPolicy,
@@ -53,9 +53,9 @@ namespace Azure.Storage.Files.DataLake
                 CopyId = blobDownloadProperties.CopyId,
                 CopyProgress = blobDownloadProperties.CopyProgress,
                 CopyStatus = (Models.CopyStatus)blobDownloadProperties.CopyStatus,
-                LeaseDuration = (Models.LeaseDurationType)blobDownloadProperties.LeaseDuration,
-                LeaseState = (Models.LeaseState)blobDownloadProperties.LeaseState,
-                LeaseStatus = (Models.LeaseStatus)blobDownloadProperties.LeaseStatus,
+                LeaseDuration = (Models.DataLakeLeaseDuration)blobDownloadProperties.LeaseDuration,
+                LeaseState = (Models.DataLakeLeaseState)blobDownloadProperties.LeaseState,
+                LeaseStatus = (Models.DataLakeLeaseStatus)blobDownloadProperties.LeaseStatus,
                 AcceptRanges = blobDownloadProperties.AcceptRanges,
                 IsServerEncrypted = blobDownloadProperties.IsServerEncrypted,
                 EncryptionKeySha256 = blobDownloadProperties.EncryptionKeySha256,
@@ -83,9 +83,9 @@ namespace Azure.Storage.Files.DataLake
                 CopyProgress = blobProperties.CopyProgress,
                 CopySource = blobProperties.CopySource,
                 IsIncrementalCopy = blobProperties.IsIncrementalCopy,
-                LeaseDuration = (Models.LeaseDurationType)blobProperties.LeaseDuration,
-                LeaseStatus = (Models.LeaseStatus)blobProperties.LeaseStatus,
-                LeaseState = (Models.LeaseState)blobProperties.LeaseState,
+                LeaseDuration = (Models.DataLakeLeaseDuration)blobProperties.LeaseDuration,
+                LeaseStatus = (Models.DataLakeLeaseStatus)blobProperties.LeaseStatus,
+                LeaseState = (Models.DataLakeLeaseState)blobProperties.LeaseState,
                 ContentLength = blobProperties.ContentLength,
                 ContentType = blobProperties.ContentType,
                 ETag = blobProperties.ETag,

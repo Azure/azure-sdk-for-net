@@ -1,6 +1,6 @@
 # Azure Storage File Shares client library for .NET
 
-> Server Version: 2019-02-02
+> Server Version: 2019-07-07
 
 Azure File Shares offers fully managed file shares in the cloud that are accessible
 via the industry standard Server Message Block (SMB) protocol. Azure file
@@ -80,7 +80,6 @@ using (FileStream stream = File.OpenRead(localFilePath))
 {
     file.Create(stream.Length);
     file.UploadRange(
-        ShareFileRangeWriteType.Update,
         new HttpRange(0, stream.Length),
         stream);
 }

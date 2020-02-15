@@ -28,12 +28,14 @@ namespace Azure.Identity
     /// </remarks>
     public class DefaultAzureCredential : TokenCredential
     {
-        private const string DefaultExceptionMessage = "The DefaultAzureCredential failed to retrieve a token from the included credentials.";
-        private const string UnhandledExceptionMessage = "The DefaultAzureCredential failed due to an unhandled exception: ";
-        private static readonly IExtendedTokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
+        private const string DefaultExceptionMessage = "DefaultAzureCredential failed to retrieve a token from the included credentials.";
+        private const string UnhandledExceptionMessage = "DefaultAzureCredential authentication failed.";
+        private static readonly TokenCredential[] s_defaultCredentialChain = GetDefaultAzureCredentialChain(new DefaultAzureCredentialFactory(CredentialPipeline.GetInstance(null)), new DefaultAzureCredentialOptions());
 
-        private readonly IExtendedTokenCredential[] _sources;
         private readonly CredentialPipeline _pipeline;
+
+        private TokenCredential[] _sources;
+        private TokenCredential _credential;
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
@@ -90,40 +92,74 @@ namespace Azure.Identity
             return await GetTokenAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        private async ValueTask<AccessToken> GetTokenAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("Azure.Identity.DefaultAcureCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("DefaultAzureCredential.GetToken", requestContext);
 
-            List<Exception> exceptions = new List<Exception>();
-
-            int i;
-
-            for (i = 0; i < _sources.Length && _sources[i] != null; i++)
+            try
             {
-                ExtendedAccessToken exToken = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
+                AccessToken token;
 
-                if (exToken.Exception is null)
+                if (_credential != null)
                 {
-                    return scope.Succeeded(exToken.AccessToken);
-                }
-
-                if (exToken.Exception is CredentialUnavailableException)
-                {
-                    exceptions.Add(exToken.Exception);
+                    token = isAsync ? await _credential.GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _credential.GetToken(requestContext, cancellationToken);
                 }
                 else
                 {
-                    exceptions.Add(exToken.Exception);
+                    token = isAsync ? await GetTokenFromSourcesAsync(isAsync, requestContext, cancellationToken).ConfigureAwait(false) : GetTokenFromSourcesAsync(isAsync, requestContext, cancellationToken).GetAwaiter().GetResult();
+                }
 
-                    throw scope.Failed(AuthenticationFailedException.CreateAggregateException($"{UnhandledExceptionMessage} {_sources[i].GetType().Name} failed with unhandled exception {exToken.Exception.Message}.", new ReadOnlyMemory<object>(_sources, 0, i + 1), exceptions));
+                return scope.Succeeded(token);
+            }
+            catch (OperationCanceledException e)
+            {
+                scope.Failed(e);
+
+                throw;
+            }
+            catch (Exception e) when (!(e is CredentialUnavailableException))
+            {
+               throw scope.FailAndWrap(new AuthenticationFailedException(UnhandledExceptionMessage, e));
+            }
+        }
+
+        private async ValueTask<AccessToken> GetTokenFromSourcesAsync(bool isAsync, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+
+            int i;
+
+            List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
+
+            for (i = 0; i < _sources.Length && _sources[i] != null; i++)
+            {
+                try
+                {
+                    AccessToken token = isAsync ? await _sources[i].GetTokenAsync(requestContext, cancellationToken).ConfigureAwait(false) : _sources[i].GetToken(requestContext, cancellationToken);
+
+                    _credential = _sources[i];
+
+                    _sources = null;
+
+                    return token;
+                }
+                catch (CredentialUnavailableException e)
+                {
+                    exceptions.Add(e);
                 }
             }
 
-            throw scope.Failed(AuthenticationFailedException.CreateAggregateException(DefaultExceptionMessage, new ReadOnlyMemory<object>(_sources, 0, i), exceptions));
+            // build the credential unavailable message, this code is only reachable if all credentials throw CredentialUnavailableException
+            StringBuilder errorMsg = new StringBuilder(DefaultExceptionMessage);
+
+            foreach (Exception ex in exceptions)
+            {
+                errorMsg.Append(Environment.NewLine).Append(ex.Message);
+            }
+
+            throw new CredentialUnavailableException(errorMsg.ToString());
         }
 
-
-        private static IExtendedTokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
+        private static TokenCredential[] GetDefaultAzureCredentialChain(DefaultAzureCredentialFactory factory, DefaultAzureCredentialOptions options)
         {
             if (options is null)
             {
@@ -131,7 +167,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            IExtendedTokenCredential[] chain = new IExtendedTokenCredential[4];
+            TokenCredential[] chain = new TokenCredential[4];
 
             if (!options.ExcludeEnvironmentCredential)
             {

@@ -1,5 +1,9 @@
 # Release History
 
+## 12.2.0 (2020-02)
+- Added support for service version 2019-07-07.
+- Sanitized header values in exceptions.
+
 ## 12.1.1 (2020-01)
 - Pass Storage version to each API.
 

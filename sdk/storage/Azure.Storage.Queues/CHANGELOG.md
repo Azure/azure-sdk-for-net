@@ -1,5 +1,10 @@
 # Release History
 
+## 12.2.0 (2020-02)
+- Added support for service version 2019-07-07.
+- Fixed issue where SAS didn't work with signed identifiers.
+- Sanitized header values in exceptions.
+
 ## 12.1.1 (2020-01)
  - Fixed issue where SAS content headers were not URL encoded when using QueueSasBuilder.
  - Fixed bug where using SAS connection string from portal would throw an exception if it included

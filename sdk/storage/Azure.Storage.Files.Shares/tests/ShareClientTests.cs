@@ -17,8 +17,8 @@ namespace Azure.Storage.Files.Shares.Test
 {
     public class ShareClientTests : FileTestBase
     {
-        public ShareClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ShareClientTests(bool async, ShareClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -307,10 +307,30 @@ namespace Azure.Storage.Files.Shares.Test
             ShareClient share = test.Share;
 
             // Act
-            Response<ShareProperties> reponse = await share.GetPropertiesAsync();
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
 
             // Assert
-            Assert.IsNotNull(reponse.GetRawResponse().Headers.RequestId);
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.LastModified);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_Premium()
+        {
+            await using DisposingShare test = await GetTestShareAsync(GetServiceClient_Premium());
+            ShareClient share = test.Share;
+
+            // Act
+            Response<ShareProperties> response = await share.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.ETag);
+            Assert.IsNotNull(response.Value.LastModified);
+            Assert.IsNotNull(response.Value.NextAllowedQuotaDowngradeTime);
+            Assert.IsNotNull(response.Value.ProvisionedEgressMBps);
+            Assert.IsNotNull(response.Value.ProvisionedIngressMBps);
+            Assert.IsNotNull(response.Value.ProvisionedIops);
+            Assert.IsNotNull(response.Value.QuotaInGB);
         }
 
         [Test]

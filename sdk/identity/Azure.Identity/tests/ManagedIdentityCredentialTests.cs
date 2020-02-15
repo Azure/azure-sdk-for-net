@@ -18,13 +18,6 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentityCredentialTests : ClientTestBase
     {
-        [SetUp]
-        public void ResetManagedIdenityClient()
-        {
-            typeof(ManagedIdentityClient).GetField("s_msiType", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, 0);
-            typeof(ManagedIdentityClient).GetField("s_endpoint", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, null);
-        }
-
         public ManagedIdentityCredentialTests(bool isAsync) : base(isAsync)
         {
         }
@@ -42,17 +35,19 @@ namespace Azure.Identity.Tests
 
                 response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_on\": \"3600\" }}");
 
-                var mockTransport = new MockTransport(response, response);
+                var mockTransport = new MockTransport(response);
 
                 var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(options: options));
+                var pipeline = CredentialPipeline.GetInstance(options);
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, new MockManagedIdentityClient(pipeline, "mock-client-id") { ImdsAvailableFunc = _ => true }));
 
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
                 Assert.AreEqual(expectedToken, actualToken.Token);
 
-                MockRequest request = mockTransport.Requests[mockTransport.Requests.Count - 1];
+                MockRequest request = mockTransport.Requests[0];
 
                 string query = request.Uri.Query;
 
@@ -79,17 +74,19 @@ namespace Azure.Identity.Tests
 
                 response.SetContent($"{{ \"access_token\": \"{expectedToken}\", \"expires_on\": \"3600\" }}");
 
-                var mockTransport = new MockTransport(response, response);
+                var mockTransport = new MockTransport(response);
 
                 var options = new TokenCredentialOptions() { Transport = mockTransport };
 
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
+                var pipeline = CredentialPipeline.GetInstance(options);
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, new MockManagedIdentityClient(pipeline, "mock-client-id") { ImdsAvailableFunc = _ => true }));
 
                 AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
                 Assert.AreEqual(expectedToken, actualToken.Token);
 
-                MockRequest request = mockTransport.Requests[mockTransport.Requests.Count - 1];
+                MockRequest request = mockTransport.Requests[0];
 
                 string query = request.Uri.Query;
 
@@ -107,45 +104,22 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void VerifyImdsUnavailableImmediateFailureMockAsync()
-        {
-            using (new TestEnvVar("MSI_ENDPOINT", null))
-            using (new TestEnvVar("MSI_SECRET", null))
-            {
-                var mockTransport = new MockTransport(request => throw new Exception("mock imds probe exception"));
-
-                var options = new TokenCredentialOptions() { Transport = mockTransport };
-
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
-
-                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-
-                MockRequest request = mockTransport.Requests[0];
-
-                string query = request.Uri.Query;
-
-                Assert.IsTrue(query.Contains("api-version=2018-02-01"));
-
-                Assert.False(request.Headers.TryGetValue("Metadata", out string _));
-            }
-        }
-
-        [NonParallelizable]
-        [Test]
         public void VerifyImdsAvailableUserCanceledMockAsync()
         {
             using (new TestEnvVar("MSI_ENDPOINT", null))
             using (new TestEnvVar("MSI_SECRET", null))
             {
-                var mockTransport = new MockTransport(request => throw new OperationCanceledException("mock user canceled exception"));
+                var mockTransport = new MockTransport();
 
                 var options = new TokenCredentialOptions() { Transport = mockTransport };
-
-                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", options));
 
                 CancellationTokenSource cancellationSource = new CancellationTokenSource();
 
                 cancellationSource.Cancel();
+
+                var pipeline = CredentialPipeline.GetInstance(options);
+
+                ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(pipeline, new MockManagedIdentityClient(pipeline, "mock-client-id") { ImdsAvailableFunc = ct => { ct.ThrowIfCancellationRequested(); return true; } }));
 
                 Assert.CatchAsync<OperationCanceledException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), cancellationSource.Token));
             }
@@ -213,7 +187,7 @@ namespace Azure.Identity.Tests
 
                 Assert.AreEqual(expectedToken, actualToken.Token);
 
-                MockRequest request = mockTransport.Requests[0];
+                MockRequest request = mockTransport.SingleRequest;
 
                 Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.msi.endpoint/"));
 
@@ -328,11 +302,11 @@ namespace Azure.Identity.Tests
         {
             var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => MsiType.Unavailable };
 
-            var credential = InstrumentClient(new ManagedIdentityCredential(null, CredentialPipeline.GetInstance(null), mockClient));
+            var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
-            Assert.AreEqual(ManagedIdentityCredential.MsiUnavailableError, ex.Message);
+            Assert.AreEqual(ManagedIdentityClient.MsiUnavailableError, ex.Message);
 
             await Task.CompletedTask;
         }
@@ -342,7 +316,7 @@ namespace Azure.Identity.Tests
         {
             var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => throw new MockClientException("message") };
 
-            var credential = InstrumentClient(new ManagedIdentityCredential(null, CredentialPipeline.GetInstance(null), mockClient));
+            var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
@@ -356,7 +330,7 @@ namespace Azure.Identity.Tests
         {
             var mockClient = new MockManagedIdentityClient { MsiTypeFactory = () => MsiType.Imds, TokenFactory = () => throw new MockClientException("message") };
 
-            var credential = InstrumentClient(new ManagedIdentityCredential(null, CredentialPipeline.GetInstance(null), mockClient));
+            var credential = InstrumentClient(new ManagedIdentityCredential(CredentialPipeline.GetInstance(null), mockClient));
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 

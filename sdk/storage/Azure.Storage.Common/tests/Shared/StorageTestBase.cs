@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,6 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 using Azure.Identity;
 using Azure.Storage.Sas;
+using Azure.Storage.Tests.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.Test.Shared
@@ -127,6 +129,14 @@ namespace Azure.Storage.Test.Shared
         public TenantConfiguration TestConfigHierarchicalNamespace => GetTestConfig(
                 "Storage_TestConfigHierarchicalNamespace",
                 () => TestConfigurations.DefaultTargetHierarchicalNamespaceTenant);
+
+        /// <summary>
+        /// Gets the tenant to use for any tests that require authentication
+        /// with Azure AD.
+        /// </summary>
+        public TenantConfiguration TestConfigManagedDisk => GetTestConfig(
+                "Storage_TestConfigManagedDisk",
+                () => TestConfigurations.DefaultTargetManagedDiskTenant);
 
         /// <summary>
         /// Gets a cache used for storing serialized tenant configurations.  Do
@@ -465,6 +475,39 @@ namespace Azure.Storage.Test.Shared
                     await Delay(mode, retryDelay);
                 }
             }
+        }
+
+        /// <summary>
+        /// Create a stream of a given size that will not use more than maxMemory memory.
+        /// If the size is greater than maxMemory, a TemporaryFileStream will be used that
+        /// will delete the file in its Dispose method.
+        /// </summary>
+        protected async Task<Stream> CreateLimitedMemoryStream(long size, long maxMemory = Constants.MB * 100)
+        {
+            Stream stream;
+            if (size < maxMemory)
+            {
+                var data = GetRandomBuffer(size);
+                stream = new MemoryStream(data);
+            }
+            else
+            {
+                var path = Path.GetTempFileName();
+                stream = new TemporaryFileStream(path, FileMode.Create);
+                var bufferSize = 4 * Constants.KB;
+
+                while (stream.Position + bufferSize < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(bufferSize), 0, bufferSize);
+                }
+                if (stream.Position < size)
+                {
+                    await stream.WriteAsync(GetRandomBuffer(size - stream.Position), 0, (int)(size - stream.Position));
+                }
+                // reset the stream
+                stream.Seek(0, SeekOrigin.Begin);
+            }
+            return stream;
         }
     }
 }

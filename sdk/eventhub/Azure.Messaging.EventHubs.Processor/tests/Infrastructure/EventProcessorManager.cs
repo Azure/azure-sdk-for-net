@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Tests;
 
 namespace Azure.Messaging.EventHubs.Processor.Tests
 {
@@ -44,10 +45,10 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         private Func<EventHubConnection> ConnectionFactory { get; }
 
         /// <summary>
-        ///   The partition manager shared by all event processors in this hub.
+        ///   The storage manager shared by all event processors in this hub.
         /// </summary>
         ///
-        private PartitionManager InnerPartitionManager { get; }
+        private StorageManager InnerStorageManager { get; }
 
         /// <summary>
         ///   The set of options to use for the event processors.
@@ -91,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         /// <param name="consumerGroup">The name of the consumer group the event processors are associated with.  Events are read in the context of this group.</param>
         /// <param name="connectionString">The connection string to use for connecting to the Event Hubs namespace.</param>
-        /// <param name="partitionManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
+        /// <param name="storageManager">Interacts with the storage system with responsibility for creation of checkpoints and for ownership claim.</param>
         /// <param name="clientOptions">The set of options to use for the event processors.</param>
         /// <param name="onInitialize">A callback action to be called on <see cref="EventProcessorClient.PartitionInitializingAsync" />.</param>
         /// <param name="onStop">A callback action to be called on <see cref="EventProcessorClient.PartitionClosingAsync" />.</param>
@@ -100,7 +101,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
         ///
         public EventProcessorManager(string consumerGroup,
                                      string connectionString,
-                                     PartitionManager partitionManager = null,
+                                     StorageManager storageManager = null,
                                      EventProcessorClientOptions clientOptions = null,
                                      Action<PartitionInitializingEventArgs> onInitialize = null,
                                      Action<PartitionClosingEventArgs> onStop = null,
@@ -113,7 +114,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             EventHubName = connectionStringProperties.EventHubName;
             ConsumerGroup = consumerGroup;
             ConnectionFactory = () => new EventHubConnection(connectionString);
-            InnerPartitionManager = partitionManager ?? new MockCheckPointStorage();
+            InnerStorageManager = storageManager ?? new MockCheckPointStorage();
 
             // In case it has not been specified, set the maximum wait time to 2 seconds because the default
             // value (1 minute) would take too much time.
@@ -145,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             {
                 var eventProcessor = new ShortWaitTimeMock
                     (
-                        InnerPartitionManager,
+                        InnerStorageManager,
                         ConsumerGroup,
                         FullyQualifiedNamespace,
                         EventHubName,
@@ -224,7 +225,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             {
                 // Remember to filter expired ownership.
 
-                var activeOwnership = (await InnerPartitionManager
+                var activeOwnership = (await InnerStorageManager
                     .ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, timeoutToken)
                     .ConfigureAwait(false))
                     .Where(ownership => DateTimeOffset.UtcNow.Subtract(ownership.LastModifiedTime.Value) < ShortWaitTimeMock.ShortOwnershipExpiration)
@@ -331,16 +332,16 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             public static readonly TimeSpan ShortLoadBalanceUpdate = TimeSpan.FromSeconds(1);
             public static readonly TimeSpan ShortOwnershipExpiration = TimeSpan.FromSeconds(3);
 
-            internal override TimeSpan LoadBalanceUpdate => ShortLoadBalanceUpdate;
             internal override TimeSpan OwnershipExpiration => ShortOwnershipExpiration;
 
-            public ShortWaitTimeMock(PartitionManager partitionManager,
+            public ShortWaitTimeMock(StorageManager storageManager,
                                      string consumerGroup,
                                      string fullyQualifiedNamespace,
                                      string eventHubName,
                                      Func<EventHubConnection> connectionFactory,
-                                     EventProcessorClientOptions clientOptions) : base(partitionManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
+                                     EventProcessorClientOptions clientOptions) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, connectionFactory, clientOptions)
             {
+                LoadBalancer.LoadBalanceInterval = ShortLoadBalanceUpdate;
             }
         }
     }

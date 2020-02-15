@@ -18,12 +18,13 @@ namespace Azure.AI.TextAnalytics.Samples
         public void CreateTextAnalyticsClient()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
             #region Snippet:CreateTextAnalyticsClient
             //@@ string endpoint = "<endpoint>";
-            //@@ string subscriptionKey = "<subscriptionKey>";
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            //@@ string apiKey = "<apiKey>";
+            var credential = new TextAnalyticsApiKeyCredential(apiKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), credential);
             #endregion
         }
 
@@ -42,15 +43,16 @@ namespace Azure.AI.TextAnalytics.Samples
         public void BadRequestSnippet()
         {
             string endpoint = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_ENDPOINT");
-            string subscriptionKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_SUBSCRIPTION_KEY");
+            string apiKey = Environment.GetEnvironmentVariable("TEXT_ANALYTICS_API_KEY");
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), subscriptionKey);
+            var credentials = new TextAnalyticsApiKeyCredential(apiKey);
+            var client = new TextAnalyticsClient(new Uri(endpoint), credentials);
             string input = "Este documento está en español.";
 
             #region Snippet:BadRequest
             try
             {
-                DetectLanguageResult result = client.DetectLanguage(input);
+                DetectedLanguage result = client.DetectLanguage(input);
             }
             catch (RequestFailedException e)
             {

@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Azure.AI.TextAnalytics
 {
@@ -14,27 +11,31 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class DetectLanguageResult : TextAnalyticsResult
     {
-        internal DetectLanguageResult(string id, TextDocumentStatistics statistics, IList<DetectedLanguage> detectedLanguages)
+        private readonly DetectedLanguage _primaryLanguage;
+
+        internal DetectLanguageResult(string id, TextDocumentStatistics statistics, DetectedLanguage detectedLanguage)
             : base(id, statistics)
         {
-            DetectedLanguages = new ReadOnlyCollection<DetectedLanguage>(detectedLanguages);
+            _primaryLanguage = detectedLanguage;
         }
 
-        internal DetectLanguageResult(string id, string errorMessage)
-            : base(id, errorMessage)
-        {
-            DetectedLanguages = Array.Empty<DetectedLanguage>();
-        }
-
-        /// <summary>
-        /// Gets a collection of languages detected in the document.  This value
-        /// contains a single language.
-        /// </summary>
-        public IReadOnlyCollection<DetectedLanguage> DetectedLanguages { get; }
+        internal DetectLanguageResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
         /// The primary language detected in the document.
         /// </summary>
-        public DetectedLanguage PrimaryLanguage => DetectedLanguages.OrderBy(l => l.Score).FirstOrDefault();
+        public DetectedLanguage PrimaryLanguage
+        {
+            get
+            {
+                if (HasError)
+                {
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+                    throw new InvalidOperationException($"Cannot access result for document {Id}, due to error {Error.Code}: {Error.Message}");
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                }
+                return _primaryLanguage;
+            }
+        }
     }
 }

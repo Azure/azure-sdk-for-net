@@ -1748,14 +1748,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var maxWaitTime = TimeSpan.FromMilliseconds(50);
             var publishDelay = maxWaitTime.Add(TimeSpan.FromMilliseconds(15));
             var options = new ReadEventOptions { MaximumWaitTime = maxWaitTime };
-            var transportConsumer = new PublishingTransportConsumerMock(events, () => publishDelay);
-            var mockConnection = new MockConnection(() => transportConsumer);
+            var mockConnection = new MockConnection(() => new PublishingTransportConsumerMock(events, () => publishDelay));
             var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
             var receivedEvents = new List<EventData>();
             var consecutiveEmptyCount = 0;
 
             var partitions = await mockConnection.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>());
             var thresholdModifier = 2 * partitions.Length;
+            var expectedEventCount = (events.Count * partitions.Length);
 
             using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(100));
 
@@ -1775,21 +1775,20 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(cancellation.IsCancellationRequested, Is.False, "The iteration should have completed normally.");
             Assert.That(receivedEvents.Count, Is.AtLeast(events.Count + 1).And.LessThanOrEqualTo(events.Count * thresholdModifier), "There should be empty events present due to the wait time.");
-            Assert.That(receivedEvents.Where(item => item != null).Count(), Is.EqualTo(events.Count), "The received event count should match the published events when empty events are removed.");
+            Assert.That(receivedEvents.Where(item => item != null).Count(), Is.EqualTo(expectedEventCount), "The received event count should match the published events when empty events are removed.");
 
             // Validate that each message received appeared in the source set once.
 
-            var sourceEventMessages = new HashSet<string>();
+            var receivedEventMessages = new HashSet<string>();
 
-            foreach (var message in events.Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            foreach (var message in receivedEvents.Where(item => item != null).Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
             {
-                sourceEventMessages.Add(message);
+                receivedEventMessages.Add(message);
             }
 
-            foreach (var receivedMessage in receivedEvents.Where(item => item != null).Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
+            foreach (var sourceMessage in events.Select(item => Encoding.UTF8.GetString(item.Body.ToArray())))
             {
-                Assert.That(sourceEventMessages.Contains(receivedMessage), $"The message: { receivedEvents } was not in the source set or has appeared more than once.");
-                sourceEventMessages.Remove(receivedMessage);
+                Assert.That(receivedEventMessages.Contains(sourceMessage), $"The message: { sourceMessage } was not received.");
             }
         }
 
@@ -2060,6 +2059,153 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumerClient.StartBackgroundChannelPublishingAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartBackgroundChannelPublishingAsyncToleratesRetriableExceptionsWhenPublishingToTheChannel()
+        {
+            var events = Enumerable
+                .Range(0, 350)
+                .Select(index => new EventData(new[] { (byte)index }))
+                .ToList();
+
+            var mockTransportConsumer = new PublishingTransportConsumerMock(events);
+            var mockConnection = new MockConnection(() => mockTransportConsumer);
+            var mockChannelWriter = new Mock<ChannelWriter<PartitionEvent>>();
+            var mockChannel = new MockChannel<PartitionEvent>(mockChannelWriter.Object, null);
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { MaximumRetries = 10, Delay = TimeSpan.FromMilliseconds(1) } };
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            var partitionContext = new PartitionContext("0", mockTransportConsumer);
+            var capturedException = default(Exception);
+            var publishedEvents = new List<EventData>();
+            var writeCount = 0;
+            var returnWriteException = false;
+
+            // Every 100 items, force an exception to trigger when writing to the channel.  These should be
+            // retried and publishing should not lose or duplicate events.
+
+            mockChannelWriter
+                .Setup(writer => writer.WriteAsync(It.IsAny<PartitionEvent>(), It.IsAny<CancellationToken>()))
+                .Callback<PartitionEvent, CancellationToken>((partEvent, token) =>
+                {
+                    returnWriteException = (++writeCount % 100 == 0);
+
+                    if ((!returnWriteException) && (partEvent.Data != null))
+                    {
+                        publishedEvents.Add(partEvent.Data);
+                    }
+                })
+                .Returns(() =>
+                {
+                    if (returnWriteException)
+                    {
+                        return new ValueTask(Task.FromException(new EventHubsException(true, "dummy")));
+                    }
+
+                    return new ValueTask();
+                });
+
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(15));
+            var publishingTask = InvokeStartBackgroundChannelPublishingAsync(consumer, mockTransportConsumer, mockChannel, partitionContext, ex => capturedException = ex, cancellation.Token);
+
+            // Allow publishing to continue until the timeout is reached or until the right number of events was
+            // written.  If publishing sends duplicate events, there will be a mismatch when comparing the event
+            // sequences, so it is safe to stop at the exact expected count.
+
+            while ((!cancellation.IsCancellationRequested) && (publishedEvents.Count < events.Count))
+            {
+                await Task.Delay(25);
+            }
+
+            cancellation.Cancel();
+
+            Assert.That(async () => await publishingTask, Throws.Nothing, "There should be no exception when publishing completes.");
+            Assert.That(publishedEvents.Count, Is.EqualTo(events.Count), "All of the events should have been published.");
+            Assert.That(capturedException, Is.Null, "The captured exception should be null.");
+
+            for (var index = 0; index < events.Count; ++index)
+            {
+                Assert.That(events[index].Body.ToArray().Single(), Is.EqualTo(publishedEvents[index].Body.ToArray().Single()), $"The payload for index: { index } should match the event source.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubConsumerClient.StartBackgroundChannelPublishingAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task StartBackgroundChannelPublishingAsyncStopsForNonRetriableExceptionsWhenPublishingToTheChannel()
+        {
+            var events = Enumerable
+                .Range(0, 350)
+                .Select(index => new EventData(new[] { (byte)index }))
+                .ToList();
+
+            var mockTransportConsumer = new PublishingTransportConsumerMock(events);
+            var mockConnection = new MockConnection(() => mockTransportConsumer);
+            var mockChannelWriter = new Mock<ChannelWriter<PartitionEvent>>();
+            var mockChannel = new MockChannel<PartitionEvent>(mockChannelWriter.Object, null);
+            var options = new EventHubConsumerClientOptions { RetryOptions = new EventHubsRetryOptions { MaximumRetries = 10, Delay = TimeSpan.FromMilliseconds(1) } };
+            var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, mockConnection);
+            var partitionContext = new PartitionContext("0", mockTransportConsumer);
+            var capturedException = default(Exception);
+            var publishedEvents = new List<EventData>();
+            var writeCount = 0;
+            var returnWriteException = false;
+            var forceErrorAt = 100;
+
+            // When the limit is reached, force an exception to trigger when writing to the channel.  These should be
+            // retried and publishing should not lose or duplicate events.
+
+            mockChannelWriter
+                .Setup(writer => writer.WriteAsync(It.IsAny<PartitionEvent>(), It.IsAny<CancellationToken>()))
+                .Callback<PartitionEvent, CancellationToken>((partEvent, token) =>
+                {
+                    if ((!returnWriteException) && (partEvent.Data != null))
+                    {
+                        publishedEvents.Add(partEvent.Data);
+                    }
+
+                    returnWriteException = (++writeCount == forceErrorAt);
+                })
+                .Returns(() =>
+                {
+                    if (returnWriteException)
+                    {
+                        return new ValueTask(Task.FromException(new EventHubsException(false, "dummy")));
+                    }
+
+                    return new ValueTask();
+                });
+
+            using var cancellation = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            var publishingTask = InvokeStartBackgroundChannelPublishingAsync(consumer, mockTransportConsumer, mockChannel, partitionContext, ex => capturedException = ex, cancellation.Token);
+
+            // Allow publishing to continue until the timeout is reached or until the right number of events was
+            // written.  If publishing sends duplicate events, there will be a mismatch when comparing the event
+            // sequences, so it is safe to stop at the exact expected count.
+
+            while (!cancellation.IsCancellationRequested)
+            {
+                await Task.Delay(25);
+            }
+
+            cancellation.Cancel();
+
+            Assert.That(async () => await publishingTask, Throws.Nothing, "There should be no exception when publishing completes.");
+            Assert.That(publishedEvents.Count, Is.EqualTo(forceErrorAt), "All of the events before failure should have been published.");
+            Assert.That(capturedException, Is.InstanceOf<EventHubsException>().And.Property("IsTransient").EqualTo(false), "The captured exception should be be a non-retriable Event Hubs exception.");
+
+            for (var index = 0; index < forceErrorAt; ++index)
+            {
+                Assert.That(events[index].Body.ToArray().Single(), Is.EqualTo(publishedEvents[index].Body.ToArray().Single()), $"The payload for index: { index } should match the event source.");
+            }
+        }
+
+        /// <summary>
         ///   Retrieves the Connection for the consumer using its private accessor.
         /// </summary>
         ///
@@ -2078,6 +2224,21 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventHubConsumerClient)
                     .GetProperty("RetryPolicy", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(consumer);
+
+        /// <summary>
+        ///   Invokes the StartBackgroundChannelPublishingAsync method of the consumer using its private accessor.
+        /// </summary>
+        ///
+        private static Task InvokeStartBackgroundChannelPublishingAsync(EventHubConsumerClient consumer,
+                                                                        TransportConsumer transportConsumer,
+                                                                        Channel<PartitionEvent> channel,
+                                                                        PartitionContext partitionContext,
+                                                                        Action<Exception> notifyException,
+                                                                        CancellationToken cancellationToken) =>
+            (Task)
+                typeof(EventHubConsumerClient)
+                    .GetMethod("StartBackgroundChannelPublishingAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(consumer, new object[] { transportConsumer, channel, partitionContext, notifyException, cancellationToken });
 
         /// <summary>
         ///   Retrieves the number of background publish event batch size for a consumer, using its private field.
@@ -2269,6 +2430,20 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Returns(new Uri($"amgp://{ fullyQualifiedNamespace}.com/{eventHubName}"));
 
                 return client.Object;
+            }
+        }
+
+        /// <summary>
+        ///   Serves as an injectable channel for testing consumer functionality.
+        /// </summary>
+        ///
+        private class MockChannel<T> : Channel<T>
+        {
+            public MockChannel(ChannelWriter<T> writer,
+                               ChannelReader<T> reader) : base()
+            {
+                Writer = writer;
+                Reader = reader;
             }
         }
     }

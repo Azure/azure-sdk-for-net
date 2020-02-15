@@ -2,10 +2,14 @@
 
 ## 1.2.0-preview.1 (Unreleased)
 
+
+## 1.1.1
+
 ### Fixes and improvements
-- Fix `UsernamePasswordCredential` constructor parameter mishandling
-- Add `AuthFileCredential` which allows using an auth file produced by the Azure CLI to authenticate
-- Add support for `AZURE_AUTH_LOCATION` to `EnvironmentCredential`, which uses the newly added `AuthFileCredential`
+- Fixed `UsernamePasswordCredential` constructor parameter mishandling
+- Updated `ManagedIdentityCredential` endpoint discovery to avoid throwing
+- Fixed `ManagedIdentityCredential` to raise `CredentialUnavailableException` on 400 return from the service where no identity has been assigned
+- Updated error messaging from `DefaultAzureCredential` to more easily root cause failures
 
 ## 1.1.0
 

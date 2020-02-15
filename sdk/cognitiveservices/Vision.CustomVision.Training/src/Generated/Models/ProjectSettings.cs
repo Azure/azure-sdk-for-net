@@ -38,11 +38,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// 'Multilabel'</param>
         /// <param name="targetExportPlatforms">A list of ExportPlatform that
         /// the trained model should be able to support.</param>
-        public ProjectSettings(System.Guid domainId = default(System.Guid), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>))
+        /// <param name="useNegativeSet">Indicates if negative set is being
+        /// used.</param>
+        /// <param name="detectionParameters">Detection parameters in use, if
+        /// any.</param>
+        /// <param name="imageProcessingSettings">Gets or sets image
+        /// preprocessing settings.</param>
+        public ProjectSettings(System.Guid domainId = default(System.Guid), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), bool? useNegativeSet = default(bool?), string detectionParameters = default(string), ImageProcessingSettings imageProcessingSettings = default(ImageProcessingSettings))
         {
             DomainId = domainId;
             ClassificationType = classificationType;
             TargetExportPlatforms = targetExportPlatforms;
+            UseNegativeSet = useNegativeSet;
+            DetectionParameters = detectionParameters;
+            ImageProcessingSettings = imageProcessingSettings;
             CustomInit();
         }
 
@@ -70,6 +79,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "targetExportPlatforms")]
         public IList<string> TargetExportPlatforms { get; set; }
+
+        /// <summary>
+        /// Gets indicates if negative set is being used.
+        /// </summary>
+        [JsonProperty(PropertyName = "useNegativeSet")]
+        public bool? UseNegativeSet { get; private set; }
+
+        /// <summary>
+        /// Gets detection parameters in use, if any.
+        /// </summary>
+        [JsonProperty(PropertyName = "detectionParameters")]
+        public string DetectionParameters { get; private set; }
+
+        /// <summary>
+        /// Gets or sets image preprocessing settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "imageProcessingSettings")]
+        public ImageProcessingSettings ImageProcessingSettings { get; set; }
 
     }
 }

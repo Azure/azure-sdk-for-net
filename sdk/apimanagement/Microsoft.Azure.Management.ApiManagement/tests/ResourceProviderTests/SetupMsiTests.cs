@@ -16,6 +16,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
     public partial class ApiManagementServiceTests
     {
         [Fact]
+        [Trait("owner", "sasolank")]
         public void SetupMsiTests()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
