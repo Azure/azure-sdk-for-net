@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string receiveLinkName = null,
             CancellationToken cancellationToken = default)
         {
-            TimeSpan timeSpan = retryPolicy.Options.Delay;
+            TimeSpan timeSpan = retryPolicy.Options.TryTimeout;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
@@ -463,7 +463,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken = default)
         {
             var stopWatch = Stopwatch.StartNew();
-            TimeSpan timeout = retryPolicy.Options.Delay;
+            TimeSpan timeout = retryPolicy.Options.TryTimeout;
 
             using (AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
             {

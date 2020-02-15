@@ -6,8 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Messaging.ServiceBus;
-using Azure.Messaging.ServiceBus.Receiver;
-using Azure.Messaging.ServiceBus.Sender;
+using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Tests;
 using NUnit.Framework;
 
@@ -20,7 +19,7 @@ namespace Microsoft.Azure.Template.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 await sender.SendRangeAsync(GetMessages(10));
             }
         }
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.Template.Tests
 
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.FullyQualifiedNamespace, scope.QueueName, credential);
+                await using var sender = new QueueSenderClient(TestEnvironment.FullyQualifiedNamespace, scope.QueueName, credential);
                 await sender.SendAsync(GetMessage());
             }
         }
@@ -45,19 +44,18 @@ namespace Microsoft.Azure.Template.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-                await using var conn = new ServiceBusConnection(TestEnvironment.ServiceBusConnectionString, scope.TopicName);
                 var options = new ServiceBusSenderClientOptions
                 {
                     RetryOptions = new ServiceBusRetryOptions(),
                     ConnectionOptions = new ServiceBusConnectionOptions()
                     {
                         TransportType = ServiceBusTransportType.AmqpWebSockets,
-                        Proxy = new WebProxy("localHost")
+                        Proxy = WebRequest.DefaultWebProxy
                     }
                 };
                 options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
 
-                await using var sender = new ServiceBusSenderClient(conn, options);
+                await using var sender = new TopicSenderClient(TestEnvironment.ServiceBusConnectionString, scope.TopicName, options);
                 await sender.SendAsync(GetMessage());
             }
         }
@@ -67,18 +65,17 @@ namespace Microsoft.Azure.Template.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
             {
-               await using var conn = new ServiceBusConnection(TestEnvironment.ServiceBusConnectionString, scope.TopicName);
                 var options = new ServiceBusSenderClientOptions
                 {
                     RetryOptions = new ServiceBusRetryOptions(),
                     ConnectionOptions = new ServiceBusConnectionOptions()
                     {
                         TransportType = ServiceBusTransportType.AmqpWebSockets,
-                        Proxy = new WebProxy("localHost")
+                        Proxy = WebRequest.DefaultWebProxy
                     }
                 };
                 options.RetryOptions.Mode = ServiceBusRetryMode.Exponential;
-                await using var sender = new ServiceBusSenderClient(conn, options);
+                await using var sender = new TopicSenderClient(TestEnvironment.ServiceBusConnectionString, scope.TopicName, options);
                 var message = GetMessage();
                 message.SessionId = "1";
                 await sender.SendAsync(message);
@@ -90,7 +87,7 @@ namespace Microsoft.Azure.Template.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 Assert.AreEqual(scope.QueueName, sender.EntityName);
                 Assert.AreEqual(TestEnvironment.FullyQualifiedNamespace, sender.FullyQualifiedNamespace);
             }
@@ -101,7 +98,7 @@ namespace Microsoft.Azure.Template.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var scheduleTime = DateTimeOffset.UtcNow.AddHours(10);
                 var sequenceNum = await sender.ScheduleMessageAsync(GetMessage(), scheduleTime);
 
