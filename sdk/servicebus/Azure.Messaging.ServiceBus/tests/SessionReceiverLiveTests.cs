@@ -145,11 +145,11 @@ namespace Azure.Messaging.ServiceBus.Tests
                     sessionSettings);
 
 
-            long seq = 0;
-            for (int i = 0; i < messageCt / peekCt; i++)
-            {
-                IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeAsync(
-                    maxMessages: peekCt);
+                long seq = 0;
+                for (int i = 0; i < messageCt / peekCt; i++)
+                {
+                    IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeAsync(
+                        maxMessages: peekCt);
 
 
                     await foreach (ServiceBusMessage msg in peekedMessages)
