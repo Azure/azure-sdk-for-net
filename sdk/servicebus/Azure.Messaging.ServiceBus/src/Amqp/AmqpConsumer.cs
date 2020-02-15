@@ -84,7 +84,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="entityName">The name of the Service Bus entity from which events will be consumed.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
-        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="sessionId"></param>
@@ -100,7 +100,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         public AmqpConsumer(
             string entityName,
-            long? ownerLevel,
+            ReceiveMode receiveMode,
             uint? prefetchCount,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         //partitionId,
                         timeout,
                         prefetchCount ?? DefaultPrefetchCount,
-                        ownerLevel,
+                        receiveMode,
                         sessionId,
                         CancellationToken.None),
                 link =>
@@ -140,14 +140,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public override async Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
             int maximumMessageCount,
-            TimeSpan? maximumWaitTime,
             CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
@@ -156,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var receivedMessageCount = 0;
             var failedAttemptCount = 0;
             var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
-            var waitTime = (maximumWaitTime ?? tryTimeout);
+            var waitTime = tryTimeout;
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
             var amqpMessages = default(IEnumerable<AmqpMessage>);

@@ -50,14 +50,12 @@ namespace Azure.Messaging.ServiceBus.Core
         /// </summary>
         ///
         /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the default wait time specified when the consumer was created will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="ServiceBusMessage" /> from the Service Bus entity partition this consumer is associated with.  If no events are present, an empty enumerable is returned.</returns>
         ///
         public abstract Task<IEnumerable<ServiceBusMessage>> ReceiveAsync(
             int maximumMessageCount,
-            TimeSpan? maximumWaitTime,
             CancellationToken cancellationToken);
 
         /// <summary>

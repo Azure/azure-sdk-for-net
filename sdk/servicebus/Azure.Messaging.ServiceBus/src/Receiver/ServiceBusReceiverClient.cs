@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             ReceiveMode = clientOptions.ReceiveMode;
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, sessionId: sessionId);
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, receiveMode: ReceiveMode, sessionId: sessionId);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             ReceiveMode = clientOptions.ReceiveMode;
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, sessionId:sessionId);
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, receiveMode: ReceiveMode, sessionId:sessionId);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             ReceiveMode = clientOptions.ReceiveMode;
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, sessionId: sessionId);
+            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, receiveMode: ReceiveMode, sessionId: sessionId);
         }
 
         /// <summary>
@@ -190,16 +190,30 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <param name="maxMessages"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveRangeAsync(
-            int maxMessages,
-            [EnumeratorCancellation]
-            CancellationToken cancellationToken = default)
+        public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveBatchAsync(
+           int maxMessages,
+           [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            foreach (ServiceBusMessage message in await Consumer.ReceiveAsync(maxMessages, TimeSpan.FromSeconds(100), cancellationToken).ConfigureAwait(false))
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            try
             {
-                yield return message;
+                foreach (ServiceBusMessage message in await Consumer.ReceiveAsync(maxMessages, cancellationToken).ConfigureAwait(false))
+                {
+                    yield return message;
+                }
             }
+            finally
+            {
+                // TODO: Add log - SeviceBusEventSource.Log.ReceiveRangeCompleteAsync();
+            }
+
+            // If cancellation was requested, then surface the expected exception.
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
+
 
         /// <summary>
         /// Get a SessionReceiverClient scoped to the ServiceBusReceiverClient entity and a specified session.

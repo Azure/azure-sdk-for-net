@@ -373,12 +373,12 @@ namespace Azure.Messaging.ServiceBus
         ///   group to be actively reading events from the partition.  These non-exclusive consumers are
         ///   sometimes referred to as "Non-epoch Consumers."
         ///
-        ///   Designating a consumer as exclusive may be specified by setting the <paramref name="ownerLevel" />.
+        ///   Designating a consumer as exclusive may be specified by setting the  />.
         ///   When <c>null</c>, consumers are created as non-exclusive.
         /// </summary>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
+        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="sessionId"></param>
         ///
@@ -386,12 +386,12 @@ namespace Azure.Messaging.ServiceBus
         ///
         internal virtual TransportConsumer CreateTransportConsumer(
             ServiceBusRetryPolicy retryPolicy,
-            long? ownerLevel = default,
+            ReceiveMode receiveMode = ReceiveMode.PeekLock,
             uint? prefetchCount = default,
             string sessionId = default)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateConsumer(retryPolicy, ownerLevel, prefetchCount, sessionId);
+            return InnerClient.CreateConsumer(retryPolicy, receiveMode, prefetchCount, sessionId);
         }
 
         /// <summary>
