@@ -277,6 +277,105 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public async Task CreateIfNotExistAsync_NotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+
+            try
+            {
+                // Act
+                Response<FileSystemInfo> response = await fileSystemClient.CreateIfNotExistsAsync();
+
+                // Assert
+                Assert.IsNotNull(response.Value.ETag);
+            }
+            finally
+            {
+                // Cleanup
+                await fileSystemClient.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistAsync_Exists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            try
+            {
+                await fileSystemClient.CreateAsync();
+
+                // Act
+                Response<FileSystemInfo> response = await fileSystemClient.CreateIfNotExistsAsync();
+
+                // Assert
+                Assert.IsNull(response);
+            }
+            finally
+            {
+                // Cleanup
+                await fileSystemClient.DeleteAsync();
+            }
+        }
+
+        [Test]
+        public async Task CreateIfNotExistsAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            DataLakeFileSystemClient unauthorizedFileSystem = InstrumentClient(new DataLakeFileSystemClient(fileSystemClient.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedFileSystem.CreateIfNotExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+        }
+
+        [Test]
+        public async Task ExistsAsync_Exists()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act
+            Response<bool> response = await test.FileSystem.ExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_NotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+
+            // Act
+            Response<bool> response = await fileSystemClient.ExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task ExistsAsync_Error()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.None);
+            DataLakeFileSystemClient unauthorizedFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(test.FileSystem.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedFileSystemClient.ExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+        }
+
+        [Test]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -348,6 +447,49 @@ namespace Azure.Storage.Files.DataLake.Tests
                     test.FileSystem.DeleteAsync(conditions: conditions),
                     e => { });
             }
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Exists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            await fileSystemClient.CreateAsync();
+
+            // Act
+            Response<bool> response = await fileSystemClient.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsTrue(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_NotExists()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+
+            // Act
+            Response<bool> response = await fileSystemClient.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [Test]
+        public async Task DeleteIfExistsAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
+            DataLakeFileSystemClient unauthorizedFileSystem = InstrumentClient(new DataLakeFileSystemClient(fileSystemClient.Uri, GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                unauthorizedFileSystem.DeleteIfExistsAsync(),
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
         }
 
         [Test]
