@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Primitives;
 
-namespace Azure.Messaging.ServiceBus.Receiver
+namespace Azure.Messaging.ServiceBus
 {
     /// <summary>Provides options associated with message pump processing using
     ///  cref="QueueClient.RegisterMessageHandler(Func{Message, CancellationToken, Task}, MessageHandlerOptions)" /> and

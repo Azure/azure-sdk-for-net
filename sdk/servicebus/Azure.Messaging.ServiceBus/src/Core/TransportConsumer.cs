@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
-using Azure.Messaging.ServiceBus.Receiver;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
     ///   Provides an abstraction for generalizing an Event Consumer so that a dedicated instance may provide operations
-    ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusReceiverClient" /> employ
+    ///   for a specific transport, such as AMQP or JMS.  It is intended that the public <see cref="ServiceBusReceiver" /> employ
     ///   a transport consumer via containment and delegate operations to it rather than understanding protocol-specific details
     ///   for different transports.
     /// </summary>
@@ -36,14 +35,14 @@ namespace Azure.Messaging.ServiceBus.Core
         public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
 
         /// <summary>
-        ///
+        /// TODO make this generic
         /// </summary>
         public AmqpConnectionScope ConnectionScope { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public string SessionId { get; set; }
+        public virtual string EntityName { get; }
 
         /// <summary>
         ///   Receives a batch of <see cref="ServiceBusMessage" /> from the Service Bus entity.

@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
@@ -17,7 +16,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     ///   A transport client abstraction responsible for brokering operations for AMQP-based connections.
-    ///   It is intended that the public <see cref="ServiceBusReceiverClient" /> make use of an instance
+    ///   It is intended that the public <see cref="ServiceBusReceiver" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
@@ -45,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The name of the Service Bus entity to which the client is bound.
         /// </summary>
         ///
-        private string EntityName { get; }
+        public override string EntityName { get; }
 
         /// <summary>
         ///   The identifier of the Service Bus entity partition that this consumer is associated with.  Events will be read
@@ -59,6 +58,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         private ServiceBusRetryPolicy RetryPolicy { get; }
+
+        /// <summary>
+        ///
+        /// </summary>
+        private bool IsSessionReceiver { get; }
 
         ///// <summary>
         /////   The converter to use for translating between AMQP messages and client library
@@ -88,6 +92,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="sessionId"></param>
+        /// <param name="isSessionReceiver"></param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -104,7 +109,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint? prefetchCount,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
-            string sessionId)
+            string sessionId,
+            bool isSessionReceiver)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -112,17 +118,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             EntityName = entityName;
             ConnectionScope = connectionScope;
             RetryPolicy = retryPolicy;
+            IsSessionReceiver = isSessionReceiver;
 
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
                     ConnectionScope.OpenConsumerLinkAsync(
-                        //consumerGroup,
-                        //partitionId,
-                        timeout,
-                        prefetchCount ?? DefaultPrefetchCount,
-                        ownerLevel,
-                        sessionId,
-                        CancellationToken.None),
+                        timeout: timeout,
+                        prefetchCount: prefetchCount ?? DefaultPrefetchCount,
+                        ownerLevel: ownerLevel,
+                        sessionId: sessionId,
+                        isSessionReceiver: isSessionReceiver,
+                        cancellationToken: CancellationToken.None),
                 link =>
                 {
                     CloseLink(link);

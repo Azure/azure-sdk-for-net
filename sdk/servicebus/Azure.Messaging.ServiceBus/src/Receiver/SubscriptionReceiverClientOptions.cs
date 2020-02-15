@@ -8,16 +8,16 @@ namespace Azure.Messaging.ServiceBus
     /// <summary>
     ///
     /// </summary>
-    public class QueueReceiverClientOptions : ServiceBusReceiverClientOptions
+    public class SubscriptionReceiverClientOptions : ServiceBusReceiverClientOptions
     {
         /// <summary>
-        ///   Creates a new copy of the current <see cref="QueueReceiverClientOptions" />, cloning its attributes into a new instance.
+        ///   Creates a new copy of the current <see cref="SubscriptionReceiverClientOptions" />, cloning its attributes into a new instance.
         /// </summary>
         ///
-        /// <returns>A new copy of <see cref="QueueReceiverClientOptions" />.</returns>
+        /// <returns>A new copy of <see cref="SubscriptionReceiverClientOptions" />.</returns>
         ///
-        internal QueueReceiverClientOptions Clone() =>
-            new QueueReceiverClientOptions
+        internal SubscriptionReceiverClientOptions Clone() =>
+            new SubscriptionReceiverClientOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()

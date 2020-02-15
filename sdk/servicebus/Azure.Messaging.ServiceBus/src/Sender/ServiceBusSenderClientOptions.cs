@@ -5,10 +5,10 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Sender
+namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
-    ///   The set of options that can be specified when creating an <see cref="ServiceBusSenderClient" />
+    ///   The set of options that can be specified when creating an <see cref="ServiceBusSender" />
     ///   to configure its behavior.
     /// </summary>
     ///

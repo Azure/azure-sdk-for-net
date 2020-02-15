@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Authorization;
-using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Newtonsoft.Json.Linq;
@@ -27,7 +26,7 @@ namespace Azure.Messaging.ServiceBus
     ///
     /// <seealso href="https://docs.microsoft.com/en-us/Azure/event-hubs/event-hubs-about" />
     ///
-    internal class ServiceBusConnection : IAsyncDisposable
+    public class ServiceBusConnection : IAsyncDisposable
     {
         /// <summary>
         ///   The fully qualified Service Bus namespace that the connection is associated with.  This is likely
@@ -310,8 +309,13 @@ namespace Azure.Messaging.ServiceBus
             string sessionId = null,
             string receiveLinkName = null,
             CancellationToken cancellationToken = default) =>
-             await InnerClient.PeekAsync(retryPolicy, fromSequenceNumber, messageCount, sessionId, receiveLinkName, cancellationToken)
-                .ConfigureAwait(false);
+            await InnerClient.PeekAsync(
+                retryPolicy,
+                fromSequenceNumber,
+                messageCount,
+                sessionId,
+                receiveLinkName,
+                cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -381,6 +385,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="sessionId"></param>
+        /// <param name="isSessionReceiver"></param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
@@ -388,10 +393,11 @@ namespace Azure.Messaging.ServiceBus
             ServiceBusRetryPolicy retryPolicy,
             long? ownerLevel = default,
             uint? prefetchCount = default,
-            string sessionId = default)
+            string sessionId = default,
+            bool isSessionReceiver = default)
         {
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
-            return InnerClient.CreateConsumer(retryPolicy, ownerLevel, prefetchCount, sessionId);
+            return InnerClient.CreateConsumer(retryPolicy, ownerLevel, prefetchCount, sessionId, isSessionReceiver);
         }
 
         /// <summary>
