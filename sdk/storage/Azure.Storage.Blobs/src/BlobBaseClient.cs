@@ -21,6 +21,10 @@ namespace Azure.Storage.Blobs.Specialized
     /// </summary>
     public class BlobBaseClient
     {
+
+
+
+
         /// <summary>
         /// The blob's primary <see cref="Uri"/> endpoint.
         /// </summary>
