@@ -130,13 +130,18 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.0.0" />
   </ItemGroup>
 
+  <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
-    <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
+  </ItemGroup>
+
+  <!-- Test only packages -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
   </ItemGroup>
 </Project>
