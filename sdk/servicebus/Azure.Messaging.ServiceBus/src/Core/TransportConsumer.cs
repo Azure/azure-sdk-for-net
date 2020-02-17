@@ -35,9 +35,10 @@ namespace Azure.Messaging.ServiceBus.Core
         public FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; protected set; }
 
         /// <summary>
-        /// TODO make this generic
+        /// The scope <see cref="TransportConnectionScope"/> associated with the
+        /// <see cref="TransportConsumer"/>.
         /// </summary>
-        public AmqpConnectionScope ConnectionScope { get; set; }
+        public virtual TransportConnectionScope ConnectionScope { get; set; }
 
         /// <summary>
         ///

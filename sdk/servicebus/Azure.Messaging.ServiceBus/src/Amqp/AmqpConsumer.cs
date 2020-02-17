@@ -57,30 +57,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private ServiceBusRetryPolicy RetryPolicy { get; }
+        private readonly ServiceBusRetryPolicy _retryPolicy;
 
         /// <summary>
-        ///
+        /// Indicates whether or not this is a receiver scoped to a session.
         /// </summary>
-        private bool IsSessionReceiver { get; }
+        private readonly bool _isSessionReceiver;
 
-        ///// <summary>
-        /////   The converter to use for translating between AMQP messages and client library
-        /////   types.
-        ///// </summary>
-        //private AmqpMessageConverter MessageConverter { get; }
+        /// <summary>
+        ///   The AMQP connection scope responsible for managing transport constructs for this instance.
+        /// </summary>
+        ///
+        private readonly AmqpConnectionScope _connectionScope;
 
-        ///// <summary>
-        /////   The AMQP connection scope responsible for managing transport constructs for this instance.
-        ///// </summary>
-        /////
-        //internal AmqpConnectionScope ConnectionScope { get; }
+        /// <inheritdoc/>
+        public override TransportConnectionScope ConnectionScope =>
+            _connectionScope;
 
-        ///// <summary>
-        /////   The AMQP link intended for use with receiving operations.
-        ///// </summary>
-        /////
-        //internal FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
@@ -116,13 +109,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
             EntityName = entityName;
-            ConnectionScope = connectionScope;
-            RetryPolicy = retryPolicy;
-            IsSessionReceiver = isSessionReceiver;
+            _connectionScope = connectionScope;
+            _retryPolicy = retryPolicy;
+            _isSessionReceiver = isSessionReceiver;
 
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    ConnectionScope.OpenConsumerLinkAsync(
+                    _connectionScope.OpenConsumerLinkAsync(
                         timeout: timeout,
                         prefetchCount: prefetchCount ?? DefaultPrefetchCount,
                         ownerLevel: ownerLevel,
@@ -161,7 +154,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var receivedMessageCount = 0;
             var failedAttemptCount = 0;
-            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+            var tryTimeout = _retryPolicy.CalculateTryTimeout(0);
             var waitTime = (maximumWaitTime ?? tryTimeout);
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
@@ -228,14 +221,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // Otherwise, bubble the exception.
 
                         ++failedAttemptCount;
-                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
+                        retryDelay = _retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
                             ServiceBusEventSource.Log.MessageReceiveError(EntityName, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
 
-                            tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                            tryTimeout = _retryPolicy.CalculateTryTimeout(failedAttemptCount);
                         }
                         else if (ex is AmqpException)
                         {

@@ -27,7 +27,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     ///   client types within a given scope.
     /// </summary>
     ///
-    internal class AmqpConnectionScope : IDisposable
+    internal class AmqpConnectionScope : TransportConnectionScope
     {
         /// <summary>The name to assign to the SASL handler to specify that CBS tokens are in use.</summary>
         private const string CbsSaslHandlerName = "MSSBCBS";
@@ -83,7 +83,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   interval be used when creating or opening AMQP links and related constructs.
         /// </summary>
         ///
-        public TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
+        public override TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         ///   Indicates whether this <see cref="AmqpConnectionScope"/> has been disposed.
@@ -91,7 +91,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <value><c>true</c> if disposed; otherwise, <c>false</c>.</value>
         ///
-        public bool IsDisposed { get; private set; }
+        public override bool IsDisposed { get; protected set; }
 
         /// <summary>
         ///   The cancellation token to use with operations initiated by the scope.
@@ -309,7 +309,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///
-        public void Dispose()
+        public override void Dispose()
         {
             if (IsDisposed)
             {

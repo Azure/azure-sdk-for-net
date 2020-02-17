@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Core;
 using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
@@ -95,7 +96,7 @@ namespace Azure.Messaging.ServiceBus
         internal async Task RunOperation(
             Func<Task> operation,
             string entityName,
-            AmqpConnectionScope scope,
+            TransportConnectionScope scope,
             CancellationToken cancellationToken)
         {
             var failedAttemptCount = 0;
