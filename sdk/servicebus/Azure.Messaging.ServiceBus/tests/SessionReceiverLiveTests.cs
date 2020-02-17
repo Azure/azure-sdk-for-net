@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
@@ -332,5 +334,27 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.IsNull(message.Result);
             }
         }
+
+        //[Test]
+        //public async Task Receive()
+        //{
+        //    await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+        //    {
+        //        await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, "joshsession");
+        //        //await sender.SendRangeAsync(GetMessages(10, Guid.NewGuid().ToString()));
+        //        //await sender.SendRangeAsync(GetMessages(10, Guid.NewGuid().ToString()));
+        //        //await sender.SendRangeAsync(GetMessages(10, Guid.NewGuid().ToString()));
+        //        var sessionOptions = new SessionOptions();
+        //        await using var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, "joshsession", sessionOptions);
+        //        var msgs = receiver.ReceiveRangeAsync(100);
+
+        //        await foreach (var msg in msgs.ConfigureAwait(false))
+        //        {
+
+        //            TestContext.Progress.WriteLine(msg.SessionId + " " + msg.MessageId);
+        //        }
+
+        //    }
+        //}
     }
 }

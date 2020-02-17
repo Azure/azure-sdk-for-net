@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -109,6 +111,112 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 var message = receiver.PeekAsync();
                 Assert.IsNull(message.Result);
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(20)]
+        public async Task Receive_Event(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                await using var sender = new QueueSenderClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+
+                // use double the number of threads so we can make sure we test that we don't
+                // retrieve more messages than expected when there are more messages available
+                await sender.SendRangeAsync(GetMessages(numThreads * 2));
+                var sessionOptions = new SessionOptions();
+                await using var receiver = new QueueReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+                int messageCt = 0;
+
+                receiver.ProcessMessageAsync += ProcessMessage;
+
+                var options = new MessageHandlerOptions
+                {
+                    MaxConcurrentCalls = numThreads
+                };
+
+                await receiver.StartProcessingAsync(options);
+
+                // Allow 5s to be sure there is enough time for a message to be processed per thread.
+                await Task.Delay(1000 * 5);
+
+                async Task ProcessMessage(ServiceBusMessage message)
+                {
+                    TestContext.Progress.WriteLine(message.SessionId + " " + message.MessageId);
+                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    TestContext.Progress.WriteLine(Process.GetCurrentProcess().Threads.Count);
+                    Interlocked.Increment(ref messageCt);
+                    await Task.Delay(1000 * 5);
+                }
+
+                // we only give each thread enough time to process one message, so the total number of messages
+                // processed should equal the number of threads
+                Assert.AreEqual(numThreads, messageCt);
+            }
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(30)]
+        public async Task Receive_StopProcessing(int numThreads)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                await using var sender = new QueueSenderClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+                int numMessages = 50;
+                await sender.SendRangeAsync(GetMessages(numMessages));
+
+                var sessionOptions = new SessionOptions();
+                await using var receiver = new QueueReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
+                int messageProcessedCt = 0;
+
+                // stop processing halfway through
+                int stopAfterMessagesCt = numMessages / 2;
+
+                receiver.ProcessMessageAsync += ProcessMessage;
+
+                var options = new MessageHandlerOptions
+                {
+                    MaxConcurrentCalls = numThreads
+                };
+
+                await receiver.StartProcessingAsync(options);
+
+                // Allow enough time for messages to be processed
+                await Task.Delay(1000 * 10);
+
+                async Task ProcessMessage(ServiceBusMessage message)
+                {
+                    await receiver.CompleteAsync(message.SystemProperties.LockToken);
+                    Interlocked.Increment(ref messageProcessedCt);
+                    if (messageProcessedCt == stopAfterMessagesCt)
+                    {
+                        await receiver.StopProcessingAsync();
+                    }
+                }
+                // can't assert on the exact amount processed due to threads that
+                // are already in flight when calling StopProcessingAsync
+                Assert.IsTrue(
+                    stopAfterMessagesCt <= messageProcessedCt &&
+                    messageProcessedCt < numMessages);
             }
         }
     }

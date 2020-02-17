@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,6 +30,38 @@ namespace Azure.Messaging.ServiceBus.Core
     ///
     public abstract class ServiceBusReceiver : IAsyncDisposable
     {
+        private Func<ServiceBusMessage, Task> _processMessageAsync;
+        private Func<ExceptionReceivedEventArgs, Task> _processErrorAsync = default;
+        /// <summary>The primitive for synchronizing access during start and set handler operations.</summary>
+        private readonly object EventHandlerGuard = new object();
+        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
+        private SemaphoreSlim MessageHandlerSemaphore;
+        /// <summary>The primitive for synchronizing access during start and close operations.</summary>
+        private readonly SemaphoreSlim ProcessingStartStopSemaphore = new SemaphoreSlim(1, 1);
+        private CancellationTokenSource RunningTaskTokenSource { get; set; }
+
+
+        /// <summary>
+        ///   The running task responsible for performing partition load balancing between multiple <see cref="ServiceBusReceiver" />
+        ///   instances, as well as managing partition processing tasks and ownership.
+        /// </summary>
+        ///
+        private Task ActiveReceiveTask { get; set; }
+        /// <summary>
+        ///   Called when a 'process event' event is triggered.
+        /// </summary>
+        ///
+        /// <param name="message">The set of arguments to identify the context of the event to be processed.</param>
+        ///
+        private Task OnProcessMessageAsync(ServiceBusMessage message) => _processMessageAsync(message);
+
+        /// <summary>
+        ///   Called when a 'process error' event is triggered.
+        /// </summary>
+        ///
+        /// <param name="eventArgs">The set of arguments to identify the context of the error to be processed.</param>
+        ///
+        private Task OnProcessErrorAsync(ExceptionReceivedEventArgs eventArgs) => _processErrorAsync(eventArgs);
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
@@ -810,6 +843,308 @@ namespace Azure.Messaging.ServiceBus.Core
         {
             // TODO remove if won't be used
 
+        }
+
+        /// <summary>
+        ///   The event responsible for processing events received from the Event Hubs service.  Implementation
+        ///   is mandatory.
+        /// </summary>
+        ///
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ServiceBusMessage, Task> ProcessMessageAsync
+        {
+            add
+            {
+                lock (EventHandlerGuard)
+                {
+
+                    Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+
+                    if (_processMessageAsync != default)
+                    {
+                        //throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+                    }
+                    _processMessageAsync = value;
+                    //EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
+                }
+            }
+
+            remove
+            {
+                Argument.AssertNotNull(value, nameof(ProcessMessageAsync));
+
+                if (_processMessageAsync != value)
+                {
+                    //throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+                }
+
+                EnsureNotRunningAndInvoke(() => _processMessageAsync = default);
+            }
+        }
+
+        /// <summary>
+        ///   Signals the <see cref="ServiceBusReceiver" /> to begin processing events.  Should this method be called while the processor
+        ///   is running, no action is taken.
+        /// </summary>
+        /// <param name="handlerOptions"></param>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the start operation.  This won't affect the <see cref="ServiceBusReceiver" /> once it starts running.</param>
+        ///
+        /// exception cref="EventHubsException">Occurs when this <see cref="ServiceBusReceiver" /> instance is already closed./exception>
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked without <see cref="ProcessMessageAsync" /> or <see cref="ProcessErrorAsync" /> set.</exception>
+        ///
+        public virtual async Task StartProcessingAsync(
+            MessageHandlerOptions handlerOptions = default,
+            CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            if (ActiveReceiveTask == null && MessageHandlerSemaphore == null)
+            {
+                MessageHandlerSemaphore = new SemaphoreSlim(
+                    handlerOptions.MaxConcurrentCalls,
+                    handlerOptions.MaxConcurrentCalls);
+                await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+                try
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    lock (EventHandlerGuard)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                        if (ActiveReceiveTask == null)
+                        {
+                            if (_processMessageAsync == null)
+                            {
+                                throw new InvalidOperationException();
+                            }
+
+                            if (_processErrorAsync == null)
+                            {
+                                //throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
+                            }
+
+                            // We expect the token source to be null, but we are playing safe.
+
+                            RunningTaskTokenSource?.Cancel();
+                            RunningTaskTokenSource?.Dispose();
+                            RunningTaskTokenSource = new CancellationTokenSource();
+
+                            // Start the main running task.  It is responsible for managing the active partition processing tasks and
+                            // for partition load balancing among multiple event processor instances.
+
+                            //Logger.EventProcessorStart(Identifier);
+                            ActiveReceiveTask = RunAsync(handlerOptions, RunningTaskTokenSource.Token);
+                        }
+                    }
+                }
+                finally
+                {
+                    ProcessingStartStopSemaphore.Release();
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+        /// <summary>
+        ///   Signals the <see cref="ServiceBusReceiver" /> to stop processing events.  Should this method be called while the processor
+        ///   is not running, no action is taken.
+        /// </summary>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the stop operation.  If the operation is successfully canceled, the <see cref="ServiceBusReceiver" /> will keep running.</param>
+        ///
+        public virtual async Task StopProcessingAsync(CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            //Logger.EventProcessorStopStart(Identifier);
+            await ProcessingStartStopSemaphore.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                if (ActiveReceiveTask != null)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                    // Cancel the current running task.
+
+                    RunningTaskTokenSource.Cancel();
+                    RunningTaskTokenSource.Dispose();
+                    RunningTaskTokenSource = null;
+
+                    // Now that a cancellation request has been issued, wait for the running task to finish.  In case something
+                    // unexpected happened and it stopped working midway, this is the moment we expect to catch an exception.
+
+                    try
+                    {
+                        await ActiveReceiveTask.ConfigureAwait(false);
+                    }
+                    catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
+                    {
+                        // Nothing to do here.  These exceptions are expected.
+                    }
+                    catch (Exception)
+                    {
+                        //Logger.LoadBalancingTaskError(Identifier, ex.Message);
+                    }
+
+                    ActiveReceiveTask.Dispose();
+                    ActiveReceiveTask = null;
+                }
+            }
+            finally
+            {
+                ProcessingStartStopSemaphore.Release();
+                //Logger.EventProcessorStopComplete(Identifier);
+            }
+        }
+
+        /// <summary>
+        ///   Performs load balancing between multiple "EventProcessorClient" /> instances, claiming others' partitions to enforce
+        ///   a more equal distribution when necessary.  It also manages its own partition processing tasks and ownership.
+        /// </summary>
+        /// <param name="options"></param>
+        ///
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        private async Task RunAsync(
+            MessageHandlerOptions options,
+            CancellationToken cancellationToken)
+        {
+
+            while (!cancellationToken.IsCancellationRequested)
+            {
+
+                await MessageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+                try
+                {
+                    Task _ = GetAndProcessMessage(options, cancellationToken);
+                }
+                catch (Exception)
+                {
+                    cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                }
+
+            }
+
+            // If cancellation has been requested, throw an exception so we can keep a consistent behavior.
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+        }
+
+        private async Task GetAndProcessMessage(
+            MessageHandlerOptions options,
+            CancellationToken cancellationToken)
+        {
+            ServiceBusMessage message = null;
+            string action = ExceptionReceivedEventArgsAction.Receive;
+            try
+            {
+                IEnumerator<ServiceBusMessage> messages = (await Consumer.ReceiveAsync(
+                    1,
+                    RetryPolicy.Options.TryTimeout,
+                    cancellationToken).ConfigureAwait(false)).GetEnumerator();
+                if (messages.MoveNext())
+                {
+                    message = messages.Current;
+                }
+                else
+                {
+                    // no messages returned
+                    return;
+                }
+
+                action = ExceptionReceivedEventArgsAction.UserCallback;
+                await OnProcessMessageAsync(message).ConfigureAwait(false);
+
+                if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
+                {
+                    action = ExceptionReceivedEventArgsAction.Complete;
+                    await CompleteAsync(
+                        message.SystemProperties.LockToken,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                await options.RaiseExceptionReceived(
+                    new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
+                await AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+
+            }
+            finally
+            {
+                MessageHandlerSemaphore.Release();
+            }
+        }
+
+        /// <summary>
+        ///   Invokes a specified action only if this <see cref="ServiceBusReceiver" /> instance is not running.
+        /// </summary>
+        ///
+        /// <param name="action">The action to invoke.</param>
+        ///
+        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        ///
+        private void EnsureNotRunningAndInvoke(Action action)
+        {
+            if (ActiveReceiveTask == null)
+            {
+                lock (EventHandlerGuard)
+                {
+                    if (ActiveReceiveTask == null)
+                    {
+                        action?.Invoke();
+                    }
+                    else
+                    {
+                        //throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                    }
+                }
+            }
+            else
+            {
+                //throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+            }
+        }
+
+        /// <summary>
+        ///   The event responsible for processing unhandled exceptions thrown while this processor is running.
+        ///   Implementation is mandatory.
+        /// </summary>
+        ///
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
+        [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
+        public event Func<ExceptionReceivedEventArgs, Task> ProcessErrorAsync
+        {
+            add
+            {
+                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
+
+                if (_processErrorAsync != default)
+                {
+                    //throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+                }
+
+                //EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
+            }
+
+            remove
+            {
+                Argument.AssertNotNull(value, nameof(ProcessErrorAsync));
+
+                if (_processErrorAsync != value)
+                {
+                    //throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+                }
+
+                //EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
+            }
         }
     }
 }
