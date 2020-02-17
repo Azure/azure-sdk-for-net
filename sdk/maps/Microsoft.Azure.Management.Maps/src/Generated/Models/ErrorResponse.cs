@@ -16,34 +16,33 @@ namespace Microsoft.Azure.Management.Maps.Models
     using System.Linq;
 
     /// <summary>
-    /// This object is returned when an error occurs in the Maps API
+    /// The resource management error response.
     /// </summary>
-    public partial class Error
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public Error()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Error class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="code">Error code.</param>
-        /// <param name="message">If available, a human readable description of
-        /// the error.</param>
-        /// <param name="target">If available, the component generating the
-        /// error.</param>
-        /// <param name="details">If available, a list of additional details
-        /// about the error.</param>
-        public Error(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetailsItem> details = default(IList<ErrorDetailsItem>))
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        /// <param name="target">The error target.</param>
+        /// <param name="details">The error details.</param>
+        /// <param name="additionalInfo">The error additional info.</param>
+        public ErrorResponse(string code = default(string), string message = default(string), string target = default(string), IList<ErrorResponse> details = default(IList<ErrorResponse>), IList<ErrorAdditionalInfo> additionalInfo = default(IList<ErrorAdditionalInfo>))
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            AdditionalInfo = additionalInfo;
             CustomInit();
         }
 
@@ -53,28 +52,34 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets error code.
+        /// Gets the error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
-        /// Gets if available, a human readable description of the error.
+        /// Gets the error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets if available, the component generating the error.
+        /// Gets the error target.
         /// </summary>
         [JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
 
         /// <summary>
-        /// Gets if available, a list of additional details about the error.
+        /// Gets the error details.
         /// </summary>
         [JsonProperty(PropertyName = "details")]
-        public IList<ErrorDetailsItem> Details { get; private set; }
+        public IList<ErrorResponse> Details { get; private set; }
+
+        /// <summary>
+        /// Gets the error additional info.
+        /// </summary>
+        [JsonProperty(PropertyName = "additionalInfo")]
+        public IList<ErrorAdditionalInfo> AdditionalInfo { get; private set; }
 
     }
 }
