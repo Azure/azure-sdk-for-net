@@ -5,8 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Receiver;
-using Azure.Messaging.ServiceBus.Sender;
+using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -23,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
 
@@ -37,7 +36,17 @@ namespace Azure.Messaging.ServiceBus.Tests
                 }
 
                 // peek the messages
-                await using var receiver = new SessionReceiverClient(sessionId, TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var sessionSettings = new SessionOptions()
+                {
+                    Connection = new ServiceBusConnection(
+                        TestEnvironment.ServiceBusConnectionString,
+                        scope.QueueName),
+                    SessionId = sessionId
+                };
+                var receiver = new QueueReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    sessionSettings);
 
                 sequenceNumber ??= 1;
                 IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeBySequenceAsync(
@@ -70,15 +79,28 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
                 await sender.SendRangeAsync(sentMessages);
 
-                await using var receiver1 = new SessionReceiverClient(sessionId, TestEnvironment.ServiceBusConnectionString, scope.QueueName);
-                await using var receiver2 = new SessionReceiverClient(sessionId, TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var sessionSettings = new SessionOptions()
+                {
+                    Connection = new ServiceBusConnection(
+                        TestEnvironment.ServiceBusConnectionString,
+                        scope.QueueName),
+                    SessionId = sessionId
+                };
+                var receiver1 = new QueueReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    sessionSettings);
+                var receiver2 = new QueueReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    sessionSettings);
                 Dictionary<string, ServiceBusMessage> sentMessageIdToMsg = new Dictionary<string, ServiceBusMessage>();
 
                 // peek the messages
@@ -98,23 +120,37 @@ namespace Azure.Messaging.ServiceBus.Tests
         [TestCase(10, 5)]
         [TestCase(50, 1)]
         [TestCase(50, 10)]
-        public async Task PeekRange_IncrementsSequenceNmber(int messageCt, int peekCt)
+        public async Task PeekRange_IncrementsSequenceNumber(int messageCt, int peekCt)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var sender = new QueueSenderClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName);
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
                 await sender.SendRangeAsync(sentMessages);
 
-                await using var receiver = new SessionReceiverClient(sessionId, TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var sessionSettings = new SessionOptions()
+                {
+                    Connection = new ServiceBusConnection(
+                        TestEnvironment.ServiceBusConnectionString,
+                        scope.QueueName),
+                    SessionId = sessionId
+                };
+                var receiver = new QueueReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    sessionSettings);
+
 
                 long seq = 0;
                 for (int i = 0; i < messageCt / peekCt; i++)
                 {
                     IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeAsync(
                         maxMessages: peekCt);
+
 
                     await foreach (ServiceBusMessage msg in peekedMessages)
                     {
@@ -136,13 +172,24 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var sessionId = Guid.NewGuid().ToString();
                 // send the messages
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt, sessionId);
                 await sender.SendRangeAsync(sentMessages);
 
-                await using var receiver = new SessionReceiverClient(sessionId, TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var sessionSettings = new SessionOptions()
+                {
+                    Connection = new ServiceBusConnection(
+                        TestEnvironment.ServiceBusConnectionString,
+                        scope.QueueName),
+                    SessionId = sessionId
+                };
+                var receiver = new QueueReceiverClient(
+                    TestEnvironment.ServiceBusConnectionString,
+                    scope.QueueName,
+                    sessionSettings);
+
 
                 long seq = 0;
                 for (int i = 0; i < messageCt; i++)
@@ -159,12 +206,11 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         [Test]
-        [Ignore("Test is currently failing; investigation needed")]
         public async Task RoundRobinSessions()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
                 HashSet<string> sessions = new HashSet<string>() { "1", "2", "3" };
 
@@ -174,25 +220,33 @@ namespace Azure.Messaging.ServiceBus.Tests
                     await sender.SendRangeAsync(GetMessages(messageCt, session));
                 }
 
-                var receiverClient = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
-                var sessionId = "";
                 // create receiver not scoped to a specific session
                 for (int i = 0; i < 10; i++)
                 {
-                    SessionReceiverClient sessionClient = receiverClient.GetSessionReceiverClient();
-                    IAsyncEnumerable<ServiceBusMessage> peekedMessages = sessionClient.PeekRangeBySequenceAsync(
+                    var sessionSettings = new SessionOptions()
+                    {
+                        Connection = new ServiceBusConnection(
+                            TestEnvironment.ServiceBusConnectionString,
+                            scope.QueueName),
+                        SessionId = null
+                    };
+
+                    var receiver = new QueueReceiverClient(
+                        TestEnvironment.ServiceBusConnectionString,
+                        scope.QueueName,
+                        sessionSettings);
+                    IAsyncEnumerable<ServiceBusMessage> peekedMessages = receiver.PeekRangeBySequenceAsync(
                         fromSequenceNumber: 1,
                         maxMessages: 10);
 
                     await foreach (ServiceBusMessage peekedMessage in peekedMessages)
                     {
-                        Assert.AreEqual(sessionClient.SessionId, peekedMessage.SessionId);
+                        var sessionId = await receiver.Session.GetSessionId();
+                        Assert.AreEqual(sessionId, peekedMessage.SessionId);
                     }
-                    TestContext.Progress.WriteLine(sessionId);
-                    sessionId = sessionClient.SessionId;
 
-                    // Close the session client when we are done with it. Since the sessionClient doesn't own the underlying connection, the connection remains open, but the session link will be closed.
-                    await sessionClient.CloseAsync();
+                    // Close the receiver client when we are done with it. Since the sessionClient doesn't own the underlying connection, the connection remains open, but the session link will be closed.
+                    await receiver.CloseAsync();
                 }
             }
         }

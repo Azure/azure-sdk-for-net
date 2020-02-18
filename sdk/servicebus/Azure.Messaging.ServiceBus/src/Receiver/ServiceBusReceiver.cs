@@ -10,11 +10,13 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
-namespace Azure.Messaging.ServiceBus.Receiver
+namespace Azure.Messaging.ServiceBus.Core
 {
     /// <summary>
     ///   A client responsible for reading <see cref="ServiceBusMessage" /> from a specific entity
@@ -29,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
     ///   sometimes referred to as "Non-Epoch Consumers."
     /// </summary>
     ///
-    public abstract class ServiceBusReceiverClient : IAsyncDisposable
+    public abstract class ServiceBusReceiver : IAsyncDisposable
     {
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
@@ -50,13 +52,15 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         public ReceiveMode ReceiveMode { get; private set; }
 
+        internal bool IsSessionReceiver { get; set; }
+
         /// <summary>
         ///
         /// </summary>
-        public int PrefetchCount { get; }
+        public uint PrefetchCount { get; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusReceiverClient"/> has been closed.
+        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
         /// </summary>
         ///
         /// <value>
@@ -93,13 +97,44 @@ namespace Azure.Messaging.ServiceBus.Receiver
         internal TransportConsumer Consumer { get; }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///
+        /// </summary>
+        public ServiceBusSession Session { get; set; }
+
+        ///// <summary>
+        /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///// </summary>
+        /////
+        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
+        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
+        ///// <param name="sessionOptions"></param>
+        /////
+        ///// <remarks>
+        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        /////   passed only once, either as part of the connection string or separately.
+        ///// </remarks>
+        /////
+        //public ServiceBusReceiver(
+        //    string connectionString,
+        //    string entityName,
+        //    SessionOptions sessionOptions) :
+        //    this(
+        //        connectionString,
+        //        entityName,
+        //        sessionOptions,
+        //        new ServiceBusReceiverClientOptions())
+        //{
+        //}
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
         /// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
-        /// <param name="sessionId"></param>
+        /// <param name="sessionOptions"></param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
@@ -107,37 +142,96 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        internal ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             string connectionString,
             string entityName,
-            string sessionId,
+            SessionOptions sessionOptions,
             ServiceBusReceiverClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(connectionString, nameof(connectionString));
             Argument.AssertNotNull(clientOptions, nameof(clientOptions));
 
+            IsSessionReceiver = sessionOptions != null;
             OwnsConnection = true;
             Connection = new ServiceBusConnection(connectionString, entityName, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             ReceiveMode = clientOptions.ReceiveMode;
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, receiveMode: ReceiveMode, sessionId: sessionId);
+            Consumer = Connection.CreateTransportConsumer(
+                retryPolicy: RetryPolicy,
+                receiveMode: ReceiveMode,
+                prefetchCount: PrefetchCount,
+                sessionId: sessionOptions?.SessionId,
+                isSessionReceiver: IsSessionReceiver);
+            Session = new ServiceBusSession(
+                Consumer,
+                RetryPolicy);
         }
 
+        ///// <summary>
+        /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///// </summary>
+        /////
+        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
+        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
+        /////
+        ///// <remarks>
+        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        /////   passed only once, either as part of the connection string or separately.
+        ///// </remarks>
+        /////
+        //public ServiceBusReceiver(
+        //    string connectionString,
+        //    string entityName) :
+        //    this(
+        //        connectionString,
+        //        entityName,
+        //        null,
+        //        new ServiceBusReceiverClientOptions())
+        //{
+        //}
+
+        ///// <summary>
+        /////   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///// </summary>
+        /////
+        ///// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
+        ///// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
+        ///// <param name="clientOptions"></param>
+        /////
+        ///// <remarks>
+        /////   If the connection string is copied from the Service Bus entity itself, it will contain the name of the desired Service Bus entity,
+        /////   and can be used directly without passing the <paramref name="entityName" />.  The name of the Service Bus entity should be
+        /////   passed only once, either as part of the connection string or separately.
+        ///// </remarks>
+        /////
+        //public ServiceBusReceiver(
+        //    string connectionString,
+        //    string entityName,
+        //    ServiceBusReceiverClientOptions clientOptions) :
+        //    this(
+        //        connectionString,
+        //        entityName,
+        //        null,
+        //        clientOptions?.Clone() ?? new ServiceBusReceiverClientOptions())
+        //{
+        //}
+
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="entityName">The name of the specific Service Bus entity to associate the consumer with.</param>
         /// <param name="credential">The Azure managed identity credential to use for authorization.  Access controls may be specified by the Service Bus namespace or the requested Service Bus entity, depending on Azure configuration.</param>
-        /// <param name="sessionId"></param>
+        /// <param name="sessionOptions"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             string fullyQualifiedNamespace,
             string entityName,
             TokenCredential credential,
-            string sessionId,
+            SessionOptions sessionOptions,
             ServiceBusReceiverClientOptions clientOptions)
         {
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
@@ -145,41 +239,59 @@ namespace Azure.Messaging.ServiceBus.Receiver
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(clientOptions, nameof(clientOptions));
 
+            IsSessionReceiver = sessionOptions != null;
             OwnsConnection = true;
             Connection = new ServiceBusConnection(fullyQualifiedNamespace, entityName, credential, clientOptions.ConnectionOptions);
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             ReceiveMode = clientOptions.ReceiveMode;
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, receiveMode: ReceiveMode, sessionId:sessionId);
+            Consumer = Connection.CreateTransportConsumer(
+                retryPolicy: RetryPolicy,
+                receiveMode: ReceiveMode,
+                prefetchCount: PrefetchCount,
+                sessionId: sessionOptions?.SessionId,
+                isSessionReceiver: IsSessionReceiver);
+            Session = new ServiceBusSession(
+                Consumer,
+                RetryPolicy);
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
         /// <param name="connection">The <see cref="ServiceBusConnection" /> connection to use for communication with the Service Bus service.</param>
-        /// <param name="sessionId"></param>
+        /// <param name="sessionOptions"></param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal ServiceBusReceiverClient(
+        internal ServiceBusReceiver(
             ServiceBusConnection connection,
-            string sessionId,
+            SessionOptions sessionOptions,
             ServiceBusReceiverClientOptions clientOptions)
         {
             Argument.AssertNotNull(connection, nameof(connection));
             Argument.AssertNotNull(clientOptions, nameof(clientOptions));
 
+            IsSessionReceiver = sessionOptions != null;
             OwnsConnection = false;
             Connection = connection;
             RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
             ReceiveMode = clientOptions.ReceiveMode;
-            Consumer = Connection.CreateTransportConsumer(retryPolicy: RetryPolicy, receiveMode: ReceiveMode, sessionId: sessionId);
+            Consumer = Connection.CreateTransportConsumer(
+                retryPolicy: RetryPolicy,
+                receiveMode: ReceiveMode,
+                prefetchCount: PrefetchCount,
+                sessionId: sessionOptions?.SessionId,
+                isSessionReceiver: IsSessionReceiver);
+            Session = new ServiceBusSession(
+                Consumer,
+                RetryPolicy);
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiverClient"/> class.
+        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
         /// </summary>
         ///
-        protected ServiceBusReceiverClient()
+        protected ServiceBusReceiver()
         {
             OwnsConnection = false;
         }
@@ -194,7 +306,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
            int maxMessages,
            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiverClient));
+            Argument.AssertNotClosed(IsClosed, nameof(ServiceBusReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             try
@@ -214,24 +326,23 @@ namespace Azure.Messaging.ServiceBus.Receiver
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
+        ///// <summary>
+        ///// Get a SessionReceiverClient scoped to the ServiceBusReceiverClient entity and a specified session.
+        ///// Note once the SessionReceiverClient is created it will be scoped to only the specified session for its lifetime.
+        ///// </summary>
+        ///// <param name="sessionId">Session to receive messages from.</param>
+        ///// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and specified session.</returns>
+        //internal SessionReceiverClient GetSessionReceiverClient(string sessionId) =>
+        //    new SessionReceiverClient(Connection, sessionId);
 
-        /// <summary>
-        /// Get a SessionReceiverClient scoped to the ServiceBusReceiverClient entity and a specified session.
-        /// Note once the SessionReceiverClient is created it will be scoped to only the specified session for its lifetime.
-        /// </summary>
-        /// <param name="sessionId">Session to receive messages from.</param>
-        /// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and specified session.</returns>
-        public SessionReceiverClient GetSessionReceiverClient(string sessionId) =>
-            new SessionReceiverClient(Connection, sessionId);
-
-        /// <summary>
-        /// Get a SessionReceiverClient scoped to the current entity without specifying a particular session.
-        /// The broker will decide what session to use for operations. Note once the SessionReceiverClient is created,
-        /// it will be scoped to only one session for its lifetime.
-        /// </summary>
-        /// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and session determined by the broker.</returns>
-        public SessionReceiverClient GetSessionReceiverClient() =>
-            GetSessionReceiverClient(null);
+        ///// <summary>
+        ///// Get a SessionReceiverClient scoped to the current entity without specifying a particular session.
+        ///// The broker will decide what session to use for operations. Note once the SessionReceiverClient is created,
+        ///// it will be scoped to only one session for its lifetime.
+        ///// </summary>
+        ///// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and session determined by the broker.</returns>
+        //internal SessionReceiverClient GetSessionReceiverClient() =>
+        //    GetSessionReceiverClient(null);
 
         /// <summary>
         ///
@@ -253,7 +364,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <returns></returns>
         public virtual async Task<ServiceBusMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
+            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceInternal(null).GetAsyncEnumerator();
             await result.MoveNextAsync().ConfigureAwait(false);
             return result.Current;
         }
@@ -284,7 +395,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceAsync(fromSequenceNumber: 1, maxMessages);
+            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(fromSequenceNumber: null, maxMessages);
             await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
             {
                 yield return msg;
@@ -319,18 +430,25 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// </summary>
         /// <param name="fromSequenceNumber"></param>
         /// <param name="maxMessages"></param>
-        /// <param name="sessionId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async IAsyncEnumerable<ServiceBusMessage> PeekRangeBySequenceInternal(
             long? fromSequenceNumber,
             int maxMessages = 1,
-            string sessionId = null,
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            string receiveLinkName = "";
+            if (IsSessionReceiver)
+            {
+                // if this is a session receiver, the receive link must be open in order to peek messages
+                await RetryPolicy.RunOperation(
+                    async (timeout) => await Consumer.ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
+                    EntityName,
+                    Consumer.ConnectionScope,
+                    cancellationToken).ConfigureAwait(false);
+            }
 
+            string receiveLinkName = "";
             if (Consumer.ReceiveLink.TryGetOpenedObject(out ReceivingAmqpLink link))
             {
                 receiveLinkName = link.Name;
@@ -340,7 +458,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
                 RetryPolicy,
                 fromSequenceNumber,
                 maxMessages,
-                sessionId,
+                await Session.GetSessionId().ConfigureAwait(false),
                 receiveLinkName,
                 cancellationToken)
                 .ConfigureAwait(false))
@@ -433,7 +551,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// <remarks>
         /// A lock token can be found in <see cref="ServiceBusMessage.SystemPropertiesCollection.LockToken"/>,
         /// only when <see cref="ReceiveMode"/> is set to <see cref="ReceiveMode.PeekLock"/>.
-        /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiverClient"/>, with the corresponding path.
+        /// In order to receive a message from the deadletter queue, you will need a new <see cref="ServiceBusReceiver"/>, with the corresponding path.
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
@@ -551,7 +669,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             IsClosed = true;
 
             var clientHash = GetHashCode().ToString();
-            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiverClient), EntityName, clientHash);
+            ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusReceiver), EntityName, clientHash);
 
             // Attempt to close the transport consumer.  In the event that an exception is encountered,
             // it should not impact the attempt to close the connection, assuming ownership.
@@ -564,7 +682,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EntityName, clientHash, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiver), EntityName, clientHash, ex.Message);
                 transportConsumerException = ex;
             }
 
@@ -580,13 +698,13 @@ namespace Azure.Messaging.ServiceBus.Receiver
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiverClient), EntityName, clientHash, ex.Message);
+                ServiceBusEventSource.Log.ClientCloseError(typeof(ServiceBusReceiver), EntityName, clientHash, ex.Message);
                 transportConsumerException = null;
                 throw;
             }
             finally
             {
-                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusReceiverClient), EntityName, clientHash);
+                ServiceBusEventSource.Log.ClientCloseComplete(typeof(ServiceBusReceiver), EntityName, clientHash);
             }
 
             // If there was an active exception pending from closing the individual
@@ -599,7 +717,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         }
 
         /// <summary>
-        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiverClient" />,
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />,
         ///   including ensuring that the client itself has been closed.
         /// </summary>
         ///
@@ -678,7 +796,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
         /// Use  cref="RegisterSessionHandler(Func{IMessageSession,Message,CancellationToken,Task}, SessionHandlerOptions)"/> to configure the settings of the pump.</remarks>
         // TODO remove if won't be used
 
-        public void RegisterSessionHandler(Func<SessionReceiverClient, ServiceBusMessage, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
+        internal void RegisterSessionHandler(Func<ServiceBusReceiver, ServiceBusMessage, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
         {
             var sessionHandlerOptions = new SessionHandlerOptions(exceptionReceivedHandler);
             this.RegisterSessionHandler(handler, sessionHandlerOptions);
@@ -692,18 +810,10 @@ namespace Azure.Messaging.ServiceBus.Receiver
         ///  cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="ServiceBusMessage"/></param>
         /// <param name="sessionHandlerOptions">Options used to configure the settings of the session pump.</param>
         /// <remarks>Enable prefetch to speed up the receive rate. </remarks>
-        public void RegisterSessionHandler(Func<SessionReceiverClient, ServiceBusMessage, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
+        internal void RegisterSessionHandler(Func<ServiceBusReceiver, ServiceBusMessage, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
         {
             // TODO remove if won't be used
 
         }
-
-        internal RetriableContext CreateRetriableContext(CancellationToken cancellationToken) =>
-             new RetriableContext(
-                Consumer.ConnectionScope,
-                new Stopwatch(),
-                RetryPolicy,
-                EntityName,
-                cancellationToken);
     }
 }

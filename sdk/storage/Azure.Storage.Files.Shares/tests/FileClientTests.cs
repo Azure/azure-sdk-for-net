@@ -325,7 +325,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.CreateAsync(maxSize: Constants.KB),
-                e => Assert.AreEqual("ParentNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ParentNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -403,7 +403,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -605,7 +605,7 @@ namespace Azure.Storage.Files.Shares.Test
                 file.GetPropertiesAsync(),
                 e =>
                 {
-                    Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]);
+                    Assert.AreEqual("ResourceNotFound", e.ErrorCode);
                     if (Mode != RecordedTestMode.Playback)
                     {
                         // The MockResponse type doesn't supply the ReasonPhrase we're
@@ -819,7 +819,7 @@ namespace Azure.Storage.Files.Shares.Test
                         ContentHash = constants.ContentMD5,
                         ContentType = constants.ContentType
                     }),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -883,7 +883,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.DeleteAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1130,7 +1130,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.StartCopyAsync(sourceUri: s_invalidUri),
-                e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
         }
 
         [Test]
@@ -1273,7 +1273,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.AbortCopyAsync("id"),
-                e => Assert.AreEqual("InvalidQueryParameterValue", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("InvalidQueryParameterValue", e.ErrorCode));
         }
 
         [Test]
@@ -1581,7 +1581,7 @@ namespace Azure.Storage.Files.Shares.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.GetRangeListAsync(range: new HttpRange(0, Constants.MB)),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1669,7 +1669,7 @@ namespace Azure.Storage.Files.Shares.Test
                 file.UploadRangeAsync(
                     range: new HttpRange(Constants.KB, Constants.KB),
                     content: stream),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
             }
         }
 
@@ -1810,7 +1810,7 @@ namespace Azure.Storage.Files.Shares.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 file.ClearRangeAsync(
                     range: new HttpRange(Constants.KB, Constants.KB)),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]

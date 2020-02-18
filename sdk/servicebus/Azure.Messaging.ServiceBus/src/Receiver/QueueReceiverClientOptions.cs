@@ -3,7 +3,7 @@
 
 using Azure.Messaging.ServiceBus.Core;
 
-namespace Azure.Messaging.ServiceBus.Receiver
+namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
     ///
