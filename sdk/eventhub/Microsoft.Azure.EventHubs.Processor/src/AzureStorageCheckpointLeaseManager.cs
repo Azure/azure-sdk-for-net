@@ -261,8 +261,8 @@ namespace Microsoft.Azure.EventHubs.Processor
                 }
                 else
                 {
-                    // Throw TaskCancelledException, caller will log the failures appropriately.
-                    throw new TaskCanceledException();
+                    // Throw OperationCanceledException, caller will log the failures appropriately.
+                    throw new OperationCanceledException();
                 }
 
                 foreach (CloudBlockBlob leaseBlob in leaseBlobsResult.Results)
