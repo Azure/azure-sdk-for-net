@@ -1723,7 +1723,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test got flaky after Partition Load Balancer introduction.")]
+        [Ignore("Flaky test. (Tracked by: #10015)")]
         public async Task PartitionClosingAsyncIsCalledWithOwnershipLostReasonWhenStoppingTheFailedProcessor()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -1879,7 +1879,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Failing test.")]
+        [Ignore("Failing test. (Tracked by: #10015)")]
         public async Task PartitionClosingAsyncTokenIsCanceledWhenStopProcessingAsyncIsCalled()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
@@ -2175,7 +2175,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [Ignore("Test is failing because there is no partition information being passed from the Partition Load Balancer to the processor.")]
+        [Ignore("Failing test. (Tracked by: #10015)")]
         public async Task ProcessErrorAsyncIsTriggeredWithCorrectArgumentsWhenOwnershipClaimFails()
         {
             var mockConsumer = new Mock<EventHubConsumerClient>("consumerGroup", Mock.Of<EventHubConnection>(), default);
