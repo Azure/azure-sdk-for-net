@@ -418,22 +418,41 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
-            try
+            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                return await CreateInternal(
-                    httpHeaders,
-                    metadata,
-                    conditions,
-                    async,
-                    cancellationToken,
-                    $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
-                    .ConfigureAwait(false);
-            }
-            catch (RequestFailedException storageRequestFailedException)
-            when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
-            {
-                return default;
+                Pipeline.LogMethodEnter(
+                    nameof(AppendBlobClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(httpHeaders)}: {httpHeaders}");
+                var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+                try
+                {
+                    Response<BlobContentInfo> response = await CreateInternal(
+                        httpHeaders,
+                        metadata,
+                        conditions,
+                        async,
+                        cancellationToken,
+                        $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
+                        .ConfigureAwait(false);
+
+                    return response;
+                }
+                catch (RequestFailedException storageRequestFailedException)
+                when (storageRequestFailedException.ErrorCode == BlobErrorCode.BlobAlreadyExists)
+                {
+                    return default;
+                }
+                catch (Exception ex)
+                {
+                    Pipeline.LogException(ex);
+                    throw;
+                }
+                finally
+                {
+                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                }
             }
         }
 
