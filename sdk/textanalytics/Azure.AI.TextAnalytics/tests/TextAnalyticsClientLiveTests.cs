@@ -847,7 +847,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Name));
                 Assert.IsNotNull(entity.DataSource);
-                Assert.IsNotNull(entity.Id);
+                Assert.IsNotNull(entity.DataSourceEntityId);
                 Assert.IsNotNull(entity.Language);
                 Assert.IsNotNull(entity.Url);
                 Assert.IsNotNull(entity.Matches);

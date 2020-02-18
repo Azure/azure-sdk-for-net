@@ -14,10 +14,10 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public readonly struct LinkedEntity
     {
-        internal LinkedEntity(string name, string id, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
+        internal LinkedEntity(string name, string dataSourceEntityId, string language, string dataSource, Uri url, IEnumerable<LinkedEntityMatch> matches)
         {
             Name = name;
-            Id = id;
+            DataSourceEntityId = dataSourceEntityId;
             Language = language;
             DataSource = dataSource;
             Url = url;
@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Gets the unique identifier of the entity in the data source.
         /// </summary>
-        public string Id { get; }
+        public string DataSourceEntityId { get; }
 
         /// <summary>
         /// Gets the language used in the data source.
