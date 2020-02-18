@@ -3,13 +3,13 @@
 
 using System;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
-namespace Microsoft.AspNetCore.DataProtection.Azure.Storage.Blob
+namespace Azure.AspNetCore.DataProtection.Blobs.Tests
 {
     public class AzureDataProtectionBuilderExtensionsTest
     {

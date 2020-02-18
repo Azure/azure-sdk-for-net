@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.AspNetCore.DataProtection;
+using Azure.AspNetCore.DataProtection.Blobs;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 

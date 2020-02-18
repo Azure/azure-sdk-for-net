@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.Storage.Blobs.AspNetCore.DataProtection.csproj" />
+    <ProjectReference Include="..\src\Azure.AspNetCore.DataProtection.Blobs.csproj" />
   </ItemGroup>
 
 </Project>

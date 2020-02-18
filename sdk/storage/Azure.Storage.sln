@@ -113,9 +113,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Blobs.Batch.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCompat", "..\..\eng\ApiCompat\ApiCompat.csproj", "{16260507-C87E-44D2-883F-8E338B7A519F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.AspNetCore.DataProtection", "Azure.Storage.Blobs.AspNetCore.DataProtection\src\Azure.Storage.Blobs.AspNetCore.DataProtection.csproj", "{E6B80592-AF36-4D07-8655-963A65103FDF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AspNetCore.DataProtection.Blobs", "Azure.AspNetCore.DataProtection.Blobs\src\Azure.AspNetCore.DataProtection.Blobs.csproj", "{E6B80592-AF36-4D07-8655-963A65103FDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs.AspNetCore.DataProtection.Tests", "Azure.Storage.Blobs.AspNetCore.DataProtection\tests\Azure.Storage.Blobs.AspNetCore.DataProtection.Tests.csproj", "{0DB3D27F-8C6F-4CFE-9059-891F63EFBF4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AspNetCore.DataProtection.Blobs.Tests", "Azure.AspNetCore.DataProtection.Blobs\tests\Azure.AspNetCore.DataProtection.Blobs.Tests.csproj", "{0DB3D27F-8C6F-4CFE-9059-891F63EFBF4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
