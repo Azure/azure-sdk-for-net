@@ -185,10 +185,10 @@ namespace Azure.Messaging.ServiceBus.Receiver
         }
 
         /// <summary>
-        ///
+        ///  Receives a batch of <see cref="ServiceBusMessage" /> from the entity using <see cref="ReceiveMode"/> mode.
         /// </summary>
-        /// <param name="maxMessages"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="maxMessages">The maximum number of messages that will be received.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns></returns>
         public virtual async IAsyncEnumerable<ServiceBusMessage> ReceiveBatchAsync(
            int maxMessages,
@@ -206,7 +206,7 @@ namespace Azure.Messaging.ServiceBus.Receiver
             }
             finally
             {
-                // TODO: Add log - SeviceBusEventSource.Log.ReceiveRangeCompleteAsync();
+                // TODO: Add log - SeviceBusEventSource.Log.ReceiveBatchAsyncComplete();
             }
 
             // If cancellation was requested, then surface the expected exception.
