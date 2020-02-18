@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Samples
                 },
                 new DetectLanguageInput("4", ":) :( :D")
                 {
-                     CountryHint = "us",
+                     CountryHint = DetectLanguageInput.None,
                 }
             };
 
