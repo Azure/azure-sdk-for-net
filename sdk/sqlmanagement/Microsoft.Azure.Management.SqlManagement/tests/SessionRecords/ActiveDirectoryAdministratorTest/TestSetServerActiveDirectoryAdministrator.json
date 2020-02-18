@@ -1142,6 +1142,8 @@
   },
   "Variables": {
     "SubscriptionId": "eb951d38-18d9-46d4-9a0c-f694b148c76a",
-    "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+    "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+    "ObjectId": "b4d0c215-779e-48b5-a12a-9bdf9c9fdaaf",
+    "DefaultLocation": "West Europe"
   }
 }
