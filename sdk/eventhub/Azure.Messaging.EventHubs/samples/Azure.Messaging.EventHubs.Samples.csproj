@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Azure.Messaging.EventHubs.Samples</AssemblyName>
     <Version>1.0.0</Version>
