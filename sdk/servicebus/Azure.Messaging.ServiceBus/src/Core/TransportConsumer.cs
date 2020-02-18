@@ -67,5 +67,13 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         public abstract Task CloseAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get the session Id corresponding to this consumer.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public abstract Task<string> GetSessionId(CancellationToken cancellationToken = default);
+
     }
 }

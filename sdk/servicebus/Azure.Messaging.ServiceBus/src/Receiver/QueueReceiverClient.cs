@@ -23,14 +23,14 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         protected QueueReceiverClient(){}
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
 
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -52,7 +52,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
@@ -65,7 +65,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the Service Bus entity name and the shared key properties are contained in this connection string.</param>
@@ -73,7 +73,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
@@ -97,7 +97,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=telemetry-hub".
         ///
         ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that
@@ -113,7 +113,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -135,7 +135,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="connectionString">The connection string to use for connecting to the Service Bus namespace; it is expected that the shared key properties are contained in this connection string, but not the Service Bus entity name.</param>
@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ServiceBusReceiver"/> class.
+        ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Service Bus namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>

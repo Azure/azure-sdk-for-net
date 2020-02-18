@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -315,5 +316,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan firstOption,
             TimeSpan secondOption) =>
             (firstOption < secondOption) ? firstOption : secondOption;
+
+        /// <summary>
+        /// Get the session Id corresponding to this consumer
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task<string> GetSessionId(CancellationToken cancellationToken = default)
+        {
+            if (!_isSessionReceiver)
+            {
+                return null;
+            }
+            ReceivingAmqpLink openedLink = null;
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                openedLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
+                EntityName,
+                ConnectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+            var source = (Source)openedLink.Settings.Source;
+            source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
+            return sessionId;
+        }
+
     }
 }

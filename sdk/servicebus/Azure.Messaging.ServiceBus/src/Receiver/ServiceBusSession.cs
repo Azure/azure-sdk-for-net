@@ -20,16 +20,13 @@ namespace Azure.Messaging.ServiceBus
     {
         private readonly TransportConsumer _consumer;
         private readonly ServiceBusRetryPolicy _retryPolicy;
-        private readonly bool _isSessionful;
 
         internal ServiceBusSession(
             TransportConsumer consumer,
-            ServiceBusRetryPolicy retryPolicy,
-            bool isSessionful)
+            ServiceBusRetryPolicy retryPolicy)
         {
             _consumer = consumer;
             _retryPolicy = retryPolicy;
-            _isSessionful = isSessionful;
         }
 
         /// <summary>
@@ -68,23 +65,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public virtual async Task<string> GetSessionId(CancellationToken cancellationToken = default)
-        {
-            if (!_isSessionful)
-            {
-                return null;
-            }
-            ReceivingAmqpLink openedLink = null;
-            await _retryPolicy.RunOperation(
-                async () =>
-                openedLink = await _consumer.ReceiveLink.GetOrCreateAsync(_retryPolicy.Options.TryTimeout).ConfigureAwait(false),
-                _consumer.EntityName,
-                _consumer.ConnectionScope,
-                cancellationToken).ConfigureAwait(false);
-
-            var source = (Source)openedLink.Settings.Source;
-            source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
-            return sessionId;
-        }
+        public virtual async Task<string> GetSessionId(CancellationToken cancellationToken = default) =>
+            await _consumer.GetSessionId(cancellationToken).ConfigureAwait(false);
     }
 }

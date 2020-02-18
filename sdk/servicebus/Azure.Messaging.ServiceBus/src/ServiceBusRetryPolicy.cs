@@ -38,13 +38,6 @@ namespace Azure.Messaging.ServiceBus
         public abstract TimeSpan CalculateTryTimeout(int attemptCount);
 
         /// <summary>
-        ///   The set of options responsible for configuring the retry
-        ///   behavior.
-        /// </summary>
-        ///
-        public abstract ServiceBusRetryOptions Options { get; }
-
-        /// <summary>
         ///   Calculates the amount of time to wait before another attempt should be made.
         /// </summary>
         ///
@@ -94,7 +87,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task RunOperation(
-            Func<Task> operation,
+            Func<TimeSpan, Task> operation,
             string entityName,
             TransportConnectionScope scope,
             CancellationToken cancellationToken)
@@ -110,7 +103,7 @@ namespace Azure.Messaging.ServiceBus
 
                     try
                     {
-                        await operation().ConfigureAwait(false);
+                        await operation(tryTimeout).ConfigureAwait(false);
                         return;
                     }
 

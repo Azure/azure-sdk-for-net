@@ -120,7 +120,7 @@ namespace Azure.Messaging.ServiceBus.Core
             long? ownerLevel,
             uint? prefetchCount,
             string sessionId,
-            bool isSessionReceiver = default);
+            bool isSessionReceiver);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

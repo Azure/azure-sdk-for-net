@@ -187,7 +187,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken = default)
         {
             IEnumerable<ServiceBusMessage> messages = null;
-            Task peekTask = retryPolicy.RunOperation(async () =>
+            Task peekTask = retryPolicy.RunOperation(async (timeout) =>
             {
                 messages = await PeekInternal(
                     retryPolicy,
@@ -195,6 +195,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     messageCount,
                     sessionId,
                     receiveLinkName,
+                    timeout,
                     cancellationToken).ConfigureAwait(false);
             },
             EntityName,
@@ -212,23 +213,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messageCount"></param>
         /// <param name="sessionId"></param>
         /// <param name="receiveLinkName"></param>
+        /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<IEnumerable<ServiceBusMessage>> PeekInternal(
             ServiceBusRetryPolicy retryPolicy,
             long? fromSequenceNumber,
-            int messageCount = 1,
-            string sessionId = null,
-            string receiveLinkName = null,
+            int messageCount,
+            string sessionId,
+            string receiveLinkName,
+            TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
-            TimeSpan timeSpan = retryPolicy.Options.TryTimeout;
             var stopWatch = new Stopwatch();
             stopWatch.Start();
 
             AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
                     ManagementConstants.Operations.PeekMessageOperation,
-                    timeSpan,
+                    timeout,
                     null);
             await AquireAccessTokenAsync(cancellationToken).ConfigureAwait(false);
 
@@ -248,13 +250,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
                 UseMinimum(ConnectionScope.SessionTimeout,
-                timeSpan.CalculateRemaining(stopWatch.Elapsed)))
+                timeout.CalculateRemaining(stopWatch.Elapsed)))
                 .ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             using AmqpMessage responseAmqpMessage = await link.RequestAsync(
                 amqpRequestMessage.AmqpMessage,
-                timeSpan.CalculateRemaining(stopWatch.Elapsed))
+                timeout.CalculateRemaining(stopWatch.Elapsed))
                 .ConfigureAwait(false);
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -305,12 +307,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string receiveLinkName = null,
             CancellationToken cancellationToken = default)
         {
-            Task cancelMessageTask = retryPolicy.RunOperation(async () =>
+            Task cancelMessageTask = retryPolicy.RunOperation(async (timeout) =>
             {
                 await CancelScheduledMessageInternal(
                     sequenceNumber,
                     retryPolicy,
                     receiveLinkName,
+                    timeout,
                     cancellationToken).ConfigureAwait(false);
             },
             EntityName,
@@ -325,97 +328,51 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="sequenceNumber"></param>
         /// <param name="retryPolicy"></param>
         /// <param name="receiveLinkName"></param>
+        /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task CancelScheduledMessageInternal(
             long sequenceNumber,
             ServiceBusRetryPolicy retryPolicy,
-            string receiveLinkName = null,
+            string receiveLinkName,
+            TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
-            var failedAttemptCount = 0;
             var stopWatch = Stopwatch.StartNew();
 
-            try
+            var request = AmqpRequestMessage.CreateRequest(
+                ManagementConstants.Operations.CancelScheduledMessageOperation,
+                timeout,
+                null);
+
+            if (receiveLinkName != null)
             {
-                var tryTimeout = retryPolicy.CalculateTryTimeout(0);
-
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    try
-                    {
-                        var request = AmqpRequestMessage.CreateRequest(
-                            ManagementConstants.Operations.CancelScheduledMessageOperation,
-                            tryTimeout,
-                            null);
-
-                        if (receiveLinkName != null)
-                        {
-                            request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLinkName;
-                        }
-
-                        request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
-
-                        RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
-                                UseMinimum(ConnectionScope.SessionTimeout,
-                                tryTimeout.CalculateRemaining(stopWatch.Elapsed)))
-                                .ConfigureAwait(false);
-
-                        using AmqpMessage response = await link.RequestAsync(
-                            request.AmqpMessage,
-                            tryTimeout.CalculateRemaining(stopWatch.Elapsed))
-                            .ConfigureAwait(false);
-
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-                        stopWatch.Stop();
-                        AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
-
-
-                        if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
-                        {
-                            throw new Exception();
-                            //throw response.ToMessagingContractException();
-                        }
-                        return;
-                    }
-
-                    catch (Exception ex)
-                    {
-                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
-                        // Otherwise, mark the exception as active and break out of the loop.
-
-                        ++failedAttemptCount;
-                        TimeSpan? retryDelay = retryPolicy.CalculateRetryDelay(ex, failedAttemptCount);
-
-                        if (retryDelay.HasValue && !ConnectionScope.IsDisposed && !cancellationToken.IsCancellationRequested)
-                        {
-                            ServiceBusEventSource.Log.CancelScheduledMessageError(EntityName, ex.Message);
-                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
-
-                            tryTimeout = retryPolicy.CalculateTryTimeout(failedAttemptCount);
-                            stopWatch.Reset();
-                        }
-                        else
-                        {
-                            throw ex;
-                        }
-                    }
-                }
-                // If no value has been returned nor exception thrown by this point,
-                // then cancellation has been requested.
-
-                throw new TaskCanceledException();
+                request.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLinkName;
             }
-            catch (Exception ex)
+
+            request.Map[ManagementConstants.Properties.SequenceNumbers] = new[] { sequenceNumber };
+
+            RequestResponseAmqpLink link = await ManagementLink.GetOrCreateAsync(
+                    UseMinimum(ConnectionScope.SessionTimeout,
+                    timeout.CalculateRemaining(stopWatch.Elapsed)))
+                    .ConfigureAwait(false);
+
+            using AmqpMessage response = await link.RequestAsync(
+                request.AmqpMessage,
+                timeout.CalculateRemaining(stopWatch.Elapsed))
+                .ConfigureAwait(false);
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+            stopWatch.Stop();
+            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(response);
+
+
+            if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
             {
-                ServiceBusEventSource.Log.CancelScheduledMessageError(EntityName, ex.Message);
-                throw;
+                throw new Exception();
+                //throw response.ToMessagingContractException();
             }
-            finally
-            {
-                stopWatch.Stop();
-                ServiceBusEventSource.Log.CancelScheduledMessageComplete(EntityName);
-            }
+            return;
         }
 
         /// <summary>
@@ -433,12 +390,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CancellationToken cancellationToken = default)
         {
             long sequenceNumber = 0;
-            Task scheduleTask = retryPolicy.RunOperation(async () =>
+            Task scheduleTask = retryPolicy.RunOperation(async (timeout) =>
             {
                 sequenceNumber = await ScheduleMessageInternal(
                     message,
                     retryPolicy,
                     receiveLinkName,
+                    timeout,
                     cancellationToken).ConfigureAwait(false);
             },
             EntityName,
@@ -454,16 +412,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="message"></param>
         /// <param name="retryPolicy"></param>
         /// <param name="receiveLinkName"></param>
+        /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         internal async Task<long> ScheduleMessageInternal(
             ServiceBusMessage message,
             ServiceBusRetryPolicy retryPolicy,
-            string receiveLinkName = null,
+            string receiveLinkName,
+            TimeSpan timeout,
             CancellationToken cancellationToken = default)
         {
             var stopWatch = Stopwatch.StartNew();
-            TimeSpan timeout = retryPolicy.Options.TryTimeout;
 
             using (AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message))
             {

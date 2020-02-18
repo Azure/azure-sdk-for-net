@@ -31,7 +31,7 @@ namespace Azure.Messaging.ServiceBus.Core
     ///   sometimes referred to as "Non-Epoch Consumers."
     /// </summary>
     ///
-    public class ServiceBusReceiver : IAsyncDisposable
+    public abstract class ServiceBusReceiver : IAsyncDisposable
     {
         /// <summary>
         ///   The fully qualified Service Bus namespace that the consumer is associated with.  This is likely
@@ -163,8 +163,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 isSessionReceiver: IsSessionReceiver);
             Session = new ServiceBusSession(
                 Consumer,
-                RetryPolicy,
-                sessionOptions != null);
+                RetryPolicy);
         }
 
         ///// <summary>
@@ -251,8 +250,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 isSessionReceiver: IsSessionReceiver);
             Session = new ServiceBusSession(
                 Consumer,
-                RetryPolicy,
-                sessionOptions != null);
+                RetryPolicy);
         }
 
         /// <summary>
@@ -283,8 +281,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 isSessionReceiver: IsSessionReceiver);
             Session = new ServiceBusSession(
                 Consumer,
-                RetryPolicy,
-                sessionOptions != null);
+                RetryPolicy);
         }
 
         /// <summary>
@@ -429,7 +426,7 @@ namespace Azure.Messaging.ServiceBus.Core
             {
                 // if this is a session receiver, the receive link must be open in order to peek messages
                 await RetryPolicy.RunOperation(
-                    async () => await Consumer.ReceiveLink.GetOrCreateAsync(RetryPolicy.Options.TryTimeout).ConfigureAwait(false),
+                    async (timeout) => await Consumer.ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
                     EntityName,
                     Consumer.ConnectionScope,
                     cancellationToken).ConfigureAwait(false);
