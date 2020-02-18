@@ -4,7 +4,7 @@
 - Renamed type `SentimentScorePerLabel` to `SentimentConfidenceScorePerLabel`.
 - In both `DocumentSentiment` and `SentenceSentiment` property `SentimentScores` has been renamed to `ConfidenceScores`.
 - In `LinkedEntity`, property `Id` has been renamed to `DataSourceEntityId`.
-- Added `DetectedLanguageInput.None` for user convenience, instead of passing empty string to `CountryHint`.
+- Added `DetectLanguageInput.None` for user convenience, instead of passing empty string to `CountryHint`.
 
 ## 1.0.0-preview.2 (2020-02-11)
 ### Breaking changes
