@@ -138,7 +138,7 @@
 
     <!-- Extension packages -->
     <PackageReference Update="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
-    <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="2.1.0" />
+    <PackageReference Update="Microsoft.AspNetCore.Server.WebListener" Version="1.1.0" />
   
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.0.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
