@@ -521,19 +521,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         /// <summary>
         ///   Creates a consumer strongly aligned with the active protocol and transport, responsible
-        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity partition, in the context
-        ///   of a specific consumer group.
-        ///
-        ///   A consumer may be exclusive, which asserts ownership over the partition for the consumer
-        ///   group to ensure that only one consumer from that group is reading the from the partition.
-        ///   These exclusive consumers are sometimes referred to as "Epoch Consumers."
-        ///
-        ///   A consumer may also be non-exclusive, allowing multiple consumers from the same consumer
-        ///   group to be actively reading events from the partition.  These non-exclusive consumers are
-        ///   sometimes referred to as "Non-epoch Consumers."
-        ///
-        ///   Designating a consumer as exclusive may be specified by setting the />.
-        ///   When <c>null</c>, consumers are created as non-exclusive.
+        ///   for reading <see cref="ServiceBusMessage" /> from a specific Service Bus entity.
         /// </summary>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>

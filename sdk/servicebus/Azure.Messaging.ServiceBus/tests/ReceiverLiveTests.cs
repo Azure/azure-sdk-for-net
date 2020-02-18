@@ -82,7 +82,5 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.IsNull(message.Result);
             }
         }
-
-
     }
 }
