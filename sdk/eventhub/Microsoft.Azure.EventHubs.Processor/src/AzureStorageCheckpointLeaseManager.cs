@@ -241,13 +241,29 @@ namespace Microsoft.Azure.EventHubs.Processor
 
             do
             {
-                var leaseBlobsResult = await this.consumerGroupDirectory.ListBlobsSegmentedAsync(
+                var listBlobsTask = this.consumerGroupDirectory.ListBlobsSegmentedAsync(
                     true,
                     BlobListingDetails.Metadata,
                     null,
                     continuationToken,
                     this.defaultRequestOptions,
-                    this.operationContext).ConfigureAwait(false);
+                    this.operationContext);
+
+                // ListBlobsSegmentedAsync honors neither timeout settings in request options nor cancellation token and thus intermittently hangs.
+                // This provides a workaround until we have storage.blob library fixed.
+                await Task.WhenAny(listBlobsTask, Task.Delay(this.LeaseRenewInterval)).ConfigureAwait(false);
+
+                BlobResultSegment leaseBlobsResult;
+
+                if (listBlobsTask.IsCompleted)
+                {
+                    leaseBlobsResult = await listBlobsTask;
+                }
+                else
+                {
+                    // Throw TaskCancelledException, caller will log the failures appropriately.
+                    throw new TaskCanceledException();
+                }
 
                 foreach (CloudBlockBlob leaseBlob in leaseBlobsResult.Results)
                 {
