@@ -10,7 +10,6 @@ using Microsoft.Azure.Management.EventHub;
 using Microsoft.Azure.Management.EventHub.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest;
-using Microsoft.Rest.Azure;
 
 namespace Azure.Messaging.EventHubs.Tests
 {

@@ -12,6 +12,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Storage.Blobs;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -1052,6 +1053,136 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(ownedPartitionsCountSnapshot.Sum(), Is.EqualTo(partitions));
                 }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorDoesNotProcessCheckpointedEventsAgain()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = TestEnvironment.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var firstEventBatch = Enumerable
+                    .Range(0, 20)
+                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"First event batch: { index }")))
+                    .ToList();
+
+                var secondEventBatch = Enumerable
+                    .Range(0, 10)
+                    .Select(index => new EventData(Encoding.UTF8.GetBytes($"Second event batch: { index }")))
+                    .ToList();
+
+                var completionSource = new TaskCompletionSource<bool>();
+                var firstBatchReceivedEventsCount = 0;
+
+                var checkpointStorage = new MockCheckPointStorage();
+                var firstProcessor = new EventProcessorClient(checkpointStorage, EventHubConsumerClient.DefaultConsumerGroupName,
+                    TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, () => new EventHubConnection(connectionString), default);
+
+                firstProcessor.ProcessEventAsync += async eventArgs =>
+                {
+                    if (++firstBatchReceivedEventsCount == firstEventBatch.Count)
+                    {
+                        await eventArgs.UpdateCheckpointAsync();
+                        completionSource.SetResult(true);
+                    }
+                };
+
+                firstProcessor.ProcessErrorAsync += eventArgs => Task.CompletedTask;
+
+                await using (var producer = new EventHubProducerClient(connectionString))
+                {
+                    using var batch = await producer.CreateBatchAsync();
+
+                    foreach (var eventData in firstEventBatch)
+                    {
+                        batch.TryAdd(eventData);
+                    }
+
+                    await producer.SendAsync(batch);
+                }
+
+                // Establish timed cancellation to ensure that the test doesn't hang.
+
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(TimeSpan.FromMinutes(5));
+
+                await firstProcessor.StartProcessingAsync(cancellationSource.Token);
+
+                while (!completionSource.Task.IsCompleted
+                    && !cancellationSource.IsCancellationRequested)
+                {
+                    await Task.Delay(25);
+                }
+
+                await firstProcessor.StopProcessingAsync(cancellationSource.Token);
+
+                await using (var producer = new EventHubProducerClient(connectionString))
+                {
+                    using var batch = await producer.CreateBatchAsync();
+
+                    foreach (var eventData in secondEventBatch)
+                    {
+                        batch.TryAdd(eventData);
+                    }
+
+                    await producer.SendAsync(batch);
+                }
+
+                completionSource = new TaskCompletionSource<bool>();
+                var secondBatchReceivedEvents = new List<EventData>();
+
+                var secondProcessor = new EventProcessorClient(checkpointStorage, EventHubConsumerClient.DefaultConsumerGroupName,
+                    TestEnvironment.FullyQualifiedNamespace, scope.EventHubName, () => new EventHubConnection(connectionString), default);
+
+                secondProcessor.ProcessEventAsync += eventArgs =>
+                {
+                    secondBatchReceivedEvents.Add(eventArgs.Data);
+
+                    if (secondBatchReceivedEvents.Count == firstEventBatch.Count)
+                    {
+                        completionSource.SetResult(true);
+                    }
+
+                    return Task.CompletedTask;
+                };
+
+                var wasErrorHandlerCalled = false;
+
+                secondProcessor.ProcessErrorAsync += eventArgs =>
+                {
+                    wasErrorHandlerCalled = true;
+                    return Task.CompletedTask;
+                };
+
+                await secondProcessor.StartProcessingAsync(cancellationSource.Token);
+
+                while (!completionSource.Task.IsCompleted
+                    && !cancellationSource.IsCancellationRequested)
+                {
+                    await Task.Delay(25);
+                }
+
+                await secondProcessor.StopProcessingAsync(cancellationSource.Token);
+
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The processors should have stopped without cancellation.");
+                Assert.That(wasErrorHandlerCalled, Is.False, "No errors should have happened while resuming from checkpoint.");
+
+                var index = 0;
+
+                foreach (var eventData in secondBatchReceivedEvents)
+                {
+                    Assert.That(eventData.IsEquivalentTo(secondEventBatch[index]), Is.True, "The received and sent event datas do not match.");
+                    index++;
+                }
+
+                Assert.That(index, Is.EqualTo(secondEventBatch.Count), $"The second processor did not receive the expected amount of events.");
             }
         }
     }
