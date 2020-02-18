@@ -21,17 +21,17 @@ namespace Azure.Messaging.ServiceBus
         ///     <see cref="MaxConcurrentCalls"/> = 1
         ///     <see cref="AutoComplete"/> = true
         ///     <see cref="ReceiveTimeOut"/> = 1 minute
-        ///     <see cref="MaxAutoRenewDuration"/> = 5 minutes
+        ///     <see cref="MaxAutoLockRenewalDuration"/> = 5 minutes
         /// </summary>
         /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
         /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
         public MessageHandlerOptions(Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler = default)
         {
-            this.MaxConcurrentCalls = 1;
-            this.AutoComplete = true;
-            this.ReceiveTimeOut = Constants.DefaultOperationTimeout;
-            this.MaxAutoRenewDuration = Constants.ClientPumpRenewLockTimeout;
-            //this.ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
+            MaxConcurrentCalls = 1;
+            AutoComplete = true;
+            ReceiveTimeOut = Constants.DefaultOperationTimeout;
+            MaxAutoLockRenewalDuration = Constants.ClientPumpRenewLockTimeout;
+            ExceptionReceivedHandler = exceptionReceivedHandler ?? throw new ArgumentNullException(nameof(exceptionReceivedHandler));
         }
 
         /// <summary>Occurs when an exception is received. Enables you to be notified of any errors encountered by the message pump.
@@ -42,7 +42,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The maximum number of concurrent calls to the callback.</value>
         public int MaxConcurrentCalls
         {
-            get => this._maxConcurrentCalls;
+            get => _maxConcurrentCalls;
 
             set
             {
@@ -51,7 +51,7 @@ namespace Azure.Messaging.ServiceBus
                     //throw new ArgumentOutOfRangeException(Resources.MaxConcurrentCallsMustBeGreaterThanZero.FormatForUser(value));
                 }
 
-                this._maxConcurrentCalls = value;
+                _maxConcurrentCalls = value;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>The maximum duration during which locks are automatically renewed.</value>
         /// <remarks>The message renew can continue for sometime in the background
         /// after completion of message and result in a few false MessageLockLostExceptions temporarily.</remarks>
-        public TimeSpan MaxAutoRenewDuration
+        public TimeSpan MaxAutoLockRenewalDuration
         {
             get => this._maxAutoRenewDuration;
 
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        internal bool AutoRenewLock => this.MaxAutoRenewDuration > TimeSpan.Zero;
+        internal bool AutoRenewLock => MaxAutoLockRenewalDuration > TimeSpan.Zero;
 
         internal TimeSpan ReceiveTimeOut { get; }
 
@@ -85,7 +85,7 @@ namespace Azure.Messaging.ServiceBus
         {
             try
             {
-                await this.ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
+                await ExceptionReceivedHandler(eventArgs).ConfigureAwait(false);
             }
             catch (Exception exception)
             {

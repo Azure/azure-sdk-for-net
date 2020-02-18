@@ -132,7 +132,6 @@ namespace Azure.Messaging.ServiceBus.Tests
                 // use double the number of threads so we can make sure we test that we don't
                 // retrieve more messages than expected when there are more messages available
                 await sender.SendRangeAsync(GetMessages(numThreads * 2));
-                var sessionOptions = new SessionOptions();
                 await using var receiver = new QueueReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);
@@ -182,7 +181,6 @@ namespace Azure.Messaging.ServiceBus.Tests
                 int numMessages = 50;
                 await sender.SendRangeAsync(GetMessages(numMessages));
 
-                var sessionOptions = new SessionOptions();
                 await using var receiver = new QueueReceiverClient(
                     TestEnvironment.ServiceBusConnectionString,
                     scope.QueueName);

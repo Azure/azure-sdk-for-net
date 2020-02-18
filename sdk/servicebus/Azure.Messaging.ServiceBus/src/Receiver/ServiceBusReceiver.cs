@@ -83,6 +83,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
         internal bool IsSessionReceiver { get; set; }
 
+
         /// <summary>
         ///
         /// </summary>
@@ -936,7 +937,9 @@ namespace Azure.Messaging.ServiceBus.Core
                             // for partition load balancing among multiple event processor instances.
 
                             //Logger.EventProcessorStart(Identifier);
-                            ActiveReceiveTask = RunAsync(handlerOptions, RunningTaskTokenSource.Token);
+                            ActiveReceiveTask = RunAsync(
+                                handlerOptions,
+                                RunningTaskTokenSource.Token);
                         }
                     }
                 }
@@ -1022,13 +1025,24 @@ namespace Azure.Messaging.ServiceBus.Core
 
                 try
                 {
-                    Task _ = GetAndProcessMessage(options, cancellationToken);
+                    TransportConsumer consumer = null;
+                    if (IsSessionReceiver && Session.UserSpecifiedSession == null)
+                    {
+                        // If the user didn't specify a session, but this is a sessionful receiver,
+                        // we want to allow each thread to have its own consumer so we can access
+                        // multiple sessions concurrently.
+                        consumer = Connection.CreateTransportConsumer(RetryPolicy, isSessionReceiver: true);
+                    }
+                    else
+                    {
+                        consumer = Consumer;
+                    }
+                    Task _ = GetAndProcessMessage(consumer, options, cancellationToken);
                 }
                 catch (Exception)
                 {
                     cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 }
-
             }
 
             // If cancellation has been requested, throw an exception so we can keep a consistent behavior.
@@ -1037,50 +1051,53 @@ namespace Azure.Messaging.ServiceBus.Core
         }
 
         private async Task GetAndProcessMessage(
+            TransportConsumer consumer,
             MessageHandlerOptions options,
             CancellationToken cancellationToken)
         {
-            ServiceBusMessage message = null;
-            string action = ExceptionReceivedEventArgsAction.Receive;
-            try
+            // loop within the context of this thread
+            while (!cancellationToken.IsCancellationRequested)
             {
-                IEnumerator<ServiceBusMessage> messages = (await Consumer.ReceiveAsync(
-                    1,
-                    RetryPolicy.Options.TryTimeout,
-                    cancellationToken).ConfigureAwait(false)).GetEnumerator();
-                if (messages.MoveNext())
+                ServiceBusMessage message = null;
+                string action = ExceptionReceivedEventArgsAction.Receive;
+                try
                 {
-                    message = messages.Current;
-                }
-                else
-                {
-                    // no messages returned
-                    return;
-                }
+                    IEnumerator<ServiceBusMessage> messages = (await consumer.ReceiveAsync(
+                        1,
+                        RetryPolicy.Options.TryTimeout,
+                        cancellationToken).ConfigureAwait(false)).GetEnumerator();
+                    if (messages.MoveNext())
+                    {
+                        message = messages.Current;
+                    }
+                    else
+                    {
+                        // no messages returned, so exit the loop as we are likely out of messages
+                        // in the case of sessions, this lets the caller give us a new consumer
+                        break;
+                    }
 
-                action = ExceptionReceivedEventArgsAction.UserCallback;
-                await OnProcessMessageAsync(message).ConfigureAwait(false);
+                    action = ExceptionReceivedEventArgsAction.UserCallback;
+                    await OnProcessMessageAsync(message).ConfigureAwait(false);
 
-                if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
+                    if (ReceiveMode == ReceiveMode.PeekLock && options.AutoComplete)
+                    {
+                        action = ExceptionReceivedEventArgsAction.Complete;
+                        await CompleteAsync(
+                            message.SystemProperties.LockToken,
+                            cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                }
+                catch (Exception ex)
                 {
-                    action = ExceptionReceivedEventArgsAction.Complete;
-                    await CompleteAsync(
-                        message.SystemProperties.LockToken,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+                    await options.RaiseExceptionReceived(
+                        new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
+                    await AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
+
                 }
             }
-            catch (Exception ex)
-            {
-                await options.RaiseExceptionReceived(
-                    new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
-                await AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
-
-            }
-            finally
-            {
-                MessageHandlerSemaphore.Release();
-            }
+            MessageHandlerSemaphore.Release();
         }
 
         /// <summary>
