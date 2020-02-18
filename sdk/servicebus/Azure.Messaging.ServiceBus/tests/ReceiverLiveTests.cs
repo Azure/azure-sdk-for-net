@@ -57,8 +57,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                 await sender.SendRangeAsync(GetMessages(10));
 
                 var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                var messageCount = 0;
+
                 await foreach (var item in receiver.ReceiveBatchAsync(10))
+                {
+                    messageCount++;
                     Assert.AreEqual(item.SystemProperties.DeliveryCount, 1);
+                }
+                Assert.AreEqual(messageCount, 10);
             }
         }
 
@@ -75,8 +81,14 @@ namespace Azure.Messaging.ServiceBus.Tests
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
                 var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
+                var messageCount = 0;
+
                 await foreach (var item in receiver.ReceiveBatchAsync(10))
+                {
+                    messageCount++;
                     Console.Write(item.Body + " ");
+                }
+                Assert.AreEqual(messageCount, 10);
 
                 var message = receiver.PeekAsync();
                 Assert.IsNull(message.Result);
