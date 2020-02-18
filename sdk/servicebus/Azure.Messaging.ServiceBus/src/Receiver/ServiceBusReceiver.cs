@@ -356,24 +356,6 @@ namespace Azure.Messaging.ServiceBus.Core
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
         }
 
-        ///// <summary>
-        ///// Get a SessionReceiverClient scoped to the ServiceBusReceiverClient entity and a specified session.
-        ///// Note once the SessionReceiverClient is created it will be scoped to only the specified session for its lifetime.
-        ///// </summary>
-        ///// <param name="sessionId">Session to receive messages from.</param>
-        ///// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and specified session.</returns>
-        //internal SessionReceiverClient GetSessionReceiverClient(string sessionId) =>
-        //    new SessionReceiverClient(Connection, sessionId);
-
-        ///// <summary>
-        ///// Get a SessionReceiverClient scoped to the current entity without specifying a particular session.
-        ///// The broker will decide what session to use for operations. Note once the SessionReceiverClient is created,
-        ///// it will be scoped to only one session for its lifetime.
-        ///// </summary>
-        ///// <returns>A SessionReceiverClient instance scoped to the ServiceBusReceiverClient entity and session determined by the broker.</returns>
-        //internal SessionReceiverClient GetSessionReceiverClient() =>
-        //    GetSessionReceiverClient(null);
-
         /// <summary>
         ///
         /// </summary>
@@ -382,9 +364,12 @@ namespace Azure.Messaging.ServiceBus.Core
         public virtual async Task<ServiceBusMessage> ReceiveAsync(
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: 1).GetAsyncEnumerator();
-            await result.MoveNextAsync().ConfigureAwait(false);
-            return result.Current;
+            IAsyncEnumerable<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: 1);
+            await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
+            {
+                return message;
+            }
+            return null;
         }
 
         /// <summary>
@@ -394,9 +379,12 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns></returns>
         public virtual async Task<ServiceBusMessage> PeekAsync(CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerator<ServiceBusMessage> result = PeekRangeBySequenceInternal(null).GetAsyncEnumerator();
-            await result.MoveNextAsync().ConfigureAwait(false);
-            return result.Current;
+            IAsyncEnumerable<ServiceBusMessage> result = PeekRangeBySequenceInternal(null);
+            await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
+            {
+                return message;
+            }
+            return null;
         }
 
         /// <summary>
@@ -409,9 +397,12 @@ namespace Azure.Messaging.ServiceBus.Core
             long fromSequenceNumber,
             CancellationToken cancellationToken = default)
         {
-            var result = PeekRangeBySequenceAsync(fromSequenceNumber: fromSequenceNumber).GetAsyncEnumerator();
-            await result.MoveNextAsync().ConfigureAwait(false);
-            return result.Current;
+            IAsyncEnumerable<ServiceBusMessage> result = PeekRangeBySequenceAsync(fromSequenceNumber: fromSequenceNumber);
+            await foreach (ServiceBusMessage message in result.ConfigureAwait(false))
+            {
+                return message;
+            }
+            return null;
         }
 
         /// <summary>
@@ -425,8 +416,8 @@ namespace Azure.Messaging.ServiceBus.Core
             [EnumeratorCancellation]
             CancellationToken cancellationToken = default)
         {
-            IAsyncEnumerable<ServiceBusMessage> ret = PeekRangeBySequenceInternal(fromSequenceNumber: null, maxMessages);
-            await foreach (ServiceBusMessage msg in ret.ConfigureAwait(false))
+            IAsyncEnumerable<ServiceBusMessage> result = PeekRangeBySequenceInternal(fromSequenceNumber: null, maxMessages);
+            await foreach (ServiceBusMessage msg in result.ConfigureAwait(false))
             {
                 yield return msg;
             }
