@@ -270,7 +270,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystemClient.CreateAsync(),
-                e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerAlreadyExists", e.ErrorCode));
 
             // Cleanup
             await fileSystemClient.DeleteAsync();
@@ -332,7 +332,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystem.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -372,7 +372,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystemClient.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -400,7 +400,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.DeleteAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -489,7 +489,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFileSystem.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -582,7 +582,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.GetPathsAsync().ToListAsync(),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -607,7 +607,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileService.GetPropertiesAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -637,7 +637,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.SetMetadataAsync(metadata),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -788,7 +788,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.CreateFileAsync(GetNewFileName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -814,7 +814,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.DeleteFileAsync(GetNewFileName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -840,7 +840,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.CreateDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -929,7 +929,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.DeleteDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -967,7 +967,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(fileSystem.GetDataLakeLeaseClient(id)).AcquireAsync(duration: duration),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1066,7 +1066,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(fileSystem.GetDataLakeLeaseClient(id)).ReleaseAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1166,7 +1166,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(fileSystem.GetDataLakeLeaseClient(id)).ReleaseAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1261,7 +1261,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(fileSystem.GetDataLakeLeaseClient(id)).ChangeAsync(id),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1367,7 +1367,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 InstrumentClient(fileSystem.GetDataLakeLeaseClient()).BreakAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1460,7 +1460,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.GetAccessPolicyAsync(),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1503,7 +1503,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 test.FileSystem.GetAccessPolicyAsync(conditions: leaseAccessConditions),
-                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("LeaseNotPresentWithContainerOperation", e.ErrorCode));
         }
 
         [Test]
@@ -1593,7 +1593,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 fileSystem.SetAccessPolicyAsync(
                     accessType: publicAccessType,
                     permissions: signedIdentifiers),
-                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
         [Test]

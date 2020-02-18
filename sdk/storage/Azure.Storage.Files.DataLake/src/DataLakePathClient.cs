@@ -895,7 +895,7 @@ namespace Azure.Storage.Files.DataLake
             try
             {
                 scope.Start();
-                DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag("*") };
+                DataLakeRequestConditions conditions = new DataLakeRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
                 response = await CreateInternal(
                     resourceType,
                     httpHeaders,
@@ -953,8 +953,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                return _blockBlobClient.Exists(
-                cancellationToken);
+                return _blockBlobClient.Exists(cancellationToken);
             }
             catch (Exception ex)
             {
@@ -995,8 +994,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
 
-                return await _blockBlobClient.ExistsAsync(
-                cancellationToken).ConfigureAwait(false);
+                return await _blockBlobClient.ExistsAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

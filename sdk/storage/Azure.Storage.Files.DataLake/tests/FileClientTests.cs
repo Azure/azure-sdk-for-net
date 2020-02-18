@@ -154,7 +154,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.CreateDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -321,7 +321,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [Test]
@@ -367,7 +367,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -413,7 +413,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedFile.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
 
@@ -442,7 +442,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileClient.DeleteAsync(),
-                e => Assert.AreEqual("PathNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("PathNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -537,7 +537,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sourceFile.RenameAsync(destinationPath: destPath),
-                e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode));
         }
 
         [Test]

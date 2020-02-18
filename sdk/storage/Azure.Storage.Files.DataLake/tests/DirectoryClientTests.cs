@@ -153,7 +153,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.CreateDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -312,7 +312,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirecotry.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [Test]
@@ -355,7 +355,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirectory.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -398,7 +398,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedDirectory.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
         [Test]
@@ -508,7 +508,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 sourceDirectory.RenameAsync(destinationPath: destPath),
-                e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1566,7 +1566,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.CreateFileAsync(GetNewFileName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1595,7 +1595,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.DeleteFileAsync(GetNewFileName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
@@ -1625,7 +1625,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 directory.CreateSubDirectoryAsync(GetNewDirectoryName()),
-                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode.Split('\n')[0]));
+                e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
         [Test]
