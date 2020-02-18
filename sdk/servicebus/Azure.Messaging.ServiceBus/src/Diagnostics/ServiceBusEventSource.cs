@@ -3,8 +3,7 @@
 
 using System;
 using System.Diagnostics.Tracing;
-using Azure.Messaging.ServiceBus.Receiver;
-using Azure.Messaging.ServiceBus.Sender;
+using Azure.Messaging.ServiceBus.Core;
 
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
@@ -183,7 +182,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         /// <summary>
         ///   Indicates that a client is closing, which may correspond to an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSenderClient" />, <see cref="ServiceBusReceiverClient" />, or <c>EventProcessorClient</c>.
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusReceiver" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -203,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         /// <summary>
         ///   Indicates that a client has been closed, which may correspond to an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSenderClient" />, <see cref="ServiceBusReceiverClient" />, or <c>EventProcessorClient</c>.
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusReceiver" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
@@ -223,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         /// <summary>
         ///   Indicates that an exception was encountered while closing an <see cref="ServiceBusConnection" />,
-        ///   <see cref="ServiceBusSenderClient" />, <see cref="ServiceBusReceiverClient" />, or <c>EventProcessorClient</c>.
+        ///   <see cref="ServiceBusSender" />, <see cref="ServiceBusReceiver" />, or <c>EventProcessorClient</c>.
         /// </summary>
         ///
         /// <param name="clientType">The type of client being closed.</param>
