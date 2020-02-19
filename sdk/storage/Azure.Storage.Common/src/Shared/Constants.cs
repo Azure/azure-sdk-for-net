@@ -266,7 +266,7 @@ namespace Azure.Storage
             /// <summary>
             /// Max upload bytes.
             /// </summary>
-            public const int MaxUploadBytes = 100 * Constants.MB; // 100 MB
+            public const int MaxAppendBytes = 100 * Constants.MB; // 100 MB
         }
 
         /// <summary>

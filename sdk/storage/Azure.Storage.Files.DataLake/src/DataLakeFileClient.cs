@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.DataLake
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, PathHttpHeaders, DataLakeRequestConditions, IProgress{long}, StorageTransferOptions, CancellationToken)"/>.
         /// </summary>
-        public virtual int MaxUploadBytes => Constants.DataLake.MaxUploadBytes;
+        public virtual int MaxUploadBytes => Constants.DataLake.MaxAppendBytes;
 
         #region ctors
         /// <summary>

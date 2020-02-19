@@ -22,6 +22,11 @@ namespace Azure.Storage
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
+        /// The size of the first range requested (which can be larger than the other ranges).
+        /// </summary>
+        public int? InitalTransferLength { get; set; }
+
+        /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
         /// </summary>
         /// <param name="obj">The instance to compare to.</param>

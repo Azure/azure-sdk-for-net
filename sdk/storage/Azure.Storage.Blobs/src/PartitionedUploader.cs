@@ -59,33 +59,59 @@ namespace Azure.Storage.Blobs
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
+            // Set _maxWorkerCount
             if (transferOptions.MaximumConcurrency.HasValue)
             {
-                Debug.Assert(transferOptions.MaximumConcurrency > 0);
-                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+                if (transferOptions.MaximumConcurrency > 1)
+                {
+                    _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                }
+                else
+                {
+                    _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+                }
             }
             else
             {
                 _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
 
-            if (transferOptions.MaximumTransferLength.HasValue)
+            // Set _singleUploadThreshold
+            if (transferOptions.InitalTransferLength.HasValue)
             {
-                Debug.Assert(transferOptions.MaximumTransferLength > 0);
-                _singleUploadThreshold = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
+                if (transferOptions.InitalTransferLength.Value < 1)
+                {
+                    _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
+                }
+                else
+                {
+                    _singleUploadThreshold = Math.Min(transferOptions.InitalTransferLength.Value, Constants.Blob.Block.MaxUploadBytes);
+                }
             }
             else
             {
                 _singleUploadThreshold = Constants.Blob.Block.MaxUploadBytes;
             }
 
-            _blockSize = null;
-            if (transferOptions.MaximumTransferLength != null)
+            // Set _blockSize
+            if (transferOptions.MaximumTransferLength.HasValue)
             {
-                _blockSize = Math.Min(
-                    Constants.Blob.Block.MaxStageBytes,
-                    transferOptions.MaximumTransferLength.Value);
+                if (transferOptions.MaximumTransferLength < 1)
+                {
+                    _blockSize = Constants.Blob.Block.MaxStageBytes;
+                }
+                else
+                {
+                    _blockSize = Math.Min(
+                        Constants.Blob.Block.MaxStageBytes,
+                        transferOptions.MaximumTransferLength.Value);
+                }
             }
+            else
+            {
+                _blockSize = Constants.Blob.Block.MaxStageBytes;
+            }
+
             _operationName = operationName;
         }
 

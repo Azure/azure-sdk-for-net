@@ -2410,12 +2410,24 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             using (var stream = new MemoryStream(data))
             {
-                await file.UploadAsync(stream, transferOptions: new StorageTransferOptions { MaximumTransferLength = 1 * Constants.MB });
+                await file.UploadAsync(
+                    stream,
+                    transferOptions: new StorageTransferOptions
+                    {
+                        MaximumTransferLength = 1 * Constants.MB,
+                        InitalTransferLength = 1 * Constants.MB
+                    });
             }
 
             // Assert
-            using var actual = new System.IO.MemoryStream();
-            await file.ReadToAsync(actual, transferOptions: new StorageTransferOptions { MaximumTransferLength = 1 * Constants.MB });
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(
+                actual,
+                transferOptions: new StorageTransferOptions
+                {
+                    MaximumTransferLength = 1 * Constants.MB,
+                    InitalTransferLength = 1 * Constants.MB
+                });
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 

@@ -909,7 +909,7 @@ namespace Azure.Storage.Blobs
         /// This operation will create a new
         /// block blob of arbitrary size by uploading it as indiviually staged
         /// blocks if it's larger than the
-        /// <paramref name="transferOptions"/>. MaximumTransferLength.
+        /// <paramref name="transferOptions"/> MaximumTransferLength.
         /// </summary>
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.

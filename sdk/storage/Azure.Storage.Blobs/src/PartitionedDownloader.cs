@@ -16,17 +16,25 @@ namespace Azure.Storage.Blobs
 {
     internal class PartitionedDownloader
     {
-        // The client used to download the blob
+        /// <summary>
+        /// The client used to download the blob.
+        /// </summary>
         private readonly BlobBaseClient _client;
 
-        // The maximum number of simultaneous workers
+        /// <summary>
+        /// The maximum number of simultaneous workers.
+        /// </summary>
         private readonly int _maxWorkerCount;
 
-        // The size of the first range requested (which can be larger than the
-        // other ranges)
+        /// <summary>
+        /// The size of the first range requested (which can be larger than the
+        /// other ranges).
+        /// </summary>
         private readonly long _initialRangeSize;
 
-        // The size of subsequent ranges
+        /// <summary>
+        /// The size of subsequent ranges.
+        /// </summary>
         private readonly int _rangeSize;
 
         public PartitionedDownloader(
@@ -35,36 +43,57 @@ namespace Azure.Storage.Blobs
         {
             _client = client;
 
+            // Set _maxWorkerCount
             if (transferOptions.MaximumConcurrency.HasValue)
             {
-                Debug.Assert(transferOptions.MaximumConcurrency > 0);
-                _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+                if (transferOptions.MaximumConcurrency > 1)
+                {
+                    _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                }
+                else
+                {
+                    _maxWorkerCount = transferOptions.MaximumConcurrency.Value;
+                }
             }
             else
             {
                 _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
             }
 
+            // Set _rangeSize
             if (transferOptions.MaximumTransferLength.HasValue)
             {
-                Debug.Assert(transferOptions.MaximumTransferLength > 0);
-                _initialRangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.DefaultBufferSize);
-            }
-            else
-            {
-                _initialRangeSize = Constants.DefaultBufferSize;
-            }
-
-            if (transferOptions.MaximumTransferLength.HasValue)
-            {
-                Debug.Assert(transferOptions.MaximumTransferLength.Value > 0);
-                _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
+                if (transferOptions.MaximumTransferLength.Value < 1)
+                {
+                    _rangeSize = Constants.DefaultBufferSize;
+                }
+                else
+                {
+                    _rangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.Blob.Block.MaxDownloadBytes);
+                }
             }
             else
             {
                 _rangeSize = Constants.DefaultBufferSize;
             }
 
+            // Set _initialRangeSize
+            if (transferOptions.InitalTransferLength.HasValue)
+            {
+                if (transferOptions.InitalTransferLength.Value < 1)
+                {
+                    _initialRangeSize = Constants.DefaultBufferSize;
+                }
+                else
+                {
+                    _initialRangeSize = Math.Min(transferOptions.MaximumTransferLength.Value, Constants.DefaultBufferSize);
+                }
+            }
+            else
+            {
+                // Set _initialRangeSize to _rangeSize if it wasn't specified by the customer.  This is by design.
+                _initialRangeSize = _rangeSize;
+            }
         }
 
         public async Task<Response> DownloadToAsync(
