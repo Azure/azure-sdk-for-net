@@ -7,7 +7,6 @@ namespace Azure.AI.TextAnalytics
     /// The predicted sentiment label for a given sentence.
     /// </summary>
     public enum SentenceSentimentLabel
-#pragma warning restore
     {
         /// <summary>
         /// Indicates that the sentiment is positive.
