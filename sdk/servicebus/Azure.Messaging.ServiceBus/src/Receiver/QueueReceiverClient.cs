@@ -22,6 +22,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// </summary>
         protected QueueReceiverClient(){}
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="QueueReceiverClient"/> class.
         /// </summary>

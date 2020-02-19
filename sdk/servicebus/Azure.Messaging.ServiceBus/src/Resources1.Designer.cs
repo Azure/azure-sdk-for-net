@@ -333,11 +333,11 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Looks up a localized string similar to The event processor is already running and needs to be stopped in order to perform this operation..
         /// </summary>
-        internal static string RunningEventProcessorCannotPerformOperation
+        internal static string RunningMessageProcessorCannotPerformOperation
         {
             get
             {
-                return ResourceManager.GetString("RunningEventProcessorCannotPerformOperation", resourceCulture);
+                return ResourceManager.GetString("RunningMessageProcessorCannotPerformOperation", resourceCulture);
             }
         }
 

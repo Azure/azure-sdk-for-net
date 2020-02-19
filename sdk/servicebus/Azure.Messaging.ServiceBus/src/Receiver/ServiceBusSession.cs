@@ -19,14 +19,13 @@ namespace Azure.Messaging.ServiceBus
     public class ServiceBusSession
     {
         private readonly TransportConsumer _consumer;
-        private readonly ServiceBusRetryPolicy _retryPolicy;
 
-        internal ServiceBusSession(
-            TransportConsumer consumer,
-            ServiceBusRetryPolicy retryPolicy)
+        internal string UserSpecifiedSession { get; }
+
+        internal ServiceBusSession(TransportConsumer consumer, string sessionId)
         {
             _consumer = consumer;
-            _retryPolicy = retryPolicy;
+            UserSpecifiedSession = sessionId;
         }
 
         /// <summary>

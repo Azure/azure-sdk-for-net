@@ -43,7 +43,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         ///   If the connection string is copied from the Service Bus namespace, it will likely not contain the name of the desired Service Bus entity,
-        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ Service Bus entity NAME ]]" to the end of the
+        ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ SERVICE BUS ENTITY NAME ]]" to the end of the
         ///   connection string.  For example, ";EntityPath=orders-queue".
         ///
         ///   If you have defined a shared access policy directly on the Service Bus entity itself, then copying the connection string from that

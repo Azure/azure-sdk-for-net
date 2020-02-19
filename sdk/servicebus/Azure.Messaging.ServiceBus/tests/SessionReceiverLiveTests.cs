@@ -369,7 +369,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 receiver.ProcessMessageAsync += ProcessMessage;
 
-                var options = new MessageHandlerOptions
+                var options = new MessageHandlerOptions(ExceptionHandler)
                 {
                     MaxConcurrentCalls = numThreads
                 };
@@ -437,7 +437,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 receiver.ProcessMessageAsync += ProcessMessage;
 
-                var options = new MessageHandlerOptions
+                var options = new MessageHandlerOptions(ExceptionHandler)
                 {
                     MaxConcurrentCalls = numThreads
                 };
@@ -465,27 +465,5 @@ namespace Azure.Messaging.ServiceBus.Tests
                 Assert.AreEqual(numThreads - 1, sessions.Count);
             }
         }
-
-        //[Test]
-        //public async Task Receive()
-        //{
-        //    await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
-        //    {
-        //        await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, "joshsession");
-        //        //await sender.SendRangeAsync(GetMessages(10, Guid.NewGuid().ToString()));
-        //        //await sender.SendRangeAsync(GetMessages(10, Guid.NewGuid().ToString()));
-        //        //await sender.SendRangeAsync(GetMessages(10, Guid.NewGuid().ToString()));
-        //        var sessionOptions = new SessionOptions();
-        //        await using var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, "joshsession", sessionOptions);
-        //        var msgs = receiver.ReceiveRangeAsync(100);
-
-        //        await foreach (var msg in msgs.ConfigureAwait(false))
-        //        {
-
-        //            TestContext.Progress.WriteLine(msg.SessionId + " " + msg.MessageId);
-        //        }
-
-        //    }
-        //}
     }
 }

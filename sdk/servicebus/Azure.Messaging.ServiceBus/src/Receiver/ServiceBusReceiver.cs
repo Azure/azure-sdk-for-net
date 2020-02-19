@@ -194,7 +194,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 isSessionReceiver: IsSessionReceiver);
             Session = new ServiceBusSession(
                 Consumer,
-                RetryPolicy);
+                sessionOptions?.SessionId);
         }
 
         ///// <summary>
@@ -282,7 +282,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 isSessionReceiver: IsSessionReceiver);
             Session = new ServiceBusSession(
                 Consumer,
-                RetryPolicy);
+                sessionOptions?.SessionId);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 isSessionReceiver: IsSessionReceiver);
             Session = new ServiceBusSession(
                 Consumer,
-                RetryPolicy);
+                sessionOptions?.SessionId);
         }
 
         /// <summary>
@@ -776,67 +776,6 @@ namespace Azure.Messaging.ServiceBus.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-
-        /// <summary>
-        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
-        /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
-        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
-        /// <remarks>Enable prefetch to speed up the receive rate.
-        /// Use  cref="RegisterMessageHandler(Func{Message,CancellationToken,Task}, MessageHandlerOptions)"/> to configure the settings of the pump.</remarks>
-        ///
-        // TODO remove if won't be used
-        public void RegisterMessageHandler(Func<ServiceBusMessage, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
-        {
-            this.RegisterMessageHandler(handler, new MessageHandlerOptions(exceptionReceivedHandler));
-        }
-
-        /// <summary>
-        /// Receive messages continuously from the entity. Registers a message handler and begins a new thread to receive messages.
-        /// This handler(<see cref="Func{Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the receiver.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{Message, CancellationToken, Task}"/> that processes messages.</param>
-        /// <param name="messageHandlerOptions">The <see cref="MessageHandlerOptions"/> options used to configure the settings of the pump.</param>
-        /// <remarks>Enable prefetch to speed up the receive rate.</remarks>
-        // TODO remove if won't be used
-        protected void RegisterMessageHandler(Func<ServiceBusMessage, CancellationToken, Task> handler, MessageHandlerOptions messageHandlerOptions)
-        {
-        }
-
-        /// <summary>
-        /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
-        /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the queue client.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages.
-        ///  cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="ServiceBusMessage"/></param>
-        /// <param name="exceptionReceivedHandler">A <see cref="Func{T1, TResult}"/> that is invoked during exceptions.
-        /// <see cref="ExceptionReceivedEventArgs"/> contains contextual information regarding the exception.</param>
-        /// <remarks>Enable prefetch to speed up the receive rate.
-        /// Use  cref="RegisterSessionHandler(Func{IMessageSession,Message,CancellationToken,Task}, SessionHandlerOptions)"/> to configure the settings of the pump.</remarks>
-        // TODO remove if won't be used
-
-        internal void RegisterSessionHandler(Func<ServiceBusReceiver, ServiceBusMessage, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task> exceptionReceivedHandler)
-        {
-            var sessionHandlerOptions = new SessionHandlerOptions(exceptionReceivedHandler);
-            this.RegisterSessionHandler(handler, sessionHandlerOptions);
-        }
-
-        /// <summary>
-        /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
-        /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the queue client.
-        /// </summary>
-        /// <param name="handler">A <see cref="Func{IMessageSession, Message, CancellationToken, Task}"/> that processes messages.
-        ///  cref="IMessageSession"/> contains the session information, and must be used to perform Complete/Abandon/Deadletter or other such operations on the <see cref="ServiceBusMessage"/></param>
-        /// <param name="sessionHandlerOptions">Options used to configure the settings of the session pump.</param>
-        /// <remarks>Enable prefetch to speed up the receive rate. </remarks>
-        internal void RegisterSessionHandler(Func<ServiceBusReceiver, ServiceBusMessage, CancellationToken, Task> handler, SessionHandlerOptions sessionHandlerOptions)
-        {
-            // TODO remove if won't be used
-
-        }
-
         /// <summary>
         ///   The event responsible for processing events received from the Event Hubs service.  Implementation
         ///   is mandatory.
@@ -1111,13 +1050,13 @@ namespace Azure.Messaging.ServiceBus.Core
                     }
                     else
                     {
-                        //throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                        throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
                     }
                 }
             }
             else
             {
-                //throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+                throw new InvalidOperationException(Resources1.RunningMessageProcessorCannotPerformOperation);
             }
         }
 

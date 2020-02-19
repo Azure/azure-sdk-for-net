@@ -139,7 +139,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 receiver.ProcessMessageAsync += ProcessMessage;
 
-                var options = new MessageHandlerOptions
+                var options = new MessageHandlerOptions(ExceptionHandler)
                 {
                     MaxConcurrentCalls = numThreads
                 };
@@ -191,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 receiver.ProcessMessageAsync += ProcessMessage;
 
-                var options = new MessageHandlerOptions
+                var options = new MessageHandlerOptions(ExceptionHandler)
                 {
                     MaxConcurrentCalls = numThreads
                 };
@@ -210,6 +210,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                         await receiver.StopProcessingAsync();
                     }
                 }
+
                 // can't assert on the exact amount processed due to threads that
                 // are already in flight when calling StopProcessingAsync
                 Assert.IsTrue(
