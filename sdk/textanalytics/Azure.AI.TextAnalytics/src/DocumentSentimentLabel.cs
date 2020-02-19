@@ -4,9 +4,9 @@
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The predicted sentiment label for a given span of text.
+    /// The predicted sentiment label for a given document.
     /// </summary>
-    public enum SentimentLabel
+    public enum DocumentSentimentLabel
     #pragma warning restore
     {
         /// <summary>
@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics
         Positive,
 
         /// <summary>
-        /// Indicates that the lacks a sentiment.
+        /// Indicates that the sentiment is neutral.
         /// </summary>
         Neutral,
 
