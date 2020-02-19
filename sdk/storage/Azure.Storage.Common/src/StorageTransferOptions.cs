@@ -45,6 +45,7 @@ namespace Azure.Storage
         public override int GetHashCode()
             => MaximumTransferLength.GetHashCode()
             ^ MaximumConcurrency.GetHashCode()
+            ^ InitalTransferLength.GetHashCode()
             ;
 
         /// <summary>
@@ -74,6 +75,7 @@ namespace Azure.Storage
         public bool Equals(StorageTransferOptions obj)
             => MaximumTransferLength == obj.MaximumTransferLength
             && MaximumConcurrency == obj.MaximumConcurrency
+            && InitalTransferLength == obj.InitalTransferLength
             ;
     }
 }
