@@ -21,15 +21,16 @@ namespace Azure.AI.TextAnalytics.Tests
             Matcher = new RecordMatcher(Sanitizer);
         }
 
-        public TextAnalyticsClient GetClient(TextAnalyticsApiKeyCredential credential = default)
+        public TextAnalyticsClient GetClient(TextAnalyticsApiKeyCredential credential = default, TextAnalyticsClientOptions options = default)
         {
             string apiKey = Recording.GetVariableFromEnvironment(ApiKeyEnvironmentVariable);
             credential ??= new TextAnalyticsApiKeyCredential(apiKey);
+            options ??= new TextAnalyticsClientOptions();
             return InstrumentClient (
                 new TextAnalyticsClient(
                     new Uri(Recording.GetVariableFromEnvironment(EndpointEnvironmentVariable)),
                     credential,
-                    Recording.InstrumentClientOptions(new TextAnalyticsClientOptions()))
+                    Recording.InstrumentClientOptions(options))
             );
         }
 
@@ -65,6 +66,31 @@ namespace Azure.AI.TextAnalytics.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(input, "COLOMBIA"));
             Assert.AreEqual("InvalidCountryHint", ex.ErrorCode);
+        }
+
+        [Test]
+        public async Task DetectLanguageWithNoneCountryHintTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            string input = "Este documento está en español";
+
+            DetectedLanguage language = await client.DetectLanguageAsync(input, DetectLanguageInput.None);
+            Assert.AreEqual("Spanish", language.Name);
+        }
+
+        [Test]
+        public async Task DetectLanguageWithNoneDefaultCountryHintTest()
+        {
+            var options = new TextAnalyticsClientOptions()
+            {
+                DefaultCountryHint = DetectLanguageInput.None
+            };
+
+            TextAnalyticsClient client = GetClient(options: options);
+            string input = "Este documento está en español";
+
+            DetectedLanguage language = await client.DetectLanguageAsync(input, DetectLanguageInput.None);
+            Assert.AreEqual("Spanish", language.Name);
         }
 
         [Test]

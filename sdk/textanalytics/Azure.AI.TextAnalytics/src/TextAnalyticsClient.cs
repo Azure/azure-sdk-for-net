@@ -120,9 +120,8 @@ namespace Azure.AI.TextAnalytics
         /// input to assist the text analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
@@ -180,9 +179,8 @@ namespace Azure.AI.TextAnalytics
         /// input to assist the text analytics model in predicting the language
         /// it is written in.  If unspecified, this value will be set to the
         /// default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/>
         /// controlling the request lifetime.</param>
         /// <returns>A result containing the detected language or an error if
@@ -240,10 +238,8 @@ namespace Azure.AI.TextAnalytics
         /// the input strings to assist the text analytics model in predicting
         /// the language they is written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".  The same country hint is applied to all strings in the
-        /// input collection.</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
@@ -276,10 +272,8 @@ namespace Azure.AI.TextAnalytics
         /// the input strings to assist the text analytics model in predicting
         /// the language they is written in.  If unspecified, this value will be
         /// set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
-        /// in the request sent to the service.  If set to an empty string, the
-        /// service will apply a model where the country is explicitly set to
-        /// "None".  The same country hint is applied to all strings in the
-        /// input collection.</param>
+        /// in the request sent to the service.
+        /// To remove this behavior, set to <see cref="DetectLanguageInput.None"/>.</param>
         /// <param name="options"><see cref="TextAnalyticsRequestOptions"/> used to
         /// select the version of the predictive model to run, and whether
         /// statistics are returned in the response.</param>
