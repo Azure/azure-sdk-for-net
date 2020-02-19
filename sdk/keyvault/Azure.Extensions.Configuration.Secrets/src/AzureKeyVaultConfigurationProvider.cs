@@ -7,9 +7,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
+namespace Azure.Extensions.Configuration.Secrets
 {
     /// <summary>
     /// An AzureKeyVault based <see cref="ConfigurationProvider"/>.

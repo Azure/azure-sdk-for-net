@@ -7,11 +7,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Testing;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration.Tests
+namespace Azure.Extensions.Configuration.Secrets.Tests
 {
     public class AzureKeyVaultConfigurationTest
     {

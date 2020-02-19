@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
+using Azure.Security.KeyVault.Secrets;
+
+namespace Azure.Extensions.Configuration.Secrets
 {
     /// <summary>
     /// The <see cref="IKeyVaultSecretManager"/> instance used to control secret loading.

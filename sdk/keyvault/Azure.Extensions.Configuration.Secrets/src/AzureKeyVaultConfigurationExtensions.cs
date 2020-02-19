@@ -3,9 +3,9 @@
 
 using System;
 using Azure.Core;
+using Azure.Extensions.Configuration.Secrets;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
-using Azure.Security.KeyVault.Secrets.Extensions.Configuration;
 
 #pragma warning disable AZC0001 // Extension methods have to be in the correct namespace to appear in intellisense.
 namespace Microsoft.Extensions.Configuration

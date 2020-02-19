@@ -3,9 +3,10 @@
 
 using System;
 using Azure.Core;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
+namespace Azure.Extensions.Configuration.Secrets
 {
     /// <summary>
     /// Options class used by the <see cref="AzureKeyVaultConfigurationExtensions"/>.

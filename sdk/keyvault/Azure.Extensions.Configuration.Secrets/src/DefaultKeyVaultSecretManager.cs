@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.Security.KeyVault.Secrets.Extensions.Configuration
+namespace Azure.Extensions.Configuration.Secrets
 {
     /// <summary>
     /// Default implementation of <see cref="IKeyVaultSecretManager"/> that loads all secrets
