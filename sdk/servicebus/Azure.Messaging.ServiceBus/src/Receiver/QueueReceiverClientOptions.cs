@@ -20,7 +20,8 @@ namespace Azure.Messaging.ServiceBus
             new QueueReceiverClientOptions
             {
                 _connectionOptions = ConnectionOptions.Clone(),
-                _retryOptions = RetryOptions.Clone()
+                _retryOptions = RetryOptions.Clone(),
+                 ReceiveMode =  ReceiveMode
             };
     }
 }
