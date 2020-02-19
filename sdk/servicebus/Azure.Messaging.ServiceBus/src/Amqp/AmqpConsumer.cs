@@ -222,7 +222,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
-                    link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
                     // message.Dispose();
                 }
