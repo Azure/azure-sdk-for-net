@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.DataLake
             // Set _maxWorkerCount
             if (transferOptions.MaximumConcurrency.HasValue)
             {
-                if (transferOptions.MaximumConcurrency > 1)
+                if (transferOptions.MaximumConcurrency < 1)
                 {
                     _maxWorkerCount = Constants.DataLake.DefaultConcurrentTransfersCount;
                 }

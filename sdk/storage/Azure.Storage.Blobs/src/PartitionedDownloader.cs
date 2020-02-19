@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs
             // Set _maxWorkerCount
             if (transferOptions.MaximumConcurrency.HasValue)
             {
-                if (transferOptions.MaximumConcurrency > 1)
+                if (transferOptions.MaximumConcurrency < 1)
                 {
                     _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
                 }
