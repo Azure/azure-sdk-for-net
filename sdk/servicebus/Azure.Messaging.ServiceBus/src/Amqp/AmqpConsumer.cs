@@ -71,6 +71,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private readonly AmqpConnectionScope _connectionScope;
 
+        /// <summary>
+        ///   The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.
+        /// </summary>
+        ///
+        private readonly ReceiveMode _receiveMode;
+
         /// <inheritdoc/>
         public override TransportConnectionScope ConnectionScope =>
             _connectionScope;
@@ -113,6 +119,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
+            _receiveMode = receiveMode;
 
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
@@ -182,7 +189,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
             Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
 
-            var receivedMessageCount = 0;
             var link = default(ReceivingAmqpLink);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
             var receivedMessages = default(List<ServiceBusMessage>);
@@ -208,18 +214,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((messagesReceived) && (amqpMessages != null))
             {
-                receivedMessages ??= new List<ServiceBusMessage>();
+                receivedMessages = new List<ServiceBusMessage>();
 
                 foreach (AmqpMessage message in amqpMessages)
                 {
-                    //link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
+                  if (_receiveMode == ReceiveMode.ReceiveAndDelete)
+                    {
+                        link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
+                    }
+                    link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
-                    message.Dispose();
+                    // message.Dispose();
                 }
 
                 stopWatch.Stop();
 
-                receivedMessageCount = receivedMessages.Count;
                 return receivedMessages;
             }
 

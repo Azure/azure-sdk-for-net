@@ -54,32 +54,30 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
-                IEnumerable<ServiceBusMessage> messages = GetMessages(10);
+                var messageCount = 10;
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
                 await sender.SendRangeAsync(messages);
 
                 var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
-                var messageCount = 0;
+                var receivedMessageCount = 0;
                 var messageEnum = messages.GetEnumerator();
 
-                await foreach (var item in receiver.ReceiveBatchAsync(10))
+                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
                 {
-                    messageCount++;
+                    receivedMessageCount++;
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
                     Assert.AreEqual(item.SystemProperties.DeliveryCount, 1);
                 }
-                Assert.AreEqual(messageCount, 10);
+                Assert.AreEqual(receivedMessageCount, messageCount);
 
-                messageCount = 0;
                 messageEnum.Reset();
-                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekRangeAsync(10);
+                IAsyncEnumerable<ServiceBusMessage> peekMessages = receiver.PeekRangeAsync(messageCount);
                 await foreach (var item in peekMessages)
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
-                    messageCount++;
                 }
-                Assert.AreEqual(messageCount, 10);
             }
         }
 
@@ -89,7 +87,8 @@ namespace Azure.Messaging.ServiceBus.Tests
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
-                IEnumerable<ServiceBusMessage> messages = GetMessages(10);
+                var messageCount = 10;
+                IEnumerable<ServiceBusMessage> messages = GetMessages(messageCount);
                 await sender.SendRangeAsync(messages);
 
                 var messageEnum = messages.GetEnumerator();
@@ -98,15 +97,15 @@ namespace Azure.Messaging.ServiceBus.Tests
                     ReceiveMode = ReceiveMode.ReceiveAndDelete,
                 };
                 var receiver = new QueueReceiverClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName, clientOptions);
-                var messageCount = 0;
+                var receivedMessageCount = 0;
 
-                await foreach (var item in receiver.ReceiveBatchAsync(10))
+                await foreach (var item in receiver.ReceiveBatchAsync(messageCount))
                 {
                     messageEnum.MoveNext();
                     Assert.AreEqual(item.MessageId, messageEnum.Current.MessageId);
-                    messageCount++;
+                    receivedMessageCount++;
                 }
-                Assert.AreEqual(messageCount, 10);
+                Assert.AreEqual(receivedMessageCount, messageCount);
 
                 var message = receiver.PeekAsync();
                 Assert.IsNull(message.Result);
