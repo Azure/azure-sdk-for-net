@@ -1,4 +1,4 @@
-namespace Azure.Storage.Blobs.AspNetCore.DataProtection
+namespace Azure.AspNetCore.DataProtection.Blobs
 {
     public sealed partial class AzureBlobXmlRepository : Microsoft.AspNetCore.DataProtection.Repositories.IXmlRepository
     {
