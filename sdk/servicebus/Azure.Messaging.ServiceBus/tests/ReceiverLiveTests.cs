@@ -4,8 +4,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus.Receiver;
-using Azure.Messaging.ServiceBus.Sender;
+using Azure.Core.Testing;
+using Azure.Messaging.ServiceBus.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var sender = new ServiceBusSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
+                await using var sender = new QueueSenderClient(TestEnvironment.ServiceBusConnectionString, scope.QueueName);
                 var messageCt = 10;
 
                 IEnumerable<ServiceBusMessage> sentMessages = GetMessages(messageCt);

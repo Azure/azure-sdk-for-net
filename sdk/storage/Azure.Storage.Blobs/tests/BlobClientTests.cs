@@ -261,12 +261,17 @@ namespace Azure.Storage.Blobs.Test
                 {
                     File.WriteAllBytes(path, data);
 
+                    // Test that we can upload a read-only file.
+                    File.SetAttributes(path, FileAttributes.ReadOnly);
+
                     await blob.UploadAsync(path);
+
                 }
                 finally
                 {
                     if (File.Exists(path))
                     {
+                        File.SetAttributes(path, FileAttributes.Normal);
                         File.Delete(path);
                     }
                 }

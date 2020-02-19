@@ -4,6 +4,11 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Core;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -72,5 +77,75 @@ namespace Azure.Messaging.ServiceBus
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="operation"></param>
+        /// <param name="entityName"></param>
+        /// <param name="scope"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async Task RunOperation(
+            Func<TimeSpan, Task> operation,
+            string entityName,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken)
+        {
+            var failedAttemptCount = 0;
+
+            try
+            {
+                TimeSpan tryTimeout = CalculateTryTimeout(0);
+
+                while (!cancellationToken.IsCancellationRequested)
+                {
+
+                    try
+                    {
+                        await operation(tryTimeout).ConfigureAwait(false);
+                        return;
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Exception activeEx = ex.TranslateServiceException(entityName);
+
+                        // Determine if there should be a retry for the next attempt; if so enforce the delay but do not quit the loop.
+                        // Otherwise, mark the exception as active and break out of the loop.
+
+                        ++failedAttemptCount;
+                        TimeSpan? retryDelay = CalculateRetryDelay(ex, failedAttemptCount);
+                        if (retryDelay.HasValue && !scope.IsDisposed && !cancellationToken.IsCancellationRequested)
+                        {
+                            //EventHubsEventSource.Log.GetPropertiesError(EventHubName, activeEx.Message);
+                            await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
+
+                            tryTimeout = CalculateTryTimeout(failedAttemptCount);
+                        }
+                        else if (ex is AmqpException)
+                        {
+                            throw activeEx;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+                // If no value has been returned nor exception thrown by this point,
+                // then cancellation has been requested.
+                throw new TaskCanceledException();
+            }
+            catch (Exception exception)
+            {
+                throw exception;
+                //TODO through correct exception throw AmqpExceptionHelper.GetClientException(exception);
+            }
+            finally
+            {
+                //TODO log correct completion event ServiceBusEventSource.Log.PeekMessagesComplete(EntityName);
+            }
+        }
     }
 }

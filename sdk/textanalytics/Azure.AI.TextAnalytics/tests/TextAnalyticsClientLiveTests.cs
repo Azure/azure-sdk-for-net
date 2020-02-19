@@ -202,16 +202,16 @@ namespace Azure.AI.TextAnalytics.Tests
             DocumentSentiment docSentiment = await client.AnalyzeSentimentAsync(input);
 
             Assert.AreEqual("Positive", docSentiment.Sentiment.ToString());
-            Assert.IsNotNull(docSentiment.SentimentScores.Positive);
-            Assert.IsNotNull(docSentiment.SentimentScores.Neutral);
-            Assert.IsNotNull(docSentiment.SentimentScores.Negative);
+            Assert.IsNotNull(docSentiment.ConfidenceScores.Positive);
+            Assert.IsNotNull(docSentiment.ConfidenceScores.Neutral);
+            Assert.IsNotNull(docSentiment.ConfidenceScores.Negative);
 
             foreach (var sentence in docSentiment.Sentences)
             {
                 Assert.AreEqual("Positive", sentence.Sentiment.ToString());
-                Assert.IsNotNull(sentence.SentimentScores.Positive);
-                Assert.IsNotNull(sentence.SentimentScores.Neutral);
-                Assert.IsNotNull(sentence.SentimentScores.Negative);
+                Assert.IsNotNull(sentence.ConfidenceScores.Positive);
+                Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
+                Assert.IsNotNull(sentence.ConfidenceScores.Negative);
                 Assert.IsNotNull(sentence.Offset);
                 Assert.IsNotNull(sentence.Length);
                 Assert.AreEqual(input.Length, sentence.Length);
@@ -247,15 +247,15 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (AnalyzeSentimentResult docs in results)
             {
                 DocumentSentiment docSentiment = docs.DocumentSentiment;
-                Assert.IsNotNull(docSentiment.SentimentScores.Positive);
-                Assert.IsNotNull(docSentiment.SentimentScores.Neutral);
-                Assert.IsNotNull(docSentiment.SentimentScores.Negative);
+                Assert.IsNotNull(docSentiment.ConfidenceScores.Positive);
+                Assert.IsNotNull(docSentiment.ConfidenceScores.Neutral);
+                Assert.IsNotNull(docSentiment.ConfidenceScores.Negative);
 
                 foreach (var sentence in docSentiment.Sentences)
                 {
-                    Assert.IsNotNull(sentence.SentimentScores.Positive);
-                    Assert.IsNotNull(sentence.SentimentScores.Neutral);
-                    Assert.IsNotNull(sentence.SentimentScores.Negative);
+                    Assert.IsNotNull(sentence.ConfidenceScores.Positive);
+                    Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
+                    Assert.IsNotNull(sentence.ConfidenceScores.Negative);
                     Assert.IsNotNull(sentence.Offset);
                     Assert.IsNotNull(sentence.Length);
                 }
@@ -307,15 +307,15 @@ namespace Azure.AI.TextAnalytics.Tests
             foreach (AnalyzeSentimentResult docs in results)
             {
                 DocumentSentiment docSentiment = docs.DocumentSentiment;
-                Assert.IsNotNull(docSentiment.SentimentScores.Positive);
-                Assert.IsNotNull(docSentiment.SentimentScores.Neutral);
-                Assert.IsNotNull(docSentiment.SentimentScores.Negative);
+                Assert.IsNotNull(docSentiment.ConfidenceScores.Positive);
+                Assert.IsNotNull(docSentiment.ConfidenceScores.Neutral);
+                Assert.IsNotNull(docSentiment.ConfidenceScores.Negative);
 
                 foreach (var sentence in docSentiment.Sentences)
                 {
-                    Assert.IsNotNull(sentence.SentimentScores.Positive);
-                    Assert.IsNotNull(sentence.SentimentScores.Neutral);
-                    Assert.IsNotNull(sentence.SentimentScores.Negative);
+                    Assert.IsNotNull(sentence.ConfidenceScores.Positive);
+                    Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
+                    Assert.IsNotNull(sentence.ConfidenceScores.Negative);
                     Assert.IsNotNull(sentence.Offset);
                     Assert.IsNotNull(sentence.Length);
                 }
@@ -847,7 +847,7 @@ namespace Azure.AI.TextAnalytics.Tests
             {
                 Assert.IsTrue(entitiesList.Contains(entity.Name));
                 Assert.IsNotNull(entity.DataSource);
-                Assert.IsNotNull(entity.Id);
+                Assert.IsNotNull(entity.DataSourceEntityId);
                 Assert.IsNotNull(entity.Language);
                 Assert.IsNotNull(entity.Url);
                 Assert.IsNotNull(entity.Matches);

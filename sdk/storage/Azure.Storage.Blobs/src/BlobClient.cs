@@ -751,7 +751,7 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return StagedUploadAsync(
                     stream,
@@ -901,7 +901,7 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadAsync(
                     stream,
@@ -1062,7 +1062,7 @@ namespace Azure.Storage.Blobs
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 return await StagedUploadAsync(
                     stream,

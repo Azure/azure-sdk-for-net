@@ -8,16 +8,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus.Receiver;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
     /// <summary>
     ///   A transport client abstraction responsible for brokering operations for AMQP-based connections.
-    ///   It is intended that the public <see cref="ServiceBusReceiverClient" /> make use of an instance
+    ///   It is intended that the public <see cref="ServiceBusReceiver" /> make use of an instance
     ///   via containment and delegate operations to it.
     /// </summary>
     ///
@@ -45,7 +45,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The name of the Service Bus entity to which the client is bound.
         /// </summary>
         ///
-        private string EntityName { get; }
+        public override string EntityName { get; }
 
         /// <summary>
         ///   The identifier of the Service Bus entity partition that this consumer is associated with.  Events will be read
@@ -58,25 +58,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
-        private ServiceBusRetryPolicy RetryPolicy { get; }
+        private readonly ServiceBusRetryPolicy _retryPolicy;
 
-        ///// <summary>
-        /////   The converter to use for translating between AMQP messages and client library
-        /////   types.
-        ///// </summary>
-        //private AmqpMessageConverter MessageConverter { get; }
+        /// <summary>
+        /// Indicates whether or not this is a receiver scoped to a session.
+        /// </summary>
+        private readonly bool _isSessionReceiver;
 
-        ///// <summary>
-        /////   The AMQP connection scope responsible for managing transport constructs for this instance.
-        ///// </summary>
-        /////
-        //internal AmqpConnectionScope ConnectionScope { get; }
+        /// <summary>
+        ///   The AMQP connection scope responsible for managing transport constructs for this instance.
+        /// </summary>
+        ///
+        private readonly AmqpConnectionScope _connectionScope;
 
-        ///// <summary>
-        /////   The AMQP link intended for use with receiving operations.
-        ///// </summary>
-        /////
-        //internal FaultTolerantAmqpObject<ReceivingAmqpLink> ReceiveLink { get; }
+        /// <inheritdoc/>
+        public override TransportConnectionScope ConnectionScope =>
+            _connectionScope;
+
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="AmqpConsumer"/> class.
@@ -88,6 +86,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="sessionId"></param>
+        /// <param name="isSessionReceiver"></param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -104,25 +103,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint? prefetchCount,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
-            string sessionId)
+            string sessionId,
+            bool isSessionReceiver)
         {
             Argument.AssertNotNullOrEmpty(entityName, nameof(entityName));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
             EntityName = entityName;
-            ConnectionScope = connectionScope;
-            RetryPolicy = retryPolicy;
+            _connectionScope = connectionScope;
+            _retryPolicy = retryPolicy;
+            _isSessionReceiver = isSessionReceiver;
 
             ReceiveLink = new FaultTolerantAmqpObject<ReceivingAmqpLink>(
                 timeout =>
-                    ConnectionScope.OpenConsumerLinkAsync(
-                        //consumerGroup,
-                        //partitionId,
-                        timeout,
-                        prefetchCount ?? DefaultPrefetchCount,
-                        ownerLevel,
-                        sessionId,
-                        CancellationToken.None),
+                    _connectionScope.OpenConsumerLinkAsync(
+                        timeout: timeout,
+                        prefetchCount: prefetchCount ?? DefaultPrefetchCount,
+                        ownerLevel: ownerLevel,
+                        sessionId: sessionId,
+                        isSessionReceiver: isSessionReceiver,
+                        cancellationToken: CancellationToken.None),
                 link =>
                 {
                     CloseLink(link);
@@ -155,7 +155,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             var receivedMessageCount = 0;
             var failedAttemptCount = 0;
-            var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
+            var tryTimeout = _retryPolicy.CalculateTryTimeout(0);
             var waitTime = (maximumWaitTime ?? tryTimeout);
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
@@ -222,14 +222,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // Otherwise, bubble the exception.
 
                         ++failedAttemptCount;
-                        retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
+                        retryDelay = _retryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
                         {
                             ServiceBusEventSource.Log.MessageReceiveError(EntityName, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.Elapsed)), cancellationToken).ConfigureAwait(false);
 
-                            tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
+                            tryTimeout = _retryPolicy.CalculateTryTimeout(failedAttemptCount);
                         }
                         else if (ex is AmqpException)
                         {
@@ -316,5 +316,30 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan firstOption,
             TimeSpan secondOption) =>
             (firstOption < secondOption) ? firstOption : secondOption;
+
+        /// <summary>
+        /// Get the session Id corresponding to this consumer
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async Task<string> GetSessionId(CancellationToken cancellationToken = default)
+        {
+            if (!_isSessionReceiver)
+            {
+                return null;
+            }
+            ReceivingAmqpLink openedLink = null;
+            await _retryPolicy.RunOperation(
+                async (timeout) =>
+                openedLink = await ReceiveLink.GetOrCreateAsync(timeout).ConfigureAwait(false),
+                EntityName,
+                ConnectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+            var source = (Source)openedLink.Settings.Source;
+            source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var sessionId);
+            return sessionId;
+        }
+
     }
 }

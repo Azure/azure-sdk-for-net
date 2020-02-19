@@ -111,6 +111,7 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="sessionId"></param>
+        /// <param name="isSessionReceiver"></param>
         ///
         /// <returns>A <see cref="TransportConsumer" /> configured in the requested manner.</returns>
         ///
@@ -118,7 +119,8 @@ namespace Azure.Messaging.ServiceBus.Core
             ServiceBusRetryPolicy retryPolicy,
             long? ownerLevel,
             uint? prefetchCount,
-            string sessionId);
+            string sessionId,
+            bool isSessionReceiver);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

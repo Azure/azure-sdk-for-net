@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using Azure.Messaging.ServiceBus.Receiver;
 
 namespace Azure.Messaging.ServiceBus
 {
