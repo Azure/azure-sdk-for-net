@@ -16,20 +16,21 @@ namespace Microsoft.Azure.Management.Maps.Models
     using System.Linq;
 
     /// <summary>
-    /// An Azure resource which represents access to a suite of Maps REST APIs.
+    /// An Azure resource which represents which will provision the ability to
+    /// create private location data.
     /// </summary>
-    public partial class MapsAccount : TrackedResource
+    public partial class PrivateAtlas : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the MapsAccount class.
+        /// Initializes a new instance of the PrivateAtlas class.
         /// </summary>
-        public MapsAccount()
+        public PrivateAtlas()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MapsAccount class.
+        /// Initializes a new instance of the PrivateAtlas class.
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
@@ -40,15 +41,11 @@ namespace Microsoft.Azure.Management.Maps.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="sku">The SKU of this account.</param>
-        /// <param name="systemData">The system meta data relating to this
-        /// resource.</param>
-        /// <param name="properties">The map account properties.</param>
-        public MapsAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), SystemData systemData = default(SystemData), MapsAccountProperties properties = default(MapsAccountProperties))
+        /// <param name="properties">The Private Atlas resource
+        /// properties.</param>
+        public PrivateAtlas(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PrivateAtlasProperties properties = default(PrivateAtlasProperties))
             : base(location, id, name, type, tags)
         {
-            Sku = sku;
-            SystemData = systemData;
             Properties = properties;
             CustomInit();
         }
@@ -59,22 +56,10 @@ namespace Microsoft.Azure.Management.Maps.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the SKU of this account.
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; private set; }
-
-        /// <summary>
-        /// Gets the system meta data relating to this resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "systemData")]
-        public SystemData SystemData { get; private set; }
-
-        /// <summary>
-        /// Gets the map account properties.
+        /// Gets or sets the Private Atlas resource properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public MapsAccountProperties Properties { get; private set; }
+        public PrivateAtlasProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -85,10 +70,6 @@ namespace Microsoft.Azure.Management.Maps.Models
         public override void Validate()
         {
             base.Validate();
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
         }
     }
 }

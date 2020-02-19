@@ -47,14 +47,12 @@ namespace Microsoft.Azure.Management.Maps
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -80,6 +78,16 @@ namespace Microsoft.Azure.Management.Maps
         /// Gets the IAccountsOperations.
         /// </summary>
         public virtual IAccountsOperations Accounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IMapsOperationsOperations.
+        /// </summary>
+        public virtual IMapsOperationsOperations Maps { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateAtlasesOperations.
+        /// </summary>
+        public virtual IPrivateAtlasesOperations PrivateAtlases { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the MapsManagementClient class.
@@ -323,8 +331,10 @@ namespace Microsoft.Azure.Management.Maps
         private void Initialize()
         {
             Accounts = new AccountsOperations(this);
+            Maps = new MapsOperationsOperations(this);
+            PrivateAtlases = new PrivateAtlasesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-05-01";
+            ApiVersion = "2020-02-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
