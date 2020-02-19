@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -794,10 +795,9 @@ namespace Azure.Messaging.ServiceBus.Core
 
                     if (_processMessageAsync != default)
                     {
-                        //throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+                        throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
                     }
-                    _processMessageAsync = value;
-                    //EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
+                    EnsureNotRunningAndInvoke(() => _processMessageAsync = value);
                 }
             }
 
@@ -807,7 +807,7 @@ namespace Azure.Messaging.ServiceBus.Core
 
                 if (_processMessageAsync != value)
                 {
-                    //throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
                 }
 
                 EnsureNotRunningAndInvoke(() => _processMessageAsync = default);
@@ -835,6 +835,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 MessageHandlerSemaphore = new SemaphoreSlim(
                     handlerOptions.MaxConcurrentCalls,
                     handlerOptions.MaxConcurrentCalls);
+                ProcessErrorAsync += handlerOptions.ExceptionReceivedHandler;
                 await ProcessingStartStopSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
                 try
@@ -849,12 +850,12 @@ namespace Azure.Messaging.ServiceBus.Core
                         {
                             if (_processMessageAsync == null)
                             {
-                                throw new InvalidOperationException();
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessMessageAsync)));
                             }
 
                             if (_processErrorAsync == null)
                             {
-                                //throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
+                                throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, Resources1.CannotStartEventProcessorWithoutHandler, nameof(ProcessErrorAsync)));
                             }
 
                             // We expect the token source to be null, but we are playing safe.
@@ -994,7 +995,6 @@ namespace Azure.Messaging.ServiceBus.Core
                 {
                     IEnumerator<ServiceBusMessage> messages = (await consumer.ReceiveAsync(
                         1,
-                        RetryPolicy.Options.TryTimeout,
                         cancellationToken).ConfigureAwait(false)).GetEnumerator();
                     if (messages.MoveNext())
                     {
@@ -1022,6 +1022,7 @@ namespace Azure.Messaging.ServiceBus.Core
                 catch (Exception ex)
                 {
                     await options.RaiseExceptionReceived(
+                        // TODO - add clientId implementation and pass as last argument to ExceptionReceivedEventArgs
                         new ExceptionReceivedEventArgs(ex, action, FullyQualifiedNamespace, EntityName, "")).ConfigureAwait(false);
                     await AbandonAsync(message.SystemProperties.LockToken).ConfigureAwait(false);
 
@@ -1067,7 +1068,7 @@ namespace Azure.Messaging.ServiceBus.Core
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        public event Func<ExceptionReceivedEventArgs, Task> ProcessErrorAsync
+        private event Func<ExceptionReceivedEventArgs, Task> ProcessErrorAsync
         {
             add
             {
@@ -1075,10 +1076,10 @@ namespace Azure.Messaging.ServiceBus.Core
 
                 if (_processErrorAsync != default)
                 {
-                    //throw new NotSupportedException(Resources.HandlerHasAlreadyBeenAssigned);
+                    throw new NotSupportedException(Resources1.HandlerHasAlreadyBeenAssigned);
                 }
 
-                //EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
+                EnsureNotRunningAndInvoke(() => _processErrorAsync = value);
             }
 
             remove
@@ -1087,10 +1088,10 @@ namespace Azure.Messaging.ServiceBus.Core
 
                 if (_processErrorAsync != value)
                 {
-                    //throw new ArgumentException(Resources.HandlerHasNotBeenAssigned);
+                    throw new ArgumentException(Resources1.HandlerHasNotBeenAssigned);
                 }
 
-                //EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
+                EnsureNotRunningAndInvoke(() => _processErrorAsync = default);
             }
         }
     }
