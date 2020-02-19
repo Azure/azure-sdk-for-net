@@ -4,16 +4,29 @@
 using Azure.Core.Diagnostics;
 using Azure.Core.Testing;
 using NUnit.Framework;
+using Org.BouncyCastle.Asn1;
+using Org.BouncyCastle.Asn1.Pkcs;
+using Org.BouncyCastle.Asn1.X509;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Operators;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Pkcs;
+using Org.BouncyCastle.X509;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using X509Certificate = Org.BouncyCastle.X509.X509Certificate;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
-    public class CertificateClientLiveTests : CertificatesTestBase
+    public partial class CertificateClientLiveTests : CertificatesTestBase
     {
         public CertificateClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -386,28 +399,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [Test]
         public async Task VerifyImportCertificatePem()
         {
-            const string ca =
-"MIIDqzCCApMCFC+MROpib4t03Wqzgkcod1lad6JtMA0GCSqGSIb3DQEBCwUAMIGR" +
-"MQswCQYDVQQGEwJVUzELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1JlZG1vbmQxEjAQ" +
-"BgNVBAoMCU1pY3Jvc29mdDESMBAGA1UECwwJQXp1cmUgU0RLMRIwEAYDVQQDDAlB" +
-"enVyZSBTREsxJzAlBgkqhkiG9w0BCQEWGG9wZW5zb3VyY2VAbWljcm9zb2Z0LmNv" +
-"bTAeFw0yMDAyMTQyMzE3MTZaFw0yNTAyMTIyMzE3MTZaMIGRMQswCQYDVQQGEwJV" +
-"UzELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1JlZG1vbmQxEjAQBgNVBAoMCU1pY3Jv" +
-"c29mdDESMBAGA1UECwwJQXp1cmUgU0RLMRIwEAYDVQQDDAlBenVyZSBTREsxJzAl" +
-"BgkqhkiG9w0BCQEWGG9wZW5zb3VyY2VAbWljcm9zb2Z0LmNvbTCCASIwDQYJKoZI" +
-"hvcNAQEBBQADggEPADCCAQoCggEBANwCTuK0OnFc8UytzzCIB5pUWqWCMZA8kWO1" +
-"Es84wOVupPTZHNDWKI57prj0CB5JP2yU8BkIFjhkV/9wc2KLjKwu7xaJTwBZF/i0" +
-"t8dPBbgiEUmK6xdbJsLXoef/XZ5AmvCKb0mimEMvL8KgeF5OHuZJuYO0zCiRNVtp" +
-"ZYSx2R73qhgy5klDHh346qQd5T+KbsdK3DArilT86QO1GrpBWl1GPvHJ3VZ1OO33" +
-"iFWfyEVgwdAtMAkWXH8Eh1/MpPE8WQk5X5pdVEu+RJLLrVbgr+cnlVzfirSVLRar" +
-"KZROAB3e2x8JdSqylnar/WWK11NERdiKaZr3WxAkceuVkTsKmRkCAwEAATANBgkq" +
-"hkiG9w0BAQsFAAOCAQEAYLfk2dBcW1mJbkVYx80ogDUy/xX3d+uuop2gZwUXuzWY" +
-"I4uXzSEsY37/+NKzOX6PtET3X6xENDW7AuJhTuWmTGZtPB1AjiVKLIgRwugV3Ovr" +
-"1DoPBIvS7iCHGGcsr7tAgYxiVATlIcczCxQG1KPhrrLSUDxkbiyUHpyroExHGBeC" +
-"UflT2BIO+TZ+44aYfO7vuwpu0ajfB6Rs0s/DM+uUTWCfsVvyPenObHz5HF2vxf75" +
-"y8pr3fYKuUvpJ45T0ZjiXyRpkBTDudU3vuYuyAP3PwO6F/ic7Rm9D1uzEI38Va+o" +
-"6CUh4NJnpIZIBs7T+rPwhKrUuM7BEO0CL7VTh37UzA==";
-
             const string pem =
 "-----BEGIN CERTIFICATE-----\n" +
 "MIIDqzCCApMCFC+MROpib4t03Wqzgkcod1lad6JtMA0GCSqGSIb3DQEBCwUAMIGR\n" +
@@ -460,10 +451,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 "BkRGMfUngiT8oVyaMtZWYPM=\n" +
 "-----END PRIVATE KEY-----\n";
 
-            string certName = Recording.GenerateId();
-            byte[] certBytes = Encoding.ASCII.GetBytes(pem);
+            string caCertificateName = Recording.GenerateId();
+            byte[] caCertificateBytes = Encoding.ASCII.GetBytes(pem);
 
-            ImportCertificateOptions options = new ImportCertificateOptions(certName, certBytes)
+            ImportCertificateOptions options = new ImportCertificateOptions(caCertificateName, caCertificateBytes)
             {
                 Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK")
                 {
@@ -472,96 +463,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             };
 
             KeyVaultCertificateWithPolicy cert = await Client.ImportCertificateAsync(options);
-            RegisterForCleanup(certName);
+            RegisterForCleanup(caCertificateName);
 
-            byte[] pubBytes = Convert.FromBase64String(ca);
+            byte[] pubBytes = Convert.FromBase64String(CaPublicKeyBase64);
             CollectionAssert.AreEqual(pubBytes, cert.Cer);
         }
 
         [Test]
         public async Task VerifyImportCertificatePfx()
         {
-            const string ca =
-"MIIDqzCCApMCFC+MROpib4t03Wqzgkcod1lad6JtMA0GCSqGSIb3DQEBCwUAMIGR" +
-"MQswCQYDVQQGEwJVUzELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1JlZG1vbmQxEjAQ" +
-"BgNVBAoMCU1pY3Jvc29mdDESMBAGA1UECwwJQXp1cmUgU0RLMRIwEAYDVQQDDAlB" +
-"enVyZSBTREsxJzAlBgkqhkiG9w0BCQEWGG9wZW5zb3VyY2VAbWljcm9zb2Z0LmNv" +
-"bTAeFw0yMDAyMTQyMzE3MTZaFw0yNTAyMTIyMzE3MTZaMIGRMQswCQYDVQQGEwJV" +
-"UzELMAkGA1UECAwCV0ExEDAOBgNVBAcMB1JlZG1vbmQxEjAQBgNVBAoMCU1pY3Jv" +
-"c29mdDESMBAGA1UECwwJQXp1cmUgU0RLMRIwEAYDVQQDDAlBenVyZSBTREsxJzAl" +
-"BgkqhkiG9w0BCQEWGG9wZW5zb3VyY2VAbWljcm9zb2Z0LmNvbTCCASIwDQYJKoZI" +
-"hvcNAQEBBQADggEPADCCAQoCggEBANwCTuK0OnFc8UytzzCIB5pUWqWCMZA8kWO1" +
-"Es84wOVupPTZHNDWKI57prj0CB5JP2yU8BkIFjhkV/9wc2KLjKwu7xaJTwBZF/i0" +
-"t8dPBbgiEUmK6xdbJsLXoef/XZ5AmvCKb0mimEMvL8KgeF5OHuZJuYO0zCiRNVtp" +
-"ZYSx2R73qhgy5klDHh346qQd5T+KbsdK3DArilT86QO1GrpBWl1GPvHJ3VZ1OO33" +
-"iFWfyEVgwdAtMAkWXH8Eh1/MpPE8WQk5X5pdVEu+RJLLrVbgr+cnlVzfirSVLRar" +
-"KZROAB3e2x8JdSqylnar/WWK11NERdiKaZr3WxAkceuVkTsKmRkCAwEAATANBgkq" +
-"hkiG9w0BAQsFAAOCAQEAYLfk2dBcW1mJbkVYx80ogDUy/xX3d+uuop2gZwUXuzWY" +
-"I4uXzSEsY37/+NKzOX6PtET3X6xENDW7AuJhTuWmTGZtPB1AjiVKLIgRwugV3Ovr" +
-"1DoPBIvS7iCHGGcsr7tAgYxiVATlIcczCxQG1KPhrrLSUDxkbiyUHpyroExHGBeC" +
-"UflT2BIO+TZ+44aYfO7vuwpu0ajfB6Rs0s/DM+uUTWCfsVvyPenObHz5HF2vxf75" +
-"y8pr3fYKuUvpJ45T0ZjiXyRpkBTDudU3vuYuyAP3PwO6F/ic7Rm9D1uzEI38Va+o" +
-"6CUh4NJnpIZIBs7T+rPwhKrUuM7BEO0CL7VTh37UzA==";
+            string caCertificateName = Recording.GenerateId();
+            byte[] caCertificateBytes = Convert.FromBase64String(CaKeyPairPkcs12Base64);
 
-            const string pfx =
-"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";
-
-            string certName = Recording.GenerateId();
-            byte[] certBytes = Convert.FromBase64String(pfx);
-
-            ImportCertificateOptions options = new ImportCertificateOptions(certName, certBytes)
+            ImportCertificateOptions options = new ImportCertificateOptions(caCertificateName, caCertificateBytes)
             {
                 Policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=Azure SDK")
                 {
@@ -570,10 +484,77 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             };
 
             KeyVaultCertificateWithPolicy cert = await Client.ImportCertificateAsync(options);
-            RegisterForCleanup(certName);
+            RegisterForCleanup(caCertificateName);
 
-            byte[] pubBytes = Convert.FromBase64String(ca);
+            byte[] pubBytes = Convert.FromBase64String(CaPublicKeyBase64);
             CollectionAssert.AreEqual(pubBytes, cert.Cer);
+        }
+
+        [Test]
+        public async Task ValidateMergeCertificate()
+        {
+            string serverCertificateName = Recording.GenerateId();
+
+            // Generate the request.
+            CertificatePolicy policy = new CertificatePolicy(WellKnownIssuerNames.Unknown, "CN=Azure SDK")
+            {
+                CertificateTransparency = false,
+                ContentType = CertificateContentType.Pkcs12,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(serverCertificateName, policy);
+
+            RegisterForCleanup(serverCertificateName);
+            await using IAsyncDisposable disposableOperation = EnsureDeleted(operation);
+
+            // Read the CA.
+            byte[] caCertificateBytes = Convert.FromBase64String(CaPublicKeyBase64);
+            X509Certificate2 caCertificate = new X509Certificate2(caCertificateBytes);
+
+            // Read CA private key since getting it from caCertificate above throws.
+            AsymmetricCipherKeyPair caPrivateKey;
+            using (StringReader caPrivateKeyReader = new StringReader(CaPrivateKeyPem))
+            {
+                PemReader reader = new PemReader(caPrivateKeyReader);
+                caPrivateKey = (AsymmetricCipherKeyPair)reader.ReadObject();
+            }
+
+            // Read the CSR.
+            Pkcs10CertificationRequest csr = new Pkcs10CertificationRequest(operation.Properties.Csr);
+            CertificationRequestInfo csrInfo = csr.GetCertificationRequestInfo();
+
+            // Parse the issuer subject name.
+            Hashtable oidLookup = new Hashtable(X509Name.DefaultLookup)
+            {
+                { "s", new DerObjectIdentifier("2.5.4.8") },
+            };
+
+            X509Name issuerName = new X509Name(true, oidLookup, caCertificate.Subject);
+
+            // Sign the request.
+            X509V3CertificateGenerator generator = new X509V3CertificateGenerator();
+            generator.SetIssuerDN(issuerName);
+            generator.SetSerialNumber(BigInteger.One);
+            generator.SetNotBefore(DateTime.Now);
+            generator.SetNotAfter(DateTime.Now.AddDays(1));
+            generator.SetSubjectDN(csrInfo.Subject);
+            generator.SetPublicKey(csr.GetPublicKey());
+
+            Asn1SignatureFactory signatureFactory = new Asn1SignatureFactory("SHA256WITHRSA", caPrivateKey.Private);
+            X509Certificate serverSignedPublicKey = generator.Generate(signatureFactory);
+
+            // Merge the certificate chain.
+            MergeCertificateOptions options = new MergeCertificateOptions(serverCertificateName, new[] { serverSignedPublicKey.GetEncoded(), caCertificateBytes });
+            KeyVaultCertificateWithPolicy mergedServerCertificate = await Client.MergeCertificateAsync(options);
+
+            X509Certificate2 serverCertificate = new X509Certificate2(mergedServerCertificate.Cer);
+            Assert.AreEqual(csrInfo.Subject.ToString(), serverCertificate.Subject);
+            Assert.AreEqual(serverCertificateName, mergedServerCertificate.Name);
+
+            KeyVaultCertificateWithPolicy completedServerCertificate = await WaitForCompletion(operation);
+
+            Assert.AreEqual(mergedServerCertificate.Name, completedServerCertificate.Name);
+            CollectionAssert.AreEqual(mergedServerCertificate.Cer, completedServerCertificate.Cer);
         }
 
         // Backup Restore
