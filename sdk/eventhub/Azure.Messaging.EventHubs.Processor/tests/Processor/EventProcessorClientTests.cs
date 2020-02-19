@@ -677,6 +677,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Force an exception to be thrown as soon as the background running task starts.
 
             var firstRun = true;
+            var expectedException = new Exception();
 
             mockProcessor
                 .Setup(processor => processor.CreateConsumer(
@@ -688,7 +689,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     if (firstRun)
                     {
                         firstRun = false;
-                        throw new Exception();
+                        throw expectedException;
                     }
 
                     return mockConsumer.Object;
@@ -711,11 +712,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(mockProcessor.Object.IsRunning, Is.False, "StartProcessingAsync should not be able to reset processor state.");
 
+            var capturedException = default(Exception);
+
             try
             {
                 await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token);
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                capturedException = ex;
+            }
+
+            Assert.That(capturedException, Is.EqualTo(expectedException), "The captured and expected exceptions do not match.");
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
@@ -870,9 +878,9 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<CancellationToken>()))
                 .Callback(() =>
                 {
-                    if (Interlocked.Increment(ref partitionsBeingProcessed) == partitionIds.Length)
+                    if (Interlocked.Increment(ref partitionsBeingProcessed) >= partitionIds.Length)
                     {
-                        completionSource.SetResult(true);
+                        completionSource.TrySetResult(true);
                     }
                 })
                 .Returns<string, EventPosition, ReadEventOptions, CancellationToken>((partition, position, options, token) =>
@@ -924,7 +932,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task StopProcessingAsyncShouldSurfaceLoadBalancingException()
+        public async Task StopProcessingAsyncShouldSurfaceBackgroundRunningTaskException()
         {
             var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "eventHub", Mock.Of<Func<EventHubConnection>>(), default, default) { CallBase = true };
             var completionSource = new TaskCompletionSource<bool>();
@@ -1732,7 +1740,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = new[] { "0", "1" };
             var faultedPartitionId = partitionIds.Last();
 
-            mockProcessor.CatchNUnitRunnerException = (partitionId, position, token) => partitionId != faultedPartitionId;
+            mockProcessor.ShouldIgnoreTestRunnerException = (partitionId, position, token) => partitionId != faultedPartitionId;
 
             mockConsumer
                 .Setup(consumer => consumer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
@@ -3463,7 +3471,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private class InjectableEventSourceProcessorMock : EventProcessorClient
         {
-            public Func<string, EventPosition, CancellationToken, bool> CatchNUnitRunnerException = (id, pos, token) => true;
+            public Func<string, EventPosition, CancellationToken, bool> ShouldIgnoreTestRunnerException = (id, pos, token) => true;
 
             public Exception RunPartitionProcessingException;
 
@@ -3501,7 +3509,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     await base.RunPartitionProcessingAsync(partitionId, startingPosition, cancellationToken).ConfigureAwait(false);
                 }
                 catch (NullReferenceException ex)
-                    when ((CatchNUnitRunnerException(partitionId, startingPosition, cancellationToken))
+                    when ((ShouldIgnoreTestRunnerException(partitionId, startingPosition, cancellationToken))
                         && (string.Equals(ex.Source, "Microsoft.Bcl.AsyncInterfaces", StringComparison.OrdinalIgnoreCase)))
                 {
                     // This is a test-specific error that occurs when stopping and using a mocked event source.

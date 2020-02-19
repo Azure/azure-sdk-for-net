@@ -168,7 +168,8 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 // If ownership list retrieval fails, give up on the current cycle.  There's nothing more we can do
                 // without an updated ownership list.  Set the EventHubName to null so it doesn't modify the exception
-                // message.
+                // message.  This exception message is used so the processor can retrieve the raw Operation string, and
+                // adding the EventHubName would append unwanted info to it.
 
                 throw new EventHubsException(true, null, Resources.OperationListOwnership, ex);
             }
@@ -418,7 +419,9 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 Logger.RenewOwnershipError(OwnerIdentifier, ex.Message);
 
-                // Set the EventHubName to null so it doesn't modify the exception message.
+                // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
+                // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append
+                // unwanted info to it.
 
                 throw new EventHubsException(true, null, Resources.OperationRenewOwnership, ex);
             }
@@ -476,7 +479,9 @@ namespace Azure.Messaging.EventHubs.Processor
 
                 Logger.ClaimOwnershipError(partitionId, ex.Message);
 
-                // Set the EventHubName to null so it doesn't modify the exception message.
+                // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
+                // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append
+                // unwanted info to it.
 
                 throw new EventHubsException(true, null, Resources.OperationClaimOwnership, ex);
             }
