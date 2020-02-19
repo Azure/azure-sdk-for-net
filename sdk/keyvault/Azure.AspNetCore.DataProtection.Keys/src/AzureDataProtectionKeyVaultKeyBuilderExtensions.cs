@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AspNetCore.DataProtection.Keys;
 using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
-using Azure.Security.KeyVault.Secrets.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 
