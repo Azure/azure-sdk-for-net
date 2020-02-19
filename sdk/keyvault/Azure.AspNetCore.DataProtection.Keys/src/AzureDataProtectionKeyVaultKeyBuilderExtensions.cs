@@ -39,26 +39,26 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <returns>The value <paramref name="builder"/>.</returns>
         public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, TokenCredential tokenCredential)
         {
-            return ProtectKeysWithAzureKeyVault(builder, new KeyResolver(tokenCredential), keyIdentifier);
+            return ProtectKeysWithAzureKeyVault(builder, keyIdentifier, new KeyResolver(tokenCredential));
         }
 
         /// <summary>
         /// Configures the data protection system to protect keys with specified key in Azure KeyVault.
         /// </summary>
         /// <param name="builder">The builder instance to modify.</param>
-        /// <param name="client">The <see cref="IKeyEncryptionKeyResolver"/> to use for Key Vault access.</param>
+        /// <param name="keyResolver">The <see cref="IKeyEncryptionKeyResolver"/> to use for Key Vault access.</param>
         /// <param name="keyIdentifier">The Azure Key Vault key identifier used for key encryption.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
-        public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, IKeyEncryptionKeyResolver client, string keyIdentifier)
+        public static IDataProtectionBuilder ProtectKeysWithAzureKeyVault(this IDataProtectionBuilder builder, string keyIdentifier, IKeyEncryptionKeyResolver keyResolver)
         {
             Argument.AssertNotNull(builder, nameof(builder));
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(keyResolver, nameof(keyResolver));
             Argument.AssertNotNullOrEmpty(keyIdentifier, nameof(keyIdentifier));
 
-            builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(client);
+            builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(keyResolver);
             builder.Services.Configure<KeyManagementOptions>(options =>
             {
-                options.XmlEncryptor = new AzureKeyVaultXmlEncryptor(client, keyIdentifier);
+                options.XmlEncryptor = new AzureKeyVaultXmlEncryptor(keyResolver, keyIdentifier);
             });
 
             return builder;

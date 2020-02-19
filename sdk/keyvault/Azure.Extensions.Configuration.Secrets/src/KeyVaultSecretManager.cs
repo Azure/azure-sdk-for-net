@@ -1,27 +1,37 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Extensions.Configuration.Secrets
 {
     /// <summary>
-    /// The <see cref="IKeyVaultSecretManager"/> instance used to control secret loading.
+    /// Default implementation of <see cref="KeyVaultSecretManager"/> that loads all secrets
+    /// and replaces '--' with ':" in key names.
     /// </summary>
-    public interface IKeyVaultSecretManager
+    public class KeyVaultSecretManager
     {
+        internal static KeyVaultSecretManager Instance { get; } = new KeyVaultSecretManager();
+
         /// <summary>
         /// Checks if <see cref="KeyVaultSecret"/> value should be retrieved.
         /// </summary>
         /// <param name="secret">The <see cref="KeyVaultSecret"/> instance.</param>
         /// <returns><code>true</code> if secrets value should be loaded, otherwise <code>false</code>.</returns>
-        bool Load(SecretProperties secret);
+        public virtual string GetKey(KeyVaultSecret secret)
+        {
+            return secret.Name.Replace("--", ConfigurationPath.KeyDelimiter);
+        }
 
         /// <summary>
         /// Maps secret to a configuration key.
         /// </summary>
         /// <param name="secret">The <see cref="KeyVaultSecret"/> instance.</param>
         /// <returns>Configuration key name to store secret value.</returns>
-        string GetKey(KeyVaultSecret secret);
+        public virtual bool Load(SecretProperties secret)
+        {
+            return true;
+        }
     }
 }

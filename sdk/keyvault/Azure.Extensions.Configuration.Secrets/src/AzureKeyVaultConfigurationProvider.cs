@@ -19,7 +19,7 @@ namespace Azure.Extensions.Configuration.Secrets
     {
         private readonly TimeSpan? _reloadInterval;
         private readonly SecretClient _client;
-        private readonly IKeyVaultSecretManager _manager;
+        private readonly KeyVaultSecretManager _manager;
         private Dictionary<string, LoadedSecret> _loadedSecrets;
         private Task _pollingTask;
         private readonly CancellationTokenSource _cancellationToken;
@@ -28,9 +28,9 @@ namespace Azure.Extensions.Configuration.Secrets
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationProvider"/>.
         /// </summary>
         /// <param name="client">The <see cref="SecretClient"/> to use for retrieving values.</param>
-        /// <param name="manager">The <see cref="IKeyVaultSecretManager"/> to use in managing values.</param>
+        /// <param name="manager">The <see cref="KeyVaultSecretManager"/> to use in managing values.</param>
         /// <param name="reloadInterval">The timespan to wait in between each attempt at polling the Azure Key Vault for changes. Default is null which indicates no reloading.</param>
-        public AzureKeyVaultConfigurationProvider(SecretClient client, IKeyVaultSecretManager manager, TimeSpan? reloadInterval = null)
+        public AzureKeyVaultConfigurationProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadInterval = null)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(manager, nameof(manager));
