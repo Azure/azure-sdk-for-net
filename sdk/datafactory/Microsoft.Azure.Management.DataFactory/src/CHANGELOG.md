@@ -1,5 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.8.0
+###  Feature Additions
+- Added new API to query on triggers with filters like type and parentTrigger
+- Fixed offset value validation in self dependency and trigger dependency for tumbling window trigger, now accepts negative offsets
+- Introduced a new rerunTumblingWindowTrigger which can rerun multiple windows of an existing tumblingWindowTrigger with independent concurrency
+- Added rerun from failed activity support for create pipeline run
+
 ## Version 4.7.0
 ###  Feature Additions
 - Added compute support in execute data flow activity
