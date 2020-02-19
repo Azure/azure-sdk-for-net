@@ -218,7 +218,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 foreach (AmqpMessage message in amqpMessages)
                 {
-                  if (_receiveMode == ReceiveMode.ReceiveAndDelete)
+                    if (_receiveMode == ReceiveMode.ReceiveAndDelete)
                     {
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
